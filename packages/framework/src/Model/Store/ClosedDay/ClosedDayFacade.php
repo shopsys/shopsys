@@ -90,4 +90,18 @@ class ClosedDayFacade
     ): array {
         return $this->closedDayRepository->getPublicHolidays($domainId, $startDate, $endDate);
     }
+
+    /**
+     * @param int $domainId
+     * @param \DateTimeInterface $startDate
+     * @param \DateTimeInterface $endDate
+     * @return bool
+     */
+    public function hasPublicHolidays(
+        int $domainId,
+        DateTimeInterface $startDate,
+        DateTimeInterface $endDate,
+    ): bool {
+        return $this->closedDayRepository->hasPublicHolidays($domainId, $startDate, $endDate);
+    }
 }

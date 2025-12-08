@@ -8,6 +8,7 @@ use DateInterval;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
@@ -83,9 +84,49 @@ class ClosedDayRepository
         DateTimeInterface $endDate,
     ): array {
         $closedDays = $this
+            ->createPublicHolidaysQueryBuilder($domainId, $startDate, $endDate)
+            ->select('cd.date')
+            ->getQuery()
+            ->getResult();
+
+        return array_column($closedDays, 'date');
+    }
+
+    /**
+     * @param int $domainId
+     * @param \DateTimeInterface $startDate
+     * @param \DateTimeInterface $endDate
+     * @return bool
+     */
+    public function hasPublicHolidays(
+        int $domainId,
+        DateTimeInterface $startDate,
+        DateTimeInterface $endDate,
+    ): bool {
+        $result = $this
+            ->createPublicHolidaysQueryBuilder($domainId, $startDate, $endDate)
+            ->select('1')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $result !== null;
+    }
+
+    /**
+     * @param int $domainId
+     * @param \DateTimeInterface $startDate
+     * @param \DateTimeInterface $endDate
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function createPublicHolidaysQueryBuilder(
+        int $domainId,
+        DateTimeInterface $startDate,
+        DateTimeInterface $endDate,
+    ): QueryBuilder {
+        return $this
             ->getClosedDayRepository()
             ->createQueryBuilder('cd')
-            ->select('cd.date')
             ->where('cd.domainId = :domainId')
             ->andWhere('cd.isPublicHoliday = :isPublicHoliday')
             ->andWhere('cd.date >= :startDate')
@@ -93,11 +134,7 @@ class ClosedDayRepository
             ->setParameter('domainId', $domainId)
             ->setParameter('isPublicHoliday', true)
             ->setParameter('startDate', $startDate)
-            ->setParameter('endDate', $endDate)
-            ->getQuery()
-            ->getResult();
-
-        return array_column($closedDays, 'date');
+            ->setParameter('endDate', $endDate);
     }
 
     /**
