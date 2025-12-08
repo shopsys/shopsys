@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Store\ClosedDay;
 
 use DateInterval;
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Psr\Clock\ClockInterface;
@@ -68,6 +69,35 @@ class ClosedDayRepository
             ->setParameter('endOfFollowingWeek', $endOfFollowingWeek)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param int $domainId
+     * @param \DateTimeInterface $startDate
+     * @param \DateTimeInterface $endDate
+     * @return \DateTimeInterface[]
+     */
+    public function getPublicHolidays(
+        int $domainId,
+        DateTimeInterface $startDate,
+        DateTimeInterface $endDate,
+    ): array {
+        $closedDays = $this
+            ->getClosedDayRepository()
+            ->createQueryBuilder('cd')
+            ->select('cd.date')
+            ->where('cd.domainId = :domainId')
+            ->andWhere('cd.isPublicHoliday = :isPublicHoliday')
+            ->andWhere('cd.date >= :startDate')
+            ->andWhere('cd.date <= :endDate')
+            ->setParameter('domainId', $domainId)
+            ->setParameter('isPublicHoliday', true)
+            ->setParameter('startDate', $startDate)
+            ->setParameter('endDate', $endDate)
+            ->getQuery()
+            ->getResult();
+
+        return array_column($closedDays, 'date');
     }
 
     /**

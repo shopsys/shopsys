@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Store\ClosedDay;
 
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 
@@ -74,5 +75,19 @@ class ClosedDayFacade
         $closedDay = $this->getById($closedDayId);
         $this->em->remove($closedDay);
         $this->em->flush();
+    }
+
+    /**
+     * @param int $domainId
+     * @param \DateTimeInterface $startDate
+     * @param \DateTimeInterface $endDate
+     * @return \DateTimeInterface[]
+     */
+    public function getPublicHolidays(
+        int $domainId,
+        DateTimeInterface $startDate,
+        DateTimeInterface $endDate,
+    ): array {
+        return $this->closedDayRepository->getPublicHolidays($domainId, $startDate, $endDate);
     }
 }
