@@ -5,7 +5,7 @@
         {% block aside %}{% endblock %}
 
         {% block header %}
-            <header class="navbar sticky-lg-top d-print-none flex-column gap-2">
+            <header class="navbar sticky-lg-top d-print-none flex-column p-0">
                 {% if isMailerSettingUnusual() %}
                     <div class="mailer-info py-1 px-3 w-100">
                         <div class="d-flex align-items-center justify-content-center">
@@ -18,8 +18,8 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="container-fluid" id="navbar-menu">
-                    <div class="d-none d-xxl-flex navbar-nav">
+                <div class="container-fluid py-2" id="navbar-menu">
+                    <div class="d-none d-xxl-flex navbar-nav min-h-0">
                         <div class="dropdown">
                             <div class="my-2 my-md-0">
                                 <div class="input-group input-group-flat">
