@@ -690,6 +690,7 @@ final class ProductFormType extends AbstractType
         $variantGroup = $builder->create('variantGroup', FormType::class, [
             'inherit_data' => true,
             'label' => false,
+            'row_attr' => ['class' => 'mt-xl-3'],
         ]);
 
         if ($this->isProductVariant($product)) {
