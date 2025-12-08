@@ -38,10 +38,16 @@ export const ContactInformationDeliveryAddress: FC = () => {
     };
 
     useEffect(() => {
-        if (user?.defaultDeliveryAddress === undefined && user?.deliveryAddresses.length === 1) {
+        if (deliveryAddressUuid) {
+            return;
+        }
+
+        if (user?.defaultDeliveryAddress !== undefined) {
+            formProviderMethods.setValue(formMeta.fields.deliveryAddressUuid.name, user.defaultDeliveryAddress.uuid);
+        } else if (user?.deliveryAddresses && user.deliveryAddresses.length > 0) {
             formProviderMethods.setValue(formMeta.fields.deliveryAddressUuid.name, user.deliveryAddresses[0].uuid);
         }
-    }, [user?.defaultDeliveryAddress, user?.deliveryAddresses.length]);
+    }, [user?.defaultDeliveryAddress?.uuid, user?.deliveryAddresses.length, deliveryAddressUuid]);
 
     return (
         <FormBlockWrapper>
