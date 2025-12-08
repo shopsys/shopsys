@@ -8,7 +8,6 @@ type BasePageHeroProps = {
     title: string | ReactNode;
     titleTid?: string;
     description?: string | ReactNode;
-    descriptionProps?: React.HTMLAttributes<HTMLParagraphElement>;
 };
 
 type PageHeroProps = BasePageHeroProps &
@@ -30,7 +29,6 @@ export const PageHero: FC<PageHeroProps> = ({
     title,
     titleTid,
     description,
-    descriptionProps,
     actionHref,
     actionTitle,
     actionSkeletonType,
@@ -46,7 +44,12 @@ export const PageHero: FC<PageHeroProps> = ({
             </h1>
 
             {description && (
-                <p className="mx-auto max-w-[520px] text-center text-balance" {...descriptionProps}>
+                <p
+                    aria-atomic="true"
+                    aria-live="polite"
+                    className="mx-auto max-w-[520px] text-center text-balance"
+                    role="alert"
+                >
                     {description}
                 </p>
             )}

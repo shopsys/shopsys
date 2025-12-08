@@ -51,16 +51,7 @@ export const ResetPasswordContent: FC = () => {
         <Webline width="lg">
             <VerticalStack gap="sm">
                 {isSuccess && (
-                    <PageHero
-                        description={formMeta.messages.success}
-                        icon={MailIcon}
-                        title={t('Check your email')}
-                        descriptionProps={{
-                            'aria-atomic': true,
-                            'aria-live': 'polite',
-                            role: 'alert',
-                        }}
-                    />
+                    <PageHero description={formMeta.messages.success} icon={MailIcon} title={t('Check your email')} />
                 )}
 
                 {!isSuccess && (
