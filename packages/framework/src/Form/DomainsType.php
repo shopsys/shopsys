@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class DomainsType extends AbstractType
 {
@@ -32,5 +33,16 @@ final class DomainsType extends AbstractType
                 'label' => $domainConfig->getName(),
             ]);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'error_bubbling' => false,
+        ]);
     }
 }

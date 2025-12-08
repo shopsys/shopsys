@@ -76,7 +76,6 @@ final class HolidaysImportFormType extends AbstractType
             $builder->add('selectedDomains', DomainsType::class, [
                 'label' => 'Import for domain',
                 'required' => true,
-                'error_bubbling' => false,
                 'constraints' => [
                     new Callback(['callback' => [$this, 'validateSelectedDomains']]),
                 ],
