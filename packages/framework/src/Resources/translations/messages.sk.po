@@ -61,6 +61,9 @@ msgstr "<a href=\"%url%\">Predvolená jednotka nie je nastavená.</a>"
 msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
 msgstr "<a href=\"%url%\">Článok zásad ochrany osobných údajov pre doménu %domainName% nie je nastavený.</a>"
 
+msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
+msgstr "<a href=\"%url%\">Sviatky pre rok %year% nie sú nastavené.</a>"
+
 msgid "<a href=\"%url%\">Some required email templates are not fully set.</a>"
 msgstr "<a href=\"%url%\">Niektoré povinné emailové šablóny nie sú úplne nastavené.</a>"
 
@@ -673,8 +676,8 @@ msgstr "Krajina <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravená"
 msgid "Country code"
 msgstr "Kód krajiny"
 
-msgid "Country code in ISO 3166-1 alpha-2"
-msgstr "Kód krajiny v ISO 3166-1 alpha-2"
+msgid "Country code in <a href=\"%wikiLink%\" target=\"_blank\">ISO 3166-1 alpha-2</a>"
+msgstr "Kód krajiny v <a href=\"%wikiLink%\" target=\"_blank\">ISO 3166-1 alpha-2</a>"
 
 msgid "Create"
 msgstr "Vytvoriť"
@@ -1759,6 +1762,9 @@ msgstr "Detail sviatku / interného dňa"
 msgid "Holidays and internal days"
 msgstr "Sviatky a interné dni"
 
+msgid "Holidays import"
+msgstr "Import sviatkov"
+
 msgid "Home page"
 msgstr "Domovská stránka"
 
@@ -1780,6 +1786,9 @@ msgstr "ID %productId%"
 msgid "Icon"
 msgstr "Ikona"
 
+msgid "If the country is not listed, you have to <a href=\"%countryCreateUrl%\" target=\"_blank\">create</a> it first. Or, in rare scenarios, your country code might not be <a href=\"%supportedCountriesUrl%\" target=\"_blank\">supported</a>."
+msgstr "Ak krajina nie je uvedená, musíte ju najskôr <a href=\"%countryCreateUrl%\" target=\"_blank\">vytvoriť</a>. Alebo vo zriedkavých scenároch váš kód krajiny nemusí byť <a href=\"%supportedCountriesUrl%\" target=\"_blank\">podporovaný</a>."
+
 msgid "If you allow negative stock, it is possible to order more items than are currently in stock."
 msgstr "Ak povolíte záporný stav skladu, je možné objednať viac položiek, ako je momentálne na sklade."
 
@@ -1797,6 +1806,9 @@ msgstr "Obrázky"
 
 msgid "Import"
 msgstr "Importovať"
+
+msgid "Import for domain"
+msgstr "Import pre doménu"
 
 msgid "Import price list"
 msgstr "Importovať cenník"
@@ -2716,6 +2728,9 @@ msgstr "Akcia sa nastavuje na konkrétné variantě."
 msgid "Promotion {{ x }} + {{ y }} free"
 msgstr "Akcia {{ x }} + {{ y }} zadarmo"
 
+msgid "Public holiday"
+msgstr "Sviatok"
+
 msgid "QR code"
 msgstr "QR kód"
 
@@ -2874,6 +2889,9 @@ msgstr "Vyhľadať a vybrať produkty..."
 
 msgid "Second column categories"
 msgstr "Kategórie druhého stĺpca"
+
+msgid "Select country"
+msgstr "Vybrať krajinu"
 
 msgid "Select items"
 msgstr "Vybrať položky"
@@ -3223,6 +3241,9 @@ msgstr "Pokyny sú zákazníkovi zobrazeny po odoslaní žiadosti o odstúpenie 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimálna veľkosť ikony je 46x26 px. Povolený je len PNG formát."
 
+msgid "The selected country is not valid."
+msgstr "Vybraná krajina nie je platná."
+
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové množstvá sú nastavené pre varianty produktu osobne."
 
@@ -3541,6 +3562,9 @@ msgstr "XML Feedy"
 msgid "XML feeds settings"
 msgstr "Nastavenia XML feeds"
 
+msgid "Year"
+msgstr "Rok"
+
 msgid "Yes"
 msgstr "Áno"
 
@@ -3687,6 +3711,9 @@ msgstr "bez DPH"
 
 msgid "without positioning"
 msgstr "bez pozície"
+
+msgid "{1} Imported <strong>%count%</strong> holiday.|[2,Inf] Imported <strong>%count%</strong> holidays."
+msgstr "{1} Importovaný <strong>%count%</strong> sviatok.|[2,4] Importované <strong>%count%</strong> sviatky.|[5,Inf] Importovaných <strong>%count%</strong> sviatkov."
 
 msgid "{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in."
 msgstr "{1} Je jeden parameter posuvník, ktorý nemá vyplnené svoje číselné hodnoty.|[2,Inf] Sú %count% parametre posuvníky, ktoré nemajú vyplnené svoje číselné hodnoty."

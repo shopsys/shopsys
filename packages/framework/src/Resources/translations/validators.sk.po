@@ -268,6 +268,9 @@ msgstr "Zadajte platný IBAN."
 msgid "Please enter a whole number."
 msgstr "Prosím, zadajte celé číslo."
 
+msgid "Please enter a year"
+msgstr "Prosím, zadajte rok"
+
 msgid "Please enter account number for domain %domainName%."
 msgstr "Zadajte číslo účtu pre doménu %domainName%."
 
@@ -543,6 +546,9 @@ msgstr "Prosím, zadajte PSČ"
 
 msgid "Please select GoPay payment method for enabled domain %domainName%."
 msgstr "Vyberte platobnú metódu GoPay pre povolenú doménu %domainName%."
+
+msgid "Please select a country"
+msgstr "Prosím, vyberte krajinu"
 
 msgid "Please upload a CSV file"
 msgstr "Prosím, nahrajte CSV súbor"
