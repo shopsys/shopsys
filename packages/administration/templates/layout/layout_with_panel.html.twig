@@ -55,6 +55,9 @@
                             {% block h1 %}{{ 'Administration'|trans }}{% endblock %}
                             {% include '@ShopsysAdministration/partial/display_uuid.html.twig' %}
                         </h2>
+                        <div class="page-subtitle">
+                            {% block sub_title %}{% endblock %}
+                        </div>
                     </div>
                     <div class="col-auto text-end">
                         {% block btn_wrapper %}

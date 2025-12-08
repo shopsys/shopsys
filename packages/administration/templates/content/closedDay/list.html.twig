@@ -5,6 +5,10 @@
 {% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
 {% block h1 %}{{ 'Holidays and internal days'|trans }}{% endblock %}
 
+{% block sub_title %}
+    {{ 'The days are used to display proper stores opening hours and to calculate order withdrawal deadline.'|trans }}
+{% endblock %}
+
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
