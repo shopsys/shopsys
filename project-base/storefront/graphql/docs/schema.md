@@ -3342,7 +3342,7 @@ Selected pickup place identifier if provided
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
-Total of all discounts (product discounts + promo code discounts)
+Total of all discounts (product price adjustments discounts + promo code discounts)
 
 </td>
 </tr>
@@ -3360,7 +3360,7 @@ Total items price (excluding transport and payment)
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
-Total items price before any discounts are applied (sum of all products at basic prices)
+Total items price (excluding transport and payment) before any discounts are applied
 
 </td>
 </tr>
@@ -3374,29 +3374,11 @@ Total price including transport and payment
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="cart.totalpricewithoutdiscounttransportandpayment">totalPriceWithoutDiscountTransportAndPayment</strong></td>
+<td colspan="2" valign="top"><strong id="cart.totalproductpriceadjustmentsdiscount">totalProductPriceAdjustmentsDiscount</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
-Total price (excluding discount, transport and payment)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="cart.totalproductdiscountprice">totalProductDiscountPrice</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
-<td>
-
-Total discount from product special prices (difference between basic and selling prices)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="cart.totalpromocodediscountprice">totalPromoCodeDiscountPrice</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
-<td>
-
-Total discount from promo codes and promotions
+Total discount from product special prices (price list prices, or X+Y promotion). Difference between basic and selling prices
 
 </td>
 </tr>
@@ -8526,6 +8508,15 @@ Total value of VAT
 <td>
 
 Code of the promo code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="promocode.discountprice">discountPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total discount provided by this promo code
 
 </td>
 </tr>
