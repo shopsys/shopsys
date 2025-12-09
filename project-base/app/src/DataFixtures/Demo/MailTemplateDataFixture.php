@@ -13,6 +13,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMail;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory;
@@ -22,10 +23,12 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory $mailTemplateFactory
      * @param \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly MailTemplateFactory $mailTemplateFactory,
         private readonly MailTemplateDataFactory $mailTemplateDataFactory,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -35,7 +38,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     #[Override]
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+        foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
 
