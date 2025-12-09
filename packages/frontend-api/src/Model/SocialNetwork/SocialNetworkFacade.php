@@ -92,20 +92,20 @@ class SocialNetworkFacade
             }
             $adapter->disconnect();
 
-            $productListUuids = $session->get(SocialNetworkController::PRODUCT_LIST_UUIDS);
+            $productListUuids = $session->get(SocialNetworkController::SESSION_PRODUCT_LIST_UUIDS);
             $loginResultData = $this->loginAsUserFacade->runLoginSteps(
                 $customerUser,
                 $type,
                 $isRegistration,
                 $productListUuids !== null ? explode(',', $productListUuids) : [],
-                $session->get(SocialNetworkController::SHOULD_OVERWRITE_CART, false),
-                $session->get(SocialNetworkController::CART_UUID),
+                $session->get(SocialNetworkController::SESSION_SHOULD_OVERWRITE_CART, false),
+                $session->get(SocialNetworkController::SESSION_CART_UUID),
                 (string)$userProfile->identifier,
             );
 
-            $session->remove(SocialNetworkController::CART_UUID);
-            $session->remove(SocialNetworkController::SHOULD_OVERWRITE_CART);
-            $session->remove(SocialNetworkController::PRODUCT_LIST_UUIDS);
+            $session->remove(SocialNetworkController::SESSION_CART_UUID);
+            $session->remove(SocialNetworkController::SESSION_SHOULD_OVERWRITE_CART);
+            $session->remove(SocialNetworkController::SESSION_PRODUCT_LIST_UUIDS);
 
             return $loginResultData;
         } catch (InvalidArgumentException | UnexpectedValueException $exception) {
