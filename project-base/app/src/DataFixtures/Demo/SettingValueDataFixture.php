@@ -32,12 +32,14 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly Setting $setting,
         private readonly PricingSetting $pricingSetting,
         private readonly HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper,
         private readonly PriceConverter $priceConverter,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -47,7 +49,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
     #[Override]
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+        foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
 
