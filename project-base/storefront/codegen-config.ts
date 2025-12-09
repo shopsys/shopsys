@@ -37,7 +37,7 @@ const config: CodegenConfig = {
                 extension: '.generated.tsx',
             } as NearOperationFileConfig,
             config: codegenTypescriptConfig,
-            plugins: ['typescript-operations', 'fragment-matcher', 'typescript-urql'],
+            plugins: ['typescript-operations', 'typescript-urql'],
         },
     },
 };
