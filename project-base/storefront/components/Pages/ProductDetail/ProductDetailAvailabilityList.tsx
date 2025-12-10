@@ -1,11 +1,11 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
+import { TypeSimpleStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/SimpleStoreAvailabilityFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductDetailAvailabilityListProps = {
-    storeAvailabilities: TypeStoreAvailabilityFragment[];
+    storeAvailabilities: TypeSimpleStoreAvailabilityFragment[];
 };
 
 export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProps> = ({ storeAvailabilities }) => {

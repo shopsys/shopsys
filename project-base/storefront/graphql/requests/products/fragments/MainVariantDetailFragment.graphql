@@ -3,7 +3,7 @@ fragment MainVariantDetailFragment on MainVariant {
     variants {
         ...ListedProductFragment
         storeAvailabilities {
-            ...StoreAvailabilityFragment
+            ...SimpleStoreAvailabilityFragment
         }
     }
 }
