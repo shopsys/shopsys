@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product\Filter;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
@@ -26,11 +28,15 @@ class ProductFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly ModuleFacade $moduleFacade,
         protected readonly ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
         protected readonly CategoryParameterFacade $categoryParameterFacade,
+        protected readonly UploadedFileFacade $uploadedFileFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -88,19 +94,22 @@ class ProductFilterOptionsFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $brand
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
      * @param int $count
      * @param bool $isAbsolute
      * @param bool $isSelected
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption
      */
     protected function createParameterValueFilterOption(
-        ParameterValue $brand,
+        ParameterValue $parameterValue,
         int $count,
         bool $isAbsolute,
         bool $isSelected = false,
     ): ParameterValueFilterOption {
-        return new ParameterValueFilterOption($brand, $count, $isAbsolute, $isSelected);
+        $parameterValueFilterOption = new ParameterValueFilterOption($parameterValue, $count, $isAbsolute, $isSelected);
+        $parameterValueFilterOption->setUploadedFileDependencies($this->uploadedFileFacade, $this->domain);
+
+        return $parameterValueFilterOption;
     }
 
     /**

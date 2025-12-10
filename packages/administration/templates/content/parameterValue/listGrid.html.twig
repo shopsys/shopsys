@@ -1,7 +1,33 @@
 {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_name %}
-    <a href="{{ url('admin_parametervalue_edit', { id: row.pu.id }) }}">{{ value }}</a>
+    <a href="{{ url('admin_parametervalue_edit', { id: row.pv.id }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_value_cell_id_rgbHex %}
+    {% if row.pv.rgbHex %}
+        {{ row.pv.rgbHex }}
+    {% else %}
+        {% set uploadedFiles = uploadedFilesByEntityNameAndId('parameterValue', row.pv.id) %}
+        {% if uploadedFiles|length > 0 %}
+            <span class="text-muted">{{ 'Custom image'|trans }}</span>
+        {% else %}
+            <span>-</span>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block grid_value_cell_id_colourIcon %}
+    {% set uploadedFiles = uploadedFilesByEntityNameAndId('parameterValue', row.pv.id) %}
+    {% if uploadedFiles|length > 0 %}
+        <img src="{{ uploadedFileUrl(uploadedFiles[0]) }}"
+             alt="{{ row.pv.text }}"
+             style="width: 30px; height: 30px; object-fit: cover; border-radius: 4px;">
+    {% elseif row.pv.rgbHex %}
+        <div style="width: 30px; height: 30px; background-color: {{ row.pv.rgbHex }}; border-radius: 4px; border: 1px solid #ccc;"></div>
+    {% else %}
+        <span>-</span>
+    {% endif %}
 {% endblock %}
 
 {% block grid_no_data %}

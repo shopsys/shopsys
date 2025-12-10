@@ -9,6 +9,10 @@ fragment ProductFilterOptionsParametersColorFragment on ParameterColorFilterOpti
         count
         rgbHex
         isSelected
+        colourIconImage {
+            url
+            name
+        }
     }
     isCollapsed
 }

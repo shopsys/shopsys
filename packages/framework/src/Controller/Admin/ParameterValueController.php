@@ -65,6 +65,7 @@ class ParameterValueController extends AdminBaseController
 
         $grid->addColumn('text', 'pv.text', t('Parameter value'));
         $grid->addColumn('rgbHex', 'pv.rgbHex', t('RGB Hex'));
+        $grid->addColumn('colourIcon', 'pv.id', t('Image'), false);
         $grid->addEditActionColumn('admin_parametervalue_edit', ['id' => 'pv.id']);
         $grid->setTheme('@ShopsysAdministration/content/parameterValue/listGrid.html.twig');
 

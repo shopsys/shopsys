@@ -2328,6 +2328,8 @@ export type TypeParameterValue = {
 /** Parameter value filter option */
 export type TypeParameterValueColorFilterOption = {
   __typename?: 'ParameterValueColorFilterOption';
+  /** Uploaded image for color parameter value */
+  colourIconImage: Maybe<TypeImage>;
   /** Count of products that will be filtered if this filter option is applied. */
   count: Scalars['Int']['output'];
   /** If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result. */
