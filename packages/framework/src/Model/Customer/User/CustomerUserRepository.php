@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
@@ -162,9 +163,17 @@ class CustomerUserRepository
             ->setParameter('selectedDomainId', $domainId);
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
+            $uuidCondition = '';
+
+            if (Uuid::isValid($quickSearchData->text)) {
+                $uuidCondition = 'cu.uuid = :exactText OR ';
+                $queryBuilder->setParameter('exactText', $quickSearchData->text);
+            }
+
             $queryBuilder
                 ->andWhere('
                     (
+                        ' . $uuidCondition . '
                         NORMALIZED(cu.lastName) LIKE NORMALIZED(:text)
                         OR
                         NORMALIZED(cu.email) LIKE NORMALIZED(:text)

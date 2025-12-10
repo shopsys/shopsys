@@ -19,7 +19,8 @@
     {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
         form_input: quickSearchForm.text,
         form_submit: quickSearchForm.submit,
-        info_message: 'Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?.'|trans,
+        placeholder: 'Search by name, email, phone, or UUID...'|trans,
+        info_message: 'Searching searches in <ul><li>last name</li><li>company name</li><li>email</li><li>telephone</li><li>UUID</li></ul> It is possible to use wildcards * and ?.'|trans,
     } %}
     {{ form_end(quickSearchForm) }}
 

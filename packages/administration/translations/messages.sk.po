@@ -1699,17 +1699,26 @@ msgstr "Hľadať"
 msgid "Search by code..."
 msgstr "Hľadať podľa kódu..."
 
+msgid "Search by complaint number, email, name, or UUID..."
+msgstr "Hľadať podľa čísla reklamácie, e-mailu, mena alebo UUID..."
+
 msgid "Search by email"
 msgstr "Vyhľadať podľa e-mailu"
 
 msgid "Search by filename, extension or translated name..."
 msgstr "Hľadať podľa názvu súboru, prípony alebo preloženého názvu..."
 
-msgid "Search by name, catalog number, or product part number..."
-msgstr "Hľadať podľa názvu, katalógového čísla alebo čísla súčiastky produktu..."
+msgid "Search by name or UUID..."
+msgstr "Hľadať podľa názvu alebo UUID..."
 
-msgid "Search by name..."
-msgstr "Hľadať podľa názvu..."
+msgid "Search by name, catalog number, product part number, or UUID..."
+msgstr "Hľadať podľa názvu, katalógového čísla, partno produktu alebo UUID..."
+
+msgid "Search by name, email, phone, or UUID..."
+msgstr "Hľadať podľa mena, e-mailu, telefónu alebo UUID..."
+
+msgid "Search by order number, email, name, or UUID..."
+msgstr "Hľadať podľa čísla objednávky, e-mailu, mena alebo UUID..."
 
 msgid "Search by section name…"
 msgstr "Hľadať podľa názvu sekcie…"
@@ -1729,26 +1738,26 @@ msgstr "Vyhľadať v navigácii"
 msgid "Searching in all currencies"
 msgstr "Hľadanie vo všetkých menách"
 
-msgid "Searching searches in <ul> <li>complaint number</li><li>complaint email</li><li>order number</li><li>delivery last name</li><li>delivery company name</li><li>last name from order</li><li>email from order</li><li>complaint author last name</li><li>complaint author company name</ul> It is possible to use wildcards * and ?"
-msgstr "Vyhledávání hledá v <ul> <li>čísle reklamace</li><li>e-mailu reklamace</li><li>čísle objednávky</li><li>príjmení príjemce</li><li>názvu firmy príjemce</li><li>príjmení z objednávky</li><li>e-mailu z objednávky</li><li>príjmení autora reklamace</li><li>názvu firmy autora reklamace</li></ul> Je možné použít zástupné znaky * a ?"
+msgid "Searching searches in <ul> <li>UUID</li><li>complaint number</li><li>complaint email</li><li>order number</li><li>delivery last name</li><li>delivery company name</li><li>last name from order</li><li>email from order</li><li>complaint author last name</li><li>complaint author company name</ul> It is possible to use wildcards * and ?"
+msgstr "Vyhľadávanie vyhľadáva v <ul> <li>UUID</li><li>číslo reklamácie</li><li>e-mail reklamácie</li><li>číslo objednávky</li><li>priezvisko doručenia</li><li>názov firmy doručenia</li><li>priezvisko z objednávky</li><li>e-mail z objednávky</li><li>priezvisko autora reklamácie</li><li>názov firmy autora reklamácie</ul> Je možné použiť zástupné znaky * a ?"
 
-msgid "Searching searches in <ul> <li>order number</li><li>registered customer email</li><li>customer's email in order</li><li>customer's last name</li><li>company name."
-msgstr "Vyhledávání hledá v <ul> <li>čísle objednávky</li><li>e-mailu registrovaného zákazníka</li><li>e-mailu zákazníka v objednávce</li><li>príjmení zákazníka</li><li>názvu firmy."
+msgid "Searching searches in <ul> <li>UUID</li><li>order number</li><li>registered customer email</li><li>customer's email in order</li><li>customer's last name</li><li>company name."
+msgstr "Vyhľadávanie vyhľadáva v <ul> <li>UUID</li><li>číslo objednávky</li><li>e-mail registrovaného zákazníka</li><li>e-mail zákazníka v objednávke</li><li>priezvisko zákazníka</li><li>názov firmy."
+
+msgid "Searching searches in <ul><li>last name</li><li>company name</li><li>email</li><li>telephone</li><li>UUID</li></ul> It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v <ul><li>priezvisko</li><li>názov firmy</li><li>e-mail</li><li>telefón</li><li>UUID</li></ul> Je možné použiť zástupné znaky * a ?."
+
+msgid "Searching searches in <ul><li>name</li><li>UUID</li></ul> It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v <ul><li>názov</li><li>UUID</li></ul> Je možné použiť zástupné znaky * a ?."
+
+msgid "Searching searches in <ul><li>name</li><li>catalog number</li><li>product part number</li><li>UUID</li></ul> It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v <ul><li>názov</li><li>katalógové číslo</li><li>partno produktu</li><li>UUID</li></ul> Je možné použiť zástupné znaky * a ?."
 
 msgid "Searching searches in Key, Original translation and User translation."
 msgstr "Vyhledávání hledá v klíči, pôvodním prekladu a uživatelském prekladu."
 
 msgid "Searching searches in email. It is possible to use wildcards * and ?."
 msgstr "Vyhľadávanie vyhľadáva v e-maile. Je možné použiť zástupné znaky * a ?."
-
-msgid "Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?."
-msgstr "Vyhľadávanie vyhľadáva v priezvisku, názve spoločnosti, e-maile, telefóne. Je možné použiť zástupné znaky * a ?."
-
-msgid "Searching searches in name, catalog number or product part number. It is possible to use wildcards * and ?."
-msgstr "Vyhľadávanie vyhľadáva v názve, katalógovom čísle alebo čísle súčiastky produktu. Je možné použiť zástupné znaky * a ?."
-
-msgid "Searching searches in name. It is possible to use wildcards * and ?."
-msgstr "Vyhľadávanie vyhľadáva v názve. Je možné použiť zástupné znaky * a ?."
 
 msgid "Searching searches in product name and product catalog number. It is possible to use wildcards * and ?."
 msgstr "Vyhľadávanie vyhľadáva v názve produktu a katalógovom čísle produktu. Je možné použiť zástupné znaky * a ?."

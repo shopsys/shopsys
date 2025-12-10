@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Listing;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
@@ -79,8 +80,16 @@ class ProductListAdminRepository
         QuickSearchFormData $quickSearchData,
     ): void {
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
+            $uuidCondition = '';
+
+            if (Uuid::isValid($quickSearchData->text)) {
+                $uuidCondition = 'p.uuid = :exactText OR ';
+                $queryBuilder->setParameter('exactText', $quickSearchData->text);
+            }
+
             $queryBuilder->andWhere('
                 (
+                    ' . $uuidCondition . '
                     NORMALIZED(pt.name) LIKE NORMALIZED(:text)
                     OR
                     NORMALIZED(p.catnum) LIKE NORMALIZED(:text)
