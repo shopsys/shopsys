@@ -36,6 +36,7 @@ class ProductFilterNormalizer
                 unset($productFilterData->brands[$key]);
             }
         }
+        $productFilterData->brands = array_values($productFilterData->brands);
     }
 
     /**
@@ -51,6 +52,7 @@ class ProductFilterNormalizer
                 unset($productFilterData->flags[$key]);
             }
         }
+        $productFilterData->flags = array_values($productFilterData->flags);
     }
 
     /**
@@ -83,6 +85,7 @@ class ProductFilterNormalizer
                 unset($productFilterData->parameters[$key]);
             }
         }
+        $productFilterData->parameters = array_values($productFilterData->parameters);
     }
 
     /**
@@ -191,6 +194,7 @@ class ProductFilterNormalizer
                 foreach ($parameterFilterData->values as $key => $filterParameterValue) {
                     if ($filterParameterValue === $parameterValue) {
                         unset($parameterFilterData->values[$key]);
+                        $parameterFilterData->values = array_values($parameterFilterData->values);
 
                         break;
                     }
