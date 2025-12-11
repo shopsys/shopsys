@@ -39,9 +39,9 @@ class CartWatcher
         $modifiedItems = [];
 
         foreach ($cart->getProductCartItems() as $cartItem) {
-            $price = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser(
+            $price = $this->productPriceCalculationForCustomerUser->calculatePricesForCurrentUser(
                 $cartItem->getProduct(),
-            )->getPrice();
+            )->sellingProductPrice->getPrice();
 
             if (!$price->getPriceWithVat()->equals($cartItem->getWatchedPrice() ?? Money::zero())) {
                 $modifiedItems[] = $cartItem;
@@ -94,9 +94,9 @@ class CartWatcher
                     continue;
                 }
 
-                $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser(
-                    $product,
-                );
+                $productPrice = $this->productPriceCalculationForCustomerUser
+                    ->calculatePricesForCurrentUser($product)
+                    ->sellingProductPrice;
 
                 if ($productPrice->getPrice()->getPriceWithVat()->equals(Money::zero())) {
                     $notListableItems[] = $item;

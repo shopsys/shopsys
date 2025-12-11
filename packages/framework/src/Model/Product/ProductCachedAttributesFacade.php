@@ -38,9 +38,9 @@ class ProductCachedAttributesFacade
     {
         return $this->inMemoryCache->getOrSaveValue(
             static::BASIC_PRICES_CACHE_NAMESPACE,
-            function () use ($product) {
+            function () use ($product): ?ProductPriceInterface {
                 try {
-                    return $this->productPriceCalculationForCustomerUser->calculateBasicPriceForCurrentUser($product);
+                    return $this->productPriceCalculationForCustomerUser->calculatePricesForCurrentUser($product)->basicProductPrice;
                 } catch (MainVariantPriceCalculationException) {
                     return null;
                 }
@@ -54,11 +54,11 @@ class ProductCachedAttributesFacade
      * @param string|null $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
-    public function getProductParameterValues(Product $product, ?string $locale = null)
+    public function getProductParameterValues(Product $product, ?string $locale = null): array
     {
         return $this->inMemoryCache->getOrSaveValue(
             static::PARAMETER_VALUES_CACHE_NAMESPACE,
-            function () use ($product, $locale) {
+            function () use ($product, $locale): array {
                 $locale = $locale ?? $this->localization->getCurrentLocaleForTranslatableEntities();
 
                 $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(

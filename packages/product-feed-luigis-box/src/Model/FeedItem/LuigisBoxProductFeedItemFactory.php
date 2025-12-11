@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\Setting\LuigisBoxFeedSettingEnum;
@@ -58,36 +59,9 @@ class LuigisBoxProductFeedItemFactory
     public function create(Product $product, DomainConfig $domainConfig): LuigisBoxProductFeedItem
     {
         $locale = $domainConfig->getLocale();
-        $rootCategory = $this->categoryRepository->getRootCategory();
         $mainCategory = $this->categoryRepository->getProductMainCategoryOnDomain($product, $domainConfig->getId());
         $availabilityText = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainConfig->getId());
         $productDescription = $product->isVariant() ? $product->getMainVariant()->getDescriptionAsPlainText($domainConfig->getId()) : $product->getDescriptionAsPlainText($domainConfig->getId());
-        $categories = $product->getCategoriesIndexedByDomainId()[$domainConfig->getId()];
-        $categoryHierarchyNamesByCategoryId = [];
-
-        foreach ($categories as $category) {
-            $categoryHierarchyNames = [];
-            $parent = $category->getParent();
-            $categoryHierarchyNames[] = $category->getName($locale);
-
-            while ($parent !== null && $parent->getId() !== $rootCategory->getId()) {
-                $categoryHierarchyNames[] = $parent->getName($locale);
-                $parent = $parent->getParent();
-            }
-
-            $categoryHierarchyNamesByCategoryId[$category->getId()] = implode(' | ', array_reverse($categoryHierarchyNames));
-        }
-
-        $parameterValuesIndexedByName = [];
-
-        foreach ($this->productCachedAttributesFacade->getProductParameterValues($product, $locale) as $productParameterValue) {
-            $parameterName = str_replace('.', '', $productParameterValue->getParameter()->getName($locale));
-            $parameterValue = $productParameterValue->getParameter()->isSlider() ? $productParameterValue->getValue()->getNumericValue() : $productParameterValue->getValue()->getText();
-
-            if ($parameterValue !== null) {
-                $parameterValuesIndexedByName[$parameterName] = $parameterValue;
-            }
-        }
 
         $mainVariantId = null;
 
@@ -99,21 +73,26 @@ class LuigisBoxProductFeedItemFactory
 
         $imageUrl = $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig);
 
+        $productPrices = $this->productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
+            $product,
+            $domainConfig->getId(),
+        );
+
         return new LuigisBoxProductFeedItem(
             $product->getId(),
             $product->getFullName($domainConfig->getLocale()),
             $product->getCatnum(),
             $availabilityText,
             $this->getAvailabilityRank($product, $domainConfig),
-            $this->getPrice($product, $domainConfig),
-            $this->getBasicPrice($product, $domainConfig),
+            $this->getProperAmountUsingSellingPriceType($productPrices->sellingProductPrice),
+            $this->getProperAmountUsingSellingPriceType($productPrices->basicProductPrice),
             $this->getCurrency($domainConfig),
             $mainCategory->getId(),
             $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
-            array_reverse($categoryHierarchyNamesByCategoryId, true),
+            $this->getCategoryHierarchyNamesByCategoryId($product, $domainConfig),
             $product->isMainVariant(),
-            array_map(fn (Flag $flag): string => $flag->getName($locale), $product->getFlags($domainConfig->getId())),
-            $parameterValuesIndexedByName,
+            array_map(static fn (Flag $flag): string => $flag->getName($locale), $product->getFlags($domainConfig->getId())),
+            $this->getParameterValuesIndexedByName($product, $locale),
             $mainCategory->getName($locale),
             $product->getEan(),
             $product->getCatnum(),
@@ -127,41 +106,16 @@ class LuigisBoxProductFeedItemFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface $productPrice
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getPrice(Product $product, DomainConfig $domainConfig): Money
+    protected function getProperAmountUsingSellingPriceType(ProductPriceInterface $productPrice): Money
     {
-        $price = $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
-            $product,
-            $domainConfig->getId(),
-        )->getPrice();
-
         if ($this->pricingSetting->getSellingPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
-            return $price->getPriceWithVat();
+            return $productPrice->getPrice()->getPriceWithVat();
         }
 
-        return $price->getPriceWithoutVat();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    protected function getBasicPrice(Product $product, DomainConfig $domainConfig): Money
-    {
-        $basePrice = $this->productPriceCalculationForCustomerUser->calculateBasicPriceForCustomerUserAndDomainId(
-            $product,
-            $domainConfig->getId(),
-        )->getPrice();
-
-        if ($this->pricingSetting->getSellingPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
-            return $basePrice->getPriceWithVat();
-        }
-
-        return $basePrice->getPriceWithoutVat();
+        return $productPrice->getPrice()->getPriceWithoutVat();
     }
 
     /**
@@ -181,5 +135,55 @@ class LuigisBoxProductFeedItemFactory
     protected function getAvailabilityRank(Product $product, DomainConfig $domainConfig): int
     {
         return $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainConfig->getId()) ? 1 : $this->setting->getForDomain(LuigisBoxFeedSettingEnum::LUIGIS_BOX_RANK, $domainConfig->getId());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return array<int, string>
+     */
+    protected function getCategoryHierarchyNamesByCategoryId(Product $product, DomainConfig $domainConfig): array
+    {
+        $categories = $product->getCategoriesIndexedByDomainId()[$domainConfig->getId()];
+        $rootCategory = $this->categoryRepository->getRootCategory();
+        $locale = $domainConfig->getLocale();
+
+        $categoryHierarchyNamesByCategoryId = [];
+
+        foreach ($categories as $category) {
+            $categoryHierarchyNames = [];
+            $parent = $category->getParent();
+            $categoryHierarchyNames[] = $category->getName($locale);
+
+            while ($parent !== null && $parent->getId() !== $rootCategory->getId()) {
+                $categoryHierarchyNames[] = $parent->getName($locale);
+                $parent = $parent->getParent();
+            }
+
+            $categoryHierarchyNamesByCategoryId[$category->getId()] = implode(' | ', array_reverse($categoryHierarchyNames));
+        }
+
+        return array_reverse($categoryHierarchyNamesByCategoryId, true);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param string $locale
+     * @return array<string, string>
+     */
+    protected function getParameterValuesIndexedByName(Product $product, string $locale): array
+    {
+        $parameterValuesIndexedByName = [];
+
+        foreach ($this->productCachedAttributesFacade->getProductParameterValues($product, $locale) as $productParameterValue) {
+            $parameterName = str_replace('.', '', $productParameterValue->getParameter()->getName($locale));
+            $parameterValue = $productParameterValue->getParameter()->isSlider() ? $productParameterValue->getValue()->getNumericValue() : $productParameterValue->getValue()->getText();
+
+            if ($parameterValue !== null) {
+                $parameterValuesIndexedByName[$parameterName] = $parameterValue;
+            }
+        }
+
+        return $parameterValuesIndexedByName;
     }
 }

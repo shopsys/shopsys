@@ -12,20 +12,18 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPricesResult;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\MergadoBundle\Model\FeedItem\MergadoFeedItem;
 use Shopsys\ProductFeed\MergadoBundle\Model\FeedItem\MergadoFeedItemFactory;
@@ -35,31 +33,13 @@ class MergadoFeedItemTest extends TestCase
 {
     private const int MOCKED_SETTING_FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS = 8;
 
-    private LoggerInterface|MockObject $loggerMock;
-
-    private Setting|MockObject $settingMock;
-
-    private PricingGroupSettingFacade|MockObject $pricingGroupSettingFacadeMock;
-
-    private ProductPriceCalculation|MockObject $productPriceCalculationMock;
-
-    private ImageFacade|MockObject $imageFacadeMock;
-
-    private CategoryFacade|MockObject $categoryFacadeMock;
-
-    private ProductParametersBatchLoader|MockObject $productParametersBatchLoaderMock;
-
     private ProductPriceCalculationForCustomerUser|MockObject $productPriceCalculationForCustomerUserMock;
 
     private CurrencyFacade|MockObject $currencyFacadeMock;
 
     private ProductUrlsBatchLoader|MockObject $productUrlsBatchLoaderMock;
 
-    private ProductAvailabilityFacade|MockObject $productAvailabilityFacadeMock;
-
     private MergadoFeedItemFactory $mergadoFeedItemFactory;
-
-    private Currency $defaultCurrency;
 
     private DomainConfig $defaultDomain;
 
@@ -137,41 +117,35 @@ class MergadoFeedItemTest extends TestCase
     private function doSetUp(bool $isProductAvailableOnStock): void
     {
         $this->productPriceCalculationForCustomerUserMock = $this->createMock(ProductPriceCalculationForCustomerUser::class);
-        $this->productParametersBatchLoaderMock = $this->createMock(ProductParametersBatchLoader::class);
-        $this->categoryFacadeMock = $this->createMock(CategoryFacade::class);
-        $this->categoryFacadeMock->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')->willReturn(['category1', 'category2']);
+        $productParametersBatchLoaderMock = $this->createMock(ProductParametersBatchLoader::class);
+        $categoryFacadeMock = $this->createMock(CategoryFacade::class);
+        $categoryFacadeMock->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')->willReturn(['category1', 'category2']);
         $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
-        $this->imageFacadeMock = $this->createMock(ImageFacade::class);
-        $this->productPriceCalculationMock = $this->createMock(ProductPriceCalculation::class);
+        $imageFacadeMock = $this->createMock(ImageFacade::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
-        $this->pricingGroupSettingFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
-        $this->loggerMock = $this->createMock(LoggerInterface::class);
-        $this->settingMock = $this->createMock(Setting::class);
+        $loggerMock = $this->createMock(LoggerInterface::class);
 
-        $this->productAvailabilityFacadeMock = $this->createMock(ProductAvailabilityFacade::class);
-        $this->productAvailabilityFacadeMock->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
-        $this->productAvailabilityFacadeMock->method('getProductAvailabilityDaysForFeedsByDomainId')->willReturn($isProductAvailableOnStock ? 0 : self::MOCKED_SETTING_FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS);
+        $productAvailabilityFacadeMock = $this->createMock(ProductAvailabilityFacade::class);
+        $productAvailabilityFacadeMock->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
+        $productAvailabilityFacadeMock->method('getProductAvailabilityDaysForFeedsByDomainId')->willReturn($isProductAvailableOnStock ? 0 : self::MOCKED_SETTING_FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS);
 
         $this->mergadoFeedItemFactory = new MergadoFeedItemFactory(
             $this->productUrlsBatchLoaderMock,
-            $this->productParametersBatchLoaderMock,
-            $this->categoryFacadeMock,
-            $this->productAvailabilityFacadeMock,
+            $productParametersBatchLoaderMock,
+            $categoryFacadeMock,
+            $productAvailabilityFacadeMock,
             $this->productPriceCalculationForCustomerUserMock,
-            $this->imageFacadeMock,
+            $imageFacadeMock,
             $this->currencyFacadeMock,
-            $this->productPriceCalculationMock,
-            $this->pricingGroupSettingFacadeMock,
-            $this->loggerMock,
-            $this->settingMock,
+            $loggerMock,
         );
 
-        $this->defaultCurrency = $this->createCurrencyMock(1, 'EUR');
+        $defaultCurrency = $this->createCurrencyMock(1, 'EUR');
         $this->defaultDomain = $this->createDomainConfigMock(
             Domain::FIRST_DOMAIN_ID,
             'https://example.com',
             'en',
-            $this->defaultCurrency,
+            $defaultCurrency,
         );
 
         $this->defaultProduct = $this->createMock(Product::class);
@@ -231,13 +205,11 @@ class MergadoFeedItemTest extends TestCase
     {
         $domainId = $domain->getId();
         $pricingGroup = new PricingGroup(new PricingGroupData(), $domainId);
-        $this->pricingGroupSettingFacadeMock->method('getDefaultPricingGroupByDomainId')->willReturn($pricingGroup);
         $productPrice = new ProductPrice($price, $pricingGroup, false);
-        $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForCustomerUserAndDomainId')
-            ->with($product, $domainId, null)->willReturn($productPrice);
+        $productPricesResult = new ProductPricesResult($productPrice, $productPrice);
 
-        $this->productPriceCalculationMock->method('calculatePrice')
-            ->with($product, $domainId)->willReturn($productPrice);
+        $this->productPriceCalculationForCustomerUserMock->method('calculatePricesForCustomerUserAndDomainId')
+            ->with($product, $domainId, null)->willReturn($productPricesResult);
     }
 
     /**

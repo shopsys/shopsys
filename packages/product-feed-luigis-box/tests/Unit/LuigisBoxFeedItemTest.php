@@ -30,6 +30,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPricesResult;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
@@ -121,8 +122,9 @@ class LuigisBoxFeedItemTest extends TestCase
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
         $productPrice = new ProductPrice($price, $this->createMock(PricingGroup::class), false);
-        $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForCustomerUserAndDomainId')
-            ->with($product, $domain->getId(), null)->willReturn($productPrice);
+        $productPricesResult = new ProductPricesResult($productPrice, $productPrice);
+        $this->productPriceCalculationForCustomerUserMock->method('calculatePricesForCustomerUserAndDomainId')
+            ->with($product, $domain->getId(), null)->willReturn($productPricesResult);
     }
 
     /**
