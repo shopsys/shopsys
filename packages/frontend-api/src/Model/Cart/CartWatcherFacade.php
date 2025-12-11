@@ -196,7 +196,12 @@ class CartWatcherFacade
                 continue;
             }
 
-            $this->cartWithModificationsResult->addPromoCode($promoCode);
+            /*
+                when we add support for multiple promo codes,
+                this line should be replaced with the calculation of price for the specific promo code
+            */
+            $promoCodeDiscountPrice = $orderData->getPromoCodeDiscountPrice();
+            $this->cartWithModificationsResult->addPromoCode($promoCode, $promoCodeDiscountPrice);
         }
     }
 }

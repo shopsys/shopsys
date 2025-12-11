@@ -82,7 +82,6 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                     totalDiscountPrice={cart.totalDiscountPrice}
                     totalItemsPriceBeforeDiscount={cart.totalItemsPriceBeforeDiscount}
                     totalPrice={cart.totalPrice}
-                    totalProductDiscountPrice={cart.totalProductDiscountPrice}
                     payment={{
                         name: payment?.name,
                         price: payment?.price.priceWithVat,

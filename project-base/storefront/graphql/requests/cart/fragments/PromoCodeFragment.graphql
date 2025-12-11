@@ -2,4 +2,9 @@ fragment PromoCodeFragment on PromoCode {
     __typename
     code
     type
+    discountPrice {
+        priceWithVat
+        priceWithoutVat
+        vatAmount
+    }
 }

@@ -34,7 +34,7 @@ query CartQuery(
                 }
             }
         }
-        totalPriceWithoutDiscountTransportAndPayment {
+        totalItemsPriceBeforeDiscount {
             priceWithVat
             priceWithoutVat
             vatAmount

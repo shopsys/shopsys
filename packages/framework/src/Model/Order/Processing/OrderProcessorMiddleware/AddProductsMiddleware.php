@@ -74,6 +74,17 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
         $orderData->addItem($orderItemData);
 
         $sellingTotalPrice = $quantifiedPrices->sellingQuantifiedItemPrice->getTotalPrice();
+        $basicTotalPrice = $quantifiedPrices->basicQuantifiedItemPrice->getTotalPrice();
+
         $orderData->addTotalPrice($sellingTotalPrice, OrderItemTypeEnum::TYPE_PRODUCT);
+        $orderData->addBasicTotalItemsPrice($basicTotalPrice);
+
+        if ($basicTotalPrice->equals($sellingTotalPrice)) {
+            return;
+        }
+
+        $priceDifference = $basicTotalPrice->subtract($sellingTotalPrice);
+
+        $orderData->addTotalProductPriceAdjustmentsDiscount($priceDifference);
     }
 }

@@ -19,7 +19,6 @@ type OrderConfirmationSummaryProps = {
     totalPrice: TypePriceFragment;
     roundingPrice?: TypePriceFragment | null;
     totalItemsPriceBeforeDiscount?: TypePriceFragment | null;
-    totalProductDiscountPrice?: TypePriceFragment | null;
     totalDiscountPrice?: TypePriceFragment | null;
 };
 
@@ -30,16 +29,16 @@ const OrderConfirmationSummaryComp: FC<OrderConfirmationSummaryProps> = ({
     totalPrice,
     roundingPrice,
     totalItemsPriceBeforeDiscount,
-    totalProductDiscountPrice,
+    totalProductPriceAdjustmentsDiscount,
     totalDiscountPrice,
 }) => {
     const formatPrice = useFormatPrice();
     const { t } = useTranslation();
 
     const hasProductDiscounts =
-        totalProductDiscountPrice &&
-        isPriceVisible(totalProductDiscountPrice.priceWithVat) &&
-        mapPriceForCalculations(totalProductDiscountPrice.priceWithVat) > 0;
+        totalProductPriceAdjustmentsDiscount &&
+        isPriceVisible(totalProductPriceAdjustmentsDiscount.priceWithVat) &&
+        mapPriceForCalculations(totalProductPriceAdjustmentsDiscount.priceWithVat) > 0;
 
     const hasTotalDiscounts =
         totalDiscountPrice &&

@@ -8,13 +8,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -41,8 +38,6 @@ class TransportAndPaymentWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade $cartPaymentFacade
      * @param \Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade $paymentValidationFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         protected readonly TransportFacade $transportFacade,
@@ -54,8 +49,6 @@ class TransportAndPaymentWatcherFacade
         protected readonly CartPaymentFacade $cartPaymentFacade,
         protected readonly PaymentValidationFacade $paymentValidationFacade,
         protected readonly OrderFacade $orderFacade,
-        protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -88,123 +81,14 @@ class TransportAndPaymentWatcherFacade
             $this->cartWithModificationsResult->setRemainingAmountForFreeTransport($amountForFreeTransport);
         }
 
-        // Calculate promo code discounts (TYPE_DISCOUNT + TYPE_PROMOTION)
-        // These come as negative values from OrderData, so we inverse them to get positive discount amounts
-        $promoCodeDiscountPrice = $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT];
-        $promoCodeDiscountPrice = $promoCodeDiscountPrice->add($orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PROMOTION]);
-        $promoCodeDiscountPrice = $promoCodeDiscountPrice->inverse();
-
-        // Calculate product-level discounts (difference between basic price and selling price)
-        // This already returns positive values
-        $productDiscountPrice = $this->calculateTotalProductDiscounts($cart);
-
-        // Calculate total discount (promo codes + product discounts)
-        $totalDiscountPrice = $promoCodeDiscountPrice->add($productDiscountPrice);
-
-        // Calculate total items price before any discounts
-        $totalItemsPriceBeforeDiscount = $this->calculateTotalItemsPriceBeforeDiscount($cart);
-
         $this->cartWithModificationsResult->setTotalPrice($orderData->totalPrice);
         $this->cartWithModificationsResult->setTotalItemsPrice($productsPrice);
-        $this->cartWithModificationsResult->setTotalItemsPriceBeforeDiscount($totalItemsPriceBeforeDiscount);
-        $this->cartWithModificationsResult->setTotalProductDiscountPrice($productDiscountPrice);
-        $this->cartWithModificationsResult->setTotalPromoCodeDiscountPrice($promoCodeDiscountPrice);
-        $this->cartWithModificationsResult->setTotalDiscountPrice($totalDiscountPrice);
-        $this->cartWithModificationsResult->setTotalPriceWithoutDiscountTransportAndPayment(
-            $orderData->getTotalPriceWithoutDiscountTransportAndPayment(),
-        );
+        $this->cartWithModificationsResult->setTotalItemsPriceBeforeDiscount($orderData->basicTotalItemsPrice);
+        $this->cartWithModificationsResult->setTotalProductPriceAdjustmentsDiscount($orderData->totalProductPriceAdjustmentsDiscount);
+        $this->cartWithModificationsResult->setTotalDiscountPrice($orderData->getTotalDiscountPrice());
         $this->cartWithModificationsResult->setRoundingPrice($orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_ROUNDING]);
 
         $this->checkPayment($cart);
-    }
-
-    /**
-     * Calculate total items price before any discounts (sum of basicPrice * quantity for all products)
-     *
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    protected function calculateTotalItemsPriceBeforeDiscount(Cart $cart): Price
-    {
-        $totalPrice = Price::zero();
-        $domainId = $this->domain->getId();
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        foreach ($cart->getProductCartItems() as $cartItem) {
-            $product = $cartItem->getProduct();
-            $quantity = $cartItem->getQuantity();
-
-            // Calculate basic price (without special price)
-            $basicProductPrice = $this->productPriceCalculationForCustomerUser->calculateBasicPriceForCustomerUserAndDomainId(
-                $product,
-                $domainId,
-                $customerUser,
-            );
-
-            $basicPriceWithVat = $basicProductPrice->getPrice()->getPriceWithVat();
-            $basicPriceWithoutVat = $basicProductPrice->getPrice()->getPriceWithoutVat();
-
-            $totalPriceWithVat = $basicPriceWithVat->multiply($quantity);
-            $totalPriceWithoutVat = $basicPriceWithoutVat->multiply($quantity);
-
-            $itemPrice = new Price($totalPriceWithoutVat, $totalPriceWithVat);
-            $totalPrice = $totalPrice->add($itemPrice);
-        }
-
-        return $totalPrice;
-    }
-
-    /**
-     * Calculate total discount from product prices (basicPrice - sellingPrice) across all cart items
-     *
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    protected function calculateTotalProductDiscounts(Cart $cart): Price
-    {
-        $totalDiscount = Price::zero();
-        $domainId = $this->domain->getId();
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        foreach ($cart->getProductCartItems() as $cartItem) {
-            $product = $cartItem->getProduct();
-            $quantity = $cartItem->getQuantity();
-
-            // Calculate basic price (without special price)
-            $basicProductPrice = $this->productPriceCalculationForCustomerUser->calculateBasicPriceForCustomerUserAndDomainId(
-                $product,
-                $domainId,
-                $customerUser,
-            );
-
-            // Calculate actual selling price (with special price if applicable)
-            $sellingProductPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
-                $product,
-                $domainId,
-                $customerUser,
-            );
-
-            $basicPriceWithVat = $basicProductPrice->getPrice()->getPriceWithVat();
-            $sellingPriceWithVat = $sellingProductPrice->getPrice()->getPriceWithVat();
-
-            // Calculate discount only if selling price is lower than basic price
-            if (!$sellingPriceWithVat->isLessThan($basicPriceWithVat)) {
-                continue;
-            }
-
-            $discountPerUnit = $basicPriceWithVat->subtract($sellingPriceWithVat);
-            $discountTotal = $discountPerUnit->multiply($quantity);
-
-            $basicPriceWithoutVat = $basicProductPrice->getPrice()->getPriceWithoutVat();
-            $sellingPriceWithoutVat = $sellingProductPrice->getPrice()->getPriceWithoutVat();
-            $discountPerUnitWithoutVat = $basicPriceWithoutVat->subtract($sellingPriceWithoutVat);
-            $discountTotalWithoutVat = $discountPerUnitWithoutVat->multiply($quantity);
-
-            $discountPrice = new Price($discountTotalWithoutVat, $discountTotal);
-            $totalDiscount = $totalDiscount->add($discountPrice);
-        }
-
-        return $totalDiscount;
     }
 
     /**

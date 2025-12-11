@@ -73,13 +73,9 @@ class CartWithModificationsResult
 
     protected ?PriceInterface $totalItemsPriceBeforeDiscount = null;
 
-    protected ?PriceInterface $totalProductDiscountPrice = null;
-
-    protected ?PriceInterface $totalPromoCodeDiscountPrice = null;
+    protected ?PriceInterface $totalProductPriceAdjustmentsDiscount = null;
 
     protected ?PriceInterface $totalDiscountPrice = null;
-
-    protected ?PriceInterface $totalPriceWithoutDiscountTransportAndPayment = null;
 
     protected ?Money $remainingAmountForFreeTransport = null;
 
@@ -261,41 +257,21 @@ class CartWithModificationsResult
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getTotalProductDiscountPrice(): PriceInterface
+    public function getTotalProductPriceAdjustmentsDiscount(): PriceInterface
     {
-        if (!$this->totalProductDiscountPrice) {
+        if (!$this->totalProductPriceAdjustmentsDiscount) {
             throw new LogicException('Total product discount price must be set before calling the getter.');
         }
 
-        return $this->totalProductDiscountPrice;
+        return $this->totalProductPriceAdjustmentsDiscount;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalProductDiscountPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalProductPriceAdjustmentsDiscount
      */
-    public function setTotalProductDiscountPrice(PriceInterface $totalProductDiscountPrice): void
+    public function setTotalProductPriceAdjustmentsDiscount(PriceInterface $totalProductPriceAdjustmentsDiscount): void
     {
-        $this->totalProductDiscountPrice = $totalProductDiscountPrice;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
-    public function getTotalPromoCodeDiscountPrice(): PriceInterface
-    {
-        if (!$this->totalPromoCodeDiscountPrice) {
-            throw new LogicException('Total promo code discount price must be set before calling the getter.');
-        }
-
-        return $this->totalPromoCodeDiscountPrice;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalPromoCodeDiscountPrice
-     */
-    public function setTotalPromoCodeDiscountPrice(PriceInterface $totalPromoCodeDiscountPrice): void
-    {
-        $this->totalPromoCodeDiscountPrice = $totalPromoCodeDiscountPrice;
+        $this->totalProductPriceAdjustmentsDiscount = $totalProductPriceAdjustmentsDiscount;
     }
 
     /**
@@ -391,27 +367,6 @@ class CartWithModificationsResult
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
-    public function getTotalPriceWithoutDiscountTransportAndPayment(): PriceInterface
-    {
-        if (!$this->totalPriceWithoutDiscountTransportAndPayment) {
-            throw new LogicException('Total price without discount, transport, and payment must be set before calling the getter.');
-        }
-
-        return $this->totalPriceWithoutDiscountTransportAndPayment;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalPriceWithoutDiscountTransportAndPayment
-     */
-    public function setTotalPriceWithoutDiscountTransportAndPayment(
-        PriceInterface $totalPriceWithoutDiscountTransportAndPayment,
-    ): void {
-        $this->totalPriceWithoutDiscountTransportAndPayment = $totalPriceWithoutDiscountTransportAndPayment;
-    }
-
-    /**
      * @return bool
      */
     public function isCartModified(): bool
@@ -489,9 +444,14 @@ class CartWithModificationsResult
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $promoCodeDiscountPrice
      */
-    public function addPromoCode(PromoCode $promoCode): void
+    public function addPromoCode(PromoCode $promoCode, PriceInterface $promoCodeDiscountPrice): void
     {
-        $this->promoCodes[] = $promoCode;
+        $this->promoCodes[] = new PromoCodeQueryDto(
+            $promoCode->getCode(),
+            $promoCode->getDiscountType(),
+            $promoCodeDiscountPrice,
+        );
     }
 }
