@@ -16,3 +16,6 @@ ParameterValueFilterOptionDecorator:
             isAbsolute:
                 type: "Boolean!"
                 description: "If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result."
+            isSelected:
+                type: "Boolean!"
+                description: "Indicator whether the option is already selected (used for \"ready category seo mixes\")"

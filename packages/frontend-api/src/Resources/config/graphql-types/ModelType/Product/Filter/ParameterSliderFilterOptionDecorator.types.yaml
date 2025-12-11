@@ -1,0 +1,19 @@
+ParameterSliderFilterOptionDecorator:
+    type: object
+    decorator: true
+    inherits:
+        - 'ParameterFilterOptionDecorator'
+    config:
+        fields:
+            minimalValue:
+                type: "Float!"
+                description: "The parameter minimal value"
+            maximalValue:
+                type: "Float!"
+                description: "The parameter maximal value"
+            selectedValue:
+                type: "Float"
+                description: "The pre-selected value (used for \"ready category seo mixes\")"
+            isSelectable:
+                type: "Boolean!"
+                description: "Can be used in filter"
