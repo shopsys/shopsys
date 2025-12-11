@@ -439,7 +439,7 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker compose pull --parallel postgres webserver elasticsearch redis php-fpm
+                    docker compose pull postgres webserver elasticsearch redis php-fpm
                     docker compose up -d postgres webserver elasticsearch redis php-fpm
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys npm-install-dependencies
             -   name: Run tests
@@ -479,7 +479,7 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker compose pull --parallel postgres webserver elasticsearch redis php-fpm
+                    docker compose pull postgres webserver elasticsearch redis php-fpm
                     docker compose up -d postgres webserver elasticsearch redis php-fpm
                     docker compose cp ./project-base/app/config/domains.yaml php-fpm:/var/www/html/project-base/app/config/domains.yaml
                     docker compose cp ./project-base/app/src/DataFixtures/Demo/SettingValueDataFixture.php php-fpm:/var/www/html/project-base/app/src/DataFixtures/Demo/SettingValueDataFixture.php
@@ -519,7 +519,7 @@ jobs:
                     name: docker-compose
             -   name: Build application and run demo-data
                 run: |
-                    docker compose pull --parallel postgres elasticsearch redis php-fpm
+                    docker compose pull postgres elasticsearch redis php-fpm
                     docker compose up -d postgres elasticsearch redis php-fpm
                     docker compose cp ./project-base/app/config/domains.yaml php-fpm:/var/www/html/project-base/app/config/domains.yaml
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change db-create demo-data
@@ -549,7 +549,7 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker compose pull --parallel webserver postgres elasticsearch redis php-fpm selenium-server
+                    docker compose pull webserver postgres elasticsearch redis php-fpm selenium-server
                     docker compose up -d webserver postgres elasticsearch redis php-fpm selenium-server
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Run acceptance tests
