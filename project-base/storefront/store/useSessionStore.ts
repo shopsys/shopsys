@@ -1,3 +1,4 @@
+import { createCartStaleSlice, CartStaleSlice } from './slices/createCartStaleSlice';
 import { createFilterPanelSlice, FilterPanelSlice } from './slices/createFilterPanelSlice';
 import { createFocusManagementSlice, FocusManagementSlice } from './slices/createFocusManagementSlice';
 import { createGeolocationSlice, GeolocationSlice } from './slices/createGeolocationSlice';
@@ -8,7 +9,8 @@ import { createSeoCategorySlice, SeoCategorySlice } from './slices/createSeoCate
 import { UserMenuSlice, createUserMenuSlice } from './slices/createUserMenuSlice';
 import { create } from 'zustand';
 
-type SessionStore = SeoCategorySlice &
+type SessionStore = CartStaleSlice &
+    SeoCategorySlice &
     PageLoadingStateSlice &
     PortalSlice &
     FilterPanelSlice &
@@ -18,6 +20,7 @@ type SessionStore = SeoCategorySlice &
     FocusManagementSlice;
 
 export const useSessionStore = create<SessionStore>()((...store) => ({
+    ...createCartStaleSlice(...store),
     ...createSeoCategorySlice(...store),
     ...createPageLoadingStateSlice(...store),
     ...createPortalSlice(...store),
