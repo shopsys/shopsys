@@ -2731,6 +2731,9 @@ msgstr ""
 msgid "Public holiday"
 msgstr ""
 
+msgid "Public holidays are taken into account when calculating the order withdrawal deadline."
+msgstr ""
+
 msgid "QR code"
 msgstr ""
 

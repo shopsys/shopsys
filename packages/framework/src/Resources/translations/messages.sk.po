@@ -2731,6 +2731,9 @@ msgstr "Akcia {{ x }} + {{ y }} zadarmo"
 msgid "Public holiday"
 msgstr "Sviatok"
 
+msgid "Public holidays are taken into account when calculating the order withdrawal deadline."
+msgstr "Sviatky sa berú do úvahy pri výpočte lehoty na odstúpenie od objednávky."
+
 msgid "QR code"
 msgstr "QR kód"
 
