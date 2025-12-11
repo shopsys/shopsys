@@ -18,7 +18,7 @@
 .tree-item-content {
     display: flex;
     align-items: center;
-    padding: 0 var(--tblr-spacer-2);
+    padding: 0 var(--tblr-spacer-1);
     border-radius: var(--tblr-border-radius);
     transition: background-color 0.15s ease-in-out;
 
@@ -58,8 +58,8 @@
         content: '';
         position: absolute;
         left: -0.9em;
-        top: 0.9em;
-        width: 1.1em;
+        top: 0.7em;
+        width: 0.9em;
         height: 2px;
         background: var(--tree-guide-color);
     }

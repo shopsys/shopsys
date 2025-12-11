@@ -1,0 +1,34 @@
+.js-category-tree-chosen {
+    > .tree-item-content {
+        background-color: var(--tblr-bg-surface-secondary);
+    }
+}
+
+.js-category-tree-drag {
+    list-style-type: none;
+
+    .tree-item-content {
+        opacity: 0.5;
+    }
+}
+
+.is-dragging-category {
+    cursor: grabbing !important;
+
+    * {
+        cursor: grabbing !important;
+    }
+}
+
+.js-category-tree-item-handle {
+    cursor: grab;
+
+    &:active {
+        cursor: grabbing;
+    }
+}
+
+// hide drag handle for first root category
+.js-protect-root.tree > .js-category-tree-item:first-child > .tree-item-content > .js-category-tree-item-handle {
+    display: none;
+}
