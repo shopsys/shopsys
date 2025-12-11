@@ -51,10 +51,6 @@ class ProductExtension extends AbstractExtension
                 $this->findProductMainCategory(...),
             ),
             new TwigFunction(
-                'getProductSellingPrice',
-                $this->getProductSellingPrice(...),
-            ),
-            new TwigFunction(
                 'getProductParameterValues',
                 $this->getProductParameterValues(...),
             ),
@@ -102,15 +98,6 @@ class ProductExtension extends AbstractExtension
     public function findProductMainCategory(Product $product, $domainId)
     {
         return $this->categoryFacade->findProductMainCategoryByDomainId($product, $domainId);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface|null
-     */
-    public function getProductSellingPrice(Product $product)
-    {
-        return $this->productCachedAttributesFacade->getProductSellingPrice($product);
     }
 
     /**

@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 
 class ProductCachedAttributesFacade
 {
-    protected const string SELLING_PRICES_CACHE_NAMESPACE = 'sellingPricesByProductId';
     protected const string BASIC_PRICES_CACHE_NAMESPACE = 'basicPricesByProductId';
     protected const string PARAMETER_VALUES_CACHE_NAMESPACE = 'parameterValuesByProductId';
 
@@ -29,28 +28,6 @@ class ProductCachedAttributesFacade
         protected readonly Localization $localization,
         protected readonly InMemoryCache $inMemoryCache,
     ) {
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface|null
-     */
-    public function getProductSellingPrice(Product $product): ?ProductPriceInterface
-    {
-        $key = (string)$product->getId();
-
-        if ($this->inMemoryCache->hasItem(static::SELLING_PRICES_CACHE_NAMESPACE, $key)) {
-            return $this->inMemoryCache->getItem(static::SELLING_PRICES_CACHE_NAMESPACE, $key);
-        }
-
-        try {
-            $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($product);
-        } catch (MainVariantPriceCalculationException $ex) {
-            $productPrice = null;
-        }
-        $this->inMemoryCache->save(static::SELLING_PRICES_CACHE_NAMESPACE, $productPrice, $key);
-
-        return $productPrice;
     }
 
     /**
