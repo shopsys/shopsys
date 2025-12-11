@@ -3,6 +3,7 @@ numberRegex="^[0-9]+([.][0-9]+)?$"
 operatingSystem=""
 allowedValues=(1 2)
 projectPathPrefix="app/"
+scriptsPathPrefix=""
 echo This is installation script that will install demo Shopsys Platform application on docker with all required containers and with demo database created.
 
 docker ps -q &> /dev/null
@@ -34,6 +35,7 @@ done
 
 if [[ -d "project-base" ]]; then
     projectPathPrefix="project-base/app/"
+    scriptsPathPrefix="project-base/"
     echo "You are in monorepo, prefixing paths app paths with ${projectPathPrefix}"
 fi
 
@@ -55,18 +57,20 @@ case "$operatingSystem" in
         ;;
     "2")
         cp -f docker/conf/docker-compose-mac.yml.dist docker-compose.yml
+        cp -f docker/conf/mutagen.yml.dist mutagen.yml
 
         sed -i '' -E "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
         sed -i '' -E "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
-        sed -i '' -E "s#defaultOwner: \"id:501\"+#defaultOwner: \"id:$(id -u)\"#" ./docker-compose.yml
         sed -i '' -E "s#LOCAL_PATH_TO_PROJECT_ROOT: .*#LOCAL_PATH_TO_PROJECT_ROOT: $(pwd)#" ./docker-compose.yml
+        sed -i '' -E "s#defaultOwner: \"id:501\"#defaultOwner: \"id:$(id -u)\"#g" ./mutagen.yml
+        sed -i '' -E "s#defaultGroup: \"id:20\"#defaultGroup: \"id:$(id -g)\"#g" ./mutagen.yml
 
         if [[ $1 != --skip-aliasing ]]; then
             echo "You will be asked to enter sudo password in case to allow second domain alias in your system config"
             sudo ifconfig lo0 alias 127.0.0.2 up
         fi
 
-        echo "Starting mutagen-compose"
-        mutagen-compose up -d --build --force-recreate
+        echo "Starting docker compose with Mutagen"
+        ./${scriptsPathPrefix}scripts/mutagen-up.sh --build
         ;;
 esac

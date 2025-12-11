@@ -57,6 +57,10 @@ RUN if [ -n "${www_data_gid}" ] && ! getent group ${www_data_gid} >/dev/null; th
         if id -u www-data >/dev/null; then usermod -u ${www_data_uid} www-data; fi; \
     fi
 
+RUN mkdir -p ./vendor \
+    && mkdir -p ./node_modules \
+    && chown -R www-data:www-data /var/www/html
+
 USER www-data
 
 ########################################################################################################################

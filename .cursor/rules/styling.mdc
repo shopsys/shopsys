@@ -385,8 +385,8 @@ const SkipLink: FC = () => (
 # Automatic with Next.js production builds
 
 # Analyze CSS bundle size
-mutagen-compose exec storefront pnpm run build
-mutagen-compose exec storefront pnpm run bundle-analyzer
+docker compose exec storefront pnpm run build
+docker compose exec storefront pnpm run bundle-analyzer
 ```
 
 ### Efficient Class Usage

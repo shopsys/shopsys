@@ -19,22 +19,22 @@ description: Comprehensive frontend development guide for React/Next.js/TypeScri
 
 ```bash
 # Development server
-mutagen-compose exec storefront pnpm dev
+docker compose exec storefront pnpm dev
 
 # Code quality (all-in-one)
-mutagen-compose exec storefront pnpm check--fix
+docker compose exec storefront pnpm check--fix
 
 # Individual quality checks
-mutagen-compose exec storefront pnpm typecheck
-mutagen-compose exec storefront pnpm lint--fix
-mutagen-compose exec storefront pnpm format
+docker compose exec storefront pnpm typecheck
+docker compose exec storefront pnpm lint--fix
+docker compose exec storefront pnpm format
 
 # Testing & Analysis
-mutagen-compose exec storefront pnpm test
-mutagen-compose exec storefront pnpm bundle-analyzer
+docker compose exec storefront pnpm test
+docker compose exec storefront pnpm bundle-analyzer
 
 # Translations & GraphQL
-mutagen-compose exec storefront pnpm translate
+docker compose exec storefront pnpm translate
 make generate-schema
 ```
 

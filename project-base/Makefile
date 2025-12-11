@@ -15,13 +15,32 @@ help: ## Displays list of available commands
 # Phony targets - declaration of targets that are not files
 # ------------------------------------------------------------------------------
 
-.PHONY: help generate-schema generate-schema-native check-fix php-checks php-lock-icons php-translations \
+.PHONY: help mutagen-up mutagen-up-build mutagen-up-build-no-cache mutagen-stop mutagen-down generate-schema generate-schema-native check-fix php-checks php-lock-icons php-translations \
 	storefront-checks storefront-translations check-schema run-acceptance-tests-base \
 	run-acceptance-tests-regression selected-acceptance-tests-base selected-acceptance-tests-regression \
 	run-specific-test-regression run-specific-test-base \
 	open-acceptance-tests-base open-acceptance-tests-regression run-smoke-tests \
 	generate-snapshots-info-table prepare-data-for-acceptance-tests cypress-prepare cypress-cleanup \
 	check-licenses
+
+# ------------------------------------------------------------------------------
+# 🐳 Docker Compose (macOS with Mutagen)
+# ------------------------------------------------------------------------------
+
+mutagen-up: ## Starts Docker environment with Mutagen sync (macOS)
+	./scripts/mutagen-up.sh
+
+mutagen-up-build: ## Starts Docker environment with Mutagen sync and rebuilds images (macOS)
+	./scripts/mutagen-up.sh --build
+
+mutagen-up-build-no-cache: ## Starts Docker environment with Mutagen sync and rebuilds images without cache (macOS)
+	./scripts/mutagen-up.sh --build --no-cache
+
+mutagen-stop: ## Stops Docker environment and Mutagen sync, keeps containers (macOS)
+	./scripts/mutagen-stop.sh
+
+mutagen-down: ## Removes Docker containers and stops Mutagen sync (macOS)
+	./scripts/mutagen-down.sh
 
 # ------------------------------------------------------------------------------
 # 🔧 Generating GraphQL schema and types

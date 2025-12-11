@@ -26,3 +26,5 @@
 
 /.claude/**/*.local.*
 /*.local.md
+mutagen.yml
+mutagen.yml.lock

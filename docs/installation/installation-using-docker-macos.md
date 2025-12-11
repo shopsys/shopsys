@@ -17,7 +17,6 @@ This solution uses [_Mutagen_](https://mutagen.io) (for relatively fast two-way 
     - Enable Docker Compose V2 in General settings
     - We recommend to set at least 8 GB RAM, 4 CPUs and 512 MB Swap in `Docker -> Preferences… -> Resources -> ADVANCED`
 - [Mutagen](https://mutagen.io/) (install using [Mutagen installation guide](https://mutagen.io/documentation/introduction/installation))
-- [Mutagen Compose](https://mutagen.io/documentation/orchestration/compose/) (install using [Mutagen Compose installation guide](https://github.com/mutagen-io/mutagen-compose#installation))
 
 ## Steps
 
@@ -65,12 +64,13 @@ There are two domains each for different language in default installation. First
 sudo ifconfig lo0 alias 127.0.0.2 up
 ```
 
-#### 2.2. Create docker-compose.yml
+#### 2.2. Create docker-compose.yml and mutagen.yml
 
-Create `docker-compose.yml` from template [`docker-compose-mac.yml.dist`]({{github.link}}/project-base/docker/conf/docker-compose-mac.yml.dist).
+Create `docker-compose.yml` from template [`docker-compose-mac.yml.dist`]({{github.link}}/project-base/docker/conf/docker-compose-mac.yml.dist) and `mutagen.yml` from template [`mutagen.yml.dist`]({{github.link}}/project-base/docker/conf/mutagen.yml.dist).
 
 ```sh
 cp docker/conf/docker-compose-mac.yml.dist docker-compose.yml
+cp docker/conf/mutagen.yml.dist mutagen.yml
 ```
 
 #### 2.3 Set the UID and GID to allow file access in mounted volumes
@@ -79,20 +79,53 @@ Because we want both the user in host machine (you) and the user running php-fpm
 This can be achieved by build arguments `www_data_uid` and `www_data_gid` that should be set to the same UID and GID as your own user in your `docker-compose.yml`.
 You can find out your UID by running `id -u` and your GID by running `id -g`.
 Once you get these values, set these values into your `docker-compose.yml` into `php-fpm` container definition by replacing values in `args` section.
-Update also `defaultOwner` to your UID in `x-mutagen` section in `docker-compose.yml`.
+Update also `defaultOwner` and `defaultGroup` in `mutagen.yml` to match your UID and GID.
 
 #### 2.4 Build and start containers using Mutagen
 
-On macOS, you want to synchronize folders using Mutagen as it enables faster performance then current implementation in Docker Desktop.
+On macOS, you want to synchronize folders using Mutagen as it enables faster performance than current implementation in Docker Desktop.
+
+**Option A: Use the helper script (recommended)**
 
 ```sh
-mutagen-compose up -d --build
+./scripts/mutagen-up.sh
 ```
+
+**Option B: Manual steps**
+
+```sh
+# 1. Start sidecar containers for Mutagen (with the 'mutagen' profile)
+docker compose --profile mutagen up -d --build
+
+# 2. Start Mutagen file synchronization
+mutagen project start
+
+# 3. Wait for initial sync to complete (check status with: mutagen sync list)
+#    Look for "Watching for changes" status
+
+# 4. Start all remaining containers
+docker compose up -d
+```
+
+!!! tip
+
+    Once Mutagen is running and containers are up, you use standard `docker` and `docker compose` commands like you are used to.
+    ```
 
 !!! note
 
-    With Mutagen Compose you will use `mutagen-compose` instead of `docker compose` for all your Docker Compose commands.<br>
-    `mutagen-compose` is a wrapper around `docker compose` that adds Mutagen synchronization to the `docker compose up` command.
+    The `mutagen project start` command reads the `mutagen.yml` configuration file and creates synchronization sessions between your local filesystem and the Docker volumes via sidecar containers.
+
+!!! note
+
+    To stop the environment (keeps containers):
+    ```sh
+    ./scripts/mutagen-stop.sh
+    ```
+    To remove containers completely:
+    ```sh
+    ./scripts/mutagen-down.sh
+    ```
 
 !!! note
 

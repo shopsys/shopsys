@@ -40,13 +40,13 @@ description: Testing frameworks and essential testing patterns
 
 ```bash
 # Run tests
-mutagen-compose exec storefront pnpm test
+docker compose exec storefront pnpm test
 
 # Update test snapshots
-mutagen-compose exec storefront pnpm test--update
+docker compose exec storefront pnpm test--update
 
 # Run tests in watch mode
-mutagen-compose exec storefront pnpm test--watch
+docker compose exec storefront pnpm test--watch
 ```
 
 ### Component Testing Pattern
@@ -108,14 +108,14 @@ vi.mock('graphql/requests/products.generated', () => ({
 
 ```bash
 # All backend tests
-mutagen-compose exec php-fpm php phing tests
+docker compose exec php-fpm php phing tests
 
 # Specific test types
-mutagen-compose exec php-fpm php phing tests-unit
-mutagen-compose exec php-fpm php phing tests-functional
+docker compose exec php-fpm php phing tests-unit
+docker compose exec php-fpm php phing tests-functional
 
 # Run specific test
-mutagen-compose exec php-fpm php vendor/bin/phpunit tests/App/Unit/Model/Product/ProductTest.php
+docker compose exec php-fpm php vendor/bin/phpunit tests/App/Unit/Model/Product/ProductTest.php
 ```
 
 ### Unit Test Pattern

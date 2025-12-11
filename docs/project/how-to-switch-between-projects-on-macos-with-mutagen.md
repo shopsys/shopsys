@@ -4,14 +4,27 @@ Switching between projects can sometimes be problematic with Mutagen.
 For instance, untracked or changed files, problems with packages in the vendor, and other problems may appear after the switch.
 This article contains some tried and tested recommendations on how to minimize these issues.
 
-## Avoid using `mutagen-compose down` when switching
+## Avoid using `docker compose down` or `mutagen-down` when switching
 
-If you are switching between two or more projects on a regular basis, it's best to avoid using `mutagen-compose down` to stop the current project and then switch to the new one.
-Instead, use `mutagen-compose stop`.
-The difference is that those containers will remain suspended and not be deleted (thus taking up disk space).
+If you are switching between two or more projects on a regular basis, it's best to avoid using `docker compose down` or `./scripts/mutagen-down.sh` (or `make mutagen-down`) to stop the current project and then switch to the new one.
+Instead, use `./scripts/mutagen-stop.sh` (or `make mutagen-stop`).
+The difference is that containers will remain suspended and not be deleted (thus taking up disk space).
 Moreover, this approach will diminish or completely solve the problems described in this article's introduction.
 Switching is also significantly faster.
-After stopping all containers, switch to the folder containing the second project and run `mutagen-compose up -d`.
+
+**Stopping the current project:**
+
+```bash
+./scripts/mutagen-stop.sh
+```
+
+**Starting the next project:**
+
+Switch to the folder containing the second project and run:
+
+```bash
+./scripts/mutagen-up.sh
+```
 
 !!! note
 
@@ -30,6 +43,6 @@ If you encounter this issue after the switch, delete the affected files or perfo
 If you encounter this issue, try the following command:
 
 ```bash
-mutagen-compose exec php-fpm rm -rf vendor
-mutagen-compose exec php-fpm composer install
+docker compose exec php-fpm rm -rf vendor
+docker compose exec php-fpm composer install
 ```
