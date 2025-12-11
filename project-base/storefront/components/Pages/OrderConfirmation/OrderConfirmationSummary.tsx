@@ -29,16 +29,10 @@ const OrderConfirmationSummaryComp: FC<OrderConfirmationSummaryProps> = ({
     totalPrice,
     roundingPrice,
     totalItemsPriceBeforeDiscount,
-    totalProductPriceAdjustmentsDiscount,
     totalDiscountPrice,
 }) => {
     const formatPrice = useFormatPrice();
     const { t } = useTranslation();
-
-    const hasProductDiscounts =
-        totalProductPriceAdjustmentsDiscount &&
-        isPriceVisible(totalProductPriceAdjustmentsDiscount.priceWithVat) &&
-        mapPriceForCalculations(totalProductPriceAdjustmentsDiscount.priceWithVat) > 0;
 
     const hasTotalDiscounts =
         totalDiscountPrice &&
@@ -83,29 +77,25 @@ const OrderConfirmationSummaryComp: FC<OrderConfirmationSummaryProps> = ({
                 </div>
             )}
 
-            {hasProductDiscounts && (
+            {hasTotalDiscounts && (
                 <div className="flex flex-col gap-4">
-                    {totalItemsPriceBeforeDiscount &&
-                        isPriceVisible(totalItemsPriceBeforeDiscount.priceWithVat) &&
-                        hasTotalDiscounts && (
-                            <div className="border-border-less flex items-center justify-between gap-4 border-t-1 pt-4">
-                                <span>{t('Price before discount')}</span>
+                    {totalItemsPriceBeforeDiscount && isPriceVisible(totalItemsPriceBeforeDiscount.priceWithVat) && (
+                        <div className="border-border-less flex items-center justify-between gap-4 border-t-1 pt-4">
+                            <span>{t('Price before discount')}</span>
 
-                                <span className="whitespace-nowrap">
-                                    {formatPrice(totalItemsPriceBeforeDiscount.priceWithVat)}
-                                </span>
-                            </div>
-                        )}
-
-                    {hasTotalDiscounts && (
-                        <div className="border-border-less flex items-center justify-between gap-4">
-                            <span className="text-price-discounted">{t('Save in total')}</span>
-
-                            <span className="text-price-discounted whitespace-nowrap">
-                                {formatPrice(totalDiscountPrice.priceWithVat)}
+                            <span className="whitespace-nowrap">
+                                {formatPrice(totalItemsPriceBeforeDiscount.priceWithVat)}
                             </span>
                         </div>
                     )}
+
+                    <div className="border-border-less flex items-center justify-between gap-4">
+                        <span className="text-price-discounted">{t('Save in total')}</span>
+
+                        <span className="text-price-discounted whitespace-nowrap">
+                            {formatPrice(totalDiscountPrice.priceWithVat)}
+                        </span>
+                    </div>
                 </div>
             )}
 
