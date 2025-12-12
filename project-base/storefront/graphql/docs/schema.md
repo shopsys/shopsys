@@ -5908,6 +5908,15 @@ Whether the product allows purchasing more items than are currently in stock
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mainvariant.iscurrentlyoutofstock">isCurrentlyOutOfStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mainvariant.isinquirytype">isInquiryType</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
@@ -8842,6 +8851,15 @@ Whether the product allows purchasing more items than are currently in stock
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.iscurrentlyoutofstock">isCurrentlyOutOfStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.isinquirytype">isInquiryType</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
@@ -10201,6 +10219,15 @@ Product images
 <td>
 
 Whether the product allows purchasing more items than are currently in stock
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.iscurrentlyoutofstock">isCurrentlyOutOfStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied
 
 </td>
 </tr>
@@ -14267,6 +14294,15 @@ Product images
 <td>
 
 Whether the product allows purchasing more items than are currently in stock
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.iscurrentlyoutofstock">isCurrentlyOutOfStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied
 
 </td>
 </tr>
