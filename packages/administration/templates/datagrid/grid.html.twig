@@ -378,6 +378,10 @@
     {{ value|formatDateTime }}
 {% endblock %}
 
+{% block grid_value_cell_type_Symfony_Component_Clock_DatePoint %}
+    {{ value|formatDateTime }}
+{% endblock %}
+
 {% block grid_value_cell_type_DateTimeImmutable %}
     {{ value|formatDateTime }}
 {% endblock %}
