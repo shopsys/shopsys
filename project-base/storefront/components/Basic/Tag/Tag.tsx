@@ -49,7 +49,7 @@ export const Tag: FC<TagProps> = ({
 
     if (href) {
         return (
-            <ExtendedNextLink className={TagTwClassName} href={href} type={type}>
+            <ExtendedNextLink className={TagTwClassName} href={href} type={type} onClick={onClick}>
                 {children}
             </ExtendedNextLink>
         );
