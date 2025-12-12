@@ -224,7 +224,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours },
+                { tid: TIDs.opening_hours_in_contact_information },
             ],
         });
 
@@ -234,7 +234,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours },
+                { tid: TIDs.opening_hours_in_contact_information },
             ],
         });
 
@@ -258,7 +258,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours },
+                { tid: TIDs.opening_hours_in_contact_information },
             ],
         });
 
@@ -273,7 +273,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours },
+                { tid: TIDs.opening_hours_in_contact_information },
             ],
         });
 
@@ -311,7 +311,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours },
+                { tid: TIDs.opening_hours_in_contact_information },
             ],
         });
 
@@ -321,7 +321,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours },
+                { tid: TIDs.opening_hours_in_contact_information },
             ],
         });
 
@@ -353,7 +353,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours },
+                { tid: TIDs.opening_hours_in_contact_information },
             ],
         });
 
@@ -368,7 +368,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours },
+                { tid: TIDs.opening_hours_in_contact_information },
             ],
         });
 

@@ -1,4 +1,5 @@
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
+import { TIDs } from 'cypress/tids';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -26,7 +27,7 @@ export const ContactInformationDeliveryPickUpAddress: FC = () => {
                 </p>
             </div>
 
-            <div className="flex flex-col gap-2.5 md:ml-auto">
+            <div className="flex flex-1 flex-col gap-2.5" data-tid={TIDs.opening_hours_in_contact_information}>
                 <p className="font-secondary font-semibold">{t('Opening hours')}</p>
 
                 <OpeningHours className="text-sm" openingHours={pickupPlace.openingHours} />

@@ -97,6 +97,7 @@ export enum TIDs {
     store_opening_hours = 'store_opening_hours',
     store_opening_status = 'store_opening_status',
     opening_hours = 'opening_hours',
+    opening_hours_in_contact_information = 'opening_hours_in_contact_information',
     blog_article_publication_date = 'blog_article_publication_date',
     footer_copyright = 'footer_copyright',
     error_page = 'error_page',
