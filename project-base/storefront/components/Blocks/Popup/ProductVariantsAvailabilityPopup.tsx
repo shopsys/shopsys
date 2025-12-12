@@ -1,10 +1,10 @@
 import { Popup } from 'components/Layout/Popup/Popup';
 import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailAvailabilityList';
-import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
+import { TypeSimpleStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/SimpleStoreAvailabilityFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductVariantsAvailabilityPopupProps = {
-    storeAvailabilities: TypeStoreAvailabilityFragment[];
+    storeAvailabilities: TypeSimpleStoreAvailabilityFragment[];
 };
 
 export const ProductVariantsAvailabilityPopup: FC<ProductVariantsAvailabilityPopupProps> = ({

@@ -1,7 +1,7 @@
 import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { Popup } from 'components/Layout/Popup/Popup';
-import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
+import { TypeSimpleStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/SimpleStoreAvailabilityFragment.generated';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
@@ -12,7 +12,7 @@ type ProductDetailContentProps = {
     availability: TypeAvailability;
     availableStoresCount: number | null;
     isInquiryType: boolean;
-    storeAvailabilities: TypeStoreAvailabilityFragment[];
+    storeAvailabilities: TypeSimpleStoreAvailabilityFragment[];
 };
 
 export const ProductDetailAvailability: FC<ProductDetailContentProps> = ({
