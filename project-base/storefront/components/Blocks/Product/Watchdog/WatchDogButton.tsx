@@ -19,6 +19,7 @@ type WatchDogButtonProps = {
     isInquiryType: boolean;
     availability: TypeAvailability;
     productIsSellingDenied: boolean | undefined;
+    buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
 };
 
 export const WatchDogButton: FC<WatchDogButtonProps> = ({
@@ -28,6 +29,7 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({
     availability,
     productIsSellingDenied,
     className,
+    buttonSize = 'large',
 }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
@@ -54,13 +56,13 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({
             aria-haspopup="dialog"
             aria-label={t('Open watchdog popup for {{productName}}', { ns: 'accessibility', productName })}
             className={twJoin('whitespace-nowrap', className)}
-            size="large"
+            size={buttonSize}
             title={t('Watchdog popup')}
             variant="primary"
             onClick={openWatchDogPopup}
         >
             <WatchdogIcon className="size-6" />
-            {t('Watch the goods')}
+            {buttonSize === 'large' && t('Watch the goods')}
         </Button>
     );
 };

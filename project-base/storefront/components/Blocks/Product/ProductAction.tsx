@@ -1,5 +1,6 @@
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { ProductInquiryButton } from 'components/Blocks/Product/ProductInquiryButton';
+import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
@@ -37,11 +38,17 @@ export const ProductAction: FC<ProductActionProps> = ({
         return <div className="max-w-[215px] text-center">{t('This item can no longer be purchased')}</div>;
     }
 
-    if (product.isTemporarilyOutOfStock) {
+    if (product.isCurrentlyOutOfStock) {
         return (
-            <div className="max-w-[215px] text-center">
-                {t('This item is currently out of stock and cannot be purchased at the moment.')}
-            </div>
+            <WatchDogButton
+                availability={product.availability}
+                buttonSize="medium"
+                className="self-start"
+                isInquiryType={product.isInquiryType}
+                productIsSellingDenied={product.isSellingDenied}
+                productName={product.name}
+                productUuid={product.uuid}
+            />
         );
     }
 
