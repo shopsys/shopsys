@@ -2383,6 +2383,9 @@ msgstr "Hodnota parameteru"
 msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
 msgstr "Hodnota parametru <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> je úspěšně upravena."
 
+msgid "Parameter value of type color"
+msgstr "Hodnota parametru typu barva"
+
 msgid "Parameter values"
 msgstr "Hodnoty parametru"
 
@@ -2394,9 +2397,6 @@ msgstr "Parametry"
 
 msgid "Parameters order in category"
 msgstr "Pořadí parametrů v kategorii"
-
-msgid "Pararameter value of type color"
-msgstr "Hodnota parametru typu barva"
 
 msgid "Parent category"
 msgstr "Nadřazená kategorie"

@@ -826,7 +826,7 @@ class SideMenuBuilder
             ['route' => 'admin_country_edit', 'label' => t('Editing country'), 'display' => false],
         );
 
-        $parameterValueMenu = $listsMenu->addChild(static::LIST_PARAMETER_VALUE, ['route' => 'admin_parametervalue_list', 'label' => t('Pararameter value of type color')]);
+        $parameterValueMenu = $listsMenu->addChild(static::LIST_PARAMETER_VALUE, ['route' => 'admin_parametervalue_list', 'label' => t('Parameter value of type color')]);
         $parameterValueMenu->addChild(static::EDIT_PARAMETER_VALUE, ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editing parameter value of type color')]);
 
         $storeMenu = $listsMenu->addChild(static::LIST_STORE, ['route' => 'admin_store_list', 'label' => t('Stores')]);

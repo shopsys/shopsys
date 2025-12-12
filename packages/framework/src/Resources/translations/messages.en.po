@@ -2383,6 +2383,9 @@ msgstr ""
 msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
 msgstr ""
 
+msgid "Parameter value of type color"
+msgstr ""
+
 msgid "Parameter values"
 msgstr ""
 
@@ -2393,9 +2396,6 @@ msgid "Parameters"
 msgstr ""
 
 msgid "Parameters order in category"
-msgstr ""
-
-msgid "Pararameter value of type color"
 msgstr ""
 
 msgid "Parent category"
