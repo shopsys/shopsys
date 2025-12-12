@@ -37,6 +37,14 @@ export const ProductAction: FC<ProductActionProps> = ({
         return <div className="max-w-[215px] text-center">{t('This item can no longer be purchased')}</div>;
     }
 
+    if (product.isTemporarilyOutOfStock) {
+        return (
+            <div className="max-w-[215px] text-center">
+                {t('This item is currently out of stock and cannot be purchased at the moment.')}
+            </div>
+        );
+    }
+
     if (!product.isMainVariant && product.isInquiryType) {
         return (
             <ProductInquiryButton

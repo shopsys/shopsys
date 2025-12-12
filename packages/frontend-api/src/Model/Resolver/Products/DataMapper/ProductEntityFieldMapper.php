@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 
 class ProductEntityFieldMapper
@@ -38,6 +39,7 @@ class ProductEntityFieldMapper
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleCountByIdsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -54,6 +56,7 @@ class ProductEntityFieldMapper
         protected readonly DataLoaderInterface $productsVisibleCountByIdsBatchLoader,
         protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly ProductStockFacade $productStockFacade,
     ) {
     }
 
@@ -123,6 +126,19 @@ class ProductEntityFieldMapper
     public function isSellingDenied(Product $product): bool
     {
         return $product->isCalculatedSellingDenied($this->domain->getId()) === true;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return bool
+     */
+    public function isCurrentlyOutOfStock(Product $product): bool
+    {
+        if ($product->isAllowedNegativeStock()) {
+            return false;
+        }
+
+        return !$this->productStockFacade->isProductAvailableOnDomain($product, $this->domain->getId());
     }
 
     /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product;
 
-use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -146,68 +145,6 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 
         foreach ($this->domain->getAll() as $domainConfig) {
             $this->assertTrue($variant1->isCalculatedSellingDenied($domainConfig->getId()));
-        }
-    }
-
-    /**
-     * @return iterable<string, array{isAllowedNegativeStock: bool, setZeroStock: bool, expectedSellingDenied: bool}>
-     */
-    public static function calculatedSellingDeniedDataProvider(): iterable
-    {
-        yield 'not allowed negative stock with zero stock' => [
-            'isAllowedNegativeStock' => false,
-            'setZeroStock' => true,
-            'expectedSellingDenied' => true,
-        ];
-
-        yield 'allowed negative stock with zero stock' => [
-            'isAllowedNegativeStock' => true,
-            'setZeroStock' => true,
-            'expectedSellingDenied' => false,
-        ];
-
-        yield 'not allowed negative stock with positive stock' => [
-            'isAllowedNegativeStock' => false,
-            'setZeroStock' => false,
-            'expectedSellingDenied' => false,
-        ];
-    }
-
-    /**
-     * @dataProvider calculatedSellingDeniedDataProvider
-     * @param bool $isAllowedNegativeStock
-     * @param bool $setZeroStock
-     * @param bool $expectedSellingDenied
-     */
-    public function testCalculatedSellingDeniedDependOnNegativeStockSettings(
-        bool $isAllowedNegativeStock,
-        bool $setZeroStock,
-        bool $expectedSellingDenied,
-    ): void {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-
-        /** @var \App\Model\Product\ProductData $productData */
-        $productData = $this->productDataFactory->createFromProduct($product);
-        $productData->isAllowedNegativeStock = $isAllowedNegativeStock;
-
-        foreach ($productData->productStockData as $productStockData) {
-            $productStockData->productQuantity = $setZeroStock === true ? 0 : 1;
-        }
-
-        $this->productFacade->edit($product->getId(), $productData);
-
-        $this->handleDispatchedRecalculationMessages();
-
-        $this->em->clear();
-
-        $editedProduct = $this->productFacade->getById(1);
-
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $this->assertSame(
-                $expectedSellingDenied,
-                $editedProduct->isCalculatedSellingDenied($domainConfig->getId()),
-            );
         }
     }
 }
