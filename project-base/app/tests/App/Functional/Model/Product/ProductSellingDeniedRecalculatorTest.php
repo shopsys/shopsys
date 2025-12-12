@@ -133,7 +133,7 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $variant1ProductData->sellingDenied = false;
 
         foreach ($this->domain->getAll() as $domainConfig) {
-            $variant1ProductData->domainHidden[$domainConfig->getId()] = true;
+            $variant1ProductData->domainSellingDenied[$domainConfig->getId()] = true;
         }
 
         $this->productFacade->edit($variant1->getId(), $variant1ProductData);
