@@ -22,7 +22,7 @@ export const AddressList: FC<AddressListProps> = ({
     const [, setDefaultDeliveryAddress] = useSetDefaultDeliveryAddressMutation();
 
     useEffect(() => {
-        if (defaultDeliveryAddress === undefined && deliveryAddresses.length > 0) {
+        if (defaultDeliveryAddress === undefined && deliveryAddresses.length === 1) {
             setDefaultDeliveryAddress({ deliveryAddressUuid: deliveryAddresses[0].uuid });
         }
     }, [defaultDeliveryAddress, deliveryAddresses, setDefaultDeliveryAddress]);
