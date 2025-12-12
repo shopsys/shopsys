@@ -140,7 +140,7 @@ describe('Create Order Tests', () => {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours },
+                { tid: TIDs.opening_hours_in_contact_information },
             ],
         });
 
