@@ -19,24 +19,24 @@ export const operationNameExchange: Exchange =
                 const urlWithoutTrailingSlash = getStringWithoutTrailingSlash(operation.context.url);
                 const urlWithOperationName = urlWithoutTrailingSlash + `/${operationName}`;
 
-                const existingHeaders = (() => {
+                const existingFetchOptions = (() => {
                     if (!operation.context.fetchOptions) {
                         return {};
                     }
 
                     if (typeof operation.context.fetchOptions === 'function') {
-                        return operation.context.fetchOptions().headers ?? {};
+                        return operation.context.fetchOptions();
                     }
 
-                    return operation.context.fetchOptions.headers ?? {};
+                    return operation.context.fetchOptions;
                 })();
 
                 operation.context = {
                     ...operation.context,
                     fetchOptions: {
-                        ...operation.context.fetch,
+                        ...existingFetchOptions,
                         headers: {
-                            ...existingHeaders,
+                            ...(existingFetchOptions.headers ?? {}),
                             'X-operation-name': operationName,
                         },
                     },
