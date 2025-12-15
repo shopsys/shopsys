@@ -28,13 +28,21 @@ final class ParameterValueFormType extends AbstractType
             'required' => false,
             'label' => 'RGB Hex',
         ])->add('colorIcon', FileUploadType::class, [
-            'label' => 'Upload attachment',
+            'label' => 'Color pattern icon',
+            'info_text' => t('The icon takes precedence over the RGB color value. You can upload a PNG, JPG, GIF, or SVG file.'),
             'required' => false,
             'file_constraints' => [
                 new Constraints\File([
                     'maxSize' => '2M',
                     'maxSizeMessage' => 'Uploaded file is to large ({{ size }} {{ suffix }}). '
                         . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
+                    'extensions' => [
+                        'png' => 'image/png',
+                        'jpg' => 'image/jpeg',
+                        'jpeg' => 'image/jpeg',
+                        'gif' => 'image/gif',
+                        'svg' => 'image/svg+xml',
+                    ],
                 ]),
             ],
             'entity' => $options['entity'],
