@@ -1360,6 +1360,6 @@ class Order
      */
     public function hasExternalPayment(): bool
     {
-        return $this->getPayment()->getType() !== PaymentTypeEnum::TYPE_BASIC;
+        return !in_array($this->getPayment()->getType(), PaymentTypeEnum::INTERNAL_PAYMENTS, true);
     }
 }

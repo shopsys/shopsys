@@ -12,6 +12,8 @@ class PaymentTypeEnum extends AbstractPaymentTypeEnum
     public const string TYPE_GOPAY = 'goPay';
     public const string TYPE_BANK_TRANSFER = 'bankTransfer';
 
+    public const array INTERNAL_PAYMENTS = [self::TYPE_BASIC, self::TYPE_BANK_TRANSFER];
+
     /**
      * @return array<string, string>
      */
