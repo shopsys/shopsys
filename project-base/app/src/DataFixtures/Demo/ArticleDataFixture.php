@@ -25,6 +25,12 @@ class ArticleDataFixture extends AbstractReferenceFixture
     public const string ARTICLE_PRIVACY_POLICY = 'article_privacy_policy';
     public const string USER_CONSENT_POLICY_ARTICLE = 'article_user_consent_policy';
 
+    private const array ARTICLES_MANDATORY_ON_ALL_DOMAINS = [
+        self::ARTICLE_TERMS_AND_CONDITIONS,
+        self::ARTICLE_PRIVACY_POLICY,
+        self::USER_CONSENT_POLICY_ARTICLE,
+    ];
+
     private const string ATTRIBUTE_NAME_KEY = 'name';
     private const string ATTRIBUTE_PLAIN_NAME_KEY = 'plainName';
     private const string ATTRIBUTE_TEXT_KEY = 'text';
@@ -39,11 +45,13 @@ class ArticleDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory $articleDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly ArticleFacade $articleFacade,
         private readonly ArticleDataFactory $articleDataFactory,
         private readonly DomainRouterFactory $domainRouterFactory,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -53,7 +61,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     #[Override]
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+        foreach ($this->domain->getAll() as $domainConfig) {
             $data = $this->getDataForArticles($domainConfig);
             $this->createArticlesFromArray($data, $domainConfig->getId());
         }
@@ -67,6 +75,9 @@ class ArticleDataFixture extends AbstractReferenceFixture
     {
         $locale = $domainConfig->getLocale();
         $homepageUrl = $this->generateUrlForHomepageOnDomain($domainConfig->getId());
+        $categoryUrl = $this->domainsForDataFixtureProvider->isDomainIdAllowed($domainConfig->getId())
+            ? $this->generateUrlForCategoryOnDomain(CategoryDataFixture::CATEGORY_ELECTRONICS, $domainConfig->getId())
+            : '';
 
         return [
             [
@@ -226,7 +237,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
                         backgroundcolor="#00C8B7"
                         class="gjs-button-link button-link-position-center"
                         title="More products"
-                        href="' . $this->generateUrlForCategoryOnDomain(CategoryDataFixture::CATEGORY_ELECTRONICS, $domainConfig->getId()) . '"
+                        href="' . $categoryUrl . '"
                     >
                         <div class="gjs-text-ckeditor text" data-gjs-type="text">More products</div>
                     </a>
@@ -321,6 +332,10 @@ class ArticleDataFixture extends AbstractReferenceFixture
     private function createArticlesFromArray(array $articles, int $domainId): void
     {
         foreach ($articles as $article) {
+            if (!$this->domainsForDataFixtureProvider->isDomainIdAllowed($domainId) && !$this->isMandatoryArticle($article)) {
+                continue;
+            }
+
             $this->createArticleFromArray($article, $domainId);
         }
     }
@@ -382,5 +397,14 @@ class ArticleDataFixture extends AbstractReferenceFixture
             ['id' => $categoryReference->getId()],
             UrlGeneratorInterface::RELATIVE_PATH,
         );
+    }
+
+    /**
+     * @param array $articleInputData
+     * @return bool
+     */
+    private function isMandatoryArticle(array $articleInputData): bool
+    {
+        return array_key_exists(self::REFERENCE_NAME_KEY, $articleInputData) && in_array($articleInputData[self::REFERENCE_NAME_KEY], self::ARTICLES_MANDATORY_ON_ALL_DOMAINS, true);
     }
 }

@@ -54,7 +54,7 @@ class StocksDataFixture extends AbstractReferenceFixture
         $stockData->name = $demoRow[self::ATTR_NAME];
         $stockData->externalId = $demoRow[self::ATTR_EXTERNAL];
         $stockData->isDefault = $demoRow[self::ATTR_IS_DEFAULT];
-        $stockData->isEnabledByDomain = $demoRow[self::ATTR_ENABLED_BY_DOMAIN];
+        $stockData->isEnabledByDomain = $demoRow[self::ATTR_ENABLED_BY_DOMAIN] + $stockData->isEnabledByDomain;
         $stockData->note = $demoRow[self::ATTR_NOTE];
 
         return $stockData;

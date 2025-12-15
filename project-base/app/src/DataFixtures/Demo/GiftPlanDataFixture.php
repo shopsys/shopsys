@@ -9,7 +9,6 @@ use Doctrine\Persistence\ObjectManager;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
@@ -34,14 +33,12 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanDataFactory $giftPlanDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade $giftPlanFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         private readonly GiftPlanDataFactory $giftPlanDataFactory,
         private readonly GiftPlanFacade $giftPlanFacade,
-        private readonly Domain $domain,
         private readonly GiftPlanSettingFacade $giftPlanSettingFacade,
         private readonly PriceConverter $priceConverter,
     ) {
@@ -55,7 +52,7 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
-        foreach ($this->domain->getAllIds() as $domainId) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
 
             $convertedPrice = $this->priceConverter->convertPriceToInputPriceInDomainDefaultCurrency(

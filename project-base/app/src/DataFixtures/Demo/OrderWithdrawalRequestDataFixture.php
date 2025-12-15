@@ -10,7 +10,6 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
@@ -20,12 +19,10 @@ class OrderWithdrawalRequestDataFixture extends AbstractReferenceFixture impleme
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory $withdrawalRequestDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
         protected readonly WithdrawalRequestDataFactory $withdrawalRequestDataFactory,
-        protected readonly Domain $domain,
     ) {
     }
 
@@ -35,7 +32,7 @@ class OrderWithdrawalRequestDataFixture extends AbstractReferenceFixture impleme
     #[Override]
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $orderReference = $this->getReferenceForDomain(OrderDataFixture::ORDER_WITH_WITHDRAWAL_REQUEST, $domainConfig->getId(), Order::class);
 
             $withdrawalRequestData = $this->withdrawalRequestDataFactory->createFromArray([

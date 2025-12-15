@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -22,11 +23,13 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory $pricingGroupDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly PricingGroupDataFactory $pricingGroupDataFactory,
         private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -36,8 +39,11 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     #[Override]
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+        foreach ($this->domain->getAll() as $domainConfig) {
             $this->editDefaultPricingGroupOnDomain($domainConfig);
+        }
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $this->createVipPricingGroup($domainConfig);
         }
     }
