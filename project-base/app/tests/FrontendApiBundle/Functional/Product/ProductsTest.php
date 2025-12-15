@@ -77,6 +77,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                                 name
                             }
                             isSellingDenied
+                            isCurrentlyOutOfStock
                             description
                             orderingPriority
                             parameters {
@@ -165,6 +166,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                 ],
                 'accessories' => [],
                 'isSellingDenied' => false,
+                'isCurrentlyOutOfStock' => false,
                 'description' => t(
                     'Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768, DVB-T/C, HDMI, SCART, D-Sub, USB, speakers, Energ. Class A',
                     [],
