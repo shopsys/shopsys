@@ -73,7 +73,7 @@ class ParameterSortingHelperTest extends TestCase
         $parameterValueData = new ParameterValueData();
         $parameterValueData->text = $text;
         $parameterValueData->locale = $locale;
-        $parameterValueData->colourIcon = new UploadedFileData();
+        $parameterValueData->colorIcon = new UploadedFileData();
 
         return new ParameterValue($parameterValueData);
     }

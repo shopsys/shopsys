@@ -283,12 +283,12 @@ class ParameterFacade
         $parameterValue = $this->parameterRepository->getParameterValueById($parameterValueId);
         $parameterValue->edit($parameterValueData);
 
-        if ($parameterValueData->colourIcon->uploadedFilenames || $parameterValueData->colourIcon->relations) {
-            $this->uploadedFileFacade->manageFiles($parameterValue, $parameterValueData->colourIcon);
+        if ($parameterValueData->colorIcon->uploadedFilenames || $parameterValueData->colorIcon->relations) {
+            $this->uploadedFileFacade->manageFiles($parameterValue, $parameterValueData->colorIcon);
         }
 
-        if (count($parameterValueData->colourIcon->uploadedFilenames) === 0 && count($parameterValueData->colourIcon->relations) === 0 && $parameterValueData->colourIcon->filesToDelete) {
-            $this->uploadedFileFacade->deleteRelationsByEntityAndUploadedFiles($parameterValue, $parameterValueData->colourIcon->filesToDelete, UploadedFileTypeConfig::DEFAULT_TYPE_NAME);
+        if (count($parameterValueData->colorIcon->uploadedFilenames) === 0 && count($parameterValueData->colorIcon->relations) === 0 && $parameterValueData->colorIcon->filesToDelete) {
+            $this->uploadedFileFacade->deleteRelationsByEntityAndUploadedFiles($parameterValue, $parameterValueData->colorIcon->filesToDelete, UploadedFileTypeConfig::DEFAULT_TYPE_NAME);
         }
 
         $this->em->flush();

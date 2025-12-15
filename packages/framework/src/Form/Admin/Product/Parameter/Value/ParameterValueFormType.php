@@ -27,7 +27,7 @@ final class ParameterValueFormType extends AbstractType
         $builder->add('rgbHex', ColorPickerType::class, [
             'required' => false,
             'label' => 'RGB Hex',
-        ])->add('colourIcon', FileUploadType::class, [
+        ])->add('colorIcon', FileUploadType::class, [
             'label' => 'Upload attachment',
             'required' => false,
             'file_constraints' => [

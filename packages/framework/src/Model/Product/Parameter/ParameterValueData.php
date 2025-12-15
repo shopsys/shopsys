@@ -29,5 +29,5 @@ class ParameterValueData
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
      */
-    public $colourIcon;
+    public $colorIcon;
 }
