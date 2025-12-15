@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 
 class UploadedFileRepository implements UploadedFileRepositoryInterface
@@ -156,5 +157,43 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
             ->andWhere('ut.translatable = :uploadedFileId')->setParameter('uploadedFileId', $uploadedFileId)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param int[] $entityIds
+     * @param string $entityName
+     * @param string|null $requiredLocale
+     * @param string $type
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[][]
+     */
+    public function getAllFilesIndexedByEntityId(
+        array $entityIds,
+        string $entityName,
+        ?string $requiredLocale,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+    ): array {
+        $filesByEntityId = array_fill_keys($entityIds, []);
+        $queryBuilder = $this->em->getRepository(UploadedFileRelation::class)
+            ->createQueryBuilder('ur')
+            ->join('ur.uploadedFile', 'u')
+            ->addSelect('u')
+            ->andWhere('ur.entityName = :entityName')->setParameter('entityName', $entityName)
+            ->andWhere('ur.type = :type')->setParameter('type', $type)
+            ->andWhere('ur.entityId IN (:entities)')->setParameter('entities', $entityIds)
+            ->addOrderBy('ur.position', 'asc')
+            ->addOrderBy('u.id', 'asc');
+
+        if ($requiredLocale !== null) {
+            $queryBuilder
+                ->join('u.translations', 't', 'WITH', 't.locale = :locale AND t.name IS NOT NULL')
+                ->setParameter('locale', $requiredLocale);
+        }
+
+        /** @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelation $fileRelation */
+        foreach ($queryBuilder->getQuery()->execute() as $fileRelation) {
+            $filesByEntityId[$fileRelation->getEntityId()][] = $fileRelation->getUploadedFile();
+        }
+
+        return $filesByEntityId;
     }
 }

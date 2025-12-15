@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
@@ -12,12 +13,14 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\ParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\SliderParameterValuesUpdateFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +39,7 @@ class ParameterValueController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionDataFactory $parameterValueConversionDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
@@ -46,6 +50,7 @@ class ParameterValueController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly ParameterValueConversionDataFactory $parameterValueConversionDataFactory,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+        protected readonly UploadedFileFacade $uploadedFileFacade,
     ) {
     }
 
@@ -64,10 +69,11 @@ class ParameterValueController extends AdminBaseController
         $grid = $this->gridFactory->create('parameterValues', $dataSource, AdminRoleConstant::ROLE_PARAMETER_VALUE);
 
         $grid->addColumn('text', 'pv.text', t('Parameter value'));
-        $grid->addColumn('rgbHex', 'pv.rgbHex', t('RGB Hex'));
-        $grid->addColumn('colourIcon', 'pv.id', t('Image'), false);
+        $grid->addColumn('preview', 'pv.id', t('Preview'));
         $grid->addEditActionColumn('admin_parametervalue_edit', ['id' => 'pv.id']);
-        $grid->setTheme('@ShopsysAdministration/content/parameterValue/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/parameterValue/listGrid.html.twig', [
+            'filesIndexedByParameterValueIds' => $this->getFilesIndexedByParameterValueIds(clone $queryBuilder),
+        ]);
 
         return $this->render(
             '@ShopsysAdministration/content/parameterValue/list.html.twig',
@@ -166,5 +172,16 @@ class ParameterValueController extends AdminBaseController
                 'parameter' => $parameter,
             ],
         );
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $gridQueryBuilder
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[][]
+     */
+    protected function getFilesIndexedByParameterValueIds(QueryBuilder $gridQueryBuilder): array
+    {
+        $parameterValuesIds = array_column($gridQueryBuilder->select('pv.id')->getQuery()->getArrayResult(), 'id');
+
+        return $this->uploadedFileFacade->getAllFilesIndexedByEntityId($parameterValuesIds, ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG, null);
     }
 }

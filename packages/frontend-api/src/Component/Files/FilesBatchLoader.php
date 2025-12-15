@@ -12,19 +12,17 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundExcepti
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
-use Shopsys\FrontendApiBundle\Model\Resolver\Products\ParameterValueFilesQuery;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
 class FilesBatchLoader
 {
     /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \Shopsys\FrontendApiBundle\Component\Files\FileApiFacade $fileApiFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
-        protected readonly FileApiFacade $fileApiFacade,
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly Domain $domain,
     ) {
@@ -60,9 +58,9 @@ class FilesBatchLoader
         string $entityName,
         string $type,
     ): array {
-        $isParameterValueEntity = $entityName === ParameterValueFilesQuery::PARAMETER_VALUE_ENTITY_NAME;
+        $isParameterValueEntity = $entityName === ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG;
         $entityIds = array_map(static fn (FileBatchLoadData $fileBatchLoadData) => $fileBatchLoadData->getEntityId(), $filesBatchLoadData);
-        $filesIndexedByEntityId = $this->fileApiFacade->getAllFilesIndexedByEntityId(
+        $filesIndexedByEntityId = $this->uploadedFileFacade->getAllFilesIndexedByEntityId(
             $entityIds,
             $entityName,
             $isParameterValueEntity ? null : $this->domain->getLocale(),
@@ -120,7 +118,7 @@ class FilesBatchLoader
 
         foreach ($filesBatchLoadData as $fileBatchLoadData) {
             if (array_key_exists($fileBatchLoadData->getId(), $allFilesIndexedByFileBatchLoadDataId) === false) {
-                $isParameterValueEntity = $fileBatchLoadData->getEntityName() === ParameterValueFilesQuery::PARAMETER_VALUE_ENTITY_NAME;
+                $isParameterValueEntity = $fileBatchLoadData->getEntityName() === ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG;
                 $sortedFiles[] = $isParameterValueEntity ? null : [];
 
                 continue;

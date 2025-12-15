@@ -523,4 +523,20 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     {
         return $this->uploadedFileConfig;
     }
+
+    /**
+     * @param int[] $entityIds
+     * @param string $entityName
+     * @param string|null $requiredLocale
+     * @param string $type
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[][]
+     */
+    public function getAllFilesIndexedByEntityId(
+        array $entityIds,
+        string $entityName,
+        ?string $requiredLocale,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+    ): array {
+        return $this->uploadedFileRepository->getAllFilesIndexedByEntityId($entityIds, $entityName, $requiredLocale, $type);
+    }
 }

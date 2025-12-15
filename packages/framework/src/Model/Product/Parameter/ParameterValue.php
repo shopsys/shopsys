@@ -15,6 +15,8 @@ use Webmozart\Assert\Assert;
  */
 class ParameterValue
 {
+    public const string ENTITY_NAME_FOR_FILES_CONFIG = 'parameterValue';
+
     /**
      * @var int
      * @ORM\Column(type="integer")
