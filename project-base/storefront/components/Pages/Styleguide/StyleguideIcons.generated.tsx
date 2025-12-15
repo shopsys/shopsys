@@ -18,6 +18,7 @@ import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
 import { CrossIcon } from 'components/Basic/Icon/CrossIcon';
+import { DocumentDeleteIcon } from 'components/Basic/Icon/DocumentDeleteIcon';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
@@ -130,6 +131,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <CrossIcon className="size-10" />
                 <span className="text-center text-xs break-all">CrossIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <DocumentDeleteIcon className="size-10" />
+                <span className="text-center text-xs break-all">DocumentDeleteIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <DocumentIcon className="size-10" />
