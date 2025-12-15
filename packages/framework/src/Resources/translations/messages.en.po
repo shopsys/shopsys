@@ -571,6 +571,9 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
+msgid "Color pattern icon"
+msgstr ""
+
 msgid "Combination of parameters and their values"
 msgstr ""
 
@@ -3236,6 +3239,9 @@ msgid "Text"
 msgstr ""
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
+msgstr ""
+
+msgid "The icon takes precedence over the RGB color value. You can upload a PNG, JPG, GIF, or SVG file."
 msgstr ""
 
 msgid "The instructions are presented to the customer after they submit the order withdrawal request."

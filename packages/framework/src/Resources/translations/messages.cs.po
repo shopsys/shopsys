@@ -571,6 +571,9 @@ msgstr "Kolekce %collectionAttribute% byla změněna:<br> %changes%"
 msgid "Color"
 msgstr "Barva"
 
+msgid "Color pattern icon"
+msgstr "Ikona barevného vzoru"
+
 msgid "Combination of parameters and their values"
 msgstr "Kombinace parametrů a jejich hodnot parametrů"
 
@@ -3237,6 +3240,9 @@ msgstr "Text"
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. Státy se stejnou prioritou budou seřazeny abecedně."
+
+msgid "The icon takes precedence over the RGB color value. You can upload a PNG, JPG, GIF, or SVG file."
+msgstr "Ikona má přednost před hodnotou barvy RGB. Můžete nahrát soubor ve formátu PNG, JPG, GIF nebo SVG."
 
 msgid "The instructions are presented to the customer after they submit the order withdrawal request."
 msgstr "Instrukce jsou zákazníkovi zobrazeny poté, co odešle žádost o odstoupení od smlouvy."
