@@ -1901,6 +1901,8 @@ type ParameterValue {
 
 "Parameter value filter option"
 type ParameterValueColorFilterOption {
+  "Uploaded file for color parameter value"
+  colorIcon: File
   "Count of products that will be filtered if this filter option is applied."
   count: Int!
   "If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result."

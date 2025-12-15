@@ -7718,11 +7718,11 @@ Parameter value filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.colouriconimage">colourIconImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
+<td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.coloricon">colorIcon</strong></td>
+<td valign="top"><a href="#file">File</a></td>
 <td>
 
-Uploaded image for color parameter value
+Uploaded file for color parameter value
 
 </td>
 </tr>
