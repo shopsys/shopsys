@@ -1,0 +1,52 @@
+query CategoryProductsFilterOptions($categoryUuid: Uuid!, $filter: ProductFilter) {
+    category(uuid: $categoryUuid) {
+        products(filter: $filter) {
+            productFilterOptions {
+                flags {
+                    flag {
+                        name
+                    }
+                    count
+                    isAbsolute
+                }
+                brands {
+                    brand {
+                        name
+                    }
+                    count
+                    isAbsolute
+                }
+                inStock
+                minimalPrice
+                maximalPrice
+                parameters {
+                    isCollapsed
+                    name
+                    __typename
+                    unit {
+                        name
+                    }
+                    ... on ParameterCheckboxFilterOption {
+                        values {
+                            text
+                            count
+                            isAbsolute
+                        }
+                    }
+                    ... on ParameterColorFilterOption {
+                        values {
+                            text
+                            count
+                            isAbsolute
+                            rgbHex
+                        }
+                    }
+                    ... on ParameterSliderFilterOption {
+                        minimalValue
+                        maximalValue
+                    }
+                }
+            }
+        }
+    }
+}

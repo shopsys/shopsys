@@ -48,7 +48,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
     public function testGetElectronicsFilterOptions(): void
     {
-        $query = $this->getElectronicsQuery();
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
         if ($this->setting->get(PricingSetting::INPUT_PRICE_TYPE) === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('319');
@@ -321,7 +321,9 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ];
 
 
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoryProductsFilterOptions.graphql', [
+            'categoryUuid' => $category->getUuid(),
+        ]);
         $data = $this->getResponseDataForGraphQlType($response, 'category');
 
         $this->assertSame(4, $data['products']['productFilterOptions']['inStock']);
@@ -335,84 +337,90 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
     public function testGetElectronicsBrandFilterOptionsWithAppliedFilter(): void
     {
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
         $brandA4tech = $this->getReference(BrandDataFixture::BRAND_A4TECH, Brand::class);
 
-        $query = $this->getElectronicsQuery('{ brands: ["' . $brandA4tech->getUuid() . '"] }');
+        $expectedBrandFilterOptions = [
+            [
+                'brand' => [
+                    'name' => t('A4tech', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 0,
+                'isAbsolute' => false,
+            ],
+            [
+                'brand' => [
+                    'name' => t('LG', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 1,
+                'isAbsolute' => false,
+            ],
+            [
+                'brand' => [
+                    'name' => t('Philips', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 1,
+                'isAbsolute' => false,
+            ],
+            [
+                'brand' => [
+                    'name' => t('Samsung', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 1,
+                'isAbsolute' => false,
+            ],
+            [
+                'brand' => [
+                    'name' => t('Sencor', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 1,
+                'isAbsolute' => false,
+            ],
+        ];
 
-        $expectedJson = '[
-{
-    "brand": {
-        "name": "' . t('A4tech', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
-    },
-    "count": 0,
-    "isAbsolute": false
-},
-{
-    "brand": {
-        "name": "' . t('LG', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
-    },
-    "count": 1,
-    "isAbsolute": false
-},
-{
-    "brand": {
-        "name": "' . t('Philips', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
-    },
-    "count": 1,
-    "isAbsolute": false
-},
-{
-    "brand": {
-        "name": "' . t('Samsung', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
-    },
-    "count": 1,
-    "isAbsolute": false
-},
-{
-    "brand": {
-        "name": "' . t('Sencor', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
-    },
-    "count": 1,
-    "isAbsolute": false
-}]';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoryProductsFilterOptions.graphql', [
+            'categoryUuid' => $category->getUuid(),
+            'filter' => ['brands' => [$brandA4tech->getUuid()]],
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'category');
 
-        $result = $this->getResponseContentForQuery($query);
-        $resultJson = json_encode($result['data']['category']['products']['productFilterOptions']['brands']);
-
-        $this->assertJsonStringEqualsJsonString($expectedJson, $resultJson);
+        $this->assertArrayElements($expectedBrandFilterOptions, $data['products']['productFilterOptions']['brands']);
     }
 
     public function testGetElectronicsFlagFilterOptionsWithAppliedFilters(): void
     {
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
         $flagAction = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class);
 
-        $query = $this->getElectronicsQuery('{ flags: ["' . $flagAction->getUuid() . '"] }');
+        $expectedFlagFilterOptions = [
+            [
+                'flag' => [
+                    'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 0,
+                'isAbsolute' => false,
+            ],
+            [
+                'flag' => [
+                    'name' => t('Promotion {{ x }} + {{ y }} free', ['{{ x }}' => 3, '{{ y }}' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 0,
+                'isAbsolute' => false,
+            ],
+        ];
 
-        $expectedJson = '[
-    {
-        "flag": {
-            "name": "' . t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
-        },
-        "count": 0,
-        "isAbsolute": false
-    },
-    {
-        "flag": {
-            "name": "' . t('Promotion {{ x }} + {{ y }} free', ['{{ x }}' => 3, '{{ y }}' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
-        },
-        "count": 0,
-        "isAbsolute": false
-    }
-]';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoryProductsFilterOptions.graphql', [
+            'categoryUuid' => $category->getUuid(),
+            'filter' => ['flags' => [$flagAction->getUuid()]],
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'category');
 
-        $result = $this->getResponseContentForQuery($query);
-        $resultJson = json_encode($result['data']['category']['products']['productFilterOptions']['flags']);
-
-        $this->assertJsonStringEqualsJsonString($expectedJson, $resultJson);
+        $this->assertArrayElements($expectedFlagFilterOptions, $data['products']['productFilterOptions']['flags']);
     }
 
     public function testGetElectronicsParametersFilterOptionsWithAppliedFilter(): void
     {
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
         $parameterFacade = self::getContainer()->get(ParameterFacade::class);
         $parameter = $parameterFacade->getById(self::PARAMETER_HDMI);
 
@@ -421,13 +429,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             null,
             $this->firstDomainLocale,
         );
-
-        $query = $this->getElectronicsQuery('{
-            parameters: [ {
-                parameter: "' . $parameter->getUuid() . '",
-                values: [ "' . $parameterValue->getUuid() . '" ]
-            }]
-        }');
 
         $materials = [
             [
@@ -651,142 +652,55 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
         ];
 
-        $result = $this->getResponseContentForQuery($query);
+        $result = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoryProductsFilterOptions.graphql', [
+            'categoryUuid' => $category->getUuid(),
+            'filter' => [
+                'parameters' => [
+                    [
+                        'parameter' => $parameter->getUuid(),
+                        'values' => [$parameterValue->getUuid()],
+                    ],
+                ],
+            ],
+        ]);
         $data = $this->getResponseDataForGraphQlType($result, 'category');
 
         $this->assertArrayElements($expectedArray, $data['products']['productFilterOptions']['parameters']);
     }
 
-    /**
-     * @param string|null $filter
-     * @return string
-     */
-    private function getElectronicsQuery(?string $filter = null): string
-    {
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
-
-        if ($filter !== null) {
-            $filter = '(filter: ' . $filter . ')';
-        }
-
-        return '
-            query {
-                category (uuid: "' . $category->getUuid() . '") {
-                    products ' . $filter . ' {
-                        productFilterOptions {
-                            flags {
-                                flag {
-                                    name
-                                }
-                                count
-                                isAbsolute
-                            },
-                            brands {
-                                brand {
-                                    name
-                                }
-                                count
-                                isAbsolute
-                            },
-                            inStock,
-                            minimalPrice,
-                            maximalPrice,
-                            parameters {
-                                isCollapsed
-                                name
-                                __typename
-                                unit {
-                                    name
-                                }
-                                ... on ParameterCheckboxFilterOption {
-                                    values {
-                                        text
-                                        count
-                                        isAbsolute
-                                    }
-                                }
-                                ... on ParameterColorFilterOption {
-                                    values {
-                                        text
-                                        count
-                                        isAbsolute
-                                        rgbHex
-                                    }
-                                }
-                                ... on ParameterSliderFilterOption {
-                                    minimalValue
-                                    maximalValue
-                                }
-                            }
-                        }
-                    },
-                }
-            }
-        ';
-    }
-
-    public function testGetProductFilterOptionsForSencorSearch()
+    public function testGetProductFilterOptionsForSencorSearch(): void
     {
         $userIdentifier = Uuid::uuid4()->toString();
-
-        $query = 'query {
-          productsSearch (searchInput: { search: "sencor", isAutocomplete: false, userIdentifier: "' . $userIdentifier . '"}) {
-            productFilterOptions {
-              minimalPrice
-              maximalPrice
-              inStock
-              flags {
-                count
-                flag {
-                  name
-                }
-              }
-              brands {
-                count
-                brand {
-                  name
-                }
-              }
-              parameters {
-                name
-              }
-            }
-          }
-        }';
 
         $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('3499');
         $maximalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('7258.79');
 
-        $expectedResult = '{
-          "data": {
-            "productsSearch": {
-              "productFilterOptions": {
-                "minimalPrice": "' . $minimalPrice . '",
-                "maximalPrice": "' . $maximalPrice . '",
-                "inStock": 3,
-                "flags": [
-                  {
-                    "count": 2,
-                    "flag": {
-                      "name": "' . t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
-                    }
-                  }
-                ],
-                "brands": [
-                  {
-                    "count": 3,
-                    "brand": {
-                      "name": "Sencor"
-                    }
-                  }
-                ],
-                "parameters": null
-              }
-            }
-          }
-        }';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductsSearchFilterOptions.graphql', [
+            'search' => 'sencor',
+            'userIdentifier' => $userIdentifier,
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'productsSearch');
 
-        $this->assertQueryWithExpectedJson($query, $expectedResult);
+        $this->assertSame($minimalPrice, $data['productFilterOptions']['minimalPrice']);
+        $this->assertSame($maximalPrice, $data['productFilterOptions']['maximalPrice']);
+        $this->assertSame(3, $data['productFilterOptions']['inStock']);
+        $this->assertSame([
+            [
+                'count' => 2,
+                'flag' => [
+                    'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                ],
+            ],
+        ], $data['productFilterOptions']['flags']);
+        $this->assertSame([
+            [
+                'count' => 3,
+                'brand' => [
+                    'name' => 'Sencor',
+                ],
+            ],
+        ], $data['productFilterOptions']['brands']);
+        $this->assertNull($data['productFilterOptions']['parameters']);
     }
 
     public function testSliderParameterFilterOptions(): void
