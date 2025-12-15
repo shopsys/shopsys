@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundExcepti
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
+use Shopsys\FrontendApiBundle\Model\Resolver\Products\ParameterValueFilesQuery;
 
 class FilesBatchLoader
 {
@@ -59,11 +60,12 @@ class FilesBatchLoader
         string $entityName,
         string $type,
     ): array {
-        $entityIds = array_map(fn (FileBatchLoadData $fileBatchLoadData) => $fileBatchLoadData->getEntityId(), $filesBatchLoadData);
+        $isParameterValueEntity = $entityName === ParameterValueFilesQuery::PARAMETER_VALUE_ENTITY_NAME;
+        $entityIds = array_map(static fn (FileBatchLoadData $fileBatchLoadData) => $fileBatchLoadData->getEntityId(), $filesBatchLoadData);
         $filesIndexedByEntityId = $this->fileApiFacade->getAllFilesIndexedByEntityId(
             $entityIds,
             $entityName,
-            $this->domain->getLocale(),
+            $isParameterValueEntity ? null : $this->domain->getLocale(),
             $type,
         );
 
@@ -71,12 +73,18 @@ class FilesBatchLoader
 
         foreach ($filesBatchLoadData as $fileBatchLoadData) {
             if (!isset($filesIndexedByEntityId[$fileBatchLoadData->getEntityId()])) {
-                $files[$fileBatchLoadData->getId()] = [];
+                $files[$fileBatchLoadData->getId()] = $isParameterValueEntity ? null : [];
 
                 continue;
             }
-            $entityResolvedFiles = $this->getResolvedFiles($filesIndexedByEntityId[$fileBatchLoadData->getEntityId()]);
-            $files[$fileBatchLoadData->getId()] = $entityResolvedFiles;
+            $entityFiles = $filesIndexedByEntityId[$fileBatchLoadData->getEntityId()];
+
+            if ($isParameterValueEntity) {
+                $firstFile = reset($entityFiles);
+                $files[$fileBatchLoadData->getId()] = $firstFile !== false ? $this->getResolvedFile($firstFile) : null;
+            } else {
+                $files[$fileBatchLoadData->getId()] = $this->getResolvedFiles($entityFiles);
+            }
         }
 
         return $files;
@@ -112,7 +120,8 @@ class FilesBatchLoader
 
         foreach ($filesBatchLoadData as $fileBatchLoadData) {
             if (array_key_exists($fileBatchLoadData->getId(), $allFilesIndexedByFileBatchLoadDataId) === false) {
-                $sortedFiles[] = [];
+                $isParameterValueEntity = $fileBatchLoadData->getEntityName() === ParameterValueFilesQuery::PARAMETER_VALUE_ENTITY_NAME;
+                $sortedFiles[] = $isParameterValueEntity ? null : [];
 
                 continue;
             }
@@ -147,12 +156,14 @@ class FilesBatchLoader
      */
     protected function getResolvedFile(UploadedFile $file): array
     {
+        $translatedName = $file->getTranslatedName($this->domain->getLocale());
+
         return [
             'url' => $this->uploadedFileFacade->getUploadedFileUrl(
                 $this->domain->getCurrentDomainConfig(),
                 $file,
             ),
-            'anchorText' => $file->getTranslatedName($this->domain->getLocale()),
+            'anchorText' => $translatedName ?? $file->getName(),
         ];
     }
 }

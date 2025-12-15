@@ -162,6 +162,10 @@ services:
             $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
             $productsVisibleCountByIdsBatchLoader: '@products_visible_count_by_ids_batch_loader'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\ParameterValueFilesQuery:
+        arguments:
+            $filesBatchLoader: '@files_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFilesQuery:
         arguments:
             $filesBatchLoader: '@files_batch_loader'

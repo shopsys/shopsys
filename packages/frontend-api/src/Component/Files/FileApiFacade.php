@@ -22,16 +22,16 @@ class FileApiFacade
     /**
      * @param int[] $entityIds
      * @param string $entityName
-     * @param string $locale
+     * @param string|null $requiredLocale
      * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[][]
      */
     public function getAllFilesIndexedByEntityId(
         array $entityIds,
         string $entityName,
-        string $locale,
+        ?string $requiredLocale,
         string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
     ): array {
-        return $this->fileApiRepository->getAllFilesIndexedByEntityId($entityIds, $entityName, $locale, $type);
+        return $this->fileApiRepository->getAllFilesIndexedByEntityId($entityIds, $entityName, $requiredLocale, $type);
     }
 }

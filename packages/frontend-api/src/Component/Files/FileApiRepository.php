@@ -24,14 +24,14 @@ class FileApiRepository
     /**
      * @param int[] $entityIds
      * @param string $entityName
-     * @param string $locale
+     * @param string|null $requiredLocale
      * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[][]
      */
     public function getAllFilesIndexedByEntityId(
         array $entityIds,
         string $entityName,
-        string $locale,
+        ?string $requiredLocale,
         string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
     ): array {
         $filesByEntityId = array_fill_keys($entityIds, []);
@@ -42,11 +42,14 @@ class FileApiRepository
             ->andWhere('ur.entityName = :entityName')->setParameter('entityName', $entityName)
             ->andWhere('ur.type = :type')->setParameter('type', $type)
             ->andWhere('ur.entityId IN (:entities)')->setParameter('entities', $entityIds)
-            ->join('u.translations', 't', 'WITH', 't.locale = :locale AND t.name IS NOT NULL')
-            ->setParameter('locale', $locale)
             ->addOrderBy('ur.position', 'asc')
             ->addOrderBy('u.id', 'asc');
 
+        if ($requiredLocale !== null) {
+            $queryBuilder
+                ->join('u.translations', 't', 'WITH', 't.locale = :locale AND t.name IS NOT NULL')
+                ->setParameter('locale', $requiredLocale);
+        }
 
         /** @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelation $fileRelation */
         foreach ($queryBuilder->getQuery()->execute() as $fileRelation) {
