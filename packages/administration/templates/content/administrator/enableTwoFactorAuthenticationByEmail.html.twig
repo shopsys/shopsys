@@ -7,12 +7,12 @@
 {% block h1 %}{{ 'Enable two factor authentication via email'|trans }}{% endblock %}
 
 {% block main_content %}
-    <div class="row">
+    <div class="row row-cols-1 row-cols-xl-2 g-3">
         <div class="col">
-            <div class="card card-md">
+            <div class="card card-md h-100">
                 <div class="card-body">
                     <h2 class="card-title">1. {{ 'Request a one-time passcode by email '|trans }}</h2>
-                    <div class="card-subtitle">
+                    <div class="card-subtitle mb-3">
                         {{ 'Please use the button below to send the one-time passcode to your email address.'|trans }}
                     </div>
                     {{ form(formSendEmail) }}
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card card-md">
+            <div class="card card-md h-100">
                 <div class="card-body">
                     <h2 class="card-title">2. {{ 'Confirm one-time passcode'|trans }}</h2>
                     {{ form(formVerification) }}

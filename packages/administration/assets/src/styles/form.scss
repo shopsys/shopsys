@@ -10,3 +10,11 @@
 .form-check-label:not(:has(+ .form-check-input:disabled)):hover {
     cursor: pointer;
 }
+
+.form-check-hoverable .form-check {
+    border-radius: var(--tblr-border-radius);
+
+    &:hover {
+        background-color: var(--tblr-bg-surface-secondary);
+    }
+}

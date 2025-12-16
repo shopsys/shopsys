@@ -277,7 +277,7 @@ final class ProductFormType extends AbstractType
                 'label' => 'Flags',
                 'display_mode' => 'columns',
                 'row_attr' => [
-                    'class' => 'mb-3',
+                    'class' => 'mb-3 form-check-hoverable',
                 ],
             ])
             ->add('brand', ChoiceType::class, [
@@ -690,6 +690,7 @@ final class ProductFormType extends AbstractType
         $variantGroup = $builder->create('variantGroup', FormType::class, [
             'inherit_data' => true,
             'label' => false,
+            'row_attr' => ['class' => 'mt-xl-3'],
         ]);
 
         if ($this->isProductVariant($product)) {

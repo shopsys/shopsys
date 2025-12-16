@@ -9,21 +9,11 @@ function initSelect($container) {
         const settings = {
             allowEmptyOption: true,
             maxOptions: null,
+            dropdownParent: 'body',
             plugins: {
                 dropdown_input: {},
                 no_backspace_delete: {},
                 no_active_items: {},
-            },
-            onDropdownOpen: dropdown => {
-                const bounding = dropdown.getBoundingClientRect();
-                const bottomOffset = 50; // Arbitrary offset to prevent dropdown from being too close to the bottom
-
-                if (bounding.bottom > (window.innerHeight || document.documentElement.clientHeight) - bottomOffset) {
-                    dropdown.classList.add('dropup');
-                }
-            },
-            onDropdownClose: dropdown => {
-                dropdown.classList.remove('dropup');
             },
         };
 

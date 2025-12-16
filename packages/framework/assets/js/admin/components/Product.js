@@ -149,11 +149,8 @@ export default class Product {
 
             if (scrollTop > headerHeight + 100) {
                 $backToTopButton.removeClass('d-none');
-                $mobileTocButton.removeClass('d-none');
-                Product.adjustFloatingButtonPosition();
             } else {
                 $backToTopButton.addClass('d-none');
-                $mobileTocButton.addClass('d-none');
             }
         });
 

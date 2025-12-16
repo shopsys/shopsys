@@ -6,11 +6,13 @@
 {% block h1 %}
     {{ administrator.realName }}
     {% if administrator.isSuperadmin() %}
-        <span class="badge fs-5 ms-2 bg-yellow text-yellow-fg"
+        <span class="badge fs-5 ms-2 bg-yellow text-yellow-fg white-space-normal"
               data-bs-toggle="tooltip"
               title="{{ 'Superadmins have all permissions including changing system configuration and access to hidden administration sections.'|trans }}"
         >
-            {{ ux_icon('crown') }}
+            <div class="d-none d-sm-inline">
+                {{ ux_icon('crown') }}
+            </div>
             {{ 'Super Administrator'|trans }}
         </span>
     {% endif %}

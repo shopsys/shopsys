@@ -45,6 +45,9 @@ export default class FileUploadPreview {
                 ghostClass: 'opacity-50',
                 chosenClass: 'border-primary',
                 dragClass: 'shadow-lg',
+                scroll: true,
+                scrollSensitivity: 100,
+                scrollSpeed: 400,
             });
         });
     }

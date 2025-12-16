@@ -10,26 +10,28 @@
                     {% endif %}
 
                     <div class="card card-sm mb-3 js-file-upload-file" data-id="{{ image.id }}" data-delete-input="#{{ form.imagesToDelete.vars.id }}" style="max-width: 17.5rem;">
-                        <div class="card-header d-flex justify-content-between align-items-center py-1">
-                            {% if multiple %}
-                                <div class="js-file-upload-file-handle d-flex align-items-center" title="{{ 'Move'|trans }}">
-                                    {{ ux_icon('move', {class: 'me-2 text-muted'}) }}
-                                </div>
-                            {% else %}
-                                {# helps keep the delete button at the right side of the card #}
-                                <div class="ms-auto"></div>
-                            {% endif %}
+                        {% if multiple or (not isRemoved and not hide_delete_button) %}
+                            <div class="card-header d-flex justify-content-between align-items-center py-1">
+                                {% if multiple %}
+                                    <div class="js-file-upload-file-handle d-flex align-items-center" title="{{ 'Move'|trans }}">
+                                        {{ ux_icon('move', {class: 'me-2 text-muted cursor-move'}) }}
+                                    </div>
+                                {% else %}
+                                    {# helps keep the delete button at the right side of the card #}
+                                    <div class="ms-auto"></div>
+                                {% endif %}
 
-                            {% if not isRemoved and not hide_delete_button %}
-                                <button type="button" class="js-file-upload-delete-button btn btn-sm btn-ghost-danger" title="{{ 'Delete'|trans }}">
-                                    {{ ux_icon('delete', {class: 'icon mx-0'}) }}
-                                </button>
-                                <button type="button" class="js-file-upload-delete-revert-button btn btn-sm" style="display: none;" title="{{ 'Return back'|trans }}">
-                                    {{ ux_icon('revert') }}
-                                    {{ 'Undo delete'|trans }}
-                                </button>
-                            {% endif %}
-                        </div>
+                                {% if not isRemoved and not hide_delete_button %}
+                                    <button type="button" class="js-file-upload-delete-button btn btn-sm btn-ghost-danger" title="{{ 'Delete'|trans }}">
+                                        {{ ux_icon('delete', {class: 'icon mx-0'}) }}
+                                    </button>
+                                    <button type="button" class="js-file-upload-delete-revert-button btn btn-sm" style="display: none;" title="{{ 'Return back'|trans }}">
+                                        {{ ux_icon('revert') }}
+                                        {{ 'Undo delete'|trans }}
+                                    </button>
+                                {% endif %}
+                            </div>
+                        {% endif %}
 
                         <div class="position-relative ratio ratio-16x9 overflow-hidden">
                             {{ image(image, { type: image_type, class: 'w-100 h-100 object-contain', width: 400}) }}

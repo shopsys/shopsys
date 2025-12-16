@@ -7,16 +7,16 @@
 {% block h1 %}{{ 'Enable two factor authentication with Google Authenticator'|trans }}{% endblock %}
 
 {% block main_content %}
-    <div class="row">
+    <div class="row row-cols-1 row-cols-xl-2 g-3">
         <div class="col">
-            <div class="card card-md">
+            <div class="card card-md h-100">
                 <div class="card-body">
                     <h2 class="card-title">1. {{ 'Scan QR code'|trans }}</h2>
-                    <div class="card-subtitle">
+                    <div class="card-subtitle mb-3">
                         {{ 'Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator).'|trans }}
                     </div>
-                    <div class="text-center">
-                        <img src="{{ qrCodeDataUri }}" />
+                    <div class="text-center my-4">
+                        <img src="{{ qrCodeDataUri }}" class="img-fluid" style="max-width: 250px;" />
                     </div>
                     <div class="text-secondary mb-2">
                         {{ 'If you cannot scan the QR code, you can manually enter the following secret key:'| trans }}
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card card-md">
+            <div class="card card-md h-100">
                 <div class="card-body">
                     <h2 class="card-title">2. {{ 'Confirm one-time passcode'|trans }}</h2>
                     {{ form(form) }}

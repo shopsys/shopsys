@@ -46,9 +46,11 @@
                             {% else %}
                                 <div class="card {{ loop.last ? 'mb-0' : 'mb-3' }}">
                                     <div class="card-header card-header-light py-2">
-                                        {{ domain_icon(child.vars.attr['data-domain-id']) }}
-                                        {{ 'Domain'|trans }}
-                                        <strong>{{ getDomainName(child.vars.attr['data-domain-id']) }}</strong>
+                                        <span>
+                                            {{ domain_icon(child.vars.attr['data-domain-id']) }}
+                                            {{ 'Domain'|trans }}
+                                            <strong>{{ getDomainName(child.vars.attr['data-domain-id']) }}</strong>
+                                        </span>
                                     </div>
                                     <div class="card-body">
                                         {{- childContent|raw -}}

@@ -57,12 +57,16 @@
     {% endif %}
 {%- endblock -%}
 
+{%- block form_label_class -%}
+    col-xl-2
+{%- endblock form_label_class %}
+
 {%- block form_group_class -%}
     {# if label is not rendered, render form group with full width #}
     {%- if label is same as(false) -%}
         col
     {%- else -%}
-        {{- parent() -}}
+        col-xl-10
     {% endif %}
 {%- endblock -%}
 
