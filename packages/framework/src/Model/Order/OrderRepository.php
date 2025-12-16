@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
@@ -162,9 +163,18 @@ class OrderRepository
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder
-                ->leftJoin(CustomerUser::class, 'u', Join::WITH, 'o.customerUser = u.id')
-                ->andWhere('
+                ->leftJoin(CustomerUser::class, 'u', Join::WITH, 'o.customerUser = u.id');
+
+            $uuidCondition = '';
+
+            if (Uuid::isValid($quickSearchData->text)) {
+                $uuidCondition = 'o.uuid = :exactText OR ';
+                $queryBuilder->setParameter('exactText', $quickSearchData->text);
+            }
+
+            $queryBuilder->andWhere('
                     (
+                        ' . $uuidCondition . '
                         o.number LIKE :text
                         OR
                         NORMALIZED(o.email) LIKE NORMALIZED(:text)

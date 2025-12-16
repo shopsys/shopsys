@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
@@ -127,8 +128,19 @@ class BlogArticleRepository
         }
 
         if ($this->transformStringHelper->emptyToNull($searchData->text) !== null) {
-            $queryBuilder->andWhere('NORMALIZED(bat.name) LIKE NORMALIZED(:searchData)')
-                ->setParameter('searchData', $this->databaseSearchingHelper->getFullTextLikeSearchString($searchData->text));
+            $uuidCondition = '';
+
+            if (Uuid::isValid($searchData->text)) {
+                $uuidCondition = 'ba.uuid = :exactText OR ';
+                $queryBuilder->setParameter('exactText', $searchData->text);
+            }
+
+            $queryBuilder->andWhere('
+                (
+                    ' . $uuidCondition . '
+                    NORMALIZED(bat.name) LIKE NORMALIZED(:searchData)
+                )');
+            $queryBuilder->setParameter('searchData', $this->databaseSearchingHelper->getFullTextLikeSearchString($searchData->text));
         }
 
         return $queryBuilder;

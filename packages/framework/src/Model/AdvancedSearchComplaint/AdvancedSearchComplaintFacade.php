@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint;
 
 use Doctrine\ORM\QueryBuilder;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender;
@@ -92,9 +93,17 @@ class AdvancedSearchComplaintFacade
         $queryBuilder = $this->complaintRepository->getComplaintsQueryBuilder($this->localization->getCurrentLocaleForTranslatableEntities());
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
+            $uuidCondition = '';
+
+            if (Uuid::isValid($quickSearchData->text)) {
+                $uuidCondition = 'cmp.uuid = :exactText OR ';
+                $queryBuilder->setParameter('exactText', $quickSearchData->text);
+            }
+
             $queryBuilder
                 ->andWhere('
                     (
+                        ' . $uuidCondition . '
                         cmp.number LIKE :text
                         OR
                         NORMALIZED(cmp.email) LIKE NORMALIZED(:text)

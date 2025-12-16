@@ -1699,16 +1699,25 @@ msgstr "Search"
 msgid "Search by code..."
 msgstr ""
 
+msgid "Search by complaint number, email, name, or UUID..."
+msgstr ""
+
 msgid "Search by email"
 msgstr ""
 
 msgid "Search by filename, extension or translated name..."
 msgstr ""
 
-msgid "Search by name, catalog number, or product part number..."
+msgid "Search by name or UUID..."
 msgstr ""
 
-msgid "Search by name..."
+msgid "Search by name, catalog number, product part number, or UUID..."
+msgstr ""
+
+msgid "Search by name, email, phone, or UUID..."
+msgstr ""
+
+msgid "Search by order number, email, name, or UUID..."
 msgstr ""
 
 msgid "Search by section name…"
@@ -1729,25 +1738,25 @@ msgstr ""
 msgid "Searching in all currencies"
 msgstr ""
 
-msgid "Searching searches in <ul> <li>complaint number</li><li>complaint email</li><li>order number</li><li>delivery last name</li><li>delivery company name</li><li>last name from order</li><li>email from order</li><li>complaint author last name</li><li>complaint author company name</ul> It is possible to use wildcards * and ?"
+msgid "Searching searches in <ul> <li>UUID</li><li>complaint number</li><li>complaint email</li><li>order number</li><li>delivery last name</li><li>delivery company name</li><li>last name from order</li><li>email from order</li><li>complaint author last name</li><li>complaint author company name</ul> It is possible to use wildcards * and ?"
 msgstr ""
 
-msgid "Searching searches in <ul> <li>order number</li><li>registered customer email</li><li>customer's email in order</li><li>customer's last name</li><li>company name."
+msgid "Searching searches in <ul> <li>UUID</li><li>order number</li><li>registered customer email</li><li>customer's email in order</li><li>customer's last name</li><li>company name."
+msgstr ""
+
+msgid "Searching searches in <ul><li>last name</li><li>company name</li><li>email</li><li>telephone</li><li>UUID</li></ul> It is possible to use wildcards * and ?."
+msgstr ""
+
+msgid "Searching searches in <ul><li>name</li><li>UUID</li></ul> It is possible to use wildcards * and ?."
+msgstr ""
+
+msgid "Searching searches in <ul><li>name</li><li>catalog number</li><li>product part number</li><li>UUID</li></ul> It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Searching searches in Key, Original translation and User translation."
 msgstr ""
 
 msgid "Searching searches in email. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching searches in name, catalog number or product part number. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching searches in name. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Searching searches in product name and product catalog number. It is possible to use wildcards * and ?."
