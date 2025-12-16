@@ -154,10 +154,8 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
             $namesIndexedByLocale,
         );
 
-        $this->createRelation($entityName, $this->getEntityId($entity), $newUploadedFile, 0, $type);
-
         $this->em->persist($newUploadedFile);
-        $this->em->flush();
+        $this->createRelation($entityName, $this->getEntityId($entity), $newUploadedFile, 0, $type);
     }
 
     /**
@@ -324,6 +322,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     ): void {
         $relation = $this->uploadedFileRelationFactory->create($entityName, $entityId, $file, $position, $type);
         $this->em->persist($relation);
+        $this->em->flush();
     }
 
     /**
