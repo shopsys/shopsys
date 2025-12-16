@@ -84,8 +84,11 @@ final class OrderFormType extends AbstractType
             ->add($this->createNoteGroup($builder))
             ->add('orderItems', OrderItemsType::class, [
                 'order' => $order,
-            ])
-            ->add($this->createPaymentTransactionsGroup($builder, $order));
+            ]);
+
+        if ($order->getPaymentTransactionsCount() > 0) {
+            $builder->add($this->createPaymentTransactionsGroup($builder, $order));
+        }
 
         $builder
             ->add('actionBar', ActionBarType::class, [
