@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
+use App\DataFixtures\Demo\ParameterColorValueDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
@@ -20,6 +21,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductsFilteringOptionsTest extends GraphQlTestCase
@@ -84,12 +86,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'count' => 2,
                 'isAbsolute' => true,
                 'rgbHex' => '#000000',
+                'colorIcon' => null,
             ],
             [
                 'text' => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 3,
                 'isAbsolute' => true,
                 'rgbHex' => '#ff0000',
+                'colorIcon' => $this->getRedColorExpectedFile(),
             ],
         ];
 
@@ -456,12 +460,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'count' => 1,
                 'isAbsolute' => true,
                 'rgbHex' => '#000000',
+                'colorIcon' => null,
             ],
             [
                 'text' => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 1,
                 'isAbsolute' => true,
                 'rgbHex' => '#ff0000',
+                'colorIcon' => $this->getRedColorExpectedFile(),
             ],
         ];
 
@@ -763,5 +769,16 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         yield [true, 'filter' => []];
 
         yield [false, 'filter' => ['brands' => ['738ead90-3108-433d-ad6e-1ea23f68a13d']]];
+    }
+
+    /**
+     * @return array
+     */
+    private function getRedColorExpectedFile(): array
+    {
+        $redColorParameterValue = $this->getReference(ParameterColorValueDataFixture::PARAMETER_VALUE_RED_REFERENCE_PREFIX . $this->firstDomainLocale, ParameterValue::class);
+        $allFilesArray = $this->getFilesByEntity($redColorParameterValue);
+
+        return reset($allFilesArray);
     }
 }

@@ -39,6 +39,10 @@ query CategoryProductsFilterOptions($categoryUuid: Uuid!, $filter: ProductFilter
                             count
                             isAbsolute
                             rgbHex
+                            colorIcon {
+                                anchorText
+                                url
+                            }
                         }
                     }
                     ... on ParameterSliderFilterOption {

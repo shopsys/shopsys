@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
 
 class ParameterColorValueDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    public const string PARAMETER_VALUE_RED_REFERENCE_PREFIX = 'parameter_value_red_';
+
     /**
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
@@ -47,7 +49,8 @@ class ParameterColorValueDataFixture extends AbstractReferenceFixture implements
             $parameterValueData->locale = $locale;
             $parameterValueData->text = t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $parameterValueData->rgbHex = '#ff0000';
-            $this->parameterRepository->findOrCreateParameterValueByParameterValueData($parameterValueData);
+            $parameterValueRed = $this->parameterRepository->findOrCreateParameterValueByParameterValueData($parameterValueData);
+            $this->addReference(self::PARAMETER_VALUE_RED_REFERENCE_PREFIX . $locale, $parameterValueRed);
         }
     }
 
