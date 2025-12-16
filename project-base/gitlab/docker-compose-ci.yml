@@ -59,6 +59,7 @@ services:
         network_mode: "host"
         environment:
             - GROUP=${GROUP}
+            - TEST_LOCALE=${TEST_LOCALE:-en}
 
     cypress-regenerate-screenshots:
         build:
@@ -79,6 +80,7 @@ services:
             - TYPE=base
             - COMMAND=run
             - GROUP=${GROUP}
+            - TEST_LOCALE=${TEST_LOCALE:-en}
 
     redis:
         image: redis:7.4-alpine
