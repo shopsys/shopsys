@@ -9,6 +9,9 @@ SliderItemDecorator:
             link:
                 type: "String!"
                 description: "Target link"
+            routeName:
+                type: "FriendlyUrlRouteEnum"
+                description: "Friendly route name if exists, NULL for unknown (e.g., external) links"
             description:
                 type: "String"
                 description: "Slider description"
