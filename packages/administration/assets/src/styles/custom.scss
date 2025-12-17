@@ -5,6 +5,32 @@
     @include media-breakpoint-up(lg) {
         margin-left: 15rem;
     }
+
+    .action-bar-product_info {
+        flex-basis: 100%;
+        overflow: hidden;
+
+        @include media-breakpoint-up(xl) {
+            flex-basis: auto;
+        }
+    }
+
+    .unsaved-changes-container {
+        width: 100%;
+
+        @include media-breakpoint-up(sm) {
+            width: auto;
+        }
+    }
+
+    .btn-list {
+        width: 100%;
+        justify-content: space-between;
+
+        @include media-breakpoint-up(sm) {
+            width: auto;
+        }
+    }
 }
 
 // force display of ribbon on main image (first image in list)
@@ -20,6 +46,8 @@
 
 // add margin to last card to ensure scroll navigation works properly when card height is too low
 #product_form > .card:has(+ .action-bar-bottom) {
+    margin-bottom: 10vh !important;
+
     @include media-breakpoint-up(xl) {
         margin-bottom: 20vh !important;
     }

@@ -1,5 +1,5 @@
 import Translator from 'bazinga-translator';
-import InfoCircle from 'icons/tabler/info-circle-filled.svg';
+import AlertTriangle from 'icons/tabler/alert-triangle.svg';
 import Register from '../../common/utils/Register';
 
 export default class FormChangeInfo {
@@ -47,19 +47,17 @@ export default class FormChangeInfo {
     }
 
     static showInfo() {
-        const textToShow = Translator.trans("You have made changes, don't forget to save them!");
+        const textToShow = Translator.trans('Unsaved changes');
         const $unsavedChangesContainer = $('[data-js-unsaved-changes-container]');
 
         if (FormChangeInfo.isInfoShown || $unsavedChangesContainer.length === 0) {
             return;
         }
 
-        $unsavedChangesContainer.prepend(
-            `<div class="col-md-auto">
-                <div id="js-form-change-info" class="d-flex align-items-center h-100 gap-2">
-                    <span class="icon-wrapper">${InfoCircle}</span>
-                    <span class="small">${textToShow}</span>
-                </div>
+        $unsavedChangesContainer.append(
+            `<div id="js-form-change-info" class="d-flex align-items-center h-100 gap-2">
+                <span class="icon-wrapper text-warning">${AlertTriangle}</span>
+                <span class="small">${textToShow}</span>
             </div>`,
         );
 

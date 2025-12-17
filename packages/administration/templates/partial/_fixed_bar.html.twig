@@ -1,5 +1,7 @@
-<div class="action-bar-bottom row w-auto fixed-bottom bg-light border-top py-1 pe-4 ps-4" data-js-unsaved-changes-container{% if app.environment is same as('dev') %} data-js-fixed-bar style="transition: bottom 0.3s ease;"{% endif %}>
-    <div class="col btn-list justify-content-end">
+<div class="action-bar-bottom d-flex flex-wrap justify-content-between align-items-center gap-1 w-auto fixed-bottom bg-light border-top py-1 pe-4 ps-3"{% if app.environment is same as('dev') %} data-js-fixed-bar style="transition: bottom 0.3s ease;"{% endif %}>
+    {% block fixed_bar_product_info %}{% endblock %}
+    <div class="unsaved-changes-container" data-js-unsaved-changes-container></div>
+    <div class="btn-list">
         {% block fixed_bar_content %}{% endblock %}
     </div>
 </div>

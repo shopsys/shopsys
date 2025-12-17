@@ -3391,6 +3391,9 @@ msgstr ""
 msgid "Unknown configuration"
 msgstr ""
 
+msgid "Unsaved changes"
+msgstr ""
+
 msgid "Unsupported payment card region"
 msgstr ""
 
@@ -3599,9 +3602,6 @@ msgid "You don't have permission to perform this action."
 msgstr ""
 
 msgid "You have changed a parameter type which requires conversion of its values to a %type%. Here is a list of values, that needs to be reviewed."
-msgstr ""
-
-msgid "You have made changes, don't forget to save them!"
 msgstr ""
 
 msgid "You have to create some payment first."
