@@ -20,7 +20,7 @@ export default class AdvancedSearch {
             return false;
         });
 
-        $rulesContainer.on('change', '.js-advanced-search-rule-subject', function () {
+        $rulesContainer.on('change', 'select.js-advanced-search-rule-subject', function () {
             const $rule = $(this).closest('.js-advanced-search-rule');
             AdvancedSearch.updateRule($rulesContainer, $rule, $(this).val(), `new_${newRuleIndexCounter}`);
             newRuleIndexCounter++;
