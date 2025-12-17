@@ -3,10 +3,11 @@ fragment SliderItemFragment on SliderItem {
     uuid
     name
     link
+    routeName
     description
     rgbBackgroundColor
     opacity
-    webMainImage: mainImage (type: "web") {
+    webMainImage: mainImage(type: "web") {
         ...ImageFragment
     }
     mobileMainImage: mainImage(type: "mobile") {

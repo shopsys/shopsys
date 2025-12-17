@@ -8,6 +8,8 @@ import { useEffect, useReducer, useRef } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getPageTypeKey } from 'utils/page/getPageTypeKey';
+import { getSkeletonTypeFromLink } from 'utils/skeleton/getSkeletonTypeFromLink';
 import { isTextSelected } from 'utils/ui/isTextSelected';
 
 const SLIDER_STOP_SLIDE_TIMEOUT = 300 as const;
@@ -82,6 +84,12 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
         'snap-mandatory vl:grid vl:snap-x vl:auto-cols-[21%] vl:grid-flow-col vl:justify-start vl:overflow-x-auto vl:overscroll-x-contain hide-scrollbar',
     );
 
+    const currentBanner = sliderItems[bannerSliderState.sliderPosition];
+
+    const skeletonType = currentBanner.routeName
+        ? getPageTypeKey(currentBanner.routeName)
+        : getSkeletonTypeFromLink(currentBanner.link);
+
     return (
         <div className="flex flex-col" data-tid={TIDs.banners_slider}>
             <div {...handlers}>
@@ -89,10 +97,11 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                     preventRedirectOnTextSelection
                     className="group block rounded-t-xl rounded-b-none !no-underline select-text"
                     draggable={false}
-                    href={sliderItems[bannerSliderState.sliderPosition].link}
+                    href={currentBanner.link}
                     id={`banner-link-${bannerSliderState.sliderPosition}`}
+                    skeletonType={skeletonType}
                     aria-label={t('{{ slideName }}, slide {{ current }} of {{ total }}', {
-                        slideName: sliderItems[bannerSliderState.sliderPosition].name,
+                        slideName: currentBanner.name,
                         current: bannerSliderState.sliderPosition + 1,
                         total: sliderItems.length,
                     })}
