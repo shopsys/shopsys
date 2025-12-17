@@ -19,6 +19,21 @@ check-schema:
 	docker compose exec -u root storefront chown node:node schema.graphql
 	docker compose exec storefront sh check-code-gen.sh
 
+mutagen-up:
+	./project-base/scripts/mutagen-up.sh
+
+mutagen-up-build:
+	./project-base/scripts/mutagen-up.sh --build
+
+mutagen-up-build-no-cache:
+	./project-base/scripts/mutagen-up.sh --build --no-cache
+
+mutagen-stop:
+	./project-base/scripts/mutagen-stop.sh
+
+mutagen-down:
+	./project-base/scripts/mutagen-down.sh
+
 define run_acceptance_tests
 	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
 	docker compose exec php-fpm php phing test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
