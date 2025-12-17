@@ -14,7 +14,9 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade as BaseSliderItemFacad
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @method \App\Model\Slider\SliderItem getById(int $sliderItemId)
  * @method \App\Model\Slider\SliderItem[] getAllVisibleOnCurrentDomain()
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository $sliderItemRepository, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory $sliderItemFactory, \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository $sliderItemRepository, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory $sliderItemFactory, \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade)
+ * @method fixUrlInSliderItemData(\App\Model\Slider\SliderItemData $sliderItemData)
+ * @method setSliderItemRouteName(\App\Model\Slider\SliderItem $sliderItem)
  */
 class SliderItemFacade extends BaseSliderItemFacade
 {
@@ -28,8 +30,11 @@ class SliderItemFacade extends BaseSliderItemFacade
     #[Override]
     public function create(SliderItemData $sliderItemData): SliderItem
     {
+        $this->fixUrlInSliderItemData($sliderItemData);
+
         /** @var \App\Model\Slider\SliderItem $sliderItem */
         $sliderItem = $this->sliderItemFactory->create($sliderItemData);
+        $this->setSliderItemRouteName($sliderItem);
 
         $this->em->persist($sliderItem);
         $this->em->flush();
@@ -51,7 +56,10 @@ class SliderItemFacade extends BaseSliderItemFacade
     {
         /** @var \App\Model\Slider\SliderItem $sliderItem */
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
+        $this->fixUrlInSliderItemData($sliderItemData);
+
         $sliderItem->edit($sliderItemData);
+        $this->setSliderItemRouteName($sliderItem);
 
         $this->em->flush();
 
