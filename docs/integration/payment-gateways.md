@@ -105,7 +105,7 @@ DOMAIN_HOSTNAME_1=http://app.test:8000/
 PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1=http://app.test:8000/graphql/
 ```
 
-- recreate the storefront container with `mutagen-compose up -d --force-recreate storefront` or `docker compose up -d --force-recreate storefront` if you are not using Mutagen
+- recreate the storefront container with `docker compose up -d --force-recreate storefront`
 - enjoy the GoPay integration in your local environment on `http://app.test:8000/`
 
 For automated tests, there is a test GoPay client that simulates the GoPay API responses. This allows you to run tests without needing access to the actual GoPay service.

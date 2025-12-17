@@ -1,0 +1,40 @@
+sync:
+    defaults:
+        ignore:
+            vcs: true
+        permissions:
+            defaultOwner: "id:501"
+
+    php-fpm:
+        alpha: "./app"
+        beta: "docker://shopsys-framework-mutagen-php-fpm/volumes/php-fpm"
+        configurationBeta:
+            permissions:
+                defaultOwner: "id:501"
+                defaultGroup: "id:20"
+                defaultDirectoryMode: 0777
+        ignore:
+            paths:
+                - ".DS_Store"
+                - ".idea"
+                - ".npm-global"
+                - "elasticsearch-data"
+                - "nbproject"
+                - "node_modules"
+                - "postgres-data"
+                - "storefront"
+                - "vendor"
+        mode: "two-way-resolved"
+
+    storefront:
+        alpha: "./storefront"
+        beta: "docker://shopsys-framework-mutagen-storefront/volumes/storefront"
+        configurationBeta:
+            permissions:
+                defaultOwner: "id:1000"
+                defaultGroup: "id:1000"
+                defaultDirectoryMode: 0777
+        ignore:
+            paths:
+                - "node_modules"
+        mode: "two-way-resolved"

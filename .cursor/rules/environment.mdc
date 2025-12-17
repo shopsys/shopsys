@@ -10,8 +10,13 @@ description: Complete development environment guide - commands, workflows, and t
 ### Essential Commands
 
 ```bash
-# Start services
-mutagen-compose up -d
+# Start services (macOS) - Use helper script
+./scripts/mutagen-up.sh
+
+# Or manually:
+docker compose --profile mutagen up -d  # Start sidecar containers first
+mutagen project start                    # Start file sync
+docker compose up -d                     # Start remaining containers
 
 # Full code check and fix
 make check-fix
@@ -24,47 +29,47 @@ make generate-schema
 
 ```bash
 # Install dependencies
-mutagen-compose exec storefront pnpm install
+docker compose exec storefront pnpm install
 
 # Development server
-mutagen-compose exec storefront pnpm dev
+docker compose exec storefront pnpm dev
 
 # Code quality (all-in-one)
-mutagen-compose exec storefront pnpm check--fix
+docker compose exec storefront pnpm check--fix
 
 # Testing
-mutagen-compose exec storefront pnpm test
+docker compose exec storefront pnpm test
 
 # Bundle analysis
-mutagen-compose exec storefront pnpm bundle-analyzer
+docker compose exec storefront pnpm bundle-analyzer
 
 # Generate translations
-mutagen-compose exec storefront pnpm translate
+docker compose exec storefront pnpm translate
 ```
 
 ### Backend Development
 
 ```bash
 # Install dependencies
-mutagen-compose exec php-fpm composer install
+docker compose exec php-fpm composer install
 
 # Fix code standards
-mutagen-compose exec php-fpm php phing standards-fix
+docker compose exec php-fpm php phing standards-fix
 
 # Run PHPStan
-mutagen-compose exec php-fpm php phing phpstan
+docker compose exec php-fpm php phing phpstan
 
 # Database migration
-mutagen-compose exec php-fpm php bin/console doctrine:migrations:migrate
+docker compose exec php-fpm php bin/console doctrine:migrations:migrate
 
 # Create demo data (wipes existing database)
-mutagen-compose exec php-fpm php phing demo-data
+docker compose exec php-fpm php phing demo-data
 
 # Build assets
-mutagen-compose exec php-fpm php phing assets
+docker compose exec php-fpm php phing assets
 
 # Generate backend translations
-mutagen-compose exec php-fpm php phing translations-dump
+docker compose exec php-fpm php phing translations-dump
 ```
 
 ## Key File Locations
@@ -77,7 +82,7 @@ mutagen-compose exec php-fpm php phing translations-dump
 
 ## Essential Principles
 
-1. **Always use `mutagen-compose`** instead of `docker-compose`
+1. **On macOS, use `./scripts/mutagen-up.sh`** or manually run `docker compose --profile mutagen up -d` then `mutagen project start`
 2. **Prefer Tailwind utility classes** over custom CSS
 3. **Use TypeScript strict mode** with explicit types
 4. **Run `make generate-schema`** after GraphQL changes
@@ -87,7 +92,7 @@ mutagen-compose exec php-fpm php phing translations-dump
 
 ## Docker Setup
 
-**ALWAYS use `mutagen-compose` instead of `docker-compose` in this project.**
+**On macOS, use helper scripts or `docker compose --profile mutagen` for sidecar containers + `mutagen project` commands for file synchronization.**
 
 ### Container Services
 
@@ -97,20 +102,38 @@ mutagen-compose exec php-fpm php phing translations-dump
 - **postgres**: PostgreSQL database
 - **redis**: Redis cache
 - **elasticsearch**: Search engine
+- **mutagen-source-code**: Sidecar for source-code volume sync (macOS)
+- **mutagen-storefront**: Sidecar for storefront volume sync (macOS)
 
 ### Essential Commands
 
 ```bash
-# Start development environment
-mutagen-compose up -d
+# Start development environment (macOS) - recommended
+./scripts/mutagen-up.sh
+
+# Stop development environment (macOS)
+./scripts/mutagen-down.sh
+
+# Manual start (macOS)
+docker compose --profile mutagen up -d  # Start sidecar containers
+mutagen project start                    # Start file sync
+mutagen sync list                        # Wait for "Watching for changes"
+docker compose up -d                     # Start remaining containers
+
+# Manual stop (macOS)
+mutagen project terminate
+docker compose --profile mutagen down
 
 # Restart specific services
-mutagen-compose up -d --force-recreate storefront webserver
+docker compose up -d --force-recreate storefront webserver
 
 # Container status and logs
-mutagen-compose ps
-mutagen-compose logs storefront
-mutagen-compose logs php-fpm
+docker compose ps
+docker compose logs storefront
+docker compose logs php-fpm
+
+# Check mutagen sync status
+mutagen sync list
 
 # Full quality check and fix
 make check-fix
@@ -124,89 +147,94 @@ make generate-schema
 ### Starting Development Session
 
 ```bash
-# 1. Start containers
-mutagen-compose up -d
+# 1. Start environment (macOS) - recommended
+./scripts/mutagen-up.sh
+
+# Or manually:
+# docker compose --profile mutagen up -d
+# mutagen project start
+# docker compose up -d
 
 # 2. Install/update dependencies if needed
-mutagen-compose exec storefront pnpm install
-mutagen-compose exec php-fpm composer install
+docker compose exec storefront pnpm install
+docker compose exec php-fpm composer install
 
 # 3. Generate latest schema (if GraphQL changes)
 make generate-schema
 
 # 4. Build assets if needed
-mutagen-compose exec php-fpm php phing assets
+docker compose exec php-fpm php phing assets
 ```
 
 ### After Pulling Changes
 
 ```bash
 # 1. Update dependencies
-mutagen-compose exec storefront pnpm install
+docker compose exec storefront pnpm install
 
 # 2. Run database migrations
-mutagen-compose exec php-fpm php bin/console doctrine:migrations:migrate
+docker compose exec php-fpm php bin/console doctrine:migrations:migrate
 
 # 3. Generate schema and translations
 make generate-schema
-mutagen-compose exec storefront pnpm translate
-mutagen-compose exec php-fpm php phing translations-dump
+docker compose exec storefront pnpm translate
+docker compose exec php-fpm php phing translations-dump
 
 # 4. Clear cache and rebuild assets
-mutagen-compose exec php-fpm php bin/console cache:clear
-mutagen-compose exec php-fpm php phing assets
+docker compose exec php-fpm php bin/console cache:clear
+docker compose exec php-fpm php phing assets
 ```
 
 ### Before Committing
 
 ```bash
 # Fix code standards and run tests
-mutagen-compose exec php-fpm php phing standards-fix
-mutagen-compose exec storefront pnpm check--fix
-mutagen-compose exec storefront pnpm test
+docker compose exec php-fpm php phing standards-fix
+docker compose exec storefront pnpm check--fix
+docker compose exec storefront pnpm test
 ```
 
 ## Database & Data Management
 
 ```bash
 # Create demo data (wipes existing data)
-mutagen-compose exec php-fpm php phing demo-data
+docker compose exec php-fpm php phing demo-data
 
 # Create test database with demo data
-mutagen-compose exec php-fpm php phing test-db-demo
+docker compose exec php-fpm php phing test-db-demo
 
 # Run migrations
-mutagen-compose exec php-fpm php bin/console doctrine:migrations:migrate
+docker compose exec php-fpm php bin/console doctrine:migrations:migrate
 
 # Generate new migration
-mutagen-compose exec php-fpm php phing db-migrations-generate
+docker compose exec php-fpm php phing db-migrations-generate
 
 # Reindex Elasticsearch
-mutagen-compose exec php-fpm php phing elasticsearch-reindex
+docker compose exec php-fpm php phing elasticsearch-reindex
 ```
 
 ## Asset & Build Management
 
 ```bash
 # Development assets with source maps
-mutagen-compose exec php-fpm php phing npm-dev
+docker compose exec php-fpm php phing npm-dev
 
 # Watch for changes and rebuild
-mutagen-compose exec php-fpm php phing npm-watch
+docker compose exec php-fpm php phing npm-watch
 
 # Production assets
-mutagen-compose exec php-fpm php phing npm
-mutagen-compose exec php-fpm php phing assets
+docker compose exec php-fpm php phing npm
+docker compose exec php-fpm php phing assets
 ```
 
 ## Translation Management
 
 ```bash
 # Generate backend translations
-mutagen-compose exec php-fpm php phing translations-dump
+docker compose exec php-fpm php phing translations-dump
 
 # Generate frontend translations
-mutagen-compose exec storefront pnpm translate
+docker compose exec storefront pnpm translate
 ```
 
 ## Troubleshooting Workflows
@@ -215,30 +243,39 @@ mutagen-compose exec storefront pnpm translate
 
 ```bash
 # 1. Restart problematic containers
-mutagen-compose up -d --force-recreate storefront webserver
+docker compose up -d --force-recreate storefront webserver
 
 # 2. Clear caches
-mutagen-compose exec php-fpm php bin/console cache:clear
+docker compose exec php-fpm php bin/console cache:clear
 
 # 3. Rebuild assets
-mutagen-compose exec php-fpm php phing assets
+docker compose exec php-fpm php phing assets
 
 # 4. Check container logs
-mutagen-compose logs storefront
-mutagen-compose logs php-fpm
+docker compose logs storefront
+docker compose logs php-fpm
 ```
 
 ### Complete Reset
 
 ```bash
-# 1. Stop all containers
-mutagen-compose down
+# 1. Stop everything (macOS) - recommended
+./scripts/mutagen-down.sh
 
-# 2. Start fresh
-mutagen-compose up -d
+# Or manually:
+# mutagen project terminate
+# docker compose --profile mutagen down
+
+# 2. Start fresh (macOS)
+./scripts/mutagen-up.sh
+
+# Or manually:
+# docker compose --profile mutagen up -d
+# mutagen project start
+# docker compose up -d
 
 # 3. Recreate demo environment
-mutagen-compose exec php-fpm php phing demo-data
+docker compose exec php-fpm php phing demo-data
 ```
 
 ## Upgrade & Maintenance
@@ -247,18 +284,18 @@ mutagen-compose exec php-fpm php phing demo-data
 
 ```bash
 # Run upgrade generation (used during platform upgrades)
-mutagen-compose exec php-fpm php phing upgrade-generate
+docker compose exec php-fpm php phing upgrade-generate
 
 # Update schema after upgrade
 make generate-schema
 
 # Update translations
-mutagen-compose exec storefront pnpm translate
-mutagen-compose exec php-fpm php phing translations-dump
+docker compose exec storefront pnpm translate
+docker compose exec php-fpm php phing translations-dump
 
 # Run migrations and rebuild
-mutagen-compose exec php-fpm php bin/console doctrine:migrations:migrate
-mutagen-compose exec php-fpm php phing assets
+docker compose exec php-fpm php bin/console doctrine:migrations:migrate
+docker compose exec php-fpm php phing assets
 ```
 
 ## Makefile Commands
@@ -275,32 +312,35 @@ Use the [Makefile](mdc:Makefile) for common tasks:
 ### Full Environment Refresh
 
 ```bash
-mutagen-compose exec php-fpm php phing demo-data && \
-mutagen-compose exec php-fpm php phing elasticsearch-reindex && \
+docker compose exec php-fpm php phing demo-data && \
+docker compose exec php-fpm php phing elasticsearch-reindex && \
 make generate-schema
 ```
 
 ### Complete Code Check
 
 ```bash
-mutagen-compose exec php-fpm php phing standards-fix && \
-mutagen-compose exec storefront pnpm check--fix && \
-mutagen-compose exec storefront pnpm test
+docker compose exec php-fpm php phing standards-fix && \
+docker compose exec storefront pnpm check--fix && \
+docker compose exec storefront pnpm test
 ```
 
 ## Container Status & Logs
 
 ```bash
 # Check container status
-mutagen-compose ps
+docker compose ps
 
 # View specific container logs
-mutagen-compose logs storefront
-mutagen-compose logs php-fpm
-mutagen-compose logs webserver
+docker compose logs storefront
+docker compose logs php-fpm
+docker compose logs webserver
 
 # Follow logs in real-time
-mutagen-compose logs -f storefront
+docker compose logs -f storefront
+
+# Check mutagen sync status (macOS)
+mutagen sync list
 ```
 
 ## Help Commands
@@ -310,8 +350,8 @@ mutagen-compose logs -f storefront
 make help
 
 # Phing targets (backend)
-mutagen-compose exec php-fpm php phing -l
+docker compose exec php-fpm php phing -l
 
 # Available npm scripts (frontend)
-mutagen-compose exec storefront pnpm run
+docker compose exec storefront pnpm run
 ```

@@ -52,7 +52,7 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
 
 **Platform-specific Docker Compose:**
 
-- **macOS**: Use `mutagen-compose` instead of `docker compose`
+- **macOS**: Use helper scripts `./scripts/mutagen-up.sh` and `./scripts/mutagen-down.sh`, or manually use `docker compose --profile mutagen` + `mutagen project start/terminate`
 - **Linux/Windows**: Use `docker compose`
 
 **Commands that MUST run in Docker containers:**
@@ -70,22 +70,34 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
 **Correct Docker Command Patterns:**
 
 ```bash
-# Backend/PHP commands (use appropriate compose command)
+# Backend/PHP commands
 docker compose exec php-fpm php phing build-demo-dev-quick
 docker compose exec php-fpm php phing phpstan
 docker compose exec php-fpm composer install
-mutagen-compose exec php-fpm php vendor/bin/phpunit  # macOS
+docker compose exec php-fpm php vendor/bin/phpunit
 
-# Storefront commands (use appropriate compose command)
+# Storefront commands
 docker compose exec storefront pnpm run dev
 docker compose exec storefront pnpm run check--fix
-mutagen-compose exec storefront pnpm install  # macOS
+docker compose exec storefront pnpm install
 
 # System commands (run directly on host)
 git status
 git commit -m "message"
 make check-fix
 ls -la packages/
+
+# macOS only - Start/Stop with helper scripts (recommended)
+./scripts/mutagen-up.sh   # Start everything (sidecar + mutagen + containers)
+./scripts/mutagen-down.sh    # Stop everything
+
+# macOS only - Manual Mutagen workflow
+docker compose --profile mutagen up -d  # Start sidecar containers first
+mutagen project start                    # Start file sync
+mutagen sync list                        # Check sync status (wait for "Watching")
+docker compose up -d                     # Start remaining containers
+mutagen project terminate                # Stop file sync (before stopping containers)
+docker compose --profile mutagen down    # Stop all containers
 ```
 
 ```bash
@@ -97,8 +109,6 @@ ls -la packages/
 ```
 
 ### Backend Development (Phing)
-
-**Note**: Replace `docker compose` with `mutagen-compose` on macOS
 
 ```bash
 # Quick development builds
@@ -123,8 +133,6 @@ docker compose exec php-fpm php phing phpstan              # Static analysis
 
 ### Storefront Development
 
-**Note**: Replace `docker compose` with `mutagen-compose` on macOS
-
 ```bash
 # Development
 docker compose exec storefront pnpm run dev                   # Start dev server (port 3000)
@@ -140,8 +148,6 @@ docker compose exec storefront pnpm run gql                  # Generate GraphQL 
 ```
 
 ### Testing Commands
-
-**Note**: Replace `docker compose` with `mutagen-compose` on macOS
 
 ```bash
 # Backend testing (run in Docker)
@@ -223,7 +229,7 @@ Login credentials for PostgreSQL are set in the `project-base/app/.env` file.
 4. **GraphQL Changes**: After backend schema changes → `make generate-schema`
 5. **Full Validation**: `make check-fix` before committing
 
-**Remember**: Use `mutagen-compose` instead of `docker compose` on macOS
+**macOS Users**: Ensure `mutagen project start` is running for file synchronization
 
 ## Testing Strategy
 
@@ -244,7 +250,7 @@ Login credentials for PostgreSQL are set in the `project-base/app/.env` file.
 
 - Always use `make generate-schema` after GraphQL schema changes to sync backend and storefront
 - The platform supports multi-domain/multi-language setups by default
-- Use `docker compose exec php-fpm php phing build-demo-dev-quick` for fastest development setup with demo data (use `mutagen-compose` on macOS)
+- Use `docker compose exec php-fpm php phing build-demo-dev-quick` for fastest development setup with demo data
 - Run `make check-fix` before committing to ensure code quality standards
 - Storefront development requires pnpm, backend requires PHP/Composer - both run in Docker containers
 - Framework packages should only be modified via the monorepo, not directly in `/packages/`

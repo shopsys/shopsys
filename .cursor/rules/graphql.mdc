@@ -28,10 +28,10 @@ This command:
 
 ```bash
 # Backend: Generate schema
-mutagen-compose exec php-fpm php phing frontend-api-generate-graphql-schema
+docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
 
 # Frontend: Generate types
-mutagen-compose exec storefront pnpm run gql
+docker compose exec storefront pnpm run gql
 ```
 
 ### Alternative Backend Schema Generation
@@ -39,8 +39,8 @@ mutagen-compose exec storefront pnpm run gql
 You can also generate the GraphQL schema directly using:
 
 ```bash
-mutagen-compose exec php-fpm php bin/console graphql:validate
-mutagen-compose exec php-fpm php phing frontend-api-generate-graphql-schema
+docker compose exec php-fpm php bin/console graphql:validate
+docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
 ```
 
 ## File Structure

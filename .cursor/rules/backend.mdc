@@ -17,20 +17,20 @@ description: Essential backend patterns and commands for PHP/Symfony
 
 ```bash
 # Code quality
-mutagen-compose exec php-fpm php phing standards-fix
-mutagen-compose exec php-fpm php phing phpstan
+docker compose exec php-fpm php phing standards-fix
+docker compose exec php-fpm php phing phpstan
 
 # Database operations
-mutagen-compose exec php-fpm php bin/console doctrine:migrations:migrate
-mutagen-compose exec php-fpm php phing demo-data
+docker compose exec php-fpm php bin/console doctrine:migrations:migrate
+docker compose exec php-fpm php phing demo-data
 
 # GraphQL schema generation
-mutagen-compose exec php-fpm php phing frontend-api-generate-graphql-schema
-mutagen-compose exec php-fpm php bin/console graphql:validate
+docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
+docker compose exec php-fpm php bin/console graphql:validate
 
 # Translations and assets
-mutagen-compose exec php-fpm php phing translations-dump
-mutagen-compose exec php-fpm php phing assets
+docker compose exec php-fpm php phing translations-dump
+docker compose exec php-fpm php phing assets
 ```
 
 ## Core Architecture Patterns

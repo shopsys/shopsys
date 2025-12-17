@@ -14,13 +14,13 @@ ESLint is configured with custom rules to catch HTML validation issues and ensur
 
 ```bash
 # Check for validation issues
-mutagen-compose exec storefront pnpm lint
+docker compose exec storefront pnpm lint
 
 # Fix issues automatically (where possible)
-mutagen-compose exec storefront pnpm check--fix
+docker compose exec storefront pnpm check--fix
 
 # Check specific file
-mutagen-compose exec storefront npx eslint path/to/component.tsx
+docker compose exec storefront npx eslint path/to/component.tsx
 ```
 
 #### Button Content Validation

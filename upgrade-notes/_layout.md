@@ -22,7 +22,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 - check the instructions in all sections; any of them could be relevant to you
 - the typical upgrade sequence should be:
     - run `docker compose down --volumes` to turn off your containers
-    - _(macOS only)_ run `mutagen-compose down --volumes` instead
+    - _(macOS only)_ run `mutagen project terminate` first, then `docker compose down --volumes`
     - follow upgrade notes in the _Infrastructure_ section (related to `docker-compose.yml`, `Dockerfile`, docker containers, `nginx.conf`, `php.ini`, etc.)
     - _(MacOS, Windows only)_ run `docker-sync start` to create volumes
     - run `docker compose build --no-cache --pull` to build your images without cache and with the latest version
