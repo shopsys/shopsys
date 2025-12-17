@@ -56,6 +56,12 @@ case "$operatingSystem" in
         docker compose up -d --build --force-recreate
         ;;
     "2")
+        if ! command -v mutagen &> /dev/null; then
+            1>&2 printf "\e[31mERROR:\e[0m Mutagen is not installed. Please install it first by running:\n"
+            1>&2 printf "    brew install mutagen-io/mutagen/mutagen\n"
+            exit 1
+        fi
+
         cp -f docker/conf/docker-compose-mac.yml.dist docker-compose.yml
         cp -f docker/conf/mutagen.yml.dist mutagen.yml
 
@@ -64,6 +70,7 @@ case "$operatingSystem" in
         sed -i '' -E "s#LOCAL_PATH_TO_PROJECT_ROOT: .*#LOCAL_PATH_TO_PROJECT_ROOT: $(pwd)#" ./docker-compose.yml
         sed -i '' -E "s#defaultOwner: \"id:501\"#defaultOwner: \"id:$(id -u)\"#g" ./mutagen.yml
         sed -i '' -E "s#defaultGroup: \"id:20\"#defaultGroup: \"id:$(id -g)\"#g" ./mutagen.yml
+        sed -i '' -E "s#mutagenio/sidecar:[0-9.]+#mutagenio/sidecar:$(mutagen version)#g" ./docker-compose.yml
 
         if [[ $1 != --skip-aliasing ]]; then
             echo "You will be asked to enter sudo password in case to allow second domain alias in your system config"
