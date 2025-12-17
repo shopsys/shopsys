@@ -26,6 +26,7 @@ class ClosedDayDataFactory
         $closedDayData->domainId = $closedDay->getDomainId();
         $closedDayData->date = $closedDay->getDate();
         $closedDayData->name = $closedDay->getName();
+        $closedDayData->isPublicHoliday = $closedDay->isPublicHoliday();
 
         return $closedDayData;
     }

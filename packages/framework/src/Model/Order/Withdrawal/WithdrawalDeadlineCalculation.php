@@ -4,16 +4,24 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
+use DateTimeImmutable;
 use DateTimeInterface;
+use DateTimeZone;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\BusinessDayCalculation;
+use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class WithdrawalDeadlineCalculation
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSetting $withdrawalSetting
+     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\BusinessDayCalculation $businessDayCalculation
+     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */
     public function __construct(
         protected readonly WithdrawalSetting $withdrawalSetting,
+        protected readonly BusinessDayCalculation $businessDayCalculation,
+        protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
     ) {
     }
 
@@ -29,8 +37,17 @@ class WithdrawalDeadlineCalculation
             return null;
         }
 
-        $withdrawalDeadlineDays = $this->withdrawalSetting->getDeadlineDays($order->getDomainId());
+        $domainId = $order->getDomainId();
+        $withdrawalDeadlineDays = $this->withdrawalSetting->getDeadlineDays($domainId);
 
-        return (clone $deliveredAt)->modify(sprintf('+%d days', $withdrawalDeadlineDays));
+        $domainTimezone = $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId);
+        $deliveredAtInDomainTimezone = DateTimeImmutable::createFromInterface($deliveredAt)->setTimezone($domainTimezone);
+
+        $deadline = $deliveredAtInDomainTimezone
+            ->modify(sprintf('+%d days', $withdrawalDeadlineDays))
+            ->setTime(23, 59, 59)
+            ->setTimezone(new DateTimeZone('UTC'));
+
+        return $this->businessDayCalculation->getClosestBusinessDay($deadline, $domainId);
     }
 }

@@ -61,6 +61,9 @@ msgstr "<a href=\"%url%\">Není nastavena výchozí jednotka.</a>"
 msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
 msgstr "<a href=\"%url%\">Není nastaven článek zásady ochrany osobních údajů pro doménu %domainName%.</a>"
 
+msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
+msgstr "<a href=\"%url%\">Státní svátky pro rok %year% nejsou nastaveny.</a>"
+
 msgid "<a href=\"%url%\">Some required email templates are not fully set.</a>"
 msgstr "<a href=\"%url%\">Některé povinné e-mailové šablony nejsou vyplněny.</a>"
 
@@ -673,8 +676,8 @@ msgstr "Byl upraven stát <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 msgid "Country code"
 msgstr "Kód země"
 
-msgid "Country code in ISO 3166-1 alpha-2"
-msgstr "Kód země v ISO 3166-1 alpha-2"
+msgid "Country code in <a href=\"%wikiLink%\" target=\"_blank\">ISO 3166-1 alpha-2</a>"
+msgstr "Kód země ve formátu <a href=\"%wikiLink%\" target=\"_blank\">ISO 3166-1 alpha-2</a>"
 
 msgid "Create"
 msgstr "Vytvořit"
@@ -1759,6 +1762,9 @@ msgstr "Detail svátku / interního dne"
 msgid "Holidays and internal days"
 msgstr "Svátky a interní dny"
 
+msgid "Holidays import"
+msgstr "Import svátků"
+
 msgid "Home page"
 msgstr "Domovská stránka"
 
@@ -1780,6 +1786,9 @@ msgstr "ID %productId%"
 msgid "Icon"
 msgstr "Ikona"
 
+msgid "If the country is not listed, you have to <a href=\"%countryCreateUrl%\" target=\"_blank\">create</a> it first. Or, in rare scenarios, your country code might not be <a href=\"%supportedCountriesUrl%\" target=\"_blank\">supported</a>."
+msgstr "Pokud země není uvedena, musíte ji nejprve <a href=\"%countryCreateUrl%\" target=\"_blank\">vytvořit</a>. Nebo ve vzácných případech váš kód země nemusí být <a href=\"%supportedCountriesUrl%\" target=\"_blank\">podporován</a>."
+
 msgid "If you allow negative stock, it is possible to order more items than are currently in stock."
 msgstr "Pokud povolíte nákup do mínusu, je možné objednat více položek, než je aktuálně na skladě."
 
@@ -1797,6 +1806,9 @@ msgstr "Obrázky"
 
 msgid "Import"
 msgstr "Nahrát"
+
+msgid "Import for domain"
+msgstr "Import pro doménu"
 
 msgid "Import price list"
 msgstr "Nahrát ceník"
@@ -2716,6 +2728,12 @@ msgstr "Akce může být nastavena na konkrétní variantě."
 msgid "Promotion {{ x }} + {{ y }} free"
 msgstr "Akce {{ x }} + {{ y }} zdarma"
 
+msgid "Public holiday"
+msgstr "Státní svátek"
+
+msgid "Public holidays are taken into account when calculating the order withdrawal deadline."
+msgstr "Státní svátky se berou v úvahu při výpočtu lhůty pro odstoupení od smlouvy."
+
 msgid "QR code"
 msgstr "QR kód"
 
@@ -2874,6 +2892,9 @@ msgstr "Vyhledat a najít produkty..."
 
 msgid "Second column categories"
 msgstr "Kategorie druhého sloupce"
+
+msgid "Select country"
+msgstr "Vybrat zemi"
 
 msgid "Select items"
 msgstr "Vybrat položky"
@@ -3223,6 +3244,9 @@ msgstr "Instrukce jsou zákazníkovi zobrazeny poté, co odešle žádost o odst
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
 
+msgid "The selected country is not valid."
+msgstr "Zvolená země není platná."
+
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."
 
@@ -3541,6 +3565,9 @@ msgstr "XML Feedy"
 msgid "XML feeds settings"
 msgstr "Nastavení XML feedů"
 
+msgid "Year"
+msgstr "Rok"
+
 msgid "Yes"
 msgstr "Ano"
 
@@ -3687,6 +3714,9 @@ msgstr "bez DPH"
 
 msgid "without positioning"
 msgstr "bez umístění"
+
+msgid "{1} Imported <strong>%count%</strong> holiday.|[2,Inf] Imported <strong>%count%</strong> holidays."
+msgstr "{1} Byl naimportován <strong>%count%</strong> svátek.|[2,4] Byly naimportovány <strong>%count%</strong> svátky.|[5,Inf] Bylo naimportováno <strong>%count%</strong> svátků."
 
 msgid "{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in."
 msgstr "{1} Existuje jeden parametr typu slider, který nemá vyplněné své číselné hodnoty.|[2,4] Existuje %count% parametrů typu slider, které nemají vyplněné své číselné hodnoty.|[5,Inf] Existuje %count% parametrů typu slider, které nemají vyplněné své číselné hodnoty."

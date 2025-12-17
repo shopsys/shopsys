@@ -47,6 +47,12 @@ class ClosedDay
     protected $name;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $isPublicHoliday;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayData $closedDayData
      */
     public function __construct(ClosedDayData $closedDayData)
@@ -95,6 +101,14 @@ class ClosedDay
     }
 
     /**
+     * @return bool
+     */
+    public function isPublicHoliday()
+    {
+        return $this->isPublicHoliday;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayData $closedDayData
      */
     public function edit(ClosedDayData $closedDayData): void
@@ -111,5 +125,6 @@ class ClosedDay
         $this->domainId = $closedDayData->domainId;
         $this->date = $closedDayData->date;
         $this->name = $closedDayData->name;
+        $this->isPublicHoliday = $closedDayData->isPublicHoliday;
     }
 }

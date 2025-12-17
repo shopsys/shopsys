@@ -65,6 +65,7 @@ RUN apk add --no-cache --virtual .build-deps \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install \
         bcmath \
+        calendar \
         gd \
         intl \
         opcache \

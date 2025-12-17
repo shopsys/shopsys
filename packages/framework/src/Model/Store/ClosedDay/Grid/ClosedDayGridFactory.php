@@ -65,6 +65,7 @@ class ClosedDayGridFactory
         $grid->setDefaultOrder('date');
         $grid->addColumn('name', 'cd.name', t('Name'), true);
         $grid->addColumn('date', 'cd.date', t('Date'), true);
+        $grid->addColumn('publicHoliday', 'cd.isPublicHoliday', t('Public holiday'), true);
         $grid->addColumn('excludedStores', 'cd.excludedStores', t('Excluded stores'));
         $grid->addEditActionColumn('admin_closedday_edit', ['id' => 'cd.id']);
         $grid->addDeleteActionColumn('admin_closedday_delete', ['id' => 'cd.id'])

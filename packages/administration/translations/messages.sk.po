@@ -973,6 +973,9 @@ msgstr "Sviatky a interné dni"
 msgid "Holidays and internal days overview"
 msgstr "Prehľad Holidays and internal days"
 
+msgid "Holidays import"
+msgstr "Import sviatkov"
+
 msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
 msgstr "Ak nemôžete nascánovať QR kód, môžete ručne zadať nasledujúci tajný kľúč:"
 
@@ -987,6 +990,9 @@ msgstr "Obrázok bude po uložení zmazaný."
 
 msgid "Import CSV"
 msgstr "Importovať CSV"
+
+msgid "Import holidays"
+msgstr "Import sviatkov"
 
 msgid "Import price list"
 msgstr "Importovať cenník"
@@ -1911,6 +1917,9 @@ msgstr "Nastavenia Terms and conditions"
 
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
 msgstr "Aktuálny zoznam URL adries môže byť nájdený v repositári projektu v súbore \"storefront/config/staticRewritePaths.js\"."
+
+msgid "The days are used to display proper stores opening hours and to calculate order withdrawal deadline."
+msgstr "Tieto dni sa používajú na zobrazenie správnych otváracích hodín obchodov a na výpočet lehoty na odstúpenie od objednávky."
 
 msgid "The password reset link you used is invalid, expired, or has already been used."
 msgstr "Odkaz na resetovanie hesla je neplatný, expirovaný alebo už bol použitý."

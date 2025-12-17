@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Store;
 
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayData;
@@ -36,6 +37,10 @@ final class ClosedDayFormType extends AbstractType
     {
         $domainId = $options['data']->domainId;
         $builder
+            ->add('isPublicHoliday', YesNoType::class, [
+                'label' => 'Public holiday',
+                'help' => t('Public holidays are taken into account when calculating the order withdrawal deadline.'),
+            ])
             ->add('date', DatePickerType::class, [
                 'required' => true,
                 'label' => 'Date',

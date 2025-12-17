@@ -43,12 +43,13 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
                 continue;
             }
 
-            foreach ($this->getClosedDays($domainConfig) as [$date, $name]) {
+            foreach ($this->getClosedDays($domainConfig) as [$date, $name, $isPublicHoliday]) {
                 $closedDayData = $this->closedDayDataFactory->create();
                 $closedDayData->domainId = $domainId;
                 $closedDayData->excludedStores = [$stores[0]];
                 $closedDayData->date = $date;
                 $closedDayData->name = $name;
+                $closedDayData->isPublicHoliday = $isPublicHoliday;
                 $this->closedDayFacade->create($closedDayData);
             }
         }
@@ -56,7 +57,7 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return iterable<array{\DateTimeImmutable, string}>
+     * @return iterable<array{\DateTimeImmutable, string, bool}>
      */
     private function getClosedDays(DomainConfig $domainConfig): iterable
     {
@@ -65,16 +66,19 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
         yield [
             new DatePoint('24.12.' . date('Y')),
             t('Christmas Eve', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            true,
         ];
 
         yield [
             new DatePoint('25.12.' . date('Y')),
             t('Christmas Day', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            true,
         ];
 
         yield [
             new DatePoint('26.12.' . date('Y')),
-            t(' Second Christmas Day', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            t('Second Christmas Day', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            true,
         ];
     }
 

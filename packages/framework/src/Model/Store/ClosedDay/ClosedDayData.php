@@ -25,4 +25,9 @@ class ClosedDayData
      * @var string|null
      */
     public $name;
+
+    /**
+     * @var bool
+     */
+    public $isPublicHoliday = false;
 }

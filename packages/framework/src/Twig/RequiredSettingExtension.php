@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use DateTimeImmutable;
 use Override;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -13,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
+use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
@@ -25,6 +28,8 @@ class RequiredSettingExtension extends AbstractExtension
      */
     protected array $requiredSettingsMessages = [];
 
+    protected const int DAYS_BEFORE_YEAR_END_TO_WARN_ABOUT_HOLIDAYS = 30;
+
     /**
      * @param \Twig\Environment $twig
      * @param \Symfony\Component\Routing\RouterInterface $router
@@ -35,6 +40,8 @@ class RequiredSettingExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly Environment $twig,
@@ -46,6 +53,8 @@ class RequiredSettingExtension extends AbstractExtension
         protected readonly UnitFacade $unitFacade,
         protected readonly StockFacade $stockFacade,
         protected readonly CountryFacade $countryFacade,
+        protected readonly ClosedDayFacade $closedDayFacade,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -90,6 +99,7 @@ class RequiredSettingExtension extends AbstractExtension
         $this->checkAtLeastOneCountryExists();
         $this->checkMandatoryArticlesExist();
         $this->checkAllSliderNumericValuesAreSet();
+        $this->checkPublicHolidaysAreSet();
     }
 
     protected function checkEnabledMailTemplatesHaveTheirBodyAndSubjectFilled(): void
@@ -220,5 +230,47 @@ class RequiredSettingExtension extends AbstractExtension
         $message .= '</ul>';
 
         $this->requiredSettingsMessages[] = $message;
+    }
+
+    protected function checkPublicHolidaysAreSet(): void
+    {
+        $now = $this->clock->now();
+        $currentYear = (int)$now->format('Y');
+
+        $yearsToCheck = [$currentYear];
+
+        $yearEnd = new DateTimeImmutable($currentYear . '-12-31');
+        $daysUntilYearEnd = $now->diff($yearEnd)->days ?: 0;
+
+        if ($daysUntilYearEnd <= static::DAYS_BEFORE_YEAR_END_TO_WARN_ABOUT_HOLIDAYS) {
+            $yearsToCheck[] = $currentYear + 1;
+        }
+
+        foreach ($yearsToCheck as $year) {
+            $this->checkPublicHolidaysForYearAreSet($year);
+        }
+    }
+
+    /**
+     * @param int $year
+     */
+    protected function checkPublicHolidaysForYearAreSet(int $year): void
+    {
+        $yearStart = new DateTimeImmutable($year . '-01-01');
+        $yearEnd = new DateTimeImmutable($year . '-12-31');
+
+        foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
+            if (!$this->closedDayFacade->hasPublicHolidays($domainId, $yearStart, $yearEnd)) {
+                $this->requiredSettingsMessages[] = t(
+                    '<a href="%url%">Public holidays for year %year% are not set.</a>',
+                    [
+                        '%url%' => $this->router->generate('admin_closedday_list'),
+                        '%year%' => $year,
+                    ],
+                );
+
+                return;
+            }
+        }
     }
 }

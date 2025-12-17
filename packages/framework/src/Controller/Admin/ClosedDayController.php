@@ -13,12 +13,16 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Form\Admin\Holidays\HolidaysImportFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Store\ClosedDayFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Holiday\HolidaysImportDataFactory;
+use Shopsys\FrameworkBundle\Model\Holiday\HolidaysImportFacade;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\Exception\ClosedDayNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\Grid\ClosedDayGridFactory;
+use Spatie\Holidays\Exceptions\InvalidCountry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -32,6 +36,8 @@ class ClosedDayController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory $closedDayDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Model\Holiday\HolidaysImportDataFactory $holidaysImportDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Holiday\HolidaysImportFacade $holidaysImportFacade
      */
     public function __construct(
         protected readonly ClosedDayFacade $closedDayFacade,
@@ -39,6 +45,8 @@ class ClosedDayController extends AdminBaseController
         protected readonly ClosedDayDataFactory $closedDayDataFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly HolidaysImportDataFactory $holidaysImportDataFactory,
+        protected readonly HolidaysImportFacade $holidaysImportFacade,
     ) {
     }
 
@@ -168,5 +176,35 @@ class ClosedDayController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_closedday_list');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/closed-day/holidays-import')]
+    #[CanEdit]
+    public function holidaysImportAction(Request $request): Response
+    {
+        $holidaysImportData = $this->holidaysImportDataFactory->create();
+        $form = $this->createForm(HolidaysImportFormType::class, $holidaysImportData);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            try {
+                $importedCount = $this->holidaysImportFacade->import($data);
+                $this->addSuccessFlashTwig(t('{1} Imported <strong>%count%</strong> holiday.|[2,Inf] Imported <strong>%count%</strong> holidays.', ['%count%' => $importedCount]));
+            } catch (InvalidCountry) {
+                $this->addErrorFlash(t('The selected country is not valid.'));
+            }
+
+            return $this->redirectToRoute('admin_closedday_list');
+        }
+
+        return $this->render('@ShopsysAdministration/content/closedDay/holidaysImport.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

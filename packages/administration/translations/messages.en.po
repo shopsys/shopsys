@@ -973,6 +973,9 @@ msgstr ""
 msgid "Holidays and internal days overview"
 msgstr ""
 
+msgid "Holidays import"
+msgstr ""
+
 msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
 msgstr ""
 
@@ -986,6 +989,9 @@ msgid "Image will be deleted after saving"
 msgstr ""
 
 msgid "Import CSV"
+msgstr ""
+
+msgid "Import holidays"
 msgstr ""
 
 msgid "Import price list"
@@ -1910,6 +1916,9 @@ msgid "Terms and conditions settings"
 msgstr ""
 
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
+msgstr ""
+
+msgid "The days are used to display proper stores opening hours and to calculate order withdrawal deadline."
 msgstr ""
 
 msgid "The password reset link you used is invalid, expired, or has already been used."

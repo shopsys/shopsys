@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
-use DateTime;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\OrderCancelledException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalAlreadyRequestedException;
@@ -15,13 +14,13 @@ class WithdrawalChecker
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestRepository $withdrawalRequestRepository
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation,
-        protected readonly Domain $domain,
         protected readonly WithdrawalRequestRepository $withdrawalRequestRepository,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -44,9 +43,7 @@ class WithdrawalChecker
             return;
         }
 
-        $now = new DateTime();
-
-        if ($now > $withdrawalDeadline) {
+        if ($this->clock->now() > $withdrawalDeadline) {
             throw new WithdrawalDeadlinePassedException('Withdrawal deadline has passed for this order');
         }
     }
