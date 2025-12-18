@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
@@ -134,11 +135,11 @@ class CartApiFacade
                 $this->domain->getId(),
                 $this->currentCustomerUser->getPricingGroup(),
             );
-        } catch (ProductNotFoundException $exception) {
+
+            return $this->cartFacade->addProductToExistingCart($product, $quantity, $cart, $isAbsoluteQuantity);
+        } catch (ProductNotFoundException|InvalidQuantityException) {
             throw new InvalidCartItemUserError(sprintf('Product with UUID "%s" is not available', $productUuid));
         }
-
-        return $this->cartFacade->addProductToExistingCart($product, $quantity, $cart, $isAbsoluteQuantity);
     }
 
     /**
