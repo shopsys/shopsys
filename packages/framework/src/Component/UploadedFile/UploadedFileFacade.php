@@ -63,77 +63,29 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     ): void {
         $uploadedFileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfig($entity);
         $uploadedFileTypeConfig = $uploadedFileEntityConfig->getTypeByName($type);
-
-        $uploadedFiles = $uploadedFileData->uploadedFiles;
-        $uploadedFilenames = $uploadedFileData->uploadedFilenames;
-        $orderedFiles = $uploadedFileData->orderedFiles;
-        $namesIndexedByFileIdAndLocale = $uploadedFileData->namesIndexedById;
-
         $entityName = $uploadedFileEntityConfig->getEntityName();
 
         $currentRelations = $this->uploadedFileRelationRepository->getByEntityNameAndIdAndUploadedFiles(
             $entityName,
             $this->getEntityId($entity),
-            $orderedFiles,
+            $uploadedFileData->orderedFiles,
             $type,
         );
 
-        $this->updateFilesOrder($orderedFiles, $currentRelations);
+        $this->updateFilesOrder($uploadedFileData->orderedFiles, $currentRelations);
         $this->updateFilenamesAndSlugs($uploadedFileData->currentFilenamesIndexedById);
+        $this->updateTranslatedNames($uploadedFileData->namesIndexedById);
 
-        foreach ($namesIndexedByFileIdAndLocale as $fileId => $names) {
-            $file = $this->getById($fileId);
-            $file->setTranslatedNames($names);
-        }
+        $startPosition = $uploadedFileTypeConfig->isMultiple()
+            ? $this->handleMultipleFiles($entity, $entityName, $type, $uploadedFileData)
+            : $this->handleSingleFile($entity, $entityName, $type, $uploadedFileData);
 
-        $existingFilesCount = count($orderedFiles);
-        $uploadedFilesCount = count($uploadedFiles);
-
-        if ($uploadedFileTypeConfig->isMultiple()) {
-            $this->uploadFiles(
-                $entity,
-                $entityName,
-                $type,
-                $uploadedFiles,
-                $uploadedFilenames,
-                $existingFilesCount,
-                $uploadedFileData->names,
-            );
-        } else {
-            $temporaryFilename = array_pop($uploadedFiles);
-            $hasPickerSelection = count($uploadedFileData->relations) > 0;
-
-            if (count($orderedFiles) > 0) {
-                $existingFile = array_shift($orderedFiles);
-
-                if (count($orderedFiles) > 0) {
-                    $this->deleteRelationsByEntityAndUploadedFiles($entity, $orderedFiles, $type);
-                }
-
-                if ($temporaryFilename || $hasPickerSelection) {
-                    $this->deleteRelationsByEntityAndUploadedFiles($entity, [$existingFile], $type);
-                }
-            }
-
-            if ($temporaryFilename && !$hasPickerSelection) {
-                $this->uploadFile(
-                    $entity,
-                    $entityName,
-                    $type,
-                    $temporaryFilename,
-                    array_pop($uploadedFilenames),
-                    array_pop($uploadedFileData->names) ?? [],
-                );
-            }
-        }
-
-        $position = $existingFilesCount + $uploadedFilesCount;
         $this->createRelations(
             $uploadedFileData,
             $currentRelations,
             $entityName,
             $entity,
-            $position,
+            $startPosition,
             $type,
             $uploadedFileTypeConfig->isMultiple(),
         );
@@ -295,6 +247,84 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         }
 
         $this->em->flush();
+    }
+
+    /**
+     * @param array<int, array<string, string>> $namesIndexedByFileIdAndLocale
+     */
+    protected function updateTranslatedNames(array $namesIndexedByFileIdAndLocale): void
+    {
+        foreach ($namesIndexedByFileIdAndLocale as $fileId => $names) {
+            $this->getById($fileId)->setTranslatedNames($names);
+        }
+    }
+
+    /**
+     * @param object $entity
+     * @param string $entityName
+     * @param string $type
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
+     * @return int
+     */
+    protected function handleMultipleFiles(
+        object $entity,
+        string $entityName,
+        string $type,
+        UploadedFileData $uploadedFileData,
+    ): int {
+        $this->uploadFiles(
+            $entity,
+            $entityName,
+            $type,
+            $uploadedFileData->uploadedFiles,
+            $uploadedFileData->uploadedFilenames,
+            count($uploadedFileData->orderedFiles),
+            $uploadedFileData->names,
+        );
+
+        return count($uploadedFileData->orderedFiles) + count($uploadedFileData->uploadedFiles);
+    }
+
+    /**
+     * @param object $entity
+     * @param string $entityName
+     * @param string $type
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
+     * @return int
+     */
+    protected function handleSingleFile(
+        object $entity,
+        string $entityName,
+        string $type,
+        UploadedFileData $uploadedFileData,
+    ): int {
+        $temporaryFilename = end($uploadedFileData->uploadedFiles) ?: null;
+        $hasPickerSelection = count($uploadedFileData->relations) > 0;
+        $orderedFiles = $uploadedFileData->orderedFiles;
+
+        if (count($orderedFiles) > 1) {
+            $filesToDelete = array_slice($orderedFiles, 1);
+            $this->deleteRelationsByEntityAndUploadedFiles($entity, $filesToDelete, $type);
+        }
+
+        if (count($orderedFiles) > 0 && ($temporaryFilename || $hasPickerSelection)) {
+            $this->deleteRelationsByEntityAndUploadedFiles($entity, [reset($orderedFiles)], $type);
+        }
+
+        if ($temporaryFilename && !$hasPickerSelection) {
+            $this->uploadFile(
+                $entity,
+                $entityName,
+                $type,
+                $temporaryFilename,
+                end($uploadedFileData->uploadedFilenames) ?: '',
+                end($uploadedFileData->names) ?: [],
+            );
+
+            return 1;
+        }
+
+        return 0;
     }
 
     /**
