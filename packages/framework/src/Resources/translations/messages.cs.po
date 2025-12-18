@@ -475,6 +475,9 @@ msgstr "CSV soubor"
 msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
 msgstr "CSV soubor musí být v kódování UTF-8 se sloupci \"{{ columns }}\". Doporučuje se čárka jako oddělovač sloupců a tečka (.) jako desetinný oddělovač."
 
+msgid "Cancel"
+msgstr "Zrušit"
+
 msgid "Canceled"
 msgstr "Stornována"
 
@@ -2898,6 +2901,9 @@ msgstr "Kategorie druhého sloupce"
 
 msgid "Select country"
 msgstr "Vybrat zemi"
+
+msgid "Select file"
+msgstr "Vybrat soubor"
 
 msgid "Select items"
 msgstr "Vybrat položky"

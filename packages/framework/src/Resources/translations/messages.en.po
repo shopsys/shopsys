@@ -475,6 +475,9 @@ msgstr ""
 msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
 msgstr ""
 
+msgid "Cancel"
+msgstr ""
+
 msgid "Canceled"
 msgstr ""
 
@@ -2897,6 +2900,9 @@ msgid "Second column categories"
 msgstr ""
 
 msgid "Select country"
+msgstr ""
+
+msgid "Select file"
 msgstr ""
 
 msgid "Select items"
