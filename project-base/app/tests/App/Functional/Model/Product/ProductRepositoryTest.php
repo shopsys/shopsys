@@ -7,9 +7,9 @@ namespace Tests\App\Functional\Model\Product;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
+use App\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductRepositoryTest extends TransactionFunctionalTestCase
@@ -19,31 +19,31 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
      */
     private ProductRepository $productRepository;
 
-    public function testVisibleAndNotSellingDeniedProductIsListed()
+    public function testVisibleAndNotSellingDeniedProductIsListed(): void
     {
         $this->getAllListableQueryBuilderTest(1, true);
     }
 
-    public function testVisibleAndSellingDeniedProductIsNotListed()
+    public function testVisibleAndSellingDeniedProductIsNotListed(): void
     {
         $this->getAllListableQueryBuilderTest(6, false);
     }
 
-    public function testProductVariantIsNotListed()
+    public function testProductVariantIsNotListed(): void
     {
         $this->getAllListableQueryBuilderTest(53, false);
     }
 
-    public function testProductMainVariantIsListed()
+    public function testProductMainVariantIsListed(): void
     {
         $this->getAllListableQueryBuilderTest(69, true);
     }
 
     /**
-     * @param mixed $productReferenceId
-     * @param mixed $isExpectedInResult
+     * @param int $productReferenceId
+     * @param bool $isExpectedInResult
      */
-    private function getAllListableQueryBuilderTest($productReferenceId, $isExpectedInResult)
+    private function getAllListableQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
@@ -62,31 +62,31 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
 
-    public function testVisibleAndNotSellingDeniedProductIsSellable()
+    public function testVisibleAndNotSellingDeniedProductIsSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(1, true);
     }
 
-    public function testVisibleAndSellingDeniedProductIsNotSellable()
+    public function testVisibleAndSellingDeniedProductIsNotSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(6, false);
     }
 
-    public function testProductVariantIsSellable()
+    public function testProductVariantIsSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(53, true);
     }
 
-    public function testProductMainVariantIsNotSellable()
+    public function testProductMainVariantIsNotSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(69, false);
     }
 
     /**
-     * @param mixed $productReferenceId
-     * @param mixed $isExpectedInResult
+     * @param int $productReferenceId
+     * @param bool $isExpectedInResult
      */
-    private function getAllSellableQueryBuilderTest($productReferenceId, $isExpectedInResult)
+    private function getAllSellableQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
@@ -105,31 +105,31 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
 
-    public function testVisibleAndNotSellingDeniedProductIsOfferred()
+    public function testVisibleAndNotSellingDeniedProductIsOffered(): void
     {
         $this->getAllOfferedQueryBuilderTest(1, true);
     }
 
-    public function testVisibleAndSellingDeniedProductIsNotOfferred()
+    public function testVisibleAndSellingDeniedProductIsNotOffered(): void
     {
         $this->getAllOfferedQueryBuilderTest(6, false);
     }
 
-    public function testProductVariantIsOfferred()
+    public function testProductVariantIsOffered(): void
     {
         $this->getAllOfferedQueryBuilderTest(53, true);
     }
 
-    public function testProductMainVariantIsOfferred()
+    public function testProductMainVariantIsOffered(): void
     {
         $this->getAllOfferedQueryBuilderTest(69, true);
     }
 
     /**
-     * @param mixed $productReferenceId
-     * @param mixed $isExpectedInResult
+     * @param int $productReferenceId
+     * @param bool $isExpectedInResult
      */
-    private function getAllOfferedQueryBuilderTest($productReferenceId, $isExpectedInResult)
+    private function getAllOfferedQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
@@ -148,7 +148,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
 
-    public function testGetSortedProductsByIds()
+    public function testGetSortedProductsByIds(): void
     {
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
@@ -156,27 +156,16 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
             PricingGroup::class,
         );
 
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
-        $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 3, Product::class);
-        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 4, Product::class);
-
-        $sortedProducts = [
-            $product4,
-            $product1,
-            $product3,
-            $product2,
-        ];
-
-        $sortedProductIds = [
-            $product4->getId(),
-            $product1->getId(),
-            $product3->getId(),
-            $product2->getId(),
-        ];
+        $sortedProductIds = [4, 1, 3, 2];
 
         $results = $this->productRepository->getOfferedByIds($this->domain->getId(), $pricingGroup, $sortedProductIds);
 
-        $this->assertSame($sortedProducts, $results);
+        $this->assertSame(
+            $sortedProductIds,
+            array_map(
+                static fn (Product $product) => $product->getId(),
+                $results,
+            ),
+        );
     }
 }
