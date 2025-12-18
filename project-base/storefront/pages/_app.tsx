@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.css';
 import { logErrorBoundary } from 'utils/errors/logErrorBoundary';
 import { logException } from 'utils/errors/logException';
-import { initDayjsLocale } from 'utils/formaters/formatDate';
+import { initIntlDateTimeFormatterLocale } from 'utils/formaters/formatDate';
 
 const framerMotionPlugins = () => import('utils/animations/framerMotionPlugins').then((res) => res.default);
 
@@ -54,7 +54,7 @@ const Error500ContentWithBoundary = dynamic(
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
     const { defaultLocale } = pageProps.domainConfig;
-    initDayjsLocale(defaultLocale);
+    initIntlDateTimeFormatterLocale(defaultLocale);
 
     useEffect(() => {
         document.body.setAttribute('data-hydrated', 'true');

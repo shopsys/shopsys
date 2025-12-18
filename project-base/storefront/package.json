@@ -33,7 +33,6 @@
         "@urql/exchange-graphcache": "~6.4.1",
         "cookies-next": "~4.3.0",
         "crypto-js": "~4.2.0",
-        "dayjs": "~1.11.18",
         "framer-motion": "^11.18.2",
         "google-map-react": "^2.2.5",
         "graphql": "~16.8.2",

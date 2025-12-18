@@ -1,9 +1,5 @@
-import dayjs, { Dayjs } from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
-
-dayjs.extend(duration);
 
 interface TimeState {
     days: string;
@@ -13,11 +9,10 @@ interface TimeState {
     isLoading: boolean;
 }
 
-type CountdownTime = Dayjs | string | Date;
+type CountdownTime = string | Date;
 
-const calculateTimeLeft = (duration: duration.Duration): Omit<TimeState, 'isLoading'> => {
-    const totalMilliseconds = duration.asMilliseconds();
-    const totalSeconds = Math.floor(totalMilliseconds / 1000);
+const calculateTimeLeft = (durationMs: number): Omit<TimeState, 'isLoading'> => {
+    const totalSeconds = Math.floor(durationMs / 1000);
     const totalMinutes = Math.floor(totalSeconds / 60);
     const totalHours = Math.floor(totalMinutes / 60);
     const totalDays = Math.floor(totalHours / 24);
@@ -32,11 +27,11 @@ const calculateTimeLeft = (duration: duration.Duration): Omit<TimeState, 'isLoad
     };
 };
 
-export const useCountdown = (
-    endTime: CountdownTime,
-    callback: () => void = () => router.reload(),
-    interval = 1000,
-): TimeState => {
+const parseDate = (date: CountdownTime): number => {
+    return new Date(date).getTime();
+};
+
+export const useCountdown = (endTime: CountdownTime, callback?: () => void, interval = 1000): TimeState => {
     const router = useRouter();
 
     const [time, setTime] = useState<TimeState>({
@@ -47,45 +42,45 @@ export const useCountdown = (
         isLoading: true,
     });
 
+    const effectiveCallback = useCallback(() => (callback ?? router.reload)(), [callback, router]);
+
     const updateTime = useCallback(
-        (duration: duration.Duration) => {
-            if (duration.asMilliseconds() <= 0) {
-                callback();
+        (durationMs: number) => {
+            if (durationMs <= 0) {
+                effectiveCallback();
                 return false;
             }
 
-            setTime(() => ({
-                ...calculateTimeLeft(duration),
+            setTime({
+                ...calculateTimeLeft(durationMs),
                 isLoading: false,
-            }));
+            });
 
             return true;
         },
-        [router],
+        [effectiveCallback],
     );
 
     useEffect(() => {
-        const currentTime = dayjs();
-        const endTimeDayjs = dayjs(endTime);
+        const currentTime = Date.now();
+        const endTimeMs = parseDate(endTime);
 
-        if (!endTimeDayjs.isValid()) {
-            return;
+        if (isNaN(endTimeMs)) {
+            return undefined;
         }
 
-        const diffTime = endTimeDayjs.diff(currentTime);
-        let duration = dayjs.duration(diffTime);
+        let durationMs = endTimeMs - currentTime;
 
         const intervalId = setInterval(() => {
-            duration = duration.subtract(interval);
+            durationMs = durationMs - interval;
 
-            if (!updateTime(duration)) {
+            if (!updateTime(durationMs)) {
                 clearInterval(intervalId);
             }
         }, interval);
 
-        // eslint-disable-next-line consistent-return
         return () => clearInterval(intervalId);
-    }, [endTime, updateTime]);
+    }, [endTime, updateTime, interval]);
 
     return time;
 };

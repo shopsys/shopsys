@@ -3,8 +3,6 @@ import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import dayjs from 'dayjs';
-import isBetween from 'dayjs/plugin/isBetween';
 import { jwtDecode } from 'jwt-decode';
 import Trans from 'next-translate/Trans';
 import { memo, useEffect, useState } from 'react';
@@ -12,16 +10,10 @@ import { twJoin } from 'tailwind-merge';
 import { getTokensFromCookies } from 'utils/auth/getTokensFromCookies';
 import { useLogout } from 'utils/auth/useLogout';
 import { getYIQContrastTextColor } from 'utils/colors/colors';
-import { useCountdown } from 'utils/useCountdown';
 import { useNotificationBarsWithRevalidation } from 'utils/useNotificationBarRevalidation';
 
-dayjs.extend(isBetween);
-
-const COUNTDOWN_REVALIDATION_INTERVAL = 10000;
-
 export const NotificationBars: FC = memo(function NotificationBars() {
-    const { activeNotificationBars, fetchNotificationBars, nextRevalidationTime } =
-        useNotificationBarsWithRevalidation();
+    const { activeNotificationBars } = useNotificationBarsWithRevalidation();
     const user = useCurrentCustomerData();
     const [loggedAsUserEmail, setLoggedAsUserEmail] = useState<string>();
     const logout = useLogout();
@@ -36,10 +28,8 @@ export const NotificationBars: FC = memo(function NotificationBars() {
         const decodedAccessToken = jwtDecode(encodedAccessToken) as { administratorUuid?: string };
         const isUserAdmin = !!decodedAccessToken.administratorUuid;
 
-        setLoggedAsUserEmail(isUserAdmin ? user!.email : undefined);
+        setLoggedAsUserEmail(isUserAdmin && user ? user.email : undefined);
     }, [user, domainConfig]);
-
-    useCountdown(nextRevalidationTime, () => fetchNotificationBars(), COUNTDOWN_REVALIDATION_INTERVAL);
 
     return (
         <>
