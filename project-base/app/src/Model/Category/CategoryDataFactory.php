@@ -35,10 +35,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     #[Override]
     protected function createInstance(): BaseCategoryData
     {
-        $categoryData = new CategoryData();
-        $categoryData->image = $this->imageUploadDataFactory->create();
-
-        return $categoryData;
+        return new CategoryData();
     }
 
     /**

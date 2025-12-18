@@ -21,10 +21,7 @@ class NotificationBarDataFactory
      */
     protected function createInstance(): NotificationBarData
     {
-        $notificationBarData = new NotificationBarData();
-        $notificationBarData->image = $this->imageUploadDataFactory->create();
-
-        return $notificationBarData;
+        return new NotificationBarData();
     }
 
     /**
@@ -64,5 +61,6 @@ class NotificationBarDataFactory
     protected function fillNew(NotificationBarData $notificationBarData): void
     {
         $notificationBarData->hidden = false;
+        $notificationBarData->image = $this->imageUploadDataFactory->create();
     }
 }

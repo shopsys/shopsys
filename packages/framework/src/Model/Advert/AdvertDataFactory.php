@@ -21,11 +21,7 @@ class AdvertDataFactory
      */
     protected function createInstance(): AdvertData
     {
-        $advertData = new AdvertData();
-        $advertData->image = $this->imageUploadDataFactory->create();
-        $advertData->mobileImage = $this->imageUploadDataFactory->create();
-
-        return $advertData;
+        return new AdvertData();
     }
 
     /**
@@ -33,7 +29,12 @@ class AdvertDataFactory
      */
     public function create(): AdvertData
     {
-        return $this->createInstance();
+        $advertData = $this->createInstance();
+
+        $advertData->image = $this->imageUploadDataFactory->create();
+        $advertData->mobileImage = $this->imageUploadDataFactory->create();
+
+        return $advertData;
     }
 
     /**
@@ -61,7 +62,6 @@ class AdvertDataFactory
         $advertData->positionName = $advert->getPositionName();
         $advertData->hidden = $advert->isHidden();
         $advertData->domainId = $advert->getDomainId();
-        $advertData->image = $this->imageUploadDataFactory->createFromEntityAndType($advert);
         $advertData->categories = $advert->getCategories();
 
         $advertData->image = $this->imageUploadDataFactory->createFromEntityAndType($advert, AdvertFacade::IMAGE_TYPE_WEB);
