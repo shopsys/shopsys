@@ -43,6 +43,7 @@ services:
             - dev # change to `- build` if you want to test application build
         volumes:
             - storefront:/home/node/app
+            - storefront-node-modules:/home/node/app/node_modules
         ports:
             - "3000:3000"
 
@@ -74,7 +75,7 @@ services:
         container_name: shopsys-framework-cypress
         volumes:
             - ./storefront/cypress:/app:delegated
-            - node_modules:/app/node_modules
+            - storefront-node-modules:/app/node_modules
         profiles:
             - storefront-acceptance-tests
         network_mode: "host"
@@ -88,7 +89,9 @@ services:
                 <<: *common_build_args
         container_name: shopsys-framework-php-fpm
         volumes:
-            - source-code:/var/www/html
+            - php-fpm:/var/www/html
+            - php-fpm-vendor:/var/www/html/vendor
+            - php-fpm-node-modules:/var/www/html/node_modules
             - ./.npm-global:/var/www/html/.npm-global
         ports:
             - "35729:35729"
@@ -106,7 +109,9 @@ services:
             - rabbitmq
         container_name: shopsys-framework-php-consumer
         volumes:
-            - source-code:/var/www/html
+            - php-fpm:/var/www/html
+            - php-fpm-vendor:/var/www/html/vendor
+            - php-fpm-node-modules:/var/www/html/node_modules
         entrypoint:
             - /bin/sh
             - docker/php-fpm/consumer-entrypoint.sh
@@ -190,45 +195,29 @@ services:
         ports:
             - "8060:8080"
 
+    mutagen-php-fpm:
+        image: mutagenio/sidecar:0.18.1
+        container_name: shopsys-framework-mutagen-php-fpm
+        volumes:
+            - php-fpm:/volumes/php-fpm
+        profiles:
+            - mutagen
+
+    mutagen-storefront:
+        image: mutagenio/sidecar:0.18.1
+        container_name: shopsys-framework-mutagen-storefront
+        volumes:
+            - storefront:/volumes/storefront
+        profiles:
+            - mutagen
+
 volumes:
-    source-code:
+    php-fpm:
+    php-fpm-vendor:
+    php-fpm-node-modules:
     storefront:
+    storefront-node-modules:
     elasticsearch-data:
         driver: local
     postgres-data:
         driver: local
-    node_modules:
-
-x-mutagen:
-    sync:
-        defaults:
-            ignore:
-                vcs: true
-            permissions:
-                defaultOwner: "id:501"
-        source-code:
-            alpha: "./app"
-            beta: "volume://source-code"
-            mode: "two-way-resolved"
-            configurationBeta:
-                permissions:
-                    defaultOwner: "id:501"
-                    defaultDirectoryMode: 0777
-            ignore:
-                paths:
-                    - ./.DS_Store
-                    - ./.idea
-                    - ./.npm-global
-                    - ./nbproject
-                    - ./storefront
-                    - ./app/var/elasticsearch-data
-                    - ./app/var/postgres-data
-        storefront:
-            alpha: "./storefront"
-            beta: "volume://storefront"
-            mode: "two-way-resolved"
-            configurationBeta:
-                permissions:
-                    defaultOwner: "id:1000"
-                    defaultGroup: "id:1000"
-                    defaultDirectoryMode: 0777

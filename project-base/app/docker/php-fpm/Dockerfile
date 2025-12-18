@@ -22,6 +22,10 @@ RUN if [ -n "$www_data_uid" ]; then deluser www-data && (addgroup --gid $www_dat
 # as the UID and GID might have changed, change the ownership of the home directory workdir again
 RUN chown -R www-data:www-data /home/www-data /var/www/html
 
+RUN mkdir -p ./vendor \
+    && mkdir -p ./node_modules \
+    && chown -R www-data:www-data /var/www/html
+
 USER www-data
 
 ########################################################################################################################

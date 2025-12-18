@@ -94,3 +94,41 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
     -   look at the changes in the deployment package and apply them to your project: https://github.com/shopsys/deployment/blob/main/UPGRADE.md
 -   use `WHITELIST_IPS` variable to define whitelist IPs for ingress. See: https://github.com/shopsys/deployment?tab=readme-ov-file#whitelist-ip-addresses
 -   see [project-base diff](https://www.github.com/shopsys/project-base/commit/192a3205ee26f54c5b62aa6703c7543509f2183d) to update your project
+
+#### Replace `mutagen-compose` with plain `mutagen` because `mutagen-compose` is no longer compatible with the latest Docker API ([#4343](https://github.com/shopsys/shopsys/pull/4343))
+
+##### If you were using mutagen-compose, follow these steps to migrate:
+
+1. Stop and clean up your current environment:
+
+    ```bash
+    mutagen-compose down
+    docker system prune -a
+    ```
+
+2. Ensure you are running the latest version of Mutagen
+
+    ```bash
+    brew upgrade mutagen
+    ```
+
+3. Run the installation script to set up the new environment:
+    ```bash
+    ./project-base/scripts/install.sh
+    ```
+
+##### New Make targets for macOS with Mutagen:
+
+| Target                           | Description                                                            |
+| -------------------------------- | ---------------------------------------------------------------------- |
+| `make mutagen-up`                | Starts Docker environment with Mutagen sync                            |
+| `make mutagen-up-build`          | Starts environment and rebuilds images                                 |
+| `make mutagen-up-build-no-cache` | Starts environment and rebuilds images without cache                   |
+| `make mutagen-stop`              | Stops containers while preserving them (useful for switching projects) |
+| `make mutagen-down`              | Removes containers and stops Mutagen sync                              |
+
+##### Using Docker Compose directly:
+
+For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use plain `docker compose` like `docker compose exec php-fpm bash`
+
+-   see #project-base-diff to update your project

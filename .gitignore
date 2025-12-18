@@ -19,3 +19,5 @@
 /.env.*.local
 /utils/releaser/.phpunit.result.cache
 /packages/frontend-api/.phpunit.result.cache
+mutagen.yml
+mutagen.yml.lock

@@ -12,6 +12,21 @@ generate-schema-native:
 	cd storefront; npm run gql
 	rm -rf storefront/schema.graphql
 
+mutagen-up:
+	./scripts/mutagen-up.sh
+
+mutagen-up-build:
+	./scripts/mutagen-up.sh --build
+
+mutagen-up-build-no-cache:
+	./scripts/mutagen-up.sh --build --no-cache
+
+mutagen-stop:
+	./scripts/mutagen-stop.sh
+
+mutagen-down:
+	./scripts/mutagen-down.sh
+
 define run_acceptance_tests
 	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
 	docker compose exec php-fpm php phing test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
