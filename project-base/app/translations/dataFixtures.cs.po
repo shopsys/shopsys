@@ -1153,6 +1153,9 @@ msgstr "NS-9710 Prominent náhradní sáčky papírové pro VP-9711/12/13"
 msgid "New"
 msgstr "Novinka"
 
+msgid "New Year's Day"
+msgstr "Nový rok"
+
 msgid "New [adjective]"
 msgstr "Nová"
 
