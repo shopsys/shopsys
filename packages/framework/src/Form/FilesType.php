@@ -8,6 +8,8 @@ use Override;
 use Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -36,19 +38,29 @@ final class FilesType extends AbstractType
     }
 
     /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        parent::buildView($view, $form, $options);
+
+        $multiple = $options['multiple'];
+        $route = $multiple ? 'admin_filepicker_pickmultiple' : 'admin_filepicker_picksingle';
+
+        $view->vars['label_button_add'] = $multiple ? t('Add files') : t('Select file');
+        $view->vars['picker_url'] = $this->router->generate($route, ['jsInstanceId' => '__js_instance_id__']);
+    }
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'label_button_add' => t('Add files'),
-            'picker_url' => $this->router->generate(
-                'admin_filepicker_pickmultiple',
-                ['jsInstanceId' => '__js_instance_id__'],
-            ),
-            'item_name' => 'nameWithExtension',
-        ]);
+        $resolver->setRequired('multiple');
+        $resolver->setAllowedTypes('multiple', 'bool');
+        $resolver->setDefault('item_name', 'nameWithExtension');
     }
 
     /**

@@ -15,6 +15,7 @@ import './EntityUrlsNew';
 import './EntityUrlsRow';
 import './ExecuteRefund';
 import './initBootstrapFileInput';
+import './FilePicker';
 import './FilesPicker';
 import './FileUpload';
 import './fileUploadPreview';

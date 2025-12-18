@@ -101,6 +101,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
             );
         } else {
             $temporaryFilename = array_pop($uploadedFiles);
+            $hasPickerSelection = count($uploadedFileData->relations) > 0;
 
             if (count($orderedFiles) > 0) {
                 $existingFile = array_shift($orderedFiles);
@@ -109,12 +110,12 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
                     $this->deleteRelationsByEntityAndUploadedFiles($entity, $orderedFiles, $type);
                 }
 
-                if ($temporaryFilename) {
+                if ($temporaryFilename || $hasPickerSelection) {
                     $this->deleteRelationsByEntityAndUploadedFiles($entity, [$existingFile], $type);
                 }
             }
 
-            if ($temporaryFilename) {
+            if ($temporaryFilename && !$hasPickerSelection) {
                 $this->uploadFile(
                     $entity,
                     $entityName,
@@ -127,7 +128,15 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         }
 
         $position = $existingFilesCount + $uploadedFilesCount;
-        $this->createRelations($uploadedFileData, $currentRelations, $entityName, $entity, $position, $type);
+        $this->createRelations(
+            $uploadedFileData,
+            $currentRelations,
+            $entityName,
+            $entity,
+            $position,
+            $type,
+            $uploadedFileTypeConfig->isMultiple(),
+        );
 
         $this->deleteRelationsByEntityAndUploadedFiles($entity, $uploadedFileData->filesToDelete, $type);
     }
@@ -437,6 +446,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
      * @param object $entity
      * @param int $startPosition
      * @param string $type
+     * @param bool $isMultiple
      */
     protected function createRelations(
         UploadedFileData $uploadedFileData,
@@ -445,8 +455,22 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         object $entity,
         int $startPosition,
         string $type,
+        bool $isMultiple = true,
     ): void {
         $relations = $uploadedFileData->relations;
+
+        if (!$isMultiple && count($relations) > 0) {
+            if (count($currentRelations) > 0) {
+                $existingFiles = array_map(
+                    fn (UploadedFileRelation $r) => $r->getUploadedFile(),
+                    $currentRelations,
+                );
+                $this->deleteRelationsByEntityAndUploadedFiles($entity, $existingFiles, $type);
+            }
+            $relations = [array_pop($relations)];
+            $startPosition = 0;
+            $currentRelations = [];
+        }
 
         $currentRelationsIds = array_map(
             fn (UploadedFileRelation $relation) => $relation->getUploadedFile()->getId(),

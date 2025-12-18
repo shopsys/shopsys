@@ -31,11 +31,13 @@ class FilePickerGridFactory extends AbstractUploadedFileGridFactory
     /**
      * @param string $jsInstanceId
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchFormData
+     * @param bool $isMultiple
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     public function createWithSearch(
         string $jsInstanceId,
         QuickSearchFormData $quickSearchFormData,
+        bool $isMultiple,
     ): Grid {
         $queryBuilder = $this->uploadedFileAdminListFacade->getQueryBuilderByQuickSearchData($quickSearchFormData);
 
@@ -59,6 +61,7 @@ class FilePickerGridFactory extends AbstractUploadedFileGridFactory
 
         $grid->setTheme('@ShopsysAdministration/content/filePicker/listGrid.html.twig', [
             'jsInstanceId' => $jsInstanceId,
+            'isMultiple' => $isMultiple,
         ]);
 
         return $grid;

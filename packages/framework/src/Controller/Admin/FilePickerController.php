@@ -37,10 +37,7 @@ class FilePickerController extends AdminBaseController
         Request $request,
         int|string $jsInstanceId,
     ): Response {
-        return $this->getPickerResponse(
-            $request,
-            $jsInstanceId,
-        );
+        return $this->getPickerResponse($request, $jsInstanceId, true);
     }
 
     /**
@@ -48,16 +45,32 @@ class FilePickerController extends AdminBaseController
      * @param string $jsInstanceId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/file-picker/pick-single/{jsInstanceId}/', defaults: ['jsInstanceId' => '__js_instance_id__'])]
+    #[RequireRole(SystemRole::ADMIN)]
+    public function pickSingleAction(
+        Request $request,
+        string $jsInstanceId,
+    ): Response {
+        return $this->getPickerResponse($request, $jsInstanceId, false);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $jsInstanceId
+     * @param bool $isMultiple
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     protected function getPickerResponse(
         Request $request,
         string $jsInstanceId,
+        bool $isMultiple,
     ): Response {
         $quickSearchData = new QuickSearchFormData();
 
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, $quickSearchData);
         $quickSearchForm->handleRequest($request);
 
-        $grid = $this->filePickerGridFactory->createWithSearch($jsInstanceId, $quickSearchData);
+        $grid = $this->filePickerGridFactory->createWithSearch($jsInstanceId, $quickSearchData, $isMultiple);
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 

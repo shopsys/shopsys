@@ -109,7 +109,9 @@ final class FileUploadType extends AbstractType
                 'mapped' => false,
             ])
             ->add(
-                $builder->create('relations', FilesType::class),
+                $builder->create('relations', FilesType::class, [
+                    'multiple' => $this->isMultiple($options),
+                ]),
             )
             ->add(
                 $builder->create('relationsFilenames', CollectionType::class, [
