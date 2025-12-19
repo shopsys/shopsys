@@ -7,8 +7,8 @@ import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { getNavigationLinkSkeletonType } from 'utils/navigation/getNavigationLinkSkeletonType';
 import { getPageTypeKey } from 'utils/page/getPageTypeKey';
+import { getSkeletonTypeFromLink } from 'utils/skeleton/getSkeletonTypeFromLink';
 import { useDebounce } from 'utils/useDebounce';
 
 type NavigationItemProps = {
@@ -21,8 +21,10 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
     const [isMenuOpened, setIsMenuOpened] = useState(false);
     const hasChildren = !!navigationItem.categoriesByColumns.length;
     const isMenuOpenedDelayed = useDebounce(isMenuOpened && true, 200);
-    const skeletonType = getNavigationLinkSkeletonType(navigationItem);
     const shouldReduceMotion = useReducedMotion();
+    const skeletonType = navigationItem.routeName
+        ? getPageTypeKey(navigationItem.routeName)
+        : getSkeletonTypeFromLink(navigationItem.link);
 
     return (
         <li

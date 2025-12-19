@@ -3491,6 +3491,8 @@ export type TypeSliderItem = {
   opacity: Scalars['Float']['output'];
   /** RGB color code for the background of the slider description box */
   rgbBackgroundColor: Scalars['String']['output'];
+  /** Friendly route name if exists, NULL for unknown (e.g., external) links */
+  routeName: Maybe<TypeFriendlyUrlRouteEnum>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };

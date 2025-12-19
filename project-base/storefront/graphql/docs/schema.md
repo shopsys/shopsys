@@ -9490,6 +9490,15 @@ RGB color code for the background of the slider description box
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="slideritem.routename">routeName</strong></td>
+<td valign="top"><a href="#friendlyurlrouteenum">FriendlyUrlRouteEnum</a></td>
+<td>
+
+Friendly route name if exists, NULL for unknown (e.g., external) links
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="slideritem.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>

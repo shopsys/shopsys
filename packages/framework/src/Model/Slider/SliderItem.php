@@ -88,6 +88,12 @@ class SliderItem implements OrderableEntityInterface
     protected $datetimeVisibleTo;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $routeName;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
      */
     public function __construct(SliderItemData $sliderItemData)
@@ -230,5 +236,21 @@ class SliderItem implements OrderableEntityInterface
     public function setDatetimeVisibleTo($datetimeVisibleTo)
     {
         $this->datetimeVisibleTo = $datetimeVisibleTo;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRouteName()
+    {
+        return $this->routeName;
+    }
+
+    /**
+     * @param string|null $routeName
+     */
+    public function setRouteName($routeName): void
+    {
+        $this->routeName = $routeName;
     }
 }

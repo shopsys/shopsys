@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\UrlNormalizer;
 
 class NavigationItemFacade
 {
@@ -123,28 +124,8 @@ class NavigationItemFacade
      */
     protected function fixUrlInNavigationItemData(NavigationItemData $navigationItemData): void
     {
-        if ($navigationItemData->url === null) {
-            return;
-        }
-
-        $domainUrl = $this->domain->getDomainConfigById($navigationItemData->domainId)->getUrl();
-        $navigationItemData->url = str_replace($domainUrl, '', $navigationItemData->url);
-
-        if (str_starts_with($navigationItemData->url, 'http://')) {
-            return;
-        }
-
-        if (str_starts_with($navigationItemData->url, 'https://')) {
-            return;
-        }
-
-        if (str_starts_with($navigationItemData->url, 'www.')) {
-            return;
-        }
-
-        if (!str_starts_with($navigationItemData->url, '/')) {
-            $navigationItemData->url = '/' . $navigationItemData->url;
-        }
+        $domainConfig = $this->domain->getDomainConfigById($navigationItemData->domainId);
+        $navigationItemData->url = UrlNormalizer::normalizeUrl($navigationItemData->url, $domainConfig);
     }
 
     /**

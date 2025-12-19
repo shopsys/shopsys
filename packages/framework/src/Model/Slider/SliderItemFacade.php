@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\UrlNormalizer;
 
 class SliderItemFacade
 {
@@ -18,6 +20,7 @@ class SliderItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory $sliderItemFactory
      * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -26,6 +29,7 @@ class SliderItemFacade
         protected readonly Domain $domain,
         protected readonly SliderItemFactory $sliderItemFactory,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -44,7 +48,10 @@ class SliderItemFacade
      */
     public function create(SliderItemData $sliderItemData)
     {
+        $this->fixUrlInSliderItemData($sliderItemData);
+
         $sliderItem = $this->sliderItemFactory->create($sliderItemData);
+        $this->setSliderItemRouteName($sliderItem);
 
         $this->em->persist($sliderItem);
         $this->em->flush();
@@ -63,7 +70,10 @@ class SliderItemFacade
     public function edit($sliderItemId, SliderItemData $sliderItemData)
     {
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
+        $this->fixUrlInSliderItemData($sliderItemData);
+
         $sliderItem->edit($sliderItemData);
+        $this->setSliderItemRouteName($sliderItem);
 
         $this->em->flush();
         $this->imageFacade->manageImages($sliderItem, $sliderItemData->image);
@@ -92,5 +102,23 @@ class SliderItemFacade
     public function getAllVisibleOnCurrentDomain()
     {
         return $this->sliderItemRepository->getAllVisibleByDomainId($this->domain->getId());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
+     */
+    protected function fixUrlInSliderItemData(SliderItemData $sliderItemData): void
+    {
+        $domainConfig = $this->domain->getDomainConfigById($sliderItemData->domainId);
+        $sliderItemData->link = UrlNormalizer::normalizeUrl($sliderItemData->link, $domainConfig);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItem $sliderItem
+     */
+    protected function setSliderItemRouteName(SliderItem $sliderItem): void
+    {
+        $friendlyUrl = $this->friendlyUrlFacade->findByDomainIdAndSlug($sliderItem->getDomainId(), trim($sliderItem->getLink(), '/'));
+        $sliderItem->setRouteName($friendlyUrl?->getRouteName());
     }
 }

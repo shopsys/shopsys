@@ -2755,6 +2755,8 @@ type SliderItem {
   opacity: Float!
   "RGB color code for the background of the slider description box"
   rgbBackgroundColor: String!
+  "Friendly route name if exists, NULL for unknown (e.g., external) links"
+  routeName: FriendlyUrlRouteEnum
   "UUID"
   uuid: Uuid!
 }
