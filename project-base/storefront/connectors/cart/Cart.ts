@@ -108,7 +108,6 @@ const handleCartItemModifications = (itemModifications: TypeCartItemModification
             t('Quantity of item {{ itemName }} in cart was changed due to insufficient supply.', {
                 itemName: itemWithChangedQuantity.product.fullName,
             }),
-            GtmMessageOriginType.cart,
         );
     }
 
