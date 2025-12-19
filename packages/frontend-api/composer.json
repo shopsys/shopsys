@@ -48,6 +48,9 @@
         "phpunit/phpunit": "^11.2.1",
         "shopsys/coding-standards": "18.0.x-dev"
     },
+    "conflict": {
+        "webonyx/graphql-php": ">=15.29.0"
+    },
     "config": {
         "allow-plugins": {
             "symfony/flex": true,
