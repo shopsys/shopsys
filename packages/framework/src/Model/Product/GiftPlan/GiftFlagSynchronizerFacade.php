@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -91,10 +92,14 @@ class GiftFlagSynchronizerFacade
      */
     public function recalculateGiftFlagForMainProductId(int $mainProductId): void
     {
-        $mainProduct = $this->productFacade->getById($mainProductId);
+        try {
+            $mainProduct = $this->productFacade->getById($mainProductId);
 
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $this->recalculateGiftFlagForMainProductAndDomainId($mainProduct, $domainId);
+            foreach ($this->domain->getAllIds() as $domainId) {
+                $this->recalculateGiftFlagForMainProductAndDomainId($mainProduct, $domainId);
+            }
+        } catch (ProductNotFoundException) {
+            // deleted product, nothing to recalculate
         }
     }
 
