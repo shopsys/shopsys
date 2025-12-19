@@ -139,9 +139,6 @@ msgstr ""
 msgid "Authentication code"
 msgstr ""
 
-msgid "Authenticator key"
-msgstr ""
-
 msgid "Back to category selection"
 msgstr ""
 
@@ -301,7 +298,10 @@ msgstr ""
 msgid "Company number"
 msgstr ""
 
-msgid "Confirm authentication code"
+msgid "Confirm code and enable two-factor authentication"
+msgstr ""
+
+msgid "Confirm one-time passcode"
 msgstr ""
 
 msgid "Contact"
@@ -730,6 +730,9 @@ msgstr ""
 msgid "Home page"
 msgstr ""
 
+msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
+msgstr ""
+
 msgid "Image"
 msgstr ""
 
@@ -1141,6 +1144,12 @@ msgstr ""
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%."
 msgstr ""
 
+msgid "Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator)."
+msgstr ""
+
+msgid "Please use the button below to send the one-time passcode to your email address."
+msgstr ""
+
 msgid "Position of image"
 msgstr ""
 
@@ -1267,6 +1276,9 @@ msgstr ""
 msgid "Remaining number of uses"
 msgstr ""
 
+msgid "Request a one-time passcode by email"
+msgstr ""
+
 msgid "Right"
 msgstr ""
 
@@ -1319,6 +1331,9 @@ msgid "Save changes in order"
 msgstr ""
 
 msgid "Scaled promo code"
+msgstr ""
+
+msgid "Scan QR code"
 msgstr ""
 
 msgid "Search [noun]"

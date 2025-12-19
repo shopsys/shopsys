@@ -168,3 +168,7 @@ For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use 
     -   `imageuploadFields.html.twig` Twig template extension
     -   `Advert/listGrid.html.twig` Twig template extension
 -   see #project-base-diff to update your project
+
+#### Upgrade two-factor packages to be compatible with Symfony 6 ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+
+-   see #project-base-diff to update your project
