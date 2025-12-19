@@ -2,16 +2,21 @@ import { useRedirectOnPermissionsChange } from './useRedirectOnPermissionsChange
 import { useCustomerUserRoleGroupsQuery } from 'graphql/requests/customer/queries/CustomerUserRoleGroupsQuery.generated';
 import { TypeCustomerUserRoleGroup } from 'graphql/types';
 import { useMemo } from 'react';
-import { SelectOptionType } from 'types/selectOptions';
+import { RadiobuttonOptionType } from 'types/radiobuttonOptions';
 
-export const useCustomerUserGroupsAsSelectOptions = () => {
-    const [{ data: customerUserRoleGroupsData, error }] = useCustomerUserRoleGroupsQuery({
+export const useCustomerUserGroupsAsRadiobuttonOptions = (
+    isDisabled: boolean,
+): {
+    customerUserRoleGroupsOptions: RadiobuttonOptionType[];
+    isFetching: boolean;
+} => {
+    const [{ data: customerUserRoleGroupsData, error, fetching: isFetching }] = useCustomerUserRoleGroupsQuery({
         requestPolicy: 'cache-and-network',
     });
     const { redirect } = useRedirectOnPermissionsChange();
 
     const customerUserRoleGroupsDataMemoized = useMemo(
-        () => mapuserGroupsToSelectOptions(customerUserRoleGroupsData?.customerUserRoleGroups),
+        () => mapUserGroupsToRadiobuttonOptions(customerUserRoleGroupsData?.customerUserRoleGroups, isDisabled),
         [customerUserRoleGroupsData?.customerUserRoleGroups],
     );
 
@@ -19,8 +24,14 @@ export const useCustomerUserGroupsAsSelectOptions = () => {
         redirect();
     }
 
-    return customerUserRoleGroupsDataMemoized;
+    return {
+        customerUserRoleGroupsOptions: customerUserRoleGroupsDataMemoized,
+        isFetching,
+    };
 };
 
-const mapuserGroupsToSelectOptions = (groups: TypeCustomerUserRoleGroup[] | undefined): SelectOptionType[] =>
-    groups?.map((group) => ({ label: group.name, value: group.uuid })) ?? [];
+const mapUserGroupsToRadiobuttonOptions = (
+    groups: TypeCustomerUserRoleGroup[] | undefined,
+    isDisabled: boolean,
+): RadiobuttonOptionType[] =>
+    groups?.map((group) => ({ label: group.name, value: group.uuid, disabled: isDisabled })) ?? [];

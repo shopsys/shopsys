@@ -1,9 +1,9 @@
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { Select } from 'components/Forms/Select/Select';
+import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
 import {
@@ -15,14 +15,16 @@ import { getCustomerUser } from 'connectors/customer/CustomerUser';
 import { TypeSimpleCustomerUserFragment } from 'graphql/requests/customer/fragments/SimpleCustomerUserFragment.generated';
 import { useAddNewCustomerUserMutation } from 'graphql/requests/customer/mutations/AddNewCustomerUserMutation.generated';
 import { useEditCustomerUserPersonalDataMutation } from 'graphql/requests/customer/mutations/EditCustomerUserPersonalDataMutation.generated';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { useEffect } from 'react';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
+import { twJoin } from 'tailwind-merge';
 import { CustomerUserManageProfileFormType } from 'types/form';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
-import { useCustomerUserGroupsAsSelectOptions } from 'utils/user/useCustomerUserGroupsAsSelectOptions';
+import { useCustomerUserGroupsAsRadiobuttonOptions } from 'utils/user/useCustomerUserGroupsAsSelectOptions';
 
 type ManageCustomerUserPopupProps = {
     customerUser?: TypeSimpleCustomerUserFragment;
@@ -35,17 +37,16 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
     const [, customerAddUser] = useAddNewCustomerUserMutation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const { canManageCompanyData, currentCustomerUserUuid: uuid } = useAuthorization();
-    const customerUserRoleGroupsAsSelectOptions = useCustomerUserGroupsAsSelectOptions();
     const customerUserData = getCustomerUser(customerUser);
+
+    const isRoleGroupDisabled = !canManageCompanyData || (mode === 'edit' && customerUser?.uuid === uuid);
+    const { customerUserRoleGroupsOptions, isFetching: isRoleGroupsFetching } =
+        useCustomerUserGroupsAsRadiobuttonOptions(isRoleGroupDisabled);
 
     const customerUserDefaultFormData = {
         ...customerUserData,
-        roleGroup: {
-            label: customerUser?.roleGroup.name ?? '',
-            value: customerUser?.roleGroup.uuid ?? '',
-        },
+        roleGroup: customerUser?.roleGroup.uuid ?? '',
     };
-
     const [formProviderMethods] = useCustomerUserManageProfileForm(customerUserDefaultFormData);
     const formMeta = useCustomerUserManageProfileFormMeta(formProviderMethods, mode);
 
@@ -66,7 +67,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                     firstName: customerUserManageProfileFormData.firstName,
                     lastName: customerUserManageProfileFormData.lastName,
                     telephone: customerUserManageProfileFormData.telephone,
-                    roleGroupUuid: customerUserManageProfileFormData.roleGroup.value,
+                    roleGroupUuid: customerUserManageProfileFormData.roleGroup,
                     newsletterSubscription: false,
                 },
             });
@@ -89,7 +90,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                 firstName: customerUserManageProfileFormData.firstName,
                 lastName: customerUserManageProfileFormData.lastName,
                 telephone: customerUserManageProfileFormData.telephone,
-                roleGroupUuid: customerUserManageProfileFormData.roleGroup.value,
+                roleGroupUuid: customerUserManageProfileFormData.roleGroup,
                 newsletterSubscription: false,
             },
         });
@@ -104,12 +105,25 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
 
     useScrollToFirstError(formMeta.formName, formProviderMethods);
 
+    useEffect(() => {
+        const firstRoleOption = customerUserRoleGroupsOptions[0]?.value;
+        const hasNoDefaultRole = mode === 'add' && !isRoleGroupsFetching && firstRoleOption;
+
+        if (hasNoDefaultRole) {
+            formProviderMethods.setValue('roleGroup', firstRoleOption);
+        }
+    }, [customerUserRoleGroupsOptions, isRoleGroupsFetching, mode, formProviderMethods]);
+
+    const popupTitle = mode === 'edit' ? t('Edit customer user') : t('Add customer user');
+
     return (
-        <Popup className="vl:w-auto w-11/12 lg:w-4/5" contentClassName="overflow-y-auto" title={t('Personal data')}>
+        <Popup className="vl:w-auto w-11/12 lg:w-4/5" contentClassName="overflow-y-auto" title={popupTitle}>
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerUserManageProfileFormHandler)}>
                     <FormContentWrapper>
                         <FormBlockWrapper>
+                            <FormHeading>{t('Personal data')}</FormHeading>
+
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
@@ -166,30 +180,35 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                     }}
                                 />
                             </FormColumn>
+                        </FormBlockWrapper>
 
-                            <Controller
-                                name={formMeta.fields.roleGroup.name}
-                                render={({ fieldState: { error }, field }) => (
-                                    <>
-                                        <Select
-                                            isRequired
-                                            ariaLabel={t('Select role group', { ns: 'accessibility' })}
-                                            label={formMeta.fields.roleGroup.label}
-                                            options={customerUserRoleGroupsAsSelectOptions}
-                                            tid={formMeta.formName + '-' + formMeta.fields.roleGroup.name}
-                                            activeOption={customerUserRoleGroupsAsSelectOptions.find(
-                                                (option) => option.value === field.value.value,
-                                            )}
-                                            isDisabled={
-                                                !canManageCompanyData ||
-                                                (mode === 'edit' && customerUser?.uuid === uuid)
-                                            }
-                                            onSelectOption={field.onChange}
-                                        />
-                                        <FormLineError error={error} inputType="select" />
-                                    </>
+                        <FormBlockWrapper>
+                            <FormHeading>{formMeta.fields.roleGroup.label}</FormHeading>
+
+                            <div
+                                aria-label={t('Select role group', { ns: 'accessibility' })}
+                                data-tid={formMeta.formName + '-' + formMeta.fields.roleGroup.name}
+                                className={twJoin(
+                                    'vl:gap-4 flex flex-col gap-2',
+                                    isRoleGroupDisabled ? 'pointer-events-none opacity-50' : undefined,
                                 )}
-                            />
+                            >
+                                {isRoleGroupsFetching ? (
+                                    <div className="flex flex-col gap-2">
+                                        {Array.from({ length: 5 }).map((_, index) => (
+                                            <Skeleton key={index} className="h-6 w-1/2 rounded" />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <RadiobuttonGroup
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.roleGroup.name}
+                                        radiobuttons={customerUserRoleGroupsOptions}
+                                        render={(radiobutton, key) => <span key={key}>{radiobutton}</span>}
+                                    />
+                                )}
+                            </div>
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>

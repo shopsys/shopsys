@@ -8,8 +8,8 @@ type NativeProps = ExtractNativePropsFromDefault<
     'disabled' | 'name' | 'onBlur' | 'checked' | 'onChange' | 'aria-label'
 >;
 
-export type RadiobuttonProps = NativeProps & {
-    value: any;
+export type RadiobuttonProps<T = string> = NativeProps & {
+    value: T;
     checked: InputHTMLAttributes<HTMLInputElement>['checked'];
     label: ReactNode;
     onClick?: (newValue: string | null) => void;
