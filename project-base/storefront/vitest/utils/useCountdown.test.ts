@@ -24,13 +24,22 @@ describe('useCountdown', () => {
     const noopCallback = vi.fn();
 
     describe('initial state', () => {
-        test('returns loading state initially', () => {
+        test('updates state immediately on next tick (not waiting for full interval)', () => {
             vi.setSystemTime(new Date('2024-03-15T12:00:00Z'));
 
             const { result } = renderHook(() => useCountdown('2024-03-16T12:00:00Z', noopCallback));
 
+            // Before any timer advancement, still loading
             expect(result.current.isLoading).toBe(true);
-            expect(result.current.days).toBe('00');
+
+            // Advance by just 1ms - should trigger the initial update
+            act(() => {
+                vi.advanceTimersByTime(1);
+            });
+
+            // Now should be loaded with correct initial values
+            expect(result.current.isLoading).toBe(false);
+            expect(result.current.days).toBe('01');
             expect(result.current.hours).toBe('00');
             expect(result.current.minutes).toBe('00');
             expect(result.current.seconds).toBe('00');
@@ -212,8 +221,9 @@ describe('useCountdown', () => {
 
             renderHook(() => useCountdown('2024-03-14T12:00:00Z', customCallback));
 
+            // Callback is triggered immediately on next tick (not waiting for full interval)
             act(() => {
-                vi.advanceTimersByTime(1000);
+                vi.advanceTimersByTime(1);
             });
 
             expect(customCallback).toHaveBeenCalled();

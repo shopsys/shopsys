@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface TimeState {
     days: string;
@@ -33,7 +33,6 @@ const parseDate = (date: CountdownTime): number => {
 
 export const useCountdown = (endTime: CountdownTime, callback?: () => void, interval = 1000): TimeState => {
     const router = useRouter();
-
     const [time, setTime] = useState<TimeState>({
         days: '00',
         hours: '00',
@@ -42,45 +41,55 @@ export const useCountdown = (endTime: CountdownTime, callback?: () => void, inte
         isLoading: true,
     });
 
-    const effectiveCallback = useCallback(() => (callback ?? router.reload)(), [callback, router]);
+    const onCompleteRef = useRef<() => void>();
+    onCompleteRef.current = callback ?? router.reload;
 
-    const updateTime = useCallback(
-        (durationMs: number) => {
+    useEffect(() => {
+        const endTimeMs = parseDate(endTime);
+        let isActive = true;
+        let intervalId: ReturnType<typeof setInterval> | undefined;
+
+        const tick = () => {
+            if (!isActive) {
+                return;
+            }
+
+            const durationMs = Math.max(0, endTimeMs - Date.now());
+
             if (durationMs <= 0) {
-                effectiveCallback();
-                return false;
+                isActive = false;
+                if (intervalId) {
+                    clearInterval(intervalId);
+                }
+                onCompleteRef.current?.();
+                return;
             }
 
             setTime({
                 ...calculateTimeLeft(durationMs),
                 isLoading: false,
             });
+        };
 
-            return true;
-        },
-        [effectiveCallback],
-    );
+        const timeoutId = isNaN(endTimeMs)
+            ? undefined
+            : setTimeout(() => {
+                  tick();
+                  if (isActive) {
+                      intervalId = setInterval(tick, interval);
+                  }
+              }, 0);
 
-    useEffect(() => {
-        const currentTime = Date.now();
-        const endTimeMs = parseDate(endTime);
-
-        if (isNaN(endTimeMs)) {
-            return undefined;
-        }
-
-        let durationMs = endTimeMs - currentTime;
-
-        const intervalId = setInterval(() => {
-            durationMs = durationMs - interval;
-
-            if (!updateTime(durationMs)) {
+        return () => {
+            isActive = false;
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+            if (intervalId) {
                 clearInterval(intervalId);
             }
-        }, interval);
-
-        return () => clearInterval(intervalId);
-    }, [endTime, updateTime, interval]);
+        };
+    }, [endTime, interval]);
 
     return time;
 };

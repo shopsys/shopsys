@@ -7,7 +7,14 @@ const isFutureDate = (dateString: string | null): boolean => {
     if (dateString === null) {
         return true;
     }
-    return Date.now() < new Date(dateString).getTime();
+
+    const timestamp = new Date(dateString).getTime();
+
+    if (isNaN(timestamp)) {
+        return true;
+    }
+
+    return Date.now() < timestamp;
 };
 
 export const useNotificationBarsWithRevalidation = (pollingIntervalMs = DEFAULT_POLLING_INTERVAL_MS) => {

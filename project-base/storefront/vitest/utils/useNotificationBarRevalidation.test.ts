@@ -70,6 +70,20 @@ describe('useNotificationBarsWithRevalidation', () => {
             expect(result.current.activeNotificationBars).toHaveLength(2);
         });
 
+        test('treats notifications with invalid date strings as active (defensive behavior)', () => {
+            mockNotificationBars.mockReturnValue({
+                notificationBars: [
+                    { id: '1', text: 'Invalid date', validityTo: 'not-a-valid-date' },
+                    { id: '2', text: 'Valid', validityTo: '2024-03-20T12:00:00Z' },
+                ],
+            });
+
+            const { result } = renderHook(() => useNotificationBarsWithRevalidation());
+
+            // Invalid dates are treated as "future" to avoid silently dropping notifications
+            expect(result.current.activeNotificationBars).toHaveLength(2);
+        });
+
         test('returns empty array when all notifications are expired', () => {
             mockNotificationBars.mockReturnValue({
                 notificationBars: [
