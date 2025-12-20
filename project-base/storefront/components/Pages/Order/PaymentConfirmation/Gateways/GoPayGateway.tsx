@@ -1,10 +1,14 @@
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { getStaticRewritePathKeyType } from 'config/staticRewritePaths';
 import { usePayOrderMutation } from 'graphql/requests/orders/mutations/PayOrderMutation.generated';
 import { TypeGoPayCreatePaymentSetup } from 'graphql/types';
+import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
 type GoPayGatewayProps = {
@@ -12,6 +16,7 @@ type GoPayGatewayProps = {
     requiresAction?: boolean;
     isDisabled?: boolean;
     initialButtonText?: string;
+    onMaxTransactionCountReached?: () => void;
 };
 
 export const GoPayGateway: FC<GoPayGatewayProps> = ({
@@ -20,41 +25,100 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
     initialButtonText,
     className,
     isDisabled,
+    onMaxTransactionCountReached,
 }) => {
-    const [initiatedPaymentGate, setInitiatedPaymentGate] = useState(!requiresAction);
-    const [goPayPaymentSetup, setGoPayPaymentSetup] = useState<TypeGoPayCreatePaymentSetup | undefined>(undefined);
-    const [, payOrder] = usePayOrderMutation();
     const { t } = useTranslation();
-    const wasPaidRef = useRef(false);
+    const [, payOrder] = usePayOrderMutation();
+    const { url: domainUrl } = useDomainConfig();
+    const router = useRouter();
 
-    useEffect(() => {
-        if (!wasPaidRef.current && initiatedPaymentGate) {
-            payOrder({ orderUuid }).then((payOrderResult) => {
-                if (payOrderResult.error?.graphQLErrors) {
-                    for (const error of payOrderResult.error.graphQLErrors) {
-                        showErrorMessage(
-                            error.message.includes('Max transaction count reached')
-                                ? t('Max transaction count reached')
-                                : error.message,
-                        );
-                    }
+    const [initiatedPaymentGate, setInitiatedPaymentGate] = useState(false);
+    const [isMaxTransactionCountReached, setIsMaxTransactionCountReached] = useState(false);
+    const [goPayPaymentSetup, setGoPayPaymentSetup] = useState<TypeGoPayCreatePaymentSetup | undefined>(undefined);
+
+    const autoTriggeredOrderRef = useRef<string | null>(null);
+
+    const handlePayOrder = useCallback(async () => {
+        setInitiatedPaymentGate(true);
+
+        const query = {
+            ...router.query,
+            requiresAction: true,
+        };
+
+        const staticPathname = getStaticRewritePathKeyType(router.pathname, domainUrl);
+
+        if (staticPathname) {
+            const [originalInternationalizedPathname] = getInternationalizedStaticUrls([staticPathname], domainUrl);
+            await router.replace(
+                {
+                    pathname: originalInternationalizedPathname,
+                    query,
+                },
+                undefined,
+                { shallow: true },
+            );
+        }
+
+        const payOrderResult = await payOrder({ orderUuid });
+
+        if (payOrderResult.error?.graphQLErrors) {
+            for (const error of payOrderResult.error.graphQLErrors) {
+                if (error.message.includes('Max transaction count reached')) {
+                    setIsMaxTransactionCountReached(true);
                     setInitiatedPaymentGate(false);
+                    showErrorMessage(t('Max transaction count reached'));
+                    onMaxTransactionCountReached?.();
                     return;
                 }
-
-                setGoPayPaymentSetup(payOrderResult.data?.PayOrder.goPayCreatePaymentSetup ?? undefined);
-            });
-            wasPaidRef.current = true;
+                showErrorMessage(error.message);
+            }
+            setInitiatedPaymentGate(false);
+            return;
         }
-    }, [initiatedPaymentGate]);
+
+        setGoPayPaymentSetup(payOrderResult.data?.PayOrder.goPayCreatePaymentSetup ?? undefined);
+    }, [router, domainUrl, payOrder, orderUuid, t, onMaxTransactionCountReached]);
 
     const initGoPayCheckout = (gatewayUrl: string) => () => {
-        // @ts-expect-error 3rd party function
-        _gopay.checkout({
-            gatewayUrl,
-            inline: true,
-        });
+        const attemptCheckout = (attempt = 0) => {
+            const gopayGlobal = typeof window !== 'undefined' ? (window as any)._gopay : undefined;
+            if (gopayGlobal && typeof gopayGlobal.checkout === 'function') {
+                try {
+                    gopayGlobal.checkout({
+                        gatewayUrl,
+                        inline: true,
+                    });
+                } catch {
+                    showErrorMessage(t('Failed to initialize payment gateway. Please try again.'));
+                    setInitiatedPaymentGate(false);
+                }
+            } else if (attempt < 10) {
+                setTimeout(() => attemptCheckout(attempt + 1), Math.min(100 * (attempt + 1), 500));
+            } else {
+                showErrorMessage(t('Payment gateway failed to load. Please refresh the page.'));
+                setInitiatedPaymentGate(false);
+            }
+        };
+
+        attemptCheckout();
     };
+
+    const handlePaymentButtonClick = () => {
+        handlePayOrder();
+    };
+
+    const handlePaymentError = () => {
+        showErrorMessage(t('Failed to load payment gateway. Please try again.'));
+        setInitiatedPaymentGate(false);
+    };
+
+    useEffect(() => {
+        if (!requiresAction && autoTriggeredOrderRef.current !== orderUuid) {
+            autoTriggeredOrderRef.current = orderUuid;
+            handlePayOrder();
+        }
+    }, [requiresAction, handlePayOrder, orderUuid]);
 
     return (
         <>
@@ -62,15 +126,17 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
                 <Script
                     id="go-pay-embedded-js"
                     src={goPayPaymentSetup.embedJs}
+                    strategy="afterInteractive"
+                    onError={handlePaymentError}
                     onLoad={initGoPayCheckout(goPayPaymentSetup.gatewayUrl)}
                 />
             )}
-            {requiresAction && (
+            {requiresAction && !isMaxTransactionCountReached && (
                 <Button
                     className={className}
                     hasDisabledLook={isDisabled}
                     size="xlarge"
-                    onClick={() => setInitiatedPaymentGate(true)}
+                    onClick={handlePaymentButtonClick}
                 >
                     {initiatedPaymentGate ? (
                         <>

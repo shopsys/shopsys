@@ -20,7 +20,7 @@ import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
-export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
+export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
     orderUuid,
     companyNumber,
     orderEmail,

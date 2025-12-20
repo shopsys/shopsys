@@ -62,6 +62,7 @@
     "Go to my orders page": "Go to my orders page",
     "Go to new complaint page": "Go to new complaint page",
     "Go to order detail number {{ orderNumber }}": "Go to order detail number {{ orderNumber }}",
+    "Go to order detail page": "Go to order detail page",
     "Go to page {{ page }}": "Go to page {{ page }}",
     "Go to page with product variants of {{ productName }}": "Go to page with product variants of {{ productName }}",
     "Go to previous step": "Go to previous step",

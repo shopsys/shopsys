@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
 import { OrderCustomerInfo } from 'components/Blocks/OrderCustomerInfo/OrderCustomerInfo';
@@ -9,6 +10,7 @@ import { OrderConfirmationStepper } from 'components/Pages/OrderConfirmation/Ord
 import { FlowTypesEnum } from 'components/Pages/OrderConfirmation/OrderConfirmationStepperFlows';
 import { OrderConfirmationSummary } from 'components/Pages/OrderConfirmation/OrderConfirmationSummary';
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useOrderDetailByHashOrUuidQuery } from 'graphql/requests/orders/queries/OrderDetailByHashOrUuidQuery.generated';
 import {
@@ -20,8 +22,9 @@ import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum, TypePaymentTypeEnum } 
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import Trans from 'next-translate/Trans';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -29,29 +32,33 @@ import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWr
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-export type OrderConfirmationUrlQuery = {
-    orderUuid: string | undefined;
-    companyNumber: string | undefined;
-    orderEmail: string | undefined;
-    orderPaymentType: TypePaymentTypeEnum | undefined;
-    orderUrlHash?: string | undefined;
-    orderPaymentStatusPageValidityHash: string | undefined;
-};
+export type OrderConfirmationUrlQuery = Partial<{
+    orderUuid: string;
+    companyNumber: string;
+    orderEmail: string;
+    orderPaymentType: TypePaymentTypeEnum;
+    orderUrlHash?: string;
+    orderPaymentStatusPageValidityHash: string;
+    requiresAction?: boolean;
+}>;
 
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { query } = useRouter();
     const { fetchCart } = useCurrentCart(false);
-    const { orderUuid, orderPaymentType, companyNumber, orderEmail, orderUrlHash } = query as OrderConfirmationUrlQuery;
+    const { url } = useDomainConfig();
+    const [isMaxTransactionCountReached, setIsMaxTransactionCountReached] = useState(false);
+    const { orderUuid, orderPaymentType, companyNumber, orderEmail, orderUrlHash, requiresAction } =
+        query as OrderConfirmationUrlQuery;
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: orderSentPageContentData, fetching: isOrderSentPageContentFetching }] = useOrderSentPageContentQuery(
-        {
-            variables: { orderUuid: orderUuid! },
-        },
-    );
+    const [
+        { data: orderSentPageContentData, fetching: isOrderSentPageContentFetching, error: orderSentPageContentError },
+    ] = useOrderSentPageContentQuery({
+        variables: { orderUuid: orderUuid! },
+    });
 
     const [{ data: orderData }] = useOrderDetailByHashOrUuidQuery({
         variables: {
@@ -59,6 +66,11 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
             uuid: orderUuid,
         },
     });
+
+    const [orderDetailUrl] = getInternationalizedStaticUrls(
+        [{ url: '/order-detail/:urlHash', param: orderData?.order?.urlHash }],
+        url,
+    );
 
     useEffect(() => {
         fetchCart();
@@ -88,11 +100,35 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                 <Webline tid={TIDs.pages_orderconfirmation}>
                     <ConfirmationPageContent
                         content={orderSentPageContentData?.orderSentPageContent}
+                        error={orderSentPageContentError}
                         heading={t('Your order was created')}
+                        orderDetailUrl={orderDetailUrl}
                     >
-                        {orderPaymentType === TypePaymentTypeEnum.GoPay ? (
-                            <GoPayGateway orderUuid={orderUuid!} />
-                        ) : undefined}
+                        {orderPaymentType === TypePaymentTypeEnum.GoPay && (
+                            <div className="mt-4">
+                                <GoPayGateway
+                                    initialButtonText={t('Repeat payment')}
+                                    orderUuid={orderUuid!}
+                                    requiresAction={requiresAction}
+                                    onMaxTransactionCountReached={() => setIsMaxTransactionCountReached(true)}
+                                />
+
+                                {isMaxTransactionCountReached && (
+                                    <Trans
+                                        i18nKey="Max transaction count reached. Please go to the <link>order detail page</link> and pay with another method."
+                                        components={{
+                                            link: (
+                                                <ExtendedNextLink
+                                                    aria-label={t('Go to order detail page', { ns: 'accessibility' })}
+                                                    href={orderDetailUrl}
+                                                    type="orderDetail"
+                                                />
+                                            ),
+                                        }}
+                                    />
+                                )}
+                            </div>
+                        )}
                     </ConfirmationPageContent>
 
                     <OrderConfirmationStepper flow={stepperFlow} />
