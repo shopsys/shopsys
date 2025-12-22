@@ -72,12 +72,9 @@ Encore
 ;
 
 Encore.addAliases({
-    'jquery-ui': 'jquery-ui/ui/widgets',
     'framework': '@shopsys/framework/js',
     'jquery': path.resolve(path.join(sources.getNodeModulesDir(), 'jquery')),
-    'jquery-ui-styles': path.resolve(path.join(sources.getNodeModulesDir(), 'jquery-ui')),
     'bazinga-translator': path.resolve(path.join(sources.getNodeModulesDir(), 'bazinga-translator')),
-    'jquery-ui-nested-sortable': path.resolve(path.join(sources.getNodeModulesDir(), 'nestedSortable')),
     'icons': path.resolve(path.join(__dirname, 'assets/icons'))
 });
 

@@ -19,8 +19,6 @@
         "flatpickr": "^4.6.13",
         "jquery": "^3.4.1",
         "jquery-hoverintent": "^1.10.1",
-        "jquery-ui": "1.12.1",
-        "jquery-ui-touch-punch": "^0.2.3",
         "nouislider": "^15.8.1",
         "select2": "^4.0.12",
         "sortablejs": "^1.15.6"
