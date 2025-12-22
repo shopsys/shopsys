@@ -9,7 +9,10 @@ use Shopsys\FormTypesBundle\ActionBarType as BaseActionBarType;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -34,6 +37,30 @@ final class ActionBarType extends AbstractTypeExtension
     public static function getExtendedTypes(): iterable
     {
         return [BaseActionBarType::class];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver
+            ->setDefined(['entity_name', 'entity_identifier'])
+            ->setAllowedTypes('entity_name', ['string', 'null'])
+            ->setAllowedTypes('entity_identifier', ['string', 'null'])
+            ->setDefault('entity_name', null)
+            ->setDefault('entity_identifier', null);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $view->vars['entity_name'] = $options['entity_name'];
+        $view->vars['entity_identifier'] = $options['entity_identifier'];
     }
 
     /**
