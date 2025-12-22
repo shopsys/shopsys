@@ -194,7 +194,7 @@
         "tuscanicz/enum": "^2.1",
         "twig/twig": "^3.14.0",
         "webmozart/assert": "^1.4",
-        "webonyx/graphql-php": "^15.6"
+        "webonyx/graphql-php": "^15.29.1"
     },
     "require-dev": {
         "ext-pgsql": "*",
@@ -227,8 +227,7 @@
         "symfony/symfony": "*",
         "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0",
         "doctrine/doctrine-migrations-bundle": "3.4.0",
-        "doctrine/orm": ">=2.20.7",
-        "webonyx/graphql-php": ">=15.29.0"
+        "doctrine/orm": ">=2.20.7"
     },
     "scripts": {
         "post-install-cmd": [
