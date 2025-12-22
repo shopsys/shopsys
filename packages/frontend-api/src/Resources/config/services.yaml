@@ -164,7 +164,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ParameterValueFilesQuery:
         arguments:
-            $filesBatchLoader: '@files_batch_loader'
+            $filesBatchLoader: '@first_file_batch_loader'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFilesQuery:
         arguments:

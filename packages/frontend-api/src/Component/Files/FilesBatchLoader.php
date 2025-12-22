@@ -44,48 +44,99 @@ class FilesBatchLoader
             }
         }
 
-        return $this->promiseAdapter->all($this->sortAllFilesByOriginalInputData($allFiles, $filesBatchLoadData));
+        return $this->promiseAdapter->all($this->sortAllFilesByOriginalInputData($allFiles, $filesBatchLoadData, []));
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function loadFirstByBatchData(array $filesBatchLoadData): Promise
+    {
+        $filesBatchLoadDataByEntityNameAndType = $this->getFileBatchLoadDataArrayByEntityAndType($filesBatchLoadData);
+
+        $allFiles = [];
+
+        foreach ($filesBatchLoadDataByEntityNameAndType as $entityName => $dataByTypes) {
+            foreach ($dataByTypes as $type => $filesBatchLoadDataOfEntityAndType) {
+                $allFiles = array_merge($allFiles, $this->getFirstFileByEntityNameAndTypeIndexedByDataId($filesBatchLoadDataOfEntityAndType, $entityName, $type));
+            }
+        }
+
+        return $this->promiseAdapter->all($this->sortAllFilesByOriginalInputData($allFiles, $filesBatchLoadData, null));
     }
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
      * @param string $entityName
      * @param string $type
-     * @return array<string, array|null>
+     * @return array<string, array<int, array{url: string, anchorText: string}>>
      */
     protected function getFilesByEntityNameAndTypeIndexedByDataId(
         array $filesBatchLoadData,
         string $entityName,
         string $type,
     ): array {
-        $isParameterValueEntity = $entityName === ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG;
-        $entityIds = array_map(static fn (FileBatchLoadData $fileBatchLoadData) => $fileBatchLoadData->getEntityId(), $filesBatchLoadData);
-        $filesIndexedByEntityId = $this->uploadedFileFacade->getAllFilesIndexedByEntityId(
-            $entityIds,
-            $entityName,
-            $isParameterValueEntity ? null : $this->domain->getLocale(),
-            $type,
-        );
+        $filesIndexedByEntityId = $this->getFilesIndexedByEntityId($filesBatchLoadData, $entityName, $type, $this->domain->getLocale());
 
         $files = [];
 
         foreach ($filesBatchLoadData as $fileBatchLoadData) {
-            if (!isset($filesIndexedByEntityId[$fileBatchLoadData->getEntityId()])) {
-                $files[$fileBatchLoadData->getId()] = $isParameterValueEntity ? null : [];
-
-                continue;
-            }
-            $entityFiles = $filesIndexedByEntityId[$fileBatchLoadData->getEntityId()];
-
-            if ($isParameterValueEntity) {
-                $firstFile = reset($entityFiles);
-                $files[$fileBatchLoadData->getId()] = $firstFile !== false ? $this->getResolvedFile($firstFile) : null;
-            } else {
-                $files[$fileBatchLoadData->getId()] = $this->getResolvedFiles($entityFiles);
-            }
+            $entityFiles = $filesIndexedByEntityId[$fileBatchLoadData->getEntityId()] ?? [];
+            $files[$fileBatchLoadData->getId()] = $this->getResolvedFiles($entityFiles);
         }
 
         return $files;
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
+     * @param string $entityName
+     * @param string $type
+     * @return array<string, array{url: string, anchorText: string}|null>
+     */
+    protected function getFirstFileByEntityNameAndTypeIndexedByDataId(
+        array $filesBatchLoadData,
+        string $entityName,
+        string $type,
+    ): array {
+        $isParameterValueEntity = $entityName === ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG;
+        $locale = $isParameterValueEntity ? null : $this->domain->getLocale();
+
+        $filesIndexedByEntityId = $this->getFilesIndexedByEntityId($filesBatchLoadData, $entityName, $type, $locale);
+
+        $files = [];
+
+        foreach ($filesBatchLoadData as $fileBatchLoadData) {
+            $entityFiles = $filesIndexedByEntityId[$fileBatchLoadData->getEntityId()] ?? [];
+            $firstFile = reset($entityFiles);
+            $files[$fileBatchLoadData->getId()] = $firstFile !== false ? $this->getResolvedFile($firstFile) : null;
+        }
+
+        return $files;
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
+     * @param string $entityName
+     * @param string $type
+     * @param string|null $locale
+     * @return array<int, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]>
+     */
+    protected function getFilesIndexedByEntityId(
+        array $filesBatchLoadData,
+        string $entityName,
+        string $type,
+        ?string $locale,
+    ): array {
+        $entityIds = array_map(static fn (FileBatchLoadData $fileBatchLoadData) => $fileBatchLoadData->getEntityId(), $filesBatchLoadData);
+
+        return $this->uploadedFileFacade->getAllFilesIndexedByEntityId(
+            $entityIds,
+            $entityName,
+            $locale,
+            $type,
+        );
     }
 
     /**
@@ -108,22 +159,18 @@ class FilesBatchLoader
     /**
      * @param array<string, array|null> $allFilesIndexedByFileBatchLoadDataId
      * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
+     * @param array|null $defaultValue
      * @return array<int, array|null>
      */
     protected function sortAllFilesByOriginalInputData(
         array $allFilesIndexedByFileBatchLoadDataId,
         array $filesBatchLoadData,
+        ?array $defaultValue,
     ): array {
         $sortedFiles = [];
 
         foreach ($filesBatchLoadData as $fileBatchLoadData) {
-            if (array_key_exists($fileBatchLoadData->getId(), $allFilesIndexedByFileBatchLoadDataId) === false) {
-                $isParameterValueEntity = $fileBatchLoadData->getEntityName() === ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG;
-                $sortedFiles[] = $isParameterValueEntity ? null : [];
-
-                continue;
-            }
-            $sortedFiles[] = $allFilesIndexedByFileBatchLoadDataId[$fileBatchLoadData->getId()];
+            $sortedFiles[] = $allFilesIndexedByFileBatchLoadDataId[$fileBatchLoadData->getId()] ?? $defaultValue;
         }
 
         return $sortedFiles;
