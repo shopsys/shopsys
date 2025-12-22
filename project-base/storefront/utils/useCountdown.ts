@@ -1,9 +1,5 @@
-import dayjs, { Dayjs } from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 import { useRouter } from 'next/router';
-import { useState, useEffect, useCallback } from 'react';
-
-dayjs.extend(duration);
+import { useState, useEffect, useRef } from 'react';
 
 interface TimeState {
     days: string;
@@ -13,11 +9,10 @@ interface TimeState {
     isLoading: boolean;
 }
 
-type CountdownTime = Dayjs | string | Date;
+type CountdownTime = string | Date;
 
-const calculateTimeLeft = (duration: duration.Duration): Omit<TimeState, 'isLoading'> => {
-    const totalMilliseconds = duration.asMilliseconds();
-    const totalSeconds = Math.floor(totalMilliseconds / 1000);
+const calculateTimeLeft = (durationMs: number): Omit<TimeState, 'isLoading'> => {
+    const totalSeconds = Math.floor(durationMs / 1000);
     const totalMinutes = Math.floor(totalSeconds / 60);
     const totalHours = Math.floor(totalMinutes / 60);
     const totalDays = Math.floor(totalHours / 24);
@@ -32,13 +27,12 @@ const calculateTimeLeft = (duration: duration.Duration): Omit<TimeState, 'isLoad
     };
 };
 
-export const useCountdown = (
-    endTime: CountdownTime,
-    callback: () => void = () => router.reload(),
-    interval = 1000,
-): TimeState => {
-    const router = useRouter();
+const parseDate = (date: CountdownTime): number => {
+    return new Date(date).getTime();
+};
 
+export const useCountdown = (endTime: CountdownTime, callback?: () => void, interval = 1000): TimeState => {
+    const router = useRouter();
     const [time, setTime] = useState<TimeState>({
         days: '00',
         hours: '00',
@@ -47,45 +41,55 @@ export const useCountdown = (
         isLoading: true,
     });
 
-    const updateTime = useCallback(
-        (duration: duration.Duration) => {
-            if (duration.asMilliseconds() <= 0) {
-                callback();
-                return false;
-            }
-
-            setTime(() => ({
-                ...calculateTimeLeft(duration),
-                isLoading: false,
-            }));
-
-            return true;
-        },
-        [router],
-    );
+    const onCompleteRef = useRef<() => void>();
+    onCompleteRef.current = callback ?? router.reload;
 
     useEffect(() => {
-        const currentTime = dayjs();
-        const endTimeDayjs = dayjs(endTime);
+        const endTimeMs = parseDate(endTime);
+        let isActive = true;
+        let intervalId: ReturnType<typeof setInterval> | undefined;
 
-        if (!endTimeDayjs.isValid()) {
-            return;
-        }
+        const tick = () => {
+            if (!isActive) {
+                return;
+            }
 
-        const diffTime = endTimeDayjs.diff(currentTime);
-        let duration = dayjs.duration(diffTime);
+            const durationMs = Math.max(0, endTimeMs - Date.now());
 
-        const intervalId = setInterval(() => {
-            duration = duration.subtract(interval);
+            if (durationMs <= 0) {
+                isActive = false;
+                if (intervalId) {
+                    clearInterval(intervalId);
+                }
+                onCompleteRef.current?.();
+                return;
+            }
 
-            if (!updateTime(duration)) {
+            setTime({
+                ...calculateTimeLeft(durationMs),
+                isLoading: false,
+            });
+        };
+
+        const timeoutId = isNaN(endTimeMs)
+            ? undefined
+            : setTimeout(() => {
+                  tick();
+                  if (isActive) {
+                      intervalId = setInterval(tick, interval);
+                  }
+              }, 0);
+
+        return () => {
+            isActive = false;
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+            if (intervalId) {
                 clearInterval(intervalId);
             }
-        }, interval);
-
-        // eslint-disable-next-line consistent-return
-        return () => clearInterval(intervalId);
-    }, [endTime, updateTime]);
+        };
+    }, [endTime, interval]);
 
     return time;
 };

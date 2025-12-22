@@ -1,5 +1,4 @@
 import { SkeletonModuleCountdown } from 'components/Blocks/Skeleton/SkeletonModuleCountdown';
-import { Dayjs } from 'dayjs';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
@@ -9,7 +8,7 @@ const Countdown = dynamic(() => import('./Countdown').then((component) => compon
 });
 
 type DeferredCountdownProps = {
-    endTime: Dayjs;
+    endTime: Date | string;
 };
 
 export const DeferredCountdown: FC<DeferredCountdownProps> = ({ endTime }) => {

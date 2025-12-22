@@ -1,18 +1,72 @@
-import { Dayjs, extend, locale } from 'dayjs';
-import dayjs from 'dayjs';
-import 'dayjs/locale/cs';
-import 'dayjs/locale/sk';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import timezonePlugin from 'dayjs/plugin/timezone';
-import utcPlugin from 'dayjs/plugin/utc';
+let currentLocale = 'en';
 
-dayjs.extend(utcPlugin);
-dayjs.extend(timezonePlugin);
-extend(LocalizedFormat);
+export const initIntlDateTimeFormatterLocale = (defaultLocale: string): void => {
+    currentLocale = defaultLocale;
+};
 
-export const initDayjsLocale = (defaultLocale: string) => locale(defaultLocale);
+const parseDate = (date?: Date | string): Date | null => {
+    const dateObj = date ? new Date(date) : new Date();
+    if (isNaN(dateObj.getTime())) {
+        return null;
+    }
+    return dateObj;
+};
 
-export const formatDate = (date?: Dayjs | string, timezone?: string): string => dayjs(date).tz(timezone).format('l');
+const createFormatter = (
+    options: Intl.DateTimeFormatOptions,
+    timezone?: string,
+    locale?: string,
+): Intl.DateTimeFormat => {
+    return new Intl.DateTimeFormat(locale ?? currentLocale, {
+        ...options,
+        timeZone: timezone,
+    });
+};
 
-export const formatDateAndTime = (date?: Dayjs | string, timezone?: string): string =>
-    dayjs(date).tz(timezone).format('l LT');
+/**
+ * Formats a date string using the provided or current locale and optional timezone.
+ * Returns localized short date format (e.g., "3/15/2024" for English, "15. 3. 2024" for Czech).
+ */
+export const formatDate = (date?: Date | string, timezone?: string, locale?: string): string => {
+    const dateObj = parseDate(date);
+    if (!dateObj) {
+        return '';
+    }
+
+    const formatter = createFormatter(
+        {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+        },
+        timezone,
+        locale,
+    );
+
+    return formatter.format(dateObj);
+};
+
+/**
+ * Formats a date and time string using the provided or current locale and optional timezone.
+ * Returns localized short date and time format (e.g., "3/15/2024 10:30 AM" for English).
+ */
+export const formatDateAndTime = (date?: Date | string, timezone?: string, locale?: string): string => {
+    const dateObj = parseDate(date);
+    if (!dateObj) {
+        return '';
+    }
+
+    const formatter = createFormatter(
+        {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+        },
+        timezone,
+        locale,
+    );
+
+    return formatter.format(dateObj);
+};

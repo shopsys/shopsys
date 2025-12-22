@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { twJoin } from 'tailwind-merge';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 
@@ -8,10 +7,18 @@ type ArticleDate = {
     className?: string;
 };
 
+const toIsoDateUTC = (dateString: string): string => {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return '';
+    }
+    return date.toISOString().split('T')[0];
+};
+
 export const ArticleDate: FC<ArticleDate> = ({ date, tid, className }) => {
     const { formatDate } = useFormatDate();
 
-    const isoDateTime = dayjs.utc(date).format('YYYY-MM-DD'); //required by HTML spec
+    const isoDateTime = toIsoDateUTC(date); // Required by HTML spec
     const displayDate = formatDate(date);
 
     return (

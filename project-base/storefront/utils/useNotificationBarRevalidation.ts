@@ -1,33 +1,37 @@
-import dayjs from 'dayjs';
-import minMax from 'dayjs/plugin/minMax';
-import { TypeNotificationBarsFragment } from 'graphql/requests/notificationBars/fragments/NotificationBarsFragment.generated';
 import { useNotificationBars } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
-dayjs.extend(minMax);
+const DEFAULT_POLLING_INTERVAL_MS = 300_000; // 5 minutes (matches @redisCache TTL)
 
-const getValidityDateTimes = (notificationBars: TypeNotificationBarsFragment[]) =>
-    notificationBars
-        .map((notification) => dayjs(notification.validityTo))
-        .filter((validity) => dayjs().isBefore(validity));
+const isFutureDate = (dateString: string | null): boolean => {
+    if (dateString === null) {
+        return true;
+    }
 
-export const useNotificationBarsWithRevalidation = (fromCache = true) => {
-    const [{ data: notificationBarsData }, fetchNotificationBars] = useNotificationBars({
-        requestPolicy: fromCache ? 'cache-first' : 'network-only',
-    });
+    const timestamp = new Date(dateString).getTime();
 
-    const nextRevalidationTime =
-        (notificationBarsData?.notificationBars &&
-            dayjs.min(...getValidityDateTimes(notificationBarsData.notificationBars))) ??
-        dayjs();
+    if (isNaN(timestamp)) {
+        return true;
+    }
+
+    return Date.now() < timestamp;
+};
+
+export const useNotificationBarsWithRevalidation = (pollingIntervalMs = DEFAULT_POLLING_INTERVAL_MS) => {
+    const [{ data: notificationBarsData }, fetchNotificationBars] = useNotificationBars();
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            fetchNotificationBars({ requestPolicy: 'network-only' });
+        }, pollingIntervalMs);
+
+        return () => clearInterval(intervalId);
+    }, [fetchNotificationBars, pollingIntervalMs]);
 
     const activeNotificationBars = useMemo(
-        () =>
-            notificationBarsData?.notificationBars?.filter(
-                (notification) => notification.validityTo === null || dayjs().isBefore(dayjs(notification.validityTo)),
-            ),
+        () => notificationBarsData?.notificationBars?.filter((notification) => isFutureDate(notification.validityTo)),
         [notificationBarsData],
     );
 
-    return { notificationBarsData, activeNotificationBars, fetchNotificationBars, nextRevalidationTime };
+    return { notificationBarsData, activeNotificationBars, fetchNotificationBars };
 };

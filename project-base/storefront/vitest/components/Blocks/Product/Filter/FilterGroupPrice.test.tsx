@@ -29,7 +29,10 @@ vi.mock('framer-motion', async () => {
 });
 
 vi.mock('utils/mappers/price', () => ({
-    getPriceRounded: vi.fn((price: string) => parseFloat(price)),
+    getPriceRounded: vi.fn((price: string) => {
+        const parsed = parseFloat(price);
+        return isNaN(parsed) ? 0 : parsed;
+    }),
 }));
 
 vi.mock('utils/queryParams/useCurrentFilterQuery', () => ({

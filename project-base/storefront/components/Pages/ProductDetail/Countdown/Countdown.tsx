@@ -1,14 +1,10 @@
 import { SkeletonModuleCountdown } from 'components/Blocks/Skeleton/SkeletonModuleCountdown';
-import dayjs, { Dayjs } from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 import React from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCountdown } from 'utils/useCountdown';
 
-dayjs.extend(duration);
-
 type CountdownProps = {
-    endTime: Dayjs;
+    endTime: Date | string;
 };
 
 export const Countdown: FC<CountdownProps> = ({ endTime }) => {
