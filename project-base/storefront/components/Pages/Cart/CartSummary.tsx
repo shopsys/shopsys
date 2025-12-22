@@ -15,6 +15,6 @@ export const CartSummary: FC<CartSummaryProps> = ({ cartPreviewRef }) => (
             <PromoCode />
         </div>
 
-        <CartPreview wrapperRef={cartPreviewRef} />
+        <CartPreview isFirstStep wrapperRef={cartPreviewRef} />
     </div>
 );

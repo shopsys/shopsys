@@ -1,8 +1,7 @@
-import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { OrderItemProductCard } from 'components/Blocks/OrderItemProductCard/OrderItemProductCard';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
-import { OrderConfirmationSummary } from 'components/Pages/OrderConfirmation/OrderConfirmationSummary';
+import { CartPreview } from 'components/Pages/Cart/CartPreview';
 import { TypeCartItemTypeEnum } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -14,7 +13,7 @@ type OrderSummaryProps = {
 
 export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoading }) => {
     const { t } = useTranslation();
-    const { cart, transport, payment, roundingPrice, isCartFetchingOrUnavailable } = useCurrentCart();
+    const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
 
     if (isCartFetchingOrUnavailable) {
         return <CartLoading />;
@@ -72,26 +71,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                 )}
             </div>
 
-            <div className="relative">
-                {isTransportOrPaymentLoading && (transport || payment) && (
-                    <LoaderWithOverlay className="w-8" overlayClassName="rounded-xl" />
-                )}
-
-                <OrderConfirmationSummary
-                    roundingPrice={roundingPrice}
-                    totalDiscountPrice={cart.totalDiscountPrice}
-                    totalItemsPriceBeforeDiscount={cart.totalItemsPriceBeforeDiscount}
-                    totalPrice={cart.totalPrice}
-                    payment={{
-                        name: payment?.name,
-                        price: payment?.price.priceWithVat,
-                    }}
-                    transport={{
-                        name: transport?.name,
-                        price: transport?.price.priceWithVat,
-                    }}
-                />
-            </div>
+            <CartPreview isTransportOrPaymentLoading={isTransportOrPaymentLoading} />
         </div>
     );
 };
