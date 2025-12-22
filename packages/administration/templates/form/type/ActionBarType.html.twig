@@ -1,5 +1,17 @@
 {% block action_bar_row %}
     {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
+        {% block fixed_bar_product_info %}
+            {% if form.vars.entity_name or form.vars.entity_identifier %}
+                <div class="action-bar-product_info small">
+                    {% if form.vars.entity_name %}
+                        <span class="fw-semibold text-truncate" style="max-width: 300px;">{{ form.vars.entity_name }}</span>
+                    {% endif %}
+                    {% if form.vars.entity_identifier %}
+                        <span class="text-muted">{{ form.vars.entity_name ? '|' }}&nbsp;{{ form.vars.entity_identifier }}</span>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endblock %}
         {% block fixed_bar_content %}
             {% for child in form %}
                 {{- form_widget(child) -}}

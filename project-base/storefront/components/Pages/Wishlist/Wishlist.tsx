@@ -9,13 +9,33 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import dynamic from 'next/dynamic';
+import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
+const RemoveAllProductsPopup = dynamic(
+    () =>
+        import('components/Blocks/Popup/RemoveAllProductsPopup').then((component) => component.RemoveAllProductsPopup),
+    {
+        ssr: false,
+    },
+);
+
 export const Wishlist: FC = () => {
     const { t } = useTranslation();
-    const { wishlist, isProductListFetching, removeWishlist: handleRemoveWishlist } = useWishlist();
+    const { wishlist, isProductListFetching, removeWishlist } = useWishlist();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const title = `${t('Wishlist')}${wishlist?.products.length ? ` (${wishlist.products.length})` : ''}`;
+
+    const handleRemoveAllClick = () => {
+        updatePortalContent(
+            <RemoveAllProductsPopup
+                removeAllHandler={removeWishlist}
+                title={t('Do you really want to remove all products from wishlist?')}
+            />,
+        );
+    };
 
     return (
         <VerticalStack gap="md">
@@ -30,9 +50,7 @@ export const Wishlist: FC = () => {
                             <Button
                                 aria-label={t('Remove all product from wishlist', { ns: 'accessibility' })}
                                 variant="inverted"
-                                onClick={() => {
-                                    handleRemoveWishlist();
-                                }}
+                                onClick={handleRemoveAllClick}
                             >
                                 {t('Remove all from wishlist')}
                                 <RemoveIcon className="size-3" />

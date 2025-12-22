@@ -29,6 +29,7 @@ fragment OrderDetailItemFragment on OrderItem {
         isVisible
         isSellingDenied
         isInquiryType
+        isCurrentlyOutOfStock
         promotionBuyQuantity
         promotionFreeQuantity
         categories {

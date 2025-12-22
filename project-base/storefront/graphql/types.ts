@@ -1432,6 +1432,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   images: Array<TypeImage>;
   /** Whether the product allows purchasing more items than are currently in stock */
   isAllowedNegativeStock: Scalars['Boolean']['output'];
+  /** Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied */
+  isCurrentlyOutOfStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
@@ -2515,6 +2517,8 @@ export type TypeProduct = {
   images: Array<TypeImage>;
   /** Whether the product allows purchasing more items than are currently in stock */
   isAllowedNegativeStock: Scalars['Boolean']['output'];
+  /** Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied */
+  isCurrentlyOutOfStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
@@ -3292,6 +3296,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   images: Array<TypeImage>;
   /** Whether the product allows purchasing more items than are currently in stock */
   isAllowedNegativeStock: Scalars['Boolean']['output'];
+  /** Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied */
+  isCurrentlyOutOfStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
@@ -3716,6 +3722,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   images: Array<TypeImage>;
   /** Whether the product allows purchasing more items than are currently in stock */
   isAllowedNegativeStock: Scalars['Boolean']['output'];
+  /** Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied */
+  isCurrentlyOutOfStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];

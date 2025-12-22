@@ -99,6 +99,7 @@ class ProductTest extends GraphQlTestCase
                         name
                     }
                     isSellingDenied
+                    isCurrentlyOutOfStock
                     description
                     orderingPriority
                     parameters {
@@ -266,6 +267,7 @@ class ProductTest extends GraphQlTestCase
                         ],
                     ],
                     'isSellingDenied' => false,
+                    'isCurrentlyOutOfStock' => false,
                     'description' => t(
                         'Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B',
                         [],

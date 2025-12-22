@@ -21,7 +21,6 @@ export const ProductComparisonHead: FC<ProductComparisonHeadProps> = ({ compared
                         key={`head-${product.uuid}`}
                         listIndex={index}
                         product={product}
-                        productsCompareCount={comparedProducts!.length}
                         toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
                     />
                 ))}

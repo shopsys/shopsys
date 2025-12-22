@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper as BaseProductEntityFieldMapper;
 
 /**
@@ -60,6 +61,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method int|null getPromotionFreeQuantity(\App\Model\Product\Product $product)
  * @method bool isAllowedNegativeStock(\App\Model\Product\Product $product)
  * @method bool isSellingDenied(\App\Model\Product\Product $product)
+ * @method bool isCurrentlyOutOfStock(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -78,6 +80,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleCountByIdsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
@@ -100,6 +103,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         DataLoaderInterface $productsVisibleCountByIdsBatchLoader,
         ProductVideoTranslationsRepository $productVideoTranslationsRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
+        ProductStockFacade $productStockFacade,
         protected readonly ProductRepository $productRepository,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ParameterRepository $parameterRepository,
@@ -122,6 +126,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productsVisibleCountByIdsBatchLoader,
             $productVideoTranslationsRepository,
             $friendlyUrlFacade,
+            $productStockFacade,
         );
     }
 

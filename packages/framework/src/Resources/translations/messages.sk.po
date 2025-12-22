@@ -3391,6 +3391,9 @@ msgstr "Jednotka <strong>{{ name }}</strong> odstránená a nahradená jednotkou
 msgid "Unknown configuration"
 msgstr "Konfigurácia Unknown"
 
+msgid "Unsaved changes"
+msgstr "Neuložené zmeny"
+
 msgid "Unsupported payment card region"
 msgstr "Platobná karta je vydaná v regióne, v ktorom nie sú podporované platby kartou"
 
@@ -3600,9 +3603,6 @@ msgstr "Nemáte oprávnenie na vykonanie tejto akcie."
 
 msgid "You have changed a parameter type which requires conversion of its values to a %type%. Here is a list of values, that needs to be reviewed."
 msgstr "Zmenili ste typ parametra, čo vyžaduje konverziu jeho hodnôt na %type%. Tu je zoznam hodnôt, ktoré treba skontrolovať."
-
-msgid "You have made changes, don't forget to save them!"
-msgstr "Urobili ste zmeny, nezabudnite ich uložiť!"
 
 msgid "You have to create some payment first."
 msgstr "Musíte najskôr vytvoriť platobnú metódu."

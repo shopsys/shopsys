@@ -36,7 +36,11 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
     const showRepeatOrderButton =
         canCreateOrder &&
         order.productItems.some(
-            (item) => item.product?.isVisible && !item.product.isSellingDenied && !item.product.isInquiryType,
+            (item) =>
+                item.product?.isVisible &&
+                !item.product.isSellingDenied &&
+                !item.product.isInquiryType &&
+                !item.product.isCurrentlyOutOfStock,
         );
 
     const notPaid = order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;

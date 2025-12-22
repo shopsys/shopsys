@@ -160,10 +160,17 @@ final class ProductFormType extends AbstractType
         $builder->add($this->createFilesGroup($builder, $options));
         $builder->add($this->createAccessoriesGroup($builder, $product));
         $builder->add($this->createVideosGroup($builder));
-        $builder->add('actionBar', ActionBarType::class, [
+        $actionBarOptions = [
             'back_route' => 'admin_product_list',
             'entity' => $product,
-        ]);
+        ];
+
+        if ($product !== null) {
+            $actionBarOptions['entity_name'] = $product->getName();
+            $actionBarOptions['entity_identifier'] = $product->getCatnum();
+        }
+
+        $builder->add('actionBar', ActionBarType::class, $actionBarOptions);
 
         $this->pluginDataFormExtensionFacade->extendForm($builder, 'product', 'pluginData');
     }

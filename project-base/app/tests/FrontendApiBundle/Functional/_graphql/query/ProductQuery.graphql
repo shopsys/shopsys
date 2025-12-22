@@ -34,6 +34,7 @@ query Product($uuid: Uuid) {
             name
         }
         isSellingDenied
+        isCurrentlyOutOfStock
         description
         orderingPriority
         parameters {

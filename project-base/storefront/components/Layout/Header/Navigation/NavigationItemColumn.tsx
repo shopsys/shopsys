@@ -27,13 +27,15 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                             skeletonType={skeletonType}
                             onClick={onLinkClick}
                         >
-                            <Image
-                                alt={columnCategory.mainImage?.name || columnCategory.name}
-                                className="h-14 w-auto mix-blend-multiply"
-                                height={56}
-                                src={columnCategory.mainImage?.url}
-                                width={64}
-                            />
+                            <div className="relative h-14 w-full">
+                                <Image
+                                    fill
+                                    alt={columnCategory.mainImage?.name || columnCategory.name}
+                                    className="object-contain mix-blend-multiply"
+                                    sizes="80px"
+                                    src={columnCategory.mainImage?.url}
+                                />
+                            </div>
                         </ExtendedNextLink>
 
                         <ExtendedNextLink
