@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory;
@@ -44,19 +45,23 @@ class PromotionFlagFacade
      */
     public function updatePromotionFlags(int $productId): void
     {
-        $product = $this->productFacade->getById($productId);
-        $flagsByDomainId = [];
+        try {
+            $product = $this->productFacade->getById($productId);
+            $flagsByDomainId = [];
 
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $flagsByDomainId[$domainId] = $this->getUpdatedFlagsOnDomain($product, $domainId);
+            foreach ($this->domain->getAllIds() as $domainId) {
+                $flagsByDomainId[$domainId] = $this->getUpdatedFlagsOnDomain($product, $domainId);
+            }
+
+            if (!$this->haveFlagsChanged($product, $flagsByDomainId)) {
+                return;
+            }
+
+            $product->setFlags($flagsByDomainId);
+            $this->em->flush();
+        } catch (ProductNotFoundException) {
+            // Product has been deleted, nothing to update
         }
-
-        if (!$this->haveFlagsChanged($product, $flagsByDomainId)) {
-            return;
-        }
-
-        $product->setFlags($flagsByDomainId);
-        $this->em->flush();
     }
 
     public function updatePromotionFlagsForAll(): void
