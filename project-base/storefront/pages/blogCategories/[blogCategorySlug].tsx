@@ -13,6 +13,7 @@ import {
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
@@ -25,6 +26,11 @@ import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
+
+const Error404Content = dynamic(
+    () => import('components/Pages/ErrorPage/Error404Content').then((m) => m.Error404Content),
+    { ssr: false },
+);
 
 const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
@@ -41,6 +47,10 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(blogCategoryData?.blogCategory);
     useGtmPageViewEvent(pageViewEvent, isBlogCategoryFetching);
+
+    if (!blogCategoryData && !isBlogCategoryFetching) {
+        return <Error404Content />;
+    }
 
     return (
         <CommonLayout

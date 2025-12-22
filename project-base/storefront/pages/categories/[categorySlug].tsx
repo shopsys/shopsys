@@ -19,6 +19,7 @@ import {
 } from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
@@ -39,6 +40,11 @@ import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
+const Error404Content = dynamic(
+    () => import('components/Pages/ErrorPage/Error404Content').then((m) => m.Error404Content),
+    { ssr: false },
+);
+
 const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     const currentFilter = useCurrentFilterQuery();
     const currentSort = useCurrentSortQuery();
@@ -52,6 +58,10 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     );
 
     const firstImageUrl = categoryData?.images[0]?.url;
+
+    if (!categoryData && !isFetchingVisible) {
+        return <Error404Content />;
+    }
 
     return (
         <PageDefer>

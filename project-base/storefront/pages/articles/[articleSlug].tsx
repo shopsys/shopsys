@@ -10,6 +10,7 @@ import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/Pro
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { OgTypeEnum } from 'types/seo';
 import { OperationResult } from 'urql';
@@ -22,6 +23,11 @@ import { parseCatnums } from 'utils/parsing/grapesJsParser';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
+const Error404Content = dynamic(
+    () => import('components/Pages/ErrorPage/Error404Content').then((m) => m.Error404Content),
+    { ssr: false },
+);
+
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();
     const [{ data: articleDetailData, fetching: isArticleDetailFetching }] = useArticleDetailQuery({
@@ -32,6 +38,10 @@ const ArticleDetailPage: NextPage = () => {
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(article);
     useGtmPageViewEvent(pageViewEvent, isArticleDetailFetching);
+
+    if (!articleDetailData && !isArticleDetailFetching) {
+        return <Error404Content />;
+    }
 
     return (
         <CommonLayout
