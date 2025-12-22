@@ -1,9 +1,9 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
+import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
-import { Button } from 'components/Forms/Button/Button';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
@@ -14,24 +14,24 @@ import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEve
 import { useCallback } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { generateProductImageAlt } from 'utils/productAltText';
-import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
+import { useComparison } from 'utils/productLists/comparison/useComparison';
+import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
 type ProductComparisonItemProps = {
     product: TypeProductInProductListFragment;
-    productsCompareCount: number;
     listIndex: number;
     toggleProductInComparison: () => void;
 };
 
 export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
     product,
-    productsCompareCount,
     listIndex,
     toggleProductInComparison,
 }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const { calcMaxMarginLeft } = useComparisonTable(productsCompareCount);
+    const { isProductInComparison } = useComparison();
+    const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
     const { canSeePrices } = useAuthorization();
 
     const onProductDetailRedirectHandler = useCallback(
@@ -75,28 +75,27 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                         {t('Code')}: {product.catalogNumber}
                     </span>
                 </div>
-                <ProductAction
-                    gtmMessageOrigin={GtmMessageOriginType.other}
-                    gtmProductListName={GtmProductListNameType.product_comparison_page}
-                    listIndex={listIndex}
-                    product={product}
-                />
+                <div className="flex w-full items-center justify-between gap-1 md:justify-normal md:gap-2.5">
+                    <ProductAction
+                        gtmMessageOrigin={GtmMessageOriginType.other}
+                        gtmProductListName={GtmProductListNameType.product_comparison_page}
+                        listIndex={listIndex}
+                        product={product}
+                    />
+                    <ProductCompareButton
+                        isProductInComparison={isProductInComparison(product.uuid)}
+                        productName={product.fullName}
+                        tabIndex={0}
+                        toggleProductInComparison={toggleProductInComparison}
+                    />
+                    <ProductWishlistButton
+                        isProductInWishlist={isProductInWishlist(product.uuid)}
+                        productName={product.fullName}
+                        tabIndex={0}
+                        toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
+                    />
+                </div>
             </div>
-            <Button
-                className="bg-background-default absolute top-0 right-3 p-2 sm:right-5"
-                title={t('Remove product from comparison')}
-                variant="inverted"
-                aria-label={t('Remove from comparison product {{ productName }}', {
-                    ns: 'accessibility',
-                    productName: product.fullName,
-                })}
-                onClick={() => {
-                    toggleProductInComparison();
-                    calcMaxMarginLeft();
-                }}
-            >
-                <RemoveIcon className="size-3" />
-            </Button>
 
             <ProductFlags
                 flags={product.flags}

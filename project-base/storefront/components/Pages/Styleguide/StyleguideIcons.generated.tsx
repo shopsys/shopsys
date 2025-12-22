@@ -2,7 +2,6 @@
  * This file is auto-generated. Do not edit manually.
  * To regenerate this file, run: make generate-icons-for-styleguide
  */
-
 import { StyleguideSection } from './StyleguideElements';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
