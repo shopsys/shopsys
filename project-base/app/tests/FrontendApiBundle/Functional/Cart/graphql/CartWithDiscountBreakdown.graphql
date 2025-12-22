@@ -1,0 +1,36 @@
+query CartWithDiscountBreakdown (
+    $cartUuid: Uuid,
+) {
+    cart (cartInput: {
+        cartUuid: $cartUuid
+    }){
+        uuid
+        promoCodes {
+            discountPrice {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            }
+        }
+        totalItemsPrice {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
+        totalItemsPriceBeforeDiscount {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
+        totalProductPriceAdjustmentsDiscount {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
+        totalDiscountPrice {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
+    }
+}

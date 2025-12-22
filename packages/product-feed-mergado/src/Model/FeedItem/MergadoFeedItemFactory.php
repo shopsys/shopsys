@@ -8,14 +8,11 @@ use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
@@ -29,10 +26,7 @@ class MergadoFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
     public function __construct(
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
@@ -42,10 +36,7 @@ class MergadoFeedItemFactory
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ImageFacade $imageFacade,
         protected readonly CurrencyFacade $currencyFacade,
-        protected readonly ProductPriceCalculation $productPriceCalculation,
-        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly LoggerInterface $logger,
-        protected readonly Setting $setting,
     ) {
     }
 
@@ -58,11 +49,9 @@ class MergadoFeedItemFactory
     {
         $domainId = $domainConfig->getId();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-        $productPrice = $this->productPriceCalculation->calculatePrice(
-            $product,
-            $domainId,
-            $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId),
-        )->getPrice();
+
+        $productPricesResult = $this->productPriceCalculationForCustomerUser
+            ->calculatePricesForCustomerUserAndDomainId($product, $domainId);
 
         return new MergadoFeedItem(
             $product->getId(),
@@ -72,12 +61,12 @@ class MergadoFeedItemFactory
             $this->categoryFacade->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain($product, $domainConfig),
             $this->getProductUsp($product, $domainId),
             $this->availabilityFacade->getProductAvailabilityDaysForFeedsByDomainId($product, $domainId),
-            $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId($product, $domainId)->getPrice(),
+            $productPricesResult->sellingProductPrice->getPrice(),
             $this->getOtherProductImages($product, $domainConfig),
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
             $currency->getCode(),
             $product->getDescription($domainId),
-            $productPrice,
+            $productPricesResult->basicProductPrice->getPrice(),
             [],
             $this->availabilityFacade->isProductAvailableOnDomainCached($product, $domainId) ? 'in stock' : 'out of stock',
             $product->getBrand(),

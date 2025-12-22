@@ -21,7 +21,7 @@ export enum TIDs {
     blocks_product_addtocart = 'blocks_product_addtocart',
     product_detail_main_image = 'product_detail_main_image',
     product_list_item_image = 'product_list_item_image',
-    pages_cart_cartpreview_total = 'pages_cart_cartpreview_total',
+    pages_cart_cart_preview_total = 'pages_cart_cart_preview_total',
     blocks_product_slider_promoted_products = 'blocks_product_slider_promoted_products',
     blocks_sortingbar_option_ = 'blocks_sortingbar_option_',
     layout_header_search_autocomplete_input = 'layout_header_search_autocomplete_input',

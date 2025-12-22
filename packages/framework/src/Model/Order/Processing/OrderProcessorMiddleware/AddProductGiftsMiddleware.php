@@ -68,5 +68,6 @@ class AddProductGiftsMiddleware implements OrderProcessorMiddlewareInterface
         );
         $orderData->addItem($orderItemData);
         $orderData->addTotalPrice($quantifiedItemPrice->getTotalPrice(), OrderItemTypeEnum::TYPE_PRODUCT_GIFT);
+        $orderData->addBasicTotalItemsPrice($quantifiedItemPrice->getTotalPrice());
     }
 }

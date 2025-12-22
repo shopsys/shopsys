@@ -3340,7 +3340,11 @@ Selected pickup place identifier if provided
 <tr>
 <td colspan="2" valign="top"><strong id="cart.totaldiscountprice">totalDiscountPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
-<td></td>
+<td>
+
+Total of all discounts (product price adjustments discounts + promo code discounts)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="cart.totalitemsprice">totalItemsPrice</strong></td>
@@ -3348,6 +3352,15 @@ Selected pickup place identifier if provided
 <td>
 
 Total items price (excluding transport and payment)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cart.totalitemspricebeforediscount">totalItemsPriceBeforeDiscount</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total items price (excluding transport and payment) before any discounts are applied
 
 </td>
 </tr>
@@ -3361,11 +3374,11 @@ Total price including transport and payment
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="cart.totalpricewithoutdiscounttransportandpayment">totalPriceWithoutDiscountTransportAndPayment</strong></td>
+<td colspan="2" valign="top"><strong id="cart.totalproductpriceadjustmentsdiscount">totalProductPriceAdjustmentsDiscount</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
-Total price (excluding discount, transport and payment)
+Total discount from product special prices (price list prices, or X+Y promotion). Difference between basic and selling prices
 
 </td>
 </tr>
@@ -8495,6 +8508,15 @@ Total value of VAT
 <td>
 
 Code of the promo code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="promocode.discountprice">discountPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total discount provided by this promo code
 
 </td>
 </tr>

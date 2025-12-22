@@ -72,6 +72,7 @@ class ApplyPromotionXyMiddleware implements OrderProcessorMiddlewareInterface
 
         $orderData->addItem($discountOrderItemData);
         $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItemTypeEnum::TYPE_PROMOTION);
+        $orderData->addTotalProductPriceAdjustmentsDiscount($discountOrderItemData->getTotalPrice()->inverse());
     }
 
     /**

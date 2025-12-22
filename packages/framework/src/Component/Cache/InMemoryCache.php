@@ -183,10 +183,11 @@ class InMemoryCache implements ResettableInterface
     }
 
     /**
+     * @template T
      * @param string $namespace
-     * @param mixed $value
+     * @param T|callable(): T $value
      * @param mixed $keyParts
-     * @return mixed
+     * @return T
      */
     public function getOrSaveValue(string $namespace, mixed $value, mixed ...$keyParts): mixed
     {

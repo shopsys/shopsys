@@ -17,12 +17,13 @@ use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 use Tests\FrontendApiBundle\Test\PromoCodeAssertionTrait;
 
-class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
+class TotalItemsPriceBeforeDiscountTest extends GraphQlTestCase
 {
     use PromoCodeAssertionTrait;
 
@@ -31,7 +32,7 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
      */
     private CartFacade $cartFacade;
 
-    public function testTotalPriceWithoutDiscountTransportAndPayment(): void
+    public function testTotalItemsPriceBeforeDiscount(): void
     {
         $testingProductVoucher = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
         $voucherQuantity = 3;
@@ -65,16 +66,23 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
         $this->addPaymentToCart($newlyCreatedCart, $testingPayment);
 
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/../_graphql/query/TotalPriceWithoutDiscountPaymentAndTransportQuery.graphql',
+            __DIR__ . '/../_graphql/query/TotalItemsPriceBeforeDiscountQuery.graphql',
             [
                 'cartUuid' => $newlyCreatedCart['uuid'],
             ],
         );
         $responseData = $this->getResponseDataForGraphQlType($response, 'cart');
 
-        $expectedPriceWithVat = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(Money::create('17858'), $this->getReference(CurrencyDataFixture::CURRENCY_CZK), Domain::FIRST_DOMAIN_ID);
+        $expectedPriceWithVat = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
+            Money::create('17858'),
+            $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class),
+            Domain::FIRST_DOMAIN_ID,
+        );
 
-        self::assertThat(Money::create($responseData['totalPriceWithoutDiscountTransportAndPayment']['priceWithVat']), new IsMoneyEqual($expectedPriceWithVat));
+        self::assertThat(
+            Money::create($responseData['totalItemsPriceBeforeDiscount']['priceWithVat']),
+            new IsMoneyEqual($expectedPriceWithVat),
+        );
     }
 
     /**

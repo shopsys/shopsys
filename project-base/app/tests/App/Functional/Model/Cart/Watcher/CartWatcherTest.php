@@ -68,7 +68,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
-        $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($product);
+        $productPrice = $this->productPriceCalculationForCustomerUser->calculatePricesForCurrentUser($product)->sellingProductPrice;
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
         $cartItem = new CartItem($cart, $product, 1, $productPrice->getPrice()->getPriceWithVat());
         $cart->addItem($cartItem);

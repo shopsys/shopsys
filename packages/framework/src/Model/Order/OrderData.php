@@ -269,6 +269,16 @@ class OrderData
      */
     public $freeTransportAndPaymentApplied;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public $totalProductPriceAdjustmentsDiscount;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     */
+    public $basicTotalItemsPrice;
+
     public function __construct()
     {
         $this->deliveryAddressSameAsBillingAddress = false;
@@ -277,7 +287,9 @@ class OrderData
         $this->isCompanyCustomer = false;
         $this->freeTransportAndPaymentApplied = false;
 
-        $this->totalPrice = new Price(Money::zero(), Money::zero());
+        $this->totalPrice = Price::zero();
+        $this->basicTotalItemsPrice = Price::zero();
+        $this->totalProductPriceAdjustmentsDiscount = Price::zero();
     }
 
     /**
@@ -316,6 +328,22 @@ class OrderData
     {
         $this->totalPricesByItemType[$type] = $this->totalPricesByItemType[$type]->add($priceToAdd);
         $this->totalPrice = $this->totalPrice->add($priceToAdd);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $priceToAdd
+     */
+    public function addBasicTotalItemsPrice(PriceInterface $priceToAdd): void
+    {
+        $this->basicTotalItemsPrice = $this->basicTotalItemsPrice->add($priceToAdd);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $priceToAdd
+     */
+    public function addTotalProductPriceAdjustmentsDiscount(PriceInterface $priceToAdd): void
+    {
+        $this->totalProductPriceAdjustmentsDiscount = $this->totalProductPriceAdjustmentsDiscount->add($priceToAdd);
     }
 
     /**
@@ -363,18 +391,6 @@ class OrderData
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
-    public function getTotalPriceWithoutDiscountTransportAndPayment(): PriceInterface
-    {
-        return $this->totalPrice
-            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT])
-            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PAYMENT])
-            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT])
-            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PROMOTION]);
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
      */
     public function getItemsWithoutTransportAndPayment(): array
@@ -393,5 +409,21 @@ class OrderData
     public function setItemsWithoutTransportAndPayment(array $items): void
     {
         $this->items = $items;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     */
+    public function getTotalDiscountPrice(): PriceInterface
+    {
+        return $this->totalProductPriceAdjustmentsDiscount->add($this->getPromoCodeDiscountPrice());
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     */
+    public function getPromoCodeDiscountPrice(): PriceInterface
+    {
+        return $this->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_DISCOUNT])->inverse();
     }
 }

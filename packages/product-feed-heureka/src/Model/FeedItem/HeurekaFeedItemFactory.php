@@ -83,10 +83,10 @@ class HeurekaFeedItemFactory
      */
     protected function getPrice(Product $product, DomainConfig $domainConfig): PriceInterface
     {
-        return $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
+        return $this->productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
-        )->getPrice();
+        )->sellingProductPrice->getPrice();
     }
 
     /**

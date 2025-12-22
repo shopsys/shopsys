@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPricesResult;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory;
 use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader;
@@ -232,8 +233,9 @@ class HeurekaFeedItemTest extends TestCase
         $this->defaultProduct->method('getFullName')->with('cs')->willReturn('product name');
 
         $productPrice = new ProductPrice(Price::zero(), $this->createMock(PricingGroup::class), false);
-        $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForCustomerUserAndDomainId')
-            ->with($this->defaultProduct, Domain::FIRST_DOMAIN_ID, null)->willReturn($productPrice);
+        $productPricesResult = new ProductPricesResult($productPrice, $productPrice);
+        $this->productPriceCalculationForCustomerUserMock->method('calculatePricesForCustomerUserAndDomainId')
+            ->with($this->defaultProduct, Domain::FIRST_DOMAIN_ID, null)->willReturn($productPricesResult);
 
         $this->heurekaProductDataBatchLoaderMock->method('getProductUrl')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn('https://example.com/product-1');

@@ -81,15 +81,11 @@ class TransportAndPaymentWatcherFacade
             $this->cartWithModificationsResult->setRemainingAmountForFreeTransport($amountForFreeTransport);
         }
 
-        $totalDiscountPrice = $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT];
-        $totalDiscountPrice = $totalDiscountPrice->add($orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PROMOTION]);
-
         $this->cartWithModificationsResult->setTotalPrice($orderData->totalPrice);
         $this->cartWithModificationsResult->setTotalItemsPrice($productsPrice);
-        $this->cartWithModificationsResult->setTotalDiscountPrice($totalDiscountPrice->inverse());
-        $this->cartWithModificationsResult->setTotalPriceWithoutDiscountTransportAndPayment(
-            $orderData->getTotalPriceWithoutDiscountTransportAndPayment(),
-        );
+        $this->cartWithModificationsResult->setTotalItemsPriceBeforeDiscount($orderData->basicTotalItemsPrice);
+        $this->cartWithModificationsResult->setTotalProductPriceAdjustmentsDiscount($orderData->totalProductPriceAdjustmentsDiscount);
+        $this->cartWithModificationsResult->setTotalDiscountPrice($orderData->getTotalDiscountPrice());
         $this->cartWithModificationsResult->setRoundingPrice($orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_ROUNDING]);
 
         $this->checkPayment($cart);

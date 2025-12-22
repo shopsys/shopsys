@@ -67,11 +67,11 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $specialPriceFacadeMock,
         );
 
-        $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
+        $productPrice = $productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
             $product,
             Domain::FIRST_DOMAIN_ID,
             $customerUser,
-        );
+        )->sellingProductPrice;
         $this->assertSame($expectedProductPrice, $productPrice);
     }
 
@@ -116,11 +116,10 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $specialPriceFacadeMock,
         );
 
-        $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
+        $productPrice = $productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
             $product,
             $domainId,
-            null,
-        );
+        )->sellingProductPrice;
         $this->assertSame($expectedProductPrice, $productPrice);
     }
 }

@@ -97,7 +97,7 @@ class CartFacade
             }
         }
 
-        $productPrice = $this->productPriceCalculation->calculatePriceForCurrentUser($product);
+        $productPrice = $this->productPriceCalculation->calculatePricesForCurrentUser($product)->sellingProductPrice;
         $notOnStockQuantity = $this->productAvailabilityFacade->getNotOnStockQuantity($product, $this->domain->getId(), $quantity) ?? 0;
 
         if (!$product->isAllowedNegativeStock()) {

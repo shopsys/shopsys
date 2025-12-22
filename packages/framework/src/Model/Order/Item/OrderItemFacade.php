@@ -48,11 +48,11 @@ class OrderItemFacade
         $product = $this->productRepository->getById($productId);
         $orderDomainConfig = $this->domain->getDomainConfigById($order->getDomainId());
 
-        $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
+        $productPrice = $this->productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
             $product,
             $order->getDomainId(),
             $order->getCustomerUser(),
-        )->getPrice();
+        )->sellingProductPrice->getPrice();
 
         $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
         $orderItemData->name = $product->getName($orderDomainConfig->getLocale());

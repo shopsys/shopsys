@@ -13,32 +13,25 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class GoogleFeedItemTest extends TestCase
 {
-    private ProductPriceCalculationForCustomerUser|MockObject $productPriceCalculationForCustomerUserMock;
-
     private CurrencyFacade|MockObject $currencyFacadeMock;
 
     private ProductUrlsBatchLoader|MockObject $productUrlsBatchLoaderMock;
 
-    private ProductAvailabilityFacade|MockObject $productAvailabilityFacadeMock;
-
-    private SpecialPriceFacade $specialPriceFacade;
-
     private GoogleFeedItemFactory $googleFeedItemFactory;
-
-    private Currency $defaultCurrency;
 
     private DomainConfig $defaultDomain;
 
@@ -55,39 +48,40 @@ class GoogleFeedItemTest extends TestCase
      */
     private function doSetUp(bool $isProductAvailableOnStock): void
     {
-        $this->productPriceCalculationForCustomerUserMock = $this->createMock(
-            ProductPriceCalculationForCustomerUser::class,
-        );
+        $productPriceCalculation = $this->createProductPriceCalculationMock(Price::zero());
+
         $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
-        $this->productAvailabilityFacadeMock = $this->getMockBuilder(ProductAvailabilityFacade::class)
+        $productAvailabilityFacadeMock = $this->getMockBuilder(ProductAvailabilityFacade::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['isProductAvailableOnDomainCached'])
             ->getMock();
-        $this->productAvailabilityFacadeMock->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
-        $this->specialPriceFacade = $this->createMock(SpecialPriceFacade::class);
+        $productAvailabilityFacadeMock->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
+        $specialPriceFacade = $this->createMock(SpecialPriceFacade::class);
+        $pricingGroupSettingFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
+        $pricingGroupSettingFacadeMock->method('getDefaultPricingGroupByDomainId')->willReturn($this->createMock(PricingGroup::class));
 
         $this->googleFeedItemFactory = new GoogleFeedItemFactory(
-            $this->productPriceCalculationForCustomerUserMock,
+            $productPriceCalculation,
             $this->currencyFacadeMock,
             $this->productUrlsBatchLoaderMock,
-            $this->productAvailabilityFacadeMock,
-            $this->specialPriceFacade,
+            $productAvailabilityFacadeMock,
+            $specialPriceFacade,
+            $pricingGroupSettingFacadeMock,
         );
 
-        $this->defaultCurrency = $this->createCurrencyMock(1, 'EUR');
+        $defaultCurrency = $this->createCurrencyMock(1, 'EUR');
         $this->defaultDomain = $this->createDomainConfigMock(
             Domain::FIRST_DOMAIN_ID,
             'https://example.com',
             'en',
-            $this->defaultCurrency,
+            $defaultCurrency,
         );
 
         $this->defaultProduct = $this->createMock(Product::class);
         $this->defaultProduct->method('getId')->willReturn(1);
         $this->defaultProduct->method('getFullName')->with('en')->willReturn('product name');
 
-        $this->mockProductPrice($this->defaultProduct, $this->defaultDomain, Price::zero());
         $this->mockProductUrl($this->defaultProduct, $this->defaultDomain, 'https://example.com/product-1');
     }
 
@@ -128,15 +122,18 @@ class GoogleFeedItemTest extends TestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
      */
-    private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
+    private function createProductPriceCalculationMock(Price $price): ProductPriceCalculation
     {
         $productPrice = new ProductPrice($price, $this->createMock(PricingGroup::class), false);
-        $this->productPriceCalculationForCustomerUserMock->method('calculateBasicPriceForCustomerUserAndDomainId')
-            ->with($product, $domain->getId(), null)->willReturn($productPrice);
+
+        $productPriceCalculationMock = $this->createMock(ProductPriceCalculation::class);
+
+        $productPriceCalculationMock->method('calculatePrice')->willReturn($productPrice);
+
+        return $productPriceCalculationMock;
     }
 
     /**

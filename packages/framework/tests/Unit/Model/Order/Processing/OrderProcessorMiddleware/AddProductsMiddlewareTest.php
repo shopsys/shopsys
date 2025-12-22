@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddProductsMiddleware;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPricesResult;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
@@ -155,7 +156,14 @@ class AddProductsMiddlewareTest extends MiddlewareTestCase
     private function createAddProductsMiddleware(array $quantifiedItemPrices): AddProductsMiddleware
     {
         $quantifiedProductPriceCalculation = $this->createMock(QuantifiedProductPriceCalculation::class);
-        $quantifiedProductPriceCalculation->method('calculatePrice')->willReturnOnConsecutiveCalls(...array_values($quantifiedItemPrices));
+
+        $quantifiedProductPricesResult = array_values(array_map(
+            static fn ($quantifiedItemPrice) => new QuantifiedProductPricesResult($quantifiedItemPrice, $quantifiedItemPrice),
+            $quantifiedItemPrices,
+        ));
+
+        $quantifiedProductPriceCalculation->method('calculateQuantifiedBasicAndSellingPrice')
+            ->willReturnOnConsecutiveCalls(...$quantifiedProductPricesResult);
 
         return new AddProductsMiddleware(
             $quantifiedProductPriceCalculation,

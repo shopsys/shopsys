@@ -71,9 +71,11 @@ class CartWithModificationsResult
 
     protected ?PriceInterface $totalItemsPrice = null;
 
-    protected ?PriceInterface $totalDiscountPrice = null;
+    protected ?PriceInterface $totalItemsPriceBeforeDiscount = null;
 
-    protected ?PriceInterface $totalPriceWithoutDiscountTransportAndPayment = null;
+    protected ?PriceInterface $totalProductPriceAdjustmentsDiscount = null;
+
+    protected ?PriceInterface $totalDiscountPrice = null;
 
     protected ?Money $remainingAmountForFreeTransport = null;
 
@@ -235,6 +237,46 @@ class CartWithModificationsResult
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
+    public function getTotalItemsPriceBeforeDiscount(): PriceInterface
+    {
+        if (!$this->totalItemsPriceBeforeDiscount) {
+            throw new LogicException('Total items price before discount must be set before calling the getter.');
+        }
+
+        return $this->totalItemsPriceBeforeDiscount;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalItemsPriceBeforeDiscount
+     */
+    public function setTotalItemsPriceBeforeDiscount(PriceInterface $totalItemsPriceBeforeDiscount): void
+    {
+        $this->totalItemsPriceBeforeDiscount = $totalItemsPriceBeforeDiscount;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     */
+    public function getTotalProductPriceAdjustmentsDiscount(): PriceInterface
+    {
+        if (!$this->totalProductPriceAdjustmentsDiscount) {
+            throw new LogicException('Total product discount price must be set before calling the getter.');
+        }
+
+        return $this->totalProductPriceAdjustmentsDiscount;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalProductPriceAdjustmentsDiscount
+     */
+    public function setTotalProductPriceAdjustmentsDiscount(PriceInterface $totalProductPriceAdjustmentsDiscount): void
+    {
+        $this->totalProductPriceAdjustmentsDiscount = $totalProductPriceAdjustmentsDiscount;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     */
     public function getTotalDiscountPrice(): PriceInterface
     {
         if (!$this->totalDiscountPrice) {
@@ -325,27 +367,6 @@ class CartWithModificationsResult
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
-    public function getTotalPriceWithoutDiscountTransportAndPayment(): PriceInterface
-    {
-        if (!$this->totalPriceWithoutDiscountTransportAndPayment) {
-            throw new LogicException('Total price without discount, transport, and payment must be set before calling the getter.');
-        }
-
-        return $this->totalPriceWithoutDiscountTransportAndPayment;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalPriceWithoutDiscountTransportAndPayment
-     */
-    public function setTotalPriceWithoutDiscountTransportAndPayment(
-        PriceInterface $totalPriceWithoutDiscountTransportAndPayment,
-    ): void {
-        $this->totalPriceWithoutDiscountTransportAndPayment = $totalPriceWithoutDiscountTransportAndPayment;
-    }
-
-    /**
      * @return bool
      */
     public function isCartModified(): bool
@@ -423,9 +444,14 @@ class CartWithModificationsResult
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $promoCodeDiscountPrice
      */
-    public function addPromoCode(PromoCode $promoCode): void
+    public function addPromoCode(PromoCode $promoCode, PriceInterface $promoCodeDiscountPrice): void
     {
-        $this->promoCodes[] = $promoCode;
+        $this->promoCodes[] = new PromoCodeQueryDto(
+            $promoCode->getCode(),
+            $promoCode->getDiscountType(),
+            $promoCodeDiscountPrice,
+        );
     }
 }
