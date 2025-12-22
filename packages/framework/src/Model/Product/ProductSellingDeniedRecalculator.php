@@ -54,41 +54,20 @@ class ProductSellingDeniedRecalculator
                 WHEN (
                     p.selling_denied = TRUE
                     OR
-                    pd.domain_hidden = TRUE
-                    OR
                     pd.selling_denied = TRUE
-                    OR (
-                        p.is_allowed_negative_stock = FALSE AND NOT EXISTS (
-                            SELECT 1 FROM product_stocks as ps
-                            JOIN stock_domains as sd ON ps.stock_id = sd.stock_id AND sd.domain_id = :domainId AND sd.is_enabled = TRUE
-                            WHERE ps.product_id = p.id 
-                            AND ps.product_quantity > 0
-                        )
-                    )
                 )
                 THEN TRUE
                 ELSE FALSE
             END
             FROM products AS p
             WHERE p.id = pd.product_id
-                AND pd.domain_id = :domainId
             ' . (count($productIds) > 0 ? ' AND p.id IN (:productIds)' : '');
 
-        $params = [];
-        $params['productIds'] = $productIds;
-
-        foreach ($this->domain->getAll() as $domain) {
-            $params['domainId'] = $domain->getId();
-
-            $this->em->getConnection()->executeStatement(
-                $query,
-                $params,
-                [
-                    'productIds' => ArrayParameterType::INTEGER,
-                    'domainId' => Types::INTEGER,
-                ],
-            );
-        }
+        $this->em->getConnection()->executeStatement(
+            $query,
+            ['productIds' => $productIds],
+            ['productIds' => ArrayParameterType::INTEGER],
+        );
     }
 
     /**

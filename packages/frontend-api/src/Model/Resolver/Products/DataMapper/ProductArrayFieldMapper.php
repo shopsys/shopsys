@@ -158,6 +158,19 @@ class ProductArrayFieldMapper
 
     /**
      * @param array $data
+     * @return bool
+     */
+    public function isCurrentlyOutOfStock(array $data): bool
+    {
+        if ($this->isAllowedNegativeStock($data)) {
+            return false;
+        }
+
+        return ($this->getStockQuantity($data) ?? 0) <= 0;
+    }
+
+    /**
+     * @param array $data
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function getAccessoriesPromise(array $data): Promise

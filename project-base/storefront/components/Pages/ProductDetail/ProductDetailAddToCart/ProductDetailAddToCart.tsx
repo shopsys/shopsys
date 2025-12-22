@@ -40,6 +40,14 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         return <p className="text-text-error">{t('This item can no longer be purchased')}</p>;
     }
 
+    if (product.isCurrentlyOutOfStock) {
+        return (
+            <p className="text-text-error">
+                {t('This item is currently out of stock and cannot be purchased at the moment.')}
+            </p>
+        );
+    }
+
     if (product.isInquiryType) {
         return (
             <ProductInquiryButton

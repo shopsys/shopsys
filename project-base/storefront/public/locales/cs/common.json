@@ -596,6 +596,7 @@
     "This email is already registered": "Tento e-mail je již registrován",
     "This field is required": "Toto pole je povinné",
     "This item can no longer be purchased": "Tuto položku již nelze zakoupit",
+    "This item is currently out of stock and cannot be purchased at the moment.": "Tato položka je momentálně vyprodaná a nelze ji zakoupit.",
     "This page is about the consent and tracking policy. You can read more about it here.": "Tato stránka pojednává o zásadách souhlasu a sledování. Více informací si můžete přečíst zde.",
     "This value must be exactly {{ companyNumberLength }} characters": "Tato hodnota musí mít přesně {{ companyNumberLength }} znaků",
     "This value must be max {{ bankAccountNumberLength }} characters long": "Tato hodnota musí mít maximálně {{ bankAccountNumberLength }} znaků",

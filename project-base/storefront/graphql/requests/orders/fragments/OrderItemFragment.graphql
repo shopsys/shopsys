@@ -6,6 +6,7 @@ fragment OrderItemFragment on OrderItem {
         isVisible
         isSellingDenied
         isInquiryType
+        isCurrentlyOutOfStock
         link
         mainImage {
             ...ImageFragment

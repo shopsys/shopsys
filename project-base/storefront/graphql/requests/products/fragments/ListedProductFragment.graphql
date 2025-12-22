@@ -11,6 +11,7 @@ fragment ListedProductFragment on Product {
         name
     }
     isSellingDenied
+    isCurrentlyOutOfStock
     flags {
         ...SimpleFlagFragment
     }
