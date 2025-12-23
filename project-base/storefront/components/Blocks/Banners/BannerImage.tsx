@@ -73,6 +73,7 @@ export const BannerImage: FC<BannerImageProps> = ({
                         {...mobileImageProps}
                         className="h-full w-full object-cover"
                         loading={isFirst ? 'eager' : 'lazy'}
+                        src={mobileImageSrc + '?width=480'}
                     />
                 </picture>
                 {children}
