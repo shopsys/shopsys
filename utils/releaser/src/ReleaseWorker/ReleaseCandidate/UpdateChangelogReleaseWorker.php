@@ -42,7 +42,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
                 'In order to generate new changelog entries you need to go to https://github.com/shopsys/shopsys/releases/new?tag=%s&target=%s&title=%s',
                 $version->getOriginalString(),
                 $version->getMajor()->getValue() . '.' . $version->getMinor()->getValue(),
-                $version->getOriginalString() . ' - ' . date('Y-m-d'),
+                urlencode($version->getOriginalString() . ' - ' . date('Y-m-d')),
             ),
         );
 
