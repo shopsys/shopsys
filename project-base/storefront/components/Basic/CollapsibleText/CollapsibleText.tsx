@@ -1,5 +1,4 @@
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
-import DOMPurify from 'isomorphic-dompurify';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -22,8 +21,6 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
         }
     }, [text]);
 
-    const cleanHtml = DOMPurify.sanitize(text);
-
     const handleButtonClick = () => {
         setShowFullDescription((prev) => {
             if (prev) {
@@ -41,7 +38,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
         <div className="flex w-full flex-col items-start gap-2">
             <div className={twJoin('relative max-w-2xl', showFullDescription ? '' : 'line-clamp-4')} ref={textRef}>
                 <div
-                    dangerouslySetInnerHTML={{ __html: cleanHtml }}
+                    dangerouslySetInnerHTML={{ __html: text }}
                     className={twJoin(
                         'user-text',
                         !showFullDescription &&
