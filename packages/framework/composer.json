@@ -53,7 +53,7 @@
         "doctrine/dbal": "^3.8.5",
         "doctrine/doctrine-bundle": "^2.18",
         "doctrine/doctrine-fixtures-bundle": "^3.0.2",
-        "doctrine/orm": "^2.11.2",
+        "doctrine/orm": "^2.20.9",
         "doctrine/persistence": "^3.3.3",
         "elasticsearch/elasticsearch": "^7.6.1",
         "endroid/qr-code": "^6.0",
@@ -136,9 +136,6 @@
         "symfony/process": "^6.4",
         "symfony/var-dumper": "^6.4",
         "symfony/yaml": "^6.4"
-    },
-    "conflict": {
-        "doctrine/orm": ">=2.20.7"
     },
     "extra": {
         "symfony": {

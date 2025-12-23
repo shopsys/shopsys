@@ -103,7 +103,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.0.2",
         "doctrine/doctrine-migrations-bundle": "^3.2.2",
         "doctrine/migrations": "^3.4.1",
-        "doctrine/orm": "^2.11.2",
+        "doctrine/orm": "^2.20.9",
         "doctrine/persistence": "^3.3.3",
         "elasticsearch/elasticsearch": "^7.6.1",
         "endroid/qr-code": "^6.0",
@@ -226,8 +226,7 @@
     "conflict": {
         "symfony/symfony": "*",
         "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0",
-        "doctrine/doctrine-migrations-bundle": "3.4.0",
-        "doctrine/orm": ">=2.20.7"
+        "doctrine/doctrine-migrations-bundle": "3.4.0"
     },
     "scripts": {
         "post-install-cmd": [

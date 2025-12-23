@@ -26,7 +26,7 @@
         "ext-pdo": "*",
         "doctrine/dbal": "^3.8.5",
         "doctrine/doctrine-bundle": "^2.18",
-        "doctrine/orm": "^2.11.2",
+        "doctrine/orm": "^2.20.9",
         "doctrine/persistence": "^3.3.3",
         "shopsys/form-types-bundle": "18.0.x-dev",
         "shopsys/framework": "18.0.x-dev",

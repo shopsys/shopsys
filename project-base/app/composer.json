@@ -48,7 +48,7 @@
         "doctrine/doctrine-bundle": "^2.18",
         "doctrine/doctrine-fixtures-bundle": "^3.0.2",
         "doctrine/doctrine-migrations-bundle": "^3.2.2",
-        "doctrine/orm": "^2.11.2",
+        "doctrine/orm": "^2.20.9",
         "doctrine/persistence": "^3.3.3",
         "enlightn/security-checker": "^1.5",
         "fakerphp/faker": "^1.19.0",
