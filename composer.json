@@ -221,7 +221,7 @@
         "symfony/web-profiler-bundle": "^6.4",
         "symfony/yaml": "^6.4",
         "symplify/easy-coding-standard": "^12.2.0",
-        "shopsys/phpunit-injector": "2.5.1"
+        "shopsys/phpunit-injector": "^2.5.1"
     },
     "conflict": {
         "symfony/symfony": "*",

@@ -137,7 +137,7 @@
         "symfony/debug-bundle": "^6.4",
         "symfony/var-dumper": "^6.4",
         "symfony/web-profiler-bundle": "^6.4",
-        "shopsys/phpunit-injector": "2.5.1"
+        "shopsys/phpunit-injector": "^2.5.1"
     },
     "conflict": {
         "symfony/symfony": "*",
