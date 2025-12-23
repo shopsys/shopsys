@@ -60,7 +60,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
 
         $this->confirm(
             sprintf(
-                'Confirm you have copied the release notes to CHANGELOG-%s.%s.md, checked the changes and saved release as draft.',
+                'Confirm you have copied the release notes to CHANGELOG-%s.%s.md, checked the changes and saved release as draft. After confirmation, the markdown standards will be fixed and the changes will be committed automatically.',
                 $version->getMajor()->getValue(),
                 $version->getMinor()->getValue(),
             ),
