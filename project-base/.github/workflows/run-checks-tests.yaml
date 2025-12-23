@@ -54,7 +54,7 @@ jobs:
                     docker compose down storefront
                     docker compose up -d --wait storefront-cypress
             -   name: Run Cypress tests
-                run: docker compose run cypress
+                run: docker compose run -e TEST_LOCALE=en cypress
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
@@ -149,7 +149,7 @@ jobs:
                     docker compose down storefront
                     docker compose up -d --wait storefront-cypress
             -   name: Run Cypress tests
-                run: docker compose run cypress
+                run: docker compose run -e TEST_LOCALE=en cypress
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
