@@ -857,7 +857,12 @@ jobs:
             -   name: Build application
                 run: docker compose up -d php-fpm storefront
             -   name: Check translations are dumped
+                env:
+                    COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
+                    if [ -n "$COMPOSER_GITHUB_TOKEN" ]; then
+                        docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
+                    fi
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
                     docker compose exec -T php-fpm php phing npm-install-dependencies translations-dump
                     docker compose cp php-fpm:/var/www/html/ .
@@ -906,8 +911,13 @@ jobs:
                 with:
                     name: docker-compose
             -   name: Build application
+                env:
+                    COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
                     docker compose up -d
+                    if [ -n "$COMPOSER_GITHUB_TOKEN" ]; then
+                        docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
+                    fi
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction --dev
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Check all commands are passing
@@ -939,8 +949,13 @@ jobs:
                 with:
                     name: docker-compose
             -   name: Build application
+                env:
+                    COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
                     docker compose up -d
+                    if [ -n "$COMPOSER_GITHUB_TOKEN" ]; then
+                        docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
+                    fi
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction --dev
                     docker compose exec -T php-fpm npm install
             -   name: Checks dependency licenses in Composer and NPM (php-fpm & storefront)
@@ -973,11 +988,16 @@ jobs:
                 with:
                     name: docker-compose
             -   name: Build PHP-FPM part of application
+                env:
+                    COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
                     docker compose up -d --force-recreate
                     docker cp ./ shopsys-framework-php-fpm:/var/www/html
                     docker compose exec -T --user root php-fpm chown -R www-data:www-data /var/www/html
                     docker compose exec -T php-fpm rm -rf /var/www/html/composer.lock /var/www/html/project-base/package-lock.json /var/www/html/project-base/migrations-lock.yml /var/www/html/project-base/storefront
+                    if [ -n "$COMPOSER_GITHUB_TOKEN" ]; then
+                        docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
+                    fi
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create assets npm build-version-generate db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Check standards
@@ -1058,12 +1078,17 @@ jobs:
             -   name: Stop previous running application
                 run: docker compose down
             -   name: Build application
+                env:
+                    COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d --wait
                     docker cp ./ shopsys-framework-php-fpm:/var/www/html
                     docker compose exec -T --user root php-fpm chown -R www-data:www-data /var/www/html
                     docker compose exec -T php-fpm rm -rf /var/www/html/composer.lock /var/www/html/project-base/package-lock.json /var/www/html/project-base/migrations-lock.yml
+                    if [ -n "$COMPOSER_GITHUB_TOKEN" ]; then
+                        docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
+                    fi
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress tests
