@@ -6,7 +6,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Translate } from 'next-translate';
 import { FormProvider } from 'react-hook-form';
-import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -20,7 +20,7 @@ export const StyleguideForms: FC = () => {
 
 export const StyleguideFormExample: FC = () => {
     const { t } = useTranslation();
-    const formProviderMethods = useShopsysForm(getStyleguideExampleFormResolver(t), {
+    const formProviderMethods = useFormWrapper(getStyleguideExampleFormResolver(t), {
         optionalValue: '',
         requiredValue: '',
     });

@@ -21,7 +21,7 @@ import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CustomerTypeEnum } from 'types/customer';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
 import * as Yup from 'yup';
@@ -152,7 +152,7 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
         ...contactInformationValues,
         deliveryAddressUuid: pickupPlace ? '' : contactInformationValues.deliveryAddressUuid,
     };
-    const formProviderMethods = useShopsysForm(resolver, defaultValues);
+    const formProviderMethods = useFormWrapper(resolver, defaultValues);
 
     useEffect(() => {
         if (defaultValues.email && defaultValues.email.length > 0) {

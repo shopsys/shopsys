@@ -9,7 +9,7 @@ import {
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn } from 'react-hook-form';
 import { CustomerUserManageProfileFormType } from 'types/form';
-import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -28,7 +28,7 @@ export const useCustomerUserManageProfileForm = (
         }),
     );
 
-    return [useShopsysForm(resolver, defaultValues), defaultValues];
+    return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
 type CustomerUserManageProfileFormMetaType = {

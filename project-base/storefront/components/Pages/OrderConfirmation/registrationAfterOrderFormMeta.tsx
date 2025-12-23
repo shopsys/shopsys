@@ -6,7 +6,7 @@ import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
-import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -24,7 +24,7 @@ export const useRegistrationAfterOrderForm = (): [
     );
     const defaultValues = { password: '', passwordConfirm: '', privacyPolicy: false };
 
-    return [useShopsysForm(resolver, defaultValues), defaultValues];
+    return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
 type RegistrationAfterOrderFormMetaType = {
