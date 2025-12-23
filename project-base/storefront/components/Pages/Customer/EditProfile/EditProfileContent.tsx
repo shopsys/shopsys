@@ -45,7 +45,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     ) => {
         event?.preventDefault();
 
-        onChangeProfileHandler(customerChangeProfileFormData);
+        await onChangeProfileHandler(customerChangeProfileFormData);
     };
 
     const onChangeProfileHandler = async (customerChangeProfileFormData: CustomerChangeProfileFormType) => {

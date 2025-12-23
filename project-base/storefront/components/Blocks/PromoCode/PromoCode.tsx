@@ -1,5 +1,4 @@
 import { usePromoCodeForm, usePromoCodeFormMeta } from './promoCodeFormMeta';
-import { Loader } from 'components/Basic/Loader/Loader';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
@@ -20,7 +19,7 @@ export const PromoCode: FC = () => {
     const [formProviderMethods, defaultValues] = usePromoCodeForm();
     const formMeta = usePromoCodeFormMeta(formProviderMethods);
     const { t } = useTranslation();
-    const { applyPromoCodeToCart, isApplyingPromoCodeToCart } = useApplyPromoCodeToCart({
+    const { applyPromoCodeToCart } = useApplyPromoCodeToCart({
         success: t('Promo code was added to the order.'),
         error: t('There was an error while adding a promo code to the order.'),
     });
@@ -87,8 +86,6 @@ export const PromoCode: FC = () => {
                                 tid={TIDs.blocks_promocode_apply_button}
                                 variant="inverted"
                             >
-                                {isApplyingPromoCodeToCart && <Loader className="w-4" />}
-
                                 {t('Apply code')}
                             </SubmitButton>
                         </m.form>

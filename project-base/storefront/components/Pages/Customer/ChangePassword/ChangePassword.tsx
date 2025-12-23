@@ -37,7 +37,7 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
     ) => {
         event?.preventDefault();
 
-        onChangePasswordHandler(changePasswordFormData);
+        await onChangePasswordHandler(changePasswordFormData);
     };
 
     const onChangePasswordHandler = async (changePasswordFormData: ChangePasswordFormType) => {

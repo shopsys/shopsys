@@ -1,4 +1,3 @@
-import { Loader } from 'components/Basic/Loader/Loader';
 import { AddressList } from 'components/Blocks/AddressList/AddressList';
 import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
@@ -505,13 +504,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
 
                         <FormButtonWrapper>
                             <SubmitButton aria-label={t('Submit your complaint', { ns: 'accessibility' })}>
-                                {isSubmitting ? (
-                                    <>
-                                        <Loader className="size-4" /> {t('Sending...')}
-                                    </>
-                                ) : (
-                                    t('Send complaint')
-                                )}
+                                {t('Send complaint')}
                             </SubmitButton>
                         </FormButtonWrapper>
                     </FormContentWrapper>

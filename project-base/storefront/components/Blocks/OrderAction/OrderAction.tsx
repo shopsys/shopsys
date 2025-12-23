@@ -1,5 +1,4 @@
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
-import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { TIDs } from 'cypress/tids';
@@ -48,12 +47,11 @@ export const OrderAction: FC<OrderActionProps> = ({
                 disabled={isDisabled}
                 hasDisabledCursor={hasDisabledCursor}
                 hasDisabledLook={isDisabled || hasDisabledLook}
+                shouldShowSpinner={shouldShowSpinnerOnNextStepButton}
                 size="xlarge"
                 tid={TIDs.blocks_orderaction_next}
                 onClick={nextStepClickHandler}
             >
-                {shouldShowSpinnerOnNextStepButton && <SpinnerIcon className="size-4" />}
-
                 <span>{buttonNext}</span>
 
                 <ArrowSecondaryIcon className="size-4 -rotate-90" />

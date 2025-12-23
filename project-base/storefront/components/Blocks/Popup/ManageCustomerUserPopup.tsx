@@ -56,7 +56,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
     ) => {
         event?.preventDefault();
 
-        onChangeProfileHandler(customerUserEditProfileFormData);
+        await onChangeProfileHandler(customerUserEditProfileFormData);
     };
 
     const onChangeProfileHandler = async (customerUserManageProfileFormData: CustomerUserManageProfileFormType) => {

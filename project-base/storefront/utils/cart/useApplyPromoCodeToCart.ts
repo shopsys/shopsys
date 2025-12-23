@@ -11,7 +11,7 @@ import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 export type ApplyPromoCodeToCart = (newPromoCode: string) => Promise<TypeCartFragment | undefined | null>;
 
 export const useApplyPromoCodeToCart = (messages: { success: string; error: string }) => {
-    const [{ fetching: isApplyingPromoCodeToCart }, applyPromoCodeToCartMutation] = useApplyPromoCodeToCartMutation();
+    const [, applyPromoCodeToCartMutation] = useApplyPromoCodeToCartMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { t } = useTranslation();
 
@@ -39,5 +39,5 @@ export const useApplyPromoCodeToCart = (messages: { success: string; error: stri
         [applyPromoCodeToCartMutation, cartUuid, t],
     );
 
-    return { applyPromoCodeToCart, isApplyingPromoCodeToCart };
+    return { applyPromoCodeToCart };
 };
