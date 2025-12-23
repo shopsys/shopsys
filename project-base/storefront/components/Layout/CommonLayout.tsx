@@ -68,7 +68,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 </header>
 
                 <main
-                    className="animate-in mt-4 mb-10 flex flex-col"
+                    className="mt-4 mb-10 flex flex-col"
                     id="main-content"
                     aria-label={
                         title
