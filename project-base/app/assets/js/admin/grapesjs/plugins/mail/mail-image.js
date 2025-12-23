@@ -45,6 +45,25 @@ export default grapesjs.plugins.add('mail-custom-image', editor => {
                     [imagePositionDataAttribute]: 'left',
                     class: ['image-position-left'],
                 },
+                resizable: {
+                    updateTarget: (el, rect) => {
+                        const widthPx = `${Math.round(rect.w)}px`;
+                        const heightPx = 'auto';
+
+                        // Update DOM element immediately for visual feedback
+                        el.style.width = widthPx;
+                        el.style.height = heightPx;
+
+                        // Get the component model and update its styles for persistence
+                        const component = editor.getSelected();
+                        if (component && component.getEl() === el) {
+                            component.addStyle({
+                                width: widthPx,
+                                height: heightPx,
+                            });
+                        }
+                    },
+                },
                 traits: [
                     {
                         type: 'text',
@@ -70,7 +89,6 @@ export default grapesjs.plugins.add('mail-custom-image', editor => {
                         name: 'alt',
                     },
                 ],
-                resizable: false,
             },
         },
     });
