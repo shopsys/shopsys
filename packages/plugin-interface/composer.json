@@ -2,7 +2,11 @@
     "name": "shopsys/plugin-interface",
     "type": "library",
     "description": "General Shopsys Platform plugin interface",
-    "keywords": ["plugin", "Shopsys Platform", "SSFW"],
+    "keywords": [
+        "plugin",
+        "Shopsys Platform",
+        "SSFW"
+    ],
     "license": "MIT",
     "authors": [
         {

@@ -2,7 +2,12 @@
     "name": "shopsys/maker",
     "type": "library",
     "description": "Set of Symfony makers for generating code within Shopsys Platform projects",
-    "keywords": ["Shopsys Platform", "SSFW", "maker", "code generator"],
+    "keywords": [
+        "Shopsys Platform",
+        "SSFW",
+        "maker",
+        "code generator"
+    ],
     "license": "proprietary",
     "authors": [
         {
@@ -29,10 +34,10 @@
         "doctrine/persistence": "^3.3.3",
         "prezent/doctrine-translatable": "^3.3.0",
         "ramsey/uuid": "^4.3.1",
-        "shopsys/form-types-bundle": "18.0.x-dev",
-        "shopsys/framework": "18.0.x-dev",
-        "shopsys/migrations": "18.0.x-dev",
-        "shopsys/plugin-interface": "18.0.x-dev",
+        "shopsys/form-types-bundle": "dev-rc-18-0-0 as 18.0.0",
+        "shopsys/framework": "dev-rc-18-0-0 as 18.0.0",
+        "shopsys/migrations": "dev-rc-18-0-0 as 18.0.0",
+        "shopsys/plugin-interface": "dev-rc-18-0-0 as 18.0.0",
         "symfony/console": "^6.4",
         "symfony/dependency-injection": "^6.4",
         "symfony/filesystem": "^6.4",
@@ -49,7 +54,7 @@
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpunit/phpunit": "^11.2.1",
-        "shopsys/coding-standards": "18.0.x-dev"
+        "shopsys/coding-standards": "dev-rc-18-0-0 as 18.0.0"
     },
     "extra": {
         "symfony": {
