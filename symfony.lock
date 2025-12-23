@@ -979,8 +979,5 @@
     },
     "zalas/injector": {
         "version": "v1.2.0"
-    },
-    "zalas/phpunit-injector": {
-        "version": "v1.2.7"
     }
 }
