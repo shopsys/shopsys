@@ -15,16 +15,10 @@ export const useCartStepNavigation = (): { handleStepClick: StepClickHandler; is
     const router = useRouter();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
+    const { transport, pickupPlace, payment } = useCurrentCart();
     const { t } = useTranslation();
 
-    const validationMessages = getTransportAndPaymentValidationMessages(
-        transport,
-        pickupPlace,
-        payment,
-        paymentGoPayBankSwift,
-        t,
-    );
+    const validationMessages = getTransportAndPaymentValidationMessages(transport, pickupPlace, payment, t);
 
     const isSecondStepFilled = !hasValidationErrors(validationMessages);
 

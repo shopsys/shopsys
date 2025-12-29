@@ -45,7 +45,7 @@ const mockPickupPlace = {
 
 describe('getTransportAndPaymentValidationMessages test', () => {
     test('should return transport error when transport is not selected', () => {
-        const result = getTransportAndPaymentValidationMessages(null, null, mockPayment, null, mockT);
+        const result = getTransportAndPaymentValidationMessages(null, null, mockPayment, mockT);
 
         expect(result).toEqual({
             transport: {
@@ -59,7 +59,7 @@ describe('getTransportAndPaymentValidationMessages test', () => {
     });
 
     test('should return payment error when payment is not selected', () => {
-        const result = getTransportAndPaymentValidationMessages(mockTransport, null, null, null, mockT);
+        const result = getTransportAndPaymentValidationMessages(mockTransport, null, null, mockT);
 
         expect(result).toEqual({
             payment: {
@@ -73,13 +73,7 @@ describe('getTransportAndPaymentValidationMessages test', () => {
     });
 
     test('should return transport error when personal pickup is selected without pickup place', () => {
-        const result = getTransportAndPaymentValidationMessages(
-            mockPersonalPickupTransport,
-            null,
-            mockPayment,
-            null,
-            mockT,
-        );
+        const result = getTransportAndPaymentValidationMessages(mockPersonalPickupTransport, null, mockPayment, mockT);
 
         expect(result).toEqual({
             transport: {
@@ -92,7 +86,7 @@ describe('getTransportAndPaymentValidationMessages test', () => {
     });
 
     test('should return both transport and payment errors when neither is selected', () => {
-        const result = getTransportAndPaymentValidationMessages(null, null, null, null, mockT);
+        const result = getTransportAndPaymentValidationMessages(null, null, null, mockT);
 
         expect(result).toEqual({
             transport: {
@@ -105,7 +99,7 @@ describe('getTransportAndPaymentValidationMessages test', () => {
     });
 
     test('should return no errors when valid transport and payment are selected', () => {
-        const result = getTransportAndPaymentValidationMessages(mockTransport, null, mockPayment, null, mockT);
+        const result = getTransportAndPaymentValidationMessages(mockTransport, null, mockPayment, mockT);
 
         expect(result).toEqual({});
     });
@@ -115,7 +109,6 @@ describe('getTransportAndPaymentValidationMessages test', () => {
             mockPersonalPickupTransport,
             mockPickupPlace,
             mockPayment,
-            null,
             mockT,
         );
 
@@ -132,7 +125,6 @@ describe('getTransportAndPaymentValidationMessages test', () => {
             mockPersonalPickupTransport,
             emptyPickupPlace,
             mockPayment,
-            null,
             mockT,
         );
 
@@ -146,7 +138,7 @@ describe('getTransportAndPaymentValidationMessages test', () => {
     });
 
     test('should handle undefined values gracefully', () => {
-        const result = getTransportAndPaymentValidationMessages(null, null, null, null, mockT);
+        const result = getTransportAndPaymentValidationMessages(null, null, null, mockT);
 
         expect(result).toEqual({
             transport: {

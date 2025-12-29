@@ -18,7 +18,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 export const TransportAndPaymentContent: FC = () => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
+    const { transport, pickupPlace, payment } = useCurrentCart();
 
     const { changeTransportInCart, isChangingTransportInCart } = useChangeTransportInCart();
     const { changePaymentInCart, isChangingPaymentInOrder } = useChangePaymentInCart();
@@ -31,13 +31,7 @@ export const TransportAndPaymentContent: FC = () => {
         changeTransportInCart,
         changePaymentInCart,
     );
-    const validationMessages = getTransportAndPaymentValidationMessages(
-        transport,
-        pickupPlace,
-        payment,
-        paymentGoPayBankSwift,
-        t,
-    );
+    const validationMessages = getTransportAndPaymentValidationMessages(transport, pickupPlace, payment, t);
     const { goToPreviousStepFromTransportAndPaymentPage, goToNextStepFromTransportAndPaymentPage } =
         useTransportAndPaymentPageNavigation(validationMessages);
 

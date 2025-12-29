@@ -199,7 +199,6 @@ export const getTransportAndPaymentValidationMessages = (
     transport: Maybe<TypeTransportWithAvailablePaymentsFragment>,
     pickupPlace: Maybe<StoreOrPacketeryPoint>,
     payment: Maybe<TypeSimplePaymentFragment>,
-    paymentGoPayBankSwift: Maybe<string>,
     t: Translate,
 ) => {
     const errors: Partial<TransportAndPaymentErrorsType> = {};
