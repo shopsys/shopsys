@@ -38,7 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 <!-- Release notes generated using configuration in .github/release.yml at 18.0 -->
 
-## What's Changed
+## [v18.0.0](https://github.com/shopsys/shopsys/compare/v17.0.1...v18.0.0) (2025-12-29)
 
 ### :sparkles: Enhancements and features
 
