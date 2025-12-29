@@ -749,11 +749,11 @@ jobs:
                     bash ./${BRANCH_NAME_ESCAPED}/rabbitmq-vhost.sh create ${BRANCH_NAME_ESCAPED}
             -   name: Update docker-compose.yaml with secrets
                 run: |
-                    sed -i "s#GOPAY_GOID#${{ secrets.GOPAY_GOID }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#GOPAY_CLIENTID#${{ secrets.GOPAY_CLIENTID }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#GOPAY_CLIENTSECRET#${{ secrets.GOPAY_CLIENTSECRET }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#PACKETERY_API_KEY_VALUE#${{ secrets.PACKETERY_API_KEY }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#PACKETERY_API_PASSWORD_VALUE#${{ secrets.PACKETERY_API_PASSWORD }}#" "${BRANCH_NAME}/docker-compose.yml"
+                    sed -i "s#GOPAY_GOID#${{ secrets.GOPAY_GOID }}#" "${BRANCH_NAME_ESCAPED}/docker-compose.yml"
+                    sed -i "s#GOPAY_CLIENTID#${{ secrets.GOPAY_CLIENTID }}#" "${BRANCH_NAME_ESCAPED}/docker-compose.yml"
+                    sed -i "s#GOPAY_CLIENTSECRET#${{ secrets.GOPAY_CLIENTSECRET }}#" "${BRANCH_NAME_ESCAPED}/docker-compose.yml"
+                    sed -i "s#PACKETERY_API_KEY_VALUE#${{ secrets.PACKETERY_API_KEY }}#" "${BRANCH_NAME_ESCAPED}/docker-compose.yml"
+                    sed -i "s#PACKETERY_API_PASSWORD_VALUE#${{ secrets.PACKETERY_API_PASSWORD }}#" "${BRANCH_NAME_ESCAPED}/docker-compose.yml"
             -   name: Start project
                 run: |
                     cd ${BRANCH_NAME_ESCAPED}
