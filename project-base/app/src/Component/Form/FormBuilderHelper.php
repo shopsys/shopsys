@@ -34,7 +34,6 @@ class FormBuilderHelper
     private function trackFormElements(array $elements, array $disabledFields): void
     {
         foreach ($elements as $element) {
-            /** @var \Ivory\OrderedForm\Builder\OrderedFormBuilder $element */
             if (in_array($element->getName(), $disabledFields, true)) {
                 $element->setDisabled(true);
             }

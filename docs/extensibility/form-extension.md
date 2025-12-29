@@ -80,7 +80,8 @@ and blocks of custom form widgets for various [FormTypes](../introduction/using-
 
 ## Changing order of groups and fields
 
-All form types contain an option called `position`. With this option, you can specify the position of your group or field **on the same hierarchical layer**.
+Thanks to the usage of [Becklyn/OrderedFormBundle](https://github.com/Becklyn/OrderedFormBundle), all form types contain an option called `position`.
+With this option, you can specify the position of your group or field **on the same hierarchical layer**.
 
 Option `position` can contain four different values:
 
@@ -96,20 +97,3 @@ $builder
 ```
 
 The output will be: A => B => C => D => E => F => G.
-
-!!! tip
-
-    More examples can be found [here](https://github.com/shopsys/ordered-form/blob/master/doc/usage.md#position).
-
-### Changing order of existing groups and fields
-
-Implementation of `FormBuilderInterface` contains the method `setPosition` that can change the order of existing fields.
-
-```php
-$builder->get('a')->setPosition('first');
-$builder->get('c')->setPosition(['after' => 'b']);
-```
-
-!!! note
-
-    Because `FormBuilderInterface` doesn't declare the method `setPosition`, your IDE will warn you that method doesn't exist.
