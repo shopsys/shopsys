@@ -2,7 +2,13 @@
     "name": "shopsys/administration",
     "type": "library",
     "description": "Administration interface for the Shopsys Platform",
-    "keywords": ["Shopsys Platform", "SSFW", "admin", "administration", "admin panel"],
+    "keywords": [
+        "Shopsys Platform",
+        "SSFW",
+        "admin",
+        "administration",
+        "admin panel"
+    ],
     "license": "proprietary",
     "authors": [
         {
@@ -23,10 +29,10 @@
     "require": {
         "knplabs/knp-menu-bundle": "^3.2",
         "php": "^8.3",
-        "shopsys/form-types-bundle": "18.0.x-dev",
-        "shopsys/framework": "18.0.x-dev",
-        "shopsys/migrations": "18.0.x-dev",
-        "shopsys/plugin-interface": "18.0.x-dev",
+        "shopsys/form-types-bundle": "18.0.0",
+        "shopsys/framework": "18.0.0",
+        "shopsys/migrations": "18.0.0",
+        "shopsys/plugin-interface": "18.0.0",
         "symfony/config": "^6.4",
         "symfony/dependency-injection": "^6.4",
         "symfony/form": "^6.4",
@@ -43,8 +49,8 @@
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpunit/phpunit": "^11.2.1",
-        "shopsys/biome-config": "18.0.x-dev",
-        "shopsys/coding-standards": "18.0.x-dev"
+        "shopsys/biome-config": "18.0.0",
+        "shopsys/coding-standards": "18.0.0"
     },
     "extra": {
         "symfony": {

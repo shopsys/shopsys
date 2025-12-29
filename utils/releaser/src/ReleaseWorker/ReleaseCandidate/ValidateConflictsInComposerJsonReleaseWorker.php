@@ -21,6 +21,7 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
 
     private const array IGNORED_CONFLICT_PACKAGES = [
         'symfony/symfony' => '*',
+        'guzzlehttp/psr7' => '<=1.8.3 || >=2.0.0 <=2.1.0',
     ];
 
     /**

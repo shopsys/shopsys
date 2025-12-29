@@ -2,7 +2,11 @@
     "name": "shopsys/google-cloud-bundle",
     "type": "library",
     "description": "Shopsys Platform Google Cloud Bundle",
-    "keywords": ["google cloud", "Shopsys Platform", "SSFW"],
+    "keywords": [
+        "google cloud",
+        "Shopsys Platform",
+        "SSFW"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -19,10 +23,10 @@
         "php": "^8.3",
         "google/cloud-storage": "^1.10",
         "league/flysystem-google-cloud-storage": "^3.0",
-        "shopsys/form-types-bundle": "18.0.x-dev",
-        "shopsys/framework": "18.0.x-dev",
-        "shopsys/migrations": "18.0.x-dev",
-        "shopsys/plugin-interface": "18.0.x-dev",
+        "shopsys/form-types-bundle": "18.0.0",
+        "shopsys/framework": "18.0.0",
+        "shopsys/migrations": "18.0.0",
+        "shopsys/plugin-interface": "18.0.0",
         "symfony/config": "^6.4",
         "symfony/dependency-injection": "^6.4",
         "symfony/framework-bundle": "^6.4",

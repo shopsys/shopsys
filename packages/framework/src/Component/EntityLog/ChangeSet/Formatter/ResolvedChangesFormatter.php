@@ -43,7 +43,7 @@ class ResolvedChangesFormatter
                 continue;
             }
 
-            if (in_array($changes['dataType'], ['DateTimeImmutable', 'DateTime'], true)) {
+            if (in_array($changes['dataType'], ['DateTimeImmutable', 'DateTime', 'DatePoint'], true)) {
                 $formattedChanges[] = t(
                     'Attribute %attribute% was changed %changes%',
                     [

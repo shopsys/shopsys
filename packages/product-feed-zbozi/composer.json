@@ -2,7 +2,14 @@
     "name": "shopsys/product-feed-zbozi",
     "type": "library",
     "description": "Shopsys Platform plugin interface for Zboží XML product feed generation",
-    "keywords": ["Zboží", "product feed", "XML feed", "plugin", "Shopsys Platform", "SSFW"],
+    "keywords": [
+        "Zboží",
+        "product feed",
+        "XML feed",
+        "plugin",
+        "Shopsys Platform",
+        "SSFW"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -26,12 +33,12 @@
         "ext-pdo": "*",
         "doctrine/dbal": "^3.8.5",
         "doctrine/doctrine-bundle": "^2.18",
-        "doctrine/orm": "^2.11.2",
+        "doctrine/orm": "^2.20.9",
         "doctrine/persistence": "^3.3.3",
-        "shopsys/form-types-bundle": "18.0.x-dev",
-        "shopsys/framework": "18.0.x-dev",
-        "shopsys/migrations": "18.0.x-dev",
-        "shopsys/plugin-interface": "18.0.x-dev",
+        "shopsys/form-types-bundle": "18.0.0",
+        "shopsys/framework": "18.0.0",
+        "shopsys/migrations": "18.0.0",
+        "shopsys/plugin-interface": "18.0.0",
         "symfony/config": "^6.4",
         "symfony/dependency-injection": "^6.4",
         "symfony/form": "^6.4",

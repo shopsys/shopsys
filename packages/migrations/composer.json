@@ -2,7 +2,14 @@
     "name": "shopsys/migrations",
     "type": "library",
     "description": "Symfony bundle providing commands for transactional Doctrine database migrations",
-    "keywords": ["database", "migrations", "migrate", "schema", "ORM", "Doctrine"],
+    "keywords": [
+        "database",
+        "migrations",
+        "migrate",
+        "schema",
+        "ORM",
+        "Doctrine"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -23,9 +30,9 @@
     "require": {
         "php": "^8.3",
         "doctrine/dbal": "^3.8.5",
-        "doctrine/doctrine-migrations-bundle": "^3.2.2",
+        "doctrine/doctrine-migrations-bundle": "^3.7.0",
         "doctrine/migrations": "^3.4.1",
-        "doctrine/orm": "^2.5",
+        "doctrine/orm": "^2.20.9",
         "jdorn/sql-formatter": "^1.2",
         "psr/log": "^2.0",
         "symfony/config": "^6.4",
@@ -39,8 +46,5 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^11.2.1"
-    },
-    "conflict": {
-        "doctrine/doctrine-migrations-bundle": "3.4.0"
     }
 }

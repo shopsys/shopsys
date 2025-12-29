@@ -101,9 +101,9 @@
         "doctrine/dbal": "^3.8.5",
         "doctrine/doctrine-bundle": "^2.18",
         "doctrine/doctrine-fixtures-bundle": "^3.0.2",
-        "doctrine/doctrine-migrations-bundle": "^3.2.2",
+        "doctrine/doctrine-migrations-bundle": "^3.7.0",
         "doctrine/migrations": "^3.4.1",
-        "doctrine/orm": "^2.11.2",
+        "doctrine/orm": "^2.20.9",
         "doctrine/persistence": "^3.3.3",
         "elasticsearch/elasticsearch": "^7.6.1",
         "endroid/qr-code": "^6.0",
@@ -221,13 +221,11 @@
         "symfony/web-profiler-bundle": "^6.4",
         "symfony/yaml": "^6.4",
         "symplify/easy-coding-standard": "^12.2.0",
-        "shopsys/phpunit-injector": "2.5.1"
+        "shopsys/phpunit-injector": "^2.5.1"
     },
     "conflict": {
         "symfony/symfony": "*",
-        "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0",
-        "doctrine/doctrine-migrations-bundle": "3.4.0",
-        "doctrine/orm": ">=2.20.7"
+        "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0"
     },
     "scripts": {
         "post-install-cmd": [

@@ -11,7 +11,6 @@ use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckPackagesGithubActionsBu
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckReleaseBlogPostReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckShopsysInstallReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CreateBranchReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\DumpTranslationsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ForceYourBranchSplitReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\GenerateApiaryBlueprintReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ResolveDocsTodoReleaseWorker;
@@ -40,7 +39,6 @@ return [
     ValidateRequireFormatInComposerJsonReleaseWorker::class,
     ValidateConflictsInComposerJsonReleaseWorker::class,
     GenerateApiaryBlueprintReleaseWorker::class,
-    DumpTranslationsReleaseWorker::class,
     SetFrameworkBundleVersionReleaseWorker::class,
     ResolveDocsTodoReleaseWorker::class,
     UpdateChangelogReleaseWorker::class,
