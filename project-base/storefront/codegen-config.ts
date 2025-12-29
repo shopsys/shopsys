@@ -37,7 +37,7 @@ const config: CodegenConfig = {
                 extension: '.generated.tsx',
             } as NearOperationFileConfig,
             config: codegenTypescriptConfig,
-            plugins: ['typescript-operations', 'typescript-urql'],
+            plugins: [{ add: { content: '// @ts-nocheck' } }, 'typescript-operations', 'typescript-urql'],
         },
     },
 };
