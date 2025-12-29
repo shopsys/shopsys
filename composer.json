@@ -142,7 +142,7 @@
         "scheb/2fa-email": "^6.12.0",
         "scheb/2fa-google-authenticator": "^6.12.0",
         "sensio/framework-extra-bundle": "^5.2",
-        "sentry/sentry-symfony": "^4.2.8",
+        "sentry/sentry-symfony": "^5.0.1",
         "shopsys/deployment": "^4.2.0",
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "snc/redis-bundle": "^4.8.0",

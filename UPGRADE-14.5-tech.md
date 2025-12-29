@@ -178,3 +178,7 @@ For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use 
 -   calling `setPosition()` directly on existing form fields is not supported anymore, otherwise, ordering form fields works the same way
 -   see [becklyn/ordered-form-bundle](https://github.com/Becklyn/OrderedFormBundle) for the documentation
 -   see #project-base-diff to update your project
+
+#### Upgrade Sentry package ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+
+-   see #project-base-diff to update your project
