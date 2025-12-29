@@ -15,7 +15,9 @@
         "jsx": "preserve",
         "baseUrl": ".",
         "typeRoots": ["./node_modules/@types", "./theme"],
-        "incremental": true
+        "incremental": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
     },
     "include": [
         "next-env.d.ts",
