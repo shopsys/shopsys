@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { expect } from 'vitest';
 
-export const getFocusableElements = (container: HTMLElement | Document = document): HTMLElement[] => {
+const getFocusableElements = (container: HTMLElement | Document = document): HTMLElement[] => {
     const focusableSelectors = [
         'button:not([disabled])',
         'input:not([disabled])',

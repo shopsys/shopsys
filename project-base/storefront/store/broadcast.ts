@@ -1,7 +1,7 @@
 import { isClient } from 'utils/isClient';
 import { StateCreator, StoreMutatorIdentifier } from 'zustand';
 
-export type Broadcast = <
+type Broadcast = <
     T,
     Mps extends [StoreMutatorIdentifier, unknown][] = [],
     Mcs extends [StoreMutatorIdentifier, unknown][] = [],

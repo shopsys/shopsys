@@ -45,7 +45,7 @@ export type GtmConsentUpdateEventType = GtmEventInterface<
 
 export type GtmChangeCartItemEventType = GtmAddToCartEventType | GtmRemoveFromCartEventType;
 
-export type GtmAddToCartEventType = GtmEventInterface<
+type GtmAddToCartEventType = GtmEventInterface<
     GtmEventType.add_to_cart,
     {
         ecommerce: {
@@ -60,7 +60,7 @@ export type GtmAddToCartEventType = GtmEventInterface<
     }
 >;
 
-export type GtmRemoveFromCartEventType = GtmEventInterface<
+type GtmRemoveFromCartEventType = GtmEventInterface<
     GtmEventType.remove_from_cart,
     {
         ecommerce: {

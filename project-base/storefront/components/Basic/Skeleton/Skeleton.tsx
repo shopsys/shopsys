@@ -1,8 +1,8 @@
 import { twMergeCustom } from 'utils/twMerge';
 
-export interface SkeletonProps {
+type SkeletonProps = {
     className?: string;
-}
+};
 
 export const Skeleton: FC<SkeletonProps> = ({ className }) => {
     return (

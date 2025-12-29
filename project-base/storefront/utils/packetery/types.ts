@@ -61,7 +61,7 @@ type PacketeryTime = {
     close: string;
 };
 
-export type PacketeryOptions = {
+type PacketeryOptions = {
     webUrl?: string;
     appIdentity?: string;
     country?: string;
@@ -71,13 +71,6 @@ export type PacketeryOptions = {
     packetConsignment?: string;
     weight?: number;
 };
-
-export type PacketeryMakeRequestFunction = (
-    method: string,
-    url: string,
-    data: any,
-    callback: (status: { status: number; statusText: string } | XMLHttpRequest['response'], hasError: boolean) => void,
-) => void;
 
 export type PacketeryPickFunction = (
     apiKey: string,

@@ -2,7 +2,7 @@ import { ButtonBaseProps, getButtonClassName } from './Button';
 import { ExtendedNextLink, ExtendedNextLinkProps } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twMergeCustom } from 'utils/twMerge';
 
-export type LinkButtonProps = ButtonBaseProps & ExtendedNextLinkProps;
+type LinkButtonProps = ButtonBaseProps & ExtendedNextLinkProps;
 
 export const LinkButton: FC<LinkButtonProps> = ({
     href,

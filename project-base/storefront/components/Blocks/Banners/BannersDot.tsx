@@ -5,7 +5,7 @@ import { twMergeCustom } from 'utils/twMerge';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
-export type BannersDotProps = {
+type BannersDotProps = {
     index: number;
     isActive: boolean;
     sliderItem: TypeSliderItemFragment;

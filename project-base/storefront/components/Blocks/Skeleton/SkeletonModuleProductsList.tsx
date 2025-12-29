@@ -8,7 +8,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
-export type SkeletonModuleProductsListProps = {
+type SkeletonModuleProductsListProps = {
     isWithoutDescription?: boolean;
     isWithoutNavigation?: boolean;
     isWithoutBestsellers?: boolean;

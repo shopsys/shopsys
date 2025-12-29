@@ -1,5 +1,6 @@
 export const GJS_PRODUCTS_SEPARATOR = '|||';
-export const GJS_PRODUCT_SEPARATOR = ',';
+
+const GJS_PRODUCT_SEPARATOR = ',';
 
 export const parseCatnums = (text: string): string[] => {
     const dividedText = text.split(GJS_PRODUCTS_SEPARATOR).filter(Boolean);

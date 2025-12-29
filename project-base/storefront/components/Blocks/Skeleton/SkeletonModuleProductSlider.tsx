@@ -4,7 +4,7 @@ import { VISIBLE_SLIDER_ITEMS } from 'components/Blocks/Product/ProductsSlider';
 import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
-export type SkeletonModuleProductsListProps = {
+type SkeletonModuleProductsListProps = {
     isWithSimpleCards?: boolean;
 };
 

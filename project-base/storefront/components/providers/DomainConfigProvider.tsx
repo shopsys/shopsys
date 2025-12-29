@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 
-export const DomainConfigContext = createContext<DomainConfigType | null>(null);
+const DomainConfigContext = createContext<DomainConfigType | null>(null);
 
 type DomainConfigProviderProps = {
     domainConfig: DomainConfigType;
