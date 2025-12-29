@@ -96,7 +96,7 @@ services:
             - ./storefront/pages:/app/pages
             - ./storefront/public/locales:/app/public/locales:delegated
             - ./app/translations:/app/app-translations:delegated
-            - storefront-node-modules:/app/node_modules
+            - cypress-node-modules:/app/node_modules
         profiles:
             - storefront-acceptance-tests
         network_mode: "host"
@@ -244,6 +244,7 @@ volumes:
     php-fpm-node-modules:
     storefront:
     storefront-node-modules:
+    cypress-node-modules:
     elasticsearch-data:
         driver: local
     postgres-data:

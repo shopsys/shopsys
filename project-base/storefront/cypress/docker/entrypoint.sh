@@ -1,4 +1,12 @@
 #!/bin/sh
+set -e
+
+# Install dependencies if node_modules is empty or cypress is missing
+if [ ! -d "/app/node_modules/cypress" ]; then
+    echo "📦 Installing dependencies..."
+    npm ci
+fi
+
 echo "TYPE variable is set to: $TYPE"
 echo "COMMAND variable is set to: $COMMAND"
 echo "SPEC variable is set to: $SPEC"
