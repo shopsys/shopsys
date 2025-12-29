@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver;
 
-use DateTime;
-use DateTimeImmutable;
+use DateTimeInterface;
 use Override;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
@@ -29,7 +28,7 @@ class DateTimeDataTypeResolver extends AbstractDataTypeResolver
     #[Override]
     protected function isResolvedDataType(mixed $value): bool
     {
-        return $value instanceof DateTime || $value instanceof DateTimeImmutable;
+        return $value instanceof DateTimeInterface;
     }
 
     /**
