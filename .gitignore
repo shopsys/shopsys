@@ -10,6 +10,7 @@
 /composer.lock
 /docker-compose.yml
 /docker-sync.yml
+/phing.phar
 /project-base/app/composer.lock
 /project-base/app/package-lock.json
 /project-base/app/migrations-lock.yml
