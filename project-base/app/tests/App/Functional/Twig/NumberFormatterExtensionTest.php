@@ -28,7 +28,7 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
             ['input' => '12.600', 'locale' => 'cs', 'result' => '12,6'],
             ['input' => '12.630000', 'locale' => 'cs', 'result' => '12,63'],
             ['input' => '12.638000', 'locale' => 'cs', 'result' => '12,638'],
-            ['input' => 12.630000, 'locale' => 'cs', 'result' => '12,63'],
+            ['input' => '12.630000', 'locale' => 'cs', 'result' => '12,63'],
             ['input' => '123456789.123456789', 'locale' => 'cs', 'result' => '123' . self::NBSP . '456' . self::NBSP . '789,123456789'],
 
             ['input' => '12', 'locale' => 'en', 'result' => '12'],
@@ -36,7 +36,7 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
             ['input' => '12.600', 'locale' => 'en', 'result' => '12.6'],
             ['input' => '12.630000', 'locale' => 'en', 'result' => '12.63'],
             ['input' => '12.638000', 'locale' => 'en', 'result' => '12.638'],
-            ['input' => 12.630000, 'locale' => 'en', 'result' => '12.63'],
+            ['input' => '12.630000', 'locale' => 'en', 'result' => '12.63'],
             ['input' => '123456789.123456789', 'locale' => 'en', 'result' => '123,456,789.123456789'],
         ];
     }
