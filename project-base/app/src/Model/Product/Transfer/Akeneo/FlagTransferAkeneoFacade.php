@@ -6,7 +6,7 @@ namespace App\Model\Product\Transfer\Akeneo;
 
 use Akeneo\Pim\ApiClient\Api\AttributeApiInterface;
 use Akeneo\Pim\ApiClient\Api\AttributeGroupApiInterface;
-use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
+use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Generator;
 
 class FlagTransferAkeneoFacade
@@ -14,9 +14,9 @@ class FlagTransferAkeneoFacade
     public const FLAG_GROUP_NAME = 'Flag';
 
     /**
-     * @param \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface $akeneoClient
+     * @param \Akeneo\Pim\ApiClient\AkeneoPimClientInterface $akeneoClient
      */
-    public function __construct(private AkeneoPimEnterpriseClientInterface $akeneoClient)
+    public function __construct(private AkeneoPimClientInterface $akeneoClient)
     {
     }
 

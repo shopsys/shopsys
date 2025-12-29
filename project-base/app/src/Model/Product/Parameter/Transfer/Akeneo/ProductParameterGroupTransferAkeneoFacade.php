@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter\Transfer\Akeneo;
 
-use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
+use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Generator;
 
 class ProductParameterGroupTransferAkeneoFacade
@@ -12,9 +12,9 @@ class ProductParameterGroupTransferAkeneoFacade
     private const PAGE_SIZE_LIMIT = 50;
 
     /**
-     * @param \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface $akeneoClient
+     * @param \Akeneo\Pim\ApiClient\AkeneoPimClientInterface $akeneoClient
      */
-    public function __construct(private AkeneoPimEnterpriseClientInterface $akeneoClient)
+    public function __construct(private AkeneoPimClientInterface $akeneoClient)
     {
     }
 
