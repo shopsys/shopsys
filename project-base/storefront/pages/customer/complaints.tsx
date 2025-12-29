@@ -53,7 +53,7 @@ const ComplaintsPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="account" title={t('My complaints')}>
+            <CustomerLayout breadcrumbs={breadcrumbs} title={t('My complaints')}>
                 <PageHero
                     icon={ComplaintsIcon}
                     title={t('My complaints')}

@@ -46,7 +46,7 @@ const OrdersPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="account" title={t('My orders')}>
+            <CustomerLayout breadcrumbs={breadcrumbs} title={t('My orders')}>
                 <PageHero
                     icon={SearchListIcon}
                     title={t('My orders')}

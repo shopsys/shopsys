@@ -32,7 +32,7 @@ const EditProfilePage: FC = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="account" title={userProfileSectionLabel}>
+            <CustomerLayout breadcrumbs={breadcrumbs} title={userProfileSectionLabel}>
                 {currentCustomerUserData !== undefined && (
                     <>
                         <PageHero
