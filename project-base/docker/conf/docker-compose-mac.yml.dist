@@ -70,6 +70,8 @@ services:
         container_name: shopsys-framework-storefront-cypress
         command:
             - build
+        environment:
+            - CYPRESS_KEEP_TID=1
         volumes:
             - storefront:/home/node/app
         healthcheck:

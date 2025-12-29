@@ -7,5 +7,6 @@ docker image build \
     --target production \
     --no-cache \
     --compress \
+    --build-arg CYPRESS_KEEP_TID=1 \
     -f project-base/storefront/docker/Dockerfile \
     ./project-base/storefront
