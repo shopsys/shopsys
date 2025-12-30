@@ -1,4 +1,4 @@
-current_version: 18.0
+current_version: 19.0
 
 extra_css:
     - _theme/main.css

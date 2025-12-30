@@ -1,16 +1,8 @@
-# UPGRADING FROM 17.x to 18.0
+# UPGRADING FROM 18.x to 19.0
 
 The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/) to make the upgrades to new versions easier and help long-term maintainability.
 
 ## Recommended way of upgrading
-
-Since there are two possible scenarios for using Shopsys Platform, instructions are divided into these scenarios.
-
-### You use our packages only
-
-Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or `shopsys/http-smoke-testing`.
-
-### You are developing a project based on the project-base repository
 
 - upgrade only your composer dependencies and follow the instructions in the guide below
 - upgrade locally first - after you fix all issues caused by the upgrade, commit your changes, test your application, and then continue with a deployment onto your server

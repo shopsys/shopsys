@@ -34,10 +34,10 @@
         "doctrine/persistence": "^3.3.3",
         "prezent/doctrine-translatable": "^3.3.0",
         "ramsey/uuid": "^4.3.1",
-        "shopsys/form-types-bundle": "18.0.x-dev",
-        "shopsys/framework": "18.0.x-dev",
-        "shopsys/migrations": "18.0.x-dev",
-        "shopsys/plugin-interface": "18.0.x-dev",
+        "shopsys/form-types-bundle": "19.0.x-dev",
+        "shopsys/framework": "19.0.x-dev",
+        "shopsys/migrations": "19.0.x-dev",
+        "shopsys/plugin-interface": "19.0.x-dev",
         "symfony/console": "^6.4",
         "symfony/dependency-injection": "^6.4",
         "symfony/filesystem": "^6.4",
@@ -54,7 +54,7 @@
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpunit/phpunit": "^11.2.1",
-        "shopsys/coding-standards": "18.0.x-dev"
+        "shopsys/coding-standards": "19.0.x-dev"
     },
     "extra": {
         "symfony": {
