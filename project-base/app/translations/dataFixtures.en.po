@@ -1153,6 +1153,9 @@ msgstr ""
 msgid "New"
 msgstr ""
 
+msgid "New Year's Day"
+msgstr ""
+
 msgid "New [adjective]"
 msgstr "New"
 

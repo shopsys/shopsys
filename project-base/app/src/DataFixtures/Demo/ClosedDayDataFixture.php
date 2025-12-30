@@ -80,6 +80,12 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
             t('Second Christmas Day', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             true,
         ];
+
+        yield [
+            new DatePoint('1 January next year'),
+            t('New Year\'s Day', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            true,
+        ];
     }
 
     /**
