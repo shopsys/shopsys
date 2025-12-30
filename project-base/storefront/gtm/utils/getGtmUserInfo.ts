@@ -1,4 +1,3 @@
-import { SHA256 } from 'crypto-js';
 import { GtmUserStatus } from 'gtm/enums/GtmUserStatus';
 import { GtmUserType } from 'gtm/enums/GtmUserType';
 import { GtmUserInfoType } from 'gtm/types/objects';
@@ -23,7 +22,6 @@ const getGtmUserInfoForVisitor = (userContactInformation: ContactInformation) =>
     ...(userContactInformation.city.length > 0 && { city: userContactInformation.city }),
     ...(userContactInformation.country.value.length > 0 && { country: userContactInformation.country.value }),
     ...(userContactInformation.email.length > 0 && { email: userContactInformation.email }),
-    ...(userContactInformation.email.length > 0 && { emailHash: SHA256(userContactInformation.email).toString() }),
     ...(userContactInformation.firstName.length > 0 && { firstName: userContactInformation.firstName }),
     ...(userContactInformation.telephone.length > 0 && { telephone: userContactInformation.telephone }),
     ...(userContactInformation.postcode.length > 0 && { postcode: userContactInformation.postcode }),
@@ -68,9 +66,6 @@ const overwriteGtmUserInfoWithLoggedCustomer = (
     }
     if (userInfo.email === undefined || userInfo.email.length === 0) {
         userInfo.email = userContactInformation.email || currentSignedInCustomer.email;
-    }
-    if (userInfo.emailHash === undefined || userInfo.emailHash.length === 0) {
-        userInfo.emailHash = SHA256(currentSignedInCustomer.email).toString();
     }
     if (userInfo.telephone === undefined || userInfo.telephone.length === 0) {
         userInfo.telephone = currentSignedInCustomer.telephone;
