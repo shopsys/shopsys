@@ -1,12 +1,12 @@
-import { Radiobutton, RadiobuttonProps } from './Radiobutton';
+import { Radiobutton } from './Radiobutton';
 import { ChangeEventHandler, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
+import { RadiobuttonOptionType } from 'types/radiobuttonOptions';
 
 type RadiobuttonGroupProps = {
     name: string;
     render: (input: JSX.Element, key: string) => ReactElement<any, any> | null;
-    radiobuttons: (Pick<RadiobuttonProps, 'disabled' | 'label' | 'value' | 'labelWrapperClassName'> &
-        Partial<Pick<RadiobuttonProps, 'id'>>)[];
+    radiobuttons: RadiobuttonOptionType[];
     control: Control<any>;
     formName: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -32,15 +32,15 @@ export const RadiobuttonGroup: FC<RadiobuttonGroupProps> = ({
 
     return (
         <>
-            {radiobuttons.map((radiobutton, index) => {
-                const radiobuttonId = formName + name + (radiobutton.id ?? index);
+            {radiobuttons.map((radiobuttonOption, index) => {
+                const radiobuttonId = formName + name + (radiobuttonOption.id ?? index);
 
                 return render(
                     <Radiobutton
                         {...field}
                         onChange={onChangeHandler}
-                        {...radiobutton}
-                        checked={field.value === radiobutton.value}
+                        {...radiobuttonOption}
+                        checked={field.value === radiobuttonOption.value}
                         id={radiobuttonId}
                     />,
                     radiobuttonId,

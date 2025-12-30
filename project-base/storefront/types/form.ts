@@ -57,7 +57,7 @@ export type CustomerUserManageProfileFormType = {
     telephone: string;
     firstName: string;
     lastName: string;
-    roleGroup: SelectOptionType;
+    roleGroup: string;
 };
 
 export type ContactFormType = {

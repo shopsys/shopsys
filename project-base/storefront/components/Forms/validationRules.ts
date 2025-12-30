@@ -160,17 +160,7 @@ export const validateBankAccountNumber = (t: Translate): Schema => {
 };
 
 export const validateRoleGroup = (t: Translate): Schema => {
-    return Yup.object()
-        .shape({
-            label: Yup.string().required(),
-            value: Yup.string().required(),
-        })
-        .required(t('Please select a role group'))
-        .test(
-            'non-null-or-empty-string',
-            t('Please select a role group'),
-            (value: { label: string; value: string }) => value.value !== '',
-        );
+    return Yup.string().required(t('Please select a role group'));
 };
 
 export const validateCompanyName = (t: Translate): Schema => {
