@@ -132,3 +132,7 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
 For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use plain `docker compose` like `docker compose exec php-fpm bash`
 
 -   see #project-base-diff to update your project
+
+#### update coding standards for YAML files ([#4361](https://github.com/shopsys/shopsys/pull/4361))
+
+-   see #project-base-diff to update your project

@@ -1,16 +1,8 @@
 -   pathsToCheck:
-        - ./**/*.{yaml,yml}
-    excludedPaths:
-        - ./docker-compose.yml
-        - ./docker-sync.yml
-        - ./.github/workflows/**/*.{yaml,yml} # yaml standards have problems with multiline definitions in workflows
-        - ./vendor/**/*.{yaml,yml}
-        - ./project-base/app/node_modules/**/*.{yaml,yml}
-        - ./project-base/app/config/domains_urls.yaml
-        - ./project-base/app/config/oauth2/parameters_oauth.yaml.dist
-        - ./project-base/storefront/**/*.{yaml,yml}
-        - ./project-base/storefront/*.{yaml,yml}
-        - ./packages/framework/assets/node_modules/**/*.{yaml,yml}
+        - ./*.yaml
+        - ./*.yaml.dist
+        - ./*.yml
+        - ./*.yml.dist
     checkers:
         -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
             parameters:
@@ -19,3 +11,24 @@
             parameters:
                 { serviceAliasingType: long, indents: 4 }
         -   pathToChecker: YamlStandards\Model\YamlEmptyLineAtEnd\YamlEmptyLineAtEndChecker
+    excludedPaths:
+        - ./**/*.types.yaml
+        - ./**/*.types.yml
+        - ./**/docker*
+        - ./**/gitlab*
+        - ./**/migrations-lock.yaml
+        - ./**/migrations-lock.yml
+        - ./**/monolog.yaml
+        - ./**/monolog.yml
+        - ./**/navigation.yaml
+        - ./**/navigation.yml
+        - ./**/routing*.yaml
+        - ./**/routing*.yml
+        - ./docker*
+        - ./packages/framework/assets/node_modules/*
+        - ./project-base/app/config/cron.yaml
+        - ./project-base/app/config/packages/security.yaml
+        - ./project-base/app/node_modules/*
+        - ./project-base/app/var/*
+        - ./project-base/storefront/*
+        - ./vendor/*

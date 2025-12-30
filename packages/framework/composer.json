@@ -115,7 +115,7 @@
         "phpunit/phpunit": "^9.5.20",
         "psr/event-dispatcher": "^1.0.0",
         "shopsys/coding-standards": "14.5.x-dev",
-        "sspooky13/yaml-standards": "^7.0.1",
+        "sspooky13/yaml-standards": "^9.0",
         "symfony/var-dumper": "^5.4"
     },
     "extra": {
