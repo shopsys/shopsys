@@ -280,11 +280,10 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                             <Controller
                                 name={formMeta.fields.resolution.name}
                                 render={({ fieldState: { error }, field }) => (
-                                    <>
+                                    <FormLine>
                                         <Select
                                             isRequired
                                             ariaLabel={t('Select resolution', { ns: 'accessibility' })}
-                                            className="mb-2.5"
                                             isDisabled={isSubmitting}
                                             label={formMeta.fields.resolution.label}
                                             options={complaintResolutionsAsOptions}
@@ -295,7 +294,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                             onSelectOption={field.onChange}
                                         />
                                         <FormLineError error={error} inputType="select" />
-                                    </>
+                                    </FormLine>
                                 )}
                             />
 

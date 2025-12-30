@@ -31,7 +31,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
                     isInputOrTextArea && `right-3.5 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
                     isInputPassword && `right-12 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
                     isCheckbox && 'top-1/2 right-1 -translate-y-1/2',
-                    isSelect && '-top-10 right-11 z-[2]',
+                    isSelect && '-top-9 right-11 z-[2]',
                     isDropzone && 'top-1 right-0',
                 )}
             />
