@@ -406,9 +406,6 @@ msgstr ""
 msgid "Days until delivery"
 msgstr ""
 
-msgid "Delete"
-msgstr ""
-
 msgid "Delete category with SEO mix"
 msgstr ""
 
@@ -736,9 +733,6 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-msgid "Image will be deleted after saving."
-msgstr ""
-
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr ""
 
@@ -868,9 +862,6 @@ msgstr ""
 msgid "Main URL"
 msgstr ""
 
-msgid "Main image"
-msgstr ""
-
 msgid "Maximum weight (g)"
 msgstr ""
 
@@ -884,9 +875,6 @@ msgid "Message text"
 msgstr ""
 
 msgid "Meta description"
-msgstr ""
-
-msgid "Move"
 msgstr ""
 
 msgid "Name"
@@ -1277,9 +1265,6 @@ msgid "Related products"
 msgstr ""
 
 msgid "Remaining number of uses"
-msgstr ""
-
-msgid "Return back"
 msgstr ""
 
 msgid "Right"
