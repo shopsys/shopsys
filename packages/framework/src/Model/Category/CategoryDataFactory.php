@@ -32,10 +32,7 @@ class CategoryDataFactory
      */
     protected function createInstance(): CategoryData
     {
-        $categoryData = new CategoryData();
-        $categoryData->image = $this->imageUploadDataFactory->create();
-
-        return $categoryData;
+        return new CategoryData();
     }
 
     /**
@@ -66,6 +63,8 @@ class CategoryDataFactory
      */
     protected function fillNew(CategoryData $categoryData): void
     {
+        $categoryData->image = $this->imageUploadDataFactory->create();
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->seoMetaDescriptions[$domainId] = null;
             $categoryData->seoTitles[$domainId] = null;

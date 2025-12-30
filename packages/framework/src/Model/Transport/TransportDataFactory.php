@@ -29,10 +29,7 @@ class TransportDataFactory
      */
     protected function createInstance(): TransportData
     {
-        $transportData = new TransportData();
-        $transportData->image = $this->imageUploadDataFactory->create();
-
-        return $transportData;
+        return new TransportData();
     }
 
     /**
@@ -52,6 +49,7 @@ class TransportDataFactory
     protected function fillNew(TransportData $transportData): void
     {
         $transportData->daysUntilDelivery = 0;
+        $transportData->image = $this->imageUploadDataFactory->create();
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $transportData->enabled[$domainId] = false;

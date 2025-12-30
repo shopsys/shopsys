@@ -27,10 +27,7 @@ class BrandDataFactory
      */
     protected function createInstance(): BrandData
     {
-        $brandData = new BrandData();
-        $brandData->image = $this->imageUploadDataFactory->create();
-
-        return $brandData;
+        return new BrandData();
     }
 
     /**
@@ -49,6 +46,8 @@ class BrandDataFactory
      */
     protected function fillNew(BrandData $brandData): void
     {
+        $brandData->image = $this->imageUploadDataFactory->create();
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $brandData->seoMetaDescriptions[$domainId] = null;
             $brandData->seoTitles[$domainId] = null;

@@ -29,11 +29,7 @@ class ProductDataFactory extends BaseProductDataFactory
     #[Override]
     protected function createInstance(): BaseProductData
     {
-        $productData = new ProductData();
-        $productData->images = $this->imageUploadDataFactory->create();
-        $productData->files = $this->uploadedFileDataFactory->create();
-
-        return $productData;
+        return new ProductData();
     }
 
     /**

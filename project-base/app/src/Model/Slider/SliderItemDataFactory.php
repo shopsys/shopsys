@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory as BaseSliderItem
  * @method setImageFacade(\App\Component\Image\ImageFacade $imageFacade)
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @method __construct(\App\Component\Image\ImageFacade $imageFacade)
- * @method \App\Model\Slider\SliderItemData create()
  */
 class SliderItemDataFactory extends BaseSliderItemDataFactory
 {
@@ -24,8 +23,18 @@ class SliderItemDataFactory extends BaseSliderItemDataFactory
     #[Override]
     protected function createInstance(): BaseSliderItemData
     {
-        $sliderItemData = new SliderItemData();
-        $sliderItemData->image = $this->imageUploadDataFactory->create();
+        return new SliderItemData();
+    }
+
+    /**
+     * @return \App\Model\Slider\SliderItemData
+     */
+    #[Override]
+    public function create(): BaseSliderItemData
+    {
+        /** @var \App\Model\Slider\SliderItemData $sliderItemData */
+        $sliderItemData = parent::create();
+
         $sliderItemData->mobileImage = $this->imageUploadDataFactory->create();
 
         return $sliderItemData;

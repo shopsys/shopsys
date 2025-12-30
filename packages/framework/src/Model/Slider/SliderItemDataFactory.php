@@ -21,10 +21,7 @@ class SliderItemDataFactory
      */
     protected function createInstance(): SliderItemData
     {
-        $sliderItemData = new SliderItemData();
-        $sliderItemData->image = $this->imageUploadDataFactory->create();
-
-        return $sliderItemData;
+        return new SliderItemData();
     }
 
     /**
@@ -32,7 +29,11 @@ class SliderItemDataFactory
      */
     public function create(): SliderItemData
     {
-        return $this->createInstance();
+        $sliderItemData = $this->createInstance();
+
+        $sliderItemData->image = $this->imageUploadDataFactory->create();
+
+        return $sliderItemData;
     }
 
     /**

@@ -64,11 +64,7 @@ class ProductDataFactory
      */
     protected function createInstance(): ProductData
     {
-        $productData = new ProductData();
-        $productData->images = $this->imageUploadDataFactory->create();
-        $productData->files = $this->uploadedFileDataFactory->create();
-
-        return $productData;
+        return new ProductData();
     }
 
     /**
@@ -102,6 +98,9 @@ class ProductDataFactory
 
         $productData->productInputPricesByDomain = $this->productInputPriceDataFactory->createEmptyForAllDomains();
         $productData->unit = $this->unitFacade->getDefaultUnit();
+
+        $productData->images = $this->imageUploadDataFactory->create();
+        $productData->files = $this->uploadedFileDataFactory->create();
 
         $productParameterValuesData = [];
         $productData->parameters = $productParameterValuesData;

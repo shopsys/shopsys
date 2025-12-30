@@ -22,9 +22,6 @@ class BrandDataFactory extends BaseBrandDataFactory
     #[Override]
     protected function createInstance(): BaseBrandData
     {
-        $brandData = new BrandData();
-        $brandData->image = $this->imageUploadDataFactory->create();
-
-        return $brandData;
+        return new BrandData();
     }
 }
