@@ -134,7 +134,7 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
         string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
     ): void {
         $uploadedFileData = $this->uploadedFileDataFactory->createByEntity($entity);
-        $uploadedFileData->relations = $this->uploadedFileFacade->getByIds($uploadedFileIds);
+        $uploadedFileData->relations = $this->uploadedFileFacade->getByIdsIndexedById($uploadedFileIds);
         $this->uploadedFileFacade->manageFiles($entity, $uploadedFileData, $type);
     }
 

@@ -125,19 +125,23 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
     /**
      * @param int[] $uploadedFileIds
      * @throws \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
+     * @return array<int, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile>
      */
-    public function getByIds(array $uploadedFileIds): array
+    public function getByIdsIndexedById(array $uploadedFileIds): array
     {
-        $uploadedFiles = $this->getUploadedFileRepository()->findBy(['id' => $uploadedFileIds]);
+        $uploadedFiles = $this->em->createQueryBuilder()
+            ->select('u')
+            ->from(UploadedFile::class, 'u', 'u.id')
+            ->where('u.id IN (:ids)')
+            ->setParameter('ids', $uploadedFileIds)
+            ->getQuery()
+            ->getResult();
 
         if (count($uploadedFileIds) !== count($uploadedFiles)) {
-            $foundUploadedFileIds = array_map(fn (UploadedFile $uploadedFile) => $uploadedFile->getId(), $uploadedFiles);
-
             throw new FileNotFoundException(
                 sprintf(
                     'UploadedFiles with IDs %s do not exist.',
-                    implode(', ', array_diff($uploadedFileIds, $foundUploadedFileIds)),
+                    implode(', ', array_diff($uploadedFileIds, array_keys($uploadedFiles))),
                 ),
             );
         }
@@ -146,17 +150,30 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
     }
 
     /**
-     * @param int $uploadedFileId
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation[]
+     * @param int[] $uploadedFileIds
+     * @return array<int, array<string, string>>
      */
-    public function getAllTranslationsByUploadedFileId(int $uploadedFileId): array
+    public function getTranslationsIndexedByFileIdAndLocale(array $uploadedFileIds): array
     {
-        return $this->em->createQueryBuilder()
-            ->select('ut')
+        if (count($uploadedFileIds) === 0) {
+            return [];
+        }
+
+        $translations = $this->em->createQueryBuilder()
+            ->select('IDENTITY(ut.translatable) as fileId, ut.locale, ut.name')
             ->from(UploadedFileTranslation::class, 'ut')
-            ->andWhere('ut.translatable = :uploadedFileId')->setParameter('uploadedFileId', $uploadedFileId)
+            ->andWhere('ut.translatable IN (:uploadedFileIds)')
+            ->setParameter('uploadedFileIds', $uploadedFileIds)
             ->getQuery()
-            ->getResult();
+            ->getArrayResult();
+
+        $result = array_fill_keys($uploadedFileIds, []);
+
+        foreach ($translations as $row) {
+            $result[$row['fileId']][$row['locale']] = $row['name'];
+        }
+
+        return $result;
     }
 
     /**

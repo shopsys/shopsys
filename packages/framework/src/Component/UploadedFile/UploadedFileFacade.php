@@ -208,11 +208,11 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
 
     /**
      * @param int[] $uploadedFileIds
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
+     * @return array<int, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile>
      */
-    public function getByIds(array $uploadedFileIds): array
+    public function getByIdsIndexedById(array $uploadedFileIds): array
     {
-        return $this->uploadedFileRepository->getByIds($uploadedFileIds);
+        return $this->uploadedFileRepository->getByIdsIndexedById($uploadedFileIds);
     }
 
     /**
@@ -534,20 +534,12 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
-     * @param int $uploadedFileId
-     * @return array<string, string>
+     * @param int[] $uploadedFileIds
+     * @return array<int, array<string, string>>
      */
-    public function getTranslationsIndexedByLocaleForUploadedFileId(int $uploadedFileId): array
+    public function getTranslationsIndexedByLocaleForUploadedFileIds(array $uploadedFileIds): array
     {
-        $translations = $this->uploadedFileRepository->getAllTranslationsByUploadedFileId($uploadedFileId);
-
-        $translationsByLocale = [];
-
-        foreach ($translations as $translation) {
-            $translationsByLocale[$translation->getLocale()] = $translation->getName();
-        }
-
-        return $translationsByLocale;
+        return $this->uploadedFileRepository->getTranslationsIndexedByFileIdAndLocale($uploadedFileIds);
     }
 
     /**
