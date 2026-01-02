@@ -33,6 +33,11 @@ const nextConfig = {
             },
         ],
     },
+
+    compiler: {
+        reactRemoveProperties: process.env.CYPRESS_KEEP_TID === '1' ? false : { properties: ['^data-tid$'] },
+    },
+
     serverRuntimeConfig: {
         internalGraphqlEndpoint: process.env.INTERNAL_ENDPOINT,
     },

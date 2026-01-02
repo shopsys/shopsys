@@ -22,7 +22,7 @@ sync:
                 - "nbproject"
                 - "node_modules"
                 - "postgres-data"
-                - "storefront"
+                - "/storefront"
                 - "vendor"
         mode: "two-way-resolved"
 
