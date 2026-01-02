@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
@@ -71,8 +72,9 @@ class ParameterValueController extends AdminBaseController
         $grid->addColumn('text', 'pv.text', t('Parameter value'));
         $grid->addColumn('preview', 'pv.id', t('Preview'));
         $grid->addEditActionColumn('admin_parametervalue_edit', ['id' => 'pv.id']);
+        $grid->enablePaging();
         $grid->setTheme('@ShopsysAdministration/content/parameterValue/listGrid.html.twig', [
-            'filesIndexedByParameterValueIds' => $this->getFilesIndexedByParameterValueIds(clone $queryBuilder),
+            'filesIndexedByParameterValueIds' => $this->getFilesIndexedByParameterValueIds(clone $queryBuilder, $grid),
         ]);
 
         return $this->render(
@@ -176,11 +178,22 @@ class ParameterValueController extends AdminBaseController
 
     /**
      * @param \Doctrine\ORM\QueryBuilder $gridQueryBuilder
+     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[][]
      */
-    protected function getFilesIndexedByParameterValueIds(QueryBuilder $gridQueryBuilder): array
+    protected function getFilesIndexedByParameterValueIds(QueryBuilder $gridQueryBuilder, Grid $grid): array
     {
-        $parameterValuesIds = array_column($gridQueryBuilder->select('pv.id')->getQuery()->getArrayResult(), 'id');
+        $gridQueryBuilder->select('pv.id');
+
+        if ($grid->isEnabledPaging()) {
+            $limit = $grid->getLimit();
+            $offset = ($grid->getPage() - 1) * $limit;
+            $gridQueryBuilder
+                ->setMaxResults($limit)
+                ->setFirstResult($offset);
+        }
+
+        $parameterValuesIds = array_column($gridQueryBuilder->getQuery()->getArrayResult(), 'id');
 
         return $this->uploadedFileFacade->getAllFilesIndexedByEntityId($parameterValuesIds, ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG, null);
     }
