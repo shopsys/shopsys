@@ -11,12 +11,13 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class UploadedFileConfigDefinition implements ConfigurationInterface
 {
-    public const CONFIG_CLASS = 'class';
-    public const CONFIG_ENTITY_NAME = 'name';
-    public const CONFIG_TYPES = 'types';
-    public const CONFIG_TYPE_NAME = 'name';
-    public const CONFIG_TYPE_MULTIPLE = 'multiple';
-    protected const CONFIG_ENTITY_FILES = 'entity_files';
+    public const string CONFIG_CLASS = 'class';
+    public const string CONFIG_ENTITY_NAME = 'name';
+    public const string CONFIG_TYPES = 'types';
+    public const string CONFIG_TYPE_NAME = 'name';
+    public const string CONFIG_TYPE_MULTIPLE = 'multiple';
+    public const string CONFIG_TYPE_REQUIRE_FRIENDLY_NAME = 'require_friendly_name';
+    protected const string CONFIG_ENTITY_FILES = 'entity_files';
 
     /**
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
@@ -50,6 +51,7 @@ class UploadedFileConfigDefinition implements ConfigurationInterface
                         ->children()
                             ->scalarNode(self::CONFIG_TYPE_NAME)->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode(self::CONFIG_TYPE_MULTIPLE)->defaultFalse()->end()
+                            ->booleanNode(self::CONFIG_TYPE_REQUIRE_FRIENDLY_NAME)->defaultFalse()->end()
                         ->end()
                     ->end()
                 ->end()

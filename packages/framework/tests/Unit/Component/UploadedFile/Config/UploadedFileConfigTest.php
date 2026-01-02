@@ -96,13 +96,25 @@ class UploadedFileConfigTest extends TestCase
         $this->assertTrue($uploadedFileTypeConfig2->isMultiple());
     }
 
+    public function testTypesHaveRightRequireFriendlyNameSet()
+    {
+        $entity = new Dummy();
+        $uploadedFileConfig = $this->getUploadedFileConfig();
+        $uploadedFileEntityConfig = $uploadedFileConfig->getUploadedFileEntityConfig($entity);
+        $uploadedFileTypeConfig1 = $uploadedFileEntityConfig->getTypeByName('default');
+        $uploadedFileTypeConfig2 = $uploadedFileEntityConfig->getTypeByName('additional');
+
+        $this->assertFalse($uploadedFileTypeConfig1->isRequiredFriendlyName());
+        $this->assertTrue($uploadedFileTypeConfig2->isRequiredFriendlyName());
+    }
+
     /**
      * @return array
      */
     private function getFileEntityConfigsByClass(): array
     {
-        $uploadedFileType1 = new UploadedFileTypeConfig('default', false);
-        $uploadedFileType2 = new UploadedFileTypeConfig('additional', true);
+        $uploadedFileType1 = new UploadedFileTypeConfig('default', false, false);
+        $uploadedFileType2 = new UploadedFileTypeConfig('additional', true, true);
 
         $uploadedFileTypes = ['default' => $uploadedFileType1, 'additional' => $uploadedFileType2];
 

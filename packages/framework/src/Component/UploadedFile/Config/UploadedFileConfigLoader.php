@@ -90,6 +90,7 @@ class UploadedFileConfigLoader
         foreach ($typesConfig as $typeConfig) {
             $typeName = $typeConfig[UploadedFileConfigDefinition::CONFIG_TYPE_NAME];
             $typeMultiple = $typeConfig[UploadedFileConfigDefinition::CONFIG_TYPE_MULTIPLE];
+            $typeRequireFriendlyName = $typeConfig[UploadedFileConfigDefinition::CONFIG_TYPE_REQUIRE_FRIENDLY_NAME];
 
             if ($typeName === null) {
                 throw new NotSupportedTypeNameException($typeName);
@@ -99,7 +100,7 @@ class UploadedFileConfigLoader
                 throw new DuplicateTypeNameException($typeName);
             }
 
-            $result[$typeName] = new UploadedFileTypeConfig($typeName, $typeMultiple);
+            $result[$typeName] = new UploadedFileTypeConfig($typeName, $typeMultiple, $typeRequireFriendlyName);
         }
 
         return $result;

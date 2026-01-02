@@ -6,18 +6,21 @@
 #     types:
 #         -   name: default
 #             multiple: false
+#             require_friendly_name: false
 
 -   name: mailTemplate
     class: Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     types:
         -   name: default
             multiple: true
+            require_friendly_name: false
 
 -   name: parameterValue
     class: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
     types:
         -   name: default
             multiple: false
+            require_friendly_name: false
 
 
 -   name: product
@@ -25,3 +28,4 @@
     types:
         -   name: default
             multiple: true
+            require_friendly_name: true
