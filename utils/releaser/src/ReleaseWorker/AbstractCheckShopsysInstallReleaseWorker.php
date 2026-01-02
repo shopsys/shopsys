@@ -46,7 +46,7 @@ see https://docs.shopsys.com/en/latest/installation/installation-guide/
 docker compose exec php-fpm php phing tests tests-acceptance
 
 # run the cypress tests:
-make run-acceptance-tests-actual',
+make run-acceptance-tests-regression',
         );
     }
 }

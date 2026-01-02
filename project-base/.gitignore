@@ -8,3 +8,5 @@
 /docker-sync.yml
 
 /var/*
+/mutagen.yml
+/mutagen.yml.lock

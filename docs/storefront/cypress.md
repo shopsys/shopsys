@@ -532,7 +532,7 @@ Example of overriding the locale:
 
 ```bash
 # Run tests with Czech locale instead of default English
-docker compose run --rm -e TYPE=actual -e COMMAND=run -e TEST_LOCALE=cs cypress
+docker compose run --rm -e TYPE=regression -e COMMAND=run -e TEST_LOCALE=cs cypress
 ```
 
 ### How to run tests using the CLI (`cypress run`)?
@@ -540,13 +540,13 @@ docker compose run --rm -e TYPE=actual -e COMMAND=run -e TEST_LOCALE=cs cypress
 There are six commands provided for you:
 
 - `run-acceptance-tests-base`: This command runs the tests and allows screenshot regeneration. This means that whatever your tests generate at that point will be considered the new base case. By running this, the tests will not fail because of visual differences, but might still fail because of the cypress tests failing themselves. Make sure to only run this once you are sure that your application behaves as expected. If you set the base to an invalid state, once it is fixed, your tests will start failing.
-- `run-acceptance-tests-actual`: This command runs the tests without allowing screenshot regeneration. This should be used most of the time if you want to check your application. This is also what should be used as part of CI. If this command fails because of visual differences, there will be screenshot diffs generated in a `/snapshotDiffs` folder. You can analyze them to see the differences which caused an issue.
+- `run-acceptance-tests-regression`: This command runs the tests without allowing screenshot regeneration. This should be used most of the time if you want to check your application. This is also what should be used as part of CI. If this command fails because of visual differences, there will be screenshot diffs generated in a `/snapshotDiffs` folder. You can analyze them to see the differences which caused an issue.
 - `selected-acceptance-tests-base`: This is the same as `run-acceptance-tests-base`, but you will be asked to select test suites (`.cy.ts` files) which you want to run. You can run one, two, or even all but one suits. It is up to you. You just have to decide between `y` (run the suite) and `n` (do not run the suite) when prompted.
-- `selected-acceptance-tests-actual`: This is the same as `run-acceptance-tests-actual`, but you will be asked to select test suites (`.cy.ts` files) which you want to run. You can run one, two, or even all but one suits. It is up to you. You just have to decide between `y` (run the suite) and `n` (do not run the suite) when prompted.
-- `run-specific-test-actual`: This is the same as `run-acceptance-tests-actual`, but you can provide specific file upfront to test just one test suit without waiting for a prompt to select a test. This command is especially usefull when implementing new test suit (to debug quickly) or for LLMs as they are bad with interactive scripts. Usage:
+- `selected-acceptance-tests-regression`: This is the same as `run-acceptance-tests-regression`, but you will be asked to select test suites (`.cy.ts` files) which you want to run. You can run one, two, or even all but one suits. It is up to you. You just have to decide between `y` (run the suite) and `n` (do not run the suite) when prompted.
+- `run-specific-test-regression`: This is the same as `run-acceptance-tests-regression`, but you can provide specific file upfront to test just one test suit without waiting for a prompt to select a test. This command is especially usefull when implementing new test suit (to debug quickly) or for LLMs as they are bad with interactive scripts. Usage:
 
 ```bash
-make run-specific-test-actual SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts
+make run-specific-test-regression SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts
 ```
 
 - `run-specific-test-base`: This is the same as `run-acceptance-tests-base`, but you can provide specific file upfront to test just one test suit without waiting for a prompt to select test. This command is especially usefull when implementing new test suit (to debug quickly) or for LLMs as they are bad with interactive scripts. Usage:
@@ -564,7 +564,7 @@ Unfortunately, you cannot just simply run cypress tests in docker and use the cy
 If you use Linux or Mac, where you have previously installed and set-up XQuartz as described above, you have these two commands available to run cypress tests with the interactive GUI.
 
 - `open-acceptance-tests-base`: This command opens the cypress interactive GUI, where you can select and run tests. Similar to `run-acceptance-tests-base`, this command allows screenshot regeneration. This means that whatever your tests generate at that point will be considered the new base case. By running this, the tests will not fail because of visual differences, but might still fail because of the cypress tests failing themselves. Make sure to only run this once you are sure that your application behaves as expected. If you set the base to an invalid state, once it is fixed, your tests will start failing.
-- `open-acceptance-tests-actual`: This command opens the cypress interactive GUI, where you can select and run tests. Similarly to `run-acceptance-tests-actual`, this command runs the tests without allowing screenshot regeneration. This should be used most of the time if you want to check your application. If this command fails because of visual differences, there will be screenshot diffs generated in a `/snapshotDiffs` folder. You can analyze them to see the differences which caused an issue.
+- `open-acceptance-tests-regression`: This command opens the cypress interactive GUI, where you can select and run tests. Similarly to `run-acceptance-tests-regression`, this command runs the tests without allowing screenshot regeneration. This should be used most of the time if you want to check your application. If this command fails because of visual differences, there will be screenshot diffs generated in a `/snapshotDiffs` folder. You can analyze them to see the differences which caused an issue.
 
 ### Extra make commands
 
@@ -576,9 +576,9 @@ There are some extra make commands you can use:
 
 #### Debugging tests containing registration
 
-Our tests include scenarios where we register with a static email (which is the most comfortable way of running visual regression tests). However, this means that if you use `open-acceptance-tests-base` or `open-acceptance-tests-actual`, and run a specific test with registration multiple times, the test will fail, as you will try to register with a previously registered email. For this, there are several workarounds:
+Our tests include scenarios where we register with a static email (which is the most comfortable way of running visual regression tests). However, this means that if you use `open-acceptance-tests-base` or `open-acceptance-tests-regression`, and run a specific test with registration multiple times, the test will fail, as you will try to register with a previously registered email. For this, there are several workarounds:
 
-- if you need to do quick, iterative debugging, where you run the same test multiple times, you can take that specific test and change from a static email to a generated one like shown in the diff below. This will fail your visual regression tests (if run with the `open-acceptance-tests-actual` command), but will allow you to debug. Once you understand and fix the bug, you can switch back to the static email.
+- if you need to do quick, iterative debugging, where you run the same test multiple times, you can take that specific test and change from a static email to a generated one like shown in the diff below. This will fail your visual regression tests (if run with the `open-acceptance-tests-regression` command), but will allow you to debug. Once you understand and fix the bug, you can switch back to the static email.
 
 ```diff
 - generateCustomerRegistrationData('some-static-email@shopsys.com')
@@ -595,7 +595,7 @@ As described above in the [section about running tests](#how-to-run-tests), to u
 
 #### Killing the cypress interactive GUI and finishing the make commands
 
-Though this may be obvious, when running `open-acceptance-tests-base` or `open-acceptance-tests-actual`, the make commands will not finish until you close the GUI window and kill the GUI runner. Only then will your cypress script end, storefront cypress will be killed, and regular storefront brought up.
+Though this may be obvious, when running `open-acceptance-tests-base` or `open-acceptance-tests-regression`, the make commands will not finish until you close the GUI window and kill the GUI runner. Only then will your cypress script end, storefront cypress will be killed, and regular storefront brought up.
 
 ## How to debug failed tests?
 
@@ -655,7 +655,7 @@ You can also just hide the element using the [`blackout` parameter](#hidingcover
 
 ## How to debug and commit changes made to snapshots
 
-When modifying your code, or the UI of your application, it is likely that you will deal with visual changes and will have to regenerate the cypress snapshots. In such scenario, you can run `run-acceptance-tests-actual` or `open-acceptance-tests-actual`, check the failed test's snapshot diffs if they mirror the expected changes, and then use `run-acceptance-tests-base` or `open-acceptance-tests-base` to regenerate the snapshots.
+When modifying your code, or the UI of your application, it is likely that you will deal with visual changes and will have to regenerate the cypress snapshots. In such scenario, you can run `run-acceptance-tests-regression` or `open-acceptance-tests-regression`, check the failed test's snapshot diffs if they mirror the expected changes, and then use `run-acceptance-tests-base` or `open-acceptance-tests-base` to regenerate the snapshots.
 
 However, by doing this in a situation where your application is unstable (flaky), you expose yourself to the risk that the initial changes seen in the diff are different than the changes made to the real snapshot while running it in the `base` mode. Because of that, we suggest that you use the points below to effectively debug changes made to your snapshots, and also commit them in the correct shape to your git repo.
 
@@ -672,7 +672,7 @@ The best thing you can do is to install a plugin that allows you to see highligh
 
 ### Commiting flow
 
-By using tools such as those mentioned above, you can simply run cypress tests in the `base` mode, and then check the changed pixels. With this, you avoid the unnecessary step of running the tests in the `actual` mode, but still keep the option of checking exactly which parts of the application have changed.
+By using tools such as those mentioned above, you can simply run cypress tests in the `base` mode, and then check the changed pixels. With this, you avoid the unnecessary step of running the tests in the `regression` mode, but still keep the option of checking exactly which parts of the application have changed.
 
 ## How to work with smoke tests
 
