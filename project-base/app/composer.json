@@ -138,7 +138,7 @@
         "psr/event-dispatcher": "^1.0.0",
         "shopsys/coding-standards": "14.5.x-dev",
         "shopsys/http-smoke-testing": "14.5.x-dev",
-        "sspooky13/yaml-standards": "^7.0.1",
+        "sspooky13/yaml-standards": "^9.0",
         "symfony/browser-kit": "^5.4",
         "symfony/var-dumper": "^5.4",
         "zalas/phpunit-injector": "^2.0"
