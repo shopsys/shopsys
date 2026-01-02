@@ -283,7 +283,12 @@ class ParameterFacade
         $parameterValue = $this->parameterRepository->getParameterValueById($parameterValueId);
         $parameterValue->edit($parameterValueData);
 
-        if ($parameterValueData->colorIcon->uploadedFilenames || $parameterValueData->colorIcon->relations) {
+        $shouldManageFiles = $parameterValueData->colorIcon->uploadedFilenames
+            || $parameterValueData->colorIcon->relations
+            || $parameterValueData->colorIcon->currentFilenamesIndexedById
+            || $parameterValueData->colorIcon->namesIndexedById;
+
+        if ($shouldManageFiles) {
             $this->uploadedFileFacade->manageFiles($parameterValue, $parameterValueData->colorIcon);
         }
 
