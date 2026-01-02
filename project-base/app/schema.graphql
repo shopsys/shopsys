@@ -1449,6 +1449,8 @@ type NotificationBar {
   rgbColor: String!
   "Message of the notification"
   text: String!
+  "UUID of the notification bar"
+  uuid: Uuid!
   "Notification bar validity from"
   validityFrom: DateTime
   "Notification bar validity to"

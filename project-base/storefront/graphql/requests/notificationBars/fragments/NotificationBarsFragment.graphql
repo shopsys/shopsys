@@ -1,5 +1,6 @@
 fragment NotificationBarsFragment on NotificationBar {
     __typename
+    uuid
     text
     rgbColor
     validityFrom

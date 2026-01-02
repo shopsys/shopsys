@@ -7,6 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 class NotificationBarData
 {
     /**
+     * @var string|null
+     */
+    public $uuid;
+
+    /**
      * @var int|null
      */
     public $domainId;

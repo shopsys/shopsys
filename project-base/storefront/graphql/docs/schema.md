@@ -6363,6 +6363,15 @@ Message of the notification
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="notificationbar.uuid">uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the notification bar
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="notificationbar.validityfrom">validityFrom</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>

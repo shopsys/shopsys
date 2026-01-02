@@ -1845,6 +1845,8 @@ export type TypeNotificationBar = {
   rgbColor: Scalars['String']['output'];
   /** Message of the notification */
   text: Scalars['String']['output'];
+  /** UUID of the notification bar */
+  uuid: Scalars['Uuid']['output'];
   /** Notification bar validity from */
   validityFrom: Maybe<Scalars['DateTime']['output']>;
   /** Notification bar validity to */

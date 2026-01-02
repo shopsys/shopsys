@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFacade;
 
 class NotificationBarDataFixture extends AbstractReferenceFixture
 {
+    public const string NOTIFICATION_BAR_PREFIX = 'notification_bar_domain_';
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFacade $notificationBarFacade
      * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarDataFactory $notificationBarDataFactory
@@ -45,7 +47,8 @@ class NotificationBarDataFixture extends AbstractReferenceFixture
             $notificationBarData->rgbColor = '#000000';
             $notificationBarData->hidden = false;
 
-            $this->notificationBarFacade->create($notificationBarData);
+            $notificationBar = $this->notificationBarFacade->create($notificationBarData);
+            $this->addReferenceForDomain(self::NOTIFICATION_BAR_PREFIX, $notificationBar, $domainConfig->getId());
         }
     }
 }

@@ -29,8 +29,9 @@ class NotificationBarFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
+     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar
      */
-    public function create(NotificationBarData $notificationBarData): void
+    public function create(NotificationBarData $notificationBarData): NotificationBar
     {
         $notificationBar = $this->notificationBarFactory->create($notificationBarData);
 
@@ -40,6 +41,8 @@ class NotificationBarFacade
         $this->imageFacade->manageImages($notificationBar, $notificationBarData->image);
 
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::NOTIFICATION_BARS_QUERY_KEY_PART);
+
+        return $notificationBar;
     }
 
     /**
