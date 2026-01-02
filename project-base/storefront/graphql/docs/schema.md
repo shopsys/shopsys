@@ -4551,6 +4551,15 @@ Quantity of the order item
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong id="complaintitem.uuid">uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the complaint item
+
+</td>
+</tr>
 </tbody>
 </table>
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Complaint;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Table(name="complaint_items")
@@ -19,6 +20,12 @@ class ComplaintItem
      * @ORM\Column(type="integer")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Complaint\Complaint
@@ -86,6 +93,7 @@ class ComplaintItem
      */
     protected function setData(ComplaintItemData $complaintItemData)
     {
+        $this->uuid = $complaintItemData->uuid ?? Uuid::uuid4()->toString();
         $this->orderItem = $complaintItemData->orderItem;
         $this->product = $complaintItemData->product;
         $this->productName = $complaintItemData->productName;
@@ -100,6 +108,14 @@ class ComplaintItem
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 
     /**

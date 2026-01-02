@@ -3,6 +3,9 @@ ComplaintItemDecorator:
     decorator: true
     config:
         fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID of the complaint item"
             orderItem:
                 type: "OrderItem"
                 description: "Order item"

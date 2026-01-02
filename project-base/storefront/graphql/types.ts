@@ -914,6 +914,8 @@ export type TypeComplaintItem = {
   productName: Scalars['String']['output'];
   /** Quantity of the order item */
   quantity: Scalars['Int']['output'];
+  /** UUID of the complaint item */
+  uuid: Scalars['Uuid']['output'];
 };
 
 

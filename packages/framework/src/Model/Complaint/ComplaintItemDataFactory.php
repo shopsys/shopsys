@@ -40,6 +40,7 @@ class ComplaintItemDataFactory
     {
         $complaintItemData = $this->createInstance();
 
+        $complaintItemData->uuid = $complaintItem->getUuid();
         $complaintItemData->quantity = $complaintItem->getQuantity();
         $complaintItemData->description = $complaintItem->getDescription();
         $complaintItemData->orderItem = $complaintItem->getOrderItem();

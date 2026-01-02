@@ -769,6 +769,8 @@ type ComplaintItem {
   productName: String!
   "Quantity of the order item"
   quantity: Int!
+  "UUID of the complaint item"
+  uuid: Uuid!
 }
 
 input ComplaintItemInput {
