@@ -34,4 +34,14 @@ interface UploadedFileConfigInterface
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
      */
     public function getUploadedFileEntityConfigByClass(string $entityClass): UploadedFileEntityConfig;
+
+    /**
+     * @param string $entityName
+     * @param string $typeName
+     * @return bool
+     */
+    public function isRequiredFriendlyName(
+        string $entityName,
+        string $typeName = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+    ): bool;
 }

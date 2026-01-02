@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
@@ -14,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\ParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\SliderParameterValuesUpdateFormType;
@@ -41,6 +43,8 @@ class ParameterValueController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionDataFactory $parameterValueConversionDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
@@ -52,6 +56,8 @@ class ParameterValueController extends AdminBaseController
         protected readonly ParameterValueConversionDataFactory $parameterValueConversionDataFactory,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
         protected readonly UploadedFileFacade $uploadedFileFacade,
+        protected readonly UploadedFileConfig $uploadedFileConfig,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -195,6 +201,10 @@ class ParameterValueController extends AdminBaseController
 
         $parameterValuesIds = array_column($gridQueryBuilder->getQuery()->getArrayResult(), 'id');
 
-        return $this->uploadedFileFacade->getAllFilesIndexedByEntityId($parameterValuesIds, ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG, null);
+        $locale = $this->uploadedFileConfig->isRequiredFriendlyName(ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG)
+            ? $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()
+            : null;
+
+        return $this->uploadedFileFacade->getAllFilesIndexedByEntityId($parameterValuesIds, ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG, $locale);
     }
 }

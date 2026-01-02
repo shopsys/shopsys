@@ -7,12 +7,12 @@ namespace Shopsys\FrontendApiBundle\Component\Files;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
 class FilesBatchLoader
 {
@@ -20,11 +20,13 @@ class FilesBatchLoader
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
      */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly Domain $domain,
+        protected readonly UploadedFileConfig $uploadedFileConfig,
     ) {
     }
 
@@ -77,7 +79,7 @@ class FilesBatchLoader
         string $entityName,
         string $type,
     ): array {
-        $filesIndexedByEntityId = $this->getFilesIndexedByEntityId($filesBatchLoadData, $entityName, $type, $this->domain->getLocale());
+        $filesIndexedByEntityId = $this->getFilesIndexedByEntityId($filesBatchLoadData, $entityName, $type);
 
         $files = [];
 
@@ -100,10 +102,7 @@ class FilesBatchLoader
         string $entityName,
         string $type,
     ): array {
-        $isParameterValueEntity = $entityName === ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG;
-        $locale = $isParameterValueEntity ? null : $this->domain->getLocale();
-
-        $filesIndexedByEntityId = $this->getFilesIndexedByEntityId($filesBatchLoadData, $entityName, $type, $locale);
+        $filesIndexedByEntityId = $this->getFilesIndexedByEntityId($filesBatchLoadData, $entityName, $type);
 
         $files = [];
 
@@ -120,16 +119,16 @@ class FilesBatchLoader
      * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
      * @param string $entityName
      * @param string $type
-     * @param string|null $locale
      * @return array<int, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]>
      */
     protected function getFilesIndexedByEntityId(
         array $filesBatchLoadData,
         string $entityName,
         string $type,
-        ?string $locale,
     ): array {
         $entityIds = array_map(static fn (FileBatchLoadData $fileBatchLoadData) => $fileBatchLoadData->getEntityId(), $filesBatchLoadData);
+
+        $locale = $this->uploadedFileConfig->isRequiredFriendlyName($entityName, $type) ? $this->domain->getLocale() : null;
 
         return $this->uploadedFileFacade->getAllFilesIndexedByEntityId(
             $entityIds,
