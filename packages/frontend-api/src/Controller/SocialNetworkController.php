@@ -16,10 +16,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SocialNetworkController extends AbstractController
 {
-    protected const string REFERER_URL = 'refererUrl';
-    public const string CART_UUID = 'cartUuid';
-    public const string PRODUCT_LIST_UUIDS = 'productListUuids';
-    public const string SHOULD_OVERWRITE_CART = 'shouldOverwriteCart';
+    protected const string SESSION_REFERER_URL = 'socialLoginRefererUrl';
+    public const string SESSION_CART_UUID = 'socialLoginCartUuid';
+    public const string SESSION_PRODUCT_LIST_UUIDS = 'socialLoginProductListUuids';
+    public const string SESSION_SHOULD_OVERWRITE_CART = 'socialLoginShouldOverwriteCart';
 
     protected const string PARAMETER_CART_UUID = 'cartUuid';
 
@@ -78,18 +78,29 @@ class SocialNetworkController extends AbstractController
     {
         $session = $request->getSession();
 
-        if ($session->has(self::REFERER_URL) === false) {
-            $session->set(self::REFERER_URL, $request->server->get('HTTP_REFERER'));
+        if (
+            $session->has(self::SESSION_REFERER_URL) === false
+            && $request->server->has('HTTP_REFERER')
+        ) {
+            $refererUrl = $request->server->get('HTTP_REFERER');
+
+            $parsedUrl = parse_url($refererUrl);
+            $isValidRelativePath = str_starts_with($refererUrl, '/') && !isset($parsedUrl['host']);
+            $isCurrentDomainUrl = str_starts_with($refererUrl, $this->domain->getUrl());
+
+            if ($isValidRelativePath || $isCurrentDomainUrl) {
+                $session->set(self::SESSION_REFERER_URL, $refererUrl);
+            }
         }
 
         if ($request->query->has(self::PARAMETER_CART_UUID)) {
             $cartUuid = $request->query->get(self::PARAMETER_CART_UUID);
-            $session->set(self::CART_UUID, $cartUuid);
+            $session->set(self::SESSION_CART_UUID, $cartUuid);
         }
 
         if ($request->query->has(self::PARAMETER_PRODUCT_LIST_UUIDS)) {
             $productListsUuids = $request->query->get(self::PARAMETER_PRODUCT_LIST_UUIDS);
-            $session->set(self::PRODUCT_LIST_UUIDS, $productListsUuids);
+            $session->set(self::SESSION_PRODUCT_LIST_UUIDS, $productListsUuids);
         }
 
         if (!$request->query->has(self::PARAMETER_SHOULD_OVERWRITE_CUSTOMER_USER_CART)) {
@@ -97,7 +108,7 @@ class SocialNetworkController extends AbstractController
         }
 
         $shouldOverwriteCustomerUserCart = $request->query->getBoolean(self::PARAMETER_SHOULD_OVERWRITE_CUSTOMER_USER_CART);
-        $session->set(self::SHOULD_OVERWRITE_CART, $shouldOverwriteCustomerUserCart);
+        $session->set(self::SESSION_SHOULD_OVERWRITE_CART, $shouldOverwriteCustomerUserCart);
     }
 
     /**
@@ -137,13 +148,13 @@ class SocialNetworkController extends AbstractController
      */
     protected function getRedirectPathParameter(Request $request, DomainRouter $domainRouter): string
     {
-        $refererUrl = $request->getSession()->get(self::REFERER_URL);
+        $refererUrl = $request->getSession()->get(self::SESSION_REFERER_URL);
 
         if ($refererUrl === null) {
             return $domainRouter->generate('front_homepage');
         }
 
-        $request->getSession()->remove(self::REFERER_URL);
+        $request->getSession()->remove(self::SESSION_REFERER_URL);
         $redirectPath = str_replace($this->domain->getUrl(), '', $refererUrl);
 
         if ($redirectPath === '') {
