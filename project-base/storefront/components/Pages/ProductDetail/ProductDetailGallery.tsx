@@ -85,6 +85,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                     {galleryItems.map((galleryItem, index) => {
                         const isImage = galleryItem.__typename === 'Image';
                         const isVideo = galleryItem.__typename === 'VideoToken';
+                        const galleryItemKey = isImage ? galleryItem.url : galleryItem.token;
 
                         const galleryItemThumbnail = isImage ? galleryItem : undefined;
                         const isWithAdditionalImages =
@@ -95,7 +96,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                         }
 
                         return (
-                            <Fragment key={index}>
+                            <Fragment key={galleryItemKey}>
                                 <li>
                                     <button
                                         tabIndex={0}

@@ -44,7 +44,7 @@ const SimpleNavigationComp: FC<SimpleNavigationProps> = ({
             >
                 {listedItems.map((listedItem, index) => (
                     <SimpleNavigationListItem
-                        key={index}
+                        key={listedItem.slug}
                         className={itemClassName}
                         linkTypeOverride={linkTypeOverride}
                         listedItem={listedItem}

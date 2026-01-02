@@ -44,8 +44,8 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
 
                 <BreadcrumbsSpan />
 
-                {linkedBreadcrumbs.map((linkedBreadcrumb, index) => (
-                    <Fragment key={index}>
+                {linkedBreadcrumbs.map((linkedBreadcrumb) => (
+                    <Fragment key={linkedBreadcrumb.slug}>
                         <BreadcrumbsLink href={linkedBreadcrumb.slug} type={type}>
                             {linkedBreadcrumb.name}
                         </BreadcrumbsLink>

@@ -38,9 +38,9 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
         <div className={twMergeCustom('absolute flex flex-col items-start gap-1', variantTwClass[variant])}>
             {visibleItemsConfig.flags &&
                 flags.length > 0 &&
-                flags.map(({ name, rgbColor }, index) => {
+                flags.map(({ uuid, name, rgbColor }) => {
                     return (
-                        <Flag key={index} rgbBgColor={rgbColor}>
+                        <Flag key={uuid} rgbBgColor={rgbColor}>
                             {name}
                         </Flag>
                     );

@@ -30,9 +30,10 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                 const isImage = galleryItem.__typename === 'Image';
                 const isVideo = galleryItem.__typename === 'VideoToken';
                 const isFile = galleryItem.__typename === 'File';
+                const galleryItemKey = isVideo ? galleryItem.token : galleryItem.url;
 
                 return (
-                    <li key={index} ref={itemsRefs[index]}>
+                    <li key={galleryItemKey} ref={itemsRefs[index]}>
                         <div
                             aria-label={t('Select image from gallery', { ns: 'accessibility' })}
                             role="button"

@@ -7,8 +7,8 @@ type ProductDetailUspsProps = {
 export const ProductDetailUsps: FC<ProductDetailUspsProps> = ({ usps }) => {
     return (
         <ul className="flex flex-col gap-3">
-            {usps.map((usp, index) => (
-                <li key={index} className="flex items-center gap-3 text-sm">
+            {usps.map((usp) => (
+                <li key={usp} className="flex items-center gap-3 text-sm">
                     <CheckmarkBadgeIcon className="text-text-success w-5" />
                     <span>{usp}</span>
                 </li>
