@@ -135,6 +135,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
         $parameters = $parametersQueryBuilder->getQuery()->execute();
 
         $parametersIndexedById = [];
+
         /** @var \App\Model\Product\Parameter\Parameter $parameter */
         foreach ($parameters as $parameter) {
             $parametersIndexedById[$parameter->getId()] = $parameter;
@@ -168,6 +169,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
         $values = $valuesQueryBuilder->getQuery()->execute();
 
         $valuesIndexedById = [];
+
         /** @var \App\Model\Product\Parameter\ParameterValue $value */
         foreach ($values as $value) {
             $valuesIndexedById[$value->getId()] = $value;

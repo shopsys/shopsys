@@ -69,6 +69,7 @@ class ProductExportRepository
         $query = $queryBuilder->getQuery();
 
         $results = [];
+
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
             $results[$product->getId()] = $this->extractResult($product, $domainId, $locale);
@@ -92,6 +93,7 @@ class ProductExportRepository
         $query = $queryBuilder->getQuery();
 
         $result = [];
+
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
             $result[$product->getId()] = $this->extractResult($product, $domainId, $locale);

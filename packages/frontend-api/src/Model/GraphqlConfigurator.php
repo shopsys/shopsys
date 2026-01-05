@@ -18,6 +18,7 @@ class GraphqlConfigurator
     protected function overrideStandardTypes(): void
     {
         $types = Type::getStandardTypes();
+
         // Prevents multiple overriding in tests as standard types stays overridden even on new booted kernel
         if ($types[Type::STRING] instanceof StringType) {
             return;

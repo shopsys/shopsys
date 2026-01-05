@@ -44,6 +44,7 @@ class FileProfilerStorage extends BaseFileProfilerStorage
 
         if (!$profileIndexed) {
             $file = fopen($this->getIndexFilename(), 'a');
+
             // Add to index
             if ($file === false) {
                 return false;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\ProductVideo;
 
-use App\Model\Product\Product;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

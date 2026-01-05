@@ -96,36 +96,15 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         );
 
         $productsPrice = $this->getProductsPrice($quantifiedItemsPrices, $quantifiedItemsDiscounts);
+        $transportPrice = $this->getTransportPrice($currency, $domainId, $productsPrice, $transport);
 
-        if ($transport !== null) {
-            $transportPrice = $this->transportPriceCalculation->calculatePrice(
-                $transport,
-                $currency,
-                $productsPrice,
-                $domainId,
-            );
-        } else {
-            $transportPrice = null;
-        }
-
-        if ($payment !== null) {
-            $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
-                $payment,
-                $currency,
-                $productsPrice,
-                $domainId,
-            );
-            $roundingPrice = $this->calculateRoundingPrice(
-                $payment,
-                $currency,
-                $productsPrice,
-                $transportPrice,
-                $paymentPrice,
-            );
-        } else {
-            $paymentPrice = null;
-            $roundingPrice = null;
-        }
+        [$paymentPrice, $roundingPrice] = $this->getPaymentAndRoundingPrices(
+            $currency,
+            $productsPrice,
+            $domainId,
+            $payment,
+            $transportPrice,
+        );
 
         $totalPrice = $this->calculateTotalPrice(
             $productsPrice,
@@ -163,6 +142,68 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $personalPickupStore,
             $promoCode,
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
+     * @param \App\Model\Transport\Transport|null $transport
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    private function getTransportPrice(
+        Currency $currency,
+        int $domainId,
+        Price $productsPrice,
+        ?Transport $transport,
+    ): ?Price {
+        if ($transport === null) {
+            return null;
+        }
+
+        return $this->transportPriceCalculation->calculatePrice(
+            $transport,
+            $currency,
+            $productsPrice,
+            $domainId,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
+     * @param int $domainId
+     * @param \App\Model\Payment\Payment|null $payment
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]|null[]
+     */
+    private function getPaymentAndRoundingPrices(
+        Currency $currency,
+        Price $productsPrice,
+        int $domainId,
+        ?Payment $payment,
+        ?Price $transportPrice,
+    ): array {
+        if ($payment === null) {
+            return [null, null];
+        }
+
+        $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
+            $payment,
+            $currency,
+            $productsPrice,
+            $domainId,
+        );
+
+        $roundingPrice = $this->calculateRoundingPrice(
+            $payment,
+            $currency,
+            $productsPrice,
+            $transportPrice,
+            $paymentPrice,
+        );
+
+        return [$paymentPrice, $roundingPrice];
     }
 
     /**

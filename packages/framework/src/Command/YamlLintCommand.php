@@ -89,6 +89,7 @@ EOF,
         }
 
         $filesInfo = [];
+
         /** @var \SplFileInfo $file */
         foreach ($this->getFiles($filename, $excludeRegex) as $file) {
             $filesInfo[] = $this->validate(file_get_contents($file->getPathname()), $flags, $file);

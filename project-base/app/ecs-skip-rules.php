@@ -33,6 +33,7 @@ return [
         __DIR__ . '/src/Migrations/Version20200319113341.php',
         __DIR__ . '/src/Migrations/Version20221205123619.php',
         __DIR__ . '/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoValidator.php',
+        __DIR__ . '/src/Model/Product/Elasticsearch/ProductExportRepository.php',
         __DIR__ . '/src/Model/Security/MenuItemsGrantedRolesSetting.php',
         __DIR__ . '/src/Model/Security/Roles.php',
         __DIR__ . '/tests/App/Functional/EntityExtension/EntityExtensionTest.php',
@@ -63,6 +64,7 @@ return [
     ],
     ObjectIsCreatedByFactorySniff::class => [
         __DIR__ . '/tests/*',
+        __DIR__ . '/src/Model/Order/Preview/OrderPreviewCalculation.php',
         __DIR__ . '/src/Model/Product/Filter/Elasticsearch/ProductFilterConfigFactory.php',
     ],
     ForbiddenDumpSniff::class => [

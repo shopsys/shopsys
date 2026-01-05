@@ -52,7 +52,6 @@ class CountryDataFactory implements CountryDataFactoryInterface
      */
     protected function fillFromCountry(CountryData $countryData, Country $country): void
     {
-
         /** @var \Shopsys\FrameworkBundle\Model\Country\CountryTranslation[] $translations */
         $translations = $country->getTranslations();
 
