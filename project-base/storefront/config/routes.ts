@@ -38,6 +38,7 @@ export const routes = [
         '/styleguide': '/styleguide',
         '/user-consent': '/user-consent',
         '/wishlist': '/wishlist',
+        '/test-errors': '/test-errors',
     },
     {
         '/': '/',
@@ -78,6 +79,7 @@ export const routes = [
         '/styleguide': '/styleguide',
         '/user-consent': '/uzivatelsky-souhlas',
         '/wishlist': '/oblibene-produkty',
+        '/test-errors': '/test-errors',
     },
     {
         '/': '/',
@@ -118,5 +120,6 @@ export const routes = [
         '/styleguide': '/styleguide',
         '/user-consent': '/pouzivatelsky-suhlas',
         '/wishlist': '/oblubene-produkty',
+        '/test-errors': '/test-errors',
     },
 ];

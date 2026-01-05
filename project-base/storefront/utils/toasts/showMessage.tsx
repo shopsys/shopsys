@@ -5,20 +5,52 @@ import { InfoInTriangleIcon } from 'components/Basic/Icon/InfoInTriangleIcon';
 import { TIDs } from 'cypress/tids';
 import { toast } from 'react-toastify';
 import { useSessionStore } from 'store/useSessionStore';
+import { getErrorIdentifier, isErrorIgnored } from 'utils/errors/ignoredErrors';
 import { isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
+import { parseGraphqlErrorFromJson } from 'utils/errors/parseGraphqlError';
+
+const getErrorIdentifierFromMessage = (message: string): string => {
+    const parsed = parseGraphqlErrorFromJson(message);
+
+    if (parsed === null) {
+        return message;
+    }
+
+    return getErrorIdentifier(parsed.userCode, parsed.message);
+};
 
 export const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
     const { restoreStoredFocus } = useSessionStore.getState();
 
     if (type === 'error') {
         if (isWithToastAndConsoleErrorDebugging) {
-            toast.error(() => <CopyTextBlock textToCopy={message} />, {
-                toastId: message,
-                autoClose: false,
-                closeOnClick: false,
-                style: { width: '100%' },
-                onClose: () => restoreStoredFocus(),
-            });
+            const errorIdentifier = getErrorIdentifierFromMessage(message);
+
+            if (isErrorIgnored(errorIdentifier)) {
+                // eslint-disable-next-line no-console
+                console.debug(`[Ignored Error] ${errorIdentifier}:`, message);
+                return;
+            }
+
+            const toastId = message;
+
+            toast.error(
+                () => (
+                    <CopyTextBlock
+                        textToCopy={message}
+                        onIgnore={() => {
+                            toast.dismiss(toastId);
+                        }}
+                    />
+                ),
+                {
+                    toastId,
+                    autoClose: false,
+                    closeOnClick: false,
+                    style: { width: '100%' },
+                    onClose: () => restoreStoredFocus(),
+                },
+            );
         } else {
             toast.error(() => <span dangerouslySetInnerHTML={{ __html: message }} data-tid={TIDs.toast_error} />, {
                 toastId: message,

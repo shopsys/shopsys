@@ -1,5 +1,5 @@
 import { Translate } from 'next-translate';
-import { ParsedErrors, ValidationErrors } from 'types/error';
+import { ParsedErrors } from 'types/error';
 import { CombinedError } from 'urql';
 import {
     ApplicationErrorsType,
@@ -8,6 +8,7 @@ import {
     isNoLogError,
 } from 'utils/errors/applicationErrors';
 import { getErrorMessage } from 'utils/errors/errorMessageMapper';
+import { getFirstValidationErrorPerField, parseGraphqlError } from 'utils/errors/parseGraphqlError';
 
 export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate): ParsedErrors => {
     const errors: ParsedErrors = {};
@@ -15,43 +16,32 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate
     if (originalError.networkError) {
         errors.networkError = t('Could not connect to server. Check your network.') as string;
     } else if (originalError.graphQLErrors.length > 0) {
-        for (const error of originalError.graphQLErrors) {
-            if ('validation' in error.extensions) {
-                const errorExtensions = error.extensions as {
-                    validation: {
-                        [fieldName: string]: {
-                            message: string;
-                            code: string;
-                        }[];
-                    };
+        for (const graphqlError of originalError.graphQLErrors) {
+            const parsed = parseGraphqlError(graphqlError);
+
+            if (parsed.validationErrors !== null) {
+                errors.userError = {
+                    validation: getFirstValidationErrorPerField(parsed.validationErrors, { stripInputPrefix: true }),
                 };
-                const mappedValidationErrors: ValidationErrors = {};
-
-                for (const errorName in errorExtensions.validation) {
-                    const newErrorName = errorName.replace('input.', '');
-                    mappedValidationErrors[newErrorName] = errorExtensions.validation[errorName][0];
-                }
-
-                errors.userError = { validation: mappedValidationErrors };
                 continue;
             }
 
-            if ('userCode' in error.extensions) {
-                const errorExtensions = error.extensions as { userCode: ApplicationErrorsType };
+            if (parsed.userCode !== null) {
+                const userCode = parsed.userCode as ApplicationErrorsType;
 
-                if (isNoLogError(errorExtensions.userCode) || isNoFlashMessageError(errorExtensions.userCode)) {
+                if (isNoLogError(userCode) || isNoFlashMessageError(userCode)) {
                     errors.applicationError = {
-                        type: errorExtensions.userCode,
-                        message: error.message,
+                        type: userCode,
+                        message: parsed.message,
                     };
 
                     continue;
                 }
 
-                if (isFlashMessageError(errorExtensions.userCode)) {
+                if (isFlashMessageError(userCode)) {
                     errors.applicationError = {
-                        type: errorExtensions.userCode,
-                        message: getErrorMessage(errorExtensions.userCode, t),
+                        type: userCode,
+                        message: getErrorMessage(userCode, t),
                     };
 
                     continue;

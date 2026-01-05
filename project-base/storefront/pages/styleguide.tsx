@@ -1,4 +1,5 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
+import { ErrorDebugSettingsContent } from 'components/Pages/ErrorPage/ErrorDebugSettingsContent';
 import { StyleguideContent } from 'components/Pages/Styleguide/StyleguideContent';
 import { isEnvironment } from 'utils/isEnvironment';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
@@ -12,6 +13,8 @@ const StyleguidePage: FC<StyleguidePageProps> = ({ tailwindColors }) => {
     return (
         <CommonLayout title="Styleguide">
             <StyleguideContent tailwindColors={tailwindColors} />
+
+            <ErrorDebugSettingsContent />
         </CommonLayout>
     );
 };
