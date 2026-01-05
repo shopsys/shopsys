@@ -192,3 +192,11 @@ For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use 
 -   `commerceguys/intl` has been updated to the latest version
     -   `IntlCurrencyRepository` and `NumberFormatterExtension` class methods have updated their interfaces to include strict types, you will need to update your usages of such methods in your project
 -   see #project-base-diff to update your project
+
+#### update easy-coding-standard to version 12.2 ([#4367](https://github.com/shopsys/shopsys/pull/4367))
+
+-   update configuration file to new version
+-   skip rules are now defined in the separate `ecs-skip-rule.php` file
+-   paths to check are now defined directly in the `ecs.php` file
+-   fixer `RedundantMarkDownTrailingSpacesFixer` was removed as markdown files are formatted by prettier
+-   see #project-base-diff to update your project

@@ -144,8 +144,7 @@
         "shopsys/phpunit-injector": "2.5.1"
     },
     "conflict": {
-        "symfony/symfony": "*",
-        "friendsofphp/php-cs-fixer": "2.19.0 || >=3.50.0"
+        "symfony/symfony": "*"
     },
     "scripts": {
         "pre-install-cmd": [
