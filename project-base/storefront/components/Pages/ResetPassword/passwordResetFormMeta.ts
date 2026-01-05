@@ -3,7 +3,7 @@ import { validateEmail } from 'components/Forms/validationRules';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
-import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -16,7 +16,7 @@ export const usePasswordResetForm = (): [UseFormReturn<PasswordResetFormType>, P
     );
     const defaultValues = { email: '' };
 
-    return [useShopsysForm(resolver, defaultValues), defaultValues];
+    return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
 type PasswordResetFormMetaType = {

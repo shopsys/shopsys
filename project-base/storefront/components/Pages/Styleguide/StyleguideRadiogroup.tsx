@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { FormProvider } from 'react-hook-form';
-import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import * as Yup from 'yup';
 
 const getStyleguideExampleFormResolver = () =>
@@ -14,7 +14,7 @@ const getStyleguideExampleFormResolver = () =>
     );
 
 export const StyleguideRadiogroup: FC = () => {
-    const formProviderMethods = useShopsysForm(getStyleguideExampleFormResolver(), {
+    const formProviderMethods = useFormWrapper(getStyleguideExampleFormResolver(), {
         country: 'cz',
     });
 

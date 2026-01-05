@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PromoCodeFormType } from 'types/form';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -18,7 +18,7 @@ export const usePromoCodeForm = (): [UseFormReturn<PromoCodeFormType>, PromoCode
     );
     const defaultValues = { promoCode: promoCodes[0]?.code ?? '' };
 
-    return [useShopsysForm(resolver, defaultValues), defaultValues];
+    return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
 type PromoCodeFormMetaType = {

@@ -10,8 +10,8 @@ import { TypeOrderWithdrawalDataFragment } from 'graphql/requests/orders/fragmen
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { OrderWithdrawalFormType } from 'types/form';
+import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
-import { useShopsysForm } from 'utils/forms/useShopsysForm';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -39,7 +39,7 @@ export const useOrderWithdrawalForm = (
         note: '',
     };
 
-    const formProviderMethods = useShopsysForm(resolver, defaultValues);
+    const formProviderMethods = useFormWrapper(resolver, defaultValues);
     useOnFinishHydrationDefaultValuesPrefill(defaultValues, formProviderMethods);
 
     return [formProviderMethods, defaultValues];

@@ -1,6 +1,6 @@
 import { DeepPartial, FieldValues, Resolver, useForm, UseFormReturn } from 'react-hook-form';
 
-export const useShopsysForm = <T extends FieldValues>(
+export const useFormWrapper = <T extends FieldValues>(
     resolver: Resolver<T> | undefined,
     defaultValues: DeepPartial<T>,
 ): UseFormReturn<T> =>

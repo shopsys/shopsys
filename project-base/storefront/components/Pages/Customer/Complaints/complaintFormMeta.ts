@@ -21,7 +21,7 @@ import { FieldError, UseFormReturn } from 'react-hook-form';
 import { ComplaintFormType } from 'types/form';
 import { SelectOptionType } from 'types/selectOptions';
 import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
-import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -121,7 +121,7 @@ export const useComplaintForm = (
         bankAccountNumber: '',
     };
 
-    return [useShopsysForm<ComplaintFormType>(resolver, defaultValues), defaultValues];
+    return [useFormWrapper<ComplaintFormType>(resolver, defaultValues), defaultValues];
 };
 
 export type ComplaintFormMetaType = {

@@ -23,7 +23,7 @@ import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 import { RegistrationFormType } from 'types/form';
-import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -80,7 +80,7 @@ export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, Reg
         newsletterSubscription: false,
     };
 
-    return [useShopsysForm(resolver, defaultValues), defaultValues];
+    return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
 type RegistrationFormMetaType = {
