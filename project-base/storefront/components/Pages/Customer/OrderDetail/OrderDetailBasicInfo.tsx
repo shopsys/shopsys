@@ -168,6 +168,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     {filteredOrderItems.map((orderItem) => (
                         <OrderDetailOrderItem
                             key={orderItem.name}
+                            isOrderFromRegisteredCustomer={order.customerUser !== null}
                             orderItem={orderItem}
                             orderUuid={order.uuid}
                             isDiscount={

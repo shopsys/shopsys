@@ -18,9 +18,15 @@ type OrderDetailOrderItemProps = {
     orderItem: TypeOrderDetailItemFragment;
     orderUuid: string;
     isDiscount?: boolean;
+    isOrderFromRegisteredCustomer: boolean;
 };
 
-export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem, orderUuid, isDiscount }) => {
+export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
+    orderItem,
+    orderUuid,
+    isDiscount,
+    isOrderFromRegisteredCustomer,
+}) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const isUserLoggedIn = useIsUserLoggedIn();
@@ -106,22 +112,25 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                             <span className="text-text-default text-sm">{orderItem.name}</span>
                         )}
 
-                        {canCreateComplaint && isUserLoggedIn && orderItem.type === TypeOrderItemTypeEnum.Product && (
-                            <button
-                                aria-haspopup="dialog"
-                                className="text-link-default hover:text-link-hovered cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-none"
-                                data-tid={TIDs.order_detail_create_complaint_button}
-                                tabIndex={0}
-                                aria-label={t('Create complaint for product {{ productName }}', {
-                                    ns: 'accessibility',
-                                    productName: orderItem.name,
-                                })}
-                                onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
-                            >
-                                <FillIcon className="mr-2 size-6" />
-                                {t('Create complaint')}
-                            </button>
-                        )}
+                        {canCreateComplaint &&
+                            isUserLoggedIn &&
+                            isOrderFromRegisteredCustomer &&
+                            orderItem.type === TypeOrderItemTypeEnum.Product && (
+                                <button
+                                    aria-haspopup="dialog"
+                                    className="text-link-default hover:text-link-hovered cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-none"
+                                    data-tid={TIDs.order_detail_create_complaint_button}
+                                    tabIndex={0}
+                                    aria-label={t('Create complaint for product {{ productName }}', {
+                                        ns: 'accessibility',
+                                        productName: orderItem.name,
+                                    })}
+                                    onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
+                                >
+                                    <FillIcon className="mr-2 size-6" />
+                                    {t('Create complaint')}
+                                </button>
+                            )}
                     </div>
                 </div>
 
