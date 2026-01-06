@@ -180,7 +180,7 @@
 
     <target name="checks" depends="checks-internal,standards,tests" description="Runs internal checks, coding standards and runs unit, DB and smoke tests."/>
 
-    <target name="checks-ci" depends="checks-internal,test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,tests-functional,tests-smoke,tests-acceptance" description="Runs internal checks and runs DB, smoke and acceptance tests."/>
+    <target name="checks-ci" depends="checks-internal,test-demo-data,tests-functional,tests-smoke,tests-acceptance" description="Runs internal checks and runs DB, smoke and acceptance tests."/>
 
     <target name="checks-diff" depends="checks-internal,standards-diff,tests" description="Runs internal checks, coding standards on changed files and runs unit, DB and smoke tests."/>
 
@@ -1167,6 +1167,8 @@
         </exec>
     </target>
 
+    <target name="test-demo-data" depends="test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export" description="Drops all data in test database, creates a new one with demo data and exports data to Elasticsearch."/>
+
     <target name="test-dirs-create" depends="production-protection" description="Creates application directories for content, images, uploaded files, etc. for test environment" hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -1267,7 +1269,7 @@
         </exec>
     </target>
 
-    <target name="tests" depends="test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
+    <target name="tests" depends="test-demo-data,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
 
     <target name="tests-acceptance" depends="production-protection,clean,test-clean-redis" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
         <phingcall target="tests-acceptance-before"/>
