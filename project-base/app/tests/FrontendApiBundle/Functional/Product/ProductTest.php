@@ -69,7 +69,15 @@ class ProductTest extends GraphQlTestCase
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'product');
 
-        $this->assertSame($this->getExpectedProductDetailWithAllAttributes(), $data);
+        $expectedData = $this->getExpectedProductDetailWithAllAttributes();
+
+        foreach ($expectedData as $field => $expectedValue) {
+            $this->assertArrayHasKey($field, $data, sprintf('Field "%s" is missing in response', $field));
+            $this->assertSame($expectedValue, $data[$field], sprintf('Field "%s" does not match expected value', $field));
+        }
+
+        $unexpectedFields = array_diff(array_keys($data), array_keys($expectedData));
+        $this->assertEmpty($unexpectedFields, sprintf('Unexpected fields in response: %s', implode(', ', $unexpectedFields)));
     }
 
     /**
