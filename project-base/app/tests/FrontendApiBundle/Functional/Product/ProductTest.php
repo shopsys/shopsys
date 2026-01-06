@@ -13,11 +13,23 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductTest extends GraphQlTestCase
 {
+    /**
+     * @var array<string>
+     * @see \Tests\FrontendApiBundle\Functional\Hreflang\HreflangLinksTest::testAlternateDomainLanguages for 'hreflangLinks' field coverage test
+     * @see \Tests\FrontendApiBundle\Functional\Image\ProductImagesTest::testFirstProductWithAllImages for 'images' and 'mainImage' fields coverage test
+     */
+    private const array FIELDS_EXCLUDED_FROM_COVERAGE_TEST = [
+        'hreflangLinks',
+        'images',
+        'mainImage',
+    ];
+
     private Product $product;
 
     /**
@@ -88,6 +100,7 @@ class ProductTest extends GraphQlTestCase
 
         return [
             'id' => 1,
+            'uuid' => '55bb22ab-bb88-5459-a464-005b948d8c78',
             'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'slug' => '/' . $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 1], UrlGeneratorInterface::RELATIVE_PATH),
             'shortDescription' => $shortDescription,
@@ -118,6 +131,7 @@ class ProductTest extends GraphQlTestCase
                 'status' => AvailabilityStatusEnum::IN_STOCK,
             ],
             'stockQuantity' => 2700,
+            'isAllowedNegativeStock' => true,
             'categories' => [
                 [
                     'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -136,6 +150,7 @@ class ProductTest extends GraphQlTestCase
                 ],
             ],
             'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
+            'giftPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('24', $vatHigh),
             'brand' => [
                 'name' => 'Sencor',
             ],
@@ -392,12 +407,22 @@ class ProductTest extends GraphQlTestCase
                 ],
             ],
             'vatPercent' => '21.000000',
+            'files' => $this->getFilesByEntity($this->product),
+            'isVisible' => true,
+            'isInquiryType' => false,
+            'productType' => strtoupper(ProductTypeEnum::TYPE_BASIC),
+            'productVideos' => [],
+            'gifts' => [],
+            'promotionBuyQuantity' => null,
+            'promotionFreeQuantity' => null,
+            'relatedProducts' => $this->getExpectedRelatedProducts($firstDomainLocale),
+            'isMainVariant' => false,
         ];
     }
 
     public function testAllProductFieldsAreCovered(): void
     {
-        $schemaFields = $this->getFieldNamesForType('Product');
+        $schemaFields = $this->getFieldNamesForType('Product', self::FIELDS_EXCLUDED_FROM_COVERAGE_TEST);
         $testedFields = array_keys($this->getExpectedProductDetailWithAllAttributes());
 
         $missingFields = array_diff($schemaFields, $testedFields);
@@ -405,10 +430,52 @@ class ProductTest extends GraphQlTestCase
         if (count($missingFields) > 0) {
             $this->fail(
                 sprintf(
-                    "The following Product fields are not covered by the test:\n- %s\n\nPlease add them to ProductDetailWithAllAttributes.graphql and getExpectedProductDetailWithAllAttributes().",
+                    "The following Product fields are not covered in the tests:\n- %s\n\nPlease add them to ProductDetailWithAllAttributes.graphql and getExpectedProductDetailWithAllAttributes(), or exclude them from this test using FIELDS_EXCLUDED_FROM_COVERAGE_TEST constant.",
                     implode("\n- ", $missingFields),
                 ),
             );
         }
+    }
+
+    /**
+     * @param string $firstDomainLocale
+     * @return array[]
+     */
+    private function getExpectedRelatedProducts(string $firstDomainLocale): array
+    {
+        return [
+            [
+                'name' => t(
+                    '32" Philips 32PFL4308',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $firstDomainLocale,
+                ),
+            ],
+            [
+                'name' => t(
+                    '47" LG 47LA790V (FHD)',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $firstDomainLocale,
+                ),
+            ],
+            [
+                'name' => t(
+                    'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $firstDomainLocale,
+                ),
+            ],
+            [
+                'name' => t(
+                    'Apple iPhone 5S 64GB, gold',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $firstDomainLocale,
+                ),
+            ],
+        ];
     }
 }

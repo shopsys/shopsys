@@ -1,6 +1,7 @@
 query ProductDetailWithAllAttributes($uuid: Uuid!) {
     product(uuid: $uuid) {
         id
+        uuid
         name
         slug
         shortDescription
@@ -16,6 +17,7 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
             status
         }
         stockQuantity
+        isAllowedNegativeStock
         categories {
             name
         }
@@ -24,6 +26,11 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
             rgbColor
         }
         price {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
+        giftPrice {
             priceWithVat
             priceWithoutVat
             vatAmount
@@ -68,5 +75,25 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
             slug
         }
         vatPercent
+        files {
+            anchorText
+            url
+        }
+        isVisible
+        isInquiryType
+        productType
+        productVideos {
+            token
+            description
+        }
+        gifts {
+            name
+        }
+        promotionBuyQuantity
+        promotionFreeQuantity
+        relatedProducts {
+            name
+        }
+        isMainVariant
     }
 }
