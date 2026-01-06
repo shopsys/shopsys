@@ -128,7 +128,7 @@ class CronFacade
                 'exception' => $throwable,
             ]);
 
-            throw $throwable;
+            return;
         }
 
         $this->cronModuleFacade->markCronAsEnded($cronModuleConfig);

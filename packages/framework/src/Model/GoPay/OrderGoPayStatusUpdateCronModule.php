@@ -46,6 +46,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
             'ordersCount' => count($orders),
         ]);
 
+        $errorsCount = 0;
         foreach ($orders as $order) {
             $orderId = $order->getId();
             $this->logger->info('Downloading GoPay status for order', [
@@ -68,6 +69,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
                     $this->orderFacade->updatePaymentByLastPaymentTransaction($order);
                 }
             } catch (GoPayPaymentDownloadException $e) {
+                $errorsCount++;
                 $this->logger->error($e->getMessage(), [
                     'exception' => $e,
                 ]);
@@ -99,6 +101,10 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
         }
 
         $this->em->flush();
+
+        if ($errorsCount > 0) {
+            throw new \Exception();
+        }
     }
 
     /**
