@@ -147,7 +147,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             if ($this->heurekaShopCertificationLocaleHelper->isDomainLocaleSupported($locale)) {
                 $this->setting->setForDomain(
                     HeurekaSetting::HEUREKA_API_KEY,
-                    '96411416349324269511946875061235',
+                    'JustMadeUpDemoKeyToEnableHeureka',
                     $domainId,
                 );
             }
