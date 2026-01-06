@@ -54,7 +54,7 @@ export default class GrapesMailEditor {
                         enterMode: 2,
                         versionCheck: false,
                         language: Translator.locale,
-                        format_tags: 'p;h2;h3;h4;h5;h6;pre;address;div',
+                        format_tags: 'p;h1;h2;h3;h4;h5;h6;pre;address;div',
                         toolbar: [
                             { name: 'basicstyles', items: ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'] },
                             { name: 'format', items: ['Format'] },
