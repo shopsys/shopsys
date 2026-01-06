@@ -18,10 +18,20 @@ export default grapesjs.plugins.add('mail-custom-image', editor => {
     });
 
     editor.DomComponents.addType('mail-custom-image', {
-        isComponent: element =>
-            element.tagName === 'IMG' &&
-            element.getAttribute('data-gjs-type') === 'mail-custom-image' &&
-            !element.hasAttribute('path'),
+        isComponent: element => {
+            if (element.tagName !== 'IMG') {
+                return false;
+            }
+            // Match by data-gjs-type (for new components)
+            if (element.getAttribute('data-gjs-type') === 'mail-custom-image') {
+                return element.getAttribute('path') !== '{product_image}';
+            }
+            // Match by class (for reloaded components after save)
+            if (element.classList?.contains('mail-custom-image')) {
+                return element.getAttribute('path') !== '{product_image}';
+            }
+            return false;
+        },
         extend: 'image',
         model: {
             init() {
@@ -33,17 +43,19 @@ export default grapesjs.plugins.add('mail-custom-image', editor => {
                 element.addAttributes({ path: this.attributes.src });
             },
             handleImagePositionChange(element) {
-                element.setClass([`image-position-${this.getAttributes()[imagePositionDataAttribute]}`]);
+                const position = this.getAttributes()[imagePositionDataAttribute];
+
+                element.setClass(['mail-custom-image', `image-position-${position}`]);
                 if (element.collection.parent.attributes.tagName === 'a') {
                     element.collection.parent.setAttributes({
-                        [LINK_POSITION_DATA_ATTRIBUTE]: this.getAttributes()[imagePositionDataAttribute],
+                        [LINK_POSITION_DATA_ATTRIBUTE]: position,
                     });
                 }
             },
             defaults: {
                 attributes: {
                     [imagePositionDataAttribute]: 'left',
-                    class: ['image-position-left'],
+                    class: ['mail-custom-image', 'image-position-left'],
                 },
                 resizable: {
                     updateTarget: (el, rect) => {

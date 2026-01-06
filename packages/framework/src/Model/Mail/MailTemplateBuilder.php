@@ -190,6 +190,7 @@ class MailTemplateBuilder
                         -ms-interpolation-mode: bicubic;
                         border: 0;
                         height: auto;
+                        max-width: 100%;
                         line-height: 100%;
                         outline: none;
                         text-decoration: none;
