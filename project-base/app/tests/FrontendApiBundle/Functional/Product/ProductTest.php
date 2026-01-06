@@ -394,4 +394,21 @@ class ProductTest extends GraphQlTestCase
             'vatPercent' => '21.000000',
         ];
     }
+
+    public function testAllProductFieldsAreCovered(): void
+    {
+        $schemaFields = $this->getFieldNamesForType('Product');
+        $testedFields = array_keys($this->getExpectedProductDetailWithAllAttributes());
+
+        $missingFields = array_diff($schemaFields, $testedFields);
+
+        if (count($missingFields) > 0) {
+            $this->fail(
+                sprintf(
+                    "The following Product fields are not covered by the test:\n- %s\n\nPlease add them to ProductDetailWithAllAttributes.graphql and getExpectedProductDetailWithAllAttributes().",
+                    implode("\n- ", $missingFields),
+                ),
+            );
+        }
+    }
 }

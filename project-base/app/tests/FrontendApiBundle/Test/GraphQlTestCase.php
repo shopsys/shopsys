@@ -563,4 +563,21 @@ abstract class GraphQlTestCase extends ApplicationTestCase
 
         return $filesData;
     }
+
+    /**
+     * @param string $graphQlType
+     * @param string[] $excludedFields
+     * @return string[]
+     */
+    protected function getFieldNamesForType(string $graphQlType, array $excludedFields = []): array
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/_graphql/introspectionQuery.graphql', [
+            'name' => $graphQlType,
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, '__type');
+
+        $fields = array_map(static fn (array $field) => $field['name'], $data['fields']);
+
+        return array_values(array_diff($fields, $excludedFields));
+    }
 }

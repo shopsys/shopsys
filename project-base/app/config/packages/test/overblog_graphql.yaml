@@ -1,0 +1,3 @@
+overblog_graphql:
+    security:
+        enable_introspection: true

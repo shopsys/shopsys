@@ -1,0 +1,7 @@
+query introspectionQuery ($name: String!) {
+    __type(name: $name) {
+        fields {
+            name
+        }
+    }
+}
