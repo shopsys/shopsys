@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator;
 use Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,8 +20,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class FileUploadType extends AbstractType
 {
@@ -28,11 +31,13 @@ final class FileUploadType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer $filesIdsToFilesTransformer
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
      */
     public function __construct(
         private readonly UploadedFileFacade $uploadedFileFacade,
         private readonly FilesIdsToFilesTransformer $filesIdsToFilesTransformer,
         private readonly UploadedFileConfig $uploadedFileConfig,
+        private readonly UploadedFileLocator $uploadedFileLocator,
     ) {
     }
 
@@ -111,6 +116,11 @@ final class FileUploadType extends AbstractType
             ->add(
                 $builder->create('relations', FilesType::class, [
                     'multiple' => $this->isMultiple($options),
+                    'constraints' => [
+                        new Constraints\Callback(
+                            ['callback' => [$this, 'validateSelectedFiles'], 'payload' => $options['file_constraints']],
+                        ),
+                    ],
                 ]),
             )
             ->add(
@@ -169,6 +179,33 @@ final class FileUploadType extends AbstractType
         $fileTypeConfig = $fileEntityConfig->getTypeByName($options['file_type']);
 
         return $fileTypeConfig->isMultiple();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]|null $selectedFiles
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     * @param \Symfony\Component\Validator\Constraint[] $fileConstraints
+     */
+    public function validateSelectedFiles(
+        ?array $selectedFiles,
+        ExecutionContextInterface $context,
+        array $fileConstraints,
+    ): void {
+        if ($selectedFiles === null || $fileConstraints === []) {
+            return;
+        }
+
+        foreach ($selectedFiles as $selectedFile) {
+            $filepath = $this->uploadedFileLocator->getAbsoluteUploadedFileFilepath($selectedFile);
+            $file = new File($filepath, false);
+
+            $validator = $context->getValidator();
+            $violations = $validator->validate($file, $fileConstraints);
+
+            foreach ($violations as $violation) {
+                $context->addViolation($violation->getMessageTemplate(), $violation->getParameters());
+            }
+        }
     }
 
     /**

@@ -68,6 +68,7 @@
 
     <div class="{{ disabledField is defined ? 'disabled' }}">
         {{ form_errors(form) }}
+        {{ form_errors(form.relations) }}
         {{ form_label(form, label) }}
         {% if multiple %}
             {% embed "@ShopsysAdministration/form/type/fileUpload/filesPicker.html.twig" %}
