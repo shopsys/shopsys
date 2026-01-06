@@ -411,7 +411,12 @@ class ProductTest extends GraphQlTestCase
             'isVisible' => true,
             'isInquiryType' => false,
             'productType' => strtoupper(ProductTypeEnum::TYPE_BASIC),
-            'productVideos' => [],
+            'productVideos' => [
+                [
+                    'token' => 'Wz9zttavXpo',
+                    'description' => t('Get to know Shopsys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                ],
+            ],
             'gifts' => [],
             'promotionBuyQuantity' => null,
             'promotionFreeQuantity' => null,

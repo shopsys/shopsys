@@ -850,6 +850,9 @@ msgstr "Genius SlimStar i820"
 msgid "Genius repro SP-M120 black"
 msgstr "Genius reproduktory SP-M120 čierny"
 
+msgid "Get to know Shopsys"
+msgstr "Spoznajte Shopsys"
+
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
 msgstr "Čistič skla a sklokeramických dosky (4019786908123)"
 

@@ -23,6 +23,14 @@ class ProductVideoDataFactory
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoData
+     */
+    public function create(): ProductVideoData
+    {
+        return $this->createInstance();
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo $productVideo
      * @return \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoData
      */

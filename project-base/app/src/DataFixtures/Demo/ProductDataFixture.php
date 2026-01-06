@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoDataFactory;
 use Symfony\Component\Clock\DatePoint;
 
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -40,12 +41,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\DataFixtures\Demo\DemoDataFactory\ProductDemoDataFactory $productDemoDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\DataFixtures\Demo\DataSetter\ProductDemoDataSetter $productDemoDataSetter
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
      */
     public function __construct(
         private readonly ProductFacade $productFacade,
         private readonly ProductDemoDataFactory $productDemoDataFactory,
         private readonly EntityManagerInterface $em,
         private readonly ProductDemoDataSetter $productDemoDataSetter,
+        private readonly ProductVideoDataFactory $productVideoDataFactory,
     ) {
     }
 
@@ -73,6 +76,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
 
         $parameterValues = [];
+
+        $productVideoData = $this->productVideoDataFactory->create();
+        $productVideoData->videoToken = 'Wz9zttavXpo';
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
@@ -102,10 +108,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptionUsp3ByDomainId[$domain->getId()] = t('Energy-Efficient Design', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->shortDescriptionUsp4ByDomainId[$domain->getId()] = t('Wide Color Gamut', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->shortDescriptionUsp5ByDomainId[$domain->getId()] = t('Adaptive Sync Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+
+            $productVideoData->videoTokenDescriptions[$locale] = t('Get to know Shopsys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->productDemoDataSetter->setProductParameterValues($productData, $parameterValues);
         $productData->excludedTransports = [$this->getReference(TransportDataFixture::TRANSPORT_DRONE, Transport::class)];
+
+        $productData->productVideosData = [$productVideoData];
 
         $this->createProduct($productData);
 
