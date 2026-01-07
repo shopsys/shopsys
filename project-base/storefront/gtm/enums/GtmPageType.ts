@@ -23,5 +23,6 @@ export enum GtmPageType {
     user_consent = 'user consent',
     contact = 'contact',
     product_comparison = 'product comparison',
+    catalog = 'catalog',
     other = 'other',
 }

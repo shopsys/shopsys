@@ -5,6 +5,7 @@ export enum SkeletonEnum {
     Brand = 'brand',
     BrandsOverview = 'brandsOverview',
     Cart = 'cart',
+    Catalog = 'catalog',
     Category = 'category',
     ChangePassword = 'changePassword',
     Comparison = 'comparison',

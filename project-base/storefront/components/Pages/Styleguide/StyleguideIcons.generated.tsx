@@ -13,6 +13,7 @@ import { ChatIcon } from 'components/Basic/Icon/ChatIcon';
 import { CheckboxCheckedIcon } from 'components/Basic/Icon/CheckboxCheckedIcon';
 import { CheckmarkBadgeIcon } from 'components/Basic/Icon/CheckmarkBadgeIcon';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { ChevronEmptyDotIcon } from 'components/Basic/Icon/ChevronEmptyDotIcon';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
@@ -113,6 +114,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <CheckmarkIcon className="size-10" />
                 <span className="text-center text-xs break-all">CheckmarkIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <ChevronEmptyDotIcon className="size-10" />
+                <span className="text-center text-xs break-all">ChevronEmptyDotIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <CloseIcon className="size-10" />

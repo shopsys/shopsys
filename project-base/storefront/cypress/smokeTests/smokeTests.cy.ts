@@ -75,6 +75,13 @@ context('Smoke tests', () => {
             },
         },
         ['/cart']: { skip: true },
+        ['/catalog']: {
+            skip: false,
+            test: () => {
+                checktHeadlineText('Catalog');
+                cy.get('main').find('a[href]').should('have.length.greaterThan', 0);
+            },
+        },
         ['/contact-form']: {
             skip: false,
             test: () => {
