@@ -16,7 +16,7 @@ const ProductDetailRelatedProductsTab = dynamic(
         ssr: false,
     },
 );
-export type ProductDetailTabsProps = {
+type ProductDetailTabsProps = {
     description: string | null;
     parameters: TypeParameterFragment[];
     relatedProducts: TypeListedProductFragment[];
