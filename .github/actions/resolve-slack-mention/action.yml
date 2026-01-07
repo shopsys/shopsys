@@ -1,0 +1,26 @@
+name: 'Resolve Slack Mention'
+description: 'Converts GitHub username to Slack mention using mapping'
+inputs:
+    github-username:
+        description: 'GitHub username to resolve'
+        required: true
+    slack-github-map:
+        description: 'JSON mapping of GitHub usernames to Slack IDs'
+        required: true
+outputs:
+    mention:
+        description: 'Slack mention format (<@ID>) or plain GitHub username'
+        value: ${{ steps.resolve.outputs.mention }}
+runs:
+    using: 'composite'
+    steps:
+        -   name: Resolve Slack ID
+            id: resolve
+            shell: bash
+            run: |
+                SLACK_ID=$(echo '${{ inputs.slack-github-map }}' | jq -r --arg user "${{ inputs.github-username }}" '.[$user] // empty')
+                if [ -n "$SLACK_ID" ]; then
+                    echo "mention=<@$SLACK_ID>" >> $GITHUB_OUTPUT
+                else
+                    echo "mention=${{ inputs.github-username }}" >> $GITHUB_OUTPUT
+                fi

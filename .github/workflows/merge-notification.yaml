@@ -5,34 +5,44 @@ on:
             - auto_merge_enabled
             - auto_merge_disabled
             - closed
+    workflow_run:
+        workflows: ["Docker build"]
+        types:
+            - completed
+permissions:
+    contents: read
+    pull-requests: write
+    actions: read
 jobs:
-    notify-slack:
-        name: Send notification to the Slack about merge status
+    notify-merge-start-finish:
+        name: Send notification to the Slack about merge start / finish
         runs-on: ubuntu-latest
+        if: github.event_name == 'pull_request'
         steps:
-            -   name: Prepare variables
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+            -   name: Resolve author Slack mention
+                id: author-mention
+                uses: ./.github/actions/resolve-slack-mention
+                with:
+                    github-username: ${{ github.event.pull_request.user.login }}
+                    slack-github-map: ${{ secrets.SLACK_GITHUB_MAP }}
+            -   name: Resolve sender Slack mention
+                id: sender-mention
+                uses: ./.github/actions/resolve-slack-mention
+                with:
+                    github-username: ${{ github.event.sender.login }}
+                    slack-github-map: ${{ secrets.SLACK_GITHUB_MAP }}
+            -   name: Prepare PR variables
                 id: variables
+                env:
+                    PR_URL: ${{ github.event.pull_request.html_url }}
+                    PR_TITLE: ${{ github.event.pull_request.title }}
                 run: |
-                    AUTHOR="${{ github.event.pull_request.user.login }}"
-                    AUTHOR_SLACK_ID=$(echo '${{ secrets.SLACK_GITHUB_MAP }}' | jq -r --arg author "$AUTHOR" '.[$author] // empty')
-
-                    if [ -n "$AUTHOR_SLACK_ID" ]; then
-                      echo "MENTION=<@$AUTHOR_SLACK_ID>" >> $GITHUB_OUTPUT
-                    else
-                      echo "MENTION=$AUTHOR" >> $GITHUB_OUTPUT
-                    fi
-
-                    SENDER="${{ github.event.sender.login }}"
-                    SENDER_SLACK_ID=$(echo '${{ secrets.SLACK_GITHUB_MAP }}' | jq -r --arg sender "$SENDER" '.[$sender] // empty')
-
-                    if [ -n "$SENDER_SLACK_ID" ]; then
-                      echo "SENDER_MENTION=<@$SENDER_SLACK_ID>" >> $GITHUB_OUTPUT
-                    else
-                      echo "SENDER_MENTION=$SENDER" >> $GITHUB_OUTPUT
-                    fi
-
-                    echo "PR_URL=${{ github.event.pull_request.html_url }}" >> $GITHUB_OUTPUT
-                    echo "PR_TITLE=${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
+                    echo "PR_URL=$PR_URL" >> $GITHUB_OUTPUT
+                    echo "PR_TITLE<<EOF" >> $GITHUB_OUTPUT
+                    echo "$PR_TITLE" >> $GITHUB_OUTPUT
+                    echo "EOF" >> $GITHUB_OUTPUT
             -   name: Merge started
                 id: merge-started
                 if: github.event.action == 'auto_merge_enabled'
@@ -43,7 +53,7 @@ jobs:
                     token: ${{ secrets.SLACK_BOT_TOKEN }}
                     payload: |
                         channel: ${{ secrets.SLACK_CHANNEL_ID }}
-                        text: "🔁 *Merge started for PR* <${{ steps.variables.outputs.PR_URL }}|${{ steps.variables.outputs.PR_TITLE }}> by ${{ steps.variables.outputs.MENTION }}."
+                        text: "🔁 *Merge started for PR* <${{ steps.variables.outputs.PR_URL }}|${{ steps.variables.outputs.PR_TITLE }}> by ${{ steps.author-mention.outputs.mention }}."
             -   name: Store message timestamp in PR description
                 if: github.event.action == 'auto_merge_enabled'
                 uses: Jerome1337/comment-pull-request@v1.0.4
@@ -55,14 +65,12 @@ jobs:
             -   name: Extract message timestamp
                 id: extract-timestamp
                 if: github.event.action == 'closed' || github.event.action == 'auto_merge_disabled'
-                run: |
-                    TIMESTAMP=$(echo "$PR_DESCRIPTION" | grep -oP '(?<=<!-- SLACK_TIMESTAMP: )[0-9.]+(?= -->)' | tail -1 || echo "")
-                    echo "TIMESTAMP=$TIMESTAMP" >> $GITHUB_OUTPUT
-                env:
-                    PR_DESCRIPTION: ${{ github.event.pull_request.body }}
+                uses: ./.github/actions/extract-slack-timestamp
+                with:
+                    pr-body: ${{ github.event.pull_request.body }}
             -   name: Merge complete / canceled
                 if: |
-                    steps.extract-timestamp.outputs.TIMESTAMP != '' &&
+                    steps.extract-timestamp.outputs.timestamp != '' &&
                     ((github.event.action == 'closed' && github.event.pull_request.merged == true) ||
                     github.event.action == 'auto_merge_disabled')
                 uses: slackapi/slack-github-action@v2.1.1
@@ -73,25 +81,11 @@ jobs:
                     payload: |
                         channel: ${{ secrets.SLACK_CHANNEL_ID }}
                         name: "checkered_flag"
-                        timestamp: ${{ steps.extract-timestamp.outputs.TIMESTAMP }}
-            -   name: Merge failed
-                if: |
-                    github.event.action == 'closed' &&
-                    github.event.pull_request.merged == false &&
-                    steps.extract-timestamp.outputs.TIMESTAMP != ''
-                uses: slackapi/slack-github-action@v2.1.1
-                with:
-                    errors: true
-                    method: chat.postMessage
-                    token: ${{ secrets.SLACK_BOT_TOKEN }}
-                    payload: |
-                        channel: ${{ secrets.SLACK_CHANNEL_ID }}
-                        thread_ts: ${{ steps.extract-timestamp.outputs.TIMESTAMP }}
-                        text: "❌ *Merge failed!* ${{ steps.variables.outputs.MENTION }}"
+                        timestamp: ${{ steps.extract-timestamp.outputs.timestamp }}
             -   name: Merge canceled
                 if: |
                     github.event.action == 'auto_merge_disabled' &&
-                    steps.extract-timestamp.outputs.TIMESTAMP != ''
+                    steps.extract-timestamp.outputs.timestamp != ''
                 uses: slackapi/slack-github-action@v2.1.1
                 with:
                     errors: true
@@ -99,5 +93,64 @@ jobs:
                     token: ${{ secrets.SLACK_BOT_TOKEN }}
                     payload: |
                         channel: ${{ secrets.SLACK_CHANNEL_ID }}
-                        thread_ts: ${{ steps.extract-timestamp.outputs.TIMESTAMP }}
-                        text: "🚫 *Merge canceled by ${{ steps.variables.outputs.SENDER_MENTION }}* ${{ steps.variables.outputs.MENTION }}."
+                        thread_timestamp: ${{ steps.extract-timestamp.outputs.timestamp }}
+                        text: "🚫 *Merge canceled by ${{ steps.sender-mention.outputs.mention }}* ${{ steps.author-mention.outputs.mention }}."
+
+    notify-build-failed:
+        name: Send message to the Slack about failed build for PR with auto-merge
+        runs-on: ubuntu-latest
+        if: |
+            github.event_name == 'workflow_run' &&
+            github.event.workflow_run.conclusion == 'failure'
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+            -   name: Get PR with auto-merge enabled
+                id: get-pr
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                    REPOSITORY: ${{ github.repository }}
+                    HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+                run: |
+                    PR_DATA=$(gh pr list --repo "$REPOSITORY" --head "$HEAD_BRANCH" --json number,url,title,body,author,autoMergeRequest --jq '.[] | select(.autoMergeRequest != null)')
+
+                    if [ -n "$PR_DATA" ]; then
+                        echo "PR_NUMBER=$(echo "$PR_DATA" | jq -r '.number')" >> $GITHUB_OUTPUT
+                        echo "PR_URL=$(echo "$PR_DATA" | jq -r '.url')" >> $GITHUB_OUTPUT
+
+                        echo "PR_TITLE<<EOF" >> $GITHUB_OUTPUT
+                        echo "$PR_DATA" | jq -r '.title' >> $GITHUB_OUTPUT
+                        echo "EOF" >> $GITHUB_OUTPUT
+
+                        echo "AUTHOR=$(echo "$PR_DATA" | jq -r '.author.login')" >> $GITHUB_OUTPUT
+
+                        echo "PR_BODY<<EOF" >> $GITHUB_OUTPUT
+                        echo "$PR_DATA" | jq -r '.body' >> $GITHUB_OUTPUT
+                        echo "EOF" >> $GITHUB_OUTPUT
+                    fi
+            -   name: Extract message timestamp
+                id: extract-timestamp
+                if: steps.get-pr.outputs.PR_NUMBER != ''
+                uses: ./.github/actions/extract-slack-timestamp
+                with:
+                    pr-body: ${{ steps.get-pr.outputs.PR_BODY }}
+            -   name: Resolve author Slack mention
+                id: author-mention
+                if: steps.get-pr.outputs.AUTHOR != ''
+                uses: ./.github/actions/resolve-slack-mention
+                with:
+                    github-username: ${{ steps.get-pr.outputs.AUTHOR }}
+                    slack-github-map: ${{ secrets.SLACK_GITHUB_MAP }}
+            -   name: Build failed
+                if: |
+                    steps.get-pr.outputs.PR_NUMBER != '' &&
+                    steps.extract-timestamp.outputs.timestamp != ''
+                uses: slackapi/slack-github-action@v2.1.1
+                with:
+                    errors: true
+                    method: chat.postMessage
+                    token: ${{ secrets.SLACK_BOT_TOKEN }}
+                    payload: |
+                        channel: ${{ secrets.SLACK_CHANNEL_ID }}
+                        thread_timestamp: ${{ steps.extract-timestamp.outputs.timestamp }}
+                        text: "❌ *Build failed!* ${{ steps.author-mention.outputs.mention }}"
