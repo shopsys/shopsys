@@ -10,6 +10,7 @@
             "Shopsys\\AdministrationBundle\\": "packages/administration/src/",
             "Shopsys\\CodingStandards\\": "packages/coding-standards/src/",
             "Shopsys\\FormTypesBundle\\": "packages/form-types-bundle/src/",
+            "Shopsys\\Cli\\": "packages/cli/src/",
             "Shopsys\\FrontendApiBundle\\": "packages/frontend-api/src/",
             "Shopsys\\GoogleCloudBundle\\": "packages/google-cloud-bundle/src/",
             "Shopsys\\HttpSmokeTesting\\": "packages/http-smoke-testing/src/",
