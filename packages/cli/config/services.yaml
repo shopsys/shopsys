@@ -3,6 +3,9 @@ services:
         autowire: true
         autoconfigure: true
 
+    Shopsys\Cli\:
+        resource: '../src/**/*{Handler}.php'
+
     Shopsys\Cli\Command\:
         resource: '../src/Command/*'
         public: true

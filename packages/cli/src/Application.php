@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\Cli;
 
 use Override;
+use Shopsys\Cli\Command\InitCommand;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Command\HelpCommand;
@@ -22,7 +23,12 @@ final class Application extends BaseApplication
     {
         parent::__construct(self::NAME, self::VERSION);
 
-        $this->buildContainer();
+        $container = $this->buildContainer();
+
+        $this->addCommands([
+            /** @phpstan-ignore symfonyContainer.serviceNotFound */
+            $container->get(InitCommand::class),
+        ]);
     }
 
     /**
