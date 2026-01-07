@@ -6,8 +6,9 @@ export default defineConfig({
     plugins: [react(), tsconfigPaths()],
     test: {
         environment: 'jsdom',
-        rootDir: './',
-        testMatch: ['vitest/**/*.test.{js,ts,tsx}'],
+        root: './',
+        include: ['vitest/**/*.test.{js,ts,tsx}'],
+        exclude: ['**/node_modules/**'],
         clearMocks: true,
         restoreMocks: true,
         setupFiles: ['dotenv/config', 'vitest/setup.ts'],
