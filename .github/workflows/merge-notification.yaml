@@ -1,0 +1,57 @@
+name: Slack Auto-Merge Notifications
+on:
+    pull_request:
+        types:
+            - auto_merge_enabled
+            - closed
+jobs:
+    notify-slack:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Prepare variables
+                id: variables
+                run: |
+                    AUTHOR="${{ github.event.pull_request.user.login }}"
+                    AUTHOR_SLACK_ID=$(echo '${{ secrets.SLACK_GITHUB_MAP }}' | jq -r ".[$AUTHOR] // empty")
+                    
+                    if [ -n "$AUTHOR_SLACK_ID" ]; then
+                      echo "MENTION=<@$AUTHOR_SLACK_ID>" >> $GITHUB_OUTPUT
+                    else
+                      echo "MENTION=$AUTHOR" >> $GITHUB_OUTPUT
+                    fi
+                    
+                    echo "PR_URL=${{ github.event.pull_request.html_url }}" >> $GITHUB_OUTPUT
+                    echo "PR_TITLE=${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
+            -   name: Merge started
+                if: github.event.action == 'auto_merge_enabled'
+                uses: slackapi/slack-github-action@v2.1.1
+                with:
+                    method: chat.postMessage
+                    token: ${{ secrets.SLACK_BOT_TOKEN }}
+                    payload: |
+                        channel: ${{ secrets.SLACK_CHANNEL_ID }}
+                        text: "🔁 *Merge started for PR* <${{ steps.variables.outputs.PR_URL }}|${{ steps.variables.outputs.PR_TITLE }}> by ${{ steps.variables.outputs.MENTION }}."
+            -   name: Merge finished
+                if: |
+                    github.event.action == 'closed' &&
+                    github.event.pull_request.merged == true &&
+                    github.event.pull_request.auto_merge != null
+                uses: slackapi/slack-github-action@v2.1.1
+                with:
+                    method: chat.postMessage
+                    token: ${{ secrets.SLACK_BOT_TOKEN }}
+                    payload: |
+                        channel: ${{ secrets.SLACK_CHANNEL_ID }}
+                        text: "✅ *Merge of PR* <${{ steps.variables.outputs.PR_URL }}|${{ steps.variables.outputs.PR_TITLE }}> *finished*."
+            -   name: Merge failed
+                if: |
+                    github.event.action == 'closed' &&
+                    github.event.pull_request.merged == false &&
+                    github.event.pull_request.auto_merge != null
+                uses: slackapi/slack-github-action@v2.1.1
+                with:
+                    method: chat.postMessage
+                    token: ${{ secrets.SLACK_BOT_TOKEN }}
+                    payload: |
+                        channel: ${{ secrets.SLACK_CHANNEL_ID }}
+                        text: "❌ *Merge of PR* <${{ steps.variables.outputs.PR_URL }}|${{ steps.variables.outputs.PR_TITLE }}> *failed*. Author: ${{ steps.variables.outputs.MENTION }}"
