@@ -1,13 +1,12 @@
+import { ComplaintItemColumnInfo } from './ComplaintItemColumnInfo';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
-import { ReactNode } from 'react';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { twMergeCustom } from 'utils/twMerge';
 
 type ComplaintItemProps = {
     complaintItem: TypeComplaintDetailFragment;
@@ -100,27 +99,6 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                     {t('Complaint detail')}
                 </LinkButton>
             </div>
-        </div>
-    );
-};
-
-type ComplaintItemColumnInfoProps = {
-    title: string;
-    value: ReactNode;
-    valueClassName?: string;
-    wrapperClassName?: string;
-};
-
-const ComplaintItemColumnInfo: FC<ComplaintItemColumnInfoProps> = ({
-    title,
-    value,
-    valueClassName,
-    wrapperClassName,
-}) => {
-    return (
-        <div className={twMergeCustom('flex flex-col gap-1', wrapperClassName)}>
-            <span className="text-sm">{title}</span>
-            <span className={twMergeCustom('font-bold', valueClassName)}>{value}</span>
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import { ComplaintDetailComplaintItem } from './ComplaintDetailComplaintItem';
+import { ComplaintItemColumnInfo } from 'components/Pages/Customer/Complaints/ComplaintItemColumnInfo';
 import { TIDs } from 'cypress/tids';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
-import { ReactNode } from 'react';
 import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -51,30 +51,5 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                 ))}
             </div>
         </>
-    );
-};
-
-type ComplaintItemColumnInfoProps = {
-    title: string;
-    value: ReactNode;
-    valueClassName?: string;
-    wrapperClassName?: string;
-    tid?: string;
-};
-
-export const ComplaintItemColumnInfo: FC<ComplaintItemColumnInfoProps> = ({
-    title,
-    value,
-    valueClassName,
-    wrapperClassName,
-    tid,
-}) => {
-    return (
-        <div className={twMergeCustom('flex flex-col gap-1', wrapperClassName)}>
-            <span className="text-sm">{title}</span>
-            <span className={twMergeCustom('font-bold', valueClassName)} data-tid={tid}>
-                {value}
-            </span>
-        </div>
     );
 };
