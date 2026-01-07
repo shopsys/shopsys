@@ -1,0 +1,29 @@
+{
+    "output": "shopsys.phar",
+    "main": "bin/shopsys",
+    "replacements": {
+        "cli_version": "$CLI_VERSION"
+    },
+    "directories": [
+        "src",
+        "config"
+    ],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": ["tests", "Tests"],
+            "in": "vendor"
+        },
+        {
+            "name": "*.yaml",
+            "in": "vendor/symfony"
+        },
+        {
+            "name": "*.json",
+            "in": "vendor/commerceguys/intl/resources"
+        }
+    ],
+    "compactors": [
+        "KevinGH\\Box\\Compactor\\Php"
+    ]
+}

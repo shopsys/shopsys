@@ -16,7 +16,7 @@ final class Application extends BaseApplication
 {
     public const string NAME = 'Shopsys CLI';
 
-    public const string VERSION = '1.0.0';
+    public const string VERSION = '@cli_version@';
 
     public function __construct()
     {

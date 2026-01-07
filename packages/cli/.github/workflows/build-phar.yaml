@@ -1,0 +1,94 @@
+name: Build Shopsys CLI PHAR
+
+on:
+    push:
+        branches:
+            - '[0-9]+.[0-9]+'
+        tags:
+            - 'v*'
+    workflow_dispatch:
+        inputs:
+            release_tag:
+                description: 'Release tag name (e.g., v1.0.0)'
+                required: true
+                type: string
+
+jobs:
+    build:
+        name: Build PHAR
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.3'
+                    tools: composer
+                    extensions: json, yaml
+
+            -   name: Install dependencies
+                run: composer install --no-dev --optimize-autoloader --prefer-dist
+
+            -   name: Install Box
+                run: composer global require humbug/box
+
+            -   name: Determine release tag
+                id: release_tag
+                run: |
+                    if [[ "${{ github.event_name }}" == "push" && "${{ github.ref_type }}" == "tag" ]]; then
+                        # Version tag (v*) - proper release
+                        echo "tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+                        echo "is_prerelease=false" >> $GITHUB_OUTPUT
+                        echo "replace_existing=false" >> $GITHUB_OUTPUT
+                    elif [[ -n "$INPUT_TAG" ]]; then
+                        # Manual dispatch with specific tag - always replaceable
+                        echo "tag=$INPUT_TAG" >> $GITHUB_OUTPUT
+                        echo "is_prerelease=false" >> $GITHUB_OUTPUT
+                        echo "replace_existing=true" >> $GITHUB_OUTPUT
+                    else
+                        # Version branch (e.g., 19.0, 17.1) - replaceable release
+                        echo "tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+                        echo "is_prerelease=true" >> $GITHUB_OUTPUT
+                        echo "replace_existing=true" >> $GITHUB_OUTPUT
+                    fi
+                env:
+                    INPUT_TAG: ${{ inputs.release_tag }}
+
+            -   name: Add build metadata
+                run: |
+                    echo "BUILD_SHA=${{ github.sha }}" >> .build-metadata
+                    echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> .build-metadata
+                    echo "BUILD_REF=${{ steps.release_tag.outputs.tag }}" >> .build-metadata
+
+            -   name: Set CLI version in box.json
+                run: sed -i 's/\$CLI_VERSION/${{ steps.release_tag.outputs.tag }}/' box.json
+
+            -   name: Build PHAR
+                run: box compile
+
+            -   name: Test PHAR
+                run: |
+                    php shopsys.phar --version
+                    php shopsys.phar workers
+
+            -   name: Delete existing release
+                if: steps.release_tag.outputs.replace_existing == 'true'
+                run: gh release delete "$RELEASE_TAG" --cleanup-tag --yes || true
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    RELEASE_TAG: ${{ steps.release_tag.outputs.tag }}
+
+            -   name: Create Release
+                uses: softprops/action-gh-release@v2
+                with:
+                    files: shopsys.phar
+                    tag_name: ${{ steps.release_tag.outputs.tag }}
+                    name: ${{ steps.release_tag.outputs.tag }}
+                    prerelease: ${{ steps.release_tag.outputs.is_prerelease == 'true' }}
+                    generate_release_notes: ${{ steps.release_tag.outputs.replace_existing != 'true' }}
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
