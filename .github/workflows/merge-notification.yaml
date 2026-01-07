@@ -59,8 +59,9 @@ jobs:
                 env:
                     GH_TOKEN: ${{ github.token }}
                     PR_NUMBER: ${{ github.event.pull_request.number }}
-                    TIMESTAMP: ${{ fromJson(steps.merge-started.outputs.response).ts }}
+                    SLACK_RESPONSE: ${{ steps.merge-started.outputs.response }}
                 run: |
+                    TIMESTAMP=$(echo "$SLACK_RESPONSE" | jq -r '.ts')
                     CURRENT_BODY=$(gh pr view "$PR_NUMBER" --json body --jq '.body')
                     CLEANED_BODY=$(echo "$CURRENT_BODY" | sed '/<!-- Replace -->/d' | sed '/<!-- SLACK_TIMESTAMP:/d')
                     gh pr edit "$PR_NUMBER" --body "${CLEANED_BODY}
