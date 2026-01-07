@@ -7,6 +7,7 @@ export type ButtonBaseProps = {
     hasDisabledCursor?: boolean;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
     variant?: 'primary' | 'secondary' | 'inverted' | 'transparent';
+    shouldShowSpinner?: boolean;
 };
 
 export type ButtonProps = ButtonBaseProps & ButtonHTMLAttributes<HTMLButtonElement>;

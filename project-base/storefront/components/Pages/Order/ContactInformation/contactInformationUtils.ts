@@ -61,7 +61,7 @@ export const useCreateOrder = (
     formProviderMethods: UseFormReturn<ContactInformation>,
     formMeta: ContactInformationFormMetaType,
 ) => {
-    const [{ fetching: isCreatingOrder }, createOrderMutation] = useCreateOrderMutation();
+    const [, createOrderMutation] = useCreateOrderMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const currentCart = useCurrentCart(false);
     const user = useCurrentCustomerData();
@@ -84,7 +84,7 @@ export const useCreateOrder = (
         handleCreateOrderResult(formProviderMethods, formMeta, createOrderResult, formValues);
     };
 
-    return { createOrder, isCreatingOrder };
+    return { createOrder };
 };
 
 const getCreateOrderMutationVariables = (

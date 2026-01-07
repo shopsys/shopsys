@@ -1,4 +1,3 @@
-import { Loader } from 'components/Basic/Loader/Loader';
 import { AddressList } from 'components/Blocks/AddressList/AddressList';
 import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
@@ -281,11 +280,10 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                             <Controller
                                 name={formMeta.fields.resolution.name}
                                 render={({ fieldState: { error }, field }) => (
-                                    <>
+                                    <FormLine>
                                         <Select
                                             isRequired
                                             ariaLabel={t('Select resolution', { ns: 'accessibility' })}
-                                            className="mb-2.5"
                                             isDisabled={isSubmitting}
                                             label={formMeta.fields.resolution.label}
                                             options={complaintResolutionsAsOptions}
@@ -296,7 +294,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                             onSelectOption={field.onChange}
                                         />
                                         <FormLineError error={error} inputType="select" />
-                                    </>
+                                    </FormLine>
                                 )}
                             />
 
@@ -505,13 +503,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
 
                         <FormButtonWrapper>
                             <SubmitButton aria-label={t('Submit your complaint', { ns: 'accessibility' })}>
-                                {isSubmitting ? (
-                                    <>
-                                        <Loader className="size-4" /> {t('Sending...')}
-                                    </>
-                                ) : (
-                                    t('Send complaint')
-                                )}
+                                {t('Send complaint')}
                             </SubmitButton>
                         </FormButtonWrapper>
                     </FormContentWrapper>

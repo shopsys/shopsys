@@ -69,7 +69,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
     }, [isPageLoading]);
 
     if (!showSkeleton && !isFetchingData) {
-        return <>{children}</>;
+        return <div className="animate-in">{children}</div>;
     }
 
     switch (pageType) {

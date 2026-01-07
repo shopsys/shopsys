@@ -1,5 +1,4 @@
 import { ProductComparisonBody } from './ProductComparisonBody';
-import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
 import { ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
@@ -62,41 +61,37 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
     }, [comparedProducts]);
 
     return (
-        <>
-            <ProductComparisonButtonRemoveAll displayMobile />
-
-            <div className="relative mb-24 overflow-hidden" id="js-table-compare-wrap">
-                <div className="mb-1 flex justify-between">
-                    <ContentArrow
-                        isActive={isArrowLeftActive}
-                        isShowed={isArrowLeftShowed}
-                        onClick={() => handleSlideLeft()}
-                    />
-                    <ContentArrow
-                        isRight
-                        isActive={isArrowRightActive}
-                        isShowed={isArrowRightShowed}
-                        onClick={() => handleSlideRight()}
-                    />
-                </div>
-
-                <ProductComparisonHeadSticky comparedProducts={comparedProducts} tableMarginLeft={tableMarginLeft} />
-
-                <div>
-                    <table
-                        className="table-fixed border-collapse transition-all"
-                        id="js-table-compare"
-                        style={{ marginLeft: -tableMarginLeft }}
-                    >
-                        <ProductComparisonHead comparedProducts={comparedProducts} />
-                        <ProductComparisonBody
-                            comparedProducts={comparedProducts}
-                            parametersDataState={getParametersDataState}
-                        />
-                    </table>
-                </div>
+        <div className="relative mb-24 overflow-hidden" id="js-table-compare-wrap">
+            <div className="mb-1 flex justify-between">
+                <ContentArrow
+                    isActive={isArrowLeftActive}
+                    isShowed={isArrowLeftShowed}
+                    onClick={() => handleSlideLeft()}
+                />
+                <ContentArrow
+                    isRight
+                    isActive={isArrowRightActive}
+                    isShowed={isArrowRightShowed}
+                    onClick={() => handleSlideRight()}
+                />
             </div>
-        </>
+
+            <ProductComparisonHeadSticky comparedProducts={comparedProducts} tableMarginLeft={tableMarginLeft} />
+
+            <div>
+                <table
+                    className="table-fixed border-collapse transition-all"
+                    id="js-table-compare"
+                    style={{ marginLeft: -tableMarginLeft }}
+                >
+                    <ProductComparisonHead comparedProducts={comparedProducts} />
+                    <ProductComparisonBody
+                        comparedProducts={comparedProducts}
+                        parametersDataState={getParametersDataState}
+                    />
+                </table>
+            </div>
+        </div>
     );
 };
 
@@ -107,11 +102,11 @@ const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onCl
 
     return (
         <Button
-            className={twMergeCustom('p-3', isShowed ? 'flex' : 'hidden')}
+            className={twMergeCustom(isShowed ? 'flex' : 'hidden')}
             hasDisabledLook={!isActive}
             tabIndex={isActive ? 0 : -1}
             title={isRight ? t('Next product') : t('Previous product')}
-            variant="inverted"
+            variant="secondary"
             aria-label={
                 isRight
                     ? t('Show next product in comparison', { ns: 'accessibility' })

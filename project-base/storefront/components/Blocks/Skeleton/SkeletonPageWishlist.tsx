@@ -9,7 +9,6 @@ export const SkeletonPageWishlist: FC = () => (
 
         <Webline>
             <Skeleton className="mb-4 h-8 w-44 lg:h-10" />
-            <Skeleton className="mb-2 h-9 w-48" />
 
             <SkeletonModuleWishlist />
         </Webline>

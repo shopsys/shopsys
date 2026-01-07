@@ -1,19 +1,33 @@
 import { ProductComparisonContent } from './ProductComparisonContent';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
+import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
+import { RemoveAllProductsPopup } from 'components/Blocks/Popup/RemoveAllProductsPopup';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { SkeletonModuleComparison } from 'components/Blocks/Skeleton/SkeletonModuleComparison';
+import { Button } from 'components/Forms/Button/Button';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
+import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 
 export const ProductComparison: FC = () => {
     const { t } = useTranslation();
-    const { comparison, isProductListFetching } = useComparison();
+    const { comparison, isProductListFetching, removeComparison } = useComparison();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const title = `${t('Product comparison')}${comparison?.products.length ? ` (${comparison.products.length})` : ''}`;
+
+    const handleRemoveAllClick = () => {
+        updatePortalContent(
+            <RemoveAllProductsPopup
+                removeAllHandler={removeComparison}
+                title={t('Do you really want to remove all products from comparison?')}
+            />,
+        );
+    };
 
     useGtmSliderProductListViewEvent(comparison?.products, GtmProductListNameType.product_comparison_page);
 
@@ -24,7 +38,18 @@ export const ProductComparison: FC = () => {
 
                 {comparison?.products && !isProductListFetching && (
                     <>
-                        <h1 className="mb-4">{title}</h1>
+                        <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
+                            <h1>{title}</h1>
+
+                            <Button
+                                aria-label={t('Remove all products from comparison', { ns: 'accessibility' })}
+                                variant="inverted"
+                                onClick={handleRemoveAllClick}
+                            >
+                                <TrashCanIcon className="size-4" />
+                                {t('Remove all from comparison')}
+                            </Button>
+                        </div>
 
                         <ProductComparisonContent comparedProducts={comparison.products} />
                     </>

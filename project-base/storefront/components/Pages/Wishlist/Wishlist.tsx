@@ -1,5 +1,5 @@
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SkeletonModuleWishlist } from 'components/Blocks/Skeleton/SkeletonModuleWishlist';
@@ -44,16 +44,16 @@ export const Wishlist: FC = () => {
 
                 {wishlist?.products && !isProductListFetching && (
                     <>
-                        <h1 className="mb-4">{title}</h1>
+                        <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
+                            <h1>{title}</h1>
 
-                        <div className="flex w-full flex-col items-center justify-between pb-2 lg:flex-row">
                             <Button
                                 aria-label={t('Remove all product from wishlist', { ns: 'accessibility' })}
                                 variant="inverted"
                                 onClick={handleRemoveAllClick}
                             >
+                                <TrashCanIcon className="size-4" />
                                 {t('Remove all from wishlist')}
-                                <RemoveIcon className="size-3" />
                             </Button>
                         </div>
 

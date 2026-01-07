@@ -16,7 +16,7 @@ export const ContactInformationContent: FC = () => {
     const [formProviderMethods] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const { goToPreviousStepFromContactInformationPage } = useContactInformationPageNavigation();
-    const { createOrder, isCreatingOrder } = useCreateOrder(formProviderMethods, formMeta);
+    const { createOrder } = useCreateOrder(formProviderMethods, formMeta);
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.contact_information_page);
 
@@ -41,7 +41,6 @@ export const ContactInformationContent: FC = () => {
                             buttonNext={t('Submit order')}
                             hasDisabledCursor={!formProviderMethods.formState.isValid}
                             hasDisabledLook={!formProviderMethods.formState.isValid}
-                            shouldShowSpinnerOnNextStepButton={isCreatingOrder}
                         />
                     </FormContentWrapper>
                 </Form>

@@ -1,10 +1,11 @@
 import { Button, ButtonProps } from './Button';
+import { Loader } from 'components/Basic/Loader/Loader';
 import { forwardRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 export const SubmitButton: FC<ButtonProps> = forwardRef(
     (
-        { children, hasDisabledLook: isDisabledDefault, disabled, ...props },
+        { children, hasDisabledLook: isDisabledDefault, disabled, shouldShowSpinner, ...props },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _,
     ) => {
@@ -17,9 +18,15 @@ export const SubmitButton: FC<ButtonProps> = forwardRef(
         const isDisabled = disabled || isFormSubmitting;
 
         return (
-            <Button {...props} disabled={isDisabled} hasDisabledLook={hasDisabledLook} type="submit">
-                {children}
-            </Button>
+            <div className="relative w-fit">
+                {(isFormSubmitting || shouldShowSpinner) && (
+                    <Loader className="z-overlay bg-background-more absolute inset-0 flex h-full w-full items-center justify-center rounded-sm py-2 opacity-50" />
+                )}
+
+                <Button {...props} disabled={isDisabled} hasDisabledLook={hasDisabledLook} type="submit">
+                    {children}
+                </Button>
+            </div>
         );
     },
 );
