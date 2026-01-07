@@ -28,6 +28,7 @@ jobs:
                 if: github.event.action == 'auto_merge_enabled'
                 uses: slackapi/slack-github-action@v2.1.1
                 with:
+                    errors: true
                     method: chat.postMessage
                     token: ${{ secrets.SLACK_BOT_TOKEN }}
                     payload: |
@@ -56,6 +57,7 @@ jobs:
                     github.event.action == 'auto_merge_disabled')
                 uses: slackapi/slack-github-action@v2.1.1
                 with:
+                    errors: true
                     method: reactions.add
                     token: ${{ secrets.SLACK_BOT_TOKEN }}
                     payload: |
@@ -69,6 +71,7 @@ jobs:
                     steps.extract-timestamp.outputs.TIMESTAMP != ''
                 uses: slackapi/slack-github-action@v2.1.1
                 with:
+                    errors: true
                     method: chat.postMessage
                     token: ${{ secrets.SLACK_BOT_TOKEN }}
                     payload: |
@@ -81,6 +84,7 @@ jobs:
                     steps.extract-timestamp.outputs.TIMESTAMP != ''
                 uses: slackapi/slack-github-action@v2.1.1
                 with:
+                    errors: true
                     method: chat.postMessage
                     token: ${{ secrets.SLACK_BOT_TOKEN }}
                     payload: |
