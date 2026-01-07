@@ -12,7 +12,7 @@ jobs:
                 id: variables
                 run: |
                     AUTHOR="${{ github.event.pull_request.user.login }}"
-                    AUTHOR_SLACK_ID=$(echo '${{ secrets.SLACK_GITHUB_MAP }}' | jq -r ".[$AUTHOR] // empty")
+                    AUTHOR_SLACK_ID=$(echo '${{ secrets.SLACK_GITHUB_MAP }}' | jq -r --arg author "$AUTHOR" '.[$author] // empty')
                     
                     if [ -n "$AUTHOR_SLACK_ID" ]; then
                       echo "MENTION=<@$AUTHOR_SLACK_ID>" >> $GITHUB_OUTPUT
