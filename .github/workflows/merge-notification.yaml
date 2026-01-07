@@ -3,6 +3,7 @@ on:
     pull_request:
         types:
             - auto_merge_enabled
+            - auto_merge_disabled
             - closed
 jobs:
     notify-slack:
@@ -13,16 +14,17 @@ jobs:
                 run: |
                     AUTHOR="${{ github.event.pull_request.user.login }}"
                     AUTHOR_SLACK_ID=$(echo '${{ secrets.SLACK_GITHUB_MAP }}' | jq -r --arg author "$AUTHOR" '.[$author] // empty')
-                    
+
                     if [ -n "$AUTHOR_SLACK_ID" ]; then
                       echo "MENTION=<@$AUTHOR_SLACK_ID>" >> $GITHUB_OUTPUT
                     else
                       echo "MENTION=$AUTHOR" >> $GITHUB_OUTPUT
                     fi
-                    
+
                     echo "PR_URL=${{ github.event.pull_request.html_url }}" >> $GITHUB_OUTPUT
                     echo "PR_TITLE=${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
             -   name: Merge started
+                id: merge-started
                 if: github.event.action == 'auto_merge_enabled'
                 uses: slackapi/slack-github-action@v2.1.1
                 with:
@@ -31,27 +33,57 @@ jobs:
                     payload: |
                         channel: ${{ secrets.SLACK_CHANNEL_ID }}
                         text: "🔁 *Merge started for PR* <${{ steps.variables.outputs.PR_URL }}|${{ steps.variables.outputs.PR_TITLE }}> by ${{ steps.variables.outputs.MENTION }}."
-            -   name: Merge finished
+            -   name: Store message timestamp in PR description
+                if: github.event.action == 'auto_merge_enabled'
+                uses: Jerome1337/comment-pull-request@v1.0.4
+                env:
+                    GITHUB_TOKEN: ${{ github.token }}
+                with:
+                    description-message: |
+                        <!-- SLACK_TIMESTAMP: ${{ fromJson(steps.merge-started.outputs.response).ts }} -->
+            -   name: Extract message timestamp
+                id: extract-timestamp
+                if: github.event.action == 'closed' || github.event.action == 'auto_merge_disabled'
+                run: |
+                    TIMESTAMP=$(echo "$PR_DESCRIPTION" | grep -oP '(?<=<!-- SLACK_TIMESTAMP: )[0-9.]+(?= -->)' | tail -1 || echo "")
+                    echo "TIMESTAMP=$TIMESTAMP" >> $GITHUB_OUTPUT
+                env:
+                    PR_DESCRIPTION: ${{ github.event.pull_request.body }}
+            -   name: Merge complete / canceled
                 if: |
-                    github.event.action == 'closed' &&
-                    github.event.pull_request.merged == true &&
-                    github.event.pull_request.auto_merge != null
+                    steps.extract-timestamp.outputs.TIMESTAMP != '' &&
+                    ((github.event.action == 'closed' && github.event.pull_request.merged == true) ||
+                    github.event.action == 'auto_merge_disabled')
                 uses: slackapi/slack-github-action@v2.1.1
                 with:
-                    method: chat.postMessage
+                    method: reactions.add
                     token: ${{ secrets.SLACK_BOT_TOKEN }}
                     payload: |
                         channel: ${{ secrets.SLACK_CHANNEL_ID }}
-                        text: "✅ *Merge of PR* <${{ steps.variables.outputs.PR_URL }}|${{ steps.variables.outputs.PR_TITLE }}> *finished*."
+                        name: "checkered_flag"
+                        timestamp: ${{ steps.extract-timestamp.outputs.TIMESTAMP }}
             -   name: Merge failed
                 if: |
                     github.event.action == 'closed' &&
                     github.event.pull_request.merged == false &&
-                    github.event.pull_request.auto_merge != null
+                    steps.extract-timestamp.outputs.TIMESTAMP != ''
                 uses: slackapi/slack-github-action@v2.1.1
                 with:
                     method: chat.postMessage
                     token: ${{ secrets.SLACK_BOT_TOKEN }}
                     payload: |
                         channel: ${{ secrets.SLACK_CHANNEL_ID }}
-                        text: "❌ *Merge of PR* <${{ steps.variables.outputs.PR_URL }}|${{ steps.variables.outputs.PR_TITLE }}> *failed*. Author: ${{ steps.variables.outputs.MENTION }}"
+                        thread_ts: ${{ steps.extract-timestamp.outputs.TIMESTAMP }}
+                        text: "❌ *Merge failed!* ${{ steps.variables.outputs.MENTION }}"
+            -   name: Merge canceled
+                if: |
+                    github.event.action == 'auto_merge_disabled' &&
+                    steps.extract-timestamp.outputs.TIMESTAMP != ''
+                uses: slackapi/slack-github-action@v2.1.1
+                with:
+                    method: chat.postMessage
+                    token: ${{ secrets.SLACK_BOT_TOKEN }}
+                    payload: |
+                        channel: ${{ secrets.SLACK_CHANNEL_ID }}
+                        thread_ts: ${{ steps.extract-timestamp.outputs.TIMESTAMP }}
+                        text: "🚫 *Merge canceled.* ${{ steps.variables.outputs.MENTION }}"
