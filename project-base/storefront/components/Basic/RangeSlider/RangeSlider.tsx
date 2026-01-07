@@ -195,9 +195,9 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     onTouchEnd={handleMaxValueThumbCallback}
                 />
                 <div className="relative w-full">
-                    <div className="bg-border-less absolute z-[1] h-[2px] w-full rounded-sm" />
+                    <div className="bg-border-less absolute z-1 h-[2px] w-full rounded-sm" />
                     <div className="relative mx-auto flex w-[calc(100%-32px)]">
-                        <div className="bg-input-fill absolute z-[2] h-[2px]" ref={range} />
+                        <div className="bg-input-fill absolute z-2 h-[2px]" ref={range} />
                     </div>
                 </div>
             </div>
@@ -265,7 +265,7 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ disabled, className, ...p
             tabIndex={-1}
             type="range"
             className={twJoin(
-                'pointer-events-none absolute top-[9px] z-[3] h-0 w-full appearance-none outline-hidden',
+                'pointer-events-none absolute top-[9px] z-3 h-0 w-full appearance-none outline-hidden',
                 webkitTwClass,
                 mozTwClass,
                 msTwClass,
