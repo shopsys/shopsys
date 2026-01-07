@@ -7,6 +7,7 @@ on:
             - closed
 jobs:
     notify-slack:
+        name: Send notification to the Slack about merge status
         runs-on: ubuntu-latest
         steps:
             -   name: Prepare variables
@@ -19,6 +20,15 @@ jobs:
                       echo "MENTION=<@$AUTHOR_SLACK_ID>" >> $GITHUB_OUTPUT
                     else
                       echo "MENTION=$AUTHOR" >> $GITHUB_OUTPUT
+                    fi
+
+                    SENDER="${{ github.event.sender.login }}"
+                    SENDER_SLACK_ID=$(echo '${{ secrets.SLACK_GITHUB_MAP }}' | jq -r --arg sender "$SENDER" '.[$sender] // empty')
+
+                    if [ -n "$SENDER_SLACK_ID" ]; then
+                      echo "SENDER_MENTION=<@$SENDER_SLACK_ID>" >> $GITHUB_OUTPUT
+                    else
+                      echo "SENDER_MENTION=$SENDER" >> $GITHUB_OUTPUT
                     fi
 
                     echo "PR_URL=${{ github.event.pull_request.html_url }}" >> $GITHUB_OUTPUT
@@ -90,4 +100,4 @@ jobs:
                     payload: |
                         channel: ${{ secrets.SLACK_CHANNEL_ID }}
                         thread_ts: ${{ steps.extract-timestamp.outputs.TIMESTAMP }}
-                        text: "🚫 *Merge canceled.* ${{ steps.variables.outputs.MENTION }}"
+                        text: "🚫 *Merge canceled by ${{ steps.variables.outputs.SENDER_MENTION }}* ${{ steps.variables.outputs.MENTION }}."
