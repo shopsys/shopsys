@@ -6,6 +6,7 @@ namespace Shopsys\Cli;
 
 use Override;
 use Shopsys\Cli\Command\InitCommand;
+use Shopsys\Cli\Command\ListWorkersCommand;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Command\HelpCommand;
@@ -28,6 +29,8 @@ final class Application extends BaseApplication
         $this->addCommands([
             /** @phpstan-ignore symfonyContainer.serviceNotFound */
             $container->get(InitCommand::class),
+            /** @phpstan-ignore symfonyContainer.serviceNotFound */
+            $container->get(ListWorkersCommand::class),
         ]);
     }
 

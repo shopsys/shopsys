@@ -9,3 +9,11 @@ services:
     Shopsys\Cli\Command\:
         resource: '../src/Command/*'
         public: true
+
+    Shopsys\Cli\Worker\:
+        resource: '../src/Worker/**/*Worker.php'
+        tags: [ 'cli.worker' ]
+
+    Shopsys\Cli\Worker\WorkerRunner:
+        arguments:
+            $taggedWorkers: !tagged_iterator 'cli.worker'
