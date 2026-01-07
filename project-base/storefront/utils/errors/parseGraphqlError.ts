@@ -5,7 +5,7 @@ type RawValidationEntry = {
     code: string;
 };
 
-type RawValidationErrors = Record<string, RawValidationEntry[]>;
+export type RawValidationErrors = Record<string, RawValidationEntry[]>;
 
 type GraphqlErrorExtensions = {
     validation?: RawValidationErrors;
@@ -16,7 +16,7 @@ type GraphqlErrorExtensions = {
     trace?: Array<{ file: string; line: number; call: string }>;
 };
 
-type ParsedGraphqlError = {
+export type ParsedGraphqlError = {
     message: string;
     errorCode: string | number | null;
     userCode: string | null;
@@ -24,7 +24,7 @@ type ParsedGraphqlError = {
     extensions: GraphqlErrorExtensions | null;
 };
 
-const parseGraphqlErrorExtensions = (
+export const parseGraphqlErrorExtensions = (
     extensions: GraphqlErrorExtensions | null | undefined,
 ): {
     errorCode: string | number | null;
@@ -85,7 +85,7 @@ export const hasValidationErrors = (error: ParsedGraphqlError): boolean => {
     return error.validationErrors !== null && Object.keys(error.validationErrors).length > 0;
 };
 
-const flattenValidationErrors = (
+export const flattenValidationErrors = (
     validationErrors: RawValidationErrors,
     options: { stripInputPrefix?: boolean } = {},
 ): Array<{ field: string; message: string; code: string }> => {
