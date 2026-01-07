@@ -50,7 +50,6 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
             $filledParameter['parameter_value_id'] = $parameter['parameter_value_id'] ?? '';
             $filledParameter['parameter_value_uuid'] = $parameter['parameter_value_uuid'] ?? '';
             $filledParameter['parameter_value_text'] = $parameter['parameter_value_text'] ?? '';
-            $filledParameter['parameter_is_dimensional'] = $parameter['parameter_is_dimensional'] ?? '';
             $filledParameter['parameter_group'] = $parameter['parameter_group'] ?? null;
             $filledParameter['parameter_unit'] = $parameter['parameter_unit'] ?? null;
             $filledParameter['parameter_value_for_slider_filter'] = $parameter['parameter_value_for_slider_filter'] ?? null;

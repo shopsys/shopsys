@@ -276,9 +276,6 @@
                     "parameter_value_text": {
                         "type": "text"
                     },
-                    "parameter_is_dimensional": {
-                        "type": "boolean"
-                    },
                     "parameter_group": {
                         "type": "text"
                     },
