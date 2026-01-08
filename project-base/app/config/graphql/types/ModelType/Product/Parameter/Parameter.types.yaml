@@ -2,8 +2,3 @@ Parameter:
     type: object
     inherits:
         - 'ParameterDecorator'
-    config:
-        fields:
-            group:
-                type: "String"
-                description: "Parameter group to which the parameter is assigned"

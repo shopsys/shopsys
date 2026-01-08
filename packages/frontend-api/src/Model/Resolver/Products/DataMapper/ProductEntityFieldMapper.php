@@ -12,8 +12,10 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
@@ -40,6 +42,8 @@ class ProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -57,6 +61,8 @@ class ProductEntityFieldMapper
         protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ProductStockFacade $productStockFacade,
+        protected readonly ProductRepository $productRepository,
+        protected readonly ParameterRepository $parameterRepository,
     ) {
     }
 
@@ -173,7 +179,20 @@ class ProductEntityFieldMapper
      */
     public function getParameters(Product $product): array
     {
-        return $this->parameterWithValuesFactory->createMultipleForProduct($product);
+        $products = [];
+
+        if ($product->isMainVariant() === true) {
+            $products = $this->productRepository->getAllSellableVariantsByMainVariant(
+                $product,
+                $this->domain->getId(),
+                $this->currentCustomerUser->getPricingGroup(),
+            );
+        }
+        $products[] = $product;
+
+        $productParameterValuesData = $this->parameterRepository->getProductParameterValuesDataByProducts($products, $this->domain->getLocale());
+
+        return $this->parameterWithValuesFactory->createParametersArrayFromProductArray(['parameters' => $productParameterValuesData]);
     }
 
     /**

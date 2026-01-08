@@ -854,4 +854,51 @@ class ParameterRepository
                 ->getQuery()
                 ->getSingleScalarResult() > 0;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @param string $locale
+     * @return array
+     */
+    public function getProductParameterValuesDataByProducts(array $products, string $locale): array
+    {
+        if (count($products) === 0) {
+            return [];
+        }
+
+        return $this->em->createQueryBuilder()
+            ->select(
+                'p.id as parameter_id,
+                p.orderingPriority as ordering_priority,
+                p.parameterType as parameter_type,
+                pv.id as parameter_value_id,
+                p.uuid as parameter_uuid,
+                pt.name as parameter_name,
+                pv.uuid as parameter_value_uuid,
+                pv.text as parameter_value_text,
+                pv.numericValue as parameter_value_numeric_value,
+                pgt.name as parameter_group,
+                pg.position as group_position,
+                put.name as parameter_unit',
+            )
+            ->distinct()
+            ->from(ProductParameterValue::class, 'ppv')
+            ->join('ppv.parameter', 'p')
+            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale AND pt.name IS NOT NULL')
+            ->leftjoin('p.group', 'pg')
+            ->leftJoin('pg.translations', 'pgt', Join::WITH, 'pgt.locale = :locale AND pgt.name IS NOT NULL')
+            ->leftJoin('p.unit', 'pu')
+            ->leftJoin('pu.translations', 'put', Join::WITH, 'put.locale = :locale AND put.name IS NOT NULL')
+            ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
+            ->where('ppv.product IN (:products)')
+            ->orderBy('group_position', 'ASC')
+            ->addOrderBy('ordering_priority', 'DESC')
+            ->addOrderBy('parameter_name', 'ASC')
+            ->setParameters([
+                'products' => $products,
+                'locale' => $locale,
+            ])
+            ->getQuery()
+            ->execute();
+    }
 }

@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -176,7 +177,7 @@ class ProductExportRepository
             ProductExportFieldProvider::IN_STOCK => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
             ProductExportFieldProvider::PRICES => $this->extractPrices($domainId, $product),
             ProductExportFieldProvider::SPECIAL_PRICES => $this->extractSpecialPrices($domainId, $product),
-            ProductExportFieldProvider::PARAMETERS => $this->extractParameters($locale, $product),
+            ProductExportFieldProvider::PARAMETERS => $this->extractParametersIncludedVariants($product, $locale, $domainId),
             ProductExportFieldProvider::ORDERING_PRIORITY => $product->getOrderingPriority($domainId),
             ProductExportFieldProvider::SELLING_DENIED => $product->isCalculatedSellingDenied($domainId),
             ProductExportFieldProvider::AVAILABILITY => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
@@ -312,37 +313,31 @@ class ProductExportRepository
     }
 
     /**
-     * @param string $locale
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param string $locale
+     * @param int $domainId
      * @return array
      */
-    protected function extractParameters(string $locale, Product $product): array
+    protected function extractParametersIncludedVariants(Product $product, string $locale, int $domainId): array
     {
-        $parameters = [];
-        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
-            $product,
-            $locale,
-        );
+        $products = [];
 
-        foreach ($productParameterValues as $productParameterValue) {
-            $parameter = $productParameterValue->getParameter();
-            $parameterValue = $productParameterValue->getValue();
+        if ($product->isMainVariant() === true) {
+            $products = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+        }
+        $products[] = $product;
 
-            if ($parameter->getName($locale) === null || $parameterValue->getLocale() !== $locale) {
-                continue;
+        $parameterValuesData = $this->parameterRepository->getProductParameterValuesDataByProducts($products, $locale);
+
+        foreach ($parameterValuesData as $key => $parameterValueData) {
+            $parameterValuesData[$key]['parameter_value_for_slider_filter'] = null;
+
+            if ($parameterValueData['parameter_type'] === Parameter::PARAMETER_TYPE_SLIDER) {
+                $parameterValuesData[$key]['parameter_value_for_slider_filter'] = $parameterValueData['parameter_value_numeric_value'];
             }
-
-            $parameters[] = [
-                'parameter_id' => $parameter->getId(),
-                'parameter_uuid' => $parameter->getUuid(),
-                'parameter_name' => $parameter->getName($locale),
-                'parameter_value_id' => $parameterValue->getId(),
-                'parameter_value_uuid' => $parameterValue->getUuid(),
-                'parameter_value_text' => $parameterValue->getText(),
-            ];
         }
 
-        return $parameters;
+        return $parameterValuesData;
     }
 
     /**
