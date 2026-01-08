@@ -9,6 +9,7 @@ use Shopsys\Cli\Exception\GitException;
 use Shopsys\Cli\Model\GitHandler;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -130,7 +131,17 @@ HELP,
 
         $io->success('Repository cloned successfully');
 
-        return Command::SUCCESS;
+
+        $configureCommandParameters = [
+            'command' => 'configure',
+            'path' => $projectName,
+        ];
+
+        if ($configFile !== null) {
+            $configureCommandParameters['--config'] = $configFile;
+        }
+
+        return $this->getApplication()?->doRun(new ArrayInput($configureCommandParameters), $output);
     }
 
     /**

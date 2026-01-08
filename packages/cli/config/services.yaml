@@ -3,17 +3,30 @@ services:
         autowire: true
         autoconfigure: true
 
+    _instanceof:
+        Shopsys\Cli\Config\DomainConfigSectionInterface:
+            tags: [ 'cli.domain_config_section' ]
+            shared: false
+        Shopsys\Cli\Config\ProjectConfigSectionInterface:
+            tags: [ 'cli.project_config_section' ]
+            shared: false
+        Shopsys\Cli\Worker\WorkerInterface:
+            tags: [ 'cli.worker' ]
+
     Shopsys\Cli\:
-        resource: '../src/**/*{Handler}.php'
+        resource: '../src/**/*{Collector,Handler,Loader,Registry,Section,Worker}.php'
 
     Shopsys\Cli\Command\:
         resource: '../src/Command/*'
         public: true
 
-    Shopsys\Cli\Worker\:
-        resource: '../src/Worker/**/*Worker.php'
-        tags: [ 'cli.worker' ]
+    Symfony\Component\Filesystem\Filesystem: ~
 
     Shopsys\Cli\Worker\WorkerRunner:
         arguments:
-            $taggedWorkers: !tagged_iterator 'cli.worker'
+            $workers: !tagged_iterator 'cli.worker'
+
+    Shopsys\Cli\Config\ConfigSectionRegistry:
+        arguments:
+            $domainConfigSections: !tagged_locator { tag: 'cli.domain_config_section' }
+            $projectConfigSections: !tagged_locator { tag: 'cli.project_config_section' }
