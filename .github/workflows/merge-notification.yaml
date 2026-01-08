@@ -73,7 +73,7 @@ jobs:
                 uses: ./.github/actions/extract-slack-timestamp
                 with:
                     pr-body: ${{ github.event.pull_request.body }}
-            -   name: Merge complete / canceled
+            -   name: Merge complete / canceled reaction
                 if: |
                     steps.extract-timestamp.outputs.timestamp != '' &&
                     ((github.event.action == 'closed' && github.event.pull_request.merged == true) ||
@@ -87,7 +87,21 @@ jobs:
                         channel: ${{ secrets.SLACK_CHANNEL_ID }}
                         name: "checkered_flag"
                         timestamp: ${{ steps.extract-timestamp.outputs.timestamp }}
-            -   name: Merge canceled
+            -   name: Merge complete message
+                if: |
+                    github.event.action == 'closed' &&
+                    github.event.pull_request.merged == true &&
+                    steps.extract-timestamp.outputs.timestamp != ''
+                uses: slackapi/slack-github-action@v2.1.1
+                with:
+                    errors: true
+                    method: chat.postMessage
+                    token: ${{ secrets.SLACK_BOT_TOKEN }}
+                    payload: |
+                        channel: ${{ secrets.SLACK_CHANNEL_ID }}
+                        thread_ts: ${{ steps.extract-timestamp.outputs.timestamp }}
+                        text: "✅ *Merge finished!* ${{ steps.author-mention.outputs.mention }}"
+            -   name: Merge canceled message
                 if: |
                     github.event.action == 'auto_merge_disabled' &&
                     steps.extract-timestamp.outputs.timestamp != ''
