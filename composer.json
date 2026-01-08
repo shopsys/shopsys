@@ -148,7 +148,7 @@
         "scheb/2fa-google-authenticator": "^7.6.0",
         "sentry/sentry": "^4.10.0",
         "sentry/sentry-symfony": "^5.0.1",
-        "shopsys/deployment": "^4.2.0",
+        "shopsys/deployment": "^4.3.0",
         "snc/redis-bundle": "^4.8.0",
         "spatie/holidays": "^1.23",
         "spatie/opening-hours": "^4.0",

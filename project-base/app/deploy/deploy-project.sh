@@ -109,8 +109,10 @@ function deploy() {
         ["cron-watchdog"]='*/10 * * * *'
     )
 
+    # Default whitelisted IPs (will be merged with WHITELIST_IPS environment variable if set)
     # You can define whitelisted IPs here when using HTTP authentication, see https://github.com/shopsys/deployment#whitelist-ip-addresses
-    # WHITELIST_IPS=""
+    # GoPay IPs
+    DEFAULT_WHITELIST_IPS="52.28.190.73,52.28.96.25,54.93.75.231,54.93.48.200,52.28.11.107"
 
     VARS=(
         TAG

@@ -35,6 +35,11 @@ The Shopsys payment system is designed with a flexible architecture that support
 - Supports creating, updating, and refunding transactions
 - See [`PaymentTransaction`]({{github.link}}/packages/framework/src/Model/Payment/Transaction/PaymentTransaction.php) and related classes in the `Shopsys\FrameworkBundle\Model\Payment\Transaction` namespace
 
+!!! tip
+
+    When your application is using HTTP authentication, you need to set the payment servers' IPs to the `WHITELIST_IPS` variable on your CI or extend `DEFAULT_WHITELIST_IPS` in your [`deploy-project.sh`]({{github.link}}/project-base/app/deploy/deploy-project.sh) to enable gateway to send requests back to your application.
+    For more information [see deployment bundle readme](https://github.com/shopsys/deployment#whitelist-ip-addresses).
+
 ## Supported Payment Types
 
 Shopsys currently supports the following payment types (defined by the [`PaymentTypeEnum`]({{github.link}}/packages/framework/src/Model/Payment/PaymentTypeEnum.php)):
@@ -87,8 +92,6 @@ To configure GoPay in your Shopsys project, you need to set up the `GOPAY_CONFIG
 The variable defines your GoPay merchant ID (goid), your client ID, and client secret.
 Moreover, it specifies whether to use the production or test environment, and which domains should have GoPay enabled.
 For inspiration, see the configuration in [`.env.test`]({{github.link}}/project-base/app/.env.test) file.
-
-When your application is using HTTP authentication, you need to set the GoPay servers' IPs to the `WHITELIST_IPS` variable in your [`deploy-project.sh`]({{github.link}}/project-base/app/deploy/deploy-project.sh) to enable GoPay to send requests back to your application.
 
 #### Local development and testing
 
