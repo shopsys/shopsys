@@ -1,3 +1,4 @@
+import { ArticleMetadata } from 'components/Basic/Head/ArticleMetadata';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
 import {
@@ -52,7 +53,16 @@ const ArticleDetailPage: NextPage = () => {
             ogType={OgTypeEnum.Article}
             title={article?.seoTitle || article?.articleName}
         >
-            {!!article && <ArticleDetailContent article={article} />}
+            {!!article && (
+                <>
+                    <ArticleMetadata
+                        datePublished={article.createdAt}
+                        description={article.seoMetaDescription}
+                        headline={article.seoTitle || article.articleName}
+                    />
+                    <ArticleDetailContent article={article} />
+                </>
+            )}
         </CommonLayout>
     );
 };
