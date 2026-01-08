@@ -8,6 +8,9 @@ use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotConfiguredException;
 
 class GoPayClientFactory
 {
+    protected const string PRODUCTION_URL = 'https://gate.gopay.cz/api';
+    protected const string TEST_URL = 'https://gw.sandbox.gopay.com/api';
+
     /**
      * @param array $config
      */
@@ -40,6 +43,8 @@ class GoPayClientFactory
         if ($this->config['goid'] === null || $this->config['goid'] === '') {
             throw new GoPayNotConfiguredException();
         }
+
+        $this->config['gatewayUrl'] = $this->config['isProductionMode'] ? static::PRODUCTION_URL : static::TEST_URL;
 
         return $this->config;
     }
