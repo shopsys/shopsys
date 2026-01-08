@@ -73,25 +73,29 @@ export const SeoMeta: FC<SeoMetaProps> = ({
 
             {description && <meta content={description} name="description" />}
 
-            <meta content={ogType} property="og:type" />
-            <meta content={t('metatagSiteName')} property="og:site_name" />
-            <meta content={currentUrlWithDomain} property="og:url" />
-            {ogTitle && <meta content={ogTitle} name="og:title" />}
-            {ogDescription && <meta content={ogDescription} name="og:description" />}
-            {ogImageUrl && <meta content={ogImageUrl} property="og:image" />}
+            <link href={canonicalUrl || currentUrlWithDomain} rel="canonical" />
 
             {hreflangLinks?.map(({ hreflang, href }) => (
                 <link key={hreflang} href={href} hrefLang={hreflang} rel="alternate" />
             ))}
+            {hreflangLinks && hreflangLinks.length > 0 && (
+                <link href={canonicalUrl || currentUrlWithDomain} hrefLang="x-default" rel="alternate" />
+            )}
 
-            {canonicalUrl && canonicalUrl !== currentUrlWithDomain && <link href={canonicalUrl} rel="canonical" />}
+            <meta content={ogType} property="og:type" />
+            <meta content={t('metatagSiteName')} property="og:site_name" />
+            <meta content={currentUrlWithDomain} property="og:url" />
+            {ogTitle && <meta content={ogTitle} property="og:title" />}
+            {ogDescription && <meta content={ogDescription} property="og:description" />}
+            {ogImageUrl && <meta content={ogImageUrl} property="og:image" />}
 
             <meta content="summary_large_image" name="twitter:card" />
-            <meta content={url} property="twitter:domain" />
-            <meta content={currentUrlWithDomain} property="twitter:url" />
+            <meta content={url} name="twitter:domain" />
+            <meta content={currentUrlWithDomain} name="twitter:url" />
             {ogTitle && <meta content={ogTitle} name="twitter:title" />}
             {ogDescription && <meta content={ogDescription} name="twitter:description" />}
             {ogImageUrl && <meta content={ogImageUrl} name="twitter:image" />}
+
             {children}
         </Head>
     );
