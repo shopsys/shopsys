@@ -141,7 +141,7 @@
         "sspooky13/yaml-standards": "^9.0",
         "symfony/browser-kit": "^5.4",
         "symfony/var-dumper": "^5.4",
-        "zalas/phpunit-injector": "2.5.x-dev as 2.5.1"
+        "shopsys/phpunit-injector": "2.5.1"
     },
     "conflict": {
         "symfony/symfony": "*",

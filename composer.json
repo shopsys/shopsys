@@ -205,7 +205,7 @@
         "sspooky13/yaml-standards": "^9.0",
         "symfony/var-dumper": "^5.4",
         "symplify/easy-coding-standard": "^10.3.3",
-        "zalas/phpunit-injector": "2.5.x-dev as 2.5.1"
+        "shopsys/phpunit-injector": "2.5.1"
     },
     "conflict": {
         "symfony/symfony": "*",

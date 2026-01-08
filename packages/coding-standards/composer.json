@@ -45,7 +45,7 @@
         }
     },
     "suggest": {
-        "zalas/phpunit-injector": "Needed if you want to use PhpStan extension to understand injected dependencies in tests"
+        "shopsys/phpunit-injector": "Needed if you want to use PhpStan extension to understand injected dependencies in tests"
     },
     "config": {
         "allow-plugins": {
