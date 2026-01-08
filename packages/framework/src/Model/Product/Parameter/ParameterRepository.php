@@ -866,6 +866,8 @@ class ParameterRepository
             return [];
         }
 
+        $collatedParameterName = $this->orderByCollationHelper->createOrderByForLocale('pt.name', $locale);
+
         return $this->em->createQueryBuilder()
             ->select(
                 'p.id as parameter_id,
@@ -879,7 +881,8 @@ class ParameterRepository
                 pv.numericValue as parameter_value_numeric_value,
                 pgt.name as parameter_group,
                 pg.position as group_position,
-                put.name as parameter_unit',
+                put.name as parameter_unit,
+                ' . $collatedParameterName,
             )
             ->distinct()
             ->from(ProductParameterValue::class, 'ppv')
@@ -893,7 +896,7 @@ class ParameterRepository
             ->where('ppv.product IN (:products)')
             ->orderBy('group_position', 'ASC')
             ->addOrderBy('ordering_priority', 'DESC')
-            ->addOrderBy('parameter_name', 'ASC')
+            ->addOrderBy($collatedParameterName, 'ASC')
             ->setParameters([
                 'products' => $products,
                 'locale' => $locale,
