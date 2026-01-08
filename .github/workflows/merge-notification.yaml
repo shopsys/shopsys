@@ -169,11 +169,29 @@ jobs:
                         channel: ${{ secrets.SLACK_CHANNEL_ID }}
                         thread_ts: ${{ steps.extract-timestamp.outputs.timestamp }}
                         text: "❌ *Build failed!* ${{ steps.author-mention.outputs.mention }}"
+            -   name: Check if cancelled by concurrency
+                id: check-concurrency
+                if: github.event.workflow_run.conclusion == 'cancelled'
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                    REPOSITORY: ${{ github.repository }}
+                    WORKFLOW_NAME: ${{ github.event.workflow_run.name }}
+                    HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+                    RUN_ID: ${{ github.event.workflow_run.id }}
+                run: |
+                    # Check if there's a newer run for the same workflow and branch
+                    NEWER_RUN=$(gh run list --repo "$REPOSITORY" --workflow "$WORKFLOW_NAME" --branch "$HEAD_BRANCH" --json databaseId,status --jq "[.[] | select(.databaseId > $RUN_ID)] | length")
+                    if [ "$NEWER_RUN" -gt 0 ]; then
+                        echo "CANCELLED_BY_CONCURRENCY=true" >> $GITHUB_OUTPUT
+                    else
+                        echo "CANCELLED_BY_CONCURRENCY=false" >> $GITHUB_OUTPUT
+                    fi
             -   name: Build cancelled
                 if: |
                     steps.get-pr.outputs.PR_NUMBER != '' &&
                     steps.extract-timestamp.outputs.timestamp != '' &&
-                    github.event.workflow_run.conclusion == 'cancelled'
+                    github.event.workflow_run.conclusion == 'cancelled' &&
+                    steps.check-concurrency.outputs.CANCELLED_BY_CONCURRENCY != 'true'
                 uses: slackapi/slack-github-action@v2.1.1
                 with:
                     errors: true
