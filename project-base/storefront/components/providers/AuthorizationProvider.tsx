@@ -4,7 +4,7 @@ import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { createContext, useContext } from 'react';
 import { CustomerUserAreaEnum } from 'types/customer';
 
-export const CustomerUserRolesContext = createContext<TypeCustomerUserRoleEnum[] | null>(null);
+const CustomerUserRolesContext = createContext<TypeCustomerUserRoleEnum[] | null>(null);
 
 type AuthorizationProviderProps = {
     customerUserRoles: TypeCustomerUserRoleEnum[];

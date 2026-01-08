@@ -7,7 +7,7 @@ export const RouteAccessibilityManager: FC<{ children: ReactNode }> = ({ childre
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
 
     const handleRouteChangeStart = useCallback(
-        (url: string, options: { shallow: boolean }) => {
+        (options: { shallow: boolean }) => {
             const { shallow } = options;
 
             if (shallow) {
@@ -23,7 +23,7 @@ export const RouteAccessibilityManager: FC<{ children: ReactNode }> = ({ childre
     );
 
     const handleRouteChangeComplete = useCallback(
-        (url: string, options: { shallow: boolean }) => {
+        (options: { shallow: boolean }) => {
             const { shallow } = options;
 
             if (shallow) {
@@ -38,7 +38,7 @@ export const RouteAccessibilityManager: FC<{ children: ReactNode }> = ({ childre
     );
 
     const handleRouteChangeError = useCallback(
-        (err: Error, url: string, options: { shallow: boolean }) => {
+        (options: { shallow: boolean }) => {
             const { shallow } = options;
 
             if (shallow) {

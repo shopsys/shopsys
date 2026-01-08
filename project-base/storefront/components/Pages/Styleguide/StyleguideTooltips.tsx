@@ -1,5 +1,4 @@
 import { StyleguideSection } from './StyleguideElements';
-import { Placement } from '@floating-ui/react';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
 import React from 'react';
 
@@ -23,7 +22,11 @@ export const StyleguideTooltips: FC = () => {
     );
 };
 
-const TooltipBox: FC<{ label: string; placement?: Placement }> = ({ label, placement, children }) => (
+const TooltipBox: FC<{ label: string; placement?: 'top' | 'bottom' | 'left' | 'right' }> = ({
+    label,
+    placement,
+    children,
+}) => (
     <Tooltip label={label} placement={placement}>
         <div className="bg-background-brand-less text-text-inverted rounded-full px-2 py-1">{children}</div>
     </Tooltip>

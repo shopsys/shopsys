@@ -2,7 +2,7 @@ import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 
-export type ProductDetailRelatedProductsTabProps = {
+type ProductDetailRelatedProductsTabProps = {
     relatedProducts: TypeListedProductFragment[];
 };
 

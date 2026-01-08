@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';

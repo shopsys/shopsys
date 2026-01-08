@@ -1,4 +1,4 @@
-export type ApplicationErrorVerbosityLevel = 'flash-message' | 'no-flash-message' | 'no-log';
+type ApplicationErrorVerbosityLevel = 'flash-message' | 'no-flash-message' | 'no-log';
 
 const ApplicationErrors = {
     default: 'flash-message',

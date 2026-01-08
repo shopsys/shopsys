@@ -30,7 +30,7 @@ const ChangePasswordPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="account" title={t('Change password')}>
+            <CustomerLayout breadcrumbs={breadcrumbs} title={t('Change password')}>
                 {currentCustomerUserData !== undefined && (
                     <>
                         <PageHero

@@ -16,7 +16,7 @@ const ProductsSliderPlaceholder = dynamic(() =>
     import('./ProductsSliderPlaceholder').then((component) => component.ProductsSliderPlaceholder),
 );
 
-export type DeferredRecommendedProductsProps = {
+type DeferredRecommendedProductsProps = {
     recommendationType: TypeRecommendationType;
     itemUuids?: string[];
     render: (input: JSX.Element) => ReactElement<any, any> | null;

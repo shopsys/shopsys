@@ -1,17 +1,11 @@
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { useRemoveFromCartMutation } from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { usePersistStore } from 'store/usePersistStore';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
-
-export type RemoveFromCart = (
-    cartItem: TypeCartItemFragment,
-    listIndex: number,
-) => Promise<TypeCartFragment | undefined | null>;
 
 export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) => {
     const [{ fetching: isRemovingFromCart }, removeItemFromCartMutation] = useRemoveFromCartMutation();

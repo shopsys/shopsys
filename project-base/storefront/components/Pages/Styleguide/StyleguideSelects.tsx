@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { SelectOptionType } from 'types/selectOptions';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
-export const COMBO_BOX_PAGE_SIZE = 5;
+const COMBO_BOX_PAGE_SIZE = 5;
 
 export const StyleguideSelects: FC = () => {
     const { t } = useTranslation();
@@ -140,19 +140,7 @@ export interface ColourOption {
     readonly count?: number;
 }
 
-export const dogOptions = [
-    { id: 1, label: 'Chihuahua' },
-    { id: 2, label: 'Bulldog' },
-    { id: 3, label: 'Dachshund' },
-    { id: 4, label: 'Akita' },
-];
-
-export interface GroupedOption {
-    readonly label: string;
-    readonly options: readonly ColourOption[] | readonly FlavourOption[];
-}
-
-export const colourOptions: ColourOption[] = [
+const colourOptions: ColourOption[] = [
     { value: 'ocean', label: 'Ocean', color: '#00B8D9', count: 22 },
     { value: 'blue', label: 'Blue - disabled', color: '#0052CC', isDisabled: true, count: 17 },
     { value: 'purple', label: 'Purple', color: '#5243AA', count: 5 },
@@ -163,17 +151,4 @@ export const colourOptions: ColourOption[] = [
     { value: 'forest', label: 'Forest', color: '#00875A', count: 25 },
     { value: 'slate', label: 'Slate', color: '#253858', count: 13 },
     { value: 'silver', label: 'Silver', color: '#666666', count: 17 },
-];
-
-export interface FlavourOption {
-    readonly value: string;
-    readonly label: string;
-    readonly rating: string;
-}
-
-export const flavourOptions: readonly FlavourOption[] = [
-    { value: 'vanilla', label: 'Vanilla', rating: 'safe' },
-    { value: 'chocolate', label: 'Chocolate', rating: 'good' },
-    { value: 'strawberry', label: 'Strawberry', rating: 'wild' },
-    { value: 'salted-caramel', label: 'Salted Caramel', rating: 'crazy' },
 ];

@@ -31,10 +31,47 @@ import { SkeletonPageStores } from './SkeletonPageStores';
 import { SkeletonPageTransportAndPayment } from './SkeletonPageTransportAndPayment';
 import { SkeletonPageUserConsent } from './SkeletonPageUserConsent';
 import { SkeletonPageWishlist } from './SkeletonPageWishlist';
-import { useEffect, useState } from 'react';
+import { ComponentType, useEffect, useState } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { SkeletonEnum } from 'types/skeletons';
+
+const SKELETON_COMPONENT_MAP: Record<PageType, ComponentType> = {
+    [SkeletonEnum.Article]: SkeletonPageArticle,
+    [SkeletonEnum.BlogArticle]: SkeletonPageBlogArticle,
+    [SkeletonEnum.BlogCategory]: SkeletonPageBlogCategory,
+    [SkeletonEnum.Brand]: SkeletonPageBrand,
+    [SkeletonEnum.BrandsOverview]: SkeletonPageBrandsOverview,
+    [SkeletonEnum.Cart]: SkeletonPageCart,
+    [SkeletonEnum.Category]: SkeletonPageProductsList,
+    [SkeletonEnum.ChangePassword]: SkeletonPageCustomerChangePassword,
+    [SkeletonEnum.Comparison]: SkeletonPageComparison,
+    [SkeletonEnum.ComplaintDetail]: SkeletonPageCustomerComplaintDetail,
+    [SkeletonEnum.ComplaintList]: SkeletonPageCustomerComplaintList,
+    [SkeletonEnum.ComplaintNew]: SkeletonPageCustomerComplaintNew,
+    [SkeletonEnum.Contact]: SkeletonPageContact,
+    [SkeletonEnum.ContactInformation]: SkeletonPageContactInformation,
+    [SkeletonEnum.CustomerUsers]: SkeletonPageCustomerUsers,
+    [SkeletonEnum.EditProfile]: SkeletonPageCustomerEditProfile,
+    [SkeletonEnum.Flag]: SkeletonPageFlag,
+    [SkeletonEnum.Homepage]: SkeletonPageHome,
+    [SkeletonEnum.Login]: SkeletonPageLogin,
+    [SkeletonEnum.OrderConfirmation]: SkeletonPageConfirmation,
+    [SkeletonEnum.OrderDetail]: SkeletonPageCustomerOrderDetail,
+    [SkeletonEnum.OrderList]: SkeletonPageCustomerOrderList,
+    [SkeletonEnum.OrderWithdrawal]: SkeletonPageOrderWithdrawal,
+    [SkeletonEnum.OrderWithdrawalSuccess]: SkeletonPageOrderWithdrawalSuccess,
+    [SkeletonEnum.Product]: SkeletonPageProductDetail,
+    [SkeletonEnum.ProductMainVariant]: SkeletonPageProductDetailMainVariant,
+    [SkeletonEnum.Registration]: SkeletonPageRegistration,
+    [SkeletonEnum.ResetPassword]: SkeletonPageResetPassword,
+    [SkeletonEnum.SeoCategory]: SkeletonPageProductsList,
+    [SkeletonEnum.Store]: SkeletonPageStore,
+    [SkeletonEnum.Stores]: SkeletonPageStores,
+    [SkeletonEnum.TransportAndPayment]: SkeletonPageTransportAndPayment,
+    [SkeletonEnum.UserConsent]: SkeletonPageUserConsent,
+    [SkeletonEnum.Wishlist]: SkeletonPageWishlist,
+};
 
 type SkeletonManagerProps = {
     isFetchingData?: boolean;
@@ -72,76 +109,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
         return <div className="animate-in">{children}</div>;
     }
 
-    switch (pageType) {
-        case SkeletonEnum.Article:
-            return <SkeletonPageArticle />;
-        case SkeletonEnum.BlogArticle:
-            return <SkeletonPageBlogArticle />;
-        case SkeletonEnum.BlogCategory:
-            return <SkeletonPageBlogCategory />;
-        case SkeletonEnum.Brand:
-            return <SkeletonPageBrand />;
-        case SkeletonEnum.BrandsOverview:
-            return <SkeletonPageBrandsOverview />;
-        case SkeletonEnum.Cart:
-            return <SkeletonPageCart />;
-        case SkeletonEnum.Category:
-            return <SkeletonPageProductsList />;
-        case SkeletonEnum.Comparison:
-            return <SkeletonPageComparison />;
-        case SkeletonEnum.Contact:
-            return <SkeletonPageContact />;
-        case SkeletonEnum.ContactInformation:
-            return <SkeletonPageContactInformation />;
-        case SkeletonEnum.ComplaintNew:
-            return <SkeletonPageCustomerComplaintNew />;
-        case SkeletonEnum.ComplaintDetail:
-            return <SkeletonPageCustomerComplaintDetail />;
-        case SkeletonEnum.ComplaintList:
-            return <SkeletonPageCustomerComplaintList />;
-        case SkeletonEnum.CustomerUsers:
-            return <SkeletonPageCustomerUsers />;
-        case SkeletonEnum.OrderList:
-            return <SkeletonPageCustomerOrderList />;
-        case SkeletonEnum.OrderDetail:
-            return <SkeletonPageCustomerOrderDetail />;
-        case SkeletonEnum.EditProfile:
-            return <SkeletonPageCustomerEditProfile />;
-        case SkeletonEnum.ChangePassword:
-            return <SkeletonPageCustomerChangePassword />;
-        case SkeletonEnum.Flag:
-            return <SkeletonPageFlag />;
-        case SkeletonEnum.ResetPassword:
-            return <SkeletonPageResetPassword />;
-        case SkeletonEnum.Homepage:
-            return <SkeletonPageHome />;
-        case SkeletonEnum.Login:
-            return <SkeletonPageLogin />;
-        case SkeletonEnum.OrderConfirmation:
-            return <SkeletonPageConfirmation />;
-        case SkeletonEnum.OrderWithdrawal:
-            return <SkeletonPageOrderWithdrawal />;
-        case SkeletonEnum.OrderWithdrawalSuccess:
-            return <SkeletonPageOrderWithdrawalSuccess />;
-        case SkeletonEnum.Product:
-            return <SkeletonPageProductDetail />;
-        case SkeletonEnum.ProductMainVariant:
-            return <SkeletonPageProductDetailMainVariant />;
-        case SkeletonEnum.Registration:
-            return <SkeletonPageRegistration />;
-        case SkeletonEnum.SeoCategory:
-            return <SkeletonPageProductsList />;
-        case SkeletonEnum.Store:
-            return <SkeletonPageStore />;
-        case SkeletonEnum.Stores:
-            return <SkeletonPageStores />;
-        case SkeletonEnum.TransportAndPayment:
-            return <SkeletonPageTransportAndPayment />;
-        case SkeletonEnum.Wishlist:
-            return <SkeletonPageWishlist />;
-        case SkeletonEnum.UserConsent:
-            return <SkeletonPageUserConsent />;
-        default:
-            return null;
-    }
+    const SkeletonComponent = pageType ? SKELETON_COMPONENT_MAP[pageType] : null;
+
+    return SkeletonComponent ? <SkeletonComponent /> : null;
 };

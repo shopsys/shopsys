@@ -6,7 +6,6 @@ import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonMo
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import { Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 

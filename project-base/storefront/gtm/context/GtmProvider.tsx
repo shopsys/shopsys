@@ -2,14 +2,14 @@ import { useRouter } from 'next/router';
 import React, { useState, createContext, useEffect } from 'react';
 import { useContext } from 'react';
 
-export type GtmContextType = {
+type GtmContextType = {
     didPageViewRun: boolean;
     setDidPageViewRun: (newState: boolean) => void;
     isScriptLoaded: boolean;
     setIsScriptLoaded: (newState: boolean) => void;
 };
 
-export const GtmContext = createContext<GtmContextType | null>(null);
+const GtmContext = createContext<GtmContextType | null>(null);
 
 export const GtmProvider: FC = ({ children }) => {
     const [didPageViewRun, setDidPageViewRun] = useState(false);

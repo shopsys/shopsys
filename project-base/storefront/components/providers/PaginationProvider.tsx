@@ -4,7 +4,8 @@ import { RefObject } from 'react';
 type PaginationContextType = {
     paginationScrollTargetRef: RefObject<HTMLElement> | null;
 };
-export const PaginationContext = createContext<PaginationContextType | null>(null);
+
+const PaginationContext = createContext<PaginationContextType | null>(null);
 
 type PaginationProviderProps = {
     paginationScrollTargetRef: RefObject<HTMLElement> | null;

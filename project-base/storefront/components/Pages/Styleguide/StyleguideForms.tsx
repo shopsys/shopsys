@@ -18,7 +18,7 @@ export const StyleguideForms: FC = () => {
     );
 };
 
-export const StyleguideFormExample: FC = () => {
+const StyleguideFormExample: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormWrapper(getStyleguideExampleFormResolver(t), {
         optionalValue: '',

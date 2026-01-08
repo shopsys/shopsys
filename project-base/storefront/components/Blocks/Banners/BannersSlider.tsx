@@ -16,7 +16,7 @@ const SLIDER_STOP_SLIDE_TIMEOUT = 300 as const;
 const SLIDER_SLIDE_DURATION = 500 as const;
 const SLIDER_AUTOMATIC_SLIDE_INTERVAL = 5000 as const;
 
-export type BannersSliderProps = {
+type BannersSliderProps = {
     sliderItems: TypeSliderItemFragment[];
 };
 

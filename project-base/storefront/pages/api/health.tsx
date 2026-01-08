@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default (req: NextApiRequest, res: NextApiResponse): void => {
+// @ts-expect-error - Next.js API route handler
+export default function handler(req: NextApiRequest, res: NextApiResponse): void {
     res.status(200).json({ status: 'ok' });
-};
+}

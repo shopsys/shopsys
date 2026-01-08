@@ -1,37 +1,8 @@
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
+import { SkeletonEnum } from 'types/skeletons';
 import { StateCreator } from 'zustand';
 
-type CUSTOM_PAGE_TYPES = [
-    'cart',
-    'comparison',
-    'contact-information',
-    'reset-password',
-    'homepage',
-    'order-confirmation',
-    'orderDetail',
-    'orderList',
-    'complaintNew',
-    'complaintDetail',
-    'complaintList',
-    'editProfile',
-    'changePassword',
-    'account',
-    'productMainVariant',
-    'registration',
-    'stores',
-    'transport-and-payment',
-    'contact-information',
-    'cart',
-    'order-confirmation',
-    'contact',
-    'wishlist',
-    'customer-users',
-    'user-consent',
-    'order-withdrawal',
-    'order-withdrawal-success',
-];
-
-export type PageType = FriendlyPagesTypesKey | CUSTOM_PAGE_TYPES[number];
+export type PageType = FriendlyPagesTypesKey | `${SkeletonEnum}`;
 
 export type PageLoadingStateSlice = {
     hadClientSideNavigation: boolean;

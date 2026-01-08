@@ -4,7 +4,7 @@ import { AutocompleteSearchBrandsResult } from './AutocompleteSearchBrandsResult
 import { AutocompleteSearchCategoriesResult } from './AutocompleteSearchCategoriesResult';
 import { AutocompleteSearchProductsResult } from './AutocompleteSearchProductsResult';
 import { AutocompleteSkeleton } from './AutocompleteSkeleton';
-import { IconImage } from 'components/Basic/IconImage/IconImage';
+import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -73,7 +73,6 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                         onClosePopupCallback={onClosePopupCallback}
                     />
                 )}
-
                 {showSearchResults && (areAutocompleteSearchDataFetching || !autocompleteSearchResults) && (
                     <AutocompleteSkeleton />
                 )}
@@ -83,9 +82,9 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                     autocompleteSearchResults &&
                     !isWithResults && (
                         <div className="flex items-center">
-                            <IconImage alt="warning" icon="warning" />
+                            <WarningIcon className="text-icon-error mr-2 size-5" />
 
-                            <span className="flex-1 pl-4 text-sm">
+                            <span className="flex-1 text-sm">
                                 {t('Could not find any results for the given query.')}
                             </span>
                         </div>

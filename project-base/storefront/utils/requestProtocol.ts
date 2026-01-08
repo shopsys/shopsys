@@ -4,7 +4,7 @@ import { GetServerSidePropsContext, NextPageContext } from 'next';
 
 type Protocol = 'http' | 'https';
 
-export const getProtocolClientSide = (): Protocol => {
+const getProtocolClientSide = (): Protocol => {
     if (typeof window === 'undefined') {
         throw new Error('getProtocolClientSide must be called on the client side');
     }

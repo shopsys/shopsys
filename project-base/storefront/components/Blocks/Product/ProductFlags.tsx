@@ -19,12 +19,11 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
 }) => {
     const { t } = useTranslation();
 
-    if (
-        (!visibleItemsConfig.flags && !visibleItemsConfig.discount) ||
-        (!flags.length && !percentageDiscount) ||
-        (!visibleItemsConfig.flags && !percentageDiscount) ||
-        (!visibleItemsConfig.discount && !flags.length)
-    ) {
+    const hasVisibleFlags = visibleItemsConfig.flags && flags.length > 0;
+    const hasVisibleDiscount = visibleItemsConfig.discount && !!percentageDiscount;
+    const isValidDiscountPercentage = percentageDiscount !== null && percentageDiscount > 0 && percentageDiscount < 100;
+
+    if (!hasVisibleFlags && !hasVisibleDiscount) {
         return null;
     }
 
@@ -47,14 +46,11 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
                     );
                 })}
 
-            {visibleItemsConfig.discount &&
-                !!percentageDiscount &&
-                percentageDiscount > 0 &&
-                percentageDiscount < 100 && (
-                    <Flag type="discount">
-                        -{percentageDiscount}% {t('disount')}
-                    </Flag>
-                )}
+            {visibleItemsConfig.discount && isValidDiscountPercentage && (
+                <Flag type="discount">
+                    -{percentageDiscount}% {t('disount')}
+                </Flag>
+            )}
         </div>
     );
 };

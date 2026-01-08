@@ -229,7 +229,7 @@ type OrderDetailRowInfoProps = {
     children: ReactNode;
 };
 
-export const OrderDetailRowInfo: FC<OrderDetailRowInfoProps> = ({ tid, title, children }) => {
+const OrderDetailRowInfo: FC<OrderDetailRowInfoProps> = ({ tid, title, children }) => {
     return (
         <div
             className="vl:flex-row vl:gap-3 vl:items-center bg-background-more flex flex-col gap-1 rounded-xl p-5 text-sm"

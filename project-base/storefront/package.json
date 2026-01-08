@@ -24,7 +24,6 @@
         "test--no-watch": "vitest run"
     },
     "dependencies": {
-        "@floating-ui/react": "~0.27.16",
         "@hookform/resolvers": "~2.6.1",
         "@next/bundle-analyzer": "~15.4.10",
         "@sentry/nextjs": "~9.38.0",
@@ -51,7 +50,6 @@
         "react-error-boundary": "~4.1.2",
         "react-hook-form": "~7.35.0",
         "react-infinite-scroll-component": "~6.1.1",
-        "react-merge-refs": "~2.1.1",
         "react-remove-scroll": "^2.7.2",
         "react-swipeable": "~7.0.2",
         "react-tabs": "~6.1.0",

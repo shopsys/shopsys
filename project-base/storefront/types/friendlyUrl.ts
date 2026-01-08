@@ -35,7 +35,6 @@ export const FriendlyPagesTypes = {
     complaintNew: 'front_customer_complaint_new',
     complaintList: 'front_customer_complaint_list',
     orderList: 'front_customer_order_list',
-    account: 'front_customer_account',
     login: 'front_login',
 } as const;
 
@@ -54,7 +53,6 @@ export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKey, string> = 
     complaintNew: '/customer/new-complaints',
     complaintList: '/customer/complaints',
     orderList: '/customer/orders',
-    account: '/customer/account',
     login: '/login',
 } as const;
 
