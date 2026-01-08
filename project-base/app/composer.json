@@ -66,7 +66,7 @@
         "prezent/doctrine-translatable-bundle": "^1.4",
         "sentry/sentry-symfony": "^5.0.1",
         "sentry/sentry": "^4.10.0",
-        "shopsys/deployment": "^4.2.0",
+        "shopsys/deployment": "^4.3.0",
         "shopsys/form-types-bundle": "19.0.x-dev",
         "shopsys/framework": "19.0.x-dev",
         "shopsys/frontend-api": "19.0.x-dev",
