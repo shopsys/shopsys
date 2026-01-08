@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
+use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
@@ -67,17 +68,28 @@ class ImageExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
-     * @param string|null $type
+     * @param array $attributes
      * @return string
      */
-    protected function getImageUrl($imageOrEntity, ?string $type = null): string
+    protected function getImageUrl($imageOrEntity, array $attributes): string
     {
+        $width = null;
+        $height = null;
+
+        if (array_key_exists('width', $attributes)) {
+            $width = (int)$attributes['width'];
+        }
+
+        if (array_key_exists('height', $attributes)) {
+            $height = (int)$attributes['height'];
+        }
+
         try {
-            return $this->imageFacade->getImageUrl(
+            return ImageUrlWithSizeHelper::limitSizeInImageUrl($this->imageFacade->getImageUrl(
                 $this->domain->getCurrentDomainConfig(),
                 $imageOrEntity,
-                $type,
-            );
+                $attributes['type'],
+            ), $width, $height);
         } catch (ImageNotFoundException $e) {
             return $this->getEmptyImageUrl();
         }
@@ -95,7 +107,7 @@ class ImageExtension extends AbstractExtension
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $attributes['type']);
             $entityName = $image->getEntityName();
-            $attributes['src'] = $this->getImageUrl($image, $attributes['type']);
+            $attributes['src'] = $this->getImageUrl($image, $attributes);
             $attributes['alt'] = $image->getName();
 
             return $this->getImageHtmlByEntityName($attributes, $entityName);

@@ -265,9 +265,6 @@
     "heureka/overeno-zakazniky": {
         "version": "v2.0.6"
     },
-    "intervention/image": {
-        "version": "2.5.0"
-    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

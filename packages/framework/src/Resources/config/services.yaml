@@ -207,7 +207,7 @@ services:
         arguments:
             - '%shopsys.domain_images_dir%'
 
-    Shopsys\FrameworkBundle\Component\Domain\DomainIconResizer:
+    Shopsys\FrameworkBundle\Component\Domain\DomainIconProcessor:
         arguments:
             - '@monolog.logger'
 
@@ -264,10 +264,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Image\ImageLocator:
         arguments: ['%shopsys.image_dir%']
-
-    Intervention\Image\ImageManager:
-        arguments:
-            - [driver: 'gd']
 
     Shopsys\FrameworkBundle\Component\Log\SlowLogSubscriber:
         arguments:

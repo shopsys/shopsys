@@ -6,14 +6,13 @@ namespace Shopsys\FrameworkBundle\Twig\FileThumbnail;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
-use Shopsys\FrameworkBundle\Component\Image\Processing\ImageThumbnailFactory;
+use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class FileThumbnailExtension extends AbstractExtension
 {
-    public const DEFAULT_ICON_TYPE = 'all';
-    protected const IMAGE_THUMBNAIL_QUALITY = 80;
+    public const string DEFAULT_ICON_TYPE = 'all';
 
     /**
      * @var string[]
@@ -22,11 +21,11 @@ class FileThumbnailExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageThumbnailFactory $imageThumbnailFactory
+     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
      */
     public function __construct(
         protected readonly FileUpload $fileUpload,
-        protected readonly ImageThumbnailFactory $imageThumbnailFactory,
+        protected readonly ImageProcessor $imageProcessor,
     ) {
         $this->iconsByExtension = [
             'csv' => 'excel',
@@ -47,7 +46,7 @@ class FileThumbnailExtension extends AbstractExtension
     /**
      * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -60,7 +59,7 @@ class FileThumbnailExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'file_thumbnail_extension';
     }
@@ -69,7 +68,7 @@ class FileThumbnailExtension extends AbstractExtension
      * @param string $filepath
      * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
      */
-    public function getFileThumbnailInfo($filepath)
+    public function getFileThumbnailInfo(string $filepath): FileThumbnailInfo
     {
         try {
             return $this->getImageThumbnailInfo($filepath);
@@ -82,7 +81,7 @@ class FileThumbnailExtension extends AbstractExtension
      * @param string $temporaryFilename
      * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
      */
-    public function getFileThumbnailInfoByTemporaryFilename($temporaryFilename)
+    public function getFileThumbnailInfoByTemporaryFilename(string $temporaryFilename): FileThumbnailInfo
     {
         $filepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
 
@@ -93,18 +92,16 @@ class FileThumbnailExtension extends AbstractExtension
      * @param string $filepath
      * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
      */
-    protected function getImageThumbnailInfo($filepath)
+    protected function getImageThumbnailInfo(string $filepath): FileThumbnailInfo
     {
-        $image = $this->imageThumbnailFactory->getImageThumbnail($filepath);
-
-        return new FileThumbnailInfo(null, $image->encode('data-url', static::IMAGE_THUMBNAIL_QUALITY)->getEncoded());
+        return new FileThumbnailInfo(null, $this->imageProcessor->getEncodedImageUri($filepath));
     }
 
     /**
      * @param string $filepath
      * @return string
      */
-    protected function getIconTypeByFilename($filepath)
+    protected function getIconTypeByFilename(string $filepath): string
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
 
