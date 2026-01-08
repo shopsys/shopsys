@@ -119,7 +119,7 @@
         }
 
         img {
-            @apply my-8 block h-auto max-w-full lg:my-10;
+            @apply my-8 block h-auto! max-w-full lg:my-10;
         }
 
         iframe {
@@ -150,7 +150,7 @@
 
         .gjs-button-link {
             @apply my-3 block h-fit w-fit cursor-pointer items-center justify-center gap-2 rounded-lg border-2 text-center leading-[18px] font-medium no-underline transition-all outline-none hover:no-underline;
-            @apply border-button-primary-border-default bg-button-primary-bg-default !text-button-primary-text-default [&>div]:!text-button-primary-text-default px-3 py-[7px];
+            @apply border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default! [&>div]:text-button-primary-text-default! px-3 py-[7px];
             @apply hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered;
         }
 
@@ -175,7 +175,7 @@
                 @apply border-table-bg-default border;
 
                 tr {
-                    @apply first:bg-table-bg-contrast bg-[transparent] first:[&_td]:font-bold;
+                    @apply first:bg-table-bg-contrast bg-transparent first:[&_td]:font-bold;
                 }
 
                 td {
@@ -208,7 +208,7 @@
             }
 
             img {
-                @apply !my-0 max-w-fit;
+                @apply my-0! max-w-fit;
             }
         }
 
@@ -219,12 +219,12 @@
 
         .image-position-center,
         .button-link-position-center {
-            @apply !mx-auto;
+            @apply mx-auto!;
         }
 
         .image-position-right,
         .button-link-position-right {
-            @apply !ml-auto;
+            @apply ml-auto!;
         }
 
         .gjs-text-with-image {
