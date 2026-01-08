@@ -38,7 +38,6 @@ services:
             - dev # change to `- build` if you want to test application build
         volumes:
             - storefront:/home/node/app
-            - storefront-node-modules:/home/node/app/node_modules
         ports:
             - "3000:3000"
 
@@ -87,8 +86,6 @@ services:
         container_name: shopsys-framework-php-fpm
         volumes:
             - php-fpm:/var/www/html
-            - php-fpm-vendor:/var/www/html/vendor
-            - php-fpm-node-modules:/var/www/html/node_modules
             - ./.git/:/var/www/html/.git:delegated
             - ~/.gitconfig:/home/www-data/.gitconfig
         ports:
@@ -110,8 +107,6 @@ services:
         container_name: shopsys-framework-php-consumer
         volumes:
             - php-fpm:/var/www/html
-            - php-fpm-vendor:/var/www/html/vendor
-            - php-fpm-node-modules:/var/www/html/node_modules
         entrypoint:
             - /bin/sh
             - project-base/app/docker/php-fpm/consumer-entrypoint.sh
@@ -222,10 +217,7 @@ services:
 
 volumes:
     php-fpm:
-    php-fpm-vendor:
-    php-fpm-node-modules:
     storefront:
-    storefront-node-modules:
     elasticsearch-data:
         driver: local
     postgres-data:
