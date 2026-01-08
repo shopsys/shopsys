@@ -88,7 +88,7 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
                     date: formatDate(withdrawalDeadline!),
                 })}
                 .
-                {isUserLoggedIn && canCreateComplaint && (
+                {isUserLoggedIn && canCreateComplaint && order.customerUser !== null && (
                     <>
                         {' '}
                         <Trans
