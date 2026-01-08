@@ -20,10 +20,8 @@ sync:
                 - ".npm-global"
                 - "elasticsearch-data"
                 - "nbproject"
-                - "node_modules"
                 - "postgres-data"
                 - "storefront"
-                - "vendor"
         mode: "two-way-resolved"
 
     storefront:
@@ -34,7 +32,4 @@ sync:
                 defaultOwner: "id:1000"
                 defaultGroup: "id:1000"
                 defaultDirectoryMode: 0777
-        ignore:
-            paths:
-                - "node_modules"
         mode: "two-way-resolved"
