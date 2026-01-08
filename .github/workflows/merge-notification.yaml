@@ -40,8 +40,9 @@ jobs:
                     PR_TITLE: ${{ github.event.pull_request.title }}
                 run: |
                     echo "PR_URL=$PR_URL" >> $GITHUB_OUTPUT
+                    ESCAPED_TITLE=$(echo "$PR_TITLE" | jq -Rs '.' | sed 's/^"//;s/"$//')
                     echo "PR_TITLE<<EOF" >> $GITHUB_OUTPUT
-                    echo "$PR_TITLE" >> $GITHUB_OUTPUT
+                    echo "$ESCAPED_TITLE" >> $GITHUB_OUTPUT
                     echo "EOF" >> $GITHUB_OUTPUT
             -   name: Merge started
                 id: merge-started
@@ -123,8 +124,9 @@ jobs:
                         echo "PR_NUMBER=$(echo "$PR_DATA" | jq -r '.number')" >> $GITHUB_OUTPUT
                         echo "PR_URL=$(echo "$PR_DATA" | jq -r '.url')" >> $GITHUB_OUTPUT
 
+                        ESCAPED_TITLE=$(echo "$PR_DATA" | jq -r '.title' | jq -Rs '.' | sed 's/^"//;s/"$//')
                         echo "PR_TITLE<<EOF" >> $GITHUB_OUTPUT
-                        echo "$PR_DATA" | jq -r '.title' >> $GITHUB_OUTPUT
+                        echo "$ESCAPED_TITLE" >> $GITHUB_OUTPUT
                         echo "EOF" >> $GITHUB_OUTPUT
 
                         echo "AUTHOR=$(echo "$PR_DATA" | jq -r '.author.login')" >> $GITHUB_OUTPUT
