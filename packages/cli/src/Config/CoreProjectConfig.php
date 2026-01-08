@@ -40,6 +40,22 @@ final class CoreProjectConfig
     }
 
     /**
+     * @return array<string>
+     */
+    public function getUniqueCurrencies(): array
+    {
+        $currencies = [];
+
+        foreach ($this->domains as $domain) {
+            if (!in_array($domain->currencyCode, $currencies, true)) {
+                $currencies[] = $domain->currencyCode;
+            }
+        }
+
+        return $currencies;
+    }
+
+    /**
      * @return array<int>
      */
     public function getAllDomainIds(): array
