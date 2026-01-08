@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
+use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Api\ProductApiInterface;
+use Akeneo\Pim\ApiClient\Api\PublishedProductApiInterface;
 use Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface;
 use Akeneo\Pim\ApiClient\Search\SearchBuilder;
-use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
-use Akeneo\PimEnterprise\ApiClient\Api\PublishedProductApiInterface;
 use DateTime;
 use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
@@ -19,14 +19,14 @@ class ProductTransferAkeneoFacade
     public const API_AKENEO_DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
-     * @param \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface $akeneoClient
+     * @param \Akeneo\Pim\ApiClient\AkeneoPimClientInterface $akeneoClient
      */
-    public function __construct(private AkeneoPimEnterpriseClientInterface $akeneoClient)
+    public function __construct(private AkeneoPimClientInterface $akeneoClient)
     {
     }
 
     /**
-     * @return \Akeneo\PimEnterprise\ApiClient\Api\PublishedProductApiInterface
+     * @return \Akeneo\Pim\ApiClient\Api\PublishedProductApiInterface
      */
     private function getPublishedProductApi(): PublishedProductApiInterface
     {

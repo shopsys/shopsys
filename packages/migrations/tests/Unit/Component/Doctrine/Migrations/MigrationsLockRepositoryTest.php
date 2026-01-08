@@ -9,6 +9,7 @@ use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Finder\MigrationFinder;
 use Doctrine\Migrations\Version\Version;
 use Iterator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository;
 use Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000001;
 use Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000002;
@@ -18,10 +19,10 @@ use Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20
 class MigrationsLockRepositoryTest extends AbstractMigrationLockTestCase
 {
     /**
-     * @dataProvider getMigrationsDataProvider
      * @param string[] $foundMigrationClasses
      * @param string[] $expectedMigrationClasses
      */
+    #[DataProvider('getMigrationsDataProvider')]
     public function testGetMigrations(array $foundMigrationClasses, array $expectedMigrationClasses): void
     {
         $migrationsLockRepository = $this->getMigrationsLockRepository($foundMigrationClasses);
@@ -38,7 +39,7 @@ class MigrationsLockRepositoryTest extends AbstractMigrationLockTestCase
     /**
      * @return \Iterator
      */
-    public function getMigrationsDataProvider(): Iterator
+    public static function getMigrationsDataProvider(): Iterator
     {
         yield [
             'foundMigrationClasses' => [],

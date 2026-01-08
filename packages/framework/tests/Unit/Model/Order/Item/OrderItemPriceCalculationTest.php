@@ -21,7 +21,7 @@ class OrderItemPriceCalculationTest extends TestCase
     public function testCalculatePriceWithoutVat()
     {
         $priceCalculationMock = $this->getMockBuilder(PriceCalculation::class)
-            ->setMethods(['getVatAmountByPriceWithVat'])
+            ->onlyMethods(['getVatAmountByPriceWithVat'])
             ->disableOriginalConstructor()
             ->getMock();
         $priceCalculationMock->expects($this->once())->method('getVatAmountByPriceWithVat')->willReturn(
@@ -48,7 +48,7 @@ class OrderItemPriceCalculationTest extends TestCase
     public function testCalculateTotalPrice()
     {
         $priceCalculationMock = $this->getMockBuilder(PriceCalculation::class)
-            ->setMethods(['getVatAmountByPriceWithVat'])
+            ->onlyMethods(['getVatAmountByPriceWithVat'])
             ->disableOriginalConstructor()
             ->getMock();
         $priceCalculationMock->expects($this->once())->method('getVatAmountByPriceWithVat')->willReturn(

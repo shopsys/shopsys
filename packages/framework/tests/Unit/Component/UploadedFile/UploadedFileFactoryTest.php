@@ -20,7 +20,7 @@ class UploadedFileFactoryTest extends TestCase
         $type = 'default';
 
         $fileUploadMock = $this->getMockBuilder(FileUpload::class)
-            ->setMethods(['getTemporaryFilePath'])
+            ->onlyMethods(['getTemporaryFilePath'])
             ->disableOriginalConstructor()
             ->getMock();
         $fileUploadMock

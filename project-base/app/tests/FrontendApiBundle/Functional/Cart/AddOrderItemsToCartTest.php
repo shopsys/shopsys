@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Cart\Cart;
 use App\Model\Cart\CartFacade;
 use App\Model\Product\Product;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
@@ -34,10 +35,10 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
-     * @dataProvider getAddOrderItemsToCartDataProvider
      * @param bool $shouldMerge
      * @param array $expectedProducts
      */
+    #[DataProvider('getAddOrderItemsToCartDataProvider')]
     public function testOrderItemsAreCorrectlyAddedToCart(bool $shouldMerge, array $expectedProducts): void
     {
         $response = $this->getResponseContentForQuery($this->createMinimalOrderQuery());
@@ -90,7 +91,7 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
     /**
      * @return array[]
      */
-    public function getAddOrderItemsToCartDataProvider(): array
+    public static function getAddOrderItemsToCartDataProvider(): array
     {
         return [
             [

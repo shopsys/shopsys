@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ClassExtension;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionObject;
@@ -49,7 +50,7 @@ class MethodAnnotationsFactoryTest extends TestCase
     /**
      * @return array
      */
-    public function getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider(): array
+    public static function getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider(): array
     {
         return [
             'method redeclared in the child using annotation' => [ReflectionObject::createFromName(
@@ -71,10 +72,10 @@ class MethodAnnotationsFactoryTest extends TestCase
     }
 
     /**
-     * @dataProvider getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkReflectionClass
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectReflectionClass
      */
+    #[DataProvider('getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider')]
     public function testGetProjectClassNecessaryMethodAnnotationsLinesEmptyResult(
         ReflectionClass $frameworkReflectionClass,
         ReflectionClass $projectReflectionClass,

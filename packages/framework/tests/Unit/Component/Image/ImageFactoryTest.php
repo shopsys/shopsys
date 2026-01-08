@@ -40,7 +40,7 @@ class ImageFactoryTest extends TestCase
 
         $imageProcessorMock = $this->getMockBuilder(ImageProcessor::class)
             ->disableOriginalConstructor()
-            ->setMethods(['convertToShopFormatAndGetNewFilename'])
+            ->onlyMethods(['convertToShopFormatAndGetNewFilename'])
             ->getMock();
         $imageProcessorMock->expects($this->any())->method('convertToShopFormatAndGetNewFilename')
             ->willReturnCallback(function ($filepath) {
@@ -67,7 +67,7 @@ class ImageFactoryTest extends TestCase
 
         $imageProcessorMock = $this->getMockBuilder(ImageProcessor::class)
             ->disableOriginalConstructor()
-            ->setMethods(['convertToShopFormatAndGetNewFilename'])
+            ->onlyMethods(['convertToShopFormatAndGetNewFilename'])
             ->getMock();
         $imageProcessorMock->expects($this->any())->method('convertToShopFormatAndGetNewFilename')->willReturn(
             $filename,

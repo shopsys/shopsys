@@ -9,9 +9,9 @@ use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
 use PhpParser\Node;
+use PhpParser\Node\PropertyItem;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Property;
-use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
 use PhpParser\NodeVisitor\NameResolver;
@@ -114,10 +114,10 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     }
 
     /**
-     * @param \PhpParser\Node\Stmt\PropertyProperty $node
+     * @param \PhpParser\Node\PropertyItem $node
      * @return bool
      */
-    protected function isMessagePropertyProperty(PropertyProperty $node)
+    protected function isMessagePropertyProperty(PropertyItem $node)
     {
         return strtolower(substr($node->name->toString(), -7)) === 'message';
     }

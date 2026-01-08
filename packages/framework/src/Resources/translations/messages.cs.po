@@ -1165,6 +1165,9 @@ msgstr "Nastavení šablon e-mailů"
 msgid "Enable"
 msgstr "Zapnout"
 
+msgid "Enable two-factor authentication"
+msgstr "Povolit dvoufaktorové ověřování"
+
 msgid "Enable whitelist"
 msgstr "Whitelist aktivní"
 
@@ -1916,7 +1919,7 @@ msgid "On each run (usually every 5 minutes)"
 msgstr "Po každém spuštění (obvykle každých 5 minut)"
 
 msgid "One domain cannot be used in two groups"
-msgstr "Stejná doméne nemůže být použita ve dvou skupinách"
+msgstr "Stejná doména nemůže být použita ve dvou skupinách"
 
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"

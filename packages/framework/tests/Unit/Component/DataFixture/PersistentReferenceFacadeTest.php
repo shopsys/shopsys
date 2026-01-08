@@ -22,17 +22,16 @@ class PersistentReferenceFacadeTest extends TestCase
     public function testCannotPersistReferenceToEntityWithoutGetIdMethod()
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
-            ->setMethods(['__construct', 'persist', 'flush'])
+            ->onlyMethods(['__construct', 'persist', 'flush'])
             ->disableOriginalConstructor()
             ->getMock();
         $emMock->expects($this->never())->method('persist');
         $emMock->expects($this->never())->method('flush');
 
         $persistentReferenceRepositoryMock = $this->getMockBuilder(PersistentReferenceRepository::class)
-            ->setMethods(['__construct', 'deleteAll'])
+            ->onlyMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();
-        $persistentReferenceRepositoryMock->expects($this->never())->method('deleteAll');
 
         $persistentReferenceFacade = new PersistentReferenceFacade(
             $emMock,
@@ -46,14 +45,14 @@ class PersistentReferenceFacadeTest extends TestCase
     public function testCanPersistNewReference()
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
-            ->setMethods(['__construct', 'persist', 'flush'])
+            ->onlyMethods(['__construct', 'persist', 'flush'])
             ->disableOriginalConstructor()
             ->getMock();
         $emMock->expects($this->atLeastOnce())->method('persist');
         $emMock->expects($this->atLeastOnce())->method('flush');
 
         $persistentReferenceRepositoryMock = $this->getMockBuilder(PersistentReferenceRepository::class)
-            ->setMethods(['__construct', 'getByReferenceName'])
+            ->onlyMethods(['__construct', 'getByReferenceName'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -61,7 +60,7 @@ class PersistentReferenceFacadeTest extends TestCase
         $persistentReferenceRepositoryMock->method('getByReferenceName')->willThrowException($expectedException);
 
         $productMock = $this->getMockBuilder(Product::class)
-            ->setMethods(['getId'])
+            ->onlyMethods(['getId'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -81,13 +80,13 @@ class PersistentReferenceFacadeTest extends TestCase
         $expectedObject = new stdClass();
 
         $emMock = $this->getMockBuilder(EntityManager::class)
-            ->setMethods(['__construct', 'find'])
+            ->onlyMethods(['__construct', 'find'])
             ->disableOriginalConstructor()
             ->getMock();
         $emMock->expects($this->once())->method('find')->willReturn($expectedObject);
 
         $persistentReferenceRepositoryMock = $this->getMockBuilder(PersistentReferenceRepository::class)
-            ->setMethods(['__construct', 'getByReferenceName'])
+            ->onlyMethods(['__construct', 'getByReferenceName'])
             ->disableOriginalConstructor()
             ->getMock();
         $persistentReferenceRepositoryMock
@@ -109,13 +108,13 @@ class PersistentReferenceFacadeTest extends TestCase
         $persistentReference = new PersistentReference('referenceName', 'entityName', 2);
 
         $emMock = $this->getMockBuilder(EntityManager::class)
-            ->setMethods(['__construct', 'find'])
+            ->onlyMethods(['__construct', 'find'])
             ->disableOriginalConstructor()
             ->getMock();
         $emMock->expects($this->once())->method('find')->willReturn(null);
 
         $persistentReferenceRepositoryMock = $this->getMockBuilder(PersistentReferenceRepository::class)
-            ->setMethods(['__construct', 'getByReferenceName'])
+            ->onlyMethods(['__construct', 'getByReferenceName'])
             ->disableOriginalConstructor()
             ->getMock();
         $persistentReferenceRepositoryMock

@@ -14,9 +14,8 @@ class AbstractMigrationTest extends TestCase
     public function testAddSqlException()
     {
         $abstractMigrationMock = $this->getMockBuilder(AbstractMigration::class)
-            ->setMethods(['addSql'])
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+            ->getMock();
 
         $reflectionClass = new ReflectionClass(AbstractMigration::class);
         $addSqlMethod = $reflectionClass->getMethod('addSql');

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Command;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Redis;
 use RedisException;
@@ -17,30 +18,33 @@ final class CheckRedisCommandTest extends TestCase
     /**
      * @return iterable
      */
-    public function pingAllRedisClientsProvider(): iterable
+    public static function pingAllRedisClientsProvider(): iterable
     {
-        yield [true, new RedisFacade([])];
+        yield [true, []];
 
-        yield [true, new RedisFacade([$this->createRedisMockExpectingPing()])];
+        yield [true, ['createRedisMockExpectingPing']];
 
-        yield [true, new RedisFacade(
-            [$this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing()],
-        )];
+        yield [true, ['createRedisMockExpectingPing', 'createRedisMockExpectingPing', 'createRedisMockExpectingPing']];
 
-        yield [false, new RedisFacade([$this->createRedisMockThrowingException()])];
+        yield [false, ['createRedisMockThrowingException']];
 
-        yield [false, new RedisFacade(
-            [$this->createRedisMockExpectingPing(), $this->createRedisMockThrowingException()],
-        )];
+        yield [false, ['createRedisMockExpectingPing', 'createRedisMockThrowingException']];
     }
 
     /**
-     * @dataProvider pingAllRedisClientsProvider
      * @param bool $expectSuccess
-     * @param \Shopsys\FrameworkBundle\Component\Redis\RedisFacade $redisFacade
+     * @param array $mockMethodNames
      */
-    public function testPingAllRedisClients(bool $expectSuccess, RedisFacade $redisFacade): void
+    #[DataProvider('pingAllRedisClientsProvider')]
+    public function testPingAllRedisClients(bool $expectSuccess, array $mockMethodNames): void
     {
+        $redisMocks = [];
+
+        foreach ($mockMethodNames as $mockMethodName) {
+            $redisMocks[] = $this->{$mockMethodName}();
+        }
+
+        $redisFacade = new RedisFacade($redisMocks);
         $checkRedisCommand = new CheckRedisCommand($redisFacade);
 
         $output = new BufferedOutput();

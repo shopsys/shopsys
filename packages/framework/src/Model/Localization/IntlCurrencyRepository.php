@@ -203,7 +203,7 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
      *
      * @return \CommerceGuys\Intl\Currency\Currency[]
      */
-    public function getAll($locale = null)
+    public function getAll(?string $locale = null): array
     {
         /** @var \CommerceGuys\Intl\Currency\Currency[] $intlCurrencies */
         $intlCurrencies = parent::getAll($locale);
@@ -236,17 +236,35 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
     protected function getLegacyCurrenciesIndexedByCurrencyCodes(): array
     {
         return [
+            'ANG' => new Currency([
+                'currency_code' => 'ANG',
+                'name' => 'Netherlands Antillean Guilder',
+                'locale' => 'en',
+                'numeric_code' => '532',
+            ]),
             'BYR' => new Currency([
                 'currency_code' => 'BYR',
                 'name' => 'Belarusian Ruble (2000–2016)',
                 'locale' => 'en',
                 'numeric_code' => '974',
             ]),
+            'CUC' => new Currency([
+                'currency_code' => 'CUC',
+                'name' => 'Cuban Convertible Peso',
+                'locale' => 'en',
+                'numeric_code' => '931',
+            ]),
             'MRO' => new Currency([
                 'currency_code' => 'MRO',
                 'name' => 'Mauritanian Ouguiya',
                 'locale' => 'en',
                 'numeric_code' => '478',
+            ]),
+            'SLL' => new Currency([
+                'currency_code' => 'SLL',
+                'name' => 'Sierra Leonean Leone',
+                'locale' => 'en',
+                'numeric_code' => '694',
             ]),
             'STD' => new Currency([
                 'currency_code' => 'STD',
@@ -259,6 +277,12 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
                 'name' => 'Venezuelan Bolívar',
                 'locale' => 'en',
                 'numeric_code' => '937',
+            ]),
+            'ZWL' => new Currency([
+                'currency_code' => 'ZWL',
+                'name' => 'Zimbabwean Dollar',
+                'locale' => 'en',
+                'numeric_code' => '932',
             ]),
         ];
     }

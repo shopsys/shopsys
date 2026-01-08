@@ -6,6 +6,7 @@ namespace Shopsys\Releaser\Tests;
 
 use Iterator;
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\Releaser\IntervalEvaluator;
 
@@ -20,10 +21,10 @@ final class IntervalEvaluatorTest extends TestCase
     }
 
     /**
-     * @dataProvider provideData
      * @param string $version
      * @param bool $expected
      */
+    #[DataProvider('provideData')]
     public function test(string $version, bool $expected): void
     {
         $this->assertSame($expected, $this->intervalEvaluator->isClosedInterval($version));

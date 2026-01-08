@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product\ProductList;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductListUserErrorCodeHelper;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
@@ -15,9 +16,9 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
     public const DEFAULT_USER_PASSWORD = 'no-reply.3';
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testFindProductListForCustomerUserWithoutProductListReturnsNull(
         string $productListType,
     ): void {
@@ -29,9 +30,9 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testGetProductListsForCustomerUserWithoutProductListReturnsEmptyArray(
         string $productListType,
     ): void {
@@ -43,9 +44,9 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testAddProductCreatesNewList(string $productListType): void
     {
         $productToAddId = 69;
@@ -61,9 +62,9 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testRemoveProductFromListProductListNotFoundUserError(string $productListType): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductFromListMutation.graphql', [
@@ -78,9 +79,9 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testRemoveProductFromList(string $productListType): void
     {
         /** @var \App\Model\Product\Product $product1 */
@@ -108,9 +109,9 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testRemoveLastProductFromList(string $productListType): void
     {
         /** @var \App\Model\Product\Product $product */

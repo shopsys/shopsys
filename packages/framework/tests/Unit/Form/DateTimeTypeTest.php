@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Form;
 
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
@@ -19,7 +20,7 @@ class DateTimeTypeTest extends TypeTestCase
     /**
      * @return array
      */
-    public function getConvertDateTimeToUtcData(): array
+    public static function getConvertDateTimeToUtcData(): array
     {
         return [
             ['input' => '15. 1. 2019 15:51:48', 'expected' => '2019-01-15 14:51:48 UTC'],
@@ -34,10 +35,10 @@ class DateTimeTypeTest extends TypeTestCase
     }
 
     /**
-     * @dataProvider getConvertDateTimeToUtcData
      * @param string $input
      * @param string $expected
      */
+    #[DataProvider('getConvertDateTimeToUtcData')]
     public function testConvertDateTimeToUtc(string $input, string $expected): void
     {
         $form = $this->factory->create(DateTimeType::class);

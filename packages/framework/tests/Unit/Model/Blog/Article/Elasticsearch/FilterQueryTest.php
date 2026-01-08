@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Blog\Article\Elasticsearch;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQuery;
@@ -122,12 +123,12 @@ class FilterQueryTest extends TestCase
     }
 
     /**
-     * @dataProvider offsetAndLimitDataProvider
      * @param int|null $limit
      * @param int|null $offset
      * @param int $expectedSize
      * @param int $expectedFrom
      */
+    #[DataProvider('offsetAndLimitDataProvider')]
     public function testFilterWithOffsetAndLimit(?int $limit, ?int $offset, int $expectedSize, int $expectedFrom): void
     {
         $filterQuery = new FilterQuery('blog_article');
@@ -161,7 +162,7 @@ class FilterQueryTest extends TestCase
     /**
      * @return array[]
      */
-    public function offsetAndLimitDataProvider(): array
+    public static function offsetAndLimitDataProvider(): array
     {
         return [
             [null, null, 1000, 0],

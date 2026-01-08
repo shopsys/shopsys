@@ -11,6 +11,7 @@ use Doctrine\Migrations\Metadata\ExecutedMigrationsList;
 use Doctrine\Migrations\Metadata\Storage\MetadataStorage;
 use Doctrine\Migrations\Version\Version;
 use Iterator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\PartialMigrationNotAllowedException;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator;
@@ -24,11 +25,11 @@ use Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20
 class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
 {
     /**
-     * @dataProvider getMigrationsDataProvider
      * @param string[] $availableMigrationClasses
      * @param string[] $orderedMigrationClassesFromLock
      * @param string[] $expectedMigrationClasses
      */
+    #[DataProvider('getMigrationsDataProvider')]
     public function testGetMigrations(
         array $availableMigrationClasses,
         array $orderedMigrationClassesFromLock,
@@ -68,20 +69,22 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
     }
 
     /**
-     * @dataProvider getPlanUntilVersionDataProvider
      * @param string[] $availableMigrationClasses
      * @param string[] $orderedMigrationClassesFromLock
      * @param string[] $executedMigrationClasses
-     * @param \Doctrine\Migrations\Version\Version $toVersion
+     * @param string $versionClassName
      * @param string[] $expectedMigrationClasses
      */
+    #[DataProvider('getPlanUntilVersionDataProvider')]
     public function testGetPlanUntilVersion(
         array $availableMigrationClasses,
         array $orderedMigrationClassesFromLock,
         array $executedMigrationClasses,
-        Version $toVersion,
+        string $versionClassName,
         array $expectedMigrationClasses,
     ): void {
+        $toVersion = $this->createMockedAvailableMigration($versionClassName)->getVersion();
+
         $migrationLockPlanCalculator = $this->getMigrationLockPlanCalculator($availableMigrationClasses, $orderedMigrationClassesFromLock, $executedMigrationClasses);
 
         $actualMigrations = $migrationLockPlanCalculator->getPlanUntilVersion($toVersion);
@@ -96,7 +99,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
     /**
      * @return \Iterator
      */
-    public function getMigrationsDataProvider(): Iterator
+    public static function getMigrationsDataProvider(): Iterator
     {
         $versionClass1 = Version20180101000001::class;
         $versionClass2 = Version20180101000002::class;
@@ -109,13 +112,13 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
         ];
 
         yield [
-            'availableMigrationsClasses' => [$versionClass2, $versionClass3, $versionClass1],
+            'availableMigrationClasses' => [$versionClass2, $versionClass3, $versionClass1],
             'orderedMigrationClassesFromLock' => [],
             'expectedMigrationClasses' => [$versionClass1, $versionClass2, $versionClass3],
         ];
 
         yield [
-            'availableMigrationsClasses' => [$versionClass1, $versionClass2, $versionClass3],
+            'availableMigrationClasses' => [$versionClass1, $versionClass2, $versionClass3],
             'orderedMigrationClassesFromLock' => [$versionClass2, $versionClass3],
             'expectedMigrationClasses' => [$versionClass2, $versionClass3, $versionClass1],
         ];
@@ -124,7 +127,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
     /**
      * @return \Iterator
      */
-    public function getPlanUntilVersionDataProvider(): Iterator
+    public static function getPlanUntilVersionDataProvider(): Iterator
     {
         $versionClass1 = Version20180101000001::class;
         $versionClass2 = Version20180101000002::class;
@@ -134,7 +137,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
             'availableMigrationClasses' => [$versionClass1, $versionClass2],
             'orderedMigrationClassesFromLock' => [$versionClass1, $versionClass2],
             'executedMigrationClasses' => [],
-            'toVersion' => $this->createMockedAvailableMigration($versionClass2)->getVersion(),
+            'versionClassName' => $versionClass2,
             'expectedMigrationClasses' => [$versionClass1, $versionClass2],
         ];
 
@@ -142,7 +145,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
             'availableMigrationClasses' => [$versionClass1, $versionClass2],
             'orderedMigrationClassesFromLock' => [$versionClass1, $versionClass2],
             'executedMigrationClasses' => [$versionClass1, $versionClass2],
-            'toVersion' => $this->createMockedAvailableMigration($versionClass2)->getVersion(),
+            'versionClassName' => $versionClass2,
             'expectedMigrationClasses' => [],
         ];
 
@@ -150,7 +153,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
             'availableMigrationClasses' => [$versionClass1, $versionClass2, $versionClass3],
             'orderedMigrationClassesFromLock' => [$versionClass1, $versionClass2, $versionClass3],
             'executedMigrationClasses' => [$versionClass1, $versionClass2],
-            'toVersion' => $this->createMockedAvailableMigration($versionClass3)->getVersion(),
+            'versionClassName' => $versionClass3,
             'expectedMigrationClasses' => [$versionClass3],
         ];
     }

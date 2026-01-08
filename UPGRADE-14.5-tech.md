@@ -168,3 +168,27 @@ For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use 
     -   `imageuploadFields.html.twig` Twig template extension
     -   `Advert/listGrid.html.twig` Twig template extension
 -   see #project-base-diff to update your project
+
+#### Upgrade two-factor packages to be compatible with Symfony 6 ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+
+-   see #project-base-diff to update your project
+
+#### replace shopsys/ordered-form package with becklyn/ordered-form-bundle ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+
+-   calling `setPosition()` directly on existing form fields is not supported anymore, otherwise, ordering form fields works the same way
+-   see [becklyn/ordered-form-bundle](https://github.com/Becklyn/OrderedFormBundle) for the documentation
+-   see #project-base-diff to update your project
+
+#### Upgrade Sentry package ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+
+-   see #project-base-diff to update your project
+
+#### update composer dependencies to newer versions ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+
+-   PHPUnit has been updated to version 11 with many other dependencies
+    -   many changes have been introduced since previously used version 9 e.g. configuration options, deprecated or removed methods, deprecated doc-blocks, etc.
+    -   see https://github.com/sebastianbergmann/phpunit/blob/11.1/DEPRECATIONS.md and https://github.com/sebastianbergmann/phpunit/blob/10.5/DEPRECATIONS.md for deprecations in PHPUnit that you need to solve in your tests
+    -   see #project-base diff to see changes you might need to apply in your tests
+-   `commerceguys/intl` has been updated to the latest version
+    -   `IntlCurrencyRepository` and `NumberFormatterExtension` class methods have updated their interfaces to include strict types, you will need to update your usages of such methods in your project
+-   see #project-base-diff to update your project

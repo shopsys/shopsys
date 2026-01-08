@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\StocksDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
@@ -37,11 +38,11 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
     private ProductStockDataFactory $productStockDataFactory;
 
     /**
-     * @dataProvider getTestSellingDeniedDataProvider
      * @param mixed $hidden
      * @param mixed $sellingDenied
      * @param mixed $calculatedSellingDenied
      */
+    #[DataProvider('getTestSellingDeniedDataProvider')]
     public function testSellingDenied(
         $hidden,
         $sellingDenied,
@@ -74,7 +75,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($calculatedSellingDenied, $productFromDb->getCalculatedSellingDenied(), 'Calculated selling denied:');
     }
 
-    public function getTestSellingDeniedDataProvider()
+    public static function getTestSellingDeniedDataProvider()
     {
         return [
             [

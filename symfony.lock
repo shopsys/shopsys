@@ -5,6 +5,9 @@
     "barryvdh/elfinder-flysystem-driver": {
         "version": "v0.2.1"
     },
+    "becklyn/ordered-form-bundle": {
+        "version": "1.4.0"
+    },
     "behat/gherkin": {
         "version": "v4.6.0"
     },
@@ -386,11 +389,8 @@
     "phar-io/version": {
         "version": "2.0.1"
     },
-    "phing/phing": {
-        "version": "2.16.1"
-    },
     "php-http/discovery": {
-        "version": "1.18",
+        "version": "1.20",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -400,9 +400,6 @@
         "files": [
             "project-base/app/config/packages/http_discovery.yaml"
         ]
-    },
-    "php-http/message-factory": {
-        "version": "v1.0.2"
     },
     "php-parallel-lint/php-parallel-lint": {
         "version": "v1.3.1"
@@ -512,9 +509,6 @@
     "roave/better-reflection": {
         "version": "3.5.0"
     },
-    "roave/signature": {
-        "version": "1.0.0"
-    },
     "scheb/2fa-bundle": {
         "version": "5.13",
         "recipe": {
@@ -567,9 +561,6 @@
     "sebastian/recursion-context": {
         "version": "3.0.0"
     },
-    "sebastian/resource-operations": {
-        "version": "2.0.1"
-    },
     "sebastian/type": {
         "version": "1.1.3"
     },
@@ -608,9 +599,6 @@
     },
     "shopsys/jsformvalidator-bundle": {
         "version": "1.7.0"
-    },
-    "shopsys/ordered-form": {
-        "version": "4.0.0"
     },
     "slevomat/coding-standard": {
         "version": "4.8.7"

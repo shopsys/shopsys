@@ -23,14 +23,14 @@ class SettingTest extends TestCase
 
         $entityManagerMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
-            ->setMethods(['flush', 'persist'])
+            ->onlyMethods(['flush', 'persist'])
             ->getMock();
         $entityManagerMock->expects($this->atLeastOnce())->method('flush');
         $entityManagerMock->expects($this->never())->method('persist');
 
         $settingValueRepositoryMock = $this->getMockBuilder(SettingValueRepository::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getAllByDomainId'])
+            ->onlyMethods(['getAllByDomainId'])
             ->getMock();
         $settingValueRepositoryMock->expects($this->atLeastOnce())->method('getAllByDomainId')->willReturnMap(
             $settingValueArray,
@@ -54,14 +54,14 @@ class SettingTest extends TestCase
 
         $entityManagerMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
-            ->setMethods(['flush', 'persist'])
+            ->onlyMethods(['flush', 'persist'])
             ->getMock();
         $entityManagerMock->expects($this->never())->method('flush');
         $entityManagerMock->expects($this->never())->method('persist');
 
         $settingValueRepositoryMock = $this->getMockBuilder(SettingValueRepository::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getAllByDomainId'])
+            ->onlyMethods(['getAllByDomainId'])
             ->getMock();
         $settingValueRepositoryMock->expects($this->atLeastOnce())->method('getAllByDomainId')->willReturnMap(
             $settingValueArray,
@@ -77,7 +77,7 @@ class SettingTest extends TestCase
     {
         $entityManagerMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
-            ->setMethods(['flush', 'persist'])
+            ->onlyMethods(['flush', 'persist'])
             ->getMock();
         $entityManagerMock->expects($this->never())->method('flush');
         $entityManagerMock->expects($this->never())->method('persist');
@@ -99,14 +99,14 @@ class SettingTest extends TestCase
 
         $entityManagerMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
-            ->setMethods(['flush', 'persist'])
+            ->onlyMethods(['flush', 'persist'])
             ->getMock();
         $entityManagerMock->expects($this->never())->method('flush');
         $entityManagerMock->expects($this->never())->method('persist');
 
         $settingValueRepositoryMock = $this->getMockBuilder(SettingValueRepository::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getAllByDomainId'])
+            ->onlyMethods(['getAllByDomainId'])
             ->getMock();
         $settingValueRepositoryMock->expects($this->atLeastOnce())->method('getAllByDomainId')->willReturn(
             $settingValueArray,
@@ -128,14 +128,14 @@ class SettingTest extends TestCase
 
         $entityManagerMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
-            ->setMethods(['flush', 'persist'])
+            ->onlyMethods(['flush', 'persist'])
             ->getMock();
         $entityManagerMock->expects($this->atLeastOnce())->method('flush');
         $entityManagerMock->expects($this->never())->method('persist');
 
         $settingValueRepositoryMock = $this->getMockBuilder(SettingValueRepository::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getAllByDomainId'])
+            ->onlyMethods(['getAllByDomainId'])
             ->getMock();
         $settingValueRepositoryMock->expects($this->atLeastOnce())
             ->method('getAllByDomainId')->willReturnMap($settingValueArrayByDomainIdMap);
@@ -163,7 +163,7 @@ class SettingTest extends TestCase
 
         $settingValueRepositoryMock = $this->getMockBuilder(SettingValueRepository::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getAllByDomainId'])
+            ->onlyMethods(['getAllByDomainId'])
             ->getMock();
         $settingValueRepositoryMock->expects($this->atLeastOnce())
             ->method('getAllByDomainId')->willReturnMap($settingValueArrayByDomainIdMap);

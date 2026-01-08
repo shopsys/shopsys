@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Slug;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -13,7 +14,7 @@ class SlugTest extends GraphQlTestCase
     /**
      * @return iterable
      */
-    public function getDataForSlugTest(): iterable
+    public static function getDataForSlugTest(): iterable
     {
         yield [
             'typename' => 'Store',
@@ -50,9 +51,9 @@ class SlugTest extends GraphQlTestCase
         yield [
             'typename' => 'BlogCategory',
             'name' => 'Main blog page - %locale%',
-            [],
-            null,
-            true,
+            'parameters' => [],
+            'slug' => null,
+            'useLocale' => true,
         ];
 
         yield [
@@ -61,8 +62,8 @@ class SlugTest extends GraphQlTestCase
             'parameters' => [
                 '%counter%' => '37',
             ],
-            null,
-            true,
+            'slug' => null,
+            'useLocale' => true,
         ];
 
         yield [
@@ -73,15 +74,14 @@ class SlugTest extends GraphQlTestCase
         yield [
             'typename' => 'Flag',
             'name' => 'Made in DE',
-            [],
-            null,
-            false,
-            Translator::DEFAULT_TRANSLATION_DOMAIN,
+            'parameters' => [],
+            'slug' => null,
+            'useLocale' => false,
+            'translationDomain' => Translator::DEFAULT_TRANSLATION_DOMAIN,
         ];
     }
 
     /**
-     * @dataProvider getDataForSlugTest
      * @param string $typename
      * @param string $name
      * @param array $parameters
@@ -89,6 +89,7 @@ class SlugTest extends GraphQlTestCase
      * @param bool|null $useLocale
      * @param string|null $translationDomain
      */
+    #[DataProvider('getDataForSlugTest')]
     public function testSlug(
         string $typename,
         string $name,

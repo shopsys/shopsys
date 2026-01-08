@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\EntityExtension;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use stdClass;
@@ -18,7 +19,7 @@ class EntityNameResolverTest extends TestCase
     /**
      * @return array
      */
-    public function resolvingProvider(): array
+    public static function resolvingProvider(): array
     {
         return [
             'empty map' => [
@@ -58,11 +59,11 @@ class EntityNameResolverTest extends TestCase
     }
 
     /**
-     * @dataProvider resolvingProvider
      * @param array $map
      * @param string $value
      * @param string $expected
      */
+    #[DataProvider('resolvingProvider')]
     public function testResolving(array $map, string $value, string $expected): void
     {
         $entityNameResolver = new EntityNameResolver($map);
@@ -73,9 +74,9 @@ class EntityNameResolverTest extends TestCase
     /**
      * @return array
      */
-    public function resolvingInStringsProvider(): array
+    public static function resolvingInStringsProvider(): array
     {
-        $resolveDataProvider = $this->resolvingProvider();
+        $resolveDataProvider = static::resolvingProvider();
 
         unset($resolveDataProvider['not replacing in DQL']);
 
@@ -102,11 +103,11 @@ class EntityNameResolverTest extends TestCase
     }
 
     /**
-     * @dataProvider resolvingInStringsProvider
      * @param array $map
      * @param string $value
      * @param string $expected
      */
+    #[DataProvider('resolvingInStringsProvider')]
     public function testResolvingInStrings(array $map, string $value, string $expected): void
     {
         $entityNameResolver = new EntityNameResolver($map);

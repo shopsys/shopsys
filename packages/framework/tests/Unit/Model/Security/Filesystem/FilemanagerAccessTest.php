@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Security\Filesystem;
 
 use FM\ElfinderBundle\Configuration\ElFinderConfigurationReader;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Filesystem\FilepathComparator;
 use Shopsys\FrameworkBundle\Model\Security\Filesystem\Exception\InstanceNotInjectedException;
@@ -12,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess;
 
 class FilemanagerAccessTest extends TestCase
 {
-    public function isPathAccessibleProvider()
+    public static function isPathAccessibleProvider()
     {
         return [
             [
@@ -61,16 +62,16 @@ class FilemanagerAccessTest extends TestCase
     }
 
     /**
-     * @dataProvider isPathAccessibleProvider
      * @param mixed $fileuploadDir
      * @param mixed $testPath
      * @param mixed $attr
      * @param mixed $isAccessible
      */
+    #[DataProvider('isPathAccessibleProvider')]
     public function testIsPathAccessible($fileuploadDir, $testPath, $attr, $isAccessible)
     {
         $elFinderConfigurationReaderMock = $this->getMockBuilder(ElFinderConfigurationReader::class)
-            ->setMethods(null)
+            ->onlyMethods([])
             ->disableOriginalConstructor()
             ->getMock();
         $filemanagerAccess = new FilemanagerAccess(
@@ -83,16 +84,16 @@ class FilemanagerAccessTest extends TestCase
     }
 
     /**
-     * @dataProvider isPathAccessibleProvider
      * @param mixed $fileuploadDir
      * @param mixed $testPath
      * @param mixed $attr
      * @param mixed $isAccessible
      */
+    #[DataProvider('isPathAccessibleProvider')]
     public function testIsPathAccessibleStatic($fileuploadDir, $testPath, $attr, $isAccessible)
     {
         $elFinderConfigurationReaderMock = $this->getMockBuilder(ElFinderConfigurationReader::class)
-            ->setMethods(null)
+            ->onlyMethods([])
             ->disableOriginalConstructor()
             ->getMock();
         $filemanagerAccess = new FilemanagerAccess(

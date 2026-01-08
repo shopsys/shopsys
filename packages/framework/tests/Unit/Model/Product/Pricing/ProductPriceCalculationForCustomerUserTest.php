@@ -47,7 +47,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
         $pricingGroupSettingFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
 
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
-            ->setMethods(['calculatePrice'])
+            ->onlyMethods(['calculatePrice'])
             ->disableOriginalConstructor()
             ->getMock();
         $productPriceCalculationMock->expects($this->once())->method('calculatePrice')->willReturn(
@@ -83,7 +83,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
         $currentCustomerUserMock = $this->createMock(CurrentCustomerUser::class);
 
         $pricingGroupFacadeMock = $this->getMockBuilder(PricingGroupSettingFacade::class)
-            ->setMethods(['getDefaultPricingGroupByDomainId'])
+            ->onlyMethods(['getDefaultPricingGroupByDomainId'])
             ->disableOriginalConstructor()
             ->getMock();
         $pricingGroupFacadeMock
@@ -93,7 +93,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             ->willReturn($pricingGroup);
 
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
-            ->setMethods(['calculatePrice'])
+            ->onlyMethods(['calculatePrice'])
             ->disableOriginalConstructor()
             ->getMock();
         $productPriceCalculationMock->expects($this->once())->method('calculatePrice')->willReturn(

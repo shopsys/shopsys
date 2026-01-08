@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Twig;
 
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -52,7 +53,7 @@ class PriceExtensionTest extends FunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Component\Setting\Setting|\PHPUnit\Framework\MockObject\MockObject $settingMock */
         $settingMock = $this->getMockBuilder(Setting::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getForDomain'])
+            ->onlyMethods(['getForDomain'])
             ->getMock();
         $settingMock
             ->method('getForDomain')
@@ -64,7 +65,7 @@ class PriceExtensionTest extends FunctionalTestCase
         parent::setUp();
     }
 
-    public function priceFilterDataProvider()
+    public static function priceFilterDataProvider()
     {
         return [
             ['input' => Money::create(12), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.00'],
@@ -115,11 +116,11 @@ class PriceExtensionTest extends FunctionalTestCase
     }
 
     /**
-     * @dataProvider priceFilterDataProvider
      * @param mixed $input
      * @param mixed $domainId
      * @param mixed $result
      */
+    #[DataProvider('priceFilterDataProvider')]
     public function testPriceFilter($input, $domainId, $result)
     {
         $this->domain->switchDomainById($domainId);
@@ -154,7 +155,7 @@ class PriceExtensionTest extends FunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|\PHPUnit\Framework\MockObject\MockObject $currencyFacadeMock */
         $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getDomainDefaultCurrencyByDomainId', 'getDefaultCurrency'])
+            ->onlyMethods(['getDomainDefaultCurrencyByDomainId', 'getDefaultCurrency'])
             ->getMock();
         $currencyFacadeMock
             ->method('getDomainDefaultCurrencyByDomainId')

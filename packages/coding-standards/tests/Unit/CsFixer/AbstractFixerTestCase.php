@@ -7,6 +7,7 @@ namespace Tests\CodingStandards\Unit\CsFixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SplFileInfo;
 use Tests\CodingStandards\Unit\CsFixer\Constraint\IsIdenticalString;
@@ -22,13 +23,13 @@ abstract class AbstractFixerTestCase extends TestCase
     /**
      * @return iterable
      */
-    abstract public function getTestingFiles(): iterable;
+    abstract public static function getTestingFiles(): iterable;
 
     /**
      * @param string $expectedFilePath
      * @param string|null $inputFilePath
-     * @dataProvider getTestingFiles
      */
+    #[DataProvider('getTestingFiles')]
     public function testRegisteredFiles(string $expectedFilePath, ?string $inputFilePath = null): void
     {
         $file = new SplFileInfo($inputFilePath ?? $expectedFilePath);

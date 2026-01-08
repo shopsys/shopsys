@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Component\Akeneo;
 
-use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientBuilder;
-use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
+use Akeneo\Pim\ApiClient\AkeneoPimClientBuilder;
+use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 
 class AkeneoClientFactory
 {
@@ -17,11 +17,11 @@ class AkeneoClientFactory
     }
 
     /**
-     * @return \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface
+     * @return \Akeneo\Pim\ApiClient\AkeneoPimClientInterface
      */
-    public function createClient(): AkeneoPimEnterpriseClientInterface
+    public function createClient(): AkeneoPimClientInterface
     {
-        $clientBuilder = new AkeneoPimEnterpriseClientBuilder($this->akeneoConfig->getBaseUri());
+        $clientBuilder = new AkeneoPimClientBuilder($this->akeneoConfig->getBaseUri());
 
         return $clientBuilder->buildAuthenticatedByPassword(
             $this->akeneoConfig->getClientId(),

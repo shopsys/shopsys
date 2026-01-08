@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ClassExtension;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionObject;
@@ -43,7 +44,7 @@ class PropertyAnnotationsFactoryTest extends TestCase
     /**
      * @return array
      */
-    public function testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider(): array
+    public static function getProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider(): array
     {
         return [
             'property redeclared in the child using annotation' => [ReflectionObject::createFromName(
@@ -65,10 +66,10 @@ class PropertyAnnotationsFactoryTest extends TestCase
     }
 
     /**
-     * @dataProvider testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkReflectionClass
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectReflectionClass
      */
+    #[DataProvider('getProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider')]
     public function testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResult(
         ReflectionClass $frameworkReflectionClass,
         ReflectionClass $projectReflectionClass,

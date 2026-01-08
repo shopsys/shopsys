@@ -307,6 +307,10 @@ class SideMenuBuilder
             'edit',
             ['route' => 'admin_administrator_edit', 'label' => t('Editing administrator'), 'display' => false],
         );
+        $menu->addChild(
+            'enable-two-factor-authentication',
+            ['route' => 'admin_administrator_enable-two-factor-authentication', 'label' => t('Enable two-factor authentication'), 'display' => false],
+        );
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_ADMINISTRATORS, $menu);
 

@@ -104,7 +104,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     protected function isParameterExecutionContextInterfaceSubclass(Node\Param $parameter)
     {
         if ($parameter->type instanceof FullyQualified) {
-            $fullyQualifiedName = implode('\\', $parameter->type->parts);
+            $fullyQualifiedName = implode('\\', $parameter->type->getParts());
 
             return $fullyQualifiedName === ExecutionContextInterface::class
                 || is_subclass_of($fullyQualifiedName, ExecutionContextInterface::class);

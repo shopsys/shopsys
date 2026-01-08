@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Image;
 
 use League\Flysystem\FilesystemOperator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException;
@@ -52,7 +53,7 @@ class ImageLocatorTest extends TestCase
     /**
      * @return array
      */
-    public function getRelativeImagePathProvider(): array
+    public static function getRelativeImagePathProvider(): array
     {
         return [
             [
@@ -69,11 +70,11 @@ class ImageLocatorTest extends TestCase
     }
 
     /**
-     * @dataProvider getRelativeImagePathProvider
      * @param string $entityName
      * @param string|null $type
      * @param string $expectedPath
      */
+    #[DataProvider('getRelativeImagePathProvider')]
     public function testGetRelativeImagePath(string $entityName, ?string $type, string $expectedPath): void
     {
         $filesystemMock = $this->createMock(FilesystemOperator::class);
@@ -85,7 +86,7 @@ class ImageLocatorTest extends TestCase
     /**
      * @return array
      */
-    public function getRelativeImagePathExceptionProvider(): array
+    public static function getRelativeImagePathExceptionProvider(): array
     {
         return [
             [
@@ -102,11 +103,11 @@ class ImageLocatorTest extends TestCase
     }
 
     /**
-     * @dataProvider getRelativeImagePathExceptionProvider
      * @param string $entityName
      * @param string|null $type
      * @param string $exceptionClass
      */
+    #[DataProvider('getRelativeImagePathExceptionProvider')]
     public function testGetRelativeImagePathException(string $entityName, ?string $type, string $exceptionClass): void
     {
         $filesystemMock = $this->createMock(FilesystemOperator::class);

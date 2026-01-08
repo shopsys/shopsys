@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
@@ -12,8 +13,8 @@ final class ForceLateStaticBindingForProtectedConstantsSniffTest extends Abstrac
     /**
      * @param string $fixedFileName
      * @param string $inputFileName
-     * @dataProvider getFixableFiles
      */
+    #[DataProvider('getFixableFiles')]
     public function testFixableFiles(string $fixedFileName, string $inputFileName): void
     {
         $file = $this->doRunSniff($inputFileName);
@@ -28,7 +29,7 @@ final class ForceLateStaticBindingForProtectedConstantsSniffTest extends Abstrac
     /**
      * @return iterable
      */
-    public function getFixableFiles(): iterable
+    public static function getFixableFiles(): iterable
     {
         yield [__DIR__ . '/fixed/SingleValue.php', __DIR__ . '/wrong/SingleValue.php'];
 

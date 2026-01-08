@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ClassExtension;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Roave\BetterReflection\Reflection\ReflectionObject;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder;
@@ -19,7 +20,7 @@ class AnnotationsAdderTest extends TestCase
         $betterReflectionClass = ReflectionObject::createFromName(DummyClassWithNoAnnotation::class);
         /** @var \Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer|\PHPUnit\Framework\MockObject\MockObject $fileContentsReplacerMock */
         $fileContentsReplacerMock = $this->getMockBuilder(FileContentsReplacer::class)
-            ->setMethods(['replaceInFile'])
+            ->onlyMethods(['replaceInFile'])
             ->getMock();
         $classKeywordWithName = 'class ' . $betterReflectionClass->getShortName();
         $propertyAndMethodAnnotationsLines = "@property CategoryFacade \$categoryFacade\n@method CategoryFacade getCategoryFacade()\n";
@@ -41,7 +42,7 @@ class AnnotationsAdderTest extends TestCase
         $betterReflectionClass = ReflectionObject::createFromName(DummyClassWithAnAnnotation::class);
         /** @var \Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer|\PHPUnit\Framework\MockObject\MockObject $fileContentsReplacerMock */
         $fileContentsReplacerMock = $this->getMockBuilder(FileContentsReplacer::class)
-            ->setMethods(['replaceInFile'])
+            ->onlyMethods(['replaceInFile'])
             ->getMock();
         $propertyAndMethodAnnotationsLines = "@property CategoryFacade \$categoryFacade\n@method CategoryFacade getCategoryFacade()\n";
         $docComment = $betterReflectionClass->getDocComment();
@@ -63,7 +64,7 @@ class AnnotationsAdderTest extends TestCase
         $betterReflectionClass = ReflectionObject::createFromName(DummyClassWithAnAnnotation::class);
         /** @var \Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer|\PHPUnit\Framework\MockObject\MockObject $fileContentsReplacerMock */
         $fileContentsReplacerMock = $this->getMockBuilder(FileContentsReplacer::class)
-            ->setMethods(['replaceInFile'])
+            ->onlyMethods(['replaceInFile'])
             ->getMock();
         $fileContentsReplacerMock->expects($this->never())->method('replaceInFile');
 
@@ -91,7 +92,7 @@ class AnnotationsAdderTest extends TestCase
     /**
      * @return string[][]
      */
-    public function extractPropertyOrMethodAnnotationNameDataProvider(): array
+    public static function extractPropertyOrMethodAnnotationNameDataProvider(): array
     {
         return [
             ['property-test', '@property $test'],
@@ -121,10 +122,10 @@ class AnnotationsAdderTest extends TestCase
     }
 
     /**
-     * @dataProvider extractPropertyOrMethodAnnotationNameDataProvider
      * @param string $expectedPropertyName
      * @param string $propertyLine
      */
+    #[DataProvider('extractPropertyOrMethodAnnotationNameDataProvider')]
     public function testExtractPropertyOrMethodAnnotationName(string $expectedPropertyName, string $propertyLine): void
     {
         $fileContentsReplacerMock = $this->createMock(FileContentsReplacer::class);

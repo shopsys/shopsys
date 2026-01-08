@@ -7,6 +7,7 @@ namespace Tests\CodingStandards\Unit\CsFixer\Phpdoc\FunctionAnnotationFixer;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use PhpCsFixer\WhitespacesFixerConfig;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer;
@@ -16,11 +17,9 @@ use Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
 use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 use Tests\CodingStandards\Unit\CsFixer\ChainedFixer;
 
-/**
- * @covers \Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer
- * @covers \Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer
- * @covers \Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer
- */
+#[CoversClass(MissingParamAnnotationsFixer::class)]
+#[CoversClass(MissingReturnAnnotationFixer::class)]
+#[CoversClass(OrderedParamAnnotationsFixer::class)]
 final class FunctionAnnotationFixerTest extends AbstractFixerTestCase
 {
     /**
@@ -65,7 +64,7 @@ final class FunctionAnnotationFixerTest extends AbstractFixerTestCase
     /**
      * {@inheritdoc}
      */
-    public function getTestingFiles(): iterable
+    public static function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/fixed.php', __DIR__ . '/wrong/wrong.php'];
 

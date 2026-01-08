@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Setting;
 
 use DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValue;
@@ -12,7 +13,7 @@ use stdClass;
 
 class SettingValueTest extends TestCase
 {
-    public function editProvider()
+    public static function editProvider()
     {
         return [
             ['string'],
@@ -24,7 +25,7 @@ class SettingValueTest extends TestCase
         ];
     }
 
-    public function editExceptionProvider()
+    public static function editExceptionProvider()
     {
         return [
             [[]],
@@ -33,9 +34,9 @@ class SettingValueTest extends TestCase
     }
 
     /**
-     * @dataProvider editProvider
      * @param mixed $value
      */
+    #[DataProvider('editProvider')]
     public function testEdit($value)
     {
         $settingValue = new SettingValue('name', $value, 1);
@@ -43,9 +44,9 @@ class SettingValueTest extends TestCase
     }
 
     /**
-     * @dataProvider editExceptionProvider
      * @param mixed $value
      */
+    #[DataProvider('editExceptionProvider')]
     public function testEditException($value)
     {
         $this->expectException(InvalidArgumentException::class);

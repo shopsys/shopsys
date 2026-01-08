@@ -4,23 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Test;
 
-use SebastianBergmann\Exporter\Exporter;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
-final class MoneyExporter extends Exporter
+final class MoneyExporter
 {
     /**
-     * @param mixed $value
-     * @param int $indentation
-     * @param \SebastianBergmann\RecursionContext\Context $processed
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $value
      * @return string
      */
-    protected function recursiveExport(&$value, $indentation, $processed = null): string
+    public function export(Money $value): string
     {
-        if ($value instanceof Money) {
-            return $value->getAmount();
-        }
-
-        return parent::recursiveExport($value, $indentation, $processed);
+        return $value->getAmount();
     }
 }

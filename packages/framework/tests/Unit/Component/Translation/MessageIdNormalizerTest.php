@@ -8,12 +8,13 @@ use JMS\TranslationBundle\Exception\InvalidArgumentException;
 use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer;
 
 class MessageIdNormalizerTest extends TestCase
 {
-    public function normalizeMessageIdProvider()
+    public static function normalizeMessageIdProvider()
     {
         return [
             ['Příliš žluťoučký kůň úpěl ďábelské ódy.', 'Příliš žluťoučký kůň úpěl ďábelské ódy.'],
@@ -25,10 +26,10 @@ class MessageIdNormalizerTest extends TestCase
     }
 
     /**
-     * @dataProvider normalizeMessageIdProvider
      * @param mixed $messageId
      * @param mixed $expectedMesssageId
      */
+    #[DataProvider('normalizeMessageIdProvider')]
     public function testNormalizeMessageId($messageId, $expectedMesssageId)
     {
         $messageIdNormalizer = new MessageIdNormalizer();

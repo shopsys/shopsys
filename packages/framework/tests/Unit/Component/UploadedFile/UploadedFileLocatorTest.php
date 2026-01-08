@@ -15,7 +15,7 @@ class UploadedFileLocatorTest extends TestCase
     public function testFileExists()
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->setMethods(['getFilename', 'getEntityName'])
+            ->onlyMethods(['getFilename', 'getEntityName'])
             ->disableOriginalConstructor()
             ->getMock();
         $uploadedFileMock->method('getFilename')->willReturn('dummy.txt');
@@ -28,7 +28,7 @@ class UploadedFileLocatorTest extends TestCase
     public function testFileNotExists()
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->setMethods(['getFilename', 'getEntityName'])
+            ->onlyMethods(['getFilename', 'getEntityName'])
             ->disableOriginalConstructor()
             ->getMock();
         $uploadedFileMock->method('getFilename')->willReturn('non-existent.txt');
@@ -53,7 +53,7 @@ class UploadedFileLocatorTest extends TestCase
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->setMethods(['getFilename', 'getEntityName'])
+            ->onlyMethods(['getFilename', 'getEntityName'])
             ->disableOriginalConstructor()
             ->getMock();
         $uploadedFileMock->method('getFilename')->willReturn('dummy.txt');
@@ -69,7 +69,7 @@ class UploadedFileLocatorTest extends TestCase
     public function testGetRelativeUploadedFileFilepath()
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->setMethods(['getFilename', 'getEntityName'])
+            ->onlyMethods(['getFilename', 'getEntityName'])
             ->disableOriginalConstructor()
             ->getMock();
         $uploadedFileMock->method('getFilename')->willReturn('dummy.txt');
@@ -94,7 +94,7 @@ class UploadedFileLocatorTest extends TestCase
         $filesystemMock->method('has')->willReturn($has);
 
         $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)
-            ->setMethods(['__construct', 'getRouter'])
+            ->onlyMethods(['__construct', 'getRouter'])
             ->disableOriginalConstructor()
             ->getMock();
 

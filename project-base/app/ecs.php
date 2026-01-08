@@ -191,6 +191,9 @@ return static function (ECSConfig $ecsConfig): void {
         ForbiddenSuperGlobalSniff::class => [
             __DIR__ . '/tests/App/Functional/Controller/CdnTest.php',
         ],
+        'Shopsys\CodingStandards\Sniffs\ForbiddenExitSniff' => [
+            __DIR__ . '/app/downloadPhing.php',
+        ],
         PropertyTypeHintSniff::class => [
             ...json_decode(file_get_contents(__DIR__ . '/var/cache/entities-dump.json'), true),
             __DIR__ . '/tests/App/Functional/EntityExtension/Model/*',

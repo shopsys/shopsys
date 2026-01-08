@@ -6,6 +6,7 @@ namespace Tests\MigrationBundle\Unit\Component\Doctrine\Migrations;
 
 use Doctrine\Migrations\Version\Version;
 use Iterator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockComparator;
@@ -16,12 +17,12 @@ class MigrationsLockComparatorTest extends TestCase
     private const EXPECTED_RESULT_GREATER_THAN_ZERO = 'greaterThanZero';
 
     /**
-     * @dataProvider compareDataProvider
      * @param string[] $orderedMigrationClassesFromLock
      * @param \Doctrine\Migrations\Version\Version $versionA
      * @param \Doctrine\Migrations\Version\Version $versionB
      * @param string $expectedResult
      */
+    #[DataProvider('compareDataProvider')]
     public function testCompare(
         array $orderedMigrationClassesFromLock,
         Version $versionA,
@@ -45,7 +46,7 @@ class MigrationsLockComparatorTest extends TestCase
     /**
      * @return \Iterator
      */
-    public function compareDataProvider(): Iterator
+    public static function compareDataProvider(): Iterator
     {
         yield [
             'orderedMigrationClassesFromLock' => ['Version1', 'Version2'],

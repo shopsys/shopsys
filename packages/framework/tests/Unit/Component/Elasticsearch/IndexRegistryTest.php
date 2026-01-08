@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexNotFoundException;
@@ -32,10 +33,10 @@ class IndexRegistryTest extends TestCase
     }
 
     /**
-     * @dataProvider registeredIndexProvider
      * @param string $indexName
      * @param bool $isRegistered
      */
+    #[DataProvider('registeredIndexProvider')]
     public function testIsIndexRegistered(string $indexName, bool $isRegistered): void
     {
         $this->assertSame($isRegistered, $this->indexRegistry->isIndexRegistered($indexName));
@@ -44,7 +45,7 @@ class IndexRegistryTest extends TestCase
     /**
      * @return array
      */
-    public function registeredIndexProvider(): array
+    public static function registeredIndexProvider(): array
     {
         return [
             ['product', true],

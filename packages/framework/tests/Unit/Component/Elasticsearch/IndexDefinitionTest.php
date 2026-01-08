@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchCannotReadDefinitionFileException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchInvalidJsonInDefinitionFileException;
@@ -19,8 +20,8 @@ class IndexDefinitionTest extends TestCase
      * @param string $indexPrefix
      * @param int $domainId
      * @param string $expectedResult
-     * @dataProvider indexDefinitionParametersForIndexAlias
      */
+    #[DataProvider('indexDefinitionParametersForIndexAlias')]
     public function testGetIndexAlias(
         string $indexName,
         string $definitionsDirectory,
@@ -35,7 +36,7 @@ class IndexDefinitionTest extends TestCase
     /**
      * @return array
      */
-    public function indexDefinitionParametersForIndexAlias(): array
+    public static function indexDefinitionParametersForIndexAlias(): array
     {
         return [
             ['product', '', '', 1, 'product_1'],

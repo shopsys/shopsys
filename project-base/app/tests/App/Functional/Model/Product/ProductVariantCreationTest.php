@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
@@ -39,7 +40,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     /**
      * @return array
      */
-    public function variantsWithAvailabilitiesCanBeCreatedProvider(): array
+    public static function variantsWithAvailabilitiesCanBeCreatedProvider(): array
     {
         return [
             [AvailabilityDataFixture::AVAILABILITY_IN_STOCK],
@@ -50,9 +51,9 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @dataProvider variantsWithAvailabilitiesCanBeCreatedProvider
      * @param string $availabilityReference
      */
+    #[DataProvider('variantsWithAvailabilitiesCanBeCreatedProvider')]
     public function testVariantsWithAvailabilitiesCanBeCreated(string $availabilityReference): void
     {
         $productData = $this->productDataFactory->create();
@@ -80,7 +81,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     /**
      * @return array
      */
-    public function variantsWithStockCanBeCreatedProvider(): array
+    public static function variantsWithStockCanBeCreatedProvider(): array
     {
         return [
             [0, Product::OUT_OF_STOCK_ACTION_EXCLUDE_FROM_SALE, null],
@@ -99,11 +100,11 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @dataProvider variantsWithStockCanBeCreatedProvider
      * @param int $quantity
      * @param string $outOfStockAction
      * @param string|null $outOfStockAvailabilityReference
      */
+    #[DataProvider('variantsWithStockCanBeCreatedProvider')]
     public function testVariantsWithStockCanBeCreated(
         int $quantity,
         string $outOfStockAction,

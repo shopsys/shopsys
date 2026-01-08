@@ -27,14 +27,14 @@ class DomainRouterFactoryTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain([$domainConfig], $settingMock);
 
-        $localizedRouterMock = $this->getMockBuilder(RouterInterface::class)->getMockForAbstractClass();
+        $localizedRouterMock = $this->getMockBuilder(RouterInterface::class)->getMock();
         $friendlyUrlRouterMock = $this->getMockBuilder(FriendlyUrlRouter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $localizedRouterFactoryMock = $this->getMockBuilder(LocalizedRouterFactory::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getRouter'])
+            ->onlyMethods(['getRouter'])
             ->getMock();
         $localizedRouterFactoryMock
             ->expects($this->once())
@@ -48,7 +48,7 @@ class DomainRouterFactoryTest extends TestCase
 
         $friendlyUrlRouterFactoryMock = $this->getMockBuilder(FriendlyUrlRouterFactory::class)
             ->disableOriginalConstructor()
-            ->setMethods(['createRouter'])
+            ->onlyMethods(['createRouter'])
             ->getMock();
         $friendlyUrlRouterFactoryMock
             ->expects($this->once())

@@ -702,8 +702,8 @@
     "shopsys/migrations": {
         "version": "v9.1.1"
     },
-    "shopsys/ordered-form": {
-        "version": "4.0.0"
+    "becklyn/ordered-form-bundle": {
+        "version": "1.4.0"
     },
     "shopsys/plugin-interface": {
         "version": "v9.1.1"
