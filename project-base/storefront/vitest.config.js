@@ -9,10 +9,25 @@ export default defineConfig({
         root: './',
         include: ['vitest/**/*.test.{js,ts,tsx}'],
         exclude: ['**/node_modules/**'],
+        watchExclude: ['**/node_modules/**', '**/.git/**', '**/dist/**', '**/build/**', '**/.next/**'],
         clearMocks: true,
         restoreMocks: true,
-        setupFiles: ['dotenv/config', 'vitest/setup.ts'],
+        setupFiles: ['vitest/setup.ts'],
         globals: true,
+    },
+    server: {
+        watch: {
+            ignored: [
+                '**/node_modules/**',
+                '**/.git/**',
+                '**/.next/**',
+                '**/.pnpm-store/**',
+                '**/cypress/**',
+                '**/public/**',
+                '**/certificates/**',
+                '**/*.log',
+            ],
+        },
     },
     resolve: {
         moduleDirectories: [

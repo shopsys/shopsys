@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { RedisClientType } from 'redis';
 import { Provider, ssrExchange, useQuery } from 'urql';
 import { createClient } from 'urql/createClient';
-import { Mock, afterEach, describe, expect, test, vi } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 
 const mockRequestWithFetcher = vi.fn(async () => undefined);
 
@@ -21,7 +21,7 @@ vi.mock('next/config', () => ({
     }),
 }));
 
-const mockRedisClientGet: Mock<[], null | string> = vi.fn(() => null);
+const mockRedisClientGet = vi.fn((): string | null => null);
 const mockRedisClient = {
     get: mockRedisClientGet,
     set: vi.fn(() => null),
