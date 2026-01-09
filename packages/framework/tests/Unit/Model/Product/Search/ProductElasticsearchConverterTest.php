@@ -115,6 +115,7 @@ class ProductElasticsearchConverterTest extends TestCase
                     'parameter_unit' => null,
                     'parameter_value_for_slider_filter' => null,
                     'parameter_type' => null,
+                    'parameter_value_rgbHex' => null,
                 ],
             ],
             'availability' => '',

@@ -45,6 +45,7 @@ class ParameterWithValuesFactory
             $parametersWithValues[$parameterUuid]['values'][] = [
                 'uuid' => $parameterArray['parameter_value_uuid'],
                 'text' => $parameterArray['parameter_value_text'],
+                'rgbHex' => $parameterArray['parameter_value_rgbHex'],
             ];
         }
 

@@ -103,6 +103,7 @@ class ProductElasticsearchConverter
             $filledParameter['parameter_unit'] = $parameter['parameter_unit'] ?? null;
             $filledParameter['parameter_value_for_slider_filter'] = $parameter['parameter_value_for_slider_filter'] ?? null;
             $filledParameter['parameter_type'] = $parameter['parameter_type'] ?? null;
+            $filledParameter['parameter_value_rgbHex'] = $parameter['parameter_value_rgbHex'] ?? null;
             $results[] = $filledParameter;
         }
 

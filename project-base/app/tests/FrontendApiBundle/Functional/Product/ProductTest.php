@@ -225,6 +225,7 @@ class ProductTest extends GraphQlTestCase
                     'values' => [
                         [
                             'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'rgbHex' => null,
                         ],
                     ],
                 ],
@@ -235,6 +236,7 @@ class ProductTest extends GraphQlTestCase
                     'values' => [
                         [
                             'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'rgbHex' => null,
                         ],
                     ],
                 ],
@@ -247,6 +249,7 @@ class ProductTest extends GraphQlTestCase
                     'values' => [
                         [
                             'text' => '27',
+                            'rgbHex' => null,
                         ],
                     ],
                 ],
@@ -257,6 +260,7 @@ class ProductTest extends GraphQlTestCase
                     'values' => [
                         [
                             'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'rgbHex' => null,
                         ],
                     ],
                 ],
@@ -267,6 +271,7 @@ class ProductTest extends GraphQlTestCase
                     'values' => [
                         [
                             'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'rgbHex' => null,
                         ],
                     ],
                 ],
@@ -277,6 +282,7 @@ class ProductTest extends GraphQlTestCase
                     'values' => [
                         [
                             'text' => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'rgbHex' => '#ff0000',
                         ],
                     ],
                 ],
@@ -287,6 +293,7 @@ class ProductTest extends GraphQlTestCase
                     'values' => [
                         [
                             'text' => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'rgbHex' => null,
                         ],
                     ],
                 ],
@@ -299,6 +306,7 @@ class ProductTest extends GraphQlTestCase
                     'values' => [
                         [
                             'text' => '3',
+                            'rgbHex' => null,
                         ],
                     ],
                 ],

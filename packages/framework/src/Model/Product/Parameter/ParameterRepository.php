@@ -879,6 +879,7 @@ class ParameterRepository
                 pv.uuid as parameter_value_uuid,
                 pv.text as parameter_value_text,
                 pv.numericValue as parameter_value_numeric_value,
+                pv.rgbHex as parameter_value_rgbHex,
                 pgt.name as parameter_group,
                 pg.position as group_position,
                 put.name as parameter_unit,

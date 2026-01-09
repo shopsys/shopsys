@@ -273,6 +273,9 @@
                     "parameter_value_text": {
                         "type": "text"
                     },
+                    "parameter_value_rgbHex": {
+                        "type": "text"
+                    },
                     "parameter_group": {
                         "type": "text"
                     },

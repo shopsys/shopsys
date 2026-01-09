@@ -10,3 +10,6 @@ ParameterValueDecorator:
             text:
                 type: "String!"
                 description: "Parameter value"
+            rgbHex:
+                type: "String"
+                description: "Parameter value RGB value if set (for color parameters only)"
