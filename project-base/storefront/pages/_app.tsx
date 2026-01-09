@@ -43,7 +43,9 @@ const AppPageContent = dynamic(() =>
     import('components/Pages/App/AppPageContent').then((component) => component.AppPageContent),
 );
 
-const ErrorBoundary = dynamic(() => import('react-error-boundary').then((component) => component.ErrorBoundary));
+const ErrorBoundary = dynamic(() =>
+    import('components/Basic/ErrorBoundary').then((component) => component.ErrorBoundary),
+);
 
 const Error500ContentWithBoundary = dynamic(
     () =>
@@ -73,15 +75,9 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
     if (!domainConfig) {
         return (
             <ErrorBoundary
-                fallbackRender={({ error }) =>
-                    error ? (
-                        <MinimalErrorContent
-                            err={error.message}
-                            showDebugInfo={isWithErrorDebugging}
-                            statusCode={500}
-                        />
-                    ) : null
-                }
+                fallbackRender={({ error }) => (
+                    <MinimalErrorContent err={error.message} showDebugInfo={isWithErrorDebugging} statusCode={500} />
+                )}
                 onError={logErrorBoundary}
             >
                 <Component {...pageProps} />
@@ -91,9 +87,9 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
 
     return (
         <ErrorBoundary
-            fallbackRender={({ error, resetErrorBoundary }) =>
-                error ? <Error500ContentWithBoundary error={error} resetErrorBoundary={resetErrorBoundary} /> : null
-            }
+            fallbackRender={({ error, resetErrorBoundary }) => (
+                <Error500ContentWithBoundary error={error} resetErrorBoundary={resetErrorBoundary} />
+            )}
             onError={logErrorBoundary}
         >
             <UrqlWrapper pageProps={pageProps}>
