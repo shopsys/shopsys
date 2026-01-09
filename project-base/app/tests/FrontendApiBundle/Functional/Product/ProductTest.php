@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
+use App\DataFixtures\Demo\ParameterColorValueDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Category\Category;
@@ -13,6 +14,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -226,6 +228,7 @@ class ProductTest extends GraphQlTestCase
                         [
                             'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'rgbHex' => null,
+                            'colorIcon' => null,
                         ],
                     ],
                 ],
@@ -237,6 +240,7 @@ class ProductTest extends GraphQlTestCase
                         [
                             'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'rgbHex' => null,
+                            'colorIcon' => null,
                         ],
                     ],
                 ],
@@ -250,6 +254,7 @@ class ProductTest extends GraphQlTestCase
                         [
                             'text' => '27',
                             'rgbHex' => null,
+                            'colorIcon' => null,
                         ],
                     ],
                 ],
@@ -261,6 +266,7 @@ class ProductTest extends GraphQlTestCase
                         [
                             'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'rgbHex' => null,
+                            'colorIcon' => null,
                         ],
                     ],
                 ],
@@ -272,6 +278,7 @@ class ProductTest extends GraphQlTestCase
                         [
                             'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'rgbHex' => null,
+                            'colorIcon' => null,
                         ],
                     ],
                 ],
@@ -283,6 +290,7 @@ class ProductTest extends GraphQlTestCase
                         [
                             'text' => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'rgbHex' => '#ff0000',
+                            'colorIcon' => $this->getRedColorExpectedFile($firstDomainLocale),
                         ],
                     ],
                 ],
@@ -294,6 +302,7 @@ class ProductTest extends GraphQlTestCase
                         [
                             'text' => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'rgbHex' => null,
+                            'colorIcon' => null,
                         ],
                     ],
                 ],
@@ -307,6 +316,7 @@ class ProductTest extends GraphQlTestCase
                         [
                             'text' => '3',
                             'rgbHex' => null,
+                            'colorIcon' => null,
                         ],
                     ],
                 ],
@@ -498,5 +508,17 @@ class ProductTest extends GraphQlTestCase
                 ),
             ],
         ];
+    }
+
+    /**
+     * @param string $locale
+     * @return array
+     */
+    private function getRedColorExpectedFile(string $locale): array
+    {
+        $redColorParameterValue = $this->getReference(ParameterColorValueDataFixture::PARAMETER_VALUE_RED_REFERENCE_PREFIX . $locale, ParameterValue::class);
+        $allFilesArray = $this->getFilesByEntity($redColorParameterValue);
+
+        return reset($allFilesArray);
     }
 }

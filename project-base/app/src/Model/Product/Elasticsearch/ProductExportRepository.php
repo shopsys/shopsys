@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -21,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository as BaseProductExportRepository;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider as BaseProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -72,6 +74,8 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver $parameterValueFileResolver
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      */
     public function __construct(
@@ -92,6 +96,8 @@ class ProductExportRepository extends BaseProductExportRepository
         SpecialPriceFacade $specialPriceFacade,
         ProductPriceCalculation $productPriceCalculation,
         ProductVideoTranslationsRepository $productVideoTranslationsRepository,
+        ParameterValueFileResolver $parameterValueFileResolver,
+        Domain $domain,
         private readonly BreadcrumbFacade $breadcrumbFacade,
     ) {
         parent::__construct(
@@ -112,6 +118,8 @@ class ProductExportRepository extends BaseProductExportRepository
             $specialPriceFacade,
             $productPriceCalculation,
             $productVideoTranslationsRepository,
+            $parameterValueFileResolver,
+            $domain,
         );
     }
 

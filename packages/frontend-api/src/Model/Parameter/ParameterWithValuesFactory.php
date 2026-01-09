@@ -46,6 +46,7 @@ class ParameterWithValuesFactory
                 'uuid' => $parameterArray['parameter_value_uuid'],
                 'text' => $parameterArray['parameter_value_text'],
                 'rgbHex' => $parameterArray['parameter_value_rgbHex'],
+                'colorIcon' => $this->mapColorIcon($parameterArray),
             ];
         }
 
@@ -64,6 +65,25 @@ class ParameterWithValuesFactory
             'group' => $product['parameter_group'],
             'unit' => $product['parameter_unit'] ? ['name' => $product['parameter_unit']] : null,
             'values' => [],
+        ];
+    }
+
+    /**
+     * @param array $parameterArray
+     * @return array|null
+     */
+    protected function mapColorIcon(array $parameterArray): ?array
+    {
+        $anchorText = $parameterArray['parameter_value_icon_anchor_text'];
+        $url = $parameterArray['parameter_value_icon_url'];
+
+        if ($anchorText === null || $url === null) {
+            return null;
+        }
+
+        return [
+            'anchorText' => $anchorText,
+            'url' => $url,
         ];
     }
 }

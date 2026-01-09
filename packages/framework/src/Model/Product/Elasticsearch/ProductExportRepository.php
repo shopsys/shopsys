@@ -9,6 +9,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
@@ -21,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -54,6 +56,8 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver $parameterValueFileResolver
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -73,6 +77,8 @@ class ProductExportRepository
         protected readonly SpecialPriceFacade $specialPriceFacade,
         protected readonly ProductPriceCalculation $productPriceCalculation,
         protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
+        protected readonly ParameterValueFileResolver $parameterValueFileResolver,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -337,7 +343,7 @@ class ProductExportRepository
             }
         }
 
-        return $parameterValuesData;
+        return $this->parameterValueFileResolver->addIconDataToParameterValuesData($parameterValuesData, $this->domain->getDomainConfigById($domainId));
     }
 
     /**

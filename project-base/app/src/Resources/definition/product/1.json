@@ -276,6 +276,12 @@
                     "parameter_value_rgbHex": {
                         "type": "text"
                     },
+                    "parameter_value_icon_anchor_text": {
+                        "type": "text"
+                    },
+                    "parameter_value_icon_url": {
+                        "type": "text"
+                    },
                     "parameter_group": {
                         "type": "text"
                     },

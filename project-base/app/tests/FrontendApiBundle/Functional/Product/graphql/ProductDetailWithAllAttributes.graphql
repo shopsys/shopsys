@@ -54,6 +54,10 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
             values {
                 text
                 rgbHex
+                colorIcon {
+                    anchorText
+                    url
+                }
             }
         }
         namePrefix

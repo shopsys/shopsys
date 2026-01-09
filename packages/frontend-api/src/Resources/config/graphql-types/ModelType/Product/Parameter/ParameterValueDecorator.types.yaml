@@ -13,3 +13,6 @@ ParameterValueDecorator:
             rgbHex:
                 type: "String"
                 description: "Parameter value RGB value if set (for color parameters only)"
+            colorIcon:
+                type: "File"
+                description: "Uploaded file for color parameter value"

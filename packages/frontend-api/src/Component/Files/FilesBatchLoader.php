@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataExtractor;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 
@@ -21,12 +22,14 @@ class FilesBatchLoader
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataExtractor $uploadedFileDataExtractor
      */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly Domain $domain,
         protected readonly UploadedFileConfig $uploadedFileConfig,
+        protected readonly UploadedFileDataExtractor $uploadedFileDataExtractor,
     ) {
     }
 
@@ -200,14 +203,6 @@ class FilesBatchLoader
      */
     protected function getResolvedFile(UploadedFile $file): array
     {
-        $translatedName = $file->getTranslatedName($this->domain->getLocale());
-
-        return [
-            'url' => $this->uploadedFileFacade->getUploadedFileUrl(
-                $this->domain->getCurrentDomainConfig(),
-                $file,
-            ),
-            'anchorText' => $translatedName ?? $file->getName(),
-        ];
+        return $this->uploadedFileDataExtractor->extractUploadedFileData($file, $this->domain->getCurrentDomainConfig());
     }
 }

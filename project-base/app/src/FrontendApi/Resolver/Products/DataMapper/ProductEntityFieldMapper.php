@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
@@ -84,6 +85,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver $parameterValueFileResolver
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
@@ -107,6 +109,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductStockFacade $productStockFacade,
         ProductRepository $productRepository,
         ParameterRepository $parameterRepository,
+        ParameterValueFileResolver $parameterValueFileResolver,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
@@ -130,6 +133,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productStockFacade,
             $productRepository,
             $parameterRepository,
+            $parameterValueFileResolver,
         );
     }
 

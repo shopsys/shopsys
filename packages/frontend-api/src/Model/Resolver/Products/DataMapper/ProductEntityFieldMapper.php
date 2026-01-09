@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -44,6 +45,7 @@ class ProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver $parameterValueFileResolver
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -63,6 +65,7 @@ class ProductEntityFieldMapper
         protected readonly ProductStockFacade $productStockFacade,
         protected readonly ProductRepository $productRepository,
         protected readonly ParameterRepository $parameterRepository,
+        protected readonly ParameterValueFileResolver $parameterValueFileResolver,
     ) {
     }
 
@@ -190,9 +193,12 @@ class ProductEntityFieldMapper
         }
         $products[] = $product;
 
-        $productParameterValuesData = $this->parameterRepository->getProductParameterValuesDataByProducts($products, $this->domain->getLocale());
+        $parameterValuesData = $this->parameterRepository->getProductParameterValuesDataByProducts($products, $this->domain->getLocale());
 
-        return $this->parameterWithValuesFactory->createParametersArrayFromProductArray(['parameters' => $productParameterValuesData]);
+        $domainConfig = $this->domain->getCurrentDomainConfig();
+        $parameterValuesDataWithIcons = $this->parameterValueFileResolver->addIconDataToParameterValuesData($parameterValuesData, $domainConfig);
+
+        return $this->parameterWithValuesFactory->createParametersArrayFromProductArray(['parameters' => $parameterValuesDataWithIcons]);
     }
 
     /**
