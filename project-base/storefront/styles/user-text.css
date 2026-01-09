@@ -8,7 +8,7 @@
 
 @layer components {
     .user-text {
-        @apply text-text-default text-lg leading-relaxed;
+        @apply text-text-default text-base leading-relaxed md:text-lg;
 
         h1,
         h2,

@@ -51,7 +51,6 @@
         "react-infinite-scroll-component": "~6.1.1",
         "react-remove-scroll": "^2.7.2",
         "react-swipeable": "~7.0.2",
-        "react-tabs": "~6.1.0",
         "react-toastify": "~10.0.6",
         "redis": "~4.7.1",
         "supercluster": "^8.0.1",

@@ -99,9 +99,6 @@ importers:
       react-swipeable:
         specifier: ~7.0.2
         version: 7.0.2(react@18.2.0)
-      react-tabs:
-        specifier: ~6.1.0
-        version: 6.1.0(react@18.2.0)
       react-toastify:
         specifier: ~10.0.6
         version: 10.0.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -5132,11 +5129,6 @@ packages:
     resolution: {integrity: sha512-v1Qx1l+aC2fdxKa9aKJiaU/ZxmJ5o98RMoFwUqAAzVWUcxgfHFXDDruCKXhw6zIYXm6V64JiHgP9f6mlME5l8w==}
     peerDependencies:
       react: ^16.8.3 || ^17 || ^18 || ^19.0.0 || ^19.0.0-rc
-
-  react-tabs@6.1.0:
-    resolution: {integrity: sha512-6QtbTRDKM+jA/MZTTefvigNxo0zz+gnBTVFw2CFVvq+f2BuH0nF0vDLNClL045nuTAdOoK/IL1vTP0ZLX0DAyQ==}
-    peerDependencies:
-      react: ^18.0.0 || ^19.0.0
 
   react-toastify@10.0.6:
     resolution: {integrity: sha512-yYjp+omCDf9lhZcrZHKbSq7YMuK0zcYkDFTzfRFgTXkTFHZ1ToxwAonzA4JI5CxA91JpjFLmwEsZEgfYfOqI1A==}
@@ -11610,12 +11602,6 @@ snapshots:
 
   react-swipeable@7.0.2(react@18.2.0):
     dependencies:
-      react: 18.2.0
-
-  react-tabs@6.1.0(react@18.2.0):
-    dependencies:
-      clsx: 2.1.1
-      prop-types: 15.8.1
       react: 18.2.0
 
   react-toastify@10.0.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0):

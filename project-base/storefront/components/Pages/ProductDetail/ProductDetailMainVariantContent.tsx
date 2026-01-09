@@ -1,7 +1,7 @@
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
-import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
+import { ProductDetailSections } from './ProductDetailSections/ProductDetailSections';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
@@ -71,7 +71,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
 
                 <ProductVariantsTable variants={product.variants} />
 
-                <ProductDetailTabs
+                <ProductDetailSections
                     description={product.description}
                     files={product.files}
                     parameters={product.parameters}
