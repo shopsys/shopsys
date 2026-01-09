@@ -8,7 +8,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeNotificationBarsVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeNotificationBars = { __typename?: 'Query', notificationBars: Array<{ __typename: 'NotificationBar', text: string, rgbColor: string, validityFrom: any | null, validityTo: any | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }> | null };
+export type TypeNotificationBars = { __typename?: 'Query', notificationBars: Array<{ __typename: 'NotificationBar', uuid: string, text: string, rgbColor: string, validityFrom: any | null, validityTo: any | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }> | null };
 
 
 export const NotificationBarsDocument = gql`
