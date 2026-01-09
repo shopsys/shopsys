@@ -1255,6 +1255,7 @@ jobs:
             UNIT_TESTS_STOREFRONT_RESULT: ${{ needs.unit-test-storefront.result }}
             TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT: ${{ needs.tests-storefront-acceptance-regenerate.result }}
             REGENERATION_STARTED: ${{ needs.tests-storefront-acceptance-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE || 'false' }}
+            CHECK_UPGRADE_NOTES_RESULT: ${{ needs.check-upgrade-notes.result }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
@@ -1262,5 +1263,5 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Build successful
                 run: |
-                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_CZECH_RESULT} ${CHECK_DEMO_DATA_LIMITED_DOMAINS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_SMOKE_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT} ${REGENERATION_STARTED} > /dev/null ; echo $?`
+                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_CZECH_RESULT} ${CHECK_DEMO_DATA_LIMITED_DOMAINS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_SMOKE_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT} ${REGENERATION_STARTED} ${CHECH_UPGRADE_NOTES_RESULT} > /dev/null ; echo $?`
                     exit "${EXIT_CODE}"
