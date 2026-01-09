@@ -72,7 +72,9 @@ jobs:
                 if: github.event.action == 'closed' || github.event.action == 'auto_merge_disabled'
                 uses: ./.github/actions/extract-slack-timestamp
                 with:
-                    pr-body: ${{ github.event.pull_request.body }}
+                    pr-number: ${{ github.event.pull_request.number }}
+                env:
+                    GH_TOKEN: ${{ github.token }}
             -   name: Merge complete / canceled reaction
                 if: |
                     steps.extract-timestamp.outputs.timestamp != '' &&
@@ -132,7 +134,7 @@ jobs:
                     REPOSITORY: ${{ github.repository }}
                     HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
                 run: |
-                    PR_DATA=$(gh pr list --repo "$REPOSITORY" --head "$HEAD_BRANCH" --json number,url,title,body,author,autoMergeRequest --jq '.[] | select(.autoMergeRequest != null)')
+                    PR_DATA=$(gh pr list --repo "$REPOSITORY" --head "$HEAD_BRANCH" --json number,url,title,author,autoMergeRequest --jq '.[] | select(.autoMergeRequest != null)')
 
                     if [ -n "$PR_DATA" ]; then
                         echo "PR_NUMBER=$(echo "$PR_DATA" | jq -r '.number')" >> $GITHUB_OUTPUT
@@ -144,17 +146,15 @@ jobs:
                         echo "EOF" >> $GITHUB_OUTPUT
 
                         echo "AUTHOR=$(echo "$PR_DATA" | jq -r '.author.login')" >> $GITHUB_OUTPUT
-
-                        echo "PR_BODY<<EOF" >> $GITHUB_OUTPUT
-                        echo "$PR_DATA" | jq -r '.body' >> $GITHUB_OUTPUT
-                        echo "EOF" >> $GITHUB_OUTPUT
                     fi
             -   name: Extract message timestamp
                 id: extract-timestamp
                 if: steps.get-pr.outputs.PR_NUMBER != ''
                 uses: ./.github/actions/extract-slack-timestamp
                 with:
-                    pr-body: ${{ steps.get-pr.outputs.PR_BODY }}
+                    pr-number: ${{ steps.get-pr.outputs.PR_NUMBER }}
+                env:
+                    GH_TOKEN: ${{ github.token }}
             -   name: Resolve author Slack mention
                 id: author-mention
                 if: steps.get-pr.outputs.AUTHOR != ''
