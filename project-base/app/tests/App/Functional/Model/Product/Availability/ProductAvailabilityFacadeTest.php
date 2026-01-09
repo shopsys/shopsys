@@ -57,7 +57,6 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     #[DataProvider('getTestIsProductAvailableOnDomainProvider')]
     public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain)
     {
-
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
 

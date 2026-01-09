@@ -12,6 +12,8 @@ use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataFactory;
 use App\Model\Order\OrderFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
+use App\Model\Payment\Payment;
+use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
@@ -76,33 +78,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentRepository->getById(1);
 
-        $orderData = new OrderData();
-        $orderData->transport = $transport;
-        $orderData->payment = $payment;
-        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
-        $orderData->firstName = 'firstName';
-        $orderData->lastName = 'lastName';
-        $orderData->email = 'email';
-        $orderData->telephone = 'telephone';
-        $orderData->companyName = null;
-        $orderData->companyNumber = null;
-        $orderData->companyTaxNumber = null;
-        $orderData->street = 'street';
-        $orderData->city = 'city';
-        $orderData->postcode = 'postcode';
-        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $orderData->deliveryAddressSameAsBillingAddress = false;
-        $orderData->deliveryFirstName = 'deliveryFirstName';
-        $orderData->deliveryLastName = 'deliveryLastName';
-        $orderData->deliveryCompanyName = 'deliveryCompanyName';
-        $orderData->deliveryTelephone = 'deliveryTelephone';
-        $orderData->deliveryStreet = 'deliveryStreet';
-        $orderData->deliveryCity = 'deliveryCity';
-        $orderData->deliveryPostcode = 'deliveryPostcode';
-        $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $orderData->note = 'note';
-        $orderData->domainId = Domain::FIRST_DOMAIN_ID;
-        $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $orderData = $this->getOrderData($transport, $payment);
 
         $orderPreview = $this->orderPreviewFactory->create(
             $orderData->currency,
@@ -177,5 +153,44 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderFromDb = $this->orderRepository->getById($order->getId());
 
         $this->assertCount(5, $orderFromDb->getItems());
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param \App\Model\Payment\Payment $payment
+     * @return \App\Model\Order\OrderData
+     */
+    private function getOrderData(Transport $transport, Payment $payment): OrderData
+    {
+        $orderData = new OrderData();
+
+        $orderData->transport = $transport;
+        $orderData->payment = $payment;
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
+        $orderData->firstName = 'firstName';
+        $orderData->lastName = 'lastName';
+        $orderData->email = 'email';
+        $orderData->telephone = 'telephone';
+        $orderData->companyName = null;
+        $orderData->companyNumber = null;
+        $orderData->companyTaxNumber = null;
+        $orderData->street = 'street';
+        $orderData->city = 'city';
+        $orderData->postcode = 'postcode';
+        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $orderData->deliveryAddressSameAsBillingAddress = false;
+        $orderData->deliveryFirstName = 'deliveryFirstName';
+        $orderData->deliveryLastName = 'deliveryLastName';
+        $orderData->deliveryCompanyName = 'deliveryCompanyName';
+        $orderData->deliveryTelephone = 'deliveryTelephone';
+        $orderData->deliveryStreet = 'deliveryStreet';
+        $orderData->deliveryCity = 'deliveryCity';
+        $orderData->deliveryPostcode = 'deliveryPostcode';
+        $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $orderData->note = 'note';
+        $orderData->domainId = Domain::FIRST_DOMAIN_ID;
+        $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+
+        return $orderData;
     }
 }

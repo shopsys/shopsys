@@ -35,34 +35,7 @@ class TransportFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->get('basicInformation')
-            ->add('transportType', ChoiceType::class, [
-                'required' => true,
-                'choices' => $this->transportTypeFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-                'label' => t('Transport type'),
-            ])
-            ->add('daysUntilDelivery', TextType::class, [
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                    new Constraints\GreaterThanOrEqual([
-                        'value' => 0,
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => '/^\d+$/',
-                    ]),
-                ],
-                'label' => t('Days until delivery'),
-            ])
-            ->add('maxWeight', IntegerType::class, [
-                'label' => t('Maximum weight (g)'),
-                'required' => false,
-            ]);
+        $this->modifyBasicInformationGroup($builder);
 
         $builderPackageTrackingGroup = $builder->create('packageTracking', GroupType::class, [
             'label' => t('Package tracking'),
@@ -118,5 +91,40 @@ class TransportFormTypeExtension extends AbstractTypeExtension
     public static function getExtendedTypes(): iterable
     {
         yield TransportFormType::class;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function modifyBasicInformationGroup(FormBuilderInterface $builder): void
+    {
+        $builder->get('basicInformation')
+            ->add('transportType', ChoiceType::class, [
+                'required' => true,
+                'choices' => $this->transportTypeFacade->getAll(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'label' => t('Transport type'),
+            ])
+            ->add('daysUntilDelivery', TextType::class, [
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                    new Constraints\GreaterThanOrEqual([
+                        'value' => 0,
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => '/^\d+$/',
+                    ]),
+                ],
+                'label' => t('Days until delivery'),
+            ])
+            ->add('maxWeight', IntegerType::class, [
+                'label' => t('Maximum weight (g)'),
+                'required' => false,
+            ]);
     }
 }

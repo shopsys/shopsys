@@ -177,6 +177,7 @@ class CategorySeoController extends AdminBaseController
         $choseCategorySeoMixCombination = ChoseCategorySeoMixCombination::createFromJson(
             $request->get('choseCategorySeoMixCombinationJson'),
         );
+
         // A little hack - when you need form sent data to create that same form - need for friendly URLs
         if ($choseCategorySeoMixCombination === null) {
             $sentReadyCategorySeoCombinationFormData = $request->get('ready_category_seo_combination_form');

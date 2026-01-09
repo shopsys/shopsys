@@ -13,7 +13,7 @@ class MergadoFeedInfo implements FeedInfoInterface
      */
     public function getLabel(): string
     {
-        return  'Mergado';
+        return 'Mergado';
     }
 
     /**

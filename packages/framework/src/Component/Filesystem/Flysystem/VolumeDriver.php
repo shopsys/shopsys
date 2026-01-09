@@ -59,6 +59,7 @@ class VolumeDriver extends Driver
                     $this->fs->write($fallback, $this->createThumbnailPath($res));
                 }
             }
+
             // tmb garbage collection
             if ($res && $this->options['tmbGcMaxlifeHour'] && $this->options['tmbGcPercentage'] > 0) {
                 $rand = mt_rand(1, 10000);

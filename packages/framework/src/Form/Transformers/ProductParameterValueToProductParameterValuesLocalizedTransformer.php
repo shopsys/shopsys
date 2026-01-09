@@ -37,6 +37,7 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
         }
 
         $normData = [];
+
         /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData $productParameterValueData */
         foreach ($value as $productParameterValueData) {
             $parameterId = $productParameterValueData->parameter->getId();

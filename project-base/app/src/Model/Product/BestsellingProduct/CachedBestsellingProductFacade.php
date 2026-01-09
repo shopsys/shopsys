@@ -47,7 +47,6 @@ class CachedBestsellingProductFacade extends BaseCachedBestsellingProductFacade
         return $this->cache->get(
             $cacheId,
             function () use ($domainId, $category, $pricingGroup) {
-
                 /** @var \App\Model\Product\Product[] $bestsellingProducts */
                 $bestsellingProducts = $this->bestsellingProductFacade->getAllOfferedBestsellingProducts(
                     $domainId,

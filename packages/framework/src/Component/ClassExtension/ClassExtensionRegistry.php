@@ -58,6 +58,7 @@ class ClassExtensionRegistry
             ->name('/.*(Data|Controller)\.php/');
 
         $otherClassesMap = [];
+
         /** @var \Symfony\Component\Finder\SplFileInfo $file */
         foreach ($finder as $file) {
             $frameworkClassFqcn = $this->getFqcn($file->getPathname());

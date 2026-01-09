@@ -40,7 +40,6 @@ class VatDataFixture extends AbstractReferenceFixture
      */
     public function load(ObjectManager $manager)
     {
-
         /**
          * Vat with zero rate is created in database migration.
          *

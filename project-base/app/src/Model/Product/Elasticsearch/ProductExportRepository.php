@@ -118,6 +118,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $query = $queryBuilder->getQuery();
 
         $results = [];
+
         /** @var \App\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
             $results[$product->getId()] = $this->extractResult($product, $domainId, $locale);
@@ -142,6 +143,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $query = $queryBuilder->getQuery();
 
         $result = [];
+
         /** @var \App\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
             $result[$product->getId()] = $this->extractResult($product, $domainId, $locale);

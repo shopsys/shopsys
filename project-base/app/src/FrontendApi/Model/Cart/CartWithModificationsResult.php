@@ -354,7 +354,7 @@ class CartWithModificationsResult
             || $this->isPromoCodeInCartValid()
             || $this->isSomeCartItemModified()
             || $this->cartModifications['someProductWasRemovedFromEshop']
-            ;
+        ;
     }
 
     /**
@@ -364,7 +364,7 @@ class CartWithModificationsResult
     {
         return $this->paymentModifications['paymentPriceChanged']
             || $this->paymentModifications['paymentUnavailable']
-            ;
+        ;
     }
 
     /**
@@ -376,7 +376,7 @@ class CartWithModificationsResult
             || $this->transportModifications['transportUnavailable']
             || $this->transportModifications['transportWeightLimitExceeded']
             || $this->transportModifications['personalPickupStoreUnavailable']
-            ;
+        ;
     }
 
     /**
@@ -396,7 +396,7 @@ class CartWithModificationsResult
             || count($this->itemModifications['cartItemsWithModifiedPrice']) > 0
             || count($this->itemModifications['cartItemsWithChangedQuantity']) > 0
             || count($this->itemModifications['noLongerAvailableCartItemsDueToQuantity']) > 0
-            ;
+        ;
     }
 
     /**
