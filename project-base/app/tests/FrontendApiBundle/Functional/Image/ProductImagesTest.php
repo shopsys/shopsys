@@ -44,17 +44,20 @@ class ProductImagesTest extends GraphQlTestCase
         $helloKittyName = t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
         $helloKittySlug = $this->transformStringHelper->stringToFriendlyUrlSlug($helloKittyName);
 
-        $expectedData = [
-            'images' => [
-                [
-                    'url' => $this->getBaseUrlPath('/content-test/images/product/' . $helloKittySlug . '_1.jpg'),
-                    'name' => 'Product 1 image',
-                ],
-                [
-                    'url' => $this->getBaseUrlPath('/content-test/images/product/' . $helloKittySlug . '_64.jpg'),
-                    'name' => 'Product 1 image',
-                ],
+        $allImages = [
+            [
+                'url' => $this->getBaseUrlPath('/content-test/images/product/' . $helloKittySlug . '_1.jpg'),
+                'name' => 'Product 1 image',
             ],
+            [
+                'url' => $this->getBaseUrlPath('/content-test/images/product/' . $helloKittySlug . '_64.jpg'),
+                'name' => 'Product 1 image',
+            ],
+        ];
+
+        $expectedData = [
+            'images' => $allImages,
+            'mainImage' => $allImages[0],
         ];
 
         $this->assertSame($expectedData, $responseData);

@@ -4,5 +4,9 @@ query ProductQuery($productUuid: Uuid!) {
             url
             name
         }
+        mainImage {
+            url
+            name
+        }
     }
 }

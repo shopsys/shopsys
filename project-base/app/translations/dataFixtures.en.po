@@ -850,6 +850,9 @@ msgstr ""
 msgid "Genius repro SP-M120 black"
 msgstr ""
 
+msgid "Get to know Shopsys"
+msgstr ""
+
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
 msgstr ""
 

@@ -1,0 +1,99 @@
+query ProductDetailWithAllAttributes($uuid: Uuid!) {
+    product(uuid: $uuid) {
+        id
+        uuid
+        name
+        slug
+        shortDescription
+        seoH1
+        seoTitle
+        seoMetaDescription
+        link
+        unit {
+            name
+        }
+        availability {
+            name
+            status
+        }
+        stockQuantity
+        isAllowedNegativeStock
+        categories {
+            name
+        }
+        flags {
+            name
+            rgbColor
+        }
+        price {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
+        giftPrice {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
+        brand {
+            name
+        }
+        accessories {
+            name
+        }
+        isSellingDenied
+        isCurrentlyOutOfStock
+        description
+        orderingPriority
+        parameters {
+            name
+            group
+            unit {
+                name
+            }
+            values {
+                text
+            }
+        }
+        namePrefix
+        nameSuffix
+        fullName
+        catalogNumber
+        partNumber
+        ean
+        usps
+        storeAvailabilities {
+            store {
+                name
+            }
+            availabilityInformation
+            availabilityStatus
+        }
+        availableStoresCount
+        breadcrumb {
+            name
+            slug
+        }
+        vatPercent
+        files {
+            anchorText
+            url
+        }
+        isVisible
+        isInquiryType
+        productType
+        productVideos {
+            token
+            description
+        }
+        gifts {
+            name
+        }
+        promotionBuyQuantity
+        promotionFreeQuantity
+        relatedProducts {
+            name
+        }
+        isMainVariant
+    }
+}
