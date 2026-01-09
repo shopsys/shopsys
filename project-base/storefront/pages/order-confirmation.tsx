@@ -106,14 +106,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                     >
                         {orderPaymentType === TypePaymentTypeEnum.GoPay && (
                             <div className="mt-4">
-                                <GoPayGateway
-                                    initialButtonText={t('Repeat payment')}
-                                    orderUuid={orderUuid!}
-                                    requiresAction={requiresAction}
-                                    onMaxTransactionCountReached={() => setIsMaxTransactionCountReached(true)}
-                                />
-
-                                {isMaxTransactionCountReached && (
+                                {isMaxTransactionCountReached ? (
                                     <Trans
                                         i18nKey="Max transaction count reached. Please go to the <link>order detail page</link> and pay with another method."
                                         components={{
@@ -125,6 +118,13 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                                                 />
                                             ),
                                         }}
+                                    />
+                                ) : (
+                                    <GoPayGateway
+                                        initialButtonText={t('Repeat payment')}
+                                        orderUuid={orderUuid!}
+                                        requiresAction={requiresAction}
+                                        onMaxTransactionCountReached={() => setIsMaxTransactionCountReached(true)}
                                     />
                                 )}
                             </div>

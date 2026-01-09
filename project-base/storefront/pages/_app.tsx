@@ -14,6 +14,7 @@ import 'nprogress/nprogress.css';
 import { ReactElement, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.css';
+import { isWithErrorDebugging } from 'utils/errors/isWithErrorDebugging';
 import { logErrorBoundary } from 'utils/errors/logErrorBoundary';
 import { logException } from 'utils/errors/logException';
 import { initIntlDateTimeFormatterLocale } from 'utils/formaters/formatDate';
@@ -52,13 +53,41 @@ const Error500ContentWithBoundary = dynamic(
     { ssr: false },
 );
 
+const MinimalErrorContent = dynamic(() =>
+    import('components/Pages/ErrorPage/MinimalErrorContent').then((component) => component.MinimalErrorContent),
+);
+
 function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
-    const { defaultLocale } = pageProps.domainConfig;
+    const domainConfig = pageProps.domainConfig;
+    const defaultLocale = domainConfig?.defaultLocale ?? 'en';
     initIntlDateTimeFormatterLocale(defaultLocale);
 
     useEffect(() => {
         document.body.setAttribute('data-hydrated', 'true');
     }, []);
+
+    // When domainConfig is missing (e.g., error page after getServerSideProps failed),
+    // render minimal wrapper - just the page component without providers that need domainConfig.
+    // This allows _error.tsx to render its ErrorPageBoundary and gracefully degrade.
+    // The fallback uses MinimalErrorContent which has NO dependencies (no translations, no context).
+    if (!domainConfig) {
+        return (
+            <ErrorBoundary
+                fallbackRender={({ error }) =>
+                    error ? (
+                        <MinimalErrorContent
+                            err={error.message}
+                            showDebugInfo={isWithErrorDebugging}
+                            statusCode={500}
+                        />
+                    ) : null
+                }
+                onError={logErrorBoundary}
+            >
+                <Component {...pageProps} />
+            </ErrorBoundary>
+        );
+    }
 
     return (
         <ErrorBoundary
@@ -69,7 +98,7 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
         >
             <UrqlWrapper pageProps={pageProps}>
                 <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
-                    <DomainConfigProvider domainConfig={pageProps.domainConfig}>
+                    <DomainConfigProvider domainConfig={domainConfig}>
                         <PersistStoreProvider>
                             <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
                                 <GtmProvider>

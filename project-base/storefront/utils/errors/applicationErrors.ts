@@ -42,6 +42,7 @@ const ApplicationErrors = {
     'too-many-login-attempts': 'flash-message',
     'invalid-account-or-password': 'no-log',
     'company-already-registered': 'flash-message',
+    'max-transaction-count-reached': 'flash-message',
 } as const;
 
 type KeysMatching<T, V extends ApplicationErrorVerbosityLevel> = {

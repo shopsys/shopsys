@@ -25,6 +25,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'register-by-order-is-not-possible': t('It was not possible to create register new user from the order'),
         'too-many-login-attempts': t('Too many login attempts. Try again later.'),
         'company-already-registered': t('Customer is already registered.'),
+        'max-transaction-count-reached': t('Max transaction count reached.'),
     };
 
     return ERROR_MESSAGES[errorCode];
@@ -33,5 +34,5 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
 export const getErrorMessage = (errorCode: FlashMessageKeys, t: Translate): string => {
     const translationString = getErrorMessageTranslationString(errorCode, t);
 
-    return translationString !== undefined ? t(translationString) : t('Unknown error.');
+    return translationString ?? t('Unknown error.');
 };

@@ -1,70 +1,98 @@
 import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
 import { Error500Content } from 'components/Pages/ErrorPage/Error500Content';
-import { NextPage } from 'next';
+import { MinimalErrorContent } from 'components/Pages/ErrorPage/MinimalErrorContent';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
+import { GetServerSidePropsContext, NextPage, NextPageContext } from 'next';
+import loadNamespaces from 'next-translate/loadNamespaces';
 import { ReactElement } from 'react';
 import { CookiesStoreState, getCookiesStoreState } from 'utils/cookies/cookiesStore';
-import { isWithErrorDebugging, isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
+import { DomainConfigType, getDomainConfig } from 'utils/domain/domainConfig';
+import { isWithErrorDebugging } from 'utils/errors/isWithErrorDebugging';
 import { logException } from 'utils/errors/logException';
-import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
-
-const MIDDLEWARE_STATUS_CODE_KEY = 'middleware-status-code';
-const MIDDLEWARE_STATUS_MESSAGE_KEY = 'middleware-status-message';
 
 type ErrorPageProps = {
-    hasGetInitialPropsRun: boolean;
     statusCode: number;
-    props: Partial<ServerSidePropsType> | Promise<Partial<ServerSidePropsType>>;
-    err: string;
-    cookiesStore: CookiesStoreState;
+    err?: string;
+    domainConfig?: DomainConfigType;
+    cookiesStore?: CookiesStoreState;
+    customerUserRoles?: TypeCustomerUserRoleEnum[];
 };
 
-const ErrorPage: NextPage<ErrorPageProps> = ({ hasGetInitialPropsRun, err, statusCode }): ReactElement => {
-    if (!hasGetInitialPropsRun && err) {
-        logException({ message: err, statusCode, location: 'ErrorPage' });
+const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode, err, domainConfig }): ReactElement => {
+    // If domainConfig prop exists, _app.tsx will set up providers and we can use full error pages
+    // If not, render minimal page (no dependencies on providers)
+    if (!domainConfig) {
+        return <MinimalErrorContent err={err} showDebugInfo={isWithErrorDebugging} statusCode={statusCode} />;
     }
 
     return statusCode === 404 ? <Error404Content /> : <Error500Content err={err} />;
 };
 
-ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context: any) => {
-    const middlewareStatusCode = Number.parseInt(context.res.getHeader(MIDDLEWARE_STATUS_CODE_KEY) || '');
-    const middlewareStatusMessage = context.res.getHeader(MIDDLEWARE_STATUS_MESSAGE_KEY);
-    const cookiesStoreState = getCookiesStoreState(domainConfig, context);
+ErrorPage.getInitialProps = async (context: NextPageContext): Promise<ErrorPageProps> => {
+    const statusCode = context.res?.statusCode ?? (context.err as any)?.statusCode ?? 500;
 
-    const serverSideProps = await initServerSideProps({ context, redisClient, domainConfig, t });
-    const statusCode = middlewareStatusCode || context.res.statusCode || 500;
-    let err: string | Error = middlewareStatusMessage || context.err || 'Unknown error (inside _error.tsx)';
-
-    if (err instanceof Error) {
-        err = JSON.stringify({ name: err.name, message: err.message, stack: err.stack, cause: err.cause });
+    let errorMessage: string | undefined;
+    if (context.err) {
+        errorMessage =
+            context.err instanceof Error
+                ? JSON.stringify({ name: context.err.name, message: context.err.message, stack: context.err.stack })
+                : String(context.err);
     }
 
-    if ((statusCode !== 404 || isWithErrorDebugging) && statusCode !== 503) {
+    if (statusCode !== 404) {
         logException({
-            message: err,
+            message: errorMessage ?? 'Unknown error',
             statusCode,
-            initServerSidePropsResonse: JSON.stringify(serverSideProps),
-            location: 'ErrorPage.getInitialProps.noErrorDebugging',
+            location: 'ErrorPage.getInitialProps',
         });
     }
 
-    if (isWithToastAndConsoleErrorDebugging) {
-        showErrorMessage(err);
+    // Server-side: Try to get domain config for full rendering with layout
+    // Client-side (no res): Fall back to minimal rendering (ErrorBoundary handles client errors)
+    const isRuntimeError = !!context.err;
+
+    if (context.res && context.req && !isRuntimeError) {
+        try {
+            const domainConfig = getDomainConfig(context);
+            // getCookiesStoreState only uses req/res from context, which exist on NextPageContext
+            const cookiesStoreState = getCookiesStoreState(domainConfig, {
+                req: context.req,
+                res: context.res,
+            } as GetServerSidePropsContext);
+
+            // Set proper status code on response
+            context.res.statusCode = statusCode;
+
+            // Load translations for the correct locale
+            const translations = await loadNamespaces({
+                locale: domainConfig.defaultLocale,
+                pathname: '/_error',
+                namespaces: ['common', 'accessibility'],
+            });
+
+            return {
+                ...translations,
+                statusCode,
+                err: errorMessage,
+                domainConfig,
+                cookiesStore: cookiesStoreState,
+                customerUserRoles: [],
+            };
+        } catch (e) {
+            // getDomainConfig failed (e.g., unknown domain) - fall back to minimal rendering
+            logException({
+                message: e instanceof Error ? e.message : String(e),
+                statusCode,
+                location: 'ErrorPage.getInitialProps.getDomainConfig',
+            });
+        }
     }
 
-    // eslint-disable-next-line require-atomic-updates
-    context.res.statusCode = statusCode;
-    const props: Partial<ServerSidePropsType> = 'props' in serverSideProps ? await serverSideProps.props : {};
-
+    // Client-side or domain config failed: minimal props
     return {
-        ...props,
         statusCode,
-        err,
-        hasGetInitialPropsRun: true,
-        cookiesStore: cookiesStoreState,
-    } as ErrorPageProps;
-});
+        err: errorMessage,
+    };
+};
 
 export default ErrorPage;
