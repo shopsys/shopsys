@@ -110,8 +110,8 @@ export const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
                         {error && formatError(error)}
                         {value && value.length > 0 && (
                             <ul className="mt-2">
-                                {value.map((file: File, index: number) => (
-                                    <li key={index} className={listItemTwClass}>
+                                {value.map((file: File) => (
+                                    <li key={file.name} className={listItemTwClass}>
                                         <span className={fileNameTwClass}>
                                             {file.name} - {formatBytes(file.size)}
                                         </span>

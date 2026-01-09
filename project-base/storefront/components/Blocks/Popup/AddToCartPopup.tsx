@@ -90,8 +90,8 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                 {product.gifts.length > 0 && (
                     <>
                         <p className="h3 mb-3">{t('Gifts')}</p>
-                        {product.gifts.map((gift, index) => (
-                            <ProductGift key={index} gift={gift} />
+                        {product.gifts.map((gift) => (
+                            <ProductGift key={gift.uuid} gift={gift} />
                         ))}
                     </>
                 )}

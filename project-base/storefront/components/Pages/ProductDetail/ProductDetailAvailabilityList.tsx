@@ -15,10 +15,10 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
         <div className="vl:max-w-xl">
             <ul>
                 {storeAvailabilities.map(
-                    (storeAvailability, index) =>
+                    (storeAvailability) =>
                         storeAvailability.store && (
                             <li
-                                key={index}
+                                key={storeAvailability.store.slug}
                                 className="border-border-default flex w-full items-center justify-between gap-4 border-b py-4"
                             >
                                 <strong className="w-36">{storeAvailability.store.storeName}</strong>

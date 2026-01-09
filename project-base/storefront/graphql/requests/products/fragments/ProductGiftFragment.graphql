@@ -1,4 +1,5 @@
 fragment ProductGiftFragment on Product {
+    uuid
     name
     images{
         ...ImageFragment

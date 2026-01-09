@@ -15,9 +15,9 @@ const AdvancedSeoCategoriesComp: FC<AdvancedSeoCategoriesProps> = ({ readyCatego
         <Webline className="flex flex-wrap items-center gap-5">
             <span className="h6">{t('You might be interested')}</span>
 
-            {readyCategorySeoMixLinks.map((item, index) => (
+            {readyCategorySeoMixLinks.map((item) => (
                 <Tag
-                    key={index}
+                    key={item.slug}
                     className="bg-background-accent-less text-text-default"
                     href={item.slug}
                     type="category"

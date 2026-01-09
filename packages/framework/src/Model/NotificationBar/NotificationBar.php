@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity
@@ -19,6 +20,12 @@ class NotificationBar
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var int
@@ -77,6 +84,7 @@ class NotificationBar
      */
     protected function setData(NotificationBarData $notificationBarData): void
     {
+        $this->uuid = $notificationBarData->uuid ?? Uuid::uuid4()->toString();
         $this->domainId = $notificationBarData->domainId;
         $this->text = $notificationBarData->text;
         $this->validityFrom = $notificationBarData->validityFrom;
@@ -91,6 +99,14 @@ class NotificationBar
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 
     /**

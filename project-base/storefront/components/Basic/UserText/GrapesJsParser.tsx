@@ -19,11 +19,13 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text, visibleSlid
 
     return (
         <div className="[&>*:last-child_*:last-child]:mb-0">
-            {dividedParts.map((part, index) => {
+            {dividedParts.map((part) => {
+                const partKey = `part-${part.slice(0, 50)}`;
+
                 if (part.match(/\[gjc-comp-(.*?)\]/g)) {
                     return (
                         <GrapesJsProducts
-                            key={index}
+                            key={partKey}
                             allFetchedProducts={productsData}
                             areProductsFetching={areProductsFetching}
                             rawProductPart={part}
@@ -32,7 +34,7 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text, visibleSlid
                     );
                 }
 
-                return <UserText key={index} isGrapesJs htmlContent={part} />;
+                return <UserText key={partKey} isGrapesJs htmlContent={part} />;
             })}
         </div>
     );

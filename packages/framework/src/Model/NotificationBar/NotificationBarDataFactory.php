@@ -43,6 +43,7 @@ class NotificationBarDataFactory
     {
         $notificationBarData = $this->createInstance();
 
+        $notificationBarData->uuid = $notificationBar->getUuid();
         $notificationBarData->domainId = $notificationBar->getDomainId();
         $notificationBarData->text = $notificationBar->getText();
         $notificationBarData->validityFrom = $notificationBar->getValidityFrom();

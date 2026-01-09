@@ -61,9 +61,9 @@ export const Navigation: FC<NavigationProps> = ({ navigation }) => {
                 onMouseLeave={handleEnableAnimation}
                 onScroll={handleScroll}
             >
-                {navigation.map((navigationItem, index) => (
+                {navigation.map((navigationItem) => (
                     <NavigationItem
-                        key={index}
+                        key={`${navigationItem.link}-${navigationItem.name}`}
                         handleAnimations={handleAnimations}
                         isAnimationDisabled={isAnimationDisabled}
                         navigationItem={navigationItem}

@@ -1,4 +1,5 @@
 fragment ComplaintItemFragment on ComplaintItem {
+    uuid
     quantity
     description
     orderItem {

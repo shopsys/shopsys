@@ -37,6 +37,22 @@ export const OpeningHours: FC<{
         }
     };
 
+    const formatExceptionDayText = (exceptionDay: {
+        from: string;
+        to?: string | null;
+        times: { open: string; close: string }[];
+    }): string => {
+        const dateRange = exceptionDay.to
+            ? `${formatDate(exceptionDay.from)} - ${formatDate(exceptionDay.to)}`
+            : formatDate(exceptionDay.from);
+
+        const timeRanges = exceptionDay.times.length
+            ? exceptionDay.times.map(({ open, close }) => `${open} - ${close}`).join(', ')
+            : t('Closed');
+
+        return `${dateRange} ${timeRanges}`;
+    };
+
     if (openingHours.openingHoursOfDays.length === 0) {
         return null;
     }
@@ -44,31 +60,11 @@ export const OpeningHours: FC<{
     return (
         <>
             {'exceptionDays' in openingHours &&
-                openingHours.exceptionDays?.map((exceptionDay, index) => {
-                    let exceptionDayText = formatDate(exceptionDay.from);
-
-                    if (exceptionDay.to) {
-                        exceptionDayText += ` - ${formatDate(exceptionDay.to)}`;
-                    }
-
-                    if (exceptionDay.times.length) {
-                        for (let index = 0; index < exceptionDay.times.length; index++) {
-                            if (index === 0) {
-                                exceptionDayText += ` ${exceptionDay.times[index].open} - ${exceptionDay.times[index].close}`;
-                            } else {
-                                exceptionDayText += `, ${exceptionDay.times[index].open} - ${exceptionDay.times[index].close}`;
-                            }
-                        }
-                    } else {
-                        exceptionDayText += ` ${t('Closed')}`;
-                    }
-
-                    return (
-                        <div key={index} className={twMergeCustom('text-text-error mb-1 text-xs', className)}>
-                            {exceptionDayText}
-                        </div>
-                    );
-                })}
+                openingHours.exceptionDays?.map((exceptionDay) => (
+                    <div key={exceptionDay.from} className={twMergeCustom('text-text-error mb-1 text-xs', className)}>
+                        {formatExceptionDayText(exceptionDay)}
+                    </div>
+                ))}
 
             <div
                 aria-label={t('Opening hours', { ns: 'accessibility' })}
@@ -115,7 +111,7 @@ export const OpeningHours: FC<{
                                         const closingFormatted = formatAccessibleTime(closingTime, lang);
 
                                         return (
-                                            <Fragment key={index}>
+                                            <Fragment key={`${openingTime}-${closingTime}`}>
                                                 {index > 0 && ','} {openingFormatted} - {closingFormatted}
                                             </Fragment>
                                         );

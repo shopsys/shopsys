@@ -28,7 +28,7 @@ export default function OpeningHoursToday({ openingHours }: { openingHours: Type
                 const closingFormatted = formatAccessibleTime(closingTime, lang);
 
                 return (
-                    <span key={index} aria-hidden="true">
+                    <span key={`${openingTime}-${closingTime}`} aria-hidden="true">
                         {index > 0 && ','} {openingFormatted} - {closingFormatted}
                     </span>
                 );

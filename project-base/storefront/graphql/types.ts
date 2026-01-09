@@ -914,6 +914,8 @@ export type TypeComplaintItem = {
   productName: Scalars['String']['output'];
   /** Quantity of the order item */
   quantity: Scalars['Int']['output'];
+  /** UUID of the complaint item */
+  uuid: Scalars['Uuid']['output'];
 };
 
 
@@ -1843,6 +1845,8 @@ export type TypeNotificationBar = {
   rgbColor: Scalars['String']['output'];
   /** Message of the notification */
   text: Scalars['String']['output'];
+  /** UUID of the notification bar */
+  uuid: Scalars['Uuid']['output'];
   /** Notification bar validity from */
   validityFrom: Maybe<Scalars['DateTime']['output']>;
   /** Notification bar validity to */

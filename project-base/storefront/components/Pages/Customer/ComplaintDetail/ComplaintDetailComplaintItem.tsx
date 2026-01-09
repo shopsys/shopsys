@@ -111,7 +111,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                     const imagePosition = index > 4 ? index + 1 : index;
 
                     return (
-                        <li key={index}>
+                        <li key={file.url}>
                             <div
                                 aria-label={t('View complaint images in gallery', { ns: 'accessibility' })}
                                 role="button"

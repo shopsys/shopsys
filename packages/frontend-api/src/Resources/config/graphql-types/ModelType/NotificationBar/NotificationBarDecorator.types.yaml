@@ -4,6 +4,9 @@ NotificationBarDecorator:
     config:
         description: "Represents a notification supposed to be displayed on all pages"
         fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID of the notification bar"
             text:
                 type: "String!"
                 description: "Message of the notification"

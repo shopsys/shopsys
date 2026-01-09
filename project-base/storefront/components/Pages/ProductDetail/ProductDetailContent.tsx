@@ -71,8 +71,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                                 <>
                                     <p className="h3 mb-3">{t('Gifts')}</p>
                                     <div>
-                                        {product.gifts.map((gift, index) => (
-                                            <ProductGift key={index} gift={gift} />
+                                        {product.gifts.map((gift) => (
+                                            <ProductGift key={gift.uuid} gift={gift} />
                                         ))}
                                     </div>
                                 </>

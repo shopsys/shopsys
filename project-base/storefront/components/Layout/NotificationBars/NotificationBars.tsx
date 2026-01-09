@@ -33,8 +33,8 @@ export const NotificationBars: FC = memo(function NotificationBars() {
 
     return (
         <>
-            {activeNotificationBars?.map((item, index) => (
-                <section key={index} className="py-2" style={{ backgroundColor: item.rgbColor }}>
+            {activeNotificationBars?.map((item) => (
+                <section key={item.uuid} className="py-2" style={{ backgroundColor: item.rgbColor }}>
                     <Webline>
                         <div
                             className={twJoin(
