@@ -1,5 +1,6 @@
 import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
 import { PRODUCT_DETAIL_SECTIONS_IDS } from './ProductDetailSections';
+import { ColorPreview } from 'components/Basic/ColorPreview/ColorPreview';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
@@ -11,16 +12,20 @@ type ProductDetailParametersSectionProps = {
     sectionRef: RefObject<HTMLDivElement>;
 };
 
+const renderParameterValues = (parameter: TypeParameterFragment) =>
+    parameter.values.map((value, index) => (
+        <span key={value.uuid} className="inline-flex items-center">
+            {index > 0 && ' | '}
+            <ColorPreview className="mr-1" colorIcon={value.colorIcon} rgbHex={value.rgbHex} />
+            {value.text}
+            {parameter.unit?.name && ` ${parameter.unit.name}`}
+        </span>
+    ));
+
 export const ProductDetailParametersSection = ({ parameters, sectionRef }: ProductDetailParametersSectionProps) => {
     const { t } = useTranslation();
 
-    const formatParameterValue = (valueText: string, index: number) => {
-        return index > 0 ? ' | ' + valueText : valueText;
-    };
-
-    const sortedIndividualParameters = parameters
-        .filter((parameter) => parameter.group === null)
-        .sort((a, b) => a.name.localeCompare(b.name));
+    const individualParameters = parameters.filter((parameter) => parameter.group === null);
 
     const groupedParameters = parameters
         .filter((parameter) => parameter.group !== null)
@@ -35,9 +40,9 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
             {} as Record<string, TypeParameterFragment[]>,
         );
 
-    const sortedGroupParameters = Object.entries(groupedParameters).map(([groupName, groupParameters]) => ({
+    const groupParameters = Object.entries(groupedParameters).map(([groupName, groupParams]) => ({
         groupName,
-        groupParameters: groupParameters.sort((a, b) => a.name.localeCompare(b.name)),
+        groupParameters: groupParams,
     }));
 
     return (
@@ -46,7 +51,7 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
                 <ProductDetailSectionHeading>{t('Parameters')}</ProductDetailSectionHeading>
 
                 <div className="mx-auto max-w-[700px]">
-                    {sortedGroupParameters.map(({ groupName, groupParameters }) => (
+                    {groupParameters.map(({ groupName, groupParameters }) => (
                         <Fragment key={groupName}>
                             <p className="h4 py-5">{groupName}</p>
 
@@ -63,13 +68,7 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
                                         <Cell className="flex flex-col gap-1 px-5 py-2.5 text-sm lg:block">
                                             <span className="h6 leading-5 lg:hidden">{parameter.name}</span>
 
-                                            {parameter.values.map((value, index) =>
-                                                formatParameterValue(
-                                                    value.text +
-                                                        (parameter.unit?.name ? ` ${parameter.unit.name}` : ''),
-                                                    index,
-                                                ),
-                                            )}
+                                            {renderParameterValues(parameter)}
                                         </Cell>
                                     </Row>
                                 ))}
@@ -77,12 +76,12 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
                         </Fragment>
                     ))}
 
-                    {sortedIndividualParameters.length > 0 && (
+                    {individualParameters.length > 0 && (
                         <Fragment key="other-parameters">
-                            {!!sortedGroupParameters.length && <p className="h4 py-5">{t('Other parameters')}</p>}
+                            {!!groupParameters.length && <p className="h4 py-5">{t('Other parameters')}</p>}
 
                             <Table>
-                                {sortedIndividualParameters.map((parameter) => (
+                                {individualParameters.map((parameter) => (
                                     <Row
                                         key={parameter.uuid}
                                         className="bg-table-bg-default odd:bg-table-bg-contrast border-none"
@@ -94,13 +93,7 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
                                         <Cell className="flex flex-col gap-1 px-5 py-2.5 text-sm lg:block">
                                             <span className="h6 leading-5 lg:hidden">{parameter.name}</span>
 
-                                            {parameter.values.map((value, index) =>
-                                                formatParameterValue(
-                                                    value.text +
-                                                        (parameter.unit?.name ? ` ${parameter.unit.name}` : ''),
-                                                    index,
-                                                ),
-                                            )}
+                                            {renderParameterValues(parameter)}
                                         </Cell>
                                     </Row>
                                 ))}

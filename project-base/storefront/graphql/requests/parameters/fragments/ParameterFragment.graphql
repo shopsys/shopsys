@@ -11,5 +11,10 @@ fragment ParameterFragment on Parameter {
         __typename
         uuid
         text
+        rgbHex
+        colorIcon {
+            url
+            anchorText
+        }
     }
 }
