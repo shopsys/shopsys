@@ -1237,7 +1237,7 @@ jobs:
         if: |
             always()
         name: Build successful
-        needs: [tests-acceptance, standards, tests-unit-functional-smoke, tests-unit-functional-smoke-first-czech-domain, check-demo-data-limited-domains, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-smoke, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, push-regenerated-snapshots, unit-test-storefront,]
+        needs: [tests-acceptance, standards, tests-unit-functional-smoke, tests-unit-functional-smoke-first-czech-domain, check-demo-data-limited-domains, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-smoke, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, push-regenerated-snapshots, unit-test-storefront, check-upgrade-notes]
         runs-on: ubuntu-22.04
         env:
             BUILD_FORK_RESULT: ${{ needs.build-fork-docker-images.result }}
@@ -1263,5 +1263,5 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Build successful
                 run: |
-                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_CZECH_RESULT} ${CHECK_DEMO_DATA_LIMITED_DOMAINS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_SMOKE_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT} ${REGENERATION_STARTED} ${CHECH_UPGRADE_NOTES_RESULT} > /dev/null ; echo $?`
+                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_CZECH_RESULT} ${CHECK_DEMO_DATA_LIMITED_DOMAINS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_SMOKE_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT} ${REGENERATION_STARTED} ${CHECK_UPGRADE_NOTES_RESULT} > /dev/null ; echo $?`
                     exit "${EXIT_CODE}"
