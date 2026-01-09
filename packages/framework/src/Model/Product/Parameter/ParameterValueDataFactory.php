@@ -30,7 +30,7 @@ class ParameterValueDataFactory
     {
         $parameterValueData = $this->createInstance();
         $parameterValueData->rgbHex = null;
-        $parameterValueData->colourIcon = $this->uploadedFileDataFactory->create();
+        $parameterValueData->colorIcon = $this->uploadedFileDataFactory->create();
 
         return $parameterValueData;
     }
@@ -43,7 +43,7 @@ class ParameterValueDataFactory
     {
         $parameterValueData = $this->createInstance();
         $this->fillFromParameterValue($parameterValueData, $parameterValue);
-        $parameterValueData->colourIcon = $this->uploadedFileDataFactory->createByEntity($parameterValue);
+        $parameterValueData->colorIcon = $this->uploadedFileDataFactory->createByEntity($parameterValue);
 
         return $parameterValueData;
     }
@@ -58,6 +58,6 @@ class ParameterValueDataFactory
         $parameterValueData->numericValue = $parameterValue->getNumericValue();
         $parameterValueData->locale = $parameterValue->getLocale();
         $parameterValueData->rgbHex = $parameterValue->getRgbHex();
-        $parameterValueData->colourIcon = $this->uploadedFileDataFactory->create();
+        $parameterValueData->colorIcon = $this->uploadedFileDataFactory->create();
     }
 }

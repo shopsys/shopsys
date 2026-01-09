@@ -1,10 +1,8 @@
-AppParameterFilterOptionDecorator:
-    type: object
+ParameterFilterOptionInterfaceDecorator:
+    type: interface
     decorator: true
     config:
-        interfaces:
-            - 'ParameterFilterOptionInterface'
-        description: "Parameter filter option"
+        description: "Represents parameter filter option"
         fields:
             uuid:
                 type: "Uuid!"

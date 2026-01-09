@@ -88,19 +88,19 @@ class ProductFilterOptionsFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $brand
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
      * @param int $count
      * @param bool $isAbsolute
      * @param bool $isSelected
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption
      */
     protected function createParameterValueFilterOption(
-        ParameterValue $brand,
+        ParameterValue $parameterValue,
         int $count,
         bool $isAbsolute,
         bool $isSelected = false,
     ): ParameterValueFilterOption {
-        return new ParameterValueFilterOption($brand, $count, $isAbsolute, $isSelected);
+        return new ParameterValueFilterOption($parameterValue, $count, $isAbsolute, $isSelected);
     }
 
     /**

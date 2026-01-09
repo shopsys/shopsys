@@ -11,6 +11,7 @@ use Override;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
@@ -52,6 +53,11 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      * @inject
      */
     protected PricingSetting $pricingSetting;
+
+    /**
+     * @inject
+     */
+    protected UploadedFileFacade $uploadedFileFacade;
 
     #[Override]
     protected function setUp(): void
@@ -536,5 +542,25 @@ abstract class GraphQlTestCase extends ApplicationTestCase
             $expectedErrorCode,
             $extensions['code'],
         );
+    }
+
+    /**
+     * @param object $entity
+     * @return array
+     */
+    protected function getFilesByEntity(object $entity): array
+    {
+        $files = $this->uploadedFileFacade->getUploadedFilesByEntity($entity);
+
+        $filesData = [];
+
+        foreach ($files as $file) {
+            $filesData[] = [
+                'anchorText' => $file->getTranslatedName($this->domain->getLocale()) ?? $file->getName(),
+                'url' => $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getCurrentDomainConfig(), $file),
+            ];
+        }
+
+        return $filesData;
     }
 }

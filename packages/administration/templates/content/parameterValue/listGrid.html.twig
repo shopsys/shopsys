@@ -1,7 +1,28 @@
 {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_name %}
-    <a href="{{ url('admin_parametervalue_edit', { id: row.pu.id }) }}">{{ value }}</a>
+    <a href="{{ url('admin_parametervalue_edit', { id: row.pv.id }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_value_cell_id_preview %}
+    {% set uploadedFiles = filesIndexedByParameterValueIds[row.pv.id]|default([]) %}
+    {% if uploadedFiles is not empty %}
+        {% set uploadedFile = uploadedFiles|first %}
+        <img src="{{ uploadedFileUrl(uploadedFile) }}"
+             title="{{ uploadedFile.name }}"
+             data-bs-toggle="tooltip"
+             data-bs-placement="right"
+             alt="{{ row.pv.text }}"
+             style="width: 30px; height: 30px; object-fit: cover; border-radius: 4px;">
+    {% elseif row.pv.rgbHex %}
+        <div style="width: 30px; height: 30px; background-color: {{ row.pv.rgbHex }}; border-radius: 4px; border: 1px solid #ccc;"
+             title="{{ row.pv.rgbHex }}"
+             data-bs-toggle="tooltip"
+             data-bs-placement="right"
+        ></div>
+    {% else %}
+        <span>-</span>
+    {% endif %}
 {% endblock %}
 
 {% block grid_no_data %}

@@ -7718,6 +7718,15 @@ Parameter value filter option
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.coloricon">colorIcon</strong></td>
+<td valign="top"><a href="#file">File</a></td>
+<td>
+
+Uploaded file for color parameter value
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.count">count</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>

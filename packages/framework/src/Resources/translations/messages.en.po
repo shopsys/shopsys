@@ -475,6 +475,9 @@ msgstr ""
 msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
 msgstr ""
 
+msgid "Cancel"
+msgstr ""
+
 msgid "Canceled"
 msgstr ""
 
@@ -569,6 +572,9 @@ msgid "Collection %collectionAttribute% was changed:<br> %changes%"
 msgstr ""
 
 msgid "Color"
+msgstr ""
+
+msgid "Color pattern icon"
 msgstr ""
 
 msgid "Combination of parameters and their values"
@@ -2383,6 +2389,9 @@ msgstr ""
 msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
 msgstr ""
 
+msgid "Parameter value of type color"
+msgstr ""
+
 msgid "Parameter values"
 msgstr ""
 
@@ -2393,9 +2402,6 @@ msgid "Parameters"
 msgstr ""
 
 msgid "Parameters order in category"
-msgstr ""
-
-msgid "Pararameter value of type color"
 msgstr ""
 
 msgid "Parent category"
@@ -2896,6 +2902,9 @@ msgstr ""
 msgid "Select country"
 msgstr ""
 
+msgid "Select file"
+msgstr ""
+
 msgid "Select items"
 msgstr ""
 
@@ -3236,6 +3245,9 @@ msgid "Text"
 msgstr ""
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
+msgstr ""
+
+msgid "The icon takes precedence over the RGB color value. You can upload a PNG, JPG, GIF, or SVG file."
 msgstr ""
 
 msgid "The instructions are presented to the customer after they submit the order withdrawal request."

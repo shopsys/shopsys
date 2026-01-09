@@ -2,7 +2,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeProductFilterOptionsParametersColorFragment = { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: string | null, isSelected: boolean }> };
+export type TypeProductFilterOptionsParametersColorFragment = { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: string | null, isSelected: boolean, colorIcon: { __typename?: 'File', url: string, anchorText: string } | null }> };
 
 export const ProductFilterOptionsParametersColorFragment = gql`
     fragment ProductFilterOptionsParametersColorFragment on ParameterColorFilterOption {
@@ -16,6 +16,10 @@ export const ProductFilterOptionsParametersColorFragment = gql`
     count
     rgbHex
     isSelected
+    colorIcon {
+      url
+      anchorText
+    }
   }
   isCollapsed
 }

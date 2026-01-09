@@ -1,0 +1,10 @@
+ParameterCheckboxFilterOptionDecorator:
+    type: object
+    decorator: true
+    inherits:
+        - 'ParameterFilterOptionDecorator'
+    config:
+        fields:
+            values:
+                type: "[ParameterValueFilterOption!]!"
+                description: "Filter options of parameter values"

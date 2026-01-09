@@ -5,43 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Grid;
 
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
-use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileAdminListFacade;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class UploadedFileGridFactory extends AbstractUploadedFileGridFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileAdminListFacade $uploadedFileAdminListFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
-     */
-    public function __construct(
-        GridFactory $gridFactory,
-        protected readonly UploadedFileAdminListFacade $uploadedFileAdminListFacade,
-        protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
-    ) {
-        parent::__construct($gridFactory);
-    }
-
     /**
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchFormData
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     public function createWithSearch(QuickSearchFormData $quickSearchFormData): Grid
     {
-        $queryBuilder = $this->uploadedFileAdminListFacade->getQueryBuilderByQuickSearchData($quickSearchFormData);
-
-        $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
-            $queryBuilder,
-            'u.id',
-            function ($row) {
-                $row['filename'] = sprintf('%s.%s', $row['u']['name'], $row['u']['extension']);
-
-                return $row;
-            },
-        );
+        $dataSource = $this->createDataSource($quickSearchFormData);
 
         $grid = $this->createInstance('uploadedFileList', $dataSource);
 

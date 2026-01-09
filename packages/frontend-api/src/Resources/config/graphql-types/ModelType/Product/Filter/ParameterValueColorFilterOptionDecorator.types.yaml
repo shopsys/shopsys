@@ -1,0 +1,14 @@
+ParameterValueColorFilterOptionDecorator:
+    type: object
+    decorator: true
+    inherits:
+        - 'ParameterValueFilterOptionDecorator'
+    config:
+        fields:
+            rgbHex:
+                type: "String"
+                description: "RGB hex of color parameter"
+            colorIcon:
+                type: "File"
+                description: "Uploaded file for color parameter value"
+                resolve: '@=query("colorIconByParameterValueFilterOptionPromiseQuery", value)'

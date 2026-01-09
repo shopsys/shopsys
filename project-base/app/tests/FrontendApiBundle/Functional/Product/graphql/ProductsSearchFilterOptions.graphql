@@ -1,0 +1,24 @@
+query ProductsSearchFilterOptions($search: String!, $userIdentifier: Uuid!) {
+    productsSearch(searchInput: { search: $search, isAutocomplete: false, userIdentifier: $userIdentifier }) {
+        productFilterOptions {
+            minimalPrice
+            maximalPrice
+            inStock
+            flags {
+                count
+                flag {
+                    name
+                }
+            }
+            brands {
+                count
+                brand {
+                    name
+                }
+            }
+            parameters {
+                name
+            }
+        }
+    }
+}

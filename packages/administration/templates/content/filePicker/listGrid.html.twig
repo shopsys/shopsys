@@ -1,17 +1,15 @@
-{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
-
-{% block grid_no_data %}
-    {{ 'No files found.'|trans }}
-{% endblock %}
-
-{% block grid_pager_totalcount %}
-    {% set entityName = 'files'|trans %}
-    {{ parent() }}
-{% endblock %}
+{% extends '@ShopsysAdministration/content/uploadedFile/listGrid.html.twig' %}
 
 {% block grid_value_cell_id_select %}
-    <a class="js-picker-window-add-item btn btn-sm"
-       href="#"
+    {% if isMultiple %}
+        {% set buttonJsClass = 'js-picker-window-add-item' %}
+        {% set buttonLabel = 'Add'|trans %}
+    {% else %}
+        {% set buttonJsClass = 'js-file-picker-select' %}
+        {% set buttonLabel = 'Choose'|trans %}
+    {% endif %}
+    <button type="button"
+       class="{{ buttonJsClass }} btn btn-sm"
        data-picker-instance-id="{{ jsInstanceId }}"
        data-picker-id="{{ row.u.id }}"
        data-picker-name="{{ row.filename }}"
@@ -23,7 +21,7 @@
             {{ ux_icon('plus') }}
         </span>
         <span class="js-picker-label">
-            {{ 'Add'|trans }}
+            {{ buttonLabel }}
         </span>
-    </a>
+    </button>
 {% endblock %}

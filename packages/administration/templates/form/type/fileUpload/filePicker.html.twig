@@ -1,0 +1,51 @@
+{% macro pickerWidgetItem(item, formRow, relationsFilename, additionalTypesToRender) %}
+    {% set file = item %}
+    <div class="card card-sm mb-3 js-file-upload-uploaded-file js-picker-item" data-id="{{ file ? file.id : '' }}" style="max-width: 17.5rem;">
+        <div class="card-header d-flex justify-content-between align-items-center py-1">
+            <button class="js-picker-item-button-delete ms-auto btn btn-sm btn-ghost-danger" type="button" title="{{ 'Delete'|trans }}">
+                {{ ux_icon('delete', {class: 'icon mx-0'}) }}
+            </button>
+        </div>
+
+        <div class="position-relative ratio ratio-16x9 overflow-hidden js-picker-item-thumbnail">
+            {% if file %}
+                {{ uploadedFilePreviewWithLink(file) }}
+            {% endif %}
+        </div>
+
+        <div class="card-footer pb-0">
+            {{ form_widget(formRow, {attr: {class: 'js-picker-item-input'}}) }}
+            {{ form_widget(relationsFilename, {attr: {class: 'js-picker-item-filename mb-3'}}) }}
+            {{ form_errors(relationsFilename) }}
+
+            <div class="js-picker-item-names">
+                {% if additionalTypesToRender is defined and additionalTypesToRender %}
+                    {% for additionalType in additionalTypesToRender %}
+                        {{ form_widget(additionalType) }}
+                        {{ form_errors(additionalType) }}
+                    {% endfor %}
+                {% else %}
+                    <div class="js-picker-item-name text-truncate mb-3">
+                        {% if file %}
+                            {{ file.nameWithExtension }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block file_picker %}
+    <div id="{{ form.relations.vars.id }}_single_picker"
+         class="js-file-picker"
+         data-picker-prototype="{{ _self.pickerWidgetItem(null, form.relations.vars.prototype, form.relationsFilenames.vars.prototype)|e }}"
+         data-picker-url="{{ form.relations.vars.picker_url }}"
+    >
+        <div class="file-upload-card-container js-picker-items">
+            {% for key, formRow in form.relations %}
+                {{ _self.pickerWidgetItem(form.relations.vars.items[key], formRow, form.relationsFilenames[key]) }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

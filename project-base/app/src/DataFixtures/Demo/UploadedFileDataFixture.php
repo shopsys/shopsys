@@ -18,6 +18,9 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
 class UploadedFileDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    private const int PRODUCT_EXAMPLE_FILE_ID = 1;
+    private const int PARAMETER_VALUE_HEART_RED_FILE_ID = 2;
+
     /**
      * @param string $dataFixturesFilesDirectory
      * @param \League\Flysystem\MountManager $mountManager
@@ -50,13 +53,9 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
             $this->createUploadedFileTranslatedNames('Example file'),
         );
 
-        $this->addUploadedFile(
-            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2),
-            'example-file.pdf',
-            $this->createUploadedFileTranslatedNames('Example file'),
-        );
+        $this->addReferencedUploadedFiles($this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2), [self::PRODUCT_EXAMPLE_FILE_ID]);
 
-        $this->addReferencedUploadedFiles($this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2), [1]);
+        $this->loadFilesForParameterValues();
     }
 
     /**
@@ -67,6 +66,7 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
     {
         return [
             ProductDataFixture::class,
+            ParameterColorValueDataFixture::class,
         ];
     }
 
@@ -134,7 +134,7 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
         string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
     ): void {
         $uploadedFileData = $this->uploadedFileDataFactory->createByEntity($entity);
-        $uploadedFileData->relations = $this->uploadedFileFacade->getByIds($uploadedFileIds);
+        $uploadedFileData->relations = $this->uploadedFileFacade->getByIdsIndexedById($uploadedFileIds);
         $this->uploadedFileFacade->manageFiles($entity, $uploadedFileData, $type);
     }
 
@@ -151,5 +151,25 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
         }
 
         return $names;
+    }
+
+    private function loadFilesForParameterValues(): void
+    {
+        $parameterValueFileUploaded = false;
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+            $parameterValueRed = $this->getReference(ParameterColorValueDataFixture::PARAMETER_VALUE_RED_REFERENCE_PREFIX . $locale);
+
+            if ($parameterValueFileUploaded === false) {
+                $this->addUploadedFile(
+                    $parameterValueRed,
+                    'heart-red.svg',
+                    [],
+                );
+                $parameterValueFileUploaded = true;
+            } else {
+                $this->addReferencedUploadedFiles($parameterValueRed, [self::PARAMETER_VALUE_HEART_RED_FILE_ID]);
+            }
+        }
     }
 }

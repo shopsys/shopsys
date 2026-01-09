@@ -56,8 +56,6 @@
 
     {% endif %}
 
-    {% embed "@ShopsysAdministration/form/type/fileUpload/filesPicker.html.twig" %}{% endembed %}
-
     <div class="d-none">
         {{ form_widget(form.filesToDelete) }}
     </div>
@@ -65,6 +63,11 @@
     <div class="{{ disabledField is defined ? 'disabled' }}">
         {{ form_errors(form) }}
         {{ form_label(form, label) }}
+        {% if multiple %}
+            {% embed "@ShopsysAdministration/form/type/fileUpload/filesPicker.html.twig" %}{% endembed %}
+        {% else %}
+            {% embed "@ShopsysAdministration/form/type/fileUpload/filePicker.html.twig" %}{% endembed %}
+        {% endif %}
         {{ form_widget(form) }}
     </div>
 {% endblock file_upload_row %}
@@ -89,15 +92,13 @@
         {% endblock abstract_file_upload_widget_uploaded_files %}
 
         {% block abstract_file_upload_widget_buttons %}
-            {% if multiple %}
-                <button type="button"
-                        class="btn form-control js-picker-button-add"
-                        data-picker-target="{{ form.relations.vars.id }}"
-                >
-                    {{ ux_icon('plus') }}
-                    {{ form.relations.vars.label_button_add }}
-                </button>
-            {% endif %}
+            <button type="button"
+                    class="btn form-control {{ multiple ? 'js-picker-button-add' }}"
+                    data-picker-target="{{ form.relations.vars.id }}{{ multiple ? '' : '_single_picker' }}"
+            >
+                {{ ux_icon('plus') }}
+                {{ form.relations.vars.label_button_add }}
+            </button>
         {% endblock abstract_file_upload_widget_buttons %}
     {% endembed %}
 {% endblock file_upload_widget %}

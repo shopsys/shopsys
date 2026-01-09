@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
@@ -12,12 +15,15 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\ParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\SliderParameterValuesUpdateFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +42,9 @@ class ParameterValueController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionDataFactory $parameterValueConversionDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
@@ -46,6 +55,9 @@ class ParameterValueController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly ParameterValueConversionDataFactory $parameterValueConversionDataFactory,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+        protected readonly UploadedFileFacade $uploadedFileFacade,
+        protected readonly UploadedFileConfig $uploadedFileConfig,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -64,9 +76,12 @@ class ParameterValueController extends AdminBaseController
         $grid = $this->gridFactory->create('parameterValues', $dataSource, AdminRoleConstant::ROLE_PARAMETER_VALUE);
 
         $grid->addColumn('text', 'pv.text', t('Parameter value'));
-        $grid->addColumn('rgbHex', 'pv.rgbHex', t('RGB Hex'));
+        $grid->addColumn('preview', 'pv.id', t('Preview'));
         $grid->addEditActionColumn('admin_parametervalue_edit', ['id' => 'pv.id']);
-        $grid->setTheme('@ShopsysAdministration/content/parameterValue/listGrid.html.twig');
+        $grid->enablePaging();
+        $grid->setTheme('@ShopsysAdministration/content/parameterValue/listGrid.html.twig', [
+            'filesIndexedByParameterValueIds' => $this->getFilesIndexedByParameterValueIds(clone $queryBuilder, $grid),
+        ]);
 
         return $this->render(
             '@ShopsysAdministration/content/parameterValue/list.html.twig',
@@ -165,5 +180,31 @@ class ParameterValueController extends AdminBaseController
                 'parameter' => $parameter,
             ],
         );
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $gridQueryBuilder
+     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[][]
+     */
+    protected function getFilesIndexedByParameterValueIds(QueryBuilder $gridQueryBuilder, Grid $grid): array
+    {
+        $gridQueryBuilder->select('pv.id');
+
+        if ($grid->isEnabledPaging()) {
+            $limit = $grid->getLimit();
+            $offset = ($grid->getPage() - 1) * $limit;
+            $gridQueryBuilder
+                ->setMaxResults($limit)
+                ->setFirstResult($offset);
+        }
+
+        $parameterValuesIds = array_column($gridQueryBuilder->getQuery()->getArrayResult(), 'id');
+
+        $locale = $this->uploadedFileConfig->isRequiredFriendlyName(ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG)
+            ? $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()
+            : null;
+
+        return $this->uploadedFileFacade->getAllFilesIndexedByEntityId($parameterValuesIds, ParameterValue::ENTITY_NAME_FOR_FILES_CONFIG, $locale);
     }
 }

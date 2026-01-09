@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Webmozart\Assert\Assert;
 
 /**
@@ -15,6 +14,8 @@ use Webmozart\Assert\Assert;
  */
 class ParameterValue
 {
+    public const string ENTITY_NAME_FOR_FILES_CONFIG = 'parameterValue';
+
     /**
      * @var int
      * @ORM\Column(type="integer")
@@ -54,11 +55,6 @@ class ParameterValue
     protected $rgbHex;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
-     */
-    protected $colourIcon;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
      */
     public function __construct(ParameterValueData $parameterData)
@@ -68,7 +64,6 @@ class ParameterValue
         $this->locale = $parameterData->locale;
         $this->uuid = Uuid::uuid4()->toString();
         $this->rgbHex = $parameterData->rgbHex;
-        $this->colourIcon = $parameterData->colourIcon;
     }
 
     /**
@@ -79,7 +74,6 @@ class ParameterValue
         $this->text = $parameterData->text;
         $this->numericValue = $parameterData->numericValue;
         $this->rgbHex = $parameterData->rgbHex;
-        $this->colourIcon = $parameterData->colourIcon;
     }
 
     /**
@@ -120,14 +114,6 @@ class ParameterValue
     public function getRgbHex()
     {
         return $this->rgbHex;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
-     */
-    public function getColourIcon(): UploadedFileData
-    {
-        return $this->colourIcon;
     }
 
     /**

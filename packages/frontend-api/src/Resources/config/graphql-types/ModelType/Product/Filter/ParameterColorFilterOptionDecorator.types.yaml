@@ -1,0 +1,10 @@
+ParameterColorFilterOptionDecorator:
+    type: object
+    decorator: true
+    inherits:
+        - 'ParameterFilterOptionDecorator'
+    config:
+        fields:
+            values:
+                type: "[ParameterValueColorFilterOption!]!"
+                description: "Filter options of parameter values"

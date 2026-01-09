@@ -62,23 +62,6 @@
         {% endif %}
     {% endif %}
 
-    {% embed "@ShopsysAdministration/form/type/fileUpload/filesPicker.html.twig" %}
-        {% block files_picker %}
-            <div
-                    id="{{ form.relations.vars.id }}"
-                    class="js-files-picker"
-                    data-picker-prototype="{{ _self.pickerWidgetItem(null, form.relations.vars.prototype, form.relations.vars.sortable, null, null, null, form.relationsFilenames.vars.prototype, [form.relationsNames.vars.prototype])|e }}"
-                    data-picker-url="{{ form.relations.vars.picker_url }}"
-            >
-                <div class="file-upload-card-container js-file-upload js-picker-items">
-                    {% for key, formRow in form.relations %}
-                        {{ _self.pickerWidgetItem(form.relations.vars.items[key], formRow, form.relations.vars.sortable, form.relations.vars.item_names[key], form.relations.vars.item_routes[key] ?? null, key, form.relationsFilenames[key], [form.relationsNames[key]]) }}
-                    {% endfor %}
-                </div>
-            </div>
-        {% endblock files_picker %}
-    {% endembed %}
-
     <div class="d-none">
         {{ form_widget(form.filesToDelete) }}
     </div>
@@ -86,6 +69,40 @@
     <div class="{{ disabledField is defined ? 'disabled' }}">
         {{ form_errors(form) }}
         {{ form_label(form, label) }}
+        {% if multiple %}
+            {% embed "@ShopsysAdministration/form/type/fileUpload/filesPicker.html.twig" %}
+                {% block files_picker %}
+                    <div
+                            id="{{ form.relations.vars.id }}"
+                            class="js-files-picker"
+                            data-picker-prototype="{{ _self.pickerWidgetItem(null, form.relations.vars.prototype, form.relations.vars.sortable, null, null, null, form.relationsFilenames.vars.prototype, [form.relationsNames.vars.prototype])|e }}"
+                            data-picker-url="{{ form.relations.vars.picker_url }}"
+                    >
+                        <div class="file-upload-card-container js-file-upload js-picker-items">
+                            {% for key, formRow in form.relations %}
+                                {{ _self.pickerWidgetItem(form.relations.vars.items[key], formRow, form.relations.vars.sortable, form.relations.vars.item_names[key], form.relations.vars.item_routes[key] ?? null, key, form.relationsFilenames[key], [form.relationsNames[key]]) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endblock files_picker %}
+            {% endembed %}
+        {% else %}
+            {% embed "@ShopsysAdministration/form/type/fileUpload/filePicker.html.twig" %}
+                {% block file_picker %}
+                    <div id="{{ form.relations.vars.id }}_single_picker"
+                         class="js-file-picker"
+                         data-picker-prototype="{{ _self.pickerWidgetItem(null, form.relations.vars.prototype, form.relationsFilenames.vars.prototype, [form.relationsNames.vars.prototype])|e }}"
+                         data-picker-url="{{ form.relations.vars.picker_url }}"
+                    >
+                        <div class="file-upload-card-container js-picker-items">
+                            {% for key, formRow in form.relations %}
+                                {{ _self.pickerWidgetItem(form.relations.vars.items[key], formRow, form.relationsFilenames[key], [form.relationsNames[key]]) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endblock file_picker %}
+            {% endembed %}
+        {% endif %}
         {{ form_widget(form) }}
         {{ form_help(form) }}
     </div>
@@ -112,8 +129,8 @@
 
         {% block abstract_file_upload_widget_buttons %}
             <button type="button"
-                    class="btn form-control js-picker-button-add"
-                    data-picker-target="{{ form.relations.vars.id }}"
+                    class="btn form-control {{ multiple ? 'js-picker-button-add' }}"
+                    data-picker-target="{{ form.relations.vars.id }}{{ multiple ? '' : '_single_picker' }}"
             >
                 {{ ux_icon('plus') }}
                 {{ form.relations.vars.label_button_add }}

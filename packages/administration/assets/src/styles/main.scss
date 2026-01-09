@@ -67,3 +67,24 @@
 .form-check.form-check-inline {
     margin-bottom: 0;
 }
+
+.file-picker-preview {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .icon {
+        width: 24px;
+        height: 24px;
+    }
+}

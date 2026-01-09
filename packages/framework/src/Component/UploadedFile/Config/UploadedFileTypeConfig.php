@@ -11,9 +11,13 @@ class UploadedFileTypeConfig
     /**
      * @param string $name
      * @param bool $multiple
+     * @param bool $requireFriendlyName
      */
-    public function __construct(protected readonly string $name, protected readonly bool $multiple)
-    {
+    public function __construct(
+        protected readonly string $name,
+        protected readonly bool $multiple,
+        protected readonly bool $requireFriendlyName,
+    ) {
     }
 
     /**
@@ -30,5 +34,13 @@ class UploadedFileTypeConfig
     public function isMultiple(): bool
     {
         return $this->multiple;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRequiredFriendlyName(): bool
+    {
+        return $this->requireFriendlyName;
     }
 }

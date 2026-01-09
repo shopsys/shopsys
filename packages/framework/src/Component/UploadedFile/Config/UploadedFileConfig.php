@@ -82,4 +82,34 @@ class UploadedFileConfig implements UploadedFileConfigInterface
 
         throw new UploadedFileEntityConfigNotFoundException($entityClass);
     }
+
+    /**
+     * @param string $entityName
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
+     */
+    protected function getUploadedFileEntityConfigByName(string $entityName): UploadedFileEntityConfig
+    {
+        foreach ($this->uploadedFileEntityConfigsByClass as $entityConfig) {
+            if ($entityConfig->getEntityName() === $entityName) {
+                return $entityConfig;
+            }
+        }
+
+        throw new UploadedFileEntityConfigNotFoundException($entityName);
+    }
+
+    /**
+     * @param string $entityName
+     * @param string $typeName
+     * @return bool
+     */
+    #[Override]
+    public function isRequiredFriendlyName(
+        string $entityName,
+        string $typeName = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+    ): bool {
+        return $this->getUploadedFileEntityConfigByName($entityName)
+            ->getTypeByName($typeName)
+            ->isRequiredFriendlyName();
+    }
 }

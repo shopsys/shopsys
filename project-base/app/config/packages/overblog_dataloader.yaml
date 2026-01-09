@@ -17,6 +17,9 @@ overblog_dataloader:
         filesBatchLoader:
             alias: "files_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Files\\FilesBatchLoader:loadByBatchData"
+        firstFileBatchLoader:
+            alias: "first_file_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Files\\FilesBatchLoader:loadFirstByBatchData"
         firstImageBatchLoader:
             alias: "first_image_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Image\\FirstImageBatchLoader:loadByBatchData"

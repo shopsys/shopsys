@@ -475,6 +475,9 @@ msgstr "CSV soubor"
 msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
 msgstr "CSV soubor musí být v kódování UTF-8 se sloupci \"{{ columns }}\". Doporučuje se čárka jako oddělovač sloupců a tečka (.) jako desetinný oddělovač."
 
+msgid "Cancel"
+msgstr "Zrušit"
+
 msgid "Canceled"
 msgstr "Stornována"
 
@@ -570,6 +573,9 @@ msgstr "Kolekce %collectionAttribute% byla změněna:<br> %changes%"
 
 msgid "Color"
 msgstr "Barva"
+
+msgid "Color pattern icon"
+msgstr "Ikona barevného vzoru"
 
 msgid "Combination of parameters and their values"
 msgstr "Kombinace parametrů a jejich hodnot parametrů"
@@ -2383,6 +2389,9 @@ msgstr "Hodnota parameteru"
 msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
 msgstr "Hodnota parametru <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> je úspěšně upravena."
 
+msgid "Parameter value of type color"
+msgstr "Hodnota parametru typu barva"
+
 msgid "Parameter values"
 msgstr "Hodnoty parametru"
 
@@ -2394,9 +2403,6 @@ msgstr "Parametry"
 
 msgid "Parameters order in category"
 msgstr "Pořadí parametrů v kategorii"
-
-msgid "Pararameter value of type color"
-msgstr "Hodnota parametru typu barva"
 
 msgid "Parent category"
 msgstr "Nadřazená kategorie"
@@ -2896,6 +2902,9 @@ msgstr "Kategorie druhého sloupce"
 msgid "Select country"
 msgstr "Vybrat zemi"
 
+msgid "Select file"
+msgstr "Vybrat soubor"
+
 msgid "Select items"
 msgstr "Vybrat položky"
 
@@ -3237,6 +3246,9 @@ msgstr "Text"
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. Státy se stejnou prioritou budou seřazeny abecedně."
+
+msgid "The icon takes precedence over the RGB color value. You can upload a PNG, JPG, GIF, or SVG file."
+msgstr "Ikona má přednost před hodnotou barvy RGB. Můžete nahrát soubor ve formátu PNG, JPG, GIF nebo SVG."
 
 msgid "The instructions are presented to the customer after they submit the order withdrawal request."
 msgstr "Instrukce jsou zákazníkovi zobrazeny poté, co odešle žádost o odstoupení od smlouvy."

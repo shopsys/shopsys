@@ -2,6 +2,7 @@ import { SelectedParametersList, SelectedParametersListItem, SelectedParametersN
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
+import { Image } from 'components/Basic/Image/Image';
 import { AnimatePresence } from 'framer-motion';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 import { useMemo } from 'react';
@@ -170,6 +171,10 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                               text: string;
                                               isSelected: boolean;
                                               rgbHex: string;
+                                              colorIcon?: {
+                                                  url: string;
+                                                  anchorText: string;
+                                              };
                                           }[]
                                       ).filter((selectedParameterValue) => {
                                           return (
@@ -223,34 +228,52 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                         </SelectedParametersListItem>
                                     )}
                                     {selectedParameterValues &&
-                                        selectedParameterValues.map((selectedValue) => (
-                                            <SelectedParametersListItem
-                                                key={selectedValue.uuid}
-                                                ariaLabel={t(
-                                                    'Remove parameter {{ value }} from group {{ groupName }}',
-                                                    {
-                                                        ns: 'accessibility',
-                                                        value: selectedValue.text,
-                                                        groupName: selectedParameterOptions.name,
-                                                    },
-                                                )}
-                                                onClick={() =>
-                                                    updateFilterParametersQuery(
-                                                        selectedParameter.parameter,
-                                                        selectedValue.uuid,
-                                                    )
-                                                }
-                                            >
-                                                {selectedValue.rgbHex && selectedValue.rgbHex !== '' && (
-                                                    <div
-                                                        className="border-icon-default mr-2 size-4 rounded-sm border"
-                                                        style={{ backgroundColor: selectedValue.rgbHex }}
-                                                    />
-                                                )}
-                                                {selectedValue.text}
-                                                <SelectedParametersIcon />
-                                            </SelectedParametersListItem>
-                                        ))}
+                                        selectedParameterValues.map((selectedValue) => {
+                                            const shouldShowImage =
+                                                selectedValue.colorIcon?.url && selectedValue.colorIcon.url !== '';
+                                            const shouldShowColor =
+                                                selectedValue.rgbHex && selectedValue.rgbHex !== '' && !shouldShowImage;
+
+                                            return (
+                                                <SelectedParametersListItem
+                                                    key={selectedValue.uuid}
+                                                    ariaLabel={t(
+                                                        'Remove parameter {{ value }} from group {{ groupName }}',
+                                                        {
+                                                            ns: 'accessibility',
+                                                            value: selectedValue.text,
+                                                            groupName: selectedParameterOptions.name,
+                                                        },
+                                                    )}
+                                                    onClick={() =>
+                                                        updateFilterParametersQuery(
+                                                            selectedParameter.parameter,
+                                                            selectedValue.uuid,
+                                                        )
+                                                    }
+                                                >
+                                                    {shouldShowImage && (
+                                                        <Image
+                                                            alt={selectedValue.colorIcon?.anchorText ?? 'Color icon'}
+                                                            className="mr-2 size-4 rounded-sm"
+                                                            height={16}
+                                                            src={selectedValue.colorIcon?.url}
+                                                            width={16}
+                                                        />
+                                                    )}
+
+                                                    {shouldShowColor && (
+                                                        <div
+                                                            className="border-icon-default mr-2 size-4 rounded-sm border"
+                                                            style={{ backgroundColor: selectedValue.rgbHex }}
+                                                        />
+                                                    )}
+
+                                                    {selectedValue.text}
+                                                    <SelectedParametersIcon />
+                                                </SelectedParametersListItem>
+                                            );
+                                        })}
                                 </SelectedParametersList>
                             );
                         })}

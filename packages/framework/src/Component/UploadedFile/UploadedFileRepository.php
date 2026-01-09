@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 
 class UploadedFileRepository implements UploadedFileRepositoryInterface
@@ -124,19 +125,23 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
     /**
      * @param int[] $uploadedFileIds
      * @throws \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
+     * @return array<int, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile>
      */
-    public function getByIds(array $uploadedFileIds): array
+    public function getByIdsIndexedById(array $uploadedFileIds): array
     {
-        $uploadedFiles = $this->getUploadedFileRepository()->findBy(['id' => $uploadedFileIds]);
+        $uploadedFiles = $this->em->createQueryBuilder()
+            ->select('u')
+            ->from(UploadedFile::class, 'u', 'u.id')
+            ->where('u.id IN (:ids)')
+            ->setParameter('ids', $uploadedFileIds)
+            ->getQuery()
+            ->getResult();
 
         if (count($uploadedFileIds) !== count($uploadedFiles)) {
-            $foundUploadedFileIds = array_map(fn (UploadedFile $uploadedFile) => $uploadedFile->getId(), $uploadedFiles);
-
             throw new FileNotFoundException(
                 sprintf(
                     'UploadedFiles with IDs %s do not exist.',
-                    implode(', ', array_diff($uploadedFileIds, $foundUploadedFileIds)),
+                    implode(', ', array_diff($uploadedFileIds, array_keys($uploadedFiles))),
                 ),
             );
         }
@@ -145,16 +150,67 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
     }
 
     /**
-     * @param int $uploadedFileId
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation[]
+     * @param int[] $uploadedFileIds
+     * @return array<int, array<string, string>>
      */
-    public function getAllTranslationsByUploadedFileId(int $uploadedFileId): array
+    public function getTranslationsIndexedByFileIdAndLocale(array $uploadedFileIds): array
     {
-        return $this->em->createQueryBuilder()
-            ->select('ut')
+        if (count($uploadedFileIds) === 0) {
+            return [];
+        }
+
+        $translations = $this->em->createQueryBuilder()
+            ->select('IDENTITY(ut.translatable) as fileId, ut.locale, ut.name')
             ->from(UploadedFileTranslation::class, 'ut')
-            ->andWhere('ut.translatable = :uploadedFileId')->setParameter('uploadedFileId', $uploadedFileId)
+            ->andWhere('ut.translatable IN (:uploadedFileIds)')
+            ->setParameter('uploadedFileIds', $uploadedFileIds)
             ->getQuery()
-            ->getResult();
+            ->getArrayResult();
+
+        $result = array_fill_keys($uploadedFileIds, []);
+
+        foreach ($translations as $row) {
+            $result[$row['fileId']][$row['locale']] = $row['name'];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int[] $entityIds
+     * @param string $entityName
+     * @param string|null $requiredLocale
+     * @param string $type
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[][]
+     */
+    public function getAllFilesIndexedByEntityId(
+        array $entityIds,
+        string $entityName,
+        ?string $requiredLocale,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+    ): array {
+        $filesByEntityId = array_fill_keys($entityIds, []);
+        $queryBuilder = $this->em->getRepository(UploadedFileRelation::class)
+            ->createQueryBuilder('ur')
+            ->join('ur.uploadedFile', 'u')
+            ->addSelect('u')
+            ->andWhere('ur.entityName = :entityName')->setParameter('entityName', $entityName)
+            ->andWhere('ur.type = :type')->setParameter('type', $type)
+            ->andWhere('ur.entityId IN (:entities)')->setParameter('entities', $entityIds)
+            ->addOrderBy('ur.position', 'asc')
+            ->addOrderBy('u.id', 'asc');
+
+        if ($requiredLocale !== null) {
+            $queryBuilder
+                ->join('u.translations', 't', 'WITH', 't.locale = :locale AND t.name IS NOT NULL')
+                ->setParameter('locale', $requiredLocale);
+        }
+
+        /** @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelation $fileRelation */
+        foreach ($queryBuilder->getQuery()->execute() as $fileRelation) {
+            $filesByEntityId[$fileRelation->getEntityId()][] = $fileRelation->getUploadedFile();
+        }
+
+        return $filesByEntityId;
     }
 }
