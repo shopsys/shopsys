@@ -21,10 +21,10 @@ use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
+use Shopsys\FrameworkBundle\Form\FileUploadType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Form\MultiLocaleFileUploadType;
 use Shopsys\FrameworkBundle\Form\ProductParameterValueType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
@@ -923,7 +923,7 @@ final class ProductFormType extends AbstractType
         ]);
 
         $builderFileGroup
-            ->add('files', MultiLocaleFileUploadType::class, [
+            ->add('files', FileUploadType::class, [
                 'required' => false,
                 'file_entity_class' => Product::class,
                 'file_constraints' => [

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator;
+use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -69,6 +70,7 @@ final class FileUploadType extends AbstractType
         $view->vars['files_by_id'] = $this->getFilesIndexedById($options);
         $view->vars['entity'] = $options['entity'];
         $view->vars['multiple'] = $this->isMultiple($options);
+        $view->vars['requires_friendly_name'] = $this->isRequiredFriendlyName($options);
     }
 
     /**
@@ -137,6 +139,8 @@ final class FileUploadType extends AbstractType
                     ],
                 ]),
             );
+
+        $this->buildLocalizedNamesFieldsIfNecessary($options, $builder);
     }
 
     /**
@@ -209,11 +213,62 @@ final class FileUploadType extends AbstractType
     }
 
     /**
+     * @param array $options
+     * @return bool
+     */
+    private function isRequiredFriendlyName(array $options): bool
+    {
+        if ($options['file_entity_class'] === null) {
+            return false;
+        }
+
+        $fileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfigByClass(
+            $options['file_entity_class'],
+        );
+
+        return $fileEntityConfig->getTypeByName($options['file_type'])->isRequiredFriendlyName();
+    }
+
+    /**
      * {@inheritdoc}
      */
     #[Override]
     public function getParent(): string
     {
         return AbstractFileUploadType::class;
+    }
+
+    /**
+     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildLocalizedNamesFieldsIfNecessary(array $options, FormBuilderInterface $builder): void
+    {
+        if (!$this->isRequiredFriendlyName($options)) {
+            return;
+        }
+
+        $namesOptions = [
+            'required' => false,
+            'entry_type' => LocalizedType::class,
+            'allow_add' => true,
+            'entry_options' => [
+                'label' => '',
+                'help' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
+                'entry_options' => [
+                    'constraints' => [
+                        new Constraints\Length([
+                            'max' => 255,
+                            'maxMessage' => 'Name cannot be longer than {{ limit }} characters',
+                        ]),
+                    ],
+                ],
+            ],
+        ];
+
+        $builder
+            ->add('namesIndexedById', CollectionType::class, $namesOptions)
+            ->add('names', CollectionType::class, $namesOptions)
+            ->add('relationsNames', CollectionType::class, $namesOptions);
     }
 }

@@ -46,6 +46,13 @@
                         <div class="card-footer pb-0">
                             {{ form_widget(fileForm, { full_name: form.orderedFiles.vars.full_name ~ '[]'}) }}
                             {{ form_widget(form.currentFilenamesIndexedById.children[fileForm.vars.value], { attr: { class: "mb-3" } }) }}
+
+                            {% if requires_friendly_name %}
+                                {{ form_widget(form.namesIndexedById.children[fileForm.vars.value]) }}
+                                <div class="mb-3">
+                                    {{ form_help(form.namesIndexedById.children[fileForm.vars.value]) }}
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
@@ -53,7 +60,6 @@
         {% else %}
             {% do form.orderedFiles.setRendered %}
         {% endif %}
-
     {% endif %}
 
     <div class="d-none">
@@ -65,11 +71,49 @@
         {{ form_errors(form.relations) }}
         {{ form_label(form, label) }}
         {% if multiple %}
-            {% embed "@ShopsysAdministration/form/type/fileUpload/filesPicker.html.twig" %}{% endembed %}
+            {% embed "@ShopsysAdministration/form/type/fileUpload/filesPicker.html.twig" %}
+                {% block files_picker %}
+                    {% if requires_friendly_name %}
+                        <div
+                                id="{{ form.relations.vars.id }}"
+                                class="js-files-picker"
+                                data-picker-prototype="{{ _self.pickerWidgetItem(null, form.relations.vars.prototype, form.relations.vars.sortable, null, null, null, form.relationsFilenames.vars.prototype, [form.relationsNames.vars.prototype])|e }}"
+                                data-picker-url="{{ form.relations.vars.picker_url }}"
+                        >
+                            <div class="file-upload-card-container js-file-upload js-picker-items">
+                                {% for key, formRow in form.relations %}
+                                    {{ _self.pickerWidgetItem(form.relations.vars.items[key], formRow, form.relations.vars.sortable, form.relations.vars.item_names[key], form.relations.vars.item_routes[key] ?? null, key, form.relationsFilenames[key], [form.relationsNames[key]]) }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ parent() }}
+                    {% endif %}
+                {% endblock files_picker %}
+            {% endembed %}
         {% else %}
-            {% embed "@ShopsysAdministration/form/type/fileUpload/filePicker.html.twig" %}{% endembed %}
+            {% embed "@ShopsysAdministration/form/type/fileUpload/filePicker.html.twig" %}
+                {% block file_picker %}
+                    {% if requires_friendly_name %}
+                        <div id="{{ form.relations.vars.id }}_single_picker"
+                             class="js-file-picker"
+                             data-picker-prototype="{{ _self.pickerWidgetItem(null, form.relations.vars.prototype, form.relationsFilenames.vars.prototype, [form.relationsNames.vars.prototype])|e }}"
+                             data-picker-url="{{ form.relations.vars.picker_url }}"
+                        >
+                            <div class="file-upload-card-container js-picker-items">
+                                {% for key, formRow in form.relations %}
+                                    {{ _self.pickerWidgetItem(form.relations.vars.items[key], formRow, form.relationsFilenames[key], [form.relationsNames[key]]) }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ parent() }}
+                    {% endif %}
+                {% endblock file_picker %}
+            {% endembed %}
         {% endif %}
         {{ form_widget(form) }}
+        {{ form_help(form) }}
     </div>
 {% endblock file_upload_row %}
 
@@ -80,12 +124,14 @@
         {% endblock %}
 
         {% block abstract_file_upload_widget_uploaded_files %}
+            {% set additionalTypesToRender = requires_friendly_name ? [form.names.vars.prototype] : [] %}
             <div class="file-upload-card-container js-file-upload-uploaded-files"
-                 data-prototype="{{ _self.uploadedFile(form.uploadedFiles.vars.prototype, form.uploadedFilenames.vars.prototype, '', null, false, 'js-file-upload-uploaded-file-template')|escape }}"
+                 data-prototype="{{ _self.uploadedFile(form.uploadedFiles.vars.prototype, form.uploadedFilenames.vars.prototype, '', null, false, 'js-file-upload-uploaded-file-template', additionalTypesToRender)|escape }}"
             >
                 {% for key, uploadedFile in form.uploadedFiles %}
                     {% set fileThumbnailInfo = getFileThumbnailInfoByTemporaryFilename(uploadedFile.vars.value) %}
-                    {{ _self.uploadedFile(uploadedFile, form.uploadedFilenames[key], getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri) }}
+                    {% set additionalTypesToRender = requires_friendly_name ? [form.names[key]] : [] %}
+                    {{ _self.uploadedFile(uploadedFile, form.uploadedFilenames[key], getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri, '', additionalTypesToRender) }}
                 {% else %}
                     {% do form.children.uploadedFiles.setRendered %}
                 {% endfor %}
