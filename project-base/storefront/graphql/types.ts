@@ -2323,6 +2323,10 @@ export type TypeParameterSliderFilterOption = TypeParameterFilterOptionInterface
 /** Represents a parameter value */
 export type TypeParameterValue = {
   __typename?: 'ParameterValue';
+  /** Uploaded file for color parameter value */
+  colorIcon: Maybe<TypeFile>;
+  /** Parameter value RGB value if set (for color parameters only) */
+  rgbHex: Maybe<Scalars['String']['output']>;
   /** Parameter value */
   text: Scalars['String']['output'];
   /** UUID */

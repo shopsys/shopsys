@@ -2,7 +2,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, name: string, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> };
+export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, name: string, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { __typename?: 'File', url: string, anchorText: string } | null }> };
 
 export const ParameterFragment = gql`
     fragment ParameterFragment on Parameter {
@@ -18,6 +18,11 @@ export const ParameterFragment = gql`
     __typename
     uuid
     text
+    rgbHex
+    colorIcon {
+      url
+      anchorText
+    }
   }
 }
     `;
