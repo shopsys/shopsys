@@ -99,6 +99,9 @@
                 {% for additionalType in additionalTypesToRender %}
                     {{ form_widget(additionalType) }}
                     {{ form_errors(additionalType) }}
+                    <div class="mb-3">
+                        {{ form_help(additionalType) }}
+                    </div>
                 {% endfor %}
             {% endif %}
         </div>
