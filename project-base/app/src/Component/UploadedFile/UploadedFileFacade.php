@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Component\UploadedFile;
 
-use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade as BaseUploadedFileFacade;
 
 /**
@@ -15,30 +13,4 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade as BaseUpl
  */
 class UploadedFileFacade extends BaseUploadedFileFacade
 {
-    /**
-     * @param object $entity
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
-     * @param string $type
-     */
-    public function manageSingleFile(
-        object $entity,
-        UploadedFileData $uploadedFileData,
-        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
-    ): void {
-        $uploadedFiles = $uploadedFileData->uploadedFiles;
-        $uploadedFilenames = $uploadedFileData->uploadedFilenames;
-        $uploadedFileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfig($entity);
-        $orderedFiles = $uploadedFileData->orderedFiles;
-
-        $this->deleteRelationsByEntityAndUploadedFiles($entity, $orderedFiles, $type);
-
-        $this->uploadFile(
-            $entity,
-            $uploadedFileEntityConfig->getEntityName(),
-            $type,
-            array_pop($uploadedFiles),
-            array_pop($uploadedFilenames),
-            array_pop($uploadedFileData->names),
-        );
-    }
 }
