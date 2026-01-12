@@ -1,3 +1,4 @@
+import { NewsletterFormPlaceholder } from './NewsletterFormPlaceholder';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
@@ -8,5 +9,5 @@ const NewsletterForm = dynamic(() => import('./NewsletterForm').then((component)
 export const DeferredNewsletterForm: FC = () => {
     const shouldRender = useDeferredRender('newsletter');
 
-    return shouldRender ? <NewsletterForm /> : null;
+    return shouldRender ? <NewsletterForm /> : <NewsletterFormPlaceholder />;
 };
