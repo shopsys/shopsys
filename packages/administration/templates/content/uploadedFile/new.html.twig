@@ -4,5 +4,7 @@
 {% block h1 %}{{ 'Upload files'|trans }}{% endblock %}
 
 {% block main_content_inner %}
-    {{ form_row(form) }}
+    {{ form_row(form.products) }}
+    {{ form_row(form.files) }}
+    {{ form_rest(form) }}
 {% endblock %}

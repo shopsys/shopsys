@@ -26,37 +26,44 @@ final class UploadedFileFormType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('name', TextType::class, [
-            'label' => 'Filename',
-            'constraints' => [
-                new Constraints\NotBlank(['message' => 'Please enter the filename']),
-                new Constraints\Length(
-                    ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters'],
-                ),
-            ],
-        ]);
+        $isNew = $options['uploaded_file'] === null;
 
-        $builder->add('names', LocalizedType::class, [
-            'required' => false,
-            'label' => 'Names',
-            'help' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
-            'entry_options' => [
-                'required' => false,
+        if ($isNew === false) {
+            $builder->add('name', TextType::class, [
+                'label' => 'Filename',
                 'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter the filename']),
                     new Constraints\Length(
-                        ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                        ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
-            ],
-        ]);
+            ]);
+
+            $builder->add('names', LocalizedType::class, [
+                'required' => false,
+                'label' => 'Names',
+                'help' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
+                'entry_options' => [
+                    'required' => false,
+                    'constraints' => [
+                        new Constraints\Length(
+                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                        ),
+                    ],
+                ],
+            ]);
+        }
 
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_uploadedfile_list',
             'entity' => $options['uploaded_file'],
+            'save_label' => $isNew ? t('Upload') : null,
         ]);
 
         $builder->add('files', BasicFileUploadType::class, [
             'required' => false,
+            'multiple' => $isNew,
+            'with_names_inputs' => $isNew,
             'file_constraints' => [
                 new Constraints\File([
                     'maxSize' => '2M',
@@ -64,7 +71,7 @@ final class UploadedFileFormType extends AbstractType
                         . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
                 ]),
             ],
-            'label' => 'Replace file',
+            'label' => $isNew ? false : t('Replace file'),
         ]);
 
         $builder->add('products', ProductsType::class, [
@@ -82,10 +89,9 @@ final class UploadedFileFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => UploadedFileFormData::class,
+            'uploaded_file' => null,
         ]);
 
-        $resolver
-            ->setRequired('uploaded_file')
-            ->setAllowedTypes('uploaded_file', [UploadedFile::class]);
+        $resolver->setAllowedTypes('uploaded_file', ['null', UploadedFile::class]);
     }
 }

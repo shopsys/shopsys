@@ -159,12 +159,29 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData $uploadedFileFormData
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
+     */
+    public function create(UploadedFileFormData $uploadedFileFormData): array
+    {
+        $uploadedFiles = $this->uploadFilesWithoutRelations(
+            $uploadedFileFormData->files->uploadedFiles,
+            $uploadedFileFormData->files->uploadedFilenames,
+            $uploadedFileFormData->files->names,
+        );
+
+        $this->assignFilesToProducts($uploadedFiles, $uploadedFileFormData->products);
+
+        return $uploadedFiles;
+    }
+
+    /**
      * @param array $temporaryFilenames
      * @param array $uploadedFilenames
      * @param array<int, array<string, string>> $namesIndexedByFileIdAndLocale
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
-    public function uploadFilesWithoutRelations(
+    protected function uploadFilesWithoutRelations(
         array $temporaryFilenames,
         array $uploadedFilenames,
         array $namesIndexedByFileIdAndLocale,
@@ -186,6 +203,47 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         $this->em->flush();
 
         return $files;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @param string $type
+     */
+    protected function assignFilesToProducts(
+        array $uploadedFiles,
+        array $products,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+    ): void {
+        if (count($uploadedFiles) === 0 || count($products) === 0) {
+            return;
+        }
+
+        $uploadedFileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfigByClass(Product::class);
+        $entityName = $uploadedFileEntityConfig->getEntityName();
+
+        $productIds = array_map(static fn (Product $product) => $product->getId(), $products);
+        $positions = $this->getMaxPositionsForEntities($entityName, $productIds, $type);
+
+        foreach ($uploadedFiles as $file) {
+            foreach ($products as $product) {
+                $this->createRelation($entityName, $product->getId(), $file, ++$positions[$product->getId()], $type);
+            }
+        }
+    }
+
+    /**
+     * @param string $entityName
+     * @param int[] $entityIds
+     * @param string $type
+     * @return array<int, int>
+     */
+    protected function getMaxPositionsForEntities(string $entityName, array $entityIds, string $type): array
+    {
+        return array_replace(
+            array_fill_keys($entityIds, -1),
+            $this->uploadedFileRelationRepository->maxPositionsByEntityNameAndIds($entityName, $entityIds, $type),
+        );
     }
 
     /**
@@ -451,11 +509,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         $idsToAdd = array_diff($relationsEntityIds, $currentRelationsEntityIds);
         $idsToRemove = array_diff($currentRelationsEntityIds, $relationsEntityIds);
 
-        $positions = array_fill_keys($idsToAdd, -1);
-        $positions = array_replace(
-            $positions,
-            $this->uploadedFileRelationRepository->maxPositionsByEntityNameAndIds($entityName, $idsToAdd, $type),
-        );
+        $positions = $this->getMaxPositionsForEntities($entityName, $idsToAdd, $type);
 
         foreach ($idsToAdd as $id) {
             $this->createRelation($entityName, $id, $file, ++$positions[$id], $type);
