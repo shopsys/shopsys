@@ -44,7 +44,7 @@ describe('handleFormErrors', () => {
 
         handleFormErrors(error, mockFormMethods as any, mockT, 'Custom error message');
 
-        expect(showErrorMessage).toHaveBeenCalledWith('Custom error message', expect.anything());
+        expect(showErrorMessage).toHaveBeenCalledWith('Custom error message', expect.anything(), expect.anything());
     });
 
     test('should show parsed error message when no override provided', () => {
@@ -237,7 +237,7 @@ describe('handleFormErrors', () => {
 
         handleFormErrors(error, mockFormMethods as any, mockT);
 
-        // By default, should use GtmMessageOriginType.other
-        expect(showErrorMessage).toHaveBeenCalledWith(expect.any(String), expect.anything());
+        // By default, should use GtmMessageOriginType.other and pass errorType in options
+        expect(showErrorMessage).toHaveBeenCalledWith(expect.any(String), expect.anything(), expect.anything());
     });
 });

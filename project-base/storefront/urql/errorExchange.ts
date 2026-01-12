@@ -7,7 +7,8 @@ import { ParsedErrors } from 'types/error';
 import { CombinedError, Exchange, Operation } from 'urql';
 import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
 import { DomainConfigType } from 'utils/domain/domainConfig';
-import { isFlashMessageError, isNoLogError } from 'utils/errors/applicationErrors';
+import { ErrorOrchestrator } from 'utils/errors/ErrorOrchestrator';
+import { isNoLogError } from 'utils/errors/applicationErrors';
 import { isExpectedPriceFilterError } from 'utils/errors/expectedErrors';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { isWithErrorDebugging, isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
@@ -114,26 +115,39 @@ const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operati
         return;
     }
 
-    if (!parsedErrors.applicationError) {
-        return;
-    }
-
     if (isExpectedPriceFilterError(error)) {
         return;
     }
 
-    if (isFlashMessageError(parsedErrors.applicationError.type)) {
-        showErrorMessage(parsedErrors.applicationError.message);
-        return;
-    }
+    // Use ErrorOrchestrator for consistent error handling
+    const decisions = ErrorOrchestrator.decide(parsedErrors, {
+        source: 'errorExchange',
+        gtmOrigin: GtmMessageOriginType.other,
+    });
 
-    if (!isNoLogError(parsedErrors.applicationError.type)) {
-        logException({
-            message: error.message,
-            parsedApplicationError: parsedErrors.applicationError,
-            originalError: JSON.stringify(error),
-            location: 'getErrorExchange.handleErrorMessagesForUsers',
-        });
+    for (const decision of decisions) {
+        switch (decision.action) {
+            case 'toast':
+                showErrorMessage(decision.message, GtmMessageOriginType.other, {
+                    errorType: decision.errorType,
+                });
+                break;
+
+            case 'silent-log':
+                logException({
+                    message: error.message,
+                    parsedApplicationError: parsedErrors.applicationError,
+                    originalError: JSON.stringify(error),
+                    location: 'getErrorExchange.handleErrorMessagesForUsers',
+                });
+                break;
+
+            case 'ignore':
+            case 'form-field':
+            case 'custom':
+                // These actions are handled by component-level error handlers
+                break;
+        }
     }
 };
 
@@ -142,13 +156,17 @@ const handleCartErrorMessages = ({ userError, applicationError }: ParsedErrors) 
         case 'cart-not-found':
             break;
         case 'default':
-            showErrorMessage(applicationError.message, GtmMessageOriginType.cart);
+            showErrorMessage(applicationError.message, GtmMessageOriginType.cart, {
+                errorType: applicationError.type,
+            });
             break;
     }
 
     if (userError?.validation) {
         for (const invalidFieldName in userError.validation) {
-            showErrorMessage(userError.validation[invalidFieldName].message, GtmMessageOriginType.cart);
+            showErrorMessage(userError.validation[invalidFieldName].message, GtmMessageOriginType.cart, {
+                fieldName: invalidFieldName,
+            });
         }
     }
 };
