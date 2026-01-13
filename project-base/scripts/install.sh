@@ -10,7 +10,7 @@ docker compose exec -T php-fpm composer install
 docker compose exec -T php-fpm ./phing db-create test-db-create frontend-api-generate-new-keys build-demo-dev-quick
 
 DOMAINS_URLS_FILE="$DIR/../app/config/domains_urls.yaml"
-DOMAIN_URLS=($(grep -oP 'url:\s*\K\S+' "$DOMAINS_URLS_FILE"))
+DOMAIN_URLS=($(awk '/url:/ {print $2}' "$DOMAINS_URLS_FILE"))
 
 FIRST_DOMAIN_URL="${DOMAIN_URLS[0]}"
 
