@@ -31,10 +31,11 @@ final class YamlHandler
     /**
      * @param string $path
      * @param array<mixed> $data
+     * @param int $inline
      */
-    public function writeYaml(string $path, array $data): void
+    public function writeYaml(string $path, array $data, int $inline = 4): void
     {
-        $content = Yaml::dump($data, 4, 4, Yaml::DUMP_NULL_AS_TILDE);
+        $content = Yaml::dump($data, $inline, 4, Yaml::DUMP_NULL_AS_TILDE | Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE);
         $this->fileHandler->writeFile($path, $content);
     }
 }
