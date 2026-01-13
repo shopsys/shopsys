@@ -293,7 +293,7 @@
     "Magazine": "Magazín",
     "Marketing": "Marketing",
     "Max allowed limit reached.": "Maximálne povolené množstvo dosiahnuté.",
-    "Max transaction count reached": "Maximálny počet transakcií bol dosiahnutý",
+    "Max transaction count reached.": "Maximálny počet transakcií bol dosiahnutý.",
     "Max transaction count reached. Please go to the <link>order detail page</link> and pay with another method.": "Maximálny počet transakcií bol dosiahnutý. Prosím, prejdite na <link>stránku detailu objednávky</link> a zaplaťte inou metódou.",
     "Maximum available quantity is {{ quantity }}. The quantity was adjusted.": "Maximálne dostupné množstvo je {{ quantity }}. Množstvo bolo upravené.",
     "Maximum file size is {{ max }}": "Maximálna veľkosť súboru je {{ max }}",

@@ -275,7 +275,7 @@
     "Magazine": "Magazine",
     "Marketing": "Marketing",
     "Max allowed limit reached.": "Max allowed limit reached.",
-    "Max transaction count reached": "Max transaction count reached",
+    "Max transaction count reached.": "Max transaction count reached.",
     "Max transaction count reached. Please go to the <link>order detail page</link> and pay with another method.": "Max transaction count reached. Please go to the <link>order detail page</link> and pay with another method.",
     "Maximum available quantity is {{ quantity }}. The quantity was adjusted.": "Maximum available quantity is {{ quantity }}. The quantity was adjusted.",
     "Maximum file size is {{ max }}": "Maximum file size is {{ max }}",
