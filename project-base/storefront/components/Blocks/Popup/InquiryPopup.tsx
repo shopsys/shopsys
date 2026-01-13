@@ -13,10 +13,10 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { InquiryFormType } from 'types/form';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type InquiryPopupProps = {
@@ -41,6 +41,11 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
         productUuid,
     });
     const formMeta = useInquiryFormMeta(formProviderMethods);
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        gtmOrigin: GtmMessageOriginType.other,
+        customMessage: t('There was an error while creating your inquiry'),
+    });
 
     const inquiryHandler: SubmitHandler<InquiryFormType> = async (inquiryFormData) => {
         blurInput();
@@ -54,7 +59,7 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
         updatePortalContent(null);
 
         if (createInquiryResult.error !== undefined) {
-            showErrorMessage(t('There was an error while creating your inquiry'), GtmMessageOriginType.other);
+            handleError(createInquiryResult.error);
             return;
         }
 

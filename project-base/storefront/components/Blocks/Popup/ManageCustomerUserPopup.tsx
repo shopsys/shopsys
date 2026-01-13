@@ -20,7 +20,7 @@ import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { CustomerUserManageProfileFormType } from 'types/form';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -49,6 +49,10 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
     };
     const [formProviderMethods] = useCustomerUserManageProfileForm(customerUserDefaultFormData);
     const formMeta = useCustomerUserManageProfileFormMeta(formProviderMethods, mode);
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        customMessage: formMeta.messages.error,
+    });
 
     const onSubmitCustomerUserManageProfileFormHandler: SubmitHandler<CustomerUserManageProfileFormType> = async (
         customerUserEditProfileFormData,
@@ -79,7 +83,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                 updatePortalContent(null);
             }
 
-            handleFormErrors(editUserResult.error, formProviderMethods, t, formMeta.messages.error);
+            handleError(editUserResult.error);
 
             return;
         }
@@ -100,7 +104,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
             updatePortalContent(null);
         }
 
-        handleFormErrors(addUserResult.error, formProviderMethods, t, formMeta.messages.error);
+        handleError(addUserResult.error);
     };
 
     useScrollToFirstError(formMeta.formName, formProviderMethods);

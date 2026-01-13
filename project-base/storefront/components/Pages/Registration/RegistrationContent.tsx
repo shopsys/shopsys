@@ -14,9 +14,9 @@ import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
 import { useRegistration } from 'utils/auth/useRegistration';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -26,6 +26,10 @@ export const RegistrationContent: FC = () => {
     const [formProviderMethods, defaultValues] = useRegistrationForm();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const { register } = useRegistration();
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        customMessage: formMeta.messages.error,
+    });
 
     const onRegistrationHandler: SubmitHandler<RegistrationFormType> = async (registrationFormData) => {
         blurInput();
@@ -38,7 +42,7 @@ export const RegistrationContent: FC = () => {
             billingAddressUuid: null,
         });
 
-        handleFormErrors(registrationError, formProviderMethods, t, formMeta.messages.error);
+        handleError(registrationError);
 
         clearForm(registrationError, formProviderMethods, defaultValues);
     };

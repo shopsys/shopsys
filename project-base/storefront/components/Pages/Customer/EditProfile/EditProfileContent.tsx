@@ -14,7 +14,7 @@ import { useChangePersonalDataMutation } from 'graphql/requests/customer/mutatio
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -38,6 +38,10 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     });
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
     const isSubmitting = formProviderMethods.formState.isSubmitting;
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        customMessage: formMeta.messages.error,
+    });
 
     const onSubmitCustomerChangeProfileFormHandler: SubmitHandler<CustomerChangeProfileFormType> = async (
         customerChangeProfileFormData,
@@ -77,14 +81,14 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
 
             isCompanyDataChanged = changeCompanyDataResult.data?.ChangeCompanyData !== undefined;
 
-            handleFormErrors(changeCompanyDataResult.error, formProviderMethods, t, formMeta.messages.error);
+            handleError(changeCompanyDataResult.error);
         }
 
         if (changeProfileResult.data?.ChangePersonalData !== undefined && isCompanyDataChanged) {
             showSuccessMessage(formMeta.messages.success);
         }
 
-        handleFormErrors(changeProfileResult.error, formProviderMethods, t, formMeta.messages.error);
+        handleError(changeProfileResult.error);
     };
 
     useScrollToFirstError(formMeta.formName, formProviderMethods);

@@ -15,7 +15,7 @@ import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { NewPasswordFormType } from 'types/form';
 import { useLoginAfterPasswordRecovery } from 'utils/auth/useLogin';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -36,6 +36,10 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
     const [formProviderMethods] = useRecoveryPasswordForm();
     const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        customMessage: formMeta.messages.error,
+    });
     const {
         fieldState: { error },
         field: { value: newPasswordValue },
@@ -61,21 +65,18 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                 handleActionsAfterPasswordRecovery(recoverPasswordData.showCartMergeInfo, accessToken, refreshToken);
             }
 
-            handleFormErrors(newPasswordResult.error, formProviderMethods, t, formMeta.messages.error, formMeta.fields);
+            handleError(newPasswordResult.error);
         },
         [
             cartUuid,
             email,
-            formMeta.fields,
-            formMeta.messages.error,
             formMeta.messages.success,
             formProviderMethods,
             handleActionsAfterPasswordRecovery,
             hash,
             newPassword,
             productListUuids,
-            t,
-            domainConfig,
+            handleError,
         ],
     );
 

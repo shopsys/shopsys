@@ -14,10 +14,10 @@ import { onGtmCreateWatchdotEventHandler } from 'gtm/handlers/onGtmCreateWatchdo
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { WatchdogFormType } from 'types/form';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type WatchdogPopupProps = {
@@ -36,6 +36,11 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
         gdprAgreement: false,
     });
     const formMeta = useWatchdogFormMeta(formProviderMethods);
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        gtmOrigin: GtmMessageOriginType.watchdog,
+        customMessage: t('There was an error while creating your watchdog'),
+    });
 
     const watchdogHandler: SubmitHandler<WatchdogFormType> = async (watchdogFormData) => {
         blurInput();
@@ -50,7 +55,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
         updatePortalContent(null);
 
         if (createWatchdogResult.error !== undefined) {
-            showErrorMessage(t('There was an error while creating your watchdog'), GtmMessageOriginType.watchdog);
+            handleError(createWatchdogResult.error);
             return;
         }
 

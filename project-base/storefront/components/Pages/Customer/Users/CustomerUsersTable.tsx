@@ -10,9 +10,8 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
-import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 import { useCurrentCustomerUsers } from 'utils/user/useCurrentCustomerUsers';
 
@@ -42,6 +41,10 @@ export const CustomerUsersTable: FC = () => {
     const [, removeCustomerUser] = useRemoveCustomerUserMutation();
     const { customerUsers, customerUsersIsFetching } = useCurrentCustomerUsers();
     const { currentCustomerUserUuid } = useAuthorization();
+    const handleError = useErrorHandler({
+        gtmOrigin: GtmMessageOriginType.other,
+        customMessage: t('There was an error while deleting user'),
+    });
 
     const deleteItemHandler = async (customerUserUuid: string | undefined) => {
         if (customerUserUuid === undefined) {
@@ -52,12 +55,7 @@ export const CustomerUsersTable: FC = () => {
         const deleteCustomerUserResult = await removeCustomerUser({ customerUserUuid });
 
         if (deleteCustomerUserResult.error !== undefined) {
-            const { applicationError } = getUserFriendlyErrors(deleteCustomerUserResult.error, t);
-
-            showErrorMessage(
-                applicationError?.message ? applicationError.message : t('There was an error while deleting user'),
-                GtmMessageOriginType.other,
-            );
+            handleError(deleteCustomerUserResult.error);
             return;
         }
 

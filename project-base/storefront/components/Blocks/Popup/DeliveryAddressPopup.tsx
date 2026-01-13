@@ -20,10 +20,10 @@ import { useSessionStore } from 'store/useSessionStore';
 import { DeliveryAddressType } from 'types/customer';
 import { DeliveryAddressFormType } from 'types/form';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type DeliveryAddressPopupProps = {
@@ -52,6 +52,16 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
     const formMeta = useDeliveryAddressFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
     const { setValue } = formProviderMethods;
+    const handleEditError = useErrorHandler({
+        form: formProviderMethods,
+        gtmOrigin: GtmMessageOriginType.other,
+        customMessage: t('There was an error while editing your delivery address'),
+    });
+    const handleCreateError = useErrorHandler({
+        form: formProviderMethods,
+        gtmOrigin: GtmMessageOriginType.other,
+        customMessage: t('There was an error while creating your delivery address'),
+    });
 
     useEffect(() => {
         if (countriesAsSelectOptions.length > 0 && deliveryAddress?.country) {
@@ -79,10 +89,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
             updatePortalContent(null);
 
             if (editDeliveryAddressResult.error !== undefined) {
-                showErrorMessage(
-                    t('There was an error while editing your delivery address'),
-                    GtmMessageOriginType.other,
-                );
+                handleEditError(editDeliveryAddressResult.error);
                 return;
             }
 
@@ -102,7 +109,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
         updatePortalContent(null);
 
         if (createDeliveryAddressResult.error !== undefined) {
-            showErrorMessage(t('There was an error while creating your delivery address'), GtmMessageOriginType.other);
+            handleCreateError(createDeliveryAddressResult.error);
             return;
         }
 

@@ -13,9 +13,9 @@ import { TypePersonalDataAccessRequestTypeEnum } from 'graphql/types';
 import { useCallback, useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PersonalDataOverviewFormType } from 'types/form';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type PersonalDataOverviewContentProps = {
@@ -28,6 +28,10 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
     const [, personalDataOverview] = usePersonalDataRequestMutation();
     const [formProviderMethods] = usePersonalDataOverviewForm();
     const formMeta = usePersonalDataOverviewFormMeta(formProviderMethods);
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        customMessage: formMeta.messages.error,
+    });
 
     const onPersonalDataOverviewHandler = useCallback<SubmitHandler<PersonalDataOverviewFormType>>(
         async (personalDataOverviewFormData) => {
@@ -41,10 +45,10 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
                 setIsSuccess(true);
             }
 
-            handleFormErrors(personalDataOverviewResult.error, formProviderMethods, t, formMeta.messages.error);
+            handleError(personalDataOverviewResult.error);
             clearForm(personalDataOverviewResult.error, formProviderMethods, { email: '' });
         },
-        [personalDataOverview, formMeta.messages, t, formProviderMethods],
+        [personalDataOverview, formMeta.messages, formProviderMethods, handleError],
     );
 
     return (

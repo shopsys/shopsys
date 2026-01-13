@@ -99,10 +99,13 @@ const handleErrorMessagesForMutation = (error: CombinedError, t: Translate) => {
         });
     }
 
+    // Components handle their own mutation errors via useErrorHandler or direct error checks.
     if (isWithToastAndConsoleErrorDebugging) {
-        error.graphQLErrors
-            .map((graphqlError) => mapGraphqlErrorForDevelopment(graphqlError))
-            .forEach((simplifiedGraphqlError) => showErrorMessage(JSON.stringify(simplifiedGraphqlError)));
+        // eslint-disable-next-line no-console
+        console.error(
+            '[Mutation Error]',
+            error.graphQLErrors.map((e) => mapGraphqlErrorForDevelopment(e)),
+        );
     }
 };
 
