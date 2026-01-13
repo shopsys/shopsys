@@ -200,3 +200,7 @@ For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use 
 -   paths to check are now defined directly in the `ecs.php` file
 -   fixer `RedundantMarkDownTrailingSpacesFixer` was removed as markdown files are formatted by prettier
 -   see #project-base-diff to update your project
+
+### added styles for grapesjs on localhost ([#4385](https://github.com/shopsys/shopsys/pull/4385))
+
+-   run `make generate-tailwind-for-admin` for genereting Tailwind styles to run GrapesJS localy

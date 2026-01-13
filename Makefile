@@ -52,3 +52,13 @@ run-acceptance-tests-base:
 .PHONY: run-acceptance-tests-actual
 run-acceptance-tests-actual:
 	$(call run_acceptance_tests,actual)
+
+generate-tailwind-for-admin:
+	@echo "🚀 Compiling Tailwind CSS for admin..."
+	rm -rf project-base/storefront/public/tailwind-for-admin/style.css
+	mkdir -p project-base/storefront/public/tailwind-for-admin
+	docker compose exec storefront pnpm compile-tailwind-for-admin
+	@echo "✅ Tailwind CSS compiled to: project-base/storefront/public/tailwind-for-admin/style.css"
+	@echo "🔧 Rebuilding backend admin assets..."
+	docker compose exec php-fpm php phing npm-dev
+	@echo "🎉 Admin assets rebuilt! Tailwind classes are now available in GrapesJS."

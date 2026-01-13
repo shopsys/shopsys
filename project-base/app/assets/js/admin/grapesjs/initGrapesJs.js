@@ -88,6 +88,9 @@ export default class InitGrapesJs {
             forceClass: false,
             nativeDnD: true,
             plugins: plugins,
+            canvas: {
+                styles: ['/tailwind-for-admin/style.css']
+            },
             pluginsOpts: {
                 [ckeditorPlugin]: {
                     options: {
