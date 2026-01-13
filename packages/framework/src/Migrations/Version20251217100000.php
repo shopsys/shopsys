@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Migrations;
+namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Override;
@@ -16,6 +16,8 @@ class Version20251217100000 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE slider_items ADD route_name VARCHAR(255) DEFAULT NULL');
+        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20251217100000')) {
+            $this->sql('ALTER TABLE slider_items ADD route_name VARCHAR(255) DEFAULT NULL');
+        }
     }
 }
