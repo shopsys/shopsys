@@ -258,6 +258,41 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('title of New computers with USB seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             t('meta description of New computers with USB seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
+
+        $this->createPriceBasedSeoMixForB2bDomains();
+    }
+
+    private function createPriceBasedSeoMixForB2bDomains(): void
+    {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            if (!$domainConfig->isB2b()) {
+                continue;
+            }
+
+            $domainId = $domainConfig->getId();
+            $locale = $domainConfig->getLocale();
+
+            $categoryTv = $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
+            $selectedCategorySeoMixCombinationArray = [
+                'domainId' => $domainId,
+                'categoryId' => $categoryTv->getId(),
+                'flagId' => null,
+                'ordering' => ProductListOrderingConfig::ORDER_BY_PRICE_ASC,
+                'parameterValueIdsByParameterIds' => [],
+            ];
+
+            $this->createReadyCategorySeoMix(
+                $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
+                t('TV, audio from the cheapest', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ['televize-audio-nejlevnejsi-b2b'],
+                $domainId,
+                self::READY_CATEGORY_SEO_TV_FROM_CHEAPEST,
+                t('description of TV, audio from the cheapest seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                t('short description of TV, audio from the cheapest seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                t('title of TV, audio from the cheapest seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                t('meta description of TV, audio from the cheapest seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            );
+        }
     }
 
     /**

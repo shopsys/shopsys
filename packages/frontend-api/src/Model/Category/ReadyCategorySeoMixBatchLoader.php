@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 
 class ReadyCategorySeoMixBatchLoader
 {
@@ -18,12 +19,14 @@ class ReadyCategorySeoMixBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
      */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
     }
 
@@ -35,9 +38,15 @@ class ReadyCategorySeoMixBatchLoader
     {
         $allReadyCategorySeoMixes = $this->readyCategorySeoMixFacade->getAllIndexedByCategoryId($categoryIds, $this->domain->getCurrentDomainConfig());
 
+        $canSeePrices = $this->customerUserRoleResolver->canCurrentCustomerUserSeePrices();
+
         $result = [];
 
         foreach ($allReadyCategorySeoMixes as $readyCategorySeoMixes) {
+            $filteredMixes = $canSeePrices
+                ? $readyCategorySeoMixes
+                : array_filter($readyCategorySeoMixes, fn (ReadyCategorySeoMix $mix) => !$mix->hasPriceBasedOrdering());
+
             $result[] = array_map(
                 fn (ReadyCategorySeoMix $readyCategorySeoMix) => [
                     'name' => $readyCategorySeoMix->getH1(),
@@ -47,7 +56,7 @@ class ReadyCategorySeoMixBatchLoader
                         $readyCategorySeoMix->getId(),
                     ),
                 ],
-                $readyCategorySeoMixes,
+                $filteredMixes,
             );
         }
 

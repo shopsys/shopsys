@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
@@ -24,6 +25,7 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\Exception\CategoryNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\Exception\ReadyCategorySeoMixNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Resolver\Customer\Error\CustomerUserAccessDeniedUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider;
 
 class CategoryQuery extends AbstractQuery
@@ -37,6 +39,7 @@ class CategoryQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
      * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
@@ -47,6 +50,7 @@ class CategoryQuery extends AbstractQuery
         protected readonly ProductFilterFacade $productFilterFacade,
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
         protected readonly TransformStringHelper $transformStringHelper,
+        protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
     }
 
@@ -136,6 +140,10 @@ class CategoryQuery extends AbstractQuery
                     $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($friendlyUrl->getEntityId());
                 } catch (ReadyCategorySeoMixNotFoundException) {
                     throw new ReadyCategorySeoMixNotFoundUserError(sprintf('ReadyCategorySeoMix with URL slug "%s" does not exist.', $urlSlug));
+                }
+
+                if ($readyCategorySeoMix->hasPriceBasedOrdering() && !$this->customerUserRoleResolver->canCurrentCustomerUserSeePrices()) {
+                    throw new CustomerUserAccessDeniedUserError('Access to this SEO category is denied.');
                 }
 
                 $matchingReadyCategorySeoMix = $this->findMatchingReadyCategorySeoMix($info, $readyCategorySeoMix->getCategory());
