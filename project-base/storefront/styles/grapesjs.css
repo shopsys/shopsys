@@ -29,6 +29,6 @@
 
     /* empty image placeholder */
     .gjs-plh-image {
-        @apply !h-52 !w-full !outline-none;
+        @apply h-52! w-full! outline-none!;
     }
 }

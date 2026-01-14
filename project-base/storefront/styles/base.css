@@ -133,7 +133,7 @@
 
     .Toastify__toast {
         @variant md {
-            @apply !rounded-toast border-1;
+            @apply rounded-toast! border-1;
         }
     }
 
@@ -142,7 +142,7 @@
     }
 
     .Toastify__toast-body {
-        @apply !text-text-default max-w-[90%];
+        @apply text-text-default! max-w-[90%];
 
         > div {
             @apply max-w-full;
@@ -154,22 +154,22 @@
     }
 
     .Toastify__toast--info {
-        @apply !bg-toast-bg-warning !border-toast-border-warning !text-toast-text-warning;
+        @apply bg-toast-bg-warning! border-toast-border-warning! text-toast-text-warning!;
 
         svg {
-            @apply !text-toast-icon-warning;
+            @apply text-toast-icon-warning!;
         }
 
         & .Toastify__progress-bar-theme--colored {
-            @apply !bg-toast-border-warning;
+            @apply bg-toast-border-warning!;
         }
     }
 
     .Toastify__toast--success {
-        @apply !bg-toast-bg-success !border-toast-border-success !text-toast-text-success;
+        @apply bg-toast-bg-success! border-toast-border-success! text-toast-text-success!;
 
         svg {
-            @apply !text-toast-icon-success;
+            @apply text-toast-icon-success!;
         }
 
         span {
@@ -177,53 +177,53 @@
         }
 
         & .Toastify__progress-bar-theme--colored {
-            @apply !bg-toast-border-success;
+            @apply bg-toast-border-success!;
         }
     }
 
     .Toastify__toast--error {
-        @apply !bg-toast-bg-error !border-toast-border-error !text-toast-text-error;
+        @apply bg-toast-bg-error! border-toast-border-error! text-toast-text-error!;
 
         svg {
-            @apply !text-toast-icon-error;
+            @apply text-toast-icon-error!;
         }
 
         & .Toastify__progress-bar-theme--colored {
-            @apply !bg-toast-border-error;
+            @apply bg-toast-border-error!;
         }
     }
 
     .Toastify__toast-icon {
-        @apply !size-6;
+        @apply size-6!;
 
         svg {
-            @apply !size-6;
+            @apply size-6!;
         }
     }
 
     .Toastify__close-button {
-        @apply !self-center rounded-sm !opacity-100;
+        @apply self-center rounded-sm opacity-100!;
 
         svg {
-            @apply !text-icon-less hover:!text-icon-default;
+            @apply text-icon-less hover:text-icon-default!;
         }
     }
 
     /* fix gallery video start width and hide dummy image */
     .lg-outer .lg-video-cont .lg-object.lg-video-poster {
-        @apply !w-auto;
+        @apply w-auto!;
     }
 
     .lg-outer .lg-video-cont.lg-has-youtube .lg-dummy-img {
-        @apply !hidden;
+        @apply hidden!;
     }
 
     .lg-outer .lg-thumb-outer.lg-grab .lg-thumb-item {
-        @apply !flex items-center justify-center;
+        @apply flex items-center justify-center!;
     }
 
     .lg-outer .lg-thumb-item img {
-        @apply !h-auto max-h-full !w-auto max-w-full;
+        @apply h-auto! max-h-full! w-auto! max-w-full!;
     }
 
     /* accessibility */

@@ -66,7 +66,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                     src={mainImage?.url}
                     width={500}
                     className={twJoin(
-                        'vl:size-[500px] h-[320px] w-full object-contain lg:h-[500px]',
+                        'vl:size-[500px] h-80 w-full object-contain lg:h-[500px]',
                         !!galleryItems.length && 'cursor-pointer',
                     )}
                     onClickCapture={() => !!galleryItems.length && openGallery(0)}
