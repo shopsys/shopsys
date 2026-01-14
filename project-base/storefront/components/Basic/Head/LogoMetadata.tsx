@@ -1,9 +1,10 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import Head from 'next/head';
+import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 
 export const LogoMetadata: FC = () => {
     const { url } = useDomainConfig();
-    const logoUrl = 'images/logo.svg';
+    const logoUrl = getStringWithoutTrailingSlash(url) + 'images/logo.svg';
 
     return (
         <Head>

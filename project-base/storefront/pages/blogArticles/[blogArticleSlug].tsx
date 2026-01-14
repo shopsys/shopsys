@@ -1,3 +1,4 @@
+import { ArticleMetadata } from 'components/Basic/Head/ArticleMetadata';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
 import {
@@ -56,7 +57,17 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
             ogType={OgTypeEnum.Article}
             title={blogArticleData?.blogArticle?.seoTitle || blogArticleData?.blogArticle?.name}
         >
-            {!!blogArticleData?.blogArticle && <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />}
+            {!!blogArticleData?.blogArticle && (
+                <>
+                    <ArticleMetadata
+                        datePublished={blogArticleData.blogArticle.publishDate}
+                        description={blogArticleData.blogArticle.seoMetaDescription}
+                        headline={blogArticleData.blogArticle.seoTitle || blogArticleData.blogArticle.name}
+                        imageUrl={blogArticleData.blogArticle.mainImage?.url}
+                    />
+                    <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
+                </>
+            )}
         </CommonLayout>
     );
 };
