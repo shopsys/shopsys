@@ -8,6 +8,7 @@
         "build": "next build",
         "check": "concurrently \"pnpm run typecheck\" \"pnpm run lint\"",
         "check--fix": "concurrently \"pnpm run typecheck\" \"pnpm run lint--fix\"",
+        "compile-tailwind-for-admin": "tailwindcss -i styles/globals.css -o ./public/tailwind-for-admin/style.css --minify",
         "dev": "next dev",
         "format": "prettier --config ./prettier.config.js --write '**/*.{js,ts,tsx,json}'",
         "format-check": "prettier --config ./prettier.config.js --check '**/*.{js,ts,tsx,json}'",
