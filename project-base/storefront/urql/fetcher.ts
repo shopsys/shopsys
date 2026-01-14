@@ -1,8 +1,13 @@
 import { captureException } from '@sentry/nextjs';
-import md5 from 'crypto-js/md5';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { DOMAIN_ID_HEADER } from 'urql/createClient';
 import { isClient } from 'utils/isClient';
+
+// Server-side only hash function for Redis cache keys
+const getHash = async (data: string): Promise<string> => {
+    const crypto = await import('crypto');
+    return crypto.createHash('md5').update(data).digest('hex').substring(0, 7);
+};
 
 const FRIENDLY_URL_REGEXP = `@friendlyUrl` as const;
 const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)` as const;
@@ -99,7 +104,7 @@ export const fetcher =
             const domainId = headers.get(DOMAIN_ID_HEADER);
             const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
             const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? domainId + ':' : ''}`;
-            const hash = `${key}${md5(body).toString().substring(0, 7)}`;
+            const hash = `${key}${await getHash(body)}`;
             const fromCache = await redisClient.get(hash);
 
             if (fromCache !== null) {
