@@ -6,6 +6,10 @@ This guide covers building new projects based on Shopsys Platform.
 In case you want to contribute to Shopsys Platform itself, you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
 Take a look at the article about [Monorepo](../introduction/monorepo.md) for more information.
 
+!!! tip "Automate with Shopsys CLI"
+
+    Instead of manual project setup, you can use [Shopsys CLI](./project-initialization-with-shopsys-cli.md) to automate project initialization, domain configuration, and locale settings with a single command.
+
 ## Supported systems
 
 - Windows 10 version 2004 and higher

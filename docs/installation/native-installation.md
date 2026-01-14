@@ -2,6 +2,10 @@
 
 This document will provide you with the general information that is needed for running Shopsys Platform on different operation systems like (Windows, Mac, Linux, ... ), however it is not a step-by-step guide, since it would be very difficult to maintain all operation systems and their versions.
 
+!!! tip "Automate with Shopsys CLI"
+
+    Instead of manual project setup, you can use [Shopsys CLI](./project-initialization-with-shopsys-cli.md) to automate project initialization, domain configuration, and locale settings with a single command.
+
 First it is truly essential to read and understand the articles about requirements and configurations for Shopsys Platform application.
 
 1. [Application Requirements](application-requirements.md)

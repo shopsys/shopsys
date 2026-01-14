@@ -7,6 +7,10 @@ Take a look at the article about [Monorepo](../introduction/monorepo.md) for mor
 
 This solution uses [_Mutagen_](https://mutagen.io) (for relatively fast two-way synchronization of the application files between the host machine and Docker volume).
 
+!!! tip "Automate with Shopsys CLI"
+
+    Instead of manual project setup, you can use [Shopsys CLI](./project-initialization-with-shopsys-cli.md) to automate project initialization, domain configuration, and locale settings with a single command.
+
 ## Requirements
 
 - [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)

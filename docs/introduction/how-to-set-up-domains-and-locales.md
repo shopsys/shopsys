@@ -3,6 +3,10 @@
 This article describes how to work with domains and languages during the development of your project.
 For an explanation of the basic terms, please read [domain, multidomain and multilanguage](domain-multidomain-multilanguage.md) article first.
 
+!!! tip "Automate with Shopsys CLI"
+
+    Setting up domains and locales manually can be complex. [Shopsys CLI](../installation/project-initialization-with-cli.md) automates this entire process - it guides you through domain configuration, locale settings, and URL setup interactively or via YAML configuration files.
+
 !!! note
 
     Demo data on Shopsys Platform are only translated to `en` and `cs` locales.<br>
