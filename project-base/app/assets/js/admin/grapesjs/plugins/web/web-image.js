@@ -18,22 +18,35 @@ export default grapesjs.plugins.add('custom-image', editor => {
     });
 
     editor.DomComponents.addType('image', {
-        isComponent: element => element.tagName === 'IMG' && element.getAttribute('data-gjs-type') === 'image',
+        isComponent: element => {
+            if (element.tagName !== 'IMG') {
+                return false;
+            }
+            // Match by data-gjs-type (for new components)
+            if (element.getAttribute('data-gjs-type') === 'image') {
+                return true;
+            }
+            // Match by class (for reloaded components after save)
+            if (element.classList?.contains('web-custom-image')) {
+                return true;
+            }
+            return false;
+        },
         extend: 'image',
         model: {
             init() {
                 this.on(`change:attributes:${IMAGE_POSITION_DATA_ATTRIBUTE}`, this.handleImagePositionChange);
             },
-
             handleImagePositionChange(element) {
-                element.setClass([`image-position-${this.getAttributes()[IMAGE_POSITION_DATA_ATTRIBUTE]}`]);
+                const position = this.getAttributes()[IMAGE_POSITION_DATA_ATTRIBUTE];
+
+                element.setClass(['web-custom-image', `image-position-${position}`]);
                 if (element.collection.parent.attributes.tagName === 'a') {
                     element.collection.parent.setAttributes({
-                        [LINK_POSITION_DATA_ATTRIBUTE]: this.getAttributes()[IMAGE_POSITION_DATA_ATTRIBUTE],
+                        [LINK_POSITION_DATA_ATTRIBUTE]: position,
                     });
                 }
             },
-
             defaults: {
                 resizable: {
                     updateTarget: (el, rect) => {
@@ -57,7 +70,7 @@ export default grapesjs.plugins.add('custom-image', editor => {
                 attributes: {
                     'data-gjs-type': 'image',
                     [IMAGE_POSITION_DATA_ATTRIBUTE]: 'left',
-                    class: ['image-position-left'],
+                    class: ['web-custom-image', 'image-position-left'],
                 },
                 traits: [
                     {

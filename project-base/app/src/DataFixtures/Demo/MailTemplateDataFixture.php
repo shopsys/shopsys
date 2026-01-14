@@ -141,14 +141,11 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             {rounding_info}<br/>
             {addresses}
             <a style="margin:0.75rem auto;display:flex;height:fit-content;width:fit-content;cursor:pointer;align-items:center;justify-content:center;gap:0.5rem;border-radius:0.5rem;border:2px solid #00C8B7;background-color:#00C8B7;padding:7px 12px;text-align:center;font-weight:500;line-height:18px;text-decoration:none;outline:none;transition:all 0.2s ease;color:#fff;"
+                data-gjs-type="button-link"
                 data-link-position="center"
-                class="gjs-button-link button-link-position-center"
                 title="Order detail"
                 href="{order_detail_url}"
-            >
-                <div class="gjs-text-ckeditor text" data-gjs-type="text">Order detail</div>
-            </a>
-            <br/>            
+            >Order detail</a>            
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
 
