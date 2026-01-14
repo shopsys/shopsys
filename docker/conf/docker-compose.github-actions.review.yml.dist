@@ -1,7 +1,7 @@
 services:
     postgres:
         restart: always
-        image: postgres:17.4-alpine
+        image: postgres:18-alpine
         volumes:
             - postgres-conf:/var/lib/postgresql/conf
         environment:
