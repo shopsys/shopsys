@@ -2,10 +2,6 @@
 
 {% block basic_file_upload_widget %}
     {% embed "@ShopsysAdministration/form/type/fileUpload/AbstractFileUploadType.html.twig" %}
-        {% block widget_attributes %}
-            {{ block("widget_attributes", "form_div_layout.html.twig") }}
-        {% endblock %}
-
         {% block abstract_file_upload_widget_uploaded_files %}
             {% if form.vars.with_names_inputs %}
                 <div class="file-upload-card-container js-file-upload-uploaded-files"
