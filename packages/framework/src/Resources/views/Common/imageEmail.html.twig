@@ -1,0 +1,29 @@
+{% block image_html %}
+    <picture>
+        {% apply spaceless %}
+            {% set mergedClass = (attr.class|default('') ~ ' ' ~ imageCssClass)|trim %}
+            <!--[if !mso]><!-->
+            {% set attr = attr|merge({'class': mergedClass}) %}
+            <img
+            {%- for attrname, attrvalue in attr %}
+                {%- if attrname == 'src' -%}
+                    {{- " " ~ attrname }}="{{ attrvalue|escapeButAmp }}"
+                {%- else -%}
+                    {{- " " ~ attrname }}="{{ attrvalue }}"
+                {%- endif -%}
+            {%- endfor %} itemprop="image" />
+            <!--<![endif]-->
+            <!--[if mso]>
+            {% set attrForMs = attrForMs|merge({'class': mergedClass}) %}
+            <img
+            {%- for attrname, attrvalue in attrForMs %}
+                {%- if attrname == 'src' -%}
+                    {{- " " ~ attrname }}="{{ attrvalue|escapeButAmp }}"
+                {%- else -%}
+                    {{- " " ~ attrname }}="{{ attrvalue }}"
+                {%- endif -%}
+            {%- endfor %} itemprop="image" />
+            <![endif]-->
+        {% endapply %}
+    </picture>
+{% endblock %}

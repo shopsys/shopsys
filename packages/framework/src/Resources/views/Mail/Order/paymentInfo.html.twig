@@ -5,7 +5,7 @@
         <tr>
             <td style="width: 40px; padding-right: 15px;">
                 {% if orderPaymentItem.payment is not null %}
-                    {{ image(orderPaymentItem.payment, { width: 40 }, order.domainId) }}
+                    {{ imageForEmail(orderPaymentItem.payment, { width: 40 }, order.domainId) }}
                 {% endif %}
             </td>
             <td>

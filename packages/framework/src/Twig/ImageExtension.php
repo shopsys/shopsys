@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class ImageExtension extends AbstractExtension
@@ -22,6 +23,7 @@ class ImageExtension extends AbstractExtension
     protected const array NON_HTML_ATTRIBUTES = [
         'type',
     ];
+    protected const string CDN_NO_CONVERT_QUERY_PARAM = 'vshcdn-webp-noautoconvert=1';
 
     protected string $frontDesignImageUrlPrefix;
 
@@ -52,7 +54,37 @@ class ImageExtension extends AbstractExtension
     {
         return [
             new TwigFunction('image', $this->getImageHtml(...), ['is_safe' => ['html']]),
+            new TwigFunction('imageForEmail', $this->getImageHtmlForEmail(...), ['is_safe' => ['html']]),
         ];
+    }
+
+    /**
+     * @return \Twig\TwigFilter[]
+     */
+    #[Override]
+    public function getFilters(): array
+    {
+        return [
+            new TwigFilter('escapeButAmp', [$this, 'escapeButAmp'], ['is_safe' => ['html']]),
+        ];
+    }
+
+    /**
+     * Escapes HTML special characters but keeps ampersands unescaped for email compatibility.
+     * This is needed because Outlook email clients require unescaped ampersands in URLs.
+     *
+     * @param string|null $string
+     * @return string
+     */
+    public function escapeButAmp(?string $string): string
+    {
+        if ($string === null) {
+            return '';
+        }
+
+        $escapedString = htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        return str_replace('&amp;', '&', $escapedString);
     }
 
     /**
@@ -126,6 +158,72 @@ class ImageExtension extends AbstractExtension
         } catch (ImageNotFoundException $e) {
             return $this->getNoimageHtml($domainConfig, $attributes);
         }
+    }
+
+    /**
+     * Returns image HTML optimized for email clients, including Microsoft Outlook.
+     * Uses conditional comments to serve original (non-WebP) images to Outlook clients
+     * which don't support WebP format.
+     *
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
+     * @param array $attributes
+     * @param int $domainId
+     * @return string
+     */
+    public function getImageHtmlForEmail(
+        object $imageOrEntity,
+        array $attributes = [],
+        int $domainId = Domain::FIRST_DOMAIN_ID,
+    ): string {
+        $this->preventDefault($attributes);
+
+        $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+        try {
+            $image = $this->imageFacade->getImageByObject($imageOrEntity, $attributes['type']);
+            $entityName = $image->getEntityName();
+            $attributes['src'] = $this->getImageUrl($image, $attributes, $domainConfig);
+            $attributes['alt'] = $image->getName($domainConfig->getLocale());
+
+            return $this->getImageHtmlByEntityNameForEmail($attributes, $entityName);
+        } catch (ImageNotFoundException $e) {
+            return $this->getNoimageHtmlForEmail($domainConfig, $attributes);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param array $attributes
+     * @return string
+     */
+    protected function getNoimageHtmlForEmail(DomainConfig $domainConfig, array $attributes = []): string
+    {
+        $this->preventDefault($attributes);
+
+        $entityName = 'noimage';
+        $attributes['src'] = $this->getEmptyImageUrl($domainConfig) . '?';
+
+        return $this->getImageHtmlByEntityNameForEmail($attributes, $entityName);
+    }
+
+    /**
+     * @param array $attributes
+     * @param string $entityName
+     * @return string
+     */
+    protected function getImageHtmlByEntityNameForEmail(array $attributes, string $entityName): string
+    {
+        $htmlAttributes = $this->extractHtmlAttributesFromAttributes($attributes);
+
+        $htmlAttributesForMs = $htmlAttributes;
+        $separator = str_contains($htmlAttributesForMs['src'], '?') ? '&' : '?';
+        $htmlAttributesForMs['src'] = $htmlAttributesForMs['src'] . $separator . static::CDN_NO_CONVERT_QUERY_PARAM;
+
+        return $this->twigEnvironment->render('@ShopsysFramework/Common/imageEmail.html.twig', [
+            'attr' => $htmlAttributes,
+            'imageCssClass' => $this->getImageCssClass($entityName, $attributes['type']),
+            'attrForMs' => $htmlAttributesForMs,
+        ]);
     }
 
     /**
