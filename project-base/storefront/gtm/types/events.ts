@@ -223,6 +223,7 @@ export type GtmPaymentChangeEventType = GtmEventInterface<
     }
 >;
 
+/** @public Used by ignored file gtm/factories/getGtmPaymentFailEvent.ts */
 export type GtmPaymentFailEventType = GtmEventInterface<
     GtmEventType.payment_fail,
     {
