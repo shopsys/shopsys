@@ -8,26 +8,24 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 
-/**
- * @ORM\Table(name="promo_code_categories")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'promo_code_categories')]
+#[ORM\Entity]
 class PromoCodeCategory
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode")
-     * @ORM\JoinColumn(nullable=false, name="promo_code_id", referencedColumnName="id", onDelete="CASCADE")
-     * @ORM\Id
      */
+    #[ORM\JoinColumn(nullable: false, name: 'promo_code_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: PromoCode::class)]
+    #[ORM\Id]
     protected $promoCode;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
-     * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id", onDelete="CASCADE")
-     * @ORM\Id
      */
+    #[ORM\JoinColumn(nullable: false, name: 'category_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\Id]
     protected $category;
 
     /**

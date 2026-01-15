@@ -9,62 +9,59 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @ORM\Table(
- *     name="customer_users",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="email_domain", columns={"email", "domain_id"})
- *     },
- *     indexes={
- *         @ORM\Index(columns={"email"})
- *     }
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'customer_users')]
+#[ORM\Index(columns: ['email'])]
+#[ORM\UniqueConstraint(name: 'email_domain', columns: ['email', 'domain_id'])]
+#[ORM\Entity]
 class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAuthenticatedUserInterface, ResetPasswordInterface
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\Customer")
-     * @ORM\JoinColumn(nullable=false)
      */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Customer::class)]
     protected $customer;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $firstName;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $lastName;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $email;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $password;
 
     /**
@@ -74,78 +71,78 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
      */
+    #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup")
-     * @ORM\JoinColumn(name="pricing_group_id", referencedColumnName="id", nullable=false)
      */
+    #[ORM\JoinColumn(name: 'pricing_group_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: PricingGroup::class)]
     protected $pricingGroup;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative")
-     * @ORM\JoinColumn(name="sales_representative_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'sales_representative_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: SalesRepresentative::class)]
     protected $salesRepresentative;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=50, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $resetPasswordHash;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $resetPasswordHashValidThrough;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=30, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 30, nullable: true)]
     protected $telephone;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress")
-     * @ORM\JoinColumn(name="default_delivery_address_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'default_delivery_address_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: DeliveryAddress::class)]
     protected $defaultDeliveryAddress;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain>
-     * @ORM\OneToMany(targetEntity="CustomerUserRefreshTokenChain", mappedBy="customerUser", cascade={"persist"})
      */
+    #[ORM\OneToMany(targetEntity: CustomerUserRefreshTokenChain::class, mappedBy: 'customerUser', cascade: ['persist'])]
     protected $refreshTokenChain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
-     * @ORM\ManyToOne(targetEntity="\Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup")
-     * @ORM\JoinColumn(name="role_group_id", referencedColumnName="id", nullable=false)
      */
+    #[ORM\JoinColumn(name: 'role_group_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: CustomerUserRoleGroup::class)]
     protected $roleGroup;
 
     /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      * @var \DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $lastSecurityChange;
 
     /**

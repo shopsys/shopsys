@@ -9,44 +9,42 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\Clock\DatePoint;
 
-/**
- * @ORM\Table(name="product_list_items")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'product_list_items')]
+#[ORM\Entity]
 class ProductListItem
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected $createdAt;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $product;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\List\ProductList
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\List\ProductList", inversedBy="items", cascade={"persist"})
-     * @ORM\JoinColumn(name="product_list_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'product_list_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: ProductList::class, inversedBy: 'items', cascade: ['persist'])]
     protected $productList;
 
     /**

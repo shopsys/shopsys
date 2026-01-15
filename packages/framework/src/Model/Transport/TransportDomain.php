@@ -7,49 +7,43 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
-/**
- * @ORM\Table(
- *     name="transport_domains",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="transport_domain", columns={"transport_id", "domain_id"})
- *     }
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'transport_domains')]
+#[ORM\UniqueConstraint(name: 'transport_domain', columns: ['transport_id', 'domain_id'])]
+#[ORM\Entity]
 class TransportDomain
 {
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport", inversedBy="domains")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Transport::class, inversedBy: 'domains')]
     protected $transport;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $enabled = false;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
-     * @ORM\JoinColumn(nullable=false)
      */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Vat::class)]
     protected $vat;
 
     /**

@@ -9,10 +9,8 @@ use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
-/**
- * @ORM\Table(name="parameter_translations")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'parameter_translations')]
+#[ORM\Entity]
 class ParameterTranslation extends AbstractTranslation
 {
     /**
@@ -24,8 +22,8 @@ class ParameterTranslation extends AbstractTranslation
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $name;
 
     /**

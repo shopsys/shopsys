@@ -11,54 +11,35 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Clock\DatePoint;
 
-/**
- * @ORM\Table(name="orders")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'orders')]
+#[ORM\Entity]
 class Order
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected int $id;
 
-    /**
-     * @ORM\Column(type="guid", unique=true)
-     */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected string $uuid;
 
-    /**
-     * @ORM\Column(type="string", length=30, unique=true, nullable=false)
-     */
+    #[ORM\Column(type: 'string', length: 30, unique: true, nullable: false)]
     protected string $number;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
+    #[ORM\Column(type: 'datetime_immutable')]
     protected DateTimeImmutable $createdAt;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Order\OrderItem>
-     * @ORM\OneToMany(
-     *     targetEntity="Tests\App\Functional\EntityExtension\Model\Order\OrderItem",
-     *     mappedBy="order",
-     *     cascade={"persist"},
-     *     orphanRemoval=true
-     * )
-     * @ORM\OrderBy({"id" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     protected Collection $items;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     protected string $email;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     protected int $domainId;
 
     public function __construct()

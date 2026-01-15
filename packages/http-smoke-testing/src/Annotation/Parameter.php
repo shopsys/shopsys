@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\HttpSmokeTesting\Annotation;
 
-use Doctrine\Common\Annotations\Annotation\Required;
 use Doctrine\Common\Annotations\Annotation\Target;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /**
  * @Annotation
@@ -13,13 +13,9 @@ use Doctrine\Common\Annotations\Annotation\Target;
  */
 class Parameter
 {
-    /**
-     * @Required()
-     */
+    #[Required]
     public string $name;
 
-    /**
-     * @Required()
-     */
+    #[Required]
     public string $value;
 }

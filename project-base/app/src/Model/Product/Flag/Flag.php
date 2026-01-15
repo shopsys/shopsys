@@ -11,11 +11,11 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
 
 /**
  * @property \App\Model\Product\Flag\FlagData $flagData
- * @ORM\Table(name="flags")
- * @ORM\Entity
  * @method setTranslations(\App\Model\Product\Flag\FlagData $flagData)
  * @method __construct(\App\Model\Product\Flag\FlagData $flagData)
  */
+#[ORM\Table(name: 'flags')]
+#[ORM\Entity]
 class Flag extends BaseFlag
 {
     /**

@@ -5,61 +5,56 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\GoPay\BankSwift;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 
-/**
- * @ORM\Table(
- *      name="gopay_bank_swifts",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(name="gopay_bank_swift_unique", columns={"payment_method", "swift"})
- *      }
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'gopay_bank_swifts')]
+#[ORM\UniqueConstraint(name: 'gopay_bank_swift_unique', columns: ['payment_method', 'swift'])]
+#[ORM\Entity]
 class GoPayBankSwift
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=20)
      */
+    #[ORM\Column(type: 'string', length: 20)]
     protected $swift;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod")
-     * @ORM\JoinColumn(nullable=false, name="payment_method", onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, name: 'payment_method', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: GoPayPaymentMethod::class)]
     protected $goPayPaymentMethod;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=50)
      */
+    #[ORM\Column(type: 'string', length: 50)]
     protected $name;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $imageNormalUrl;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $imageLargeUrl;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $isOnline;
 
     /**

@@ -6,27 +6,19 @@ namespace Tests\App\Functional\EntityExtension\Model\ExtendedCategory;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class CategoryOneToOneBidirectionalEntity
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected int $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="ExtendedCategory", inversedBy="oneToOneBidirectionalEntity")
-     * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id")
-     */
+    #[ORM\OneToOne(targetEntity: ExtendedCategory::class, inversedBy: 'oneToOneBidirectionalEntity')]
+    #[ORM\JoinColumn(nullable: false, name: 'category_id', referencedColumnName: 'id')]
     protected ExtendedCategory $category;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected string $name;
 
     /**

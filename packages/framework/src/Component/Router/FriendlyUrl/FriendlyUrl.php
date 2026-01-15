@@ -6,66 +6,60 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(
- *     name="friendly_urls",
- *     indexes={
- *         @ORM\Index(columns={"route_name", "entity_id"}),
- *         @ORM\Index(columns={"route_name", "entity_id", "domain_id", "main"}),
- *     }
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'friendly_urls')]
+#[ORM\Index(columns: ['route_name', 'entity_id'])]
+#[ORM\Index(columns: ['route_name', 'entity_id', 'domain_id', 'main'])]
+#[ORM\Entity]
 class FriendlyUrl
 {
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $routeName;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $entityId;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
     protected $domainId;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
-     * @ORM\Id
      */
+    #[ORM\Column(type: 'text')]
+    #[ORM\Id]
     protected $slug;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $main;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $redirectTo;
 
     /**
      * @var int|null
-     * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected $redirectCode;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $lastModification;
 
     /**

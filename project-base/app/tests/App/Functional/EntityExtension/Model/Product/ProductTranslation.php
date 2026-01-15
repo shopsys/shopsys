@@ -8,10 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
-/**
- * @ORM\Table(name="product_translations")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'product_translations')]
+#[ORM\Entity]
 class ProductTranslation extends AbstractTranslation
 {
     /**
@@ -20,9 +18,7 @@ class ProductTranslation extends AbstractTranslation
      */
     protected $translatable;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $name = null;
 
     /**

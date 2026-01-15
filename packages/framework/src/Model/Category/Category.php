@@ -15,32 +15,28 @@ use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryDomainNotFoundExcep
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @Gedmo\Tree(type="nested")
- * @ORM\Table(
- *     name="categories",
- *     indexes={
- *         @ORM\Index(columns={"lft"}),
- *         @ORM\Index(columns={"rgt"}),
- *     }
- * )
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'categories')]
+#[ORM\Index(columns: ['lft'])]
+#[ORM\Index(columns: ['rgt'])]
+#[ORM\Entity]
+#[Gedmo\Tree(type: 'nested')]
 class Category extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
@@ -52,50 +48,50 @@ class Category extends AbstractTranslatableEntity
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category|null
-     * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category", inversedBy="children")
-     * @ORM\JoinColumn(nullable=true, name="parent_id", referencedColumnName="id")
      */
+    #[ORM\JoinColumn(nullable: true, name: 'parent_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
+    #[Gedmo\TreeParent]
     protected $parent;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Category\Category>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category", mappedBy="parent")
-     * @ORM\OrderBy({"lft" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
     protected $children;
 
     /**
      * @var int
-     * @Gedmo\TreeLevel
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\TreeLevel]
     protected $level;
 
     /**
      * @var int
-     * @Gedmo\TreeLeft
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\TreeLeft]
     protected $lft;
 
     /**
      * @var int
-     * @Gedmo\TreeRight
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\TreeRight]
     protected $rgt;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Category\CategoryDomain>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Category\CategoryDomain", mappedBy="category", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
+    #[ORM\OneToMany(targetEntity: CategoryDomain::class, mappedBy: 'category', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     protected $domains;
 
     /**
      * @var string[]
-     * @ORM\Column(type="json")
      */
+    #[ORM\Column(type: 'json')]
     protected $automatedFilters;
 
     /**

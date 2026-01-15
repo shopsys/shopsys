@@ -7,36 +7,34 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="customers")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'customers')]
+#[ORM\Entity]
 class Customer
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Customer\BillingAddress>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Customer\BillingAddress", mappedBy="customer", cascade={"persist", "remove"})
      */
+    #[ORM\OneToMany(targetEntity: BillingAddress::class, mappedBy: 'customer', cascade: ['persist', 'remove'])]
     protected $billingAddresses;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress", mappedBy="customer", cascade={"persist", "remove"})
      */
+    #[ORM\OneToMany(targetEntity: DeliveryAddress::class, mappedBy: 'customer', cascade: ['persist', 'remove'])]
     protected $deliveryAddresses;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**

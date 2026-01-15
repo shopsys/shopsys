@@ -7,31 +7,29 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
-/**
- * @ORM\Table(name="payment_prices")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'payment_prices')]
+#[ORM\Entity]
 class PaymentPrice
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment", inversedBy="prices")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Payment::class, inversedBy: 'prices')]
     protected $payment;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $price;
 
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**

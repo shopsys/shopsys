@@ -8,17 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator as BaseAdministrator;
 
 /**
- * @ORM\Entity
- * @ORM\Table(
- *   name="administrators",
- *   indexes={
- *     @ORM\Index(columns={"username"})
- *   }
- * )
  * @method __construct(\App\Model\Administrator\AdministratorData $administratorData)
  * @method edit(\App\Model\Administrator\AdministratorData $administratorData)
  * @method setData(\App\Model\Administrator\AdministratorData $administratorData)
  */
+#[ORM\Table(name: 'administrators')]
+#[ORM\Index(columns: ['username'])]
+#[ORM\Entity]
 class Administrator extends BaseAdministrator
 {
 }

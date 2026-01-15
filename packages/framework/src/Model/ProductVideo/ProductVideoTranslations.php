@@ -7,37 +7,35 @@ namespace Shopsys\FrameworkBundle\Model\ProductVideo;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
-/**
- * @ORM\Table(name="product_video_translations")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'product_video_translations')]
+#[ORM\Entity]
 class ProductVideoTranslations
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo")
-     * @ORM\JoinColumn(name="product_video", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'product_video', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: ProductVideo::class)]
     protected $productVideo;
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected $description;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     protected $locale;
 
     /**

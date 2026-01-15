@@ -7,36 +7,34 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\RoleGroup;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="administrator_role_groups")
- */
+#[ORM\Table(name: 'administrator_role_groups')]
+#[ORM\Entity]
 class AdministratorRoleGroup
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, unique = true)
      */
+    #[ORM\Column(type: 'string', length: 100, unique: true)]
     protected $name;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $systemManaged = false;
 
     /**
      * @var string[]
-     * @ORM\Column(type="json")
      */
+    #[ORM\Column(type: 'json')]
     protected $roles;
 
     /**

@@ -13,98 +13,93 @@ use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Symfony\Component\Clock\DatePoint;
 
-/**
- * @ORM\Table(name="carts")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'carts')]
+#[ORM\Entity]
 class Cart
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=127)
      */
+    #[ORM\Column(type: 'string', length: 127)]
     protected $cartIdentifier;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
-     * @ORM\JoinColumn(name="customer_user_id", referencedColumnName="id", nullable = true, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'customer_user_id', referencedColumnName: 'id', nullable: true, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: CustomerUser::class)]
     protected $customerUser;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem>
-     * @ORM\OneToMany(
-     *     targetEntity="Shopsys\FrameworkBundle\Model\Cart\Item\CartItem",
-     *     mappedBy="cart"
-     * )
-     * @ORM\OrderBy({"id" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'cart')]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     protected $items;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
      */
+    #[ORM\Column(type: 'datetime_immutable')]
     protected $modifiedAt;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode>
-     * @ORM\ManyToMany(
-     *     targetEntity="\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode"
-     * )
-     * @ORM\JoinTable(name="cart_promo_codes")
-     * @ORM\OrderBy({"id" = "DESC"})
      */
+    #[ORM\JoinTable(name: 'cart_promo_codes')]
+    #[ORM\ManyToMany(targetEntity: PromoCode::class)]
+    #[ORM\OrderBy(['id' => 'DESC'])]
     protected $promoCodes;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: Transport::class)]
     protected $transport;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
     protected $transportWatchedPrice;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected $pickupPlaceIdentifier;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: Payment::class)]
     protected $payment;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
     protected $paymentWatchedPrice;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=15, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 15, nullable: true)]
     protected $paymentGoPayBankSwift;
 
     /**

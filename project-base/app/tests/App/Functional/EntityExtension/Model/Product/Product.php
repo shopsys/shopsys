@@ -15,23 +15,19 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 /**
  * Product
  *
- * @ORM\Table(
- *     name="products",
- *     indexes={
- *         @ORM\Index(columns={"variant_type"})
- *     }
- * )
- * @ORM\Entity
  * @method \Tests\App\Functional\EntityExtension\Model\Product\ProductTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'products')]
+#[ORM\Index(columns: ['variant_type'])]
+#[ORM\Entity]
 class Product extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
@@ -40,48 +36,35 @@ class Product extends AbstractTranslatableEntity
      */
     protected $translations;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected ?string $catnum = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Product\ProductCategoryDomain>
-     * @ORM\OneToMany(
-     *   targetEntity="Tests\App\Functional\EntityExtension\Model\Product\ProductCategoryDomain",
-     *   mappedBy="product",
-     *   orphanRemoval=true,
-     *   cascade={"persist"}
-     * )
      */
+    #[ORM\OneToMany(targetEntity: ProductCategoryDomain::class, mappedBy: 'product', orphanRemoval: true, cascade: ['persist'])]
     protected Collection $productCategoryDomains;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Product\Product>
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="mainVariant")
      */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'mainVariant')]
     protected Collection $variants;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="variants")
-     * @ORM\JoinColumn(nullable=true, name="main_variant_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'variants')]
+    #[ORM\JoinColumn(nullable: true, name: 'main_variant_id', referencedColumnName: 'id')]
     protected ?Product $mainVariant = null;
 
-    /**
-     * @ORM\Column(type="string", length=32, nullable=false)
-     */
+    #[ORM\Column(type: 'string', length: 32, nullable: false)]
     protected string $variantType;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Product\ProductDomain>
-     * @ORM\OneToMany(targetEntity="Tests\App\Functional\EntityExtension\Model\Product\ProductDomain", mappedBy="product", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
+    #[ORM\OneToMany(targetEntity: ProductDomain::class, mappedBy: 'product', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     protected Collection $domains;
 
-    /**
-     * @ORM\Column(type="guid", unique=true)
-     */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected string $uuid;
 
     public function __construct()

@@ -13,20 +13,20 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @ORM\Table(name="parameter_groups")
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'parameter_groups')]
+#[ORM\Entity]
 class ParameterGroup extends AbstractTranslatableEntity implements OrderableEntityInterface
 {
     protected const GEDMO_SORTABLE_LAST_POSITION = -1;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
@@ -37,9 +37,9 @@ class ParameterGroup extends AbstractTranslatableEntity implements OrderableEnti
 
     /**
      * @var int
-     * @Gedmo\SortablePosition
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\SortablePosition]
     protected $position;
 
     /**

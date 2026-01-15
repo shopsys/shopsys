@@ -13,10 +13,10 @@ use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFile;
 use Shopsys\FrameworkBundle\Model\Localization\TranslatableEntityTrait;
 
 /**
- * @ORM\Table(name="uploaded_files")})
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'uploaded_files')]
+#[ORM\Entity]
 class UploadedFile extends AbstractUploadedFile implements TranslatableInterface
 {
     use TranslatableEntityTrait;

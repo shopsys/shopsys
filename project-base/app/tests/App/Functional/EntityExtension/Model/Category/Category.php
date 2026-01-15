@@ -13,30 +13,22 @@ use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
-/**
- * @Gedmo\Tree(type="nested")
- * @ORM\Table(
- *     name="categories",
- *     indexes={
- *         @ORM\Index(columns={"lft"}),
- *         @ORM\Index(columns={"rgt"}),
- *     }
- * )
- * @ORM\Entity
- */
+#[Gedmo\Tree(type: 'nested')]
+#[ORM\Table(name: 'categories')]
+#[ORM\Index(columns: ['lft'])]
+#[ORM\Index(columns: ['rgt'])]
+#[ORM\Entity]
 class Category extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
-    /**
-     * @ORM\Column(type="guid", unique=true)
-     */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected string $uuid;
 
     /**
@@ -45,42 +37,34 @@ class Category extends AbstractTranslatableEntity
      */
     protected $translations;
 
-    /**
-     * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="Tests\App\Functional\EntityExtension\Model\Category\Category", inversedBy="children")
-     * @ORM\JoinColumn(nullable=true, name="parent_id", referencedColumnName="id")
-     */
+    #[Gedmo\TreeParent]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(nullable: true, name: 'parent_id', referencedColumnName: 'id')]
     protected Category $parent;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Category\Category>
-     * @ORM\OneToMany(targetEntity="Tests\App\Functional\EntityExtension\Model\Category\Category", mappedBy="parent")
-     * @ORM\OrderBy({"lft" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
     protected Collection $children;
 
-    /**
-     * @Gedmo\TreeLevel
-     * @ORM\Column(type="integer")
-     */
+    #[Gedmo\TreeLevel]
+    #[ORM\Column(type: 'integer')]
     protected int $level;
 
-    /**
-     * @Gedmo\TreeLeft
-     * @ORM\Column(type="integer")
-     */
+    #[Gedmo\TreeLeft]
+    #[ORM\Column(type: 'integer')]
     protected int $lft;
 
-    /**
-     * @Gedmo\TreeRight
-     * @ORM\Column(type="integer")
-     */
+    #[Gedmo\TreeRight]
+    #[ORM\Column(type: 'integer')]
     protected int $rgt;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Category\CategoryDomain>
-     * @ORM\OneToMany(targetEntity="Tests\App\Functional\EntityExtension\Model\Category\CategoryDomain", mappedBy="category", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
+    #[ORM\OneToMany(targetEntity: CategoryDomain::class, mappedBy: 'category', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     protected Collection $domains;
 
     public function __construct()

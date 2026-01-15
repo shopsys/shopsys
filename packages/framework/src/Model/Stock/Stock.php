@@ -10,64 +10,63 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Stock\Exception\StockDomainNotFoundException;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 
-/**
- * @ORM\Table(name="stocks")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'stocks')]
+#[ORM\Entity]
 class Stock implements OrderableEntityInterface
 {
     protected const GEDMO_SORTABLE_LAST_POSITION = 1;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Stock\StockDomain>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Stock\StockDomain", mappedBy="stock", cascade={"persist"})
      */
+    #[ORM\OneToMany(targetEntity: StockDomain::class, mappedBy: 'stock', cascade: ['persist'])]
     protected $domains;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Store\Store>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Store\Store", mappedBy="stock", cascade={"persist"})
      */
+    #[ORM\OneToMany(targetEntity: Store::class, mappedBy: 'stock', cascade: ['persist'])]
     protected $stores;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $name;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, unique: true, nullable: true)]
     protected $externalId;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $isDefault;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $note;
 
     /**
      * @var int
-     * @Gedmo\SortablePosition
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\SortablePosition]
     protected $position;
 
     /**

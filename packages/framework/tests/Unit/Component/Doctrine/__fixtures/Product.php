@@ -9,10 +9,8 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
-/**
- * @ORM\Table(name="products")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'products')]
+#[ORM\Entity]
 class Product extends BaseProduct
 {
     /**

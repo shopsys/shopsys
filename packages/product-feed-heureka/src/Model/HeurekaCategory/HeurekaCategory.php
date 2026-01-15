@@ -8,42 +8,36 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
-/**
- * @ORM\Table(
- *     name="heureka_category"
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'heureka_category')]
+#[ORM\Entity]
 class HeurekaCategory
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
     protected $id;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $name;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $fullName;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Category\Category>
-     * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
-     * @ORM\JoinTable(
-     *     name="heureka_category_categories",
-     *     joinColumns={@ORM\JoinColumn(name="heureka_category_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id", unique=true)}
-     * )
      */
+    #[ORM\JoinTable(name: 'heureka_category_categories')]
+    #[ORM\JoinColumn(name: 'heureka_category_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'category_id', referencedColumnName: 'id', unique: true)]
+    #[ORM\ManyToMany(targetEntity: Category::class)]
     protected $categories;
 
     /**

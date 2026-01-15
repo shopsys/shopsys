@@ -112,6 +112,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Form/Admin/Product/ProductFormType.php',
                 __DIR__ . '/packages/framework/src/Model/Order/Order.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Search/FilterQuery.php',
+                __DIR__ . '/packages/framework/src/Model/Product/Product.php',
                 __DIR__ . '/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php',
                 __DIR__ . '/packages/framework/src/Model/Security/Roles.php',
                 __DIR__ . '/project-base/app/tests/App/Functional/Model/Product/ProductOnCurrentDomainElasticFacadeCountDataTest.php',

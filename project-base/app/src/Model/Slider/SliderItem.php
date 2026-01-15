@@ -12,28 +12,28 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItem as BaseSliderItem;
 /**
  * SliderItem
  *
- * @ORM\Table(name="slider_items")
- * @ORM\Entity
  * @method setData(\App\Model\Slider\SliderItemData $sliderItemData)
  */
+#[ORM\Table(name: 'slider_items')]
+#[ORM\Entity]
 class SliderItem extends BaseSliderItem
 {
     /**
      * @var string|null
-     * @ORM\Column(type="text",nullable=false)
      */
+    #[ORM\Column(type: 'text', nullable: false)]
     protected $gtmId;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text",nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $gtmCreative;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected string $uuid;
 
     /**

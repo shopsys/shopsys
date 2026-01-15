@@ -6,90 +6,85 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="promo_codes",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="domain_code_unique", columns={
- *         "domain_id", "code"
- *     })}
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'promo_codes')]
+#[ORM\UniqueConstraint(name: 'domain_code_unique', columns: ['domain_id', 'code'])]
+#[ORM\Entity]
 class PromoCode
 {
     public const int MASS_GENERATED_CODE_LENGTH = 6;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $code;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=25)
      */
+    #[ORM\Column(type: 'string', length: 25)]
     protected $discountType;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $registeredCustomerUserOnly;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable",nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $datetimeValidFrom;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable",nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $datetimeValidTo;
 
     /**
      * @var int|null
-     * @ORM\Column(type="integer",nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected $remainingUses;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $massGenerate;
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected $prefix;
 
     /**
      * @var int|null
-     * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected $massGenerateBatchId;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $enabled;
 
     /**

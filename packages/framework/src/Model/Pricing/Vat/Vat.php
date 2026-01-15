@@ -6,45 +6,43 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="vats")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'vats')]
+#[ORM\Entity]
 class Vat
 {
     public const SETTING_DEFAULT_VAT = 'defaultVatId';
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=50)
      */
+    #[ORM\Column(type: 'string', length: 50)]
     protected $name;
 
     /**
      * @var string
-     * @ORM\Column(type="decimal", precision=20, scale=6)
      */
+    #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     protected $percent;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
-     * @ORM\JoinColumn(nullable=true)
      */
+    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(targetEntity: self::class)]
     protected $replaceWith;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**

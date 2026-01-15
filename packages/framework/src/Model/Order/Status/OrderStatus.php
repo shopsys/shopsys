@@ -13,19 +13,19 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException;
 
 /**
- * @ORM\Table(name="order_statuses")
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'order_statuses')]
+#[ORM\Entity]
 class OrderStatus extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
@@ -37,8 +37,8 @@ class OrderStatus extends AbstractTranslatableEntity
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=25)
      */
+    #[ORM\Column(type: 'string', length: 25)]
     protected $type;
 
     /**

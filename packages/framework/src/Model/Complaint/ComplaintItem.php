@@ -6,70 +6,70 @@ namespace Shopsys\FrameworkBundle\Model\Complaint;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
-/**
- * @ORM\Table(name="complaint_items")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'complaint_items')]
+#[ORM\Entity]
 class ComplaintItem
 {
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Complaint\Complaint
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Complaint\Complaint", inversedBy="items")
-     * @ORM\JoinColumn(name="complaint_id", referencedColumnName="id", nullable=false)
      */
+    #[ORM\JoinColumn(name: 'complaint_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Complaint::class, inversedBy: 'items')]
     protected $complaint;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Item\OrderItem")
-     * @ORM\JoinColumn(name="order_item_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'order_item_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: OrderItem::class)]
     protected $orderItem;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $product;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     protected $productName;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected $catnum;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $quantity;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $description;
 
     /**

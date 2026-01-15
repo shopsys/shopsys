@@ -8,10 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
-/**
- * @ORM\Table(name="uploaded_files_translations")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'uploaded_files_translations')]
+#[ORM\Entity]
 class UploadedFileTranslation extends AbstractTranslation
 {
     /**
@@ -22,8 +20,8 @@ class UploadedFileTranslation extends AbstractTranslation
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $name;
 
     /**

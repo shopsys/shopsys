@@ -8,10 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
-/**
- * @ORM\Table(name="flag_translations")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'flag_translations')]
+#[ORM\Entity]
 class FlagTranslation extends AbstractTranslation
 {
     /**
@@ -23,8 +21,8 @@ class FlagTranslation extends AbstractTranslation
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: 'string', length: 100)]
     protected $name;
 
     /**

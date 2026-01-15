@@ -5,16 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
-/**
- * @ORM\Table(
- *      name="gopay_payment_methods",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(name="gopay_payment_method_unique", columns={"domain_id", "identifier"})
- *      }
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'gopay_payment_methods')]
+#[ORM\UniqueConstraint(name: 'gopay_payment_method_unique', columns: ['domain_id', 'identifier'])]
+#[ORM\Entity]
 class GoPayPaymentMethod
 {
     public const IDENTIFIER_PAYMENT_CARD = 'PAYMENT_CARD';
@@ -22,59 +17,59 @@ class GoPayPaymentMethod
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=20)
      */
+    #[ORM\Column(type: 'string', length: 20)]
     protected $identifier;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=50)
      */
+    #[ORM\Column(type: 'string', length: 50)]
     protected $name;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency")
-     * @ORM\JoinColumn(nullable=false, name="currency_id", referencedColumnName="id")
      */
+    #[ORM\JoinColumn(nullable: false, name: 'currency_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: Currency::class)]
     protected $currency;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $imageNormalUrl;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $imageLargeUrl;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=20)
      */
+    #[ORM\Column(type: 'string', length: 20)]
     protected $paymentGroup;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $available;
 
     /**

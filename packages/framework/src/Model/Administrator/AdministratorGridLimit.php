@@ -6,31 +6,29 @@ namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="administrator_grid_limits")
- */
+#[ORM\Table(name: 'administrator_grid_limits')]
+#[ORM\Entity]
 class AdministratorGridLimit
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Administrator\Administrator", inversedBy="gridLimits")
-     * @ORM\JoinColumn(name="administrator_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'administrator_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Administrator::class, inversedBy: 'gridLimits')]
     protected $administrator;
 
     /**
      * @var string
-     * @ORM\Id
-     * @ORM\Column(type="string", length=128)
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'string', length: 128)]
     protected $gridId;
 
     /**
      * @var int
-     * @ORM\Column(name="""limit""",type="integer")
      */
+    #[ORM\Column(name: '"limit"', type: 'integer')]
     protected $limit;
 
     /**

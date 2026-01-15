@@ -8,12 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress as BaseBillingAddress;
 
 /**
- * @ORM\Table(name="billing_addresses")
- * @ORM\Entity
  * @method setData(\App\Model\Customer\BillingAddressData $billingAddressData)
  * @method edit(\App\Model\Customer\BillingAddressData $billingAddressData)
  * @method __construct(\App\Model\Customer\BillingAddressData $billingAddressData)
  */
+#[ORM\Table(name: 'billing_addresses')]
+#[ORM\Entity]
 class BillingAddress extends BaseBillingAddress
 {
 }

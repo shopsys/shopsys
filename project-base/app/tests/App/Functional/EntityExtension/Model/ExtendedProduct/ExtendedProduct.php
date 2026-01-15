@@ -11,100 +11,83 @@ use Override;
 use Tests\App\Functional\EntityExtension\Model\Product\Product;
 use Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="products")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'products')]
 class ExtendedProduct extends Product
 {
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $stringField;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity")
-     * @ORM\JoinColumn(nullable=true, name="manyToOneUnidirectionalEntity_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: UnidirectionalEntity::class)]
+    #[ORM\JoinColumn(nullable: true, name: 'manyToOneUnidirectionalEntity_id', referencedColumnName: 'id')]
     protected UnidirectionalEntity $manyToOneUnidirectionalEntity;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity")
-     * @ORM\JoinColumn(nullable=true, name="oneToOneUnidirectionalEntity_id", referencedColumnName="id")
-     */
+    #[ORM\OneToOne(targetEntity: UnidirectionalEntity::class)]
+    #[ORM\JoinColumn(nullable: true, name: 'oneToOneUnidirectionalEntity_id', referencedColumnName: 'id')]
     protected UnidirectionalEntity $oneToOneUnidirectionalEntity;
 
-    /**
-     * @ORM\OneToOne(targetEntity="ProductOneToOneBidirectionalEntity", mappedBy="product")
-     * @ORM\JoinColumn(nullable=true)
-     */
+    #[ORM\OneToOne(targetEntity: ProductOneToOneBidirectionalEntity::class, mappedBy: 'product')]
+    #[ORM\JoinColumn(nullable: true)]
     protected ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity;
 
-    /**
-     * @ORM\OneToOne(targetEntity="ExtendedProduct")
-     * @ORM\JoinColumn(nullable=true, name="oneToOneSelfReferencing_id", referencedColumnName="id")
-     */
+    #[ORM\OneToOne(targetEntity: self::class)]
+    #[ORM\JoinColumn(nullable: true, name: 'oneToOneSelfReferencing_id', referencedColumnName: 'id')]
     protected ExtendedProduct $oneToOneSelfReferencingEntity;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ProductOneToManyBidirectionalEntity>
-     * @ORM\OneToMany(targetEntity="ProductOneToManyBidirectionalEntity", mappedBy="product")
      */
+    #[ORM\OneToMany(targetEntity: ProductOneToManyBidirectionalEntity::class, mappedBy: 'product')]
     protected Collection $oneToManyBidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity>
-     * @ORM\ManyToMany(targetEntity="Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity")
-     * @ORM\JoinTable(name="products_oneToManyUnidirectionalWithJoinTableEntity",
-     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="oneToManyUnidirectionalWithJoinTableEntity_id", referencedColumnName="id", unique=true)}
-     *      )
      */
+    #[ORM\ManyToMany(targetEntity: UnidirectionalEntity::class)]
+    #[ORM\JoinTable(name: 'products_oneToManyUnidirectionalWithJoinTableEntity')]
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'oneToManyUnidirectionalWithJoinTableEntity_id', referencedColumnName: 'id', unique: true)]
     protected Collection $oneToManyUnidirectionalWithJoinTableEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct>
-     * @ORM\OneToMany(targetEntity="ExtendedProduct", mappedBy="oneToManySelfReferencingInverseEntity")
      */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'oneToManySelfReferencingInverseEntity')]
     protected Collection $oneToManySelfReferencingEntities;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="ExtendedProduct", inversedBy="oneToManySelfReferencingEntities")
-     * @ORM\JoinColumn(nullable=true, name="oneToManySelfReferencingParent_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'oneToManySelfReferencingEntities')]
+    #[ORM\JoinColumn(nullable: true, name: 'oneToManySelfReferencingParent_id', referencedColumnName: 'id')]
     protected ExtendedProduct $oneToManySelfReferencingInverseEntity;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity>
-     * @ORM\ManyToMany(targetEntity="Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity")
-     * @ORM\JoinTable(name="products_manyToManyUnidirectionalEntity",
-     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="manyToManyUnidirectionalEntity_id", referencedColumnName="id")}
-     *      )
      */
+    #[ORM\ManyToMany(targetEntity: UnidirectionalEntity::class)]
+    #[ORM\JoinTable(name: 'products_manyToManyUnidirectionalEntity')]
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'manyToManyUnidirectionalEntity_id', referencedColumnName: 'id')]
     protected Collection $manyToManyUnidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ProductManyToManyBidirectionalEntity>
-     * @ORM\ManyToMany(targetEntity="ProductManyToManyBidirectionalEntity", inversedBy="products")
-     * @ORM\JoinTable(name="products_manyToManyBidirectionalEntity")
      */
+    #[ORM\ManyToMany(targetEntity: ProductManyToManyBidirectionalEntity::class, inversedBy: 'products')]
+    #[ORM\JoinTable(name: 'products_manyToManyBidirectionalEntity')]
     protected Collection $manyToManyBidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct>
-     * @ORM\ManyToMany(targetEntity="ExtendedProduct", mappedBy="manyToManySelfReferencingInverseEntities")
      */
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'manyToManySelfReferencingInverseEntities')]
     protected Collection $manyToManySelfReferencingEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct>
-     * @ORM\ManyToMany(targetEntity="ExtendedProduct", inversedBy="manyToManySelfReferencingEntities")
-     * @ORM\JoinTable(name="products_manyToManySelfReferencing",
-     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="manyToManySelfReferencing_id", referencedColumnName="id")}
-     *      )
      */
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'manyToManySelfReferencingEntities')]
+    #[ORM\JoinTable(name: 'products_manyToManySelfReferencing')]
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'manyToManySelfReferencing_id', referencedColumnName: 'id')]
     protected Collection $manyToManySelfReferencingInverseEntities;
 
     public function __construct()

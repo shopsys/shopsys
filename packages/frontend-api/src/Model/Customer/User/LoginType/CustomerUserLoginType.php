@@ -5,45 +5,40 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Customer\User\LoginType;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
-/**
- * @ORM\Table(
- *      name="customer_user_login_types",
- *     indexes={
- *          @ORM\Index(columns={"customer_user_id", "login_type"})
- *      }
- *  )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'customer_user_login_types')]
+#[ORM\Index(columns: ['customer_user_id', 'login_type'])]
+#[ORM\Entity]
 class CustomerUserLoginType
 {
     public const string TYPE_WEB = 'web';
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: CustomerUser::class)]
     protected $customerUser;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
-     * @ORM\Id
      */
+    #[ORM\Column(type: 'text')]
+    #[ORM\Id]
     protected $loginType;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected $lastLoggedInAt;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $externalId;
 
     /**

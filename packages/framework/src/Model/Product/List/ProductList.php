@@ -7,61 +7,58 @@ namespace Shopsys\FrameworkBundle\Model\Product\List;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\Clock\DatePoint;
 
-/**
- * @ORM\Table(name="product_lists")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'product_lists')]
+#[ORM\Entity]
 class ProductList
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
-     * @ORM\JoinColumn(name="customer_user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'customer_user_id', referencedColumnName: 'id', nullable: true, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: CustomerUser::class)]
     protected $customerUser;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem>
-     * @ORM\OneToMany(
-     *     targetEntity="Shopsys\FrameworkBundle\Model\Product\List\ProductListItem", mappedBy="productList", cascade={"remove"}
-     * )
-     * @ORM\OrderBy({"createdAt" = "DESC", "id" = "DESC"})
      */
+    #[ORM\OneToMany(targetEntity: ProductListItem::class, mappedBy: 'productList', cascade: ['remove'])]
+    #[ORM\OrderBy(['createdAt' => 'DESC', 'id' => 'DESC'])]
     protected $items;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected $createdAt;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected $updatedAt;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=20, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 20, nullable: false)]
     protected $type;
 
     /**

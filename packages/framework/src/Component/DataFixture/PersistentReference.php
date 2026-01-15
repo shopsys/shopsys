@@ -8,29 +8,28 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Product
- *
- * @ORM\Table(name="persistent_references")
- * @ORM\Entity
  */
+#[ORM\Table(name: 'persistent_references')]
+#[ORM\Entity]
 class PersistentReference
 {
     /**
      * @var string
-     * @ORM\Column(type="string", length=100, nullable=true)
-     * @ORM\Id
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    #[ORM\Id]
     protected $referenceName;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $entityName;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $entityId;
 
     /**

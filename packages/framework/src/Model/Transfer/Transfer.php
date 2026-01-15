@@ -6,30 +6,28 @@ namespace Shopsys\FrameworkBundle\Model\Transfer;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="transfers")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'transfers')]
+#[ORM\Entity]
 class Transfer
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100, nullable=false, unique=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: false, unique: true)]
     protected $identifier;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: false)]
     protected $name;
 
     /**

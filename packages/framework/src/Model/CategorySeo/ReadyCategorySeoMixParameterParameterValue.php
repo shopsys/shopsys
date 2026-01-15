@@ -8,38 +8,32 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
-/**
- * @ORM\Table(name="ready_category_seo_mix_parameter_parameter_values")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'ready_category_seo_mix_parameter_parameter_values')]
+#[ORM\Entity]
 class ReadyCategorySeoMixParameterParameterValue
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix
-     * @ORM\Id
-     * @ORM\ManyToOne(
-     *     targetEntity="Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix",
-     *     inversedBy="readyCategorySeoMixParameterParameterValues",
-     *     cascade={"persist", "remove"}
-     * )
-     * @ORM\JoinColumn(name="ready_category_seo_mix_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'ready_category_seo_mix_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: ReadyCategorySeoMix::class, inversedBy: 'readyCategorySeoMixParameterParameterValues', cascade: ['persist', 'remove'])]
     protected $readyCategorySeoMix;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter")
-     * @ORM\JoinColumn(name="parameter_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'parameter_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Parameter::class)]
     protected $parameter;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue")
-     * @ORM\JoinColumn(name="parameter_value_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'parameter_value_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: ParameterValue::class)]
     protected $parameterValue;
 
     /**

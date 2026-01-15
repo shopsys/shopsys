@@ -7,53 +7,49 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 
-/**
- * @ORM\Table(name="uploaded_files_relations",
- *     indexes={
- *          @ORM\Index(columns={"entity_name", "entity_id", "type"}),
- *          @ORM\Index(columns={"entity_name", "entity_id", "type", "uploaded_file_id"}),
- *     })
- * @ORM\Entity
- */
+#[ORM\Table(name: 'uploaded_files_relations')]
+#[ORM\Index(columns: ['entity_name', 'entity_id', 'type'])]
+#[ORM\Index(columns: ['entity_name', 'entity_id', 'type', 'uploaded_file_id'])]
+#[ORM\Entity]
 class UploadedFileRelation
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: 'string', length: 100)]
     protected $entityName;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $entityId;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile")
-     * @ORM\JoinColumn(name="uploaded_file_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'uploaded_file_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: UploadedFile::class)]
     protected $uploadedFile;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $position;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: 'string', length: 100)]
     protected $type;
 
     /**

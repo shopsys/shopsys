@@ -10,100 +10,83 @@ use Doctrine\ORM\Mapping as ORM;
 use Tests\App\Functional\EntityExtension\Model\Category\Category;
 use Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="categories")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'categories')]
 class ExtendedCategory extends Category
 {
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $stringField;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity")
-     * @ORM\JoinColumn(nullable=true, name="manyToOneUnidirectionalEntity_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: UnidirectionalEntity::class)]
+    #[ORM\JoinColumn(nullable: true, name: 'manyToOneUnidirectionalEntity_id', referencedColumnName: 'id')]
     protected UnidirectionalEntity $manyToOneUnidirectionalEntity;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity")
-     * @ORM\JoinColumn(nullable=true, name="oneToOneUnidirectionalEntity_id", referencedColumnName="id")
-     */
+    #[ORM\OneToOne(targetEntity: UnidirectionalEntity::class)]
+    #[ORM\JoinColumn(nullable: true, name: 'oneToOneUnidirectionalEntity_id', referencedColumnName: 'id')]
     protected UnidirectionalEntity $oneToOneUnidirectionalEntity;
 
-    /**
-     * @ORM\OneToOne(targetEntity="CategoryOneToOneBidirectionalEntity", mappedBy="category")
-     * @ORM\JoinColumn(nullable=true)
-     */
+    #[ORM\OneToOne(targetEntity: CategoryOneToOneBidirectionalEntity::class, mappedBy: 'category')]
+    #[ORM\JoinColumn(nullable: true)]
     protected CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity;
 
-    /**
-     * @ORM\OneToOne(targetEntity="ExtendedCategory")
-     * @ORM\JoinColumn(nullable=true, name="oneToOneSelfReferencing_id", referencedColumnName="id")
-     */
+    #[ORM\OneToOne(targetEntity: self::class)]
+    #[ORM\JoinColumn(nullable: true, name: 'oneToOneSelfReferencing_id', referencedColumnName: 'id')]
     protected ExtendedCategory $oneToOneSelfReferencingEntity;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\CategoryOneToManyBidirectionalEntity>
-     * @ORM\OneToMany(targetEntity="CategoryOneToManyBidirectionalEntity", mappedBy="category")
      */
+    #[ORM\OneToMany(targetEntity: CategoryOneToManyBidirectionalEntity::class, mappedBy: 'category')]
     protected Collection $oneToManyBidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity>
-     * @ORM\ManyToMany(targetEntity="Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity")
-     * @ORM\JoinTable(name="categories_oneToManyUnidirectionalWithJoinTableEntity",
-     *      joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="oneToManyUnidirectionalWithJoinTableEntity_id", referencedColumnName="id", unique=true)}
-     *      )
      */
+    #[ORM\ManyToMany(targetEntity: UnidirectionalEntity::class)]
+    #[ORM\JoinTable(name: 'categories_oneToManyUnidirectionalWithJoinTableEntity')]
+    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'oneToManyUnidirectionalWithJoinTableEntity_id', referencedColumnName: 'id', unique: true)]
     protected Collection $oneToManyUnidirectionalWithJoinTableEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory>
-     * @ORM\OneToMany(targetEntity="ExtendedCategory", mappedBy="oneToManySelfReferencingInverseEntity")
      */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'oneToManySelfReferencingInverseEntity')]
     protected Collection $oneToManySelfReferencingEntities;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="ExtendedCategory", inversedBy="oneToManySelfReferencingEntities")
-     * @ORM\JoinColumn(nullable=true, name="oneToManySelfReferencingParent_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'oneToManySelfReferencingEntities')]
+    #[ORM\JoinColumn(nullable: true, name: 'oneToManySelfReferencingParent_id', referencedColumnName: 'id')]
     protected ExtendedCategory $oneToManySelfReferencingInverseEntity;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity>
-     * @ORM\ManyToMany(targetEntity="Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity")
-     * @ORM\JoinTable(name="categories_manyToManyUnidirectionalEntity",
-     *      joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="manyToManyUnidirectionalEntity_id", referencedColumnName="id")}
-     *      )
      */
+    #[ORM\ManyToMany(targetEntity: UnidirectionalEntity::class)]
+    #[ORM\JoinTable(name: 'categories_manyToManyUnidirectionalEntity')]
+    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'manyToManyUnidirectionalEntity_id', referencedColumnName: 'id')]
     protected Collection $manyToManyUnidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\CategoryManyToManyBidirectionalEntity>
-     * @ORM\ManyToMany(targetEntity="CategoryManyToManyBidirectionalEntity", inversedBy="categories")
-     * @ORM\JoinTable(name="categories_manyToManyBidirectionalEntity")
      */
+    #[ORM\ManyToMany(targetEntity: CategoryManyToManyBidirectionalEntity::class, inversedBy: 'categories')]
+    #[ORM\JoinTable(name: 'categories_manyToManyBidirectionalEntity')]
     protected Collection $manyToManyBidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory>
-     * @ORM\ManyToMany(targetEntity="ExtendedCategory", mappedBy="manyToManySelfReferencingInverseEntities")
      */
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'manyToManySelfReferencingInverseEntities')]
     protected Collection $manyToManySelfReferencingEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory>
-     * @ORM\ManyToMany(targetEntity="ExtendedCategory", inversedBy="manyToManySelfReferencingEntities")
-     * @ORM\JoinTable(name="categories_manyToManySelfReferencing",
-     *      joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="manyToManySelfReferencing_id", referencedColumnName="id")}
-     *      )
      */
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'manyToManySelfReferencingEntities')]
+    #[ORM\JoinTable(name: 'categories_manyToManySelfReferencing')]
+    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'manyToManySelfReferencing_id', referencedColumnName: 'id')]
     protected Collection $manyToManySelfReferencingInverseEntities;
 
     public function __construct()

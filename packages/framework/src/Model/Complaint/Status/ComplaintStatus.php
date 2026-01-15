@@ -12,18 +12,18 @@ use Shopsys\FrameworkBundle\Model\Complaint\Status\Exception\ComplaintStatusDele
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @ORM\Table(name="complaint_statuses")
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'complaint_statuses')]
+#[ORM\Entity]
 class ComplaintStatus extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
@@ -34,8 +34,8 @@ class ComplaintStatus extends AbstractTranslatableEntity
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=25)
      */
+    #[ORM\Column(type: 'string', length: 25)]
     protected $statusType;
 
     /**

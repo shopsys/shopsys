@@ -12,17 +12,15 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @ORM\Table(name="customer_user_role_groups")
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Country\CountryTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'customer_user_role_groups')]
+#[ORM\Entity]
 class CustomerUserRoleGroup extends AbstractTranslatableEntity
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
@@ -33,14 +31,14 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
 
     /**
      * @var string[]
-     * @ORM\Column(type="json")
      */
+    #[ORM\Column(type: 'json')]
     protected $roles;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**

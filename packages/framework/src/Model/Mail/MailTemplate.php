@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
-/**
- * @ORM\Table(
- *     name="mail_templates",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="name_domain", columns={"name", "domain_id"})
- *     }
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'mail_templates')]
+#[ORM\UniqueConstraint(name: 'name_domain', columns: ['name', 'domain_id'])]
+#[ORM\Entity]
 class MailTemplate
 {
     public const REGISTRATION_CONFIRM_NAME = 'registration_confirm';
@@ -24,60 +20,60 @@ class MailTemplate
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $name;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $bccEmail;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $subject;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $body;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $sendMail;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus")
-     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: OrderStatus::class)]
     protected $orderStatus;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus")
-     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: ComplaintStatus::class)]
     protected $complaintStatus;
 
     /**

@@ -11,8 +11,6 @@ use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 
 /**
- * @ORM\Table(name="orders")
- * @ORM\Entity
  * @property \App\Model\Customer\User\CustomerUser|null $customerUser
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Order\Item\OrderItem> $items
  * @property \App\Model\Transport\Transport $transport
@@ -45,6 +43,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method \App\Model\Order\Item\OrderItem[] getItemsSortedWithRelatedItems()
  */
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
+#[ORM\Table(name: 'orders')]
+#[ORM\Entity]
 class Order extends BaseOrder
 {
     /**

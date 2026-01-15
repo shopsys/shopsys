@@ -15,8 +15,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
 /**
- * @ORM\Table(name="products")
- * @ORM\Entity
  * @property \App\Model\Product\Brand\Brand|null $brand
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\Product> $variants
  * @property \App\Model\Product\Product|null $mainVariant
@@ -46,24 +44,25 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method setTranslations(\App\Model\Product\ProductData $productData)
  * @method setFlags(array<int,\App\Model\Product\Flag\Flag[]> $flagsByDomainId)
  */
+#[ORM\Table(name: 'products')]
+#[ORM\Entity]
 class Product extends BaseProduct
 {
     public const PDF_SUFFIX = '.pdf';
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100, unique=true, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 100, unique: true, nullable: false)]
     protected $catnum;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Model\Product\Product>
-     * @ORM\ManyToMany(targetEntity="App\Model\Product\Product")
-     * @ORM\JoinTable(name="related_products",
-     *     joinColumns={@ORM\JoinColumn(name="main_product", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="related_product", referencedColumnName="id")}
-     * )
      */
+    #[ORM\JoinTable(name: 'related_products')]
+    #[ORM\JoinColumn(name: 'main_product', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'related_product', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: self::class)]
     protected $relatedProducts;
 
     /**

@@ -7,69 +7,67 @@ namespace Shopsys\FrameworkBundle\Model\Product\GiftPlan;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
-/**
- * @ORM\Table(name="gift_plans", indexes={
- *      @ORM\Index(columns={"domain_id","valid_from", "valid_to"}),
- *      @ORM\Index(columns={"gift_product_id"})
- * })
- * @ORM\Entity
- */
+#[ORM\Table(name: 'gift_plans')]
+#[ORM\Index(columns: ['domain_id', 'valid_from', 'valid_to'])]
+#[ORM\Index(columns: ['gift_product_id'])]
+#[ORM\Entity]
 class GiftPlan
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
     protected $name;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Product>
-     * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
-     * @ORM\JoinTable(name="gift_plan_main_products",
-     *     joinColumns={@ORM\JoinColumn(name="gift_plan_id", referencedColumnName="id", onDelete="CASCADE")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="main_product_id", referencedColumnName="id", onDelete="CASCADE")})
-     * @ORM\OrderBy({"id" = "ASC"})
      */
+    #[ORM\JoinTable(name: 'gift_plan_main_products')]
+    #[ORM\JoinColumn(name: 'gift_plan_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'main_product_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToMany(targetEntity: Product::class)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     protected $mainProducts;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
-     * @ORM\JoinColumn(name="gift_product_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'gift_product_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $giftProduct;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $validFrom;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $validTo;
 
     /**
