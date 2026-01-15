@@ -50,6 +50,7 @@ build-storefront:
         - docker build -f ./storefront/docker/Dockerfile
             --target production
             --compress
+            --build-arg CYPRESS_KEEP_TID=1
             --build-arg SENTRY_RELEASE=${CI_COMMIT_SHORT_SHA}
             --build-arg SENTRY_URL=${SENTRY_URL}
             --build-arg SENTRY_ORG=shopsys
