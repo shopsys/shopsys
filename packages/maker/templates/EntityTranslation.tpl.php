@@ -7,22 +7,18 @@ namespace <?= $namespace; ?>;
 
 <?= $use_statements; ?>
 
-/**
- * @ORM\Table(name="<?= $table_name ?>")
- * @ORM\Entity
- */
+#[ORM\Table(name: '<?= $table_name ?>')]
+#[ORM\Entity]
 class <?= $class_name; ?> extends AbstractTranslation
 {
     /**
      * @var \<?= $entity_config->getEntityFullyQualifiedName(); ?><?= PHP_EOL; ?>
-     * @Prezent\Translatable(targetEntity="<?= $entity_config->getEntityFullyQualifiedName(); ?>")
      */
+    #[Prezent\Translatable(targetEntity: \<?= $entity_config->getEntityFullyQualifiedName(); ?>::class)]
     protected $translatable;
 
 <?php foreach ($entity_config->getTranslationPropertiesOnly() as $property): ?>
-    /**<?= PHP_EOL; ?>
-     * <?= implode(PHP_EOL . '     * ', $property->getAnnotationLines()) . PHP_EOL; ?>
-     */<?= PHP_EOL; ?>
+    <?= implode(PHP_EOL . '    ', $property->getAttributeLines()) . PHP_EOL; ?>
     private <?= $property->getTypeHint() ?> $<?= $property->propertyName; ?>;
     <?= PHP_EOL; ?>
 <?php endforeach; ?>

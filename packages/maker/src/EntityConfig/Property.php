@@ -37,7 +37,7 @@ abstract class Property
     /**
      * @return string[]
      */
-    abstract public function getAnnotationLines(): array;
+    abstract public function getAttributeLines(): array;
 
     /**
      * @param \Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum $collectionTypeHintType

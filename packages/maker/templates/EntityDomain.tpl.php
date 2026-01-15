@@ -1,6 +1,7 @@
 <?php
 
 use Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum;
+use Shopsys\MakerBundle\EntityConfig\RelationProperty;
 
 ?>
 <?= "<?php\n"; ?>
@@ -12,30 +13,27 @@ namespace <?= $namespace; ?>;
 
 <?= $use_statements; ?>
 
-/**
- * @ORM\Table(name="<?= $table_name ?>")
- * @ORM\Entity
- */
+#[ORM\Table(name: '<?= $table_name ?>')]
+#[ORM\Entity]
 class <?= $class_name; ?>
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="<?= $entity_config->getEntityFullyQualifiedName(); ?>", inversedBy="domains")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: \<?= $entity_config->getEntityFullyQualifiedName(); ?>::class, inversedBy: 'domains')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private <?= $entity_config->entityName; ?> $<?= lcfirst($entity_config->entityName); ?>;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
     private int $domainId;
 
 <?php foreach ($entity_config->getDomainPropertiesOnly() as $property): ?>
     <?= PHP_EOL; ?>
 <?= $property->getAdditionalInformation(); ?>
-    /**<?= PHP_EOL; ?>
-     * <?= implode(PHP_EOL . '     * ', $property->getAnnotationLines()) . PHP_EOL; ?>
-     */<?= PHP_EOL; ?>
+<?php if ($property instanceof RelationProperty && $property->getVarDocBlock()): ?>
+    /**
+     * <?= $property->getVarDocBlock() . PHP_EOL; ?>
+     */
+<?php endif; ?>
+    <?= implode(PHP_EOL . '    ', $property->getAttributeLines()) . PHP_EOL; ?>
     private <?= $property->getTypeHint() ?> $<?= $property->propertyName; ?>;
     <?= PHP_EOL; ?>
 <?php endforeach; ?>
