@@ -1,5 +1,0 @@
-query TransportsFullQuery($cartUuid: Uuid) {
-    transports(cartUuid: $cartUuid) {
-        ...TransportWithAvailablePaymentsAndStoresFragment
-    }
-}

@@ -1,8 +1,0 @@
-fragment StoreAvailabilityFragment on StoreAvailability {
-    __typename
-    availabilityInformation
-    availabilityStatus
-    store {
-        ...StoreDetailFragment
-    }
-}
