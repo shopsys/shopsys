@@ -97,6 +97,7 @@ test:storefront-standards-with-codegen-with-tests-with-licenses-check:
         - ./check-next-public-variable.sh
         - ./check-code-gen.sh
         - pnpm run check
+        - pnpm run knip
         - pnpm test--no-watch
         - sh scripts/check-licenses.sh
         - pnpm run translate

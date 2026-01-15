@@ -6,6 +6,7 @@ arrange:
     - dependecies.md
     - domain-configuration.md
     - coding-standards.md
+    - knip.md
     - typescript.md
     - tailwind.md
     - best-practises.md

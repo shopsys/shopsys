@@ -21,7 +21,8 @@
         "typecheck": "tsc --pretty --noEmit --project tsconfig.json",
         "test": "vitest",
         "test--update": "vitest -u",
-        "test--no-watch": "vitest run"
+        "test--no-watch": "vitest run",
+        "knip": "knip"
     },
     "dependencies": {
         "@hookform/resolvers": "~2.6.1",
@@ -101,6 +102,7 @@
         "graphql-markdown": "~7.3.0",
         "i18next-parser": "~9.3.0",
         "jsdom": "~24.0.0",
+        "knip": "^5.81.0",
         "license-checker": "^25.0.1",
         "postcss": "~8.5.6",
         "prettier": "~3.2.5",

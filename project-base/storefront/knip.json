@@ -1,0 +1,30 @@
+{
+    "$schema": "https://unpkg.com/knip@5/schema.json",
+    "ignoreIssues": {
+        "**/*.generated.tsx": ["exports", "types"]
+    },
+    "project": ["**/*.{ts,tsx}"],
+    "ignore": [
+        ".next/**",
+        "cypress/**",
+        "graphql/docs/**",
+        "graphql/types.ts",
+        "public/**",
+        "schema-compressed.graphql.json",
+        "schema.graphql.json",
+        "gtm/factories/getGtmPaymentFailEvent.ts",
+        "gtm/handlers/onGtmPaymentFailEventHandler.ts"
+    ],
+    "ignoreDependencies": ["eslint-config-prettier", "license-checker", "tailwindcss"],
+    "ignoreUnresolved": ["dotenv/config"],
+    "next": true,
+    "vitest": {
+        "entry": ["vitest/**/*.test.{ts,tsx}", "vitest/setup.ts"],
+        "config": ["vitest.config.js"]
+    },
+    "eslint": true,
+    "postcss": true,
+    "graphql-codegen": {
+        "config": ["codegen-config.ts"]
+    }
+}
