@@ -789,9 +789,6 @@ services:
 
     Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory: ~
 
-    sensio_framework_extra.psr7.http_message_factory:
-        class: Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory
-
     Psr\Http\Message\ServerRequestInterface:
         factory: ['@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory', 'createRequest']
         arguments: ['@=service("request_stack").getMainRequest()']
