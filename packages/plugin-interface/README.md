@@ -33,7 +33,7 @@ Then you need to create `DoctrineOrmMappingPass` and add it as `CompilerPass` in
         parent::build($container);
 
         $container->addCompilerPass(
-            DoctrineOrmMappingsPass::createAnnotationMappingDriver(
+            DoctrineOrmMappingsPass::createAttributeMappingDriver(
                 [$this->getNamespace() . '\Entity'],
                 [$this->getPath() . '/Entity']
             )

@@ -32,25 +32,25 @@ doctrine:
             DatagridHydrator: \Shopsys\AdministrationBundle\Component\Doctrine\DatagridHydrator
         mappings:
             ShopsysFrameworkBundle:
-                type: annotation
+                type: attribute
                 dir: '%shopsys.framework.root_dir%/src/Model'
                 alias: ShopsysFrameworkBundle
                 prefix: Shopsys\FrameworkBundle\Model
                 is_bundle: false
             ShopsysFrameworkBundleComponent:
-                type: annotation
+                type: attribute
                 dir: '%shopsys.framework.root_dir%/src/Component'
                 alias: ShopsysFrameworkBundleComponent
                 prefix: Shopsys\FrameworkBundle\Component
                 is_bundle: false
             App:
-                type: annotation
+                type: attribute
                 dir: '%kernel.project_dir%/src/Model'
                 alias: App
                 prefix: App\Model
                 is_bundle: false
             AppComponent:
-                type: annotation
+                type: attribute
                 dir: '%kernel.project_dir%/src/Component'
                 alias: AppComponent
                 prefix: App\Component

@@ -20,7 +20,7 @@ class ShopsysCategoryFeedLuigisBoxBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(
-            DoctrineOrmMappingsPass::createAnnotationMappingDriver(
+            DoctrineOrmMappingsPass::createAttributeMappingDriver(
                 [$this->getNamespace() . '\Model'],
                 [$this->getPath() . '/Model'],
             ),

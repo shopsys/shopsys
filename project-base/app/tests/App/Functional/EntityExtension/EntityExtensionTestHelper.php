@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\EntityExtension;
 
 use Doctrine\Bundle\DoctrineBundle\Mapping\MappingDriver;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use PHPUnit\Framework\Assert;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
@@ -36,7 +35,7 @@ class EntityExtensionTestHelper
 
     public function registerTestEntities(): void
     {
-        $driver = new AnnotationDriver(new AnnotationReader(), __DIR__ . '/Model');
+        $driver = new AttributeDriver([__DIR__ . '/Model']);
 
         $configuration = $this->em->getConfiguration();
         $mappingDriver = $configuration->getMetadataDriverImpl();
