@@ -132,7 +132,7 @@ export const StyleguideSelects: FC = () => {
     );
 };
 
-export interface ColourOption {
+interface ColourOption {
     readonly value: string;
     readonly label: string;
     readonly color?: string;

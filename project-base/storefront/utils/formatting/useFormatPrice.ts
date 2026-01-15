@@ -3,7 +3,7 @@ import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuer
 import { formatPrice } from 'utils/formaters/formatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
-export type FormatPriceFunctionType = (price: string | number, options?: { explicitZero?: boolean }) => string;
+type FormatPriceFunctionType = (price: string | number, options?: { explicitZero?: boolean }) => string;
 
 export const useFormatPrice = (): FormatPriceFunctionType => {
     const { t } = useTranslation();

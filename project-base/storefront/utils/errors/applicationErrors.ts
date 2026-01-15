@@ -50,9 +50,9 @@ type KeysMatching<T, V extends ApplicationErrorVerbosityLevel> = {
 
 export type FlashMessageKeys = KeysMatching<typeof ApplicationErrors, 'flash-message'>;
 
-export type NoFlashMessageKeys = KeysMatching<typeof ApplicationErrors, 'no-flash-message'>;
+type NoFlashMessageKeys = KeysMatching<typeof ApplicationErrors, 'no-flash-message'>;
 
-export type NoLogKeys = KeysMatching<typeof ApplicationErrors, 'no-log'>;
+type NoLogKeys = KeysMatching<typeof ApplicationErrors, 'no-log'>;
 
 export type ApplicationErrorsType = keyof typeof ApplicationErrors;
 

@@ -1,13 +1,13 @@
 import { GraphQLError } from 'graphql';
 
-export type RawValidationEntry = {
+type RawValidationEntry = {
     message: string;
     code: string;
 };
 
-export type RawValidationErrors = Record<string, RawValidationEntry[]>;
+type RawValidationErrors = Record<string, RawValidationEntry[]>;
 
-export type GraphqlErrorExtensions = {
+type GraphqlErrorExtensions = {
     validation?: RawValidationErrors;
     userCode?: string | null;
     code?: string | number;
@@ -16,7 +16,7 @@ export type GraphqlErrorExtensions = {
     trace?: Array<{ file: string; line: number; call: string }>;
 };
 
-export type ParsedGraphqlError = {
+type ParsedGraphqlError = {
     message: string;
     errorCode: string | number | null;
     userCode: string | null;
@@ -24,7 +24,7 @@ export type ParsedGraphqlError = {
     extensions: GraphqlErrorExtensions | null;
 };
 
-export const parseGraphqlErrorExtensions = (
+const parseGraphqlErrorExtensions = (
     extensions: GraphqlErrorExtensions | null | undefined,
 ): {
     errorCode: string | number | null;
@@ -85,7 +85,7 @@ export const hasValidationErrors = (error: ParsedGraphqlError): boolean => {
     return error.validationErrors !== null && Object.keys(error.validationErrors).length > 0;
 };
 
-export const flattenValidationErrors = (
+const flattenValidationErrors = (
     validationErrors: RawValidationErrors,
     options: { stripInputPrefix?: boolean } = {},
 ): Array<{ field: string; message: string; code: string }> => {

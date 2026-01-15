@@ -11,5 +11,3 @@ export const usePersistStore = <T>(selector: (store: PersistStore) => T): T => {
 
     return useStore(persistStoreContext, selector);
 };
-
-export type { PersistStore };

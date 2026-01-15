@@ -11,7 +11,7 @@ export const STATIC_REWRITE_PATHS = {
 
 export type StaticRewritePathKeyType = keyof (typeof STATIC_REWRITE_PATHS)[string];
 
-export const isStaticRewritePath = (path: string, domainUrl: string) => {
+const isStaticRewritePath = (path: string, domainUrl: string) => {
     return path in STATIC_REWRITE_PATHS[domainUrl];
 };
 

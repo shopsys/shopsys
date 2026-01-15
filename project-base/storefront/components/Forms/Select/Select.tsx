@@ -10,7 +10,7 @@ import { SelectOptionType } from 'types/selectOptions';
 import { twMergeCustom } from 'utils/twMerge';
 import useClickClosePopup from 'utils/ui/useClickClosePopup';
 
-export type SelectProps<T = string> = {
+type SelectProps<T = string> = {
     ariaLabel: string;
     label?: string | ReactNode;
     placeholder?: string;

@@ -12,6 +12,8 @@ const RECOMMENDER_PATHNAMES = {
     '/wishlist': 'wishlist',
 } as const;
 
+type RecommenderClientIdentifierKeyType = keyof typeof RECOMMENDER_PATHNAMES;
+
 export const getRecommenderClientIdentifier = (pathname: string): string => {
     const splitPathname = pathname.split('?')[0];
     if (!(splitPathname in RECOMMENDER_PATHNAMES)) {
@@ -21,5 +23,3 @@ export const getRecommenderClientIdentifier = (pathname: string): string => {
 
     return RECOMMENDER_PATHNAMES[splitPathname as RecommenderClientIdentifierKeyType];
 };
-
-export type RecommenderClientIdentifierKeyType = keyof typeof RECOMMENDER_PATHNAMES;

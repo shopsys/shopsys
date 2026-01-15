@@ -124,7 +124,7 @@ export const useComplaintForm = (
     return [useFormWrapper<ComplaintFormType>(resolver, defaultValues), defaultValues];
 };
 
-export type ComplaintFormMetaType = {
+type ComplaintFormMetaType = {
     formName: string;
     messages: {
         error: string;
