@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -35,8 +35,8 @@ class BlogArticle extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleTranslation")
      */
+    #[Prezent\Translations(targetEntity: BlogArticleTranslation::class)]
     protected $translations;
 
     /**

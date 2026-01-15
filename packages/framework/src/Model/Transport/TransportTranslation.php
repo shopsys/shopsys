@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\Mapping as ORM;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
@@ -15,9 +15,9 @@ class TransportTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
-     * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[Prezent\Translatable(targetEntity: Transport::class)]
     protected $translatable;
 
     /**

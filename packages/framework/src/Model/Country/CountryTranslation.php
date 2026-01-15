@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Country;
 
 use Doctrine\ORM\Mapping as ORM;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
 #[ORM\Table(name: 'country_translations')]
@@ -14,9 +14,9 @@ class CountryTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country
-     * @Prezent\Translatable(targetEntity="\Shopsys\FrameworkBundle\Model\Country\Country")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[Prezent\Translatable(targetEntity: Country::class)]
     protected $translatable;
 
     /**

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Image;
 
 use Doctrine\ORM\Mapping as ORM;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
 #[ORM\Table(name: 'images_translations')]
@@ -14,9 +14,9 @@ class ImageTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Image
-     * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Component\Image\Image")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[Prezent\Translatable(targetEntity: Image::class)]
     protected $translatable;
 
     /**

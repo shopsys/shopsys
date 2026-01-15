@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
@@ -33,8 +33,8 @@ class Category extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Category\CategoryTranslation>
-     * @Prezent\Translations(targetEntity="Tests\App\Functional\EntityExtension\Model\Category\CategoryTranslation")
      */
+    #[Prezent\Translations(targetEntity: CategoryTranslation::class)]
     protected $translations;
 
     #[Gedmo\TreeParent]

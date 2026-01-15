@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
@@ -32,8 +32,8 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Product\ProductTranslation>
-     * @Prezent\Translations(targetEntity="Tests\App\Functional\EntityExtension\Model\Product\ProductTranslation")
      */
+    #[Prezent\Translations(targetEntity: ProductTranslation::class)]
     protected $translations;
 
     #[ORM\Column(type: 'string', length: 100, nullable: true)]

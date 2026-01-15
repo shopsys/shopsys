@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
 use Doctrine\ORM\Mapping as ORM;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
 #[ORM\Table(name: 'customer_user_role_group_translations')]
@@ -14,8 +14,8 @@ class CustomerUserRoleGroupTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
-     * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup")
      */
+    #[Prezent\Translatable(targetEntity: CustomerUserRoleGroup::class)]
     protected $translatable;
 
     /**

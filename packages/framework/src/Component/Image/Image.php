@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
@@ -38,6 +38,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Component\Image\ImageTranslation>
      */
+    #[Prezent\Translations(targetEntity: ImageTranslation::class)]
     protected $translations;
 
     /**

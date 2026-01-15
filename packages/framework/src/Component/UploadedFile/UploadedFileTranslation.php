@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use Doctrine\ORM\Mapping as ORM;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
 #[ORM\Table(name: 'uploaded_files_translations')]
@@ -14,8 +14,8 @@ class UploadedFileTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
-     * @Prezent\Translatable(targetEntity="\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile")
      */
+    #[Prezent\Translatable(targetEntity: UploadedFile::class)]
     protected $translatable;
 
     /**
