@@ -25,9 +25,6 @@ services:
     Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader:
         alias: doctrine.fixtures.loader
 
-    Doctrine\Common\Annotations\DocParser:
-        alias: jms_translation.doc_parser
-
     Doctrine\Common\EventManager:
         alias: doctrine.dbal.default_connection.event_manager
 

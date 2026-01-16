@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
-use Doctrine\Common\Annotations\DocParser;
-
 class PhpFileExtractorFactory
 {
     /**
-     * @param \Doctrine\Common\Annotations\DocParser $docParser
      * @param \Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper $phpParserNodeHelper
      */
     public function __construct(
-        protected readonly DocParser $docParser,
         protected readonly PhpParserNodeHelper $phpParserNodeHelper,
     ) {
     }
@@ -28,6 +24,6 @@ class PhpFileExtractorFactory
             new TransMethodSpecification('t', 0, 2),
         ];
 
-        return new PhpFileExtractor($this->docParser, $this->phpParserNodeHelper, $transMethodSpecifications);
+        return new PhpFileExtractor($this->phpParserNodeHelper, $transMethodSpecifications);
     }
 }
