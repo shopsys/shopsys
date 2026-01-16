@@ -8,8 +8,8 @@ use Override;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use SlevomatCodingStandard\Helpers\TokenHelper;
+use const T_ATTRIBUTE;
 use const T_CLASS;
-use const T_DOC_COMMENT_OPEN_TAG;
 
 class ForbiddenDoctrineDefaultValueSniff implements Sniff
 {
@@ -30,17 +30,28 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
     public function process(File $file, $classPosition): void
     {
         $tokens = $file->getTokens();
-        $docBlockOpeningTagPositions = $this->getAllDocBlockOpeningTagPositions($file, $classPosition);
+        $classToken = $tokens[$classPosition];
 
-        foreach ($docBlockOpeningTagPositions as $docBlockOpenTagPosition) {
-            $docBlockToken = $tokens[$docBlockOpenTagPosition];
+        $attributePositions = TokenHelper::findNextAll(
+            $file,
+            [T_ATTRIBUTE],
+            $classToken['scope_opener'],
+            $classToken['scope_closer'],
+        );
 
-            $content = TokenHelper::getContent($file, $docBlockOpenTagPosition, $docBlockToken['comment_closer']);
+        foreach ($attributePositions as $attributePosition) {
+            $attributeToken = $tokens[$attributePosition];
 
-            if ($this->annotationContainsDefaultValue($content)) {
+            if (!isset($attributeToken['attribute_closer'])) {
+                continue;
+            }
+
+            $content = TokenHelper::getContent($file, $attributePosition, $attributeToken['attribute_closer']);
+
+            if ($this->attributeContainsDefaultValue($content)) {
                 $file->addError(
                     'Default value of entity properties cannot be used.',
-                    $docBlockOpenTagPosition,
+                    $attributePosition,
                     self::class,
                 );
             }
@@ -48,29 +59,11 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
     }
 
     /**
-     * @param string $annotationString
+     * @param string $attributeString
      * @return bool
      */
-    protected function annotationContainsDefaultValue(string $annotationString): bool
+    protected function attributeContainsDefaultValue(string $attributeString): bool
     {
-        return (bool)preg_match('~options\s*=\s*\{\s*.*"default"~', $annotationString);
-    }
-
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $startPosition
-     * @return int[]
-     */
-    protected function getAllDocBlockOpeningTagPositions(File $file, int $startPosition): array
-    {
-        $tokens = $file->getTokens();
-        $classToken = $tokens[$startPosition];
-
-        return TokenHelper::findNextAll(
-            $file,
-            [T_DOC_COMMENT_OPEN_TAG],
-            $classToken['scope_opener'],
-            $classToken['scope_closer'],
-        );
+        return (bool)preg_match('~options\s*:\s*\[.*[\'"]default[\'"]\s*=>~s', $attributeString);
     }
 }
