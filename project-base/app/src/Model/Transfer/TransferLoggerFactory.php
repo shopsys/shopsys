@@ -6,7 +6,7 @@ namespace App\Model\Transfer;
 
 use App\Model\Transfer\Exception\UnknownServiceTransferException;
 use App\Model\Transfer\Issue\TransferIssueFacade;
-use Symfony\Bridge\Monolog\Logger;
+use Monolog\Logger;
 
 class TransferLoggerFactory
 {
@@ -16,7 +16,7 @@ class TransferLoggerFactory
     private array $transferLoggers = [];
 
     /**
-     * @param \Symfony\Bridge\Monolog\Logger $defaultLogger
+     * @param \Monolog\Logger $defaultLogger
      * @param \App\Model\Transfer\TransferFacade $transferFacade
      * @param \App\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      */

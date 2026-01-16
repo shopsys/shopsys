@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\Transfer\Issue;
 
+use Psr\Log\LoggerInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class TransferIssueLogCleanerCronModule implements SimpleCronModuleInterface
 {
-    private Logger $logger;
+    private LoggerInterface $logger;
 
     /**
      * @param \App\Model\Transfer\Issue\TransferIssueRepository $transferIssueRepository
@@ -20,9 +20,9 @@ class TransferIssueLogCleanerCronModule implements SimpleCronModuleInterface
     }
 
     /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
+     * @param \Psr\Log\LoggerInterface $logger
      */
-    public function setLogger(Logger $logger): void
+    public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
     }

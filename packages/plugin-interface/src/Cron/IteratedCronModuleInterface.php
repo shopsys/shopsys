@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\Plugin\Cron;
 
-use Symfony\Bridge\Monolog\Logger;
+use Psr\Log\LoggerInterface;
 
 /**
  * IteratedCronModuleInterface is the interface that all long-running CRON modules must implement.
@@ -21,9 +21,9 @@ use Symfony\Bridge\Monolog\Logger;
 interface IteratedCronModuleInterface
 {
     /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
+     * @param \Psr\Log\LoggerInterface $logger
      */
-    public function setLogger(Logger $logger);
+    public function setLogger(LoggerInterface $logger);
 
     /**
      * Restores the module's state after being suspended.
