@@ -56,12 +56,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 // ...
 
-/**
- * @ORM\Table(
- *     name="products"
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'products')]
+#[ORM\Entity]
 class Product
 {
 
@@ -69,10 +65,9 @@ class Product
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     *
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
-     * @ORM\JoinColumn(nullable=false)
      */
+    #[ORM\ManyToOne(targetEntity: Vat::class)]
+    #[ORM\JoinColumn(nullable: false)]
     protected $vat;
 
     /**

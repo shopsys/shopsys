@@ -316,16 +316,13 @@ The entity property value will be automatically hydrated to an instance of `Mone
 ```php
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class MyEntity
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     *
-     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
     protected $price;
 
     // ...

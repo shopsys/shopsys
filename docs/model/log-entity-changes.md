@@ -21,10 +21,8 @@ Conversely, if I want to log only a few properties from an entity, it would be b
     **It is possible to log only entities with primary key `id` and method `getId()`**
 
 ```php
-/**
-* @ORM\Table(name="orders")
-* @ORM\Entity
-*/
+#[ORM\Table(name: 'orders')]
+#[ORM\Entity]
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 class Order
 {
@@ -34,10 +32,8 @@ class Order
 or
 
 ```php
-/**
- * @ORM\Table(name="order_items")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'order_items')]
+#[ORM\Entity]
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 class OrderItem
 {
@@ -53,10 +49,8 @@ For example, OrderItem is a child entity of the Order entity. In the case of a c
 In the case of OrderItem, it's the `$order` property.
 
 ```php
-/**
- * @ORM\Table(name="order_items")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'order_items')]
+#[ORM\Entity]
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 class OrderItem
 {
@@ -64,9 +58,9 @@ class OrderItem
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Order
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Order", inversedBy="items")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'items')]
+    #[ORM\JoinColumn(name: 'order_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[LoggableParentProperty]
     protected $order;
     ...
@@ -109,10 +103,10 @@ So if I want to see in the order log that the status has changed from "New" to "
 
 ```php
 /**
- * @ORM\Table(name="order_statuses")
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'order_statuses')]
+#[ORM\Entity]
 class OrderStatus extends AbstractTranslatableEntity
 {
     ...

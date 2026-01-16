@@ -410,7 +410,7 @@ At this point, you should be able to edit and create new salesmen directly in th
 
 In this part, we will enable drag&drop sorting of our salesmen using the grid. To make the changes in the ordering persistent, we first need to add a new attribute to the' Salesman' entity.
 
-### 2.1 Add `$position` to the `Salesman` entity and mark it as a DB column using Doctrine ORM annotation
+### 2.1 Add `$position` to the `Salesman` entity and mark it as a DB column using Doctrine ORM attribute
 
 ```diff
 // src/Model/Salesman/Salesman.php
@@ -419,9 +419,8 @@ class Salesman
 {
 +    /**
 +     * @var int|null
-+     *
-+     * @ORM\Column(type="integer", nullable=true)
 +     */
++    #[ORM\Column(type: 'integer', nullable: true)]
 +    protected $position;
 }
 ```

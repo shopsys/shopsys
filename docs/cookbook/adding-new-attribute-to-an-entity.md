@@ -12,7 +12,7 @@ It is a common modification when you need your e-commerce application and ERP sy
     Most common entities (including `Product`) are already extended in `project-base` to ease your development.<br>
     However, when extending any other entity, there are [few more steps](../extensibility/entity-extension.md#how-can-i-extend-an-entity) that need to be done.
 
-Add new `extId` field with Doctrine ORM annotations and a getter for the field into `App\Model\Product\Product` class.
+Add new `extId` field with Doctrine ORM attributes and a getter for the field into `App\Model\Product\Product` class.
 
 Overwrite `setData` method for setting entity data from a data object.
 
@@ -23,17 +23,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
-/**
- * @ORM\Table(name="products")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'products')]
+#[ORM\Entity]
 class Product extends BaseProduct
 {
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $extId;
 
     /**
@@ -57,8 +54,8 @@ class Product extends BaseProduct
 }
 ```
 
-_Notice that type hints and annotations of the methods do not match.
-This is on purpose - extended class must respect the interface of its parent while annotation ensures proper IDE autocomplete._
+_Notice that type hints and docblock annotations of the methods do not match.
+This is on purpose - extended class must respect the interface of its parent while docblock annotation ensures proper IDE autocomplete._
 
 ### Database migrations
 
