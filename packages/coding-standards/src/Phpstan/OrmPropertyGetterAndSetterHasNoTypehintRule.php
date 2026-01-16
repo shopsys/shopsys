@@ -79,10 +79,10 @@ class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
             return [];
         }
 
-        if ($this->hasOrmAnnotation($propertyReflection) && !$this->isMethodInAncestor($methodName, $scope)) {
+        if ($this->hasOrmMapping($propertyReflection) && !$this->isMethodInAncestor($methodName, $scope)) {
             return [
                 RuleErrorBuilder::message(sprintf(
-                    'Method "%s::%s()" has a return typehint, but its associated property has an ORM annotation.',
+                    'Method "%s::%s()" has a return typehint, but its associated property has an ORM attribute.',
                     $scope->getClassReflection()?->getName(),
                     $methodName,
                 ))->line($node->getLine())->build(),
@@ -122,10 +122,10 @@ class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
             return [];
         }
 
-        if ($this->hasOrmAnnotation($propertyReflection) && !$this->isMethodInAncestor($methodName, $scope)) {
+        if ($this->hasOrmMapping($propertyReflection) && !$this->isMethodInAncestor($methodName, $scope)) {
             return [
                 RuleErrorBuilder::message(sprintf(
-                    'Method "%s::%s()" has a typehint on first parameter, but its associated property has an ORM annotation.',
+                    'Method "%s::%s()" has a typehint on first parameter, but its associated property has an ORM attribute.',
                     $scope->getClassReflection()?->getName(),
                     $methodName,
                 ))->line($node->getLine())->build(),
@@ -136,12 +136,26 @@ class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
     }
 
     /**
-     * @param \PHPStan\Reflection\Php\PhpPropertyReflection $property
+     * @param \PHPStan\Reflection\PropertyReflection $property
      * @return bool
      */
-    private function hasOrmAnnotation(PropertyReflection $property): bool
+    private function hasOrmMapping(PropertyReflection $property): bool
     {
-        return $property->getDocComment() !== null && str_contains($property->getDocComment(), '@ORM\\');
+        $nativeReflection = $property->getNativeReflection();
+
+        if ($nativeReflection === null) {
+            return false;
+        }
+
+        foreach ($nativeReflection->getAttributes() as $attribute) {
+            $attributeName = $attribute->getName();
+
+            if (str_starts_with($attributeName, 'Doctrine\ORM\Mapping')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
