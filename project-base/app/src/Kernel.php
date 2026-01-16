@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App;
 
+use Closure;
+use ReflectionFunction;
+use ReflectionMethod;
+use ReflectionObject;
+use Shopsys\FrameworkBundle\Component\AnnotatedRouteControllerLoader;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -12,6 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+use Symfony\Component\Routing\RouteCollection;
 
 class Kernel extends BaseKernel
 {
@@ -70,5 +76,42 @@ class Kernel extends BaseKernel
         $routes->import($configDir . '/{routes}/*' . self::CONFIG_EXTS);
         $routes->import($configDir . '/{routes}/' . $this->environment . '/**/*' . self::CONFIG_EXTS);
         $routes->import($configDir . '/{routes}' . self::CONFIG_EXTS);
+    }
+
+    /**
+     * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
+     * @return \Symfony\Component\Routing\RouteCollection
+     */
+    public function loadRoutes(LoaderInterface $loader): RouteCollection
+    {
+        $file = (new ReflectionObject($this))->getFileName();
+        /** @var \Symfony\Component\Routing\Loader\PhpFileLoader $kernelLoader */
+        $kernelLoader = $loader->getResolver()->resolve($file, 'php');
+        $kernelLoader->setCurrentDir(dirname($file));
+        $collection = new RouteCollection();
+
+        $configureRoutes = new ReflectionMethod($this, 'configureRoutes');
+        $configureRoutes->getClosure($this)(new RoutingConfigurator($collection, $kernelLoader, $file, $file, $this->getEnvironment()));
+
+        foreach ($collection as $routeName => $route) {
+            $controller = $route->getDefault('_controller');
+
+            if (is_array($controller) && [0, 1] === array_keys($controller) && $this === $controller[0]) {
+                $route->setDefault('_controller', ['kernel', $controller[1]]);
+            } elseif ($controller instanceof Closure && $this === ($r = new ReflectionFunction($controller))->getClosureThis() && !str_contains($r->name, '{closure')) {
+                $route->setDefault('_controller', ['kernel', $r->name]);
+            }
+
+            $newRouteName = AnnotatedRouteControllerLoader::replacePartOfTheRouteName($routeName);
+
+            if ($newRouteName === $routeName) {
+                continue;
+            }
+
+            $collection->add($newRouteName, $route);
+            $collection->remove($routeName);
+        }
+
+        return $collection;
     }
 }

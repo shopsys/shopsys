@@ -1,8 +1,10 @@
 <?php
 
+use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\MethodDeclarationSniff;
+use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
 use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
@@ -18,6 +20,12 @@ use Symplify\CodingStandard\Fixer\Commenting\RemoveUselessDefaultCommentFixer;
 return [
     __DIR__ . '/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php',
     RemoveUselessDefaultCommentFixer::class,
+    AssignmentInConditionSniff::class => [
+        __DIR__ . '/src/Kernel.php',
+    ],
+    DisallowMultipleAssignmentsSniff::class => [
+        __DIR__ . '/src/Kernel.php',
+    ],
     PhpdocToPropertyTypeFixer::class => [
         __DIR__ . '/src',
         __DIR__ . '/app',
