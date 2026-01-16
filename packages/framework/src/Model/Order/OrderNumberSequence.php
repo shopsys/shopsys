@@ -7,6 +7,9 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\NumberSequence\AbstractNumberSequence;
 
+/**
+ * @phpstan-ignore shopsys.entityShouldHaveFactory
+ */
 #[ORM\Table(name: 'order_number_sequences')]
 #[ORM\Entity]
 class OrderNumberSequence extends AbstractNumberSequence
