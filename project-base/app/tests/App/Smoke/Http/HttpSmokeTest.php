@@ -15,7 +15,7 @@ class HttpSmokeTest extends HttpSmokeTestCase
     {
         parent::setUp();
 
-        static::$container->get(Domain::class)
+        self::getContainer()->get(Domain::class)
             ->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
 
@@ -24,7 +24,7 @@ class HttpSmokeTest extends HttpSmokeTestCase
      */
     protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
     {
-        $routeConfigCustomization = new RouteConfigCustomization(static::$container);
+        $routeConfigCustomization = new RouteConfigCustomization(self::getContainer());
         $routeConfigCustomization->customizeRouteConfigs($routeConfigCustomizer);
     }
 
@@ -35,7 +35,7 @@ class HttpSmokeTest extends HttpSmokeTestCase
     protected function handleRequest(Request $request)
     {
         /** @var \Doctrine\ORM\EntityManager $entityManager */
-        $entityManager = static::$container->get('doctrine.orm.entity_manager');
+        $entityManager = self::getContainer()->get('doctrine.orm.entity_manager');
 
         $entityManager->beginTransaction();
         ob_start();

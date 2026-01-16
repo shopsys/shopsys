@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Customer\Mock;
 
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class TokenMock implements TokenInterface
 {
@@ -28,7 +29,10 @@ class TokenMock implements TokenInterface
     {
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
         return '';
     }
@@ -45,7 +49,10 @@ class TokenMock implements TokenInterface
     {
     }
 
-    public function getUser()
+    /**
+     * @return \Symfony\Component\Security\Core\User\UserInterface|null
+     */
+    public function getUser(): ?UserInterface
     {
         return $this->customerUser;
     }
@@ -73,7 +80,10 @@ class TokenMock implements TokenInterface
     {
     }
 
-    public function getAttributes()
+    /**
+     * @return array
+     */
+    public function getAttributes(): array
     {
         return [];
     }
@@ -87,24 +97,27 @@ class TokenMock implements TokenInterface
 
     /**
      * @param string $name
+     * @return bool
      */
-    public function hasAttribute(string $name)
+    public function hasAttribute(string $name): bool
     {
         return true;
     }
 
     /**
      * @param string $name
+     * @return mixed
      */
-    public function getAttribute(string $name)
+    public function getAttribute(string $name): mixed
     {
+        return null;
     }
 
     /**
      * @param string $name
      * @param mixed $value
      */
-    public function setAttribute(string $name, $value)
+    public function setAttribute(string $name, mixed $value): void
     {
     }
 

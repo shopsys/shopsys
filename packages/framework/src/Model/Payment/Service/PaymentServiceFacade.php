@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Environment;
 
 class PaymentServiceFacade
 {
@@ -37,6 +38,7 @@ class PaymentServiceFacade
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationDataFactory $paymentSetupCreationDataFactory
+     * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
         protected readonly PaymentTransactionFacade $paymentTransactionFacade,
@@ -45,6 +47,7 @@ class PaymentServiceFacade
         protected readonly LoggerInterface $logger,
         protected readonly ContainerInterface $container,
         protected readonly PaymentSetupCreationDataFactory $paymentSetupCreationDataFactory,
+        protected readonly Environment $twigEnvironment,
     ) {
         $this->paymentServices = [];
         $this->paymentServices[Payment::TYPE_GOPAY] = $goPayFacade;
