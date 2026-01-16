@@ -6,8 +6,8 @@ namespace Tests\HttpSmokeTesting\Unit;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopsys\HttpSmokeTesting\Annotation\DataSet;
-use Shopsys\HttpSmokeTesting\Annotation\Parameter;
+use Shopsys\HttpSmokeTesting\Attribute\DataSet;
+use Shopsys\HttpSmokeTesting\Attribute\Parameter;
 use Shopsys\HttpSmokeTesting\RequestDataSetGeneratorFactory;
 use Shopsys\HttpSmokeTesting\RouteInfo;
 use Symfony\Component\Routing\Route;
@@ -61,7 +61,7 @@ class RequestDataSetGeneratorTest extends TestCase
     }
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\Annotation\DataSet $dataSet
+     * @param \Shopsys\HttpSmokeTesting\Attribute\DataSet $dataSet
      * @param int $statusCode
      * @param array $parameters
      */
@@ -85,13 +85,9 @@ class RequestDataSetGeneratorTest extends TestCase
 
     public function testGeneratorGeneratesRequestDataSetsFromDataSetAnnotations()
     {
-        $parameter1 = new Parameter();
-        $parameter1->name = 'name';
-        $parameter1->value = 'Batman';
+        $parameter1 = new Parameter('name', 'Batman');
 
-        $parameter2 = new Parameter();
-        $parameter2->name = 'name';
-        $parameter2->value = 'World';
+        $parameter2 = new Parameter('name', 'World');
 
         $dataSet1 = new DataSet();
         $dataSet1->parameters = [$parameter1];
@@ -125,13 +121,9 @@ class RequestDataSetGeneratorTest extends TestCase
      */
     public static function getDataSets(): array
     {
-        $parameter1 = new Parameter();
-        $parameter1->name = 'name';
-        $parameter1->value = 'Batman';
+        $parameter1 = new Parameter('name', 'Batman');
 
-        $parameter2 = new Parameter();
-        $parameter2->name = 'foo';
-        $parameter2->value = 'Bar';
+        $parameter2 = new Parameter('foo', 'Bar');
 
         $dataSet1 = new DataSet();
         $dataSet1->parameters = [$parameter1];
