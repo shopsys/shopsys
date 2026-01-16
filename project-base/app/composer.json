@@ -43,7 +43,6 @@
         "commerceguys/intl": "^2.0.0",
         "composer/composer": "^2.2.12",
         "cweagans/composer-patches": "^1.7",
-        "doctrine/annotations": "^1.6.0",
         "doctrine/common": "^3.2.2",
         "doctrine/doctrine-bundle": "^2.18",
         "doctrine/doctrine-fixtures-bundle": "^3.0.2",

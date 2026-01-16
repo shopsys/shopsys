@@ -45,7 +45,6 @@
         "commerceguys/intl": "^2.0.0",
         "composer/composer": "^2.2.12",
         "defuse/php-encryption": "^2.2.1",
-        "doctrine/annotations": "^1.6",
         "doctrine/cache": "^1.7",
         "doctrine/collections": "^1.5",
         "doctrine/common": "^3.2.2",
