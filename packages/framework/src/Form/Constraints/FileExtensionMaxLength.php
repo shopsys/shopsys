@@ -7,9 +7,6 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 use Override;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
 class FileExtensionMaxLength extends Constraint
 {
     public string $message = 'File extension {{ value }} is too long. It should have {{ limit }} character or less.';

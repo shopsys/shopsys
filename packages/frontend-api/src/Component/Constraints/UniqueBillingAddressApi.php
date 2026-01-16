@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
+use Attribute;
 use Override;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
+#[Attribute(Attribute::TARGET_CLASS | Attribute::IS_REPEATABLE)]
 class UniqueBillingAddressApi extends Constraint
 {
     public const DUPLICATE_BILLING_ADDRESS = '9732bc5c-7b8e-404b-ac8c-a1c810f6a045';

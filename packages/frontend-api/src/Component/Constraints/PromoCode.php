@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
+use Attribute;
 use Override;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
+#[Attribute(Attribute::TARGET_CLASS | Attribute::IS_REPEATABLE)]
 class PromoCode extends Constraint
 {
     public const INVALID_ERROR = '4693d59e-98c5-4cf8-8fcd-1577252f27f6';

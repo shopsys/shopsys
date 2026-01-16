@@ -6,9 +6,6 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
 class UniqueCollection extends Constraint
 {
     public string $message = 'Values are duplicate.';

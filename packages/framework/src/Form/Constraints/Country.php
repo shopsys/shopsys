@@ -6,9 +6,6 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
 class Country extends Constraint
 {
     public const string INVALID_COUNTRY_ERROR = '9080a4de-347f-48c7-a41a-b4cc46a5146d';

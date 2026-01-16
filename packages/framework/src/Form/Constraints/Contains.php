@@ -7,9 +7,6 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 use Override;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
 class Contains extends Constraint
 {
     public string $message = 'Field must contain {{ needle }}.';

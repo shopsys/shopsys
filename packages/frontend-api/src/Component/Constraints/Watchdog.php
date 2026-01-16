@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
+use Attribute;
 use Override;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
+#[Attribute(Attribute::TARGET_PROPERTY | Attribute::IS_REPEATABLE)]
 class Watchdog extends Constraint
 {
     public const INQUIRY_ERROR = 'bd70a05a-6bbb-4783-b9b2-c42824fa067d';

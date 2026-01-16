@@ -12,9 +12,6 @@ use function get_class;
 use function gettype;
 use function is_object;
 
-/**
- * @Annotation
- */
 class MoneyRange extends Constraint
 {
     public string $minMessage = 'The amount of money should be {{ limit }} or more.';

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Component\Constraints;
 
+use Attribute;
 use Override;
 use Symfony\Component\Validator\Constraint;
 
+#[Attribute(Attribute::TARGET_CLASS)]
 class ResetPasswordHash extends Constraint
 {
     public const INVALID_HASH_ERROR = '82016a50-34c6-4b78-a21d-f9dc5bb47215';

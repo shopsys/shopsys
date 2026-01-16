@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Component\Constraints;
 
+use Attribute;
 use Override;
 use Symfony\Component\Validator\Constraint;
 
+#[Attribute(Attribute::TARGET_CLASS)]
 class ParameterFilter extends Constraint
 {
     public const VALUES_NOT_SUPPORTED_FOR_SLIDER_TYPE_ERROR = '83a312e6-4433-494d-9687-00d4a4908432';
