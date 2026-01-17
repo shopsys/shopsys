@@ -92,25 +92,16 @@ class SliderItem implements OrderableEntityInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $routeName;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     */
     public function __construct(SliderItemData $sliderItemData)
     {
         $this->setData($sliderItemData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     */
     public function edit(SliderItemData $sliderItemData)
     {
         $this->setData($sliderItemData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     */
     protected function setData(SliderItemData $sliderItemData): void
     {
         $this->domainId = $sliderItemData->domainId;

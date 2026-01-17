@@ -67,7 +67,6 @@ class PerformanceTestSampleQualifier
     }
 
     /**
-     * @param \Tests\App\Performance\Page\PerformanceTestSample $performanceTestSample
      * @return int
      */
     public function getSampleStatus(PerformanceTestSample $performanceTestSample)

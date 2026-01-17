@@ -35,10 +35,6 @@ class LoginListenerTest extends TestCase
         $this->callOnSecurityInteractiveLogin($administratorMock);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administratorMock
-     * @return \Shopsys\FrameworkBundle\Model\Security\LoginListener
-     */
     protected function callOnSecurityInteractiveLogin(Administrator $administratorMock): LoginListener
     {
         $emMock = $this->getMockBuilder(EntityManager::class)

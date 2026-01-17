@@ -19,15 +19,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundU
 
 class CreateInquiryMutation extends AbstractMutation
 {
-    /**
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryDataFactory $inquiryDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade $inquiryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailFacade $inquiryMailFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     */
     public function __construct(
         protected readonly LoggerInterface $logger,
         protected readonly InquiryDataFactory $inquiryDataFactory,
@@ -39,10 +30,6 @@ class CreateInquiryMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return bool
-     */
     public function createInquiryMutation(Argument $argument): bool
     {
         try {
@@ -57,10 +44,6 @@ class CreateInquiryMutation extends AbstractMutation
         }
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Inquiry\InquiryData
-     */
     protected function createInquiryDataFromArgument(Argument $argument): InquiryData
     {
         $input = $argument['input'];

@@ -16,14 +16,6 @@ use Symfony\Component\Form\FormInterface;
 
 class UnitInlineEdit extends AbstractGridInlineEdit
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitGridFactory $unitGridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory $unitDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         UnitGridFactory $unitGridFactory,
         AccessCheckerInterface $accessChecker,
@@ -37,7 +29,6 @@ class UnitInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     * @return int|string
      */
     #[Override]
     protected function createEntityAndGetId(mixed $unitData): int|string
@@ -54,7 +45,6 @@ class UnitInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int|string $unitId
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      */
     #[Override]
@@ -63,10 +53,6 @@ class UnitInlineEdit extends AbstractGridInlineEdit
         $this->unitFacade->edit($unitId, $unitData);
     }
 
-    /**
-     * @param int|string|null $rowId
-     * @return \Symfony\Component\Form\FormInterface
-     */
     #[Override]
     public function getForm(int|string|null $rowId): FormInterface
     {
@@ -80,9 +66,6 @@ class UnitInlineEdit extends AbstractGridInlineEdit
         return $this->formFactory->create(UnitFormType::class, $unitData);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getRoleConstant(): string
     {

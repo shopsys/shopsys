@@ -15,11 +15,6 @@ class AutocompleteFavoritesQuery extends AbstractQuery
     protected const int CATEGORY_LIMIT = 3;
     protected const int BRAND_LIMIT = 3;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteFacade $autocompleteFavoriteFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly AutocompleteFavoriteFacade $autocompleteFavoriteFacade,
         protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
@@ -42,7 +37,6 @@ class AutocompleteFavoritesQuery extends AbstractQuery
     }
 
     /**
-     * @param int $domainId
      * @return array[]
      */
     protected function getListableFavoriteProducts(int $domainId): array

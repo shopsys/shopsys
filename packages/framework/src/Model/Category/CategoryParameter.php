@@ -40,12 +40,6 @@ class CategoryParameter
     #[ORM\Column(type: 'integer')]
     protected $position;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @param bool $collapsed
-     * @param int $position
-     */
     public function __construct(Category $category, Parameter $parameter, bool $collapsed, int $position)
     {
         $this->category = $category;
@@ -78,9 +72,6 @@ class CategoryParameter
         return $this->collapsed;
     }
 
-    /**
-     * @param bool $collapsed
-     */
     public function setCollapsed(bool $collapsed): void
     {
         $this->collapsed = $collapsed;

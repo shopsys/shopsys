@@ -27,14 +27,6 @@ class EntityLogEventListener implements ResetInterface
      */
     protected array $logs = [];
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityLogEntityManager
-     * @param \Doctrine\ORM\EntityManagerInterface $applicationEntityManager
-     * @param \Psr\Log\LoggerInterface $monolog
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFactory $loggableEntityConfigFactory
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ChangeSetResolver $changeSetResolver
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $entityLogEntityManager,
         protected readonly EntityManagerInterface $applicationEntityManager,
@@ -45,9 +37,6 @@ class EntityLogEventListener implements ResetInterface
     ) {
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\PostFlushEventArgs $args
-     */
     public function postFlush(PostFlushEventArgs $args): void
     {
         if (count($this->logs) <= 0) {
@@ -65,37 +54,24 @@ class EntityLogEventListener implements ResetInterface
         $this->entityLogEntityManager->flush();
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\PostPersistEventArgs $args
-     */
     public function postPersist(PostPersistEventArgs $args): void
     {
         $entity = $args->getObject();
         $this->log(EntityLogActionEnum::CREATE, $entity);
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\PostUpdateEventArgs $args
-     */
     public function postUpdate(PostUpdateEventArgs $args): void
     {
         $entity = $args->getObject();
         $this->log(EntityLogActionEnum::UPDATE, $entity);
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\PreRemoveEventArgs $args
-     */
     public function preRemove(PreRemoveEventArgs $args): void
     {
         $entity = $args->getObject();
         $this->log(EntityLogActionEnum::DELETE, $entity);
     }
 
-    /**
-     * @param string $action
-     * @param object $entity
-     */
     protected function log(string $action, object $entity): void
     {
         $loggableSetup = $this->loggableEntityConfigFactory->getLoggableSetupByEntity($entity);
@@ -111,11 +87,6 @@ class EntityLogEventListener implements ResetInterface
         }
     }
 
-    /**
-     * @param object $entity
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig $loggableSetup
-     * @param string $action
-     */
     protected function registerLog(
         object $entity,
         LoggableEntityConfig $loggableSetup,
@@ -134,10 +105,6 @@ class EntityLogEventListener implements ResetInterface
         $this->logs[] = $this->entityLogFacade->createEntityLog($entity, $loggableSetup, $action, $resolvedChangeSet);
     }
 
-    /**
-     * @param object $entity
-     * @return array
-     */
     protected function resolveUpdateChangeSet(object $entity): array
     {
         $resolvedChangeSet = [];

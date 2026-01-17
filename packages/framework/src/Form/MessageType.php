@@ -15,9 +15,6 @@ final class MessageType extends AbstractType
     public const string MESSAGE_LEVEL_WARNING = 'warning';
     public const string MESSAGE_LEVEL_INFO = 'info';
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

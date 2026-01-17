@@ -16,9 +16,6 @@ use Symfony\Component\Finder\Finder;
 #[AsCommand(name: 'upgrade:replace-obsolete-icons', description: 'Replaces obsolete icons rendered with <i> tag by {{ ux_icons() }} function calls in Twig templates')]
 final class ReplaceObsoleteIconsCommand extends Command
 {
-    /**
-     * @param string $kernelProjectDir
-     */
     public function __construct(
         private readonly string $kernelProjectDir,
     ) {
@@ -85,10 +82,6 @@ final class ReplaceObsoleteIconsCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @param string $content
-     * @return string
-     */
     private function replaceIconsAsItalicTag(string $content): string
     {
         return preg_replace_callback(
@@ -131,10 +124,6 @@ final class ReplaceObsoleteIconsCommand extends Command
         );
     }
 
-    /**
-     * @param string $content
-     * @return string
-     */
     private function replaceIconsInOtherTags(string $content): string
     {
         $tagList = ['a', 'span'];
@@ -166,11 +155,6 @@ final class ReplaceObsoleteIconsCommand extends Command
         return $content;
     }
 
-    /**
-     * @param string $allClasses
-     * @param string $iconName
-     * @return string
-     */
     private function getNormalizedAdditionalClasses(string $allClasses, string $iconName): string
     {
         $additionalClasses = array_map(
@@ -183,10 +167,6 @@ final class ReplaceObsoleteIconsCommand extends Command
         return implode(' ', $additionalClasses);
     }
 
-    /**
-     * @param string $inputAttributes
-     * @return string
-     */
     private function getNormalizedAttributes(string $inputAttributes): string
     {
         $inputAttributes = trim($inputAttributes);
@@ -210,10 +190,6 @@ final class ReplaceObsoleteIconsCommand extends Command
         return implode(', ', $twigFormattedAttributes);
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
     private function convertTwigString(string $value): string
     {
         $replaced = str_replace(['{{', '}}'], '', $value);

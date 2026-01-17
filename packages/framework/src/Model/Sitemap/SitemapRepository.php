@@ -20,13 +20,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class SitemapRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository $flagRepository
-     */
     public function __construct(
         protected readonly ProductRepository $productRepository,
         protected readonly CategoryRepository $categoryRepository,
@@ -37,8 +30,6 @@ class SitemapRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForListableProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup): array
@@ -63,7 +54,6 @@ class SitemapRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForVisibleCategories(DomainConfig $domainConfig): array
@@ -87,7 +77,6 @@ class SitemapRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForArticlesOnDomain(DomainConfig $domainConfig): array
@@ -111,7 +100,6 @@ class SitemapRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     protected function getSitemapItemsFromQueryBuilderWithSlugField(QueryBuilder $queryBuilder): array
@@ -130,7 +118,6 @@ class SitemapRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForBlogArticlesOnDomain(DomainConfig $domainConfig): array
@@ -156,11 +143,6 @@ class SitemapRepository
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return array
-     */
     public function getSitemapItemsForSoldOutProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup): array
     {
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup);
@@ -186,7 +168,6 @@ class SitemapRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForVisibleFlags(DomainConfig $domainConfig): array
@@ -210,7 +191,6 @@ class SitemapRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForVisibleCategorySeoMix(DomainConfig $domainConfig): array

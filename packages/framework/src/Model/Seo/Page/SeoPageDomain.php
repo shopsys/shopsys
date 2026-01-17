@@ -68,10 +68,6 @@ class SeoPageDomain
     #[ORM\ManyToOne(targetEntity: SeoPage::class, inversedBy: 'domains')]
     protected $seoPage;
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
-     */
     public function __construct(
         int $domainId,
         SeoPage $seoPage,

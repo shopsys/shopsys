@@ -18,14 +18,6 @@ class ImageSitemapFacade
     protected const int PRODUCTS_BATCH_SIZE = 100;
 
     /**
-     * @param string $sitemapsDir
-     * @param string $sitemapsUrlPrefix
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapDumperFactory $imageSitemapDumperFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Doctrine\ORM\EntityManager $entityManager
      */
     public function __construct(
@@ -61,7 +53,6 @@ class ImageSitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapItem[]
      */
     public function getImageSitemapItemsForVisibleProducts(DomainConfig $domainConfig): array
@@ -98,10 +89,6 @@ class ImageSitemapFacade
         return $imageSitemapItems;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getProductsSectionName(DomainConfig $domainConfig): string
     {
         $sectionName = 'products';

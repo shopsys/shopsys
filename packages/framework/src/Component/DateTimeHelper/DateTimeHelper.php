@@ -12,21 +12,12 @@ use Symfony\Component\Clock\DatePoint;
 
 class DateTimeHelper
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
         protected readonly ClockInterface $clock,
     ) {
     }
 
-    /**
-     * @param string $format
-     * @param string $time
-     * @return \Symfony\Component\Clock\DatePoint
-     */
     public static function createFromFormat(string $format, string $time): DatePoint
     {
         $dateTime = DatePoint::createFromFormat($format, $time);
@@ -39,11 +30,6 @@ class DateTimeHelper
         return $dateTime;
     }
 
-    /**
-     * @param int $intervalInMinutes
-     * @param \DateTimeZone $dateTimeZone
-     * @return \Symfony\Component\Clock\DatePoint
-     */
     public function getCurrentRoundedTimeForIntervalAndTimezone(
         int $intervalInMinutes,
         DateTimeZone $dateTimeZone,
@@ -55,19 +41,11 @@ class DateTimeHelper
         return $time;
     }
 
-    /**
-     * @param string $hoursAndMinutes
-     * @return \Symfony\Component\Clock\DatePoint
-     */
     public function createDateTimeFromTime(string $hoursAndMinutes): DatePoint
     {
         return new DatePoint(sprintf('1970-01-01 %s:00', $hoursAndMinutes));
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     public function getCurrentDayOfWeek(int $domainId): int
     {
         return (int)$this->clock->now()->setTimezone(
@@ -75,11 +53,6 @@ class DateTimeHelper
         )->format('N');
     }
 
-    /**
-     * @param string $dateTimeString
-     * @param \DateTimeZone $dateTimeZone
-     * @return \Symfony\Component\Clock\DatePoint
-     */
     public function createUtcDateTimeByTimeZoneAndString(
         string $dateTimeString,
         DateTimeZone $dateTimeZone,

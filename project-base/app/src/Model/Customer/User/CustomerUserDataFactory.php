@@ -29,7 +29,6 @@ class CustomerUserDataFactory extends BaseUserDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \App\Model\Customer\User\CustomerUserData
      */
     #[Override]
@@ -42,7 +41,6 @@ class CustomerUserDataFactory extends BaseUserDataFactory
     }
 
     /**
-     * @param int $domainId
      * @return \App\Model\Customer\User\CustomerUserData
      */
     #[Override]

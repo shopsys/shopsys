@@ -17,19 +17,11 @@ use Symfony\Component\Clock\DatePoint;
 
 final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \Shopsys\Releaser\FileManipulator\ChangelogFileManipulator $changelogFileManipulator
-     */
     public function __construct(
         private readonly ChangelogFileManipulator $changelogFileManipulator,
     ) {
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -43,10 +35,6 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
         );
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,
@@ -105,9 +93,6 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
         $this->success();
     }
 
-    /**
-     * @return string
-     */
     private function getTodayAsString(): string
     {
         return (new DatePoint())->format('Y-m-d');

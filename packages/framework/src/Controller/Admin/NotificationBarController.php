@@ -27,13 +27,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_NOTIFICATION_BAR)]
 class NotificationBarController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFacade $notificationBarFacade
-     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarDataFactory $notificationBarDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly NotificationBarFacade $notificationBarFacade,
@@ -43,9 +36,6 @@ class NotificationBarController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/notification-bar/list/')]
     #[CanView]
     public function listAction(): Response
@@ -70,10 +60,6 @@ class NotificationBarController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/notification-bar/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -104,11 +90,6 @@ class NotificationBarController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/notification-bar/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -146,10 +127,6 @@ class NotificationBarController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     #[Route(path: '/notification-bar/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]

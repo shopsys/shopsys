@@ -14,10 +14,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ResetPasswordHashValidator extends ConstraintValidator
 {
-    /**
-     * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
         private readonly Domain $domain,
@@ -25,7 +21,6 @@ class ResetPasswordHashValidator extends ConstraintValidator
     }
 
     /**
-     * @param mixed $value
      * @param \App\FrontendApi\Model\Component\Constraints\ResetPasswordHash $constraint
      */
     #[Override]

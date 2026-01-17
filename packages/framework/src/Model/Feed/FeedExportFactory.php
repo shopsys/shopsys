@@ -14,16 +14,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class FeedExportFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRendererFactory $feedRendererFactory
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter $servicesResetter
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly FeedRendererFactory $feedRendererFactory,
         protected readonly FilesystemOperator $filesystem,
@@ -36,12 +26,6 @@ class FeedExportFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInterface $feed
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int|null $lastSeekId
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedExport
-     */
     public function create(FeedInterface $feed, DomainConfig $domainConfig, ?int $lastSeekId = null): FeedExport
     {
         $feedRenderer = $this->feedRendererFactory->create($feed);

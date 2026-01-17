@@ -18,14 +18,6 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 
 class PaymentGridFactory implements GridFactoryInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository $paymentRepository
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
-     */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly PaymentRepository $paymentRepository,
@@ -36,10 +28,6 @@ class PaymentGridFactory implements GridFactoryInterface
     ) {
     }
 
-    /**
-     * @param string|null $roleConstant
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     #[Override]
     public function create(?string $roleConstant): Grid
     {
@@ -75,7 +63,6 @@ class PaymentGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
     protected function getDisplayPrice(Payment $payment)

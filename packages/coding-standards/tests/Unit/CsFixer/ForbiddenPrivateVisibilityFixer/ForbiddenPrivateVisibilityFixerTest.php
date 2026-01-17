@@ -10,9 +10,6 @@ use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
 final class ForbiddenPrivateVisibilityFixerTest extends AbstractFixerTestCase
 {
-    /**
-     * @return \Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer
-     */
     #[Override]
     protected function createFixerService(): ForbiddenPrivateVisibilityFixer
     {

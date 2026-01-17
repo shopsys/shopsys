@@ -16,10 +16,6 @@ class UrlActionRouteData implements ActionRouteInterface
     ) {
     }
 
-    /**
-     * @param mixed|null $data
-     * @return string
-     */
     public function getUrl(mixed $data = null): string
     {
         if (is_string($this->url)) {

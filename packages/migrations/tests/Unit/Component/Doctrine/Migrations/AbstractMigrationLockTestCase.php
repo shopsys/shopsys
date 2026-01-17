@@ -28,9 +28,6 @@ abstract class AbstractMigrationLockTestCase extends AbstractMigrationTestCase
         unlink(static::MIGRATION_LOCK);
     }
 
-    /**
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
-     */
     protected function createNewMigrationsLock(): MigrationsLock
     {
         $loggerMock = $this->createMock(LoggerInterface::class);

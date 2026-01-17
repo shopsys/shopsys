@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
 class ArticleElasticsearchRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQueryFactory $filterQueryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly FilterQueryFactory $filterQueryFactory,
         protected readonly ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher,
@@ -22,10 +17,6 @@ class ArticleElasticsearchRepository
     ) {
     }
 
-    /**
-     * @param string $uuid
-     * @return array
-     */
     public function getByUuid(string $uuid): array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredByUuid($uuid);
@@ -37,10 +28,6 @@ class ArticleElasticsearchRepository
         }
     }
 
-    /**
-     * @param int $articleId
-     * @return array
-     */
     public function getById(int $articleId): array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredById($articleId);
@@ -54,7 +41,6 @@ class ArticleElasticsearchRepository
 
     /**
      * @param string[] $placements
-     * @return int
      */
     public function getAllArticlesTotalCount(array $placements): int
     {
@@ -68,10 +54,7 @@ class ArticleElasticsearchRepository
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
      * @param string[] $placements
-     * @return array
      */
     public function getAllArticles(int $offset, int $limit, array $placements): array
     {
@@ -84,10 +67,6 @@ class ArticleElasticsearchRepository
         return $this->articleElasticsearchDataFetcher->getAllResults($filterQuery);
     }
 
-    /**
-     * @param string $slug
-     * @return array
-     */
     public function getBySlug(string $slug): array
     {
         $article = $this->findBySlug($slug);
@@ -103,10 +82,6 @@ class ArticleElasticsearchRepository
         return $article;
     }
 
-    /**
-     * @param string $slug
-     * @return array|null
-     */
     protected function findBySlug(string $slug): ?array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredBySlug($slug);

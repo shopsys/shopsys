@@ -50,9 +50,6 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
      */
     protected array $constructorParameterNamesCache = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper $phpParserNodeHelper
-     */
     public function __construct(
         protected readonly PhpParserNodeHelper $phpParserNodeHelper,
     ) {
@@ -91,10 +88,6 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
         return null;
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     * @return bool
-     */
     protected function isConstraintClass(Node $node): bool
     {
         return $node instanceof FullyQualified && is_subclass_of((string)$node, Constraint::class);
@@ -102,7 +95,6 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
 
     /**
      * @param array<\PhpParser\Node\Arg|\PhpParser\Node\VariadicPlaceholder> $args
-     * @param string $constraintClassName
      */
     protected function extractMessagesFromArgs(array $args, string $constraintClassName): void
     {
@@ -172,19 +164,11 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
         }
     }
 
-    /**
-     * @param string $paramName
-     * @return bool
-     */
     protected function isMessageParamName(string $paramName): bool
     {
         return strtolower(substr($paramName, -7)) === 'message';
     }
 
-    /**
-     * @param \PhpParser\Node\Identifier $name
-     * @return bool
-     */
     protected function isMessageArgName(Identifier $name): bool
     {
         return $this->isMessageParamName($name->name);

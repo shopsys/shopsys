@@ -102,49 +102,31 @@ class ExtendedCategory extends Category
         $this->manyToManySelfReferencingInverseEntities = new ArrayCollection();
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
-     */
     public function getManyToOneUnidirectionalEntity(): UnidirectionalEntity
     {
         return $this->manyToOneUnidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $manyToOneUnidirectionalEntity
-     */
     public function setManyToOneUnidirectionalEntity(UnidirectionalEntity $manyToOneUnidirectionalEntity): void
     {
         $this->manyToOneUnidirectionalEntity = $manyToOneUnidirectionalEntity;
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
-     */
     public function getOneToOneUnidirectionalEntity(): UnidirectionalEntity
     {
         return $this->oneToOneUnidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $oneToOneUnidirectionalEntity
-     */
     public function setOneToOneUnidirectionalEntity(UnidirectionalEntity $oneToOneUnidirectionalEntity): void
     {
         $this->oneToOneUnidirectionalEntity = $oneToOneUnidirectionalEntity;
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\CategoryOneToOneBidirectionalEntity
-     */
     public function getOneToOneBidirectionalEntity(): CategoryOneToOneBidirectionalEntity
     {
         return $this->oneToOneBidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity
-     */
     public function setOneToOneBidirectionalEntity(
         CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity,
     ): void {
@@ -152,17 +134,11 @@ class ExtendedCategory extends Category
         $this->oneToOneBidirectionalEntity = $oneToOneBidirectionalEntity;
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory
-     */
     public function getOneToOneSelfReferencingEntity(): self
     {
         return $this->oneToOneSelfReferencingEntity;
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory $oneToOneSelfReferencing
-     */
     public function setOneToOneSelfReferencingEntity(self $oneToOneSelfReferencing): void
     {
         $this->oneToOneSelfReferencingEntity = $oneToOneSelfReferencing;
@@ -176,9 +152,6 @@ class ExtendedCategory extends Category
         return $this->oneToManyBidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\CategoryOneToManyBidirectionalEntity $oneToManyBidirectionalEntity
-     */
     public function addOneToManyBidirectionalEntity(
         CategoryOneToManyBidirectionalEntity $oneToManyBidirectionalEntity,
     ): void {
@@ -194,9 +167,6 @@ class ExtendedCategory extends Category
         return $this->oneToManyUnidirectionalWithJoinTableEntities->getValues();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity
-     */
     public function addOneToManyUnidirectionalWithJoinTableEntity(
         UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity,
     ): void {
@@ -211,17 +181,11 @@ class ExtendedCategory extends Category
         return $this->oneToManySelfReferencingEntities->getValues();
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory
-     */
     public function getOneToManySelfReferencingInverseEntity(): self
     {
         return $this->oneToManySelfReferencingInverseEntity;
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory $oneToManySelfReferencing
-     */
     public function addOneToManySelfReferencingEntity(self $oneToManySelfReferencing): void
     {
         $oneToManySelfReferencing->oneToManySelfReferencingInverseEntity = $this;
@@ -236,9 +200,6 @@ class ExtendedCategory extends Category
         return $this->manyToManyUnidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $manyToManyUnidirectionalEntity
-     */
     public function addManyToManyUnidirectionalEntity(UnidirectionalEntity $manyToManyUnidirectionalEntity): void
     {
         $this->manyToManyUnidirectionalEntities->add($manyToManyUnidirectionalEntity);
@@ -252,9 +213,6 @@ class ExtendedCategory extends Category
         return $this->manyToManyBidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\CategoryManyToManyBidirectionalEntity $manyToManyBidirectionalEntity
-     */
     public function addManyToManyBidirectionalEntity(
         CategoryManyToManyBidirectionalEntity $manyToManyBidirectionalEntity,
     ): void {
@@ -278,26 +236,17 @@ class ExtendedCategory extends Category
         return $this->manyToManySelfReferencingInverseEntities->getValues();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory $manyToManySelfReferencing
-     */
     public function addManyToManySelfReferencingEntity(self $manyToManySelfReferencing): void
     {
         $manyToManySelfReferencing->manyToManySelfReferencingInverseEntities->add($this);
         $this->manyToManySelfReferencingEntities->add($manyToManySelfReferencing);
     }
 
-    /**
-     * @return string|null
-     */
     public function getStringField(): ?string
     {
         return $this->stringField;
     }
 
-    /**
-     * @param string|null $stringField
-     */
     public function setStringField(?string $stringField): void
     {
         $this->stringField = $stringField;

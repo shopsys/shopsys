@@ -13,12 +13,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class AdvertsQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Advert\AdvertFacade $advertFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     */
     public function __construct(
         protected readonly AdvertFacade $advertFacade,
         protected readonly Domain $domain,
@@ -29,7 +23,6 @@ class AdvertsQuery extends AbstractQuery
 
     /**
      * @param string[]|null $positionNames
-     * @param string|null $categoryOrSeoCategoryUuid
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert[]
      */
     public function advertsQuery(?array $positionNames = null, ?string $categoryOrSeoCategoryUuid = null): array

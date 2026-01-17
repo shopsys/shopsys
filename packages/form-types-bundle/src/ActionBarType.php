@@ -15,9 +15,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class ActionBarType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
     ) {

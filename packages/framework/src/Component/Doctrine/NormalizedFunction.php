@@ -17,9 +17,6 @@ class NormalizedFunction extends FunctionNode
 
     public Node $stringExpression;
 
-    /**
-     * @param \Doctrine\ORM\Query\Parser $parser
-     */
     #[Override]
     public function parse(Parser $parser): void
     {
@@ -29,10 +26,6 @@ class NormalizedFunction extends FunctionNode
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
-    /**
-     * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
-     * @return string
-     */
     #[Override]
     public function getSql(SqlWalker $sqlWalker): string
     {

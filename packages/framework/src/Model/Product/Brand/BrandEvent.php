@@ -27,16 +27,10 @@ class BrandEvent extends Event
      */
     public const DELETE = 'brand.delete';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     */
     public function __construct(protected readonly Brand $brand)
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
     public function getBrand(): Brand
     {
         return $this->brand;

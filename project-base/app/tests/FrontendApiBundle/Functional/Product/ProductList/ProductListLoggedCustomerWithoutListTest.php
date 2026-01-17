@@ -16,9 +16,6 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
     public const string DEFAULT_USER_EMAIL = 'no-reply.3@shopsys.com';
     public const string DEFAULT_USER_PASSWORD = 'no-reply.3';
 
-    /**
-     * @param string $productListType
-     */
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testFindProductListForCustomerUserWithoutProductListReturnsNull(
         string $productListType,
@@ -30,9 +27,6 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
         $this->assertNull($response['data']['productList']);
     }
 
-    /**
-     * @param string $productListType
-     */
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testGetProductListsForCustomerUserWithoutProductListReturnsEmptyArray(
         string $productListType,
@@ -44,9 +38,6 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
         $this->assertEmpty($response['data']['productListsByType']);
     }
 
-    /**
-     * @param string $productListType
-     */
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testAddProductCreatesNewList(string $productListType): void
     {
@@ -62,9 +53,6 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
         $this->assertSame([$productToAddId], array_column($data['products'], 'id'));
     }
 
-    /**
-     * @param string $productListType
-     */
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testRemoveProductFromListProductListNotFoundUserError(string $productListType): void
     {
@@ -76,9 +64,6 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
         $this->assertUserError($response, ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-list-not-found'));
     }
 
-    /**
-     * @param string $productListType
-     */
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testRemoveProductFromList(string $productListType): void
     {
@@ -104,9 +89,6 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
         $this->assertSame([$product1->getId()], array_column($data['products'], 'id'));
     }
 
-    /**
-     * @param string $productListType
-     */
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testRemoveLastProductFromList(string $productListType): void
     {

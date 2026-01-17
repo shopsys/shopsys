@@ -12,26 +12,16 @@ class DeliveryAddressRepository
 {
     protected EntityManagerInterface $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getDeliveryAddressRepository(): EntityRepository
     {
         return $this->em->getRepository(DeliveryAddress::class);
     }
 
-    /**
-     * @param int $deliveryAddressId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
-     */
     public function getById(int $deliveryAddressId): DeliveryAddress
     {
         $deliveryAddress = $this->getDeliveryAddressRepository()->find($deliveryAddressId);
@@ -45,11 +35,6 @@ class DeliveryAddressRepository
         return $deliveryAddress;
     }
 
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
-     */
     public function findByUuidAndCustomer(string $uuid, Customer $customer): ?DeliveryAddress
     {
         return $this->getDeliveryAddressRepository()->findOneBy(
@@ -60,11 +45,6 @@ class DeliveryAddressRepository
         );
     }
 
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
-     */
     public function getByUuidAndCustomer(string $uuid, Customer $customer): DeliveryAddress
     {
         $deliveryAddress = $this->findByUuidAndCustomer($uuid, $customer);

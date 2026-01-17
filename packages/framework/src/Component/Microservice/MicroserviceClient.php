@@ -9,16 +9,11 @@ use GuzzleHttp\RequestOptions;
 
 class MicroserviceClient
 {
-    /**
-     * @param \GuzzleHttp\Client $guzzleClient
-     */
     public function __construct(protected readonly Client $guzzleClient)
     {
     }
 
     /**
-     * @param string $resource
-     * @param array $parameters
      * @return mixed
      */
     public function get(string $resource, array $parameters = [])
@@ -34,8 +29,6 @@ class MicroserviceClient
     }
 
     /**
-     * @param string $resource
-     * @param array $parameters
      * @return mixed
      */
     public function post(string $resource, array $parameters = [])
@@ -47,8 +40,6 @@ class MicroserviceClient
     }
 
     /**
-     * @param string $resource
-     * @param array $parameters
      * @return mixed
      */
     public function delete(string $resource, array $parameters = [])
@@ -60,8 +51,6 @@ class MicroserviceClient
     }
 
     /**
-     * @param string $resource
-     * @param array $parameters
      * @return mixed
      */
     public function patch(string $resource, array $parameters = [])
@@ -72,9 +61,6 @@ class MicroserviceClient
         return json_decode($response->getBody()->getContents());
     }
 
-    /**
-     * @return array
-     */
     protected function createDefaultOptions(): array
     {
         return [
@@ -84,10 +70,6 @@ class MicroserviceClient
         ];
     }
 
-    /**
-     * @param array $jsonData
-     * @return array
-     */
     protected function createJsonOptions(array $jsonData): array
     {
         return array_merge(

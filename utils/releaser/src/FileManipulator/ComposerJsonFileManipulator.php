@@ -12,7 +12,6 @@ class ComposerJsonFileManipulator
     /**
      * @param \Symfony\Component\Finder\SplFileInfo[] $fileInfos
      * @param string[] $packageNames
-     * @param string $version
      */
     public function setMutualDependenciesToVersion(
         array $fileInfos,
@@ -31,12 +30,6 @@ class ComposerJsonFileManipulator
         }
     }
 
-    /**
-     * @param array $jsonContent
-     * @param string $packageName
-     * @param string $requestedVersion
-     * @return array
-     */
     private function replaceVersion(array $jsonContent, string $packageName, string $requestedVersion): array
     {
         if (isset($jsonContent['require'][$packageName])) {

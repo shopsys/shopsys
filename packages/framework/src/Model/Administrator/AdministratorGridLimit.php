@@ -32,7 +32,6 @@ class AdministratorGridLimit
     protected $limit;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param string $gridId
      * @param int $limit
      */

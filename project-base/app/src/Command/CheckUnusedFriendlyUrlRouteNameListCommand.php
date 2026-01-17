@@ -19,20 +19,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     */
     public function __construct(
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
         parent::__construct();
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

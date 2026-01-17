@@ -47,9 +47,6 @@ class PropertyAnnotationsFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @return array
-     */
     public static function getProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider(): array
     {
         return [
@@ -71,10 +68,6 @@ class PropertyAnnotationsFactoryTest extends TestCase
         ];
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkReflectionClass
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectReflectionClass
-     */
     #[DataProvider('getProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider')]
     public function testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResult(
         ReflectionClass $frameworkReflectionClass,

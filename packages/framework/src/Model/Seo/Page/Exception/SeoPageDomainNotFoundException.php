@@ -8,11 +8,6 @@ use Exception;
 
 class SeoPageDomainNotFoundException extends Exception
 {
-    /**
-     * @param int $seoPageId
-     * @param int $domainId
-     * @param \Exception|null $previous
-     */
     public function __construct(
         int $seoPageId,
         int $domainId,

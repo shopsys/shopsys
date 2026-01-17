@@ -8,11 +8,6 @@ use Exception;
 
 class CategoryDomainNotFoundException extends Exception
 {
-    /**
-     * @param int $domainId
-     * @param int|null $categoryId
-     * @param \Exception|null $previous
-     */
     public function __construct(int $domainId, ?int $categoryId = null, ?Exception $previous = null)
     {
         $categoryDescription = $categoryId !== null ? sprintf('with ID %d', $categoryId) : 'without ID';

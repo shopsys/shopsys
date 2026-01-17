@@ -11,17 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BreadcrumbController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     */
     public function __construct(
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[RequireRole(SystemRole::ADMIN)]
     public function indexAction(): Response
     {

@@ -9,11 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductStockFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockRepository $productStockRepository
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFactory $productStockFactory
-     */
     public function __construct(
         protected readonly ProductStockRepository $productStockRepository,
         protected readonly EntityManagerInterface $em,
@@ -22,7 +17,6 @@ class ProductStockFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProduct(Product $product): array
@@ -31,8 +25,6 @@ class ProductStockFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProductAndDomainId(Product $product, int $domainId): array
@@ -41,7 +33,6 @@ class ProductStockFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProductIndexedByStockId(Product $product): array
@@ -57,8 +48,6 @@ class ProductStockFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProductAndDomainIdIndexedByStockId(Product $product, int $domainId): array
@@ -75,7 +64,6 @@ class ProductStockFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Stock\Stock[] $stocksIndexedById
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockData[] $productStockDataItems
      */
@@ -100,11 +88,6 @@ class ProductStockFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
-     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock
-     */
     protected function createProductStock(Product $product, Stock $stock): ProductStock
     {
         $productStock = $this->productStockFactory->create($stock, $product);
@@ -113,19 +96,11 @@ class ProductStockFacade
         return $productStock;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return bool
-     */
     public function isProductAvailableOnDomain(Product $product, int $domainId): bool
     {
         return $this->productStockRepository->isProductAvailableOnDomain($product, $domainId);
     }
 
-    /**
-     * @param int $stockId
-     */
     public function createProductStockRelationForStockId(int $stockId): void
     {
         $this->productStockRepository->createProductStockRelationForStockId($stockId);

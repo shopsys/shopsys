@@ -12,19 +12,12 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 
 class OrderItemResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @param \Overblog\DataLoader\DataLoaderInterface $firstImageBatchLoader
-     */
     public function __construct(
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
         protected readonly DataLoaderInterface $firstImageBatchLoader,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

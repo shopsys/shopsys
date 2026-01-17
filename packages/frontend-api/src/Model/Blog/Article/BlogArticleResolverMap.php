@@ -13,11 +13,6 @@ use Symfony\Component\Clock\DatePoint;
 
 class BlogArticleResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
-     */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly Domain $domain,
@@ -25,9 +20,6 @@ class BlogArticleResolverMap extends ResolverMap
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

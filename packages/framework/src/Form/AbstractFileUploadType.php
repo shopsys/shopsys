@@ -27,16 +27,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class AbstractFileUploadType extends AbstractType implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     */
     public function __construct(private readonly FileUpload $fileUpload)
     {
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -52,7 +46,6 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
 
     /**
      * @param array $value
-     * @return string
      */
     #[Override]
     public function reverseTransform($value): string
@@ -62,7 +55,6 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
 
     /**
      * @param string $value
-     * @return array
      */
     #[Override]
     public function transform($value): array
@@ -70,11 +62,6 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
         return ['uploadedFiles' => (array)$value];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -83,10 +70,6 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
         $view->vars['info_text'] = $options['info_text'];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -129,7 +112,6 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
 
     /**
      * @param string[]|null $uploadedFiles
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      * @param \Symfony\Component\Validator\Constraint[] $fileConstraints
      */
     public function validateUploadedFiles(
@@ -150,9 +132,6 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
         }
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     */
     public function onPreSubmit(FormEvent $event)
     {
         $data = $event->getData();

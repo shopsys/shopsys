@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 
 class ProductListApiFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListInputValidationFactory $productListInputValidationFactory
-     */
     public function __construct(
         protected readonly ProductListFacade $productListFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -24,7 +19,6 @@ class ProductListApiFacade
 
     /**
      * @param array{uuid:string|null, type:string} $input
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
      */
     public function findProductListByInputData(array $input): ?ProductList
     {

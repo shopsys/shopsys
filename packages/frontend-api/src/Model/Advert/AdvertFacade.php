@@ -8,15 +8,11 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class AdvertFacade
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Advert\AdvertRepository $advertRepository
-     */
     public function __construct(protected readonly AdvertRepository $advertRepository)
     {
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert[]
      */
     public function getVisibleAdvertsByDomainId(int $domainId): array
@@ -25,9 +21,7 @@ class AdvertFacade
     }
 
     /**
-     * @param int $domainId
      * @param string[] $positionNames
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert[]
      */
     public function getVisibleAdvertsByDomainIdAndPositionName(

@@ -41,19 +41,12 @@ class BrandDataFixture extends AbstractReferenceFixture
     public const string BRAND_HYUNDAI = 'brand_hyundai';
     public const string BRAND_NIKON = 'brand_nikon';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \App\Model\Product\Brand\BrandDataFactory $brandDataFactory
-     */
     public function __construct(
         private readonly BrandFacade $brandFacade,
         private readonly BrandDataFactory $brandDataFactory,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

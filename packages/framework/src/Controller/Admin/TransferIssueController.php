@@ -24,13 +24,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_TRANSFER)]
 class TransferIssueController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly TransferIssueFacade $transferIssueFacade,
         protected readonly GridFactory $gridFactory,
@@ -40,10 +33,6 @@ class TransferIssueController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/transfer/issue/list/', name: 'admin_transferissue_list')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -86,10 +75,6 @@ class TransferIssueController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     #[Route(path: '/transfer/issue/delete/{id}', name: 'admin_transferissue_delete', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]

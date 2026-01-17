@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ExistingEmailValidator extends ConstraintValidator
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(

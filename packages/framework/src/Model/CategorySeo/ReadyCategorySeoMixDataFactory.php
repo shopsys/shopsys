@@ -12,15 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ReadyCategorySeoMixDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValueFactory $readyCategorySeoMixParameterValueFactory
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory
-     */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
         protected readonly FlagFacade $flagFacade,
@@ -32,26 +23,16 @@ class ReadyCategorySeoMixDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData
-     */
     protected function createInstance(): ReadyCategorySeoMixData
     {
         return new ReadyCategorySeoMixData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData
-     */
     public function create(): ReadyCategorySeoMixData
     {
         return $this->createInstance();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination|null $selectedCategorySeoMixCombination
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData
-     */
     public function createReadyCategorySeoMixData(
         ?SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): ReadyCategorySeoMixData {
@@ -79,10 +60,6 @@ class ReadyCategorySeoMixDataFactory
         return $readyCategorySeoMixData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
-     */
     public function fillValuesFromSelectedCategorySeoMixCombination(
         ReadyCategorySeoMixData $readyCategorySeoMixData,
         SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
@@ -114,10 +91,6 @@ class ReadyCategorySeoMixDataFactory
         $readyCategorySeoMixData->selectedCategorySeoMixCombinationJson = $this->selectedCategorySeoMixCombinationFactory->createJsonFromSelectedCategorySeoMixCombination($selectedCategorySeoMixCombination);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
-     */
     public function fillValuesFromReadyCategorySeoMix(
         ReadyCategorySeoMixData $readyCategorySeoMixData,
         ReadyCategorySeoMix $readyCategorySeoMix,

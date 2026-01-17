@@ -48,7 +48,6 @@ class RequestDataSetGeneratorTest extends TestCase
     /**
      * @param string $routePath
      * @param string $routeName
-     * @param array $annotations
      * @return \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
      */
     private function createRequestDataSetGenerator($routePath, $routeName, array $annotations = [])
@@ -60,11 +59,6 @@ class RequestDataSetGeneratorTest extends TestCase
         return $requestDataSetGeneratorFactory->create($routeInfo);
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\Attribute\DataSet $dataSet
-     * @param int $statusCode
-     * @param array $parameters
-     */
     #[DataProvider('getDataSets')]
     public function testGeneratorGenerateRequestDataSetFromDataSetAnnotation(
         DataSet $dataSet,
@@ -116,9 +110,6 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertSame(404, $requestDataSets[1]->getExpectedStatusCode());
     }
 
-    /**
-     * @return array
-     */
     public static function getDataSets(): array
     {
         $parameter1 = new Parameter('name', 'Batman');

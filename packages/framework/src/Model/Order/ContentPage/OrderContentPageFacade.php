@@ -16,12 +16,6 @@ class OrderContentPageFacade
     public const VARIABLE_ORDER_DETAIL_URL = '{order_detail_url}';
     public const VARIABLE_NUMBER = '{number}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
-     * @param \Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageSettingFacade $orderContentPageSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade $paymentInstructionFacade
-     */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly OrderUrlGenerator $orderUrlGenerator,
@@ -30,10 +24,6 @@ class OrderContentPageFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
     public function getOrderSentPageContent(Order $order): string
     {
         $orderSentPageContent = $this->orderContentPageSettingFacade->getOrderSentPageContent($order->getDomainId());
@@ -41,10 +31,6 @@ class OrderContentPageFacade
         return $this->replaceVariables($order, $orderSentPageContent);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
     public function getPaymentSuccessfulPageContent(Order $order): string
     {
         $orderSentPageContent = $this->orderContentPageSettingFacade->getPaymentSuccessfulPageContent($order->getDomainId());
@@ -52,10 +38,6 @@ class OrderContentPageFacade
         return $this->replaceVariables($order, $orderSentPageContent);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
     public function getPaymentFailedPageContent(Order $order): string
     {
         $orderSentPageContent = $this->orderContentPageSettingFacade->getPaymentFailedPageContent($order->getDomainId());
@@ -63,10 +45,6 @@ class OrderContentPageFacade
         return $this->replaceVariables($order, $orderSentPageContent);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
     public function getPaymentInProcessPageContent(Order $order): string
     {
         $orderSentPageContent = $this->orderContentPageSettingFacade->getPaymentInProcessPageContent($order->getDomainId());
@@ -74,11 +52,6 @@ class OrderContentPageFacade
         return $this->replaceVariables($order, $orderSentPageContent);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $orderSentPageContent
-     * @return string
-     */
     protected function replaceVariables(Order $order, string $orderSentPageContent): string
     {
         $orderDetailUrl = $this->orderUrlGenerator->getOrderDetailUrl($order);

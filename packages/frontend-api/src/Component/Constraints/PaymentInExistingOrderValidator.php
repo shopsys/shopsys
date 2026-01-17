@@ -20,11 +20,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PaymentInExistingOrderValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
-     */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly PaymentFacade $paymentFacade,
@@ -32,10 +27,6 @@ class PaymentInExistingOrderValidator extends ConstraintValidator
     ) {
     }
 
-    /**
-     * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
@@ -58,12 +49,6 @@ class PaymentInExistingOrderValidator extends ConstraintValidator
         $this->validateSwift($order, $payment, $paymentGoPayBankSwift, $constraint);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param string|null $paymentGoPayBankSwift
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrder $constraint
-     */
     protected function validateSwift(
         Order $order,
         Payment $payment,
@@ -95,10 +80,6 @@ class PaymentInExistingOrderValidator extends ConstraintValidator
             ->addViolation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrder $constraint
-     */
     protected function validatePaymentCanBeChanged(Order $order, PaymentInExistingOrder $constraint): void
     {
         if ($order->isPaid() === false && $order->getPayment()->isGoPay()) {
@@ -111,11 +92,6 @@ class PaymentInExistingOrderValidator extends ConstraintValidator
             ->addViolation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrder $constraint
-     */
     protected function validatePaymentIsAvailable(
         Order $order,
         Payment $payment,

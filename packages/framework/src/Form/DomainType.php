@@ -15,10 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class DomainType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     */
     public function __construct(
         private readonly Domain $domain,
         private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
@@ -35,9 +31,6 @@ final class DomainType extends AbstractType
         $view->vars['displayUrl'] = $options['displayUrl'];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

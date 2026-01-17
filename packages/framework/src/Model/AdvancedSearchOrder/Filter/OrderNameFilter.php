@@ -16,9 +16,6 @@ class OrderNameFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'customerName';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {

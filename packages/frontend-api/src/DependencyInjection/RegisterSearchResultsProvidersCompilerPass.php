@@ -15,9 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class RegisterSearchResultsProvidersCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function process(ContainerBuilder $container): void
     {

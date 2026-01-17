@@ -17,9 +17,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 class SymfonyRouterAdapter implements RouterAdapterInterface
 {
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     */
     public function __construct(private readonly RouterInterface $router)
     {
     }
@@ -39,10 +36,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return $allRouteInfo;
     }
 
-    /**
-     * @param \Symfony\Component\Routing\Route $route
-     * @return array
-     */
     private function extractAttributesForRoute(Route $route): array
     {
         if ($route->hasDefault('_controller')) {
@@ -52,10 +45,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return [];
     }
 
-    /**
-     * @param string $controller
-     * @return array
-     */
     private function extractAttributesForController(string $controller): array
     {
         try {
@@ -68,7 +57,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     }
 
     /**
-     * @param \ReflectionMethod $reflectionMethod
      * @return array<\Shopsys\HttpSmokeTesting\Attribute\DataSet|\Shopsys\HttpSmokeTesting\Attribute\Skipped>
      */
     private function getControllerMethodAttributes(ReflectionMethod $reflectionMethod): array
@@ -86,10 +74,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return $attributes;
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
-     * @return string|null
-     */
     #[Override]
     public function generateUri(RequestDataSet $requestDataSet): ?string
     {

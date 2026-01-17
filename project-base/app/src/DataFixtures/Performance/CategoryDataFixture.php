@@ -27,12 +27,7 @@ class CategoryDataFixture
 
     /**
      * @param int[] $categoryCountsByLevel
-     * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      */
     public function __construct(
         $categoryCountsByLevel,
@@ -47,9 +42,6 @@ class CategoryDataFixture
         $this->categoriesCreated = 0;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function load(OutputInterface $output)
     {
         $progressBar = $this->progressBarFactory->create($output, $this->recursivelyCountCategoriesInCategoryTree());
@@ -63,7 +55,6 @@ class CategoryDataFixture
 
     /**
      * @param \App\Model\Category\Category $parentCategory
-     * @param \Symfony\Component\Console\Helper\ProgressBar $progressBar
      * @param int $categoryLevel
      */
     private function recursivelyCreateCategoryTree($parentCategory, ProgressBar $progressBar, $categoryLevel = 0)

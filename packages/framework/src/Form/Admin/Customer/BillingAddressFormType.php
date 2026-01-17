@@ -23,17 +23,10 @@ final class BillingAddressFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     */
     public function __construct(private readonly CountryFacade $countryFacade)
     {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -167,9 +160,6 @@ final class BillingAddressFormType extends AbstractType
             ->add($builderAddressGroup);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

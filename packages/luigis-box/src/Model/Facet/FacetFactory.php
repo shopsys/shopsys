@@ -11,7 +11,6 @@ use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 class FacetFactory
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return string[]
      */
     public function mapFacetsFromProductFilterData(ProductFilterData $productFilterData): array
@@ -26,7 +25,6 @@ class FacetFactory
     }
 
     /**
-     * @param string $type
      * @return string[]
      */
     public function getDefaultFacetNamesByType(string $type): array

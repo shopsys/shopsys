@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 
 class DomainFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader $domainsConfigLoader
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator $currentAdministrator
-     */
     public function __construct(
         protected readonly DomainsConfigLoader $domainsConfigLoader,
         protected readonly Setting $setting,
@@ -22,11 +17,6 @@ class DomainFactory
     ) {
     }
 
-    /**
-     * @param string $domainsConfigFilepath
-     * @param string $domainsUrlsConfigFilepath
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     public function create(string $domainsConfigFilepath, string $domainsUrlsConfigFilepath): Domain
     {
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml(

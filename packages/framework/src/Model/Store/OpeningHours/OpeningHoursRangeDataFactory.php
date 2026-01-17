@@ -24,11 +24,6 @@ class OpeningHoursRangeDataFactory
         return $openingHoursRangesData;
     }
 
-    /**
-     * @param string $openingTime
-     * @param string $closingTime
-     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeData
-     */
     public function create(string $openingTime, string $closingTime): OpeningHoursRangeData
     {
         $openingHoursRangeData = $this->createInstance();
@@ -38,9 +33,6 @@ class OpeningHoursRangeDataFactory
         return $openingHoursRangeData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeData
-     */
     protected function createInstance(): OpeningHoursRangeData
     {
         return new OpeningHoursRangeData();

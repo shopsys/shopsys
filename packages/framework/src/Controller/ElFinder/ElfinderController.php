@@ -15,15 +15,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class ElfinderController extends BaseElFinderController
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Symfony\Component\HttpKernel\HttpKernelInterface $httpKernel
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $instance
-     * @param string $homeFolder
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     #[Override]
     public function load(
         SessionInterface $session,

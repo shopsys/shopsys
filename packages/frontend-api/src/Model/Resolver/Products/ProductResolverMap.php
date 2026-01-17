@@ -17,19 +17,12 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
 
 class ProductResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper $productEntityFieldMapper
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper $productArrayFieldMapper
-     */
     public function __construct(
         protected readonly ProductEntityFieldMapper $productEntityFieldMapper,
         protected readonly ProductArrayFieldMapper $productArrayFieldMapper,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {
@@ -74,11 +67,6 @@ class ProductResolverMap extends ResolverMap
         ];
     }
 
-    /**
-     * @param object $mapper
-     * @param string $fieldName
-     * @return callable
-     */
     protected function getObjectMethodForField(object $mapper, string $fieldName): callable
     {
         $prefixes = ['get', 'is', ''];

@@ -9,10 +9,6 @@ use GoPay\Definition\Response\PaymentSubStatus;
 
 class GoPayOrderStatus
 {
-    /**
-     * @param string $goPayStatus
-     * @return string
-     */
     public static function getTranslatedGoPayStatus(string $goPayStatus): string
     {
         $goPayStatusToTranslate = self::getGoPayStatusesToTranslate();
@@ -24,10 +20,6 @@ class GoPayOrderStatus
         return $goPayStatus;
     }
 
-    /**
-     * @param string|null $goPaySubStatus
-     * @return string|null
-     */
     public static function getTranslatedGoPaySubStatus(?string $goPaySubStatus): ?string
     {
         $goPaySubStatusesToTranslate = self::getGoPaySubStatusesToTranslate();

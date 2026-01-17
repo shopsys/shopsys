@@ -11,9 +11,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class DomainConfigCollectionToDomainIdsTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly Domain $domain,
     ) {

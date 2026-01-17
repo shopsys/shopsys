@@ -14,11 +14,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupReposi
 
 class CustomerUserDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupRepository $customerUserRoleGroupRepository
-     */
     public function __construct(
         protected readonly BaseCustomerUserDataFactory $customerUserDataFactory,
         protected readonly Domain $domain,
@@ -26,11 +21,6 @@ class CustomerUserDataFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     public function createNewForCustomerWithArgument(Customer $customer, Argument $argument): CustomerUserData
     {
         $input = $argument['input'];
@@ -41,11 +31,6 @@ class CustomerUserDataFactory
         return $this->mapInputDataToCustomerUserData($input, $customerUserData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     public function createForCustomerUserWithArgument(CustomerUser $customerUser, Argument $argument): CustomerUserData
     {
         $input = $argument['input'];
@@ -55,11 +40,6 @@ class CustomerUserDataFactory
         return $this->mapInputDataToCustomerUserData($input, $customerUserData);
     }
 
-    /**
-     * @param array $input
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     protected function mapInputDataToCustomerUserData(
         array $input,
         CustomerUserData $customerUserData,
@@ -75,10 +55,6 @@ class CustomerUserDataFactory
         return $customerUserData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @param string $roleGroupUuid
-     */
     protected function setRoleGroup(CustomerUserData $customerUserData, string $roleGroupUuid): void
     {
         $customerUserData->roleGroup = $this->customerUserRoleGroupRepository->getByUuid($roleGroupUuid);

@@ -14,17 +14,11 @@ use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 
 class TopProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
-     */
     public function __construct(
         private readonly TopProductFacade $topProductFacade,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -61,7 +55,6 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
 
     /**
      * @param string[] $productReferenceNames
-     * @param int $domainId
      */
     private function createTopProductsForDomain(array $productReferenceNames, int $domainId): void
     {

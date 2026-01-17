@@ -12,9 +12,6 @@ class InvalidFindCriteriaForProductListUserError extends UserError implements Us
 {
     protected const CODE = 'invalid-find-criteria-for-product-list';
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

@@ -16,11 +16,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CreateComplaintVoter extends Voter
 {
-    /**
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
-     */
     public function __construct(
         protected readonly Security $security,
         protected readonly CurrentCustomerUser $currentCustomerUser,

@@ -55,9 +55,6 @@ class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implemen
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @param int $domainId
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     protected function getCategoryBreadcrumbItemsOnDomain(Category $category, int $domainId, string $locale): array

@@ -32,9 +32,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
     /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
-     * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesDataFactory $transportInputPricesDataFactory
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
@@ -44,9 +41,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -142,7 +136,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     }
 
     /**
-     * @param string $referenceName
      * @param \App\Model\Transport\TransportData $transportData
      */
     private function createTransport(string $referenceName, TransportData $transportData): void
@@ -154,8 +147,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
     /**
      * @param \App\Model\Transport\TransportData $transportData
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param int|null $maxWeight
      */
     private function setPriceForAllDomains(TransportData $transportData, Money $price, ?int $maxWeight = null): void
     {

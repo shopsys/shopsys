@@ -9,15 +9,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class PluginCrudExtensionFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionRegistry $pluginCrudExtensionRegistry
-     */
     public function __construct(protected readonly PluginCrudExtensionRegistry $pluginCrudExtensionRegistry)
     {
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string $type
      * @param string $name
      */
@@ -58,7 +54,6 @@ class PluginCrudExtensionFacade
     /**
      * @param string $type
      * @param int $id
-     * @param array $allData
      */
     public function saveAllData($type, $id, array $allData)
     {

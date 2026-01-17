@@ -16,9 +16,6 @@ class Version20250404110544 extends AbstractMigration implements ContainerAwareI
 
     private const string SETTING_NAME = 'paymentInProcessText';
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {

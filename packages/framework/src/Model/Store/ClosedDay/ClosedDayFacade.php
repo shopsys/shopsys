@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class ClosedDayFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayRepository $closedDayRepository
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFactory $closedDayFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClosedDayRepository $closedDayRepository,
@@ -22,17 +17,12 @@ class ClosedDayFacade
     ) {
     }
 
-    /**
-     * @param int $closedDayId
-     * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay
-     */
     public function getById(int $closedDayId): ClosedDay
     {
         return $this->closedDayRepository->getById($closedDayId);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
      */
     public function getFollowingWeekClosedDaysNotExcludedForStore(Store $store): array
@@ -40,10 +30,6 @@ class ClosedDayFacade
         return $this->closedDayRepository->getFollowingWeekClosedDaysNotExcludedForStore($store);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayData $closedDayData
-     * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay
-     */
     public function create(ClosedDayData $closedDayData): ClosedDay
     {
         $closedDay = $this->closedDayFactory->create($closedDayData);
@@ -53,11 +39,6 @@ class ClosedDayFacade
         return $closedDay;
     }
 
-    /**
-     * @param int $closedDayId
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayData $closedDayData
-     * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay
-     */
     public function edit(int $closedDayId, ClosedDayData $closedDayData): ClosedDay
     {
         $closedDay = $this->getById($closedDayId);
@@ -67,9 +48,6 @@ class ClosedDayFacade
         return $closedDay;
     }
 
-    /**
-     * @param int $closedDayId
-     */
     public function deleteById(int $closedDayId): void
     {
         $closedDay = $this->getById($closedDayId);
@@ -78,9 +56,6 @@ class ClosedDayFacade
     }
 
     /**
-     * @param int $domainId
-     * @param \DateTimeInterface $startDate
-     * @param \DateTimeInterface $endDate
      * @return \DateTimeInterface[]
      */
     public function getPublicHolidays(
@@ -91,12 +66,6 @@ class ClosedDayFacade
         return $this->closedDayRepository->getPublicHolidays($domainId, $startDate, $endDate);
     }
 
-    /**
-     * @param int $domainId
-     * @param \DateTimeInterface $startDate
-     * @param \DateTimeInterface $endDate
-     * @return bool
-     */
     public function hasPublicHolidays(
         int $domainId,
         DateTimeInterface $startDate,

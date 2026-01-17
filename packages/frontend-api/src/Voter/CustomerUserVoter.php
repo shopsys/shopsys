@@ -16,11 +16,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class CustomerUserVoter extends AbstractB2bVoter
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     */
     public function __construct(
         Domain $domain,
         protected readonly Security $security,
@@ -30,9 +25,7 @@ class CustomerUserVoter extends AbstractB2bVoter
     }
 
     /**
-     * @param string $attribute
      * @param array $subject
-     * @return bool
      */
     #[Override]
     protected function supports(string $attribute, $subject): bool
@@ -40,12 +33,6 @@ class CustomerUserVoter extends AbstractB2bVoter
         return $attribute === 'can_manage_customer_user_voter';
     }
 
-    /**
-     * @param string $attribute
-     * @param \Overblog\GraphQLBundle\Definition\Argument|null $argument
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @return bool
-     */
     #[Override]
     protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token): bool
     {
@@ -68,21 +55,11 @@ class CustomerUserVoter extends AbstractB2bVoter
         return false;
     }
 
-    /**
-     * @param array $inputData
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @return bool
-     */
     protected function isUnauthenticatedAccessAllowed(array $inputData, TokenInterface $token): bool
     {
         return false;
     }
 
-    /**
-     * @param array $inputData
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @return bool
-     */
     protected function isEditedCustomerUserFromSameCompany(array $inputData, TokenInterface $token): bool
     {
         /** @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $loggedUser */

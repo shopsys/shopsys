@@ -102,10 +102,6 @@ class Cart
     #[ORM\Column(type: 'string', length: 15, nullable: true)]
     protected $paymentGoPayBankSwift;
 
-    /**
-     * @param string $cartIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     */
     public function __construct(string $cartIdentifier, ?CustomerUser $customerUser)
     {
         $this->cartIdentifier = $cartIdentifier;
@@ -115,9 +111,6 @@ class Cart
         $this->promoCodes = new ArrayCollection();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $item
-     */
     public function addItem(CartItem $item)
     {
         if (!$this->items->contains($item)) {
@@ -173,9 +166,6 @@ class Cart
         return $this->getItemsCount() === 0;
     }
 
-    /**
-     * @param array $quantitiesByItemId
-     */
     public function changeQuantities(array $quantitiesByItemId)
     {
         foreach ($this->items as $item) {
@@ -221,10 +211,6 @@ class Cart
         return $quantifiedProducts;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct
-     */
     protected function createQuantifiedProduct(CartItem $cartItem): QuantifiedProduct
     {
         $quantifiedProduct = new QuantifiedProduct($cartItem->getProduct(), $cartItem->getQuantity());
@@ -244,10 +230,6 @@ class Cart
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $item
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem|null
-     */
     public function findSimilarItemByItem(CartItem $item): ?CartItem
     {
         foreach ($this->items as $similarItem) {
@@ -310,9 +292,6 @@ class Cart
         return $firstAppliedPromoCode;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     */
     public function applyPromoCode(PromoCode $promoCode): void
     {
         if (!$this->promoCodes->contains($promoCode)) {
@@ -321,9 +300,6 @@ class Cart
         }
     }
 
-    /**
-     * @param int $promoCodeId
-     */
     public function removePromoCodeById(int $promoCodeId): void
     {
         foreach ($this->promoCodes as $promoCode) {
@@ -339,10 +315,6 @@ class Cart
         throw new InvalidCartItemException($message);
     }
 
-    /**
-     * @param string $promoCodeCode
-     * @return bool
-     */
     public function isPromoCodeApplied(string $promoCodeCode): bool
     {
         return $this->promoCodes->exists(
@@ -360,9 +332,6 @@ class Cart
         $this->setModifiedNow();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportData $cartTransportData
-     */
     public function editCartTransport(CartTransportData $cartTransportData): void
     {
         $this->transport = $cartTransportData->transport;
@@ -371,9 +340,6 @@ class Cart
         $this->setModifiedNow();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentData $cartPaymentData
-     */
     public function editCartPayment(CartPaymentData $cartPaymentData): void
     {
         $this->payment = $cartPaymentData->payment;
@@ -459,9 +425,6 @@ class Cart
         $this->paymentWatchedPrice = $paymentWatchedPrice;
     }
 
-    /**
-     * @return int
-     */
     public function getTotalWeight(): int
     {
         $totalWeight = 0;
@@ -478,10 +441,6 @@ class Cart
         return $totalWeight;
     }
 
-    /**
-     * @param string $itemUuid
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
-     */
     public function getItemByUuid(string $itemUuid): CartItem
     {
         foreach ($this->items as $item) {
@@ -495,9 +454,6 @@ class Cart
         throw new InvalidCartItemException($message);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     */
     public function assignCartToCustomerUser(?CustomerUser $customerUser): void
     {
         $this->customerUser = $customerUser;

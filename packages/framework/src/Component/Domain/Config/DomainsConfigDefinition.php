@@ -18,9 +18,6 @@ class DomainsConfigDefinition implements ConfigurationInterface
     public const string CONFIG_TYPE = 'type';
     public const string CONFIG_LOAD_DEMO_DATA = 'load_demo_data';
 
-    /**
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
-     */
     #[Override]
     public function getConfigTreeBuilder(): TreeBuilder
     {

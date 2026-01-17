@@ -15,9 +15,6 @@ class SqlLoggerFacade
 
     protected bool $isLoggerTemporarilyDisabled;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
         $this->isLoggerTemporarilyDisabled = false;

@@ -15,13 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class CustomerUploadedFileQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig $customerUploadedFileConfig
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Component\CustomerUploadedFile\CustomerUploadedFileApiFacade $customerUploadedFileApiFacade
-     * @param \Overblog\DataLoader\DataLoaderInterface $customerUploadedFilesBatchLoader
-     */
     public function __construct(
         protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
         protected readonly CustomerUploadedFileConfig $customerUploadedFileConfig,
@@ -31,11 +24,6 @@ class CustomerUploadedFileQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param object $entity
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function customerFilesByEntityPromiseQuery(object $entity, ?string $type): Promise
     {
         $entityConfig = $this->customerUploadedFileConfig->getUploadedFileEntityConfig($entity);
@@ -43,12 +31,6 @@ class CustomerUploadedFileQuery extends AbstractQuery
         return $this->resolveByEntityIdPromise($entity->getId(), $entityConfig->getEntityName(), $type);
     }
 
-    /**
-     * @param int $entityId
-     * @param string $entityName
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     protected function resolveByEntityIdPromise(
         int $entityId,
         string $entityName,

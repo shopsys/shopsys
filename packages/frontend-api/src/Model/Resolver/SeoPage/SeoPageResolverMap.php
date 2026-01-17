@@ -12,19 +12,12 @@ use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 
 class SeoPageResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

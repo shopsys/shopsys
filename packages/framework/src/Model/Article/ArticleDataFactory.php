@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class ArticleDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper
-     */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
@@ -22,18 +17,11 @@ class ArticleDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData
-     */
     protected function createInstance(): ArticleData
     {
         return new ArticleData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
-     * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData
-     */
     public function createFromArticle(Article $article): ArticleData
     {
         $articleData = $this->createInstance();
@@ -42,10 +30,6 @@ class ArticleDataFactory
         return $articleData;
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData
-     */
     public function create(int $domainId): ArticleData
     {
         $articleData = $this->createInstance();
@@ -54,10 +38,6 @@ class ArticleDataFactory
         return $articleData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
-     */
     protected function fillFromArticle(ArticleData $articleData, Article $article)
     {
         $articleData->name = $article->getName();
@@ -84,10 +64,6 @@ class ArticleDataFactory
             );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     * @param int $domainId
-     */
     protected function fillNew(ArticleData $articleData, int $domainId)
     {
         $articleData->domainId = $domainId;

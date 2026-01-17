@@ -16,10 +16,6 @@ class NumberFormatterExtension extends AbstractExtension
     protected const MINIMUM_FRACTION_DIGITS = 0;
     protected const MAXIMUM_FRACTION_DIGITS = 10;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface $numberFormatRepository
-     */
     public function __construct(
         protected readonly Localization $localization,
         protected readonly NumberFormatRepositoryInterface $numberFormatRepository,
@@ -52,11 +48,6 @@ class NumberFormatterExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $number
-     * @param string|null $locale
-     * @return string
-     */
     public function formatNumber(string $number, ?string $locale = null): string
     {
         $numberFormatter = new NumberFormatter($this->numberFormatRepository, [
@@ -69,12 +60,6 @@ class NumberFormatterExtension extends AbstractExtension
         return $numberFormatter->format($number);
     }
 
-    /**
-     * @param string $number
-     * @param int $minimumFractionDigits
-     * @param string|null $locale
-     * @return string
-     */
     public function formatDecimalNumber(string $number, int $minimumFractionDigits, ?string $locale = null): string
     {
         $numberFormatter = new NumberFormatter($this->numberFormatRepository, [
@@ -87,11 +72,6 @@ class NumberFormatterExtension extends AbstractExtension
         return $numberFormatter->format($number);
     }
 
-    /**
-     * @param string $number
-     * @param string|null $locale
-     * @return string
-     */
     public function formatPercent(string $number, ?string $locale = null): string
     {
         $numberFormatter = new NumberFormatter($this->numberFormatRepository, [
@@ -104,10 +84,6 @@ class NumberFormatterExtension extends AbstractExtension
         return $numberFormatter->format((string)((float)$number / 100));
     }
 
-    /**
-     * @param string|null $locale
-     * @return string
-     */
     protected function getLocale(?string $locale = null): string
     {
         if ($locale !== null) {
@@ -117,18 +93,11 @@ class NumberFormatterExtension extends AbstractExtension
         return $this->localization->getRequestLocale();
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'number_formatter_extension';
     }
 
-    /**
-     * @param string $number
-     * @return bool
-     */
     public function isInteger(string $number): bool
     {
         return is_numeric($number) && (string)(int)$number === (string)$number;

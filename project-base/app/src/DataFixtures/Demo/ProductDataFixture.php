@@ -36,13 +36,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private array $productIdsByCatnum = [];
 
-    /**
-     * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \App\DataFixtures\Demo\DemoDataFactory\ProductDemoDataFactory $productDemoDataFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\DataFixtures\Demo\DataSetter\ProductDemoDataSetter $productDemoDataSetter
-     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
-     */
     public function __construct(
         private readonly ProductFacade $productFacade,
         private readonly ProductDemoDataFactory $productDemoDataFactory,
@@ -52,9 +45,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -4068,10 +4058,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createVariants();
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @return \App\Model\Product\Product
-     */
     private function createProduct(ProductData $productData): Product
     {
         $productData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $productData->catnum)->toString();
@@ -4083,9 +4069,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         return $product;
     }
 
-    /**
-     * @return array
-     */
     public static function getVariantCatnumsByMainVariantCatnum(): array
     {
         return [
@@ -4128,8 +4111,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param array $parameterValues
-     * @param string $locale
      * @param array<string, string> $parameterValuesData
      */
     private function addParameterValues(
@@ -4146,9 +4127,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         }
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     */
     public function addProductReference(Product $product): void
     {
         $this->addReference(self::PRODUCT_PREFIX . $this->productNo, $product);
@@ -4162,7 +4140,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param array $productCatnumsByMainVariantCatnum
      * @return string[]
      */
     private function getAllVariantCatnumsFromAssociativeArray(array $productCatnumsByMainVariantCatnum): array
@@ -4177,18 +4154,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         return array_unique($catnums);
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     */
     private function saveProductToCache(Product $product): void
     {
         $this->productIdsByCatnum[$product->getCatnum()] = $product->getId();
     }
 
-    /**
-     * @param string $catnum
-     * @return \App\Model\Product\Product
-     */
     private function getProductFromCacheByCatnum(string $catnum): Product
     {
         return $this->productFacade->getById($this->productIdsByCatnum[$catnum]);

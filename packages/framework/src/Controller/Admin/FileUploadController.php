@@ -16,20 +16,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class FileUploadController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension $fileThumbnailExtension
-     */
     public function __construct(
         protected readonly FileUpload $fileUpload,
         protected readonly FileThumbnailExtension $fileThumbnailExtension,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     #[Route(path: '/file-upload/')]
     #[RequireRole(SystemRole::ADMIN)]
     public function uploadAction(Request $request): JsonResponse
@@ -65,10 +57,6 @@ class FileUploadController extends AdminBaseController
         return new JsonResponse($actionResult);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     #[Route(path: '/file-upload/delete-temporary-file/')]
     #[RequireRole(SystemRole::ADMIN)]
     public function deleteTemporaryFileAction(Request $request): JsonResponse

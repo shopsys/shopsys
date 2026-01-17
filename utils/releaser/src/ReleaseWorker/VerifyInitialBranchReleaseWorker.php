@@ -10,11 +10,6 @@ use Shopsys\Releaser\Stage;
 
 final class VerifyInitialBranchReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -23,10 +18,6 @@ final class VerifyInitialBranchReleaseWorker extends AbstractShopsysReleaseWorke
         return 'Verify that you\'re releasing on the proper branch';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

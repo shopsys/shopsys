@@ -21,11 +21,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_COMPLAINT_STATUS)]
 class ComplaintStatusController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\Grid\ComplaintStatusInlineEdit $complaintStatusInlineEdit
-     * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
-     */
     public function __construct(
         protected readonly ComplaintStatusFacade $complaintStatusFacade,
         protected readonly ComplaintStatusInlineEdit $complaintStatusInlineEdit,
@@ -33,9 +28,6 @@ class ComplaintStatusController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/complaint-status/list/')]
     #[CanView]
     public function listAction(): Response
@@ -47,11 +39,6 @@ class ComplaintStatusController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/complaint-status/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -95,9 +82,7 @@ class ComplaintStatusController extends AdminBaseController
     }
 
     /**
-     * @param int $id
      * @throws \Shopsys\FrameworkBundle\Component\ConfirmDelete\Exception\InvalidEntityPassedException
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/complaint-status/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]

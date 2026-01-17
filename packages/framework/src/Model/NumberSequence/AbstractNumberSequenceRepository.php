@@ -14,9 +14,6 @@ abstract class AbstractNumberSequenceRepository
 {
     protected const int ID = 1;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
@@ -27,9 +24,6 @@ abstract class AbstractNumberSequenceRepository
      */
     abstract protected function getNumberSequenceRepository(): EntityRepository;
 
-    /**
-     * @return string
-     */
     public function getNextNumber(): string
     {
         try {

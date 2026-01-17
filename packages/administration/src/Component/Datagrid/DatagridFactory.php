@@ -17,18 +17,13 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
  */
 final class DatagridFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     */
     public function __construct(
         private readonly GridFactory $gridFactory,
     ) {
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface $adapter
      * @param DatagridOptions $options
-     * @return \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid
      */
     public function create(AdapterInterface $adapter, array $options): Datagrid
     {

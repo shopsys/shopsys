@@ -12,17 +12,11 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductStockRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -30,10 +24,6 @@ class ProductStockRepository
             ->from(ProductStock::class, 'ps');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getProductStockQueryBuilderByProduct(Product $product): QueryBuilder
     {
         return $this->getQueryBuilder()
@@ -42,10 +32,7 @@ class ProductStockRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @throws \Doctrine\ORM\NonUniqueResultException
-     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock|null
      */
     public function findProductStockByStockAndProduct(Stock $stock, Product $product): ?ProductStock
     {
@@ -58,7 +45,6 @@ class ProductStockRepository
 
     /**
      * @param int[] $stockIds
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByStocksAndProductIndexedByStockId(array $stockIds, Product $product): array
@@ -84,7 +70,6 @@ class ProductStockRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProduct(Product $product): array
@@ -96,11 +81,6 @@ class ProductStockRepository
             ->execute();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return bool
-     */
     public function isProductAvailableOnDomain(Product $product, int $domainId): bool
     {
         $queryBuilder = $this->getQueryBuilder()
@@ -122,8 +102,6 @@ class ProductStockRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProductAndDomainId(Product $product, int $domainId): array
@@ -136,9 +114,6 @@ class ProductStockRepository
             ->execute();
     }
 
-    /**
-     * @param int $stockId
-     */
     public function createProductStockRelationForStockId(int $stockId): void
     {
         $this->em->getConnection()->executeStatement(

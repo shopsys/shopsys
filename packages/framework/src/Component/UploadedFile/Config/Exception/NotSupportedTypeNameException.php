@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig
 
 class NotSupportedTypeNameException extends Exception
 {
-    /**
-     * @param string|null $typeName
-     * @param \Exception|null $previous
-     */
     public function __construct(?string $typeName, ?Exception $previous = null)
     {
         $message = sprintf(

@@ -9,18 +9,12 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
 class LuigisBoxCategoryRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     */
     public function __construct(
         protected readonly CategoryRepository $categoryRepository,
     ) {
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int|null $lastSeekId
-     * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getCategories(

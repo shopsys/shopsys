@@ -22,13 +22,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
  * @method filterByBrand(\Doctrine\ORM\QueryBuilder $queryBuilder, \App\Model\Product\Brand\Brand $brand)
  * @method \App\Model\Product\Product getById(int $id)
  * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)
- * @method \App\Model\Product\Product getSellableById(int $id, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
- * @method \App\Model\Product\Product[] getOfferedByIds(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int[] $sortedProductIds)
- * @method \App\Model\Product\Product[] getListableByIds(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int[] $sortedProductIds)
+ * @method \App\Model\Product\Product getSellableById(int $id, int $domainId,  $pricingGroup)
+ * @method \App\Model\Product\Product[] getOfferedByIds(int $domainId,  $pricingGroup, int[] $sortedProductIds)
+ * @method \App\Model\Product\Product[] getListableByIds( $domainId,  $pricingGroup, int[] $sortedProductIds)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getOneByUuid(string $uuid)
- * @method \App\Model\Product\Product[] getAllSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
- * @method \App\Model\Product\Product[] getAllOfferedProductsPaginated(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $offset, int $limit)
+ * @method \App\Model\Product\Product[] getAllSellableVariantsByMainVariant( $mainVariant, int $domainId,  $pricingGroup)
+ * @method \App\Model\Product\Product[] getAllOfferedProductsPaginated( $domainId,  $pricingGroup,  $offset,  $limit)
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
  * @method \App\Model\Product\Product|null findByCatnum(string $catnum)
  * @method \App\Model\Product\Product[] findAllByCatnums(string[] $catnums)
@@ -37,9 +37,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
 class ProductRepository extends BaseProductRepository
 {
     /**
-     * @param array $productCatnums
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \App\Model\Product\Product[]
      */
     public function getVisibleProductsByCatnumsAndDomainId(
@@ -74,7 +71,6 @@ class ProductRepository extends BaseProductRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $locale
      * @param string|null $searchText
      * @return \Doctrine\ORM\QueryBuilder

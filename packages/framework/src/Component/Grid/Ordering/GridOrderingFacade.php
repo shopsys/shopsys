@@ -9,16 +9,12 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderab
 
 class GridOrderingFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
     /**
      * @param string $entityClass
-     * @param array $rowIds
      */
     public function saveOrdering($entityClass, array $rowIds)
     {

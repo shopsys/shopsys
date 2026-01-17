@@ -187,9 +187,6 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $this->testInvalidSwift($swiftForSecondDomain);
     }
 
-    /**
-     * @param string $swift
-     */
     private function testInvalidSwift(string $swift): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);

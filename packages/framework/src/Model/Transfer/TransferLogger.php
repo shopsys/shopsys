@@ -17,12 +17,6 @@ class TransferLogger implements TransferLoggerInterface
      */
     protected array $transferIssueDataList = [];
 
-    /**
-     * @param \Monolog\Logger $logger
-     * @param string $serviceTransferIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueDataFactory $transferIssueDataFactory
-     */
     public function __construct(
         protected readonly Logger $logger,
         protected readonly string $serviceTransferIdentifier,
@@ -45,10 +39,6 @@ class TransferLogger implements TransferLoggerInterface
         $this->info('Transfer logger saves ' . $transferIssuesCount . ' to database');
     }
 
-    /**
-     * @param string $message
-     * @param array $context
-     */
     #[Override]
     public function debug(string $message, array $context = []): void
     {
@@ -57,30 +47,18 @@ class TransferLogger implements TransferLoggerInterface
         $this->logger->debug($message, $context);
     }
 
-    /**
-     * @param string $message
-     * @param array $context
-     */
     #[Override]
     public function info(string $message, array $context = []): void
     {
         $this->logger->info($message, $context);
     }
 
-    /**
-     * @param string $message
-     * @param array $context
-     */
     #[Override]
     public function notice(string $message, array $context = []): void
     {
         $this->logger->notice($message, $context);
     }
 
-    /**
-     * @param string $message
-     * @param array $context
-     */
     #[Override]
     public function warning(string $message, array $context = []): void
     {
@@ -89,10 +67,6 @@ class TransferLogger implements TransferLoggerInterface
         $this->logger->warning($message, $context);
     }
 
-    /**
-     * @param string $message
-     * @param array $context
-     */
     #[Override]
     public function error(string $message, array $context = []): void
     {
@@ -101,10 +75,6 @@ class TransferLogger implements TransferLoggerInterface
         $this->logger->error($message, $context);
     }
 
-    /**
-     * @param string $message
-     * @param array $context
-     */
     #[Override]
     public function critical(string $message, array $context = []): void
     {
@@ -113,20 +83,12 @@ class TransferLogger implements TransferLoggerInterface
         $this->logger->critical($message, $context);
     }
 
-    /**
-     * @param string $message
-     * @param array $context
-     */
     #[Override]
     public function alert(string $message, array $context = []): void
     {
         $this->logger->alert($message, $context);
     }
 
-    /**
-     * @param string $message
-     * @param array $context
-     */
     #[Override]
     public function emergency(string $message, array $context = []): void
     {

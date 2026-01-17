@@ -15,7 +15,6 @@ class ProductListOrderingConfig
 
     /**
      * @param string[] $supportedOrderingModesNamesById
-     * @param string $defaultOrderingModeId
      */
     public function __construct(
         protected readonly array $supportedOrderingModesNamesById,
@@ -31,9 +30,6 @@ class ProductListOrderingConfig
         return $this->supportedOrderingModesNamesById;
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultOrderingModeId(): string
     {
         return $this->defaultOrderingModeId;

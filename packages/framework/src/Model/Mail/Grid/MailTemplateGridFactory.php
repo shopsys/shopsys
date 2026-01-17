@@ -16,13 +16,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository;
 
 class MailTemplateGridFactory implements GridFactoryInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository $mailTemplateRepository
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration $mailTemplateConfiguration
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly MailTemplateRepository $mailTemplateRepository,
         protected readonly GridFactory $gridFactory,
@@ -32,10 +25,6 @@ class MailTemplateGridFactory implements GridFactoryInterface
     ) {
     }
 
-    /**
-     * @param string|null $roleConstant
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     #[Override]
     public function create(?string $roleConstant): Grid
     {
@@ -60,9 +49,6 @@ class MailTemplateGridFactory implements GridFactoryInterface
         return $grid;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
-     */
     protected function createDataSource(): DataSourceInterface
     {
         $queryBuilder = $this->mailTemplateRepository->createGridQueryBuilder(

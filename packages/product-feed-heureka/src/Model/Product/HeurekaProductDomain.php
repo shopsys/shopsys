@@ -38,25 +38,16 @@ class HeurekaProductDomain
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData $heurekaProductDomainData
-     */
     public function __construct(HeurekaProductDomainData $heurekaProductDomainData)
     {
         $this->setData($heurekaProductDomainData);
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData $heurekaProductDomainData
-     */
     public function edit(HeurekaProductDomainData $heurekaProductDomainData)
     {
         $this->setData($heurekaProductDomainData);
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData $heurekaProductDomainData
-     */
     protected function setData(HeurekaProductDomainData $heurekaProductDomainData): void
     {
         $this->product = $heurekaProductDomainData->product;

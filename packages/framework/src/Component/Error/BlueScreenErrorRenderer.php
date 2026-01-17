@@ -14,13 +14,6 @@ use Tracy\Debugger;
 
 final class BlueScreenErrorRenderer implements ErrorRendererInterface
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\ErrorHandler\ErrorRenderer\ErrorRendererInterface $fallbackErrorRenderer
-     * @param bool $isDebug
-     * @param string $localPathToProjectRoot
-     * @param string $tracyDebuggerIdeUrlFormat
-     */
     public function __construct(
         private readonly RequestStack $requestStack,
         private readonly ErrorRendererInterface $fallbackErrorRenderer,
@@ -30,10 +23,6 @@ final class BlueScreenErrorRenderer implements ErrorRendererInterface
     ) {
     }
 
-    /**
-     * @param \Throwable $exception
-     * @return \Symfony\Component\ErrorHandler\Exception\FlattenException
-     */
     #[Override]
     public function render(Throwable $exception): FlattenException
     {
@@ -57,9 +46,6 @@ final class BlueScreenErrorRenderer implements ErrorRendererInterface
         return FlattenException::createFromThrowable($exception)->setAsString($result);
     }
 
-    /**
-     * @return bool
-     */
     private function isDebug(): bool
     {
         $request = $this->requestStack->getCurrentRequest();

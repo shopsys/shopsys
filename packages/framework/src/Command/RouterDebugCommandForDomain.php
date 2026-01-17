@@ -25,11 +25,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 )]
 class RouterDebugCommandForDomain extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler $domainChoiceHelper
-     * @param \Symfony\Bundle\FrameworkBundle\Command\RouterDebugCommand $routerDebugCommand
-     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
-     */
     public function __construct(
         private readonly DomainChoiceHandler $domainChoiceHelper,
         private readonly RouterDebugCommand $routerDebugCommand,

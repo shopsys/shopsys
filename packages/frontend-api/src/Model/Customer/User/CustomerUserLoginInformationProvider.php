@@ -13,9 +13,6 @@ use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 
 class CustomerUserLoginInformationProvider extends BaseCustomerUserLoginInformationProvider
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
-     */
     public function __construct(
         protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
     ) {

@@ -12,9 +12,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 final class AdminContext extends AbstractContext
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administration\AdminUrlProvider $adminUrlProvider
-     * @param \Shopsys\FrameworkBundle\Component\Context\ResolveContextHelper $resolveContextHelper
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param string[] $additionalAdminPathPrefixes
      */
     public function __construct(
@@ -49,10 +46,6 @@ final class AdminContext extends AbstractContext
         return $this->isPathMatchingAdminPattern($request->getPathInfo());
     }
 
-    /**
-     * @param string $pathinfo
-     * @return bool
-     */
     private function isPathMatchingAdminPattern(string $pathinfo): bool
     {
         return Utils::strStartsWithAny($pathinfo, $this->additionalAdminPathPrefixes) ||

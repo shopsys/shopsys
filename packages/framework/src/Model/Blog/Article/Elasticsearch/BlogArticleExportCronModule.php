@@ -11,12 +11,6 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 
 class BlogArticleExportCronModule extends AbstractExportCronModule
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex $index
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         BlogArticleIndex $index,
         IndexFacade $indexFacade,

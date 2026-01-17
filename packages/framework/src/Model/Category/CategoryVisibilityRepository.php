@@ -12,11 +12,6 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class CategoryVisibilityRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
@@ -33,9 +28,6 @@ class CategoryVisibilityRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     protected function refreshCategoriesVisibilityOnDomain(DomainConfig $domainConfig)
     {
         $this->setRootCategoryVisibleOnDomain($domainConfig);
@@ -47,9 +39,6 @@ class CategoryVisibilityRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     protected function setRootCategoryVisibleOnDomain(DomainConfig $domainConfig)
     {
         $this->em->getConnection()->executeStatement(
@@ -68,7 +57,6 @@ class CategoryVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return int
      */
     protected function getMaxLevelOnDomain(DomainConfig $domainConfig)
@@ -85,7 +73,6 @@ class CategoryVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int $level
      */
     protected function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, $level)
@@ -115,9 +102,6 @@ class CategoryVisibilityRepository
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
-     */
     public function onKernelResponse(ResponseEvent $event): void
     {
         if (!$event->isMainRequest()) {

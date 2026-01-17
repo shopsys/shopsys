@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeNotFoundExc
 
 class PromoCodeRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
@@ -34,11 +31,6 @@ class PromoCodeRepository
         return $this->getPromoCodeRepository()->find($promoCodeId);
     }
 
-    /**
-     * @param string $code
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
-     */
     public function findByCodeAndDomainId(string $code, int $domainId): ?PromoCode
     {
         return $this->getPromoCodeRepository()->findOneBy([
@@ -77,9 +69,6 @@ class PromoCodeRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllQueryBuilder(): QueryBuilder
     {
         return $this->getPromoCodeRepository()
@@ -97,9 +86,6 @@ class PromoCodeRepository
         return array_column($queryBuilder->getQuery()->execute(), 'code');
     }
 
-    /**
-     * @return int
-     */
     public function getMassLastGeneratedBatchId(): int
     {
         $queryBuilder = $this->getAllQueryBuilder()
@@ -111,7 +97,6 @@ class PromoCodeRepository
     }
 
     /**
-     * @param int $batchId
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]|null
      */
     public function findByMassBatchId(int $batchId): ?array

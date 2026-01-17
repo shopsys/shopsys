@@ -35,11 +35,6 @@ class ProductParameterValue
     #[ORM\ManyToOne(targetEntity: ParameterValue::class)]
     protected $value;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $value
-     */
     public function __construct(
         Product $product,
         Parameter $parameter,

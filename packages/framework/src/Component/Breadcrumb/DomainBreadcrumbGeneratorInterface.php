@@ -7,10 +7,6 @@ namespace Shopsys\FrameworkBundle\Component\Breadcrumb;
 interface DomainBreadcrumbGeneratorInterface extends BreadcrumbGeneratorInterface
 {
     /**
-     * @param int $domainId
-     * @param string $routeName
-     * @param array $routeParameters
-     * @param string|null $locale
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     public function getBreadcrumbItemsOnDomain(

@@ -27,12 +27,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_CUSTOMER)]
 class DeliveryAddressController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     */
     public function __construct(
         protected readonly DeliveryAddressFacade $deliveryAddressFacade,
         protected readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
@@ -41,11 +35,6 @@ class DeliveryAddressController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $customerId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/delivery-address/new/{customerId}', name: 'admin_delivery_address_new', requirements: ['customerId' => '\d+'])]
     #[CanCreate]
     public function newAction(Request $request, int $customerId): Response
@@ -94,11 +83,6 @@ class DeliveryAddressController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/delivery-address/edit/{id}', name: 'admin_delivery_address_edit', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -154,10 +138,6 @@ class DeliveryAddressController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     #[Route(path: '/delivery-address/delete/{id}', name: 'admin_delivery_address_delete', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -190,10 +170,6 @@ class DeliveryAddressController extends AdminBaseController
         return $this->redirectToRoute('admin_customer_list');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return string
-     */
     protected function resolveBackUrl(Customer $customer): string
     {
         if ($this->customerFacade->isB2bFeaturesEnabledByCustomer($customer)) {
@@ -208,10 +184,6 @@ class DeliveryAddressController extends AdminBaseController
         return $this->generateUrl('admin_customer_edit', ['id' => $firstCustomerUser->getId()]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return string
-     */
     protected function resolveBackUrlText(Customer $customer): string
     {
         if ($this->customerFacade->isB2bFeaturesEnabledByCustomer($customer)) {

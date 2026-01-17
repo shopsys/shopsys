@@ -10,7 +10,6 @@ class ProductFilterConfig
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $parameterChoices
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flagChoices
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brandChoices
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange $priceRange
      */
     public function __construct(
         protected readonly array $parameterChoices,
@@ -44,9 +43,6 @@ class ProductFilterConfig
         return $this->brandChoices;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
-     */
     public function getPriceRange(): PriceRange
     {
         return $this->priceRange;

@@ -21,7 +21,6 @@ class ParameterFilterValidator extends ConstraintValidator
     }
 
     /**
-     * @param mixed $value
      * @param \App\FrontendApi\Model\Component\Constraints\ParameterFilter $constraint
      */
     #[Override]

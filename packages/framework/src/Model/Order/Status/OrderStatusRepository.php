@@ -12,9 +12,6 @@ class OrderStatusRepository
 {
     protected EntityManagerInterface $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
@@ -55,7 +52,6 @@ class OrderStatusRepository
     }
 
     /**
-     * @param string $type
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
     public function getAllByType(string $type): array
@@ -63,10 +59,6 @@ class OrderStatusRepository
         return $this->getOrderStatusRepository()->findBy(['type' => $type]);
     }
 
-    /**
-     * @param string $statusType
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     */
     public function getByType(string $statusType): OrderStatus
     {
         $orderStatus = $this->getOrderStatusRepository()->findOneBy(['type' => $statusType]);
@@ -117,10 +109,6 @@ class OrderStatusRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $oldOrderStatus
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $newOrderStatus
-     */
     public function replaceOrderStatus(OrderStatus $oldOrderStatus, OrderStatus $newOrderStatus)
     {
         $this->em->createQueryBuilder()

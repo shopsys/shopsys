@@ -15,11 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundU
 
 class ProductDetailQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     */
     public function __construct(
         protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
         protected readonly Domain $domain,
@@ -27,11 +22,6 @@ class ProductDetailQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param string|null $uuid
-     * @param string|null $urlSlug
-     * @return array
-     */
     public function productDetailQuery(?string $uuid = null, ?string $urlSlug = null): array
     {
         if ($uuid !== null) {
@@ -45,10 +35,6 @@ class ProductDetailQuery extends AbstractQuery
         throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
-    /**
-     * @param string $uuid
-     * @return array
-     */
     protected function getVisibleProductArrayByUuid(string $uuid): array
     {
         try {
@@ -58,10 +44,6 @@ class ProductDetailQuery extends AbstractQuery
         }
     }
 
-    /**
-     * @param string $urlSlug
-     * @return array
-     */
     protected function getVisibleProductArrayOnDomainBySlug(string $urlSlug): array
     {
         try {

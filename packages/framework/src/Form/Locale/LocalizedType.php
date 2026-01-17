@@ -17,10 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocalizedType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Form\FormTypeLayout $formTypeLayout
-     */
     public function __construct(
         private readonly Localization $localization,
         private readonly FormTypeLayout $formTypeLayout,

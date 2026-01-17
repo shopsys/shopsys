@@ -26,7 +26,6 @@ class RequireOverrideAttributeSniff implements Sniff
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile
      * @param mixed $stackPtr
      * @throws \ReflectionException
      */
@@ -51,11 +50,6 @@ class RequireOverrideAttributeSniff implements Sniff
         }
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile
-     * @param int $classPtr
-     * @param \ReflectionClass $parentClass
-     */
     private function processClassMethods(
         File $phpcsFile,
         int $classPtr,
@@ -90,11 +84,6 @@ class RequireOverrideAttributeSniff implements Sniff
         }
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile
-     * @param int $stackPtr
-     * @return string|null
-     */
     private function getParentClassName(File $phpcsFile, int $stackPtr): ?string
     {
         $tokens = $phpcsFile->getTokens();
@@ -116,8 +105,6 @@ class RequireOverrideAttributeSniff implements Sniff
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile
-     * @param int $stackPtr
      * @return array<string>
      */
     private function getInterfaceNames(File $phpcsFile, int $stackPtr): array
@@ -146,12 +133,6 @@ class RequireOverrideAttributeSniff implements Sniff
         return $interfaceNames;
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile
-     * @param string $className
-     * @param int $position
-     * @return string|null
-     */
     private function resolveClassName(File $phpcsFile, string $className, int $position): ?string
     {
         $allUseStatements = UseStatementHelper::getFileUseStatements($phpcsFile);
@@ -172,20 +153,12 @@ class RequireOverrideAttributeSniff implements Sniff
 
     /**
      * Checks magic methods like __construct, __destruct, __call, etc.
-     *
-     * @param string $methodName
-     * @return bool
      */
     private function isMagicMethod(string $methodName): bool
     {
         return str_starts_with($methodName, '__');
     }
 
-    /**
-     * @param \ReflectionClass $parentClass
-     * @param string $methodName
-     * @return bool
-     */
     private function methodExistsInParentClass(ReflectionClass $parentClass, string $methodName): bool
     {
         if ($parentClass->hasMethod($methodName)) {
@@ -210,11 +183,6 @@ class RequireOverrideAttributeSniff implements Sniff
         return false;
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile
-     * @param int $stackPtr
-     * @return bool
-     */
     private function hasOverrideAttribute(File $phpcsFile, int $stackPtr): bool
     {
         $tokens = $phpcsFile->getTokens();
@@ -246,12 +214,6 @@ class RequireOverrideAttributeSniff implements Sniff
         return false;
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile
-     * @param int $stackPtr
-     * @param string $methodName
-     * @param string $parentClassName
-     */
     private function addOverrideAttributeError(
         File $phpcsFile,
         int $stackPtr,
@@ -294,10 +256,6 @@ class RequireOverrideAttributeSniff implements Sniff
         $phpcsFile->fixer->endChangeset();
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile
-     * @return bool
-     */
     private function hasOverrideUseStatement(File $phpcsFile): bool
     {
         $allUseStatements = UseStatementHelper::getFileUseStatements($phpcsFile);
@@ -312,10 +270,6 @@ class RequireOverrideAttributeSniff implements Sniff
         return false;
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile
-     * @param string $className
-     */
     private function addUseStatement(File $phpcsFile, string $className): void
     {
         // First try to find existing use statements

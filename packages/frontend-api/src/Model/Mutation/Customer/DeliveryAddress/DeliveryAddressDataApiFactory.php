@@ -14,11 +14,6 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 
 class DeliveryAddressDataApiFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
-     */
     public function __construct(
         protected readonly CountryFacade $countryFacade,
         protected readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
@@ -26,11 +21,6 @@ class DeliveryAddressDataApiFactory
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
-     */
     public function createFromDeliveryInputArgumentAndCustomer(
         Argument $argument,
         Customer $customer,

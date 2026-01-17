@@ -11,10 +11,7 @@ final readonly class Definition
 {
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
-     * @param string $controllerName
      * @param class-string $entityClass
-     * @param string $entityName
-     * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfigData $config
      * @param \Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension[] $extensions
      */
     public function __construct(
@@ -35,17 +32,11 @@ final readonly class Definition
         return $this->extensions;
     }
 
-    /**
-     * @return \Shopsys\AdministrationBundle\Component\Config\CrudConfigData
-     */
     public function getConfig(): CrudConfigData
     {
         return $this->config;
     }
 
-    /**
-     * @return string
-     */
     public function getRoleConstant(): string
     {
         return $this->getConfig()->getCustomRoleConstant() ?? 'ROLE_CRUD_' . strtoupper(CrudTransformationHelper::transformToRouteName($this->controllerName));

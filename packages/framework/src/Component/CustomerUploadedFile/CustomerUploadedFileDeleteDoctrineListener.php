@@ -9,19 +9,12 @@ use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUpload
 
 class CustomerUploadedFileDeleteDoctrineListener
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig $customerUploadedFileConfig
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
-     */
     public function __construct(
         protected readonly CustomerUploadedFileConfig $customerUploadedFileConfig,
         protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
     ) {
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     */
     public function preRemove(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();

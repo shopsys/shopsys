@@ -12,10 +12,6 @@ class ArticleNotFoundUserError extends EntityNotFoundUserError implements UserEr
 {
     protected const CODE = 'article-not-found';
 
-    /**
-     * @param string $message
-     * @param string|null $articleIdentifier
-     */
     public function __construct(string $message, protected readonly ?string $articleIdentifier = null)
     {
         parent::__construct($message);

@@ -9,19 +9,11 @@ use Shopsys\FrameworkBundle\Model\Transfer\Transfer;
 
 class TransferIssueFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Transfer $transfer
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueData $transferIssueData
-     * @return \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssue
-     */
     public function create(Transfer $transfer, TransferIssueData $transferIssueData): TransferIssue
     {
         $entityName = $this->entityNameResolver->resolve(TransferIssue::class);

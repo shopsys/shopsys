@@ -11,29 +11,17 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
 class PriceListProductPriceDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         protected readonly ProductFacade $productFacade,
         protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData
-     */
     protected function createInstance(): PriceListProductPriceData
     {
         return new PriceListProductPriceData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPrice $priceListProductPrice
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData
-     */
     public function createFromPriceListProductPrice(
         PriceListProductPrice $priceListProductPrice,
         int $domainId,
@@ -44,12 +32,6 @@ class PriceListProductPriceDataFactory
         return $priceListProductPriceData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceAmount
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData
-     */
     public function create(Product $product, Money $priceAmount, int $domainId): PriceListProductPriceData
     {
         $priceListProductPrice = $this->createInstance();
@@ -63,11 +45,6 @@ class PriceListProductPriceDataFactory
         return $priceListProductPrice;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData $priceListProductPriceData
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPrice $priceListProductPrice
-     * @param int $domainId
-     */
     protected function fillFromPriceListProductPrice(
         PriceListProductPriceData $priceListProductPriceData,
         PriceListProductPrice $priceListProductPrice,
@@ -81,11 +58,6 @@ class PriceListProductPriceDataFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     protected function getBasicPriceBasedOnPricingSetting(Product $product, int $domainId): Money
     {
         $basicPrice = $this->productFacade->getProductPriceForDefaultPricingGroup(
@@ -102,7 +74,6 @@ class PriceListProductPriceDataFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPrice[] $priceListProductPrices
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData[]
      */
     public function createFromPriceListProductPrices(array $priceListProductPrices, int $domainId): array

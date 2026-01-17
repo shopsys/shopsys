@@ -19,9 +19,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ImageLocatorTest extends TestCase
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
-     */
     private function getBaseImageConfig(): ImageConfig
     {
         $inputConfig = [
@@ -50,9 +47,6 @@ class ImageLocatorTest extends TestCase
         return new ImageConfig($imageEntityConfigByClass, $entityNameResolver);
     }
 
-    /**
-     * @return array
-     */
     public static function getRelativeImagePathProvider(): array
     {
         return [
@@ -69,11 +63,6 @@ class ImageLocatorTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $entityName
-     * @param string|null $type
-     * @param string $expectedPath
-     */
     #[DataProvider('getRelativeImagePathProvider')]
     public function testGetRelativeImagePath(string $entityName, ?string $type, string $expectedPath): void
     {
@@ -83,9 +72,6 @@ class ImageLocatorTest extends TestCase
         $this->assertSame($expectedPath, $imageLocator->getRelativeImagePath($entityName, $type));
     }
 
-    /**
-     * @return array
-     */
     public static function getRelativeImagePathExceptionProvider(): array
     {
         return [
@@ -102,11 +88,6 @@ class ImageLocatorTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $entityName
-     * @param string|null $type
-     * @param string $exceptionClass
-     */
     #[DataProvider('getRelativeImagePathExceptionProvider')]
     public function testGetRelativeImagePathException(string $entityName, ?string $type, string $exceptionClass): void
     {

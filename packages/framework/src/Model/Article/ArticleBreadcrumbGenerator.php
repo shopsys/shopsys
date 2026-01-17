@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Component\Breadcrumb\DomainBreadcrumbGeneratorInterf
 
 class ArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
-     */
     public function __construct(protected readonly ArticleRepository $articleRepository)
     {
     }

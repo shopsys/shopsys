@@ -12,12 +12,6 @@ class AdvancedSearchProductFacade
 {
     public const RULES_FORM_NAME = 'as';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchFormFactory $advancedSearchFormFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade $productListAdminFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory $ruleFormViewDataFactory
-     */
     public function __construct(
         protected readonly ProductAdvancedSearchFormFactory $advancedSearchFormFactory,
         protected readonly AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
@@ -27,7 +21,6 @@ class AdvancedSearchProductFacade
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createAdvancedSearchForm(Request $request)
@@ -65,7 +58,6 @@ class AdvancedSearchProductFacade
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
     public function isAdvancedSearchFormSubmitted(Request $request)

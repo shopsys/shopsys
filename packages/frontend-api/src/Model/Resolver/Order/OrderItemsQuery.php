@@ -20,12 +20,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class OrderItemsQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade $orderItemApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilterFactory $orderItemsFilterFactory
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     */
     public function __construct(
         protected readonly OrderItemApiFacade $orderItemApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -34,10 +28,6 @@ class OrderItemsQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|\GraphQL\Executor\Promise\Promise
-     */
     public function orderItemsQuery(Argument $argument): ConnectionInterface|Promise
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
@@ -53,12 +43,6 @@ class OrderItemsQuery extends AbstractQuery
         return $this->getPaginatedCustomerUserOrderItems($customerUser, $filter, $argument);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
-     */
     protected function getPaginatedCustomerUserOrderItems(
         CustomerUser $customerUser,
         OrderItemsFilter $filter,
@@ -79,12 +63,6 @@ class OrderItemsQuery extends AbstractQuery
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
-     */
     protected function getPaginatedCustomerOrderItems(
         Customer $customer,
         OrderItemsFilter $filter,

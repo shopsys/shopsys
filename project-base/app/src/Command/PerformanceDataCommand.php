@@ -20,12 +20,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class PerformanceDataCommand extends Command
 {
-    /**
-     * @param \App\DataFixtures\Performance\CategoryDataFixture $categoryDataFixture
-     * @param \App\DataFixtures\Performance\ProductDataFixture $productDataFixture
-     * @param \App\DataFixtures\Performance\CustomerUserDataFixture $customerUserDataFixture
-     * @param \App\DataFixtures\Performance\OrderDataFixture $orderDataFixture
-     */
     public function __construct(
         private readonly CategoryDataFixture $categoryDataFixture,
         private readonly ProductDataFixture $productDataFixture,

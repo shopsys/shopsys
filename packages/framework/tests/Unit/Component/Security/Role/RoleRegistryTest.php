@@ -315,12 +315,6 @@ class RoleRegistryTest extends TestCase
         $registry->getRoles(self::TEST_ADMIN_CONTEXT);
     }
 
-    /**
-     * @param string $context
-     * @param int $priority
-     * @param callable $configureCallback
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\RoleProviderInterface
-     */
     private function createProvider(string $context, int $priority, callable $configureCallback): RoleProviderInterface
     {
         $provider = $this->createMock(RoleProviderInterface::class);

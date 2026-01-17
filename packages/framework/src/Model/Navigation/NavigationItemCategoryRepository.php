@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class NavigationItemCategoryRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
@@ -20,7 +17,6 @@ class NavigationItemCategoryRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem[] $navigationItems
-     * @return \Doctrine\ORM\QueryBuilder
      */
     protected function getSortedNavigationItemCategoriesByNavigationItemQueryBuilder(
         array $navigationItems,
@@ -46,7 +42,6 @@ class NavigationItemCategoryRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem[] $navigationItems
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategory[]
      */
     public function getSortedVisibleNavigationItemCategoriesByNavigationItems(

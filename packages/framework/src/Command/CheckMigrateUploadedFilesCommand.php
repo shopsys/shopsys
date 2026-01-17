@@ -18,10 +18,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class CheckMigrateUploadedFilesCommand extends Command
 {
-    /**
-     * @param string $uploadedFilesDirectory
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     */
     public function __construct(
         protected readonly string $uploadedFilesDirectory,
         protected readonly FilesystemOperator $filesystem,
@@ -56,7 +52,6 @@ class CheckMigrateUploadedFilesCommand extends Command
     }
 
     /**
-     * @param string $rootDirectory
      * @return array<int, array{message:string, paths: string[]}>
      */
     protected function checkDirectoriesAndFiles(string $rootDirectory): array

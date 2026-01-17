@@ -11,17 +11,11 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class FriendlyUrlDataFixture extends AbstractReferenceFixture
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     */
     public function __construct(
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

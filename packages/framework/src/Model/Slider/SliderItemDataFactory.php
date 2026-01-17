@@ -8,25 +8,16 @@ use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
 class SliderItemDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     */
     public function __construct(
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItemData
-     */
     protected function createInstance(): SliderItemData
     {
         return new SliderItemData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItemData
-     */
     public function create(): SliderItemData
     {
         $sliderItemData = $this->createInstance();
@@ -36,10 +27,6 @@ class SliderItemDataFactory
         return $sliderItemData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItem $sliderItem
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItemData
-     */
     public function createFromSliderItem(SliderItem $sliderItem): SliderItemData
     {
         $sliderItemData = $this->createInstance();
@@ -48,10 +35,6 @@ class SliderItemDataFactory
         return $sliderItemData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItem $sliderItem
-     */
     protected function fillFromSliderItem(SliderItemData $sliderItemData, SliderItem $sliderItem): void
     {
         $sliderItemData->name = $sliderItem->getName();

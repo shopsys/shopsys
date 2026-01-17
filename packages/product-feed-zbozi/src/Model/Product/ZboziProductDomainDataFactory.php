@@ -6,17 +6,11 @@ namespace Shopsys\ProductFeed\ZboziBundle\Model\Product;
 
 class ZboziProductDomainDataFactory
 {
-    /**
-     * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData
-     */
     protected function createInstance(): ZboziProductDomainData
     {
         return new ZboziProductDomainData();
     }
 
-    /**
-     * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData
-     */
     public function create(): ZboziProductDomainData
     {
         return $this->createInstance();

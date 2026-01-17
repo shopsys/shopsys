@@ -17,16 +17,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SitemapDumper extends Dumper
 {
-    /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param \League\Flysystem\FilesystemOperator $abstractFilesystem
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
-     * @param string $sitemapFilePrefix
-     * @param int|null $itemsBySet
-     */
     public function __construct(
         EventDispatcherInterface $dispatcher,
         Filesystem $filesystem,
@@ -69,8 +59,6 @@ class SitemapDumper extends Dumper
 
     /**
      * Deletes sitemap files matching filename patterns of newly generated files
-     *
-     * @param string $targetDir
      */
     #[Override]
     protected function deleteExistingSitemaps(string $targetDir): void

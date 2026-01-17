@@ -46,11 +46,6 @@ class CategoryAutomatedFilterFacade
         return $notesIndexedByValue;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function applyFiltersByCategory(FilterQuery $filterQuery, Category $category): FilterQuery
     {
         $filterQuery = $filterQuery->filterByCategory($category->getId());
@@ -63,7 +58,6 @@ class CategoryAutomatedFilterFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface[]
      */
     protected function getByCategory(Category $category): array

@@ -15,7 +15,6 @@ namespace Shopsys\FrameworkBundle\Model\Category;
 class CategoryWithPreloadedChildren
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildren[] $children
      */
     public function __construct(

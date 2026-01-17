@@ -6,11 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
 class FileContentsReplacer
 {
-    /**
-     * @param string $fileName
-     * @param string $search
-     * @param string $replace
-     */
     public function replaceInFile(string $fileName, string $search, string $replace): void
     {
         $fileContent = file_get_contents($fileName);

@@ -9,9 +9,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\CurrencyNotFoundExc
 
 class CurrencyRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
@@ -44,10 +41,6 @@ class CurrencyRepository
         ]);
     }
 
-    /**
-     * @param string $currencyCode
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     public function getByCode(string $currencyCode): Currency
     {
         $currency = $this->findByCode($currencyCode);

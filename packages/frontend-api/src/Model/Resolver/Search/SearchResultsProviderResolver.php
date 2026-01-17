@@ -23,16 +23,8 @@ abstract class SearchResultsProviderResolver
     ) {
     }
 
-    /**
-     * @return string
-     */
     abstract protected function getSearchResultsProviderInterface(): string;
 
-    /**
-     * @param int $domainId
-     * @param string $searchedEntityName
-     * @return \Shopsys\FrontendApiBundle\Model\Resolver\Search\SearchResultsProviderInterface
-     */
     public function getSearchResultsProviderByDomainIdAndEntityName(
         int $domainId,
         string $searchedEntityName,
@@ -68,10 +60,6 @@ abstract class SearchResultsProviderResolver
         return $searchResultsProvidersOrderedByPriority;
     }
 
-    /**
-     * @param string $serviceId
-     * @param int $priority
-     */
     public function registerSearchResultsProvider(string $serviceId, int $priority): void
     {
         if (array_key_exists($priority, $this->searchResultsProvidersServiceIdByPriority)) {

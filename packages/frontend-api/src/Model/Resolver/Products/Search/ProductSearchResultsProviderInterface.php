@@ -11,10 +11,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Search\SearchResultsProviderInterfa
 
 interface ProductSearchResultsProviderInterface extends SearchResultsProviderInterface
 {
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection|\GraphQL\Executor\Promise\Promise
-     */
     public function getProductsSearchResults(
         Argument $argument,
     ): ProductConnection|Promise;

@@ -9,11 +9,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerUserLoginTypeFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFactory $customerUserLoginTypeFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeRepository $customerUserLoginTypeRepository
-     */
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
         protected readonly CustomerUserLoginTypeFactory $customerUserLoginTypeFactory,
@@ -21,9 +16,6 @@ class CustomerUserLoginTypeFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeData $customerUserLoginTypeData
-     */
     public function updateCustomerUserLoginTypes(
         CustomerUserLoginTypeData $customerUserLoginTypeData,
     ): void {
@@ -45,11 +37,6 @@ class CustomerUserLoginTypeFacade
         $this->entityManager->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string|null $excludeType
-     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginType|null
-     */
     public function findMostRecentLoginType(
         CustomerUser $customerUser,
         ?string $excludeType = null,
@@ -58,8 +45,6 @@ class CustomerUserLoginTypeFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string|null $excludeType
      * @return string[]
      */
     public function getAllLoginTypes(CustomerUser $customerUser, ?string $excludeType = null): array

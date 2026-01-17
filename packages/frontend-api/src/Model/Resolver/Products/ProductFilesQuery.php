@@ -15,9 +15,6 @@ class ProductFilesQuery extends AbstractQuery
 {
     protected const PRODUCT_ENTITY_NAME = 'product';
 
-    /**
-     * @param \Overblog\DataLoader\DataLoaderInterface $filesBatchLoader
-     */
     public function __construct(
         protected readonly DataLoaderInterface $filesBatchLoader,
     ) {
@@ -25,8 +22,6 @@ class ProductFilesQuery extends AbstractQuery
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
-     * @param string $type
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function filesByProductPromiseQuery(
         $data,
@@ -37,12 +32,6 @@ class ProductFilesQuery extends AbstractQuery
         return $this->resolveByEntityIdPromise($productId, static::PRODUCT_ENTITY_NAME, $type);
     }
 
-    /**
-     * @param int $entityId
-     * @param string $entityName
-     * @param string $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     protected function resolveByEntityIdPromise(
         int $entityId,
         string $entityName,

@@ -23,8 +23,6 @@ final class CrudControllerRegistry
     private ?array $items = null;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param array<int, array{class: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, entityClass: string}> $crudControllers
      * @param array<int, array{extensionClass: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension>, controllerClass: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, priority: int}> $crudControllerExtensions
      */
@@ -90,7 +88,6 @@ final class CrudControllerRegistry
 
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
-     * @return \Shopsys\AdministrationBundle\Component\Crud\Definition
      */
     public function getItem(string $controllerClass): Definition
     {
@@ -103,9 +100,7 @@ final class CrudControllerRegistry
 
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
-     * @param string $entityName
      * @param \Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension[] $extensions
-     * @return \Shopsys\AdministrationBundle\Component\Config\CrudConfigData
      */
     private function loadCrudConfiguration(
         string $controllerClass,

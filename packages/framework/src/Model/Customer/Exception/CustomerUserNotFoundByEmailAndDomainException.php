@@ -15,7 +15,6 @@ class CustomerUserNotFoundByEmailAndDomainException extends CustomerUserNotFound
     /**
      * @param string $email
      * @param int $domainId
-     * @param \Exception|null $previous
      */
     public function __construct($email, $domainId, ?Exception $previous = null)
     {

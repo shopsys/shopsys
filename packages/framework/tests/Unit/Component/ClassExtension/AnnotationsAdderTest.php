@@ -121,10 +121,6 @@ class AnnotationsAdderTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $expectedPropertyName
-     * @param string $propertyLine
-     */
     #[DataProvider('extractPropertyOrMethodAnnotationNameDataProvider')]
     public function testExtractPropertyOrMethodAnnotationName(string $expectedPropertyName, string $propertyLine): void
     {
@@ -132,9 +128,6 @@ class AnnotationsAdderTest extends TestCase
         $annotationsAdder = (new class($fileContentsReplacerMock) extends AnnotationsAdder {
             /**
              * Method overridden to make it public and thus testable
-             *
-             * @param string $annotationLine
-             * @return string
              */
             public function extractPropertyOrMethodAnnotationName(string $annotationLine): string
             {

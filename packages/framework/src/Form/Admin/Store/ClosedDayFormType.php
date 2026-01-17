@@ -21,9 +21,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class ClosedDayFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
     ) {

@@ -8,15 +8,6 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchConfig;
 
 class ComplaintAdvancedSearchConfig extends AdvancedSearchConfig
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter\ComplaintNumberFilter $complaintNumberFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter\OrderNumberFilter $orderNumberFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter\ComplaintCreateDateFilter $complaintCreateDateFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter\ComplaintDeliveryLastNameFilter $complaintDeliveryLastNameFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter\ComplaintDeliveryStreetFilter $complaintDeliveryStreetFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter\ComplaintDeliveryCityFilter $complaintDeliveryCityFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter\ComplaintDeliveryPhoneNumberFilter $complaintDeliveryPhoneNumberFilter
-     */
     public function __construct(
         Filter\ComplaintNumberFilter $complaintNumberFilter,
         Filter\OrderNumberFilter $orderNumberFilter,

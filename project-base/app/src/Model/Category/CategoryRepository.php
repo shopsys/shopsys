@@ -18,28 +18,26 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method \App\Model\Category\Category[] getAll()
  * @method \App\Model\Category\Category[] getAllCategoriesOfCollapsedTree(\App\Model\Category\Category[] $selectedCategories)
  * @method \App\Model\Category\Category getRootCategory()
- * @method \App\Model\Category\Category[] getAllTranslatedWithoutBranch(\App\Model\Category\Category $categoryBranch, string $locale)
+ * @method \App\Model\Category\Category[] getAllTranslatedWithoutBranch( $categoryBranch,  $locale)
  * @method \App\Model\Category\Category|null findById(int $categoryId)
  * @method \App\Model\Category\Category getById(int $categoryId)
  * @method \App\Model\Category\Category getOneByUuid(string $uuid)
- * @method \App\Model\Category\Category[] getPreOrderTreeTraversalForAllCategories(string $locale)
- * @method \App\Model\Category\Category[] getPreOrderTreeTraversalForVisibleCategoriesByDomain(int $domainId, string $locale)
- * @method \App\Model\Category\Category[] getTranslatedVisibleSubcategoriesByDomain(\App\Model\Category\Category $parentCategory, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
- * @method \App\Model\Category\Category[] getAllVisibleChildrenByCategoryAndDomainId(\App\Model\Category\Category $category, int $domainId)
+ * @method \App\Model\Category\Category[] getPreOrderTreeTraversalForAllCategories( $locale)
+ * @method \App\Model\Category\Category[] getPreOrderTreeTraversalForVisibleCategoriesByDomain( $domainId,  $locale)
+ * @method \App\Model\Category\Category[] getTranslatedVisibleSubcategoriesByDomain( $parentCategory,  $domainConfig)
+ * @method \App\Model\Category\Category[] getAllVisibleChildrenByCategoryAndDomainId( $category,  $domainId)
  * @method \App\Model\Category\Category|null findProductMainCategoryOnDomain(\App\Model\Product\Product $product, int $domainId)
  * @method \App\Model\Category\Category getProductMainCategoryOnDomain(\App\Model\Product\Product $product, int $domainId)
- * @method \App\Model\Category\Category[] getVisibleCategoriesInPathFromRootOnDomain(\App\Model\Category\Category $category, int $domainId)
+ * @method \App\Model\Category\Category[] getVisibleCategoriesInPathFromRootOnDomain( $category,  $domainId)
  * @method string[] getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, string|null $locale = null)
  * @method \App\Model\Category\Category[] getCategoriesByIds(int[] $categoryIds)
- * @method \App\Model\Category\Category[] getCategoriesWithVisibleChildren(\App\Model\Category\Category[] $categories, int $domainId)
- * @method \App\Model\Category\Category[] getAllTranslated(string $locale)
+ * @method \App\Model\Category\Category[] getCategoriesWithVisibleChildren(\App\Model\Category\Category[] $categories,  $domainId)
+ * @method \App\Model\Category\Category[] getAllTranslated( $locale)
  */
 class CategoryRepository extends BaseCategoryRepository
 {
     /**
      * @param \App\Model\Category\Category[] $categories
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
      * @return int[]
      */
     #[Override]
@@ -85,9 +83,6 @@ class CategoryRepository extends BaseCategoryRepository
     /**
      * Thanks to joining "c.domains" instead of "CategoryDomain::class",
      * the category domains can be eager loaded (by adding "cd" to "select" part), but are still excluded from the result array
-     *
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
     #[Override]
     public function getAllVisibleByDomainIdQueryBuilder(int $domainId): QueryBuilder
@@ -101,8 +96,6 @@ class CategoryRepository extends BaseCategoryRepository
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[]
      */
     public function getAllVisibleChildrenByCategoryAndDomainConfig(

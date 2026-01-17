@@ -29,16 +29,6 @@ class WatchdogController extends AdminBaseController
 {
     protected const string WATCHDOG_DOMAIN_FILTER_NAMESPACE = 'watchdogs';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade $watchdogFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogGridFactory $watchdogGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Twig\ProductExtension $productExtension
-     */
     public function __construct(
         protected readonly WatchdogFacade $watchdogFacade,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
@@ -51,10 +41,6 @@ class WatchdogController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/watchdog/list/')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -86,11 +72,6 @@ class WatchdogController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/watchdog/detail/{id}', requirements: ['id' => '\d+'])]
     #[CanView]
     public function detailAction(Request $request, int $id): Response
@@ -129,10 +110,6 @@ class WatchdogController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/watchdog/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]

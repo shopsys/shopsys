@@ -12,12 +12,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class UserConsentPolicyFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(
         protected readonly ArticleFacade $articleFacade,
         protected readonly Setting $setting,
@@ -26,10 +20,6 @@ class UserConsentPolicyFacade
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
-     */
     public function findUserConsentPolicyArticleByDomainId(int $domainId): ?Article
     {
         $userConsentPolicyArticleId = $this->setting->getForDomain(Setting::USER_CONSENT_POLICY_ARTICLE_ID, $domainId);
@@ -43,10 +33,6 @@ class UserConsentPolicyFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $userConsentPolicyArticle
-     * @param int $domainId
-     */
     public function setUserConsentPolicyArticleOnDomain(?Article $userConsentPolicyArticle, int $domainId): void
     {
         $this->setting->setForDomain(
@@ -56,10 +42,6 @@ class UserConsentPolicyFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
-     * @return bool
-     */
     public function isArticleUsedAsUserConsentPolicyArticle(Article $article): bool
     {
         foreach ($this->domain->getAll() as $domainConfig) {

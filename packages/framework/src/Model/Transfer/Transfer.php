@@ -30,10 +30,6 @@ class Transfer
     #[ORM\Column(type: 'string', length: 100, nullable: false)]
     protected $name;
 
-    /**
-     * @param string $identifier
-     * @param string $name
-     */
     public function __construct(string $identifier, string $name)
     {
         $this->identifier = $identifier;

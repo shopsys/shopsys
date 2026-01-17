@@ -12,7 +12,6 @@ class ObjectRequiredException extends InvalidArgumentException
 {
     /**
      * @param mixed $given
-     * @param \Exception|null $previous
      */
     public function __construct($given, ?Exception $previous = null)
     {

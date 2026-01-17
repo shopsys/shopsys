@@ -6,9 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope;
 
 class ProductExportScopeConfigFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig $productExportScopeConfig
-     */
     public function __construct(
         protected readonly ProductExportScopeConfig $productExportScopeConfig,
     ) {
@@ -31,7 +28,6 @@ class ProductExportScopeConfigFacade
 
     /**
      * @param string[] $exportScopes
-     * @return bool
      */
     public function shouldRecalculateVisibility(array $exportScopes): bool
     {
@@ -50,7 +46,6 @@ class ProductExportScopeConfigFacade
 
     /**
      * @param string[] $exportScopes
-     * @return bool
      */
     public function shouldRecalculateSellingDenied(array $exportScopes): bool
     {
@@ -69,7 +64,6 @@ class ProductExportScopeConfigFacade
 
     /**
      * @param string[] $exportScopes
-     * @return bool
      */
     public function shouldRecalculateGiftFlags(array $exportScopes): bool
     {

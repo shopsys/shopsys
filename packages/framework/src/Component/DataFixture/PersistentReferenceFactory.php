@@ -8,19 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class PersistentReferenceFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param string $referenceName
-     * @param string $entityName
-     * @param int $entityId
-     * @return \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference
-     */
     public function create(
         string $referenceName,
         string $entityName,

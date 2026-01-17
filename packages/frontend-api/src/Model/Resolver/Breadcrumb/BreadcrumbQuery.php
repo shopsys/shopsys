@@ -13,17 +13,12 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Breadcrumb\Exception\UnableToGenera
 
 class BreadcrumbQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
-     */
     public function __construct(
         protected readonly BreadcrumbFacade $breadcrumbFacade,
     ) {
     }
 
     /**
-     * @param int $id
-     * @param string $routeName
      * @return array<int, array{name: string, slug: string}>
      */
     public function breadcrumbQuery(int $id, string $routeName): array
@@ -39,7 +34,6 @@ class BreadcrumbQuery extends AbstractQuery
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @return array[]
      */
     public function categoryBreadcrumbQuery(Category|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix): array

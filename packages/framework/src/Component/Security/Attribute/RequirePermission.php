@@ -21,8 +21,6 @@ use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 final readonly class RequirePermission
 {
     /**
-     * @param string $role
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission $permission
      * @param array<string|\Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod> $methods
      */
     public function __construct(

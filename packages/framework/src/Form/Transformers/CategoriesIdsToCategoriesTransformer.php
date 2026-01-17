@@ -12,9 +12,6 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class CategoriesIdsToCategoriesTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     */
     public function __construct(protected readonly CategoryRepository $categoryRepository)
     {
     }

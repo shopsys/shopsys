@@ -13,17 +13,11 @@ class DispatchAffectedEntityOnSaveOrderingListener
 {
     protected const SAVE_ORDERING_URI = '/admin/_grid/save-ordering/';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     */
     public function __construct(
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $controllerEvent
-     */
     public function onKernelController(ControllerEvent $controllerEvent): void
     {
         if ($controllerEvent->getRequest()->getRequestUri() !== static::SAVE_ORDERING_URI) {

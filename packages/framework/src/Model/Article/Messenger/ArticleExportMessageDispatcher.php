@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Component\Messenger\AbstractMessageDispatcher;
 
 class ArticleExportMessageDispatcher extends AbstractMessageDispatcher
 {
-    /**
-     * @param int $articleId
-     * @param int $domainId
-     */
     public function dispatchArticleExportMessage(int $articleId, int $domainId): void
     {
         $this->messageBus->dispatch(new ArticleExportMessage($articleId, $domainId));
@@ -19,7 +15,6 @@ class ArticleExportMessageDispatcher extends AbstractMessageDispatcher
 
     /**
      * @param int[] $articleIds
-     * @param int $domainId
      */
     public function dispatchArticleExportMessages(array $articleIds, int $domainId): void
     {

@@ -16,12 +16,7 @@ class MoneyRange extends Constraint
 {
     /**
      * @param array<string, mixed>|null $options
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $min
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $max
-     * @param string $minMessage
-     * @param string $maxMessage
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(
@@ -52,10 +47,6 @@ class MoneyRange extends Constraint
         }
     }
 
-    /**
-     * @param string $optionName
-     * @param mixed $value
-     */
     protected function validateMoneyOrNullOption(string $optionName, mixed $value): void
     {
         if ($value === null) {

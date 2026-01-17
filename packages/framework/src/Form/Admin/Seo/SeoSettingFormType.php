@@ -18,10 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class SeoSettingFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     */
     public function __construct(
         private readonly Domain $domain,
         private readonly SeoSettingFacade $seoSettingFacade,

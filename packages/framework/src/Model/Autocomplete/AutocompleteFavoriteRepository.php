@@ -12,10 +12,6 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
 class AutocompleteFavoriteRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CategoryRepository $categoryRepository,
@@ -23,7 +19,6 @@ class AutocompleteFavoriteRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteProduct[]
      */
     public function getAutocompleteFavoriteProducts(int $domainId): array
@@ -34,7 +29,6 @@ class AutocompleteFavoriteRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getProductsForDomain(int $domainId): array
@@ -50,7 +44,6 @@ class AutocompleteFavoriteRepository
     }
 
     /**
-     * @param int $domainId
      * @return int[]
      */
     public function getProductIdsForDomain(int $domainId): array
@@ -62,7 +55,6 @@ class AutocompleteFavoriteRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteCategory[]
      */
     public function getAutocompleteFavoriteCategories(int $domainId): array
@@ -77,7 +69,6 @@ class AutocompleteFavoriteRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getCategoriesForDomain(int $domainId): array
@@ -93,8 +84,6 @@ class AutocompleteFavoriteRepository
     }
 
     /**
-     * @param int $domainId
-     * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getVisibleCategoriesForDomain(int $domainId, int $limit): array
@@ -107,8 +96,6 @@ class AutocompleteFavoriteRepository
     }
 
     /**
-     * @param int $domainId
-     * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteBrand[]
      */
     public function getAutocompleteFavoriteBrands(int $domainId, ?int $limit = null): array
@@ -127,8 +114,6 @@ class AutocompleteFavoriteRepository
     }
 
     /**
-     * @param int $domainId
-     * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function getBrandsForDomain(int $domainId, ?int $limit = null): array
@@ -143,34 +128,21 @@ class AutocompleteFavoriteRepository
         return $brands;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getProductRepository(): EntityRepository
     {
         return $this->em->getRepository(AutocompleteFavoriteProduct::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getCategoryRepository(): EntityRepository
     {
         return $this->em->getRepository(AutocompleteFavoriteCategory::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getBrandRepository(): EntityRepository
     {
         return $this->em->getRepository(AutocompleteFavoriteBrand::class);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getAutocompleteFavoriteProductsQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->getProductRepository()

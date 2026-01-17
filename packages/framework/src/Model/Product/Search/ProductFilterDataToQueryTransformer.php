@@ -14,11 +14,6 @@ use function count;
 
 class ProductFilterDataToQueryTransformer
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function addBrandsToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery): FilterQuery
     {
         if (count($productFilterData->brands) === 0) {
@@ -35,11 +30,6 @@ class ProductFilterDataToQueryTransformer
         return $filterQuery->filterByBrands($brandIds);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function addFlagsToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery): FilterQuery
     {
         if (count($productFilterData->flags) === 0) {
@@ -56,11 +46,6 @@ class ProductFilterDataToQueryTransformer
         return $filterQuery->filterByFlags($flagIds);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function addParametersToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery): FilterQuery
     {
         $parametersFilterData = $productFilterData->parameters;
@@ -96,7 +81,6 @@ class ProductFilterDataToQueryTransformer
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $parameters
-     * @return array
      */
     protected function flattenParameterFilterData(array $parameters): array
     {
@@ -119,11 +103,6 @@ class ProductFilterDataToQueryTransformer
         return $result;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function addStockToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery): FilterQuery
     {
         if ($productFilterData->inStock === false) {
@@ -133,12 +112,6 @@ class ProductFilterDataToQueryTransformer
         return $filterQuery->filterOnlyInStock();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function addPricesToQuery(
         ProductFilterData $productFilterData,
         FilterQuery $filterQuery,

@@ -8,9 +8,6 @@ use Exception;
 
 class ElasticsearchAliasNotFoundException extends Exception
 {
-    /**
-     * @param string $alias
-     */
     public function __construct(string $alias)
     {
         parent::__construct(

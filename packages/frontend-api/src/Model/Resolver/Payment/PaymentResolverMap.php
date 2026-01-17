@@ -11,17 +11,11 @@ use Shopsys\FrameworkBundle\Model\Payment\Payment;
 
 class PaymentResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

@@ -21,24 +21,6 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
 class ProductDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory $productInputPriceDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoRepository $productVideoRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory $productPromotionXyDataFactory
-     */
     public function __construct(
         protected readonly UnitFacade $unitFacade,
         protected readonly Domain $domain,
@@ -59,17 +41,11 @@ class ProductDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
     protected function createInstance(): ProductData
     {
         return new ProductData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
     public function create(): ProductData
     {
         $productData = $this->createInstance();
@@ -78,9 +54,6 @@ class ProductDataFactory
         return $productData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     protected function fillNew(ProductData $productData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -123,10 +96,6 @@ class ProductDataFactory
         $this->fillProductStockByStocks($productData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
     public function createFromProduct(Product $product): ProductData
     {
         $productData = $this->createInstance();
@@ -136,10 +105,6 @@ class ProductDataFactory
         return $productData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     protected function fillFromProduct(ProductData $productData, Product $product): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductTranslation[] $translations */
@@ -207,7 +172,6 @@ class ProductDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     protected function getAccessoriesData(Product $product)
@@ -222,7 +186,6 @@ class ProductDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
      */
     protected function getParametersData(Product $product)
@@ -253,10 +216,6 @@ class ProductDataFactory
         return $nullForAllDomains;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     protected function fillProductStockByProduct(ProductData $productData, Product $product): void
     {
         $this->fillProductStockByStocks($productData);
@@ -266,9 +225,6 @@ class ProductDataFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     protected function fillProductStockByStocks(ProductData $productData): void
     {
         foreach ($this->stockFacade->getAllStocks() as $stock) {
@@ -276,10 +232,6 @@ class ProductDataFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     protected function fillProductVideosByProductId(ProductData $productData, Product $product): void
     {
         foreach ($this->productVideoRepository->findByProductId($product->getId()) as $video) {

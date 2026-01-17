@@ -12,11 +12,6 @@ use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
 class LoginListener
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade $administratorActivityFacade
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorActivityFacade $administratorActivityFacade,
@@ -24,9 +19,6 @@ class LoginListener
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Security\Http\Event\LoginSuccessEvent $event
-     */
     public function onSecurityInteractiveLogin(LoginSuccessEvent $event): void
     {
         $token = $event->getAuthenticatedToken();

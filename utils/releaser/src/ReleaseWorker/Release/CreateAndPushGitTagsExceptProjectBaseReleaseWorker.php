@@ -24,18 +24,10 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         'shopsys/project-base',
     ];
 
-    /**
-     * @param \Shopsys\Releaser\Packagist\PackageProvider $packageProvider
-     */
     public function __construct(private readonly PackageProvider $packageProvider)
     {
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -44,10 +36,6 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         return 'Create and push git tags for packages excluding monorepo and project-base';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,
@@ -155,11 +143,6 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         }
     }
 
-    /**
-     * @param string $packageName
-     * @param string $versionString
-     * @return bool
-     */
     private function checkPackageTagExists(string $packageName, string $versionString): bool
     {
         $url = sprintf(
@@ -184,7 +167,6 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
     /**
      * @param string[] $packageNames
-     * @param string $versionString
      */
     private function checkAllPackagesHaveTag(array $packageNames, string $versionString): void
     {

@@ -32,10 +32,6 @@ final class ElFinderInstallerCommand extends Command
 
     private const ELFINDER_IMG_DIR = 'studio-42/elfinder/img';
 
-    /**
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
-     */
     public function __construct(
         protected Filesystem $filesystem,
         protected readonly ParameterBagInterface $parameterBag,

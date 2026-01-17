@@ -37,10 +37,6 @@ class PromoCodeFlag
     #[ORM\Column(type: 'string')]
     protected $type;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @param string $type
-     */
     public function __construct(
         Flag $flag,
         string $type,
@@ -65,17 +61,11 @@ class PromoCodeFlag
         return $this->type;
     }
 
-    /**
-     * @return bool
-     */
     public function isInclusive(): bool
     {
         return $this->type === static::TYPE_INCLUSIVE;
     }
 
-    /**
-     * @return bool
-     */
     public function isExclusive(): bool
     {
         return $this->type === static::TYPE_EXCLUSIVE;

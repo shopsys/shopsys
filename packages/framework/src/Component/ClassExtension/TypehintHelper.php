@@ -9,10 +9,6 @@ use Roave\BetterReflection\Reflection\ReflectionProperty;
 
 class TypehintHelper
 {
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
-     * @return string|null
-     */
     public function getPropertyTypeFromTypehint(ReflectionProperty $reflectionProperty): ?string
     {
         $type = $reflectionProperty->getType();

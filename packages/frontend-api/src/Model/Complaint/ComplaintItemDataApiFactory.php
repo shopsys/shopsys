@@ -14,12 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
 class ComplaintItemDataApiFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemDataFactory $complaintItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory $customerUploadedFileDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     */
     public function __construct(
         protected readonly ComplaintItemDataFactory $complaintItemDataFactory,
         protected readonly CustomerUploadedFileDataFactory $customerUploadedFileDataFactory,
@@ -28,11 +22,6 @@ class ComplaintItemDataApiFactory
     ) {
     }
 
-    /**
-     * @param array $itemInputData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem|null $orderItem
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData
-     */
     public function createFromComplaintItemInput(array $itemInputData, ?OrderItem $orderItem = null): ComplaintItemData
     {
         $manualComplaintItemCatnum = $itemInputData['manualComplaintItemCatnum'];
@@ -63,10 +52,6 @@ class ComplaintItemDataApiFactory
         return $complaintItemData;
     }
 
-    /**
-     * @param string|null $manualComplaintItemCatnum
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
-     */
     protected function findProductByManualCatnum(?string $manualComplaintItemCatnum): ?Product
     {
         if ($manualComplaintItemCatnum === null) {

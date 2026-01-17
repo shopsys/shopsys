@@ -10,9 +10,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20170807084807 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -52,7 +49,6 @@ class Version20170807084807 extends AbstractMigration
     }
 
     /**
-     * @param array $valuesByKey
      * @param string $pluginName
      */
     private function insertPluginDataValues(array $valuesByKey, $pluginName)

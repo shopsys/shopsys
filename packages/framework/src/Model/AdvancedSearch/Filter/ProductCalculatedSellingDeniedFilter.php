@@ -16,9 +16,6 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
 {
     public const string NAME = 'productCalculatedSellingDenied';
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
@@ -64,7 +61,6 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
     #[Override]

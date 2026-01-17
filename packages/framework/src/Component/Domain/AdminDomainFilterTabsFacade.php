@@ -13,38 +13,22 @@ class AdminDomainFilterTabsFacade
 {
     protected const string SESSION_PREFIX = 'admin_domain_filter_tabs_';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly RequestStack $requestStack,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @param string $namespace
-     * @return int|null
-     */
     public function getSelectedDomainId(string $namespace): ?int
     {
         return $this->getSelectedDomainConfig($namespace)?->getId();
     }
 
-    /**
-     * @param string $namespace
-     * @param int|null $domainId
-     */
     public function setSelectedDomainId(string $namespace, ?int $domainId): void
     {
         $this->requestStack->getSession()->set($this->getSessionKey($namespace), $domainId);
     }
 
-    /**
-     * @param string $namespace
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig|null
-     */
     public function getSelectedDomainConfig(string $namespace): ?DomainConfig
     {
         try {
@@ -66,10 +50,6 @@ class AdminDomainFilterTabsFacade
         }
     }
 
-    /**
-     * @param string $namespace
-     * @return string
-     */
     protected function getSessionKey(string $namespace): string
     {
         return static::SESSION_PREFIX . $namespace;

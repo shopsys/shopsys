@@ -131,13 +131,6 @@ class RegisterTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @param string $email
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $password
-     * @return array
-     */
     public static function getRegisterQueryVariables(
         string $email = self::DEFAULT_USER_EMAIL,
         string $firstName = self::DEFAULT_USER_FIRST_NAME,
@@ -159,9 +152,6 @@ class RegisterTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param array $response
-     */
     private function assertSuccessfulRegistration(array $response): void
     {
         $graphQlType = 'Register';

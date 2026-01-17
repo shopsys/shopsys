@@ -10,19 +10,11 @@ use Ramsey\Uuid\Uuid;
 
 class UuidType
 {
-    /**
-     * @param string $value
-     * @return string
-     */
     public static function serialize(string $value): string
     {
         return $value;
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
     public static function parseValue(string $value): string
     {
         if (!Uuid::isValid($value)) {
@@ -32,10 +24,6 @@ class UuidType
         return $value;
     }
 
-    /**
-     * @param \GraphQL\Language\AST\StringValueNode $valueNode
-     * @return string
-     */
     public static function parseLiteral(StringValueNode $valueNode): string
     {
         if (!Uuid::isValid($valueNode->value)) {

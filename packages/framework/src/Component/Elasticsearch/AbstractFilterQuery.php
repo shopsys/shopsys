@@ -35,9 +35,6 @@ abstract class AbstractFilterQuery
 
     protected int $from;
 
-    /**
-     * @param string $indexName
-     */
     public function __construct(protected string $indexName)
     {
         $this->match = [
@@ -47,10 +44,6 @@ abstract class AbstractFilterQuery
         $this->limit = static::DEFAULT_LIMIT;
     }
 
-    /**
-     * @param int|null $limit
-     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractFilterQuery
-     */
     public function setLimit(?int $limit): self
     {
         $clone = clone $this;
@@ -59,10 +52,6 @@ abstract class AbstractFilterQuery
         return $clone;
     }
 
-    /**
-     * @param int|null $from
-     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractFilterQuery
-     */
     public function setFrom(?int $from): self
     {
         $clone = clone $this;
@@ -71,9 +60,6 @@ abstract class AbstractFilterQuery
         return $clone;
     }
 
-    /**
-     * @return array
-     */
     public function getQuery(): array
     {
         return [

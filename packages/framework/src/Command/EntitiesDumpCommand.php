@@ -20,10 +20,6 @@ class EntitiesDumpCommand extends Command
 {
     public const string OUTPUT_FILE = 'entities-dump.json';
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param string $cacheDir
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected string $cacheDir,

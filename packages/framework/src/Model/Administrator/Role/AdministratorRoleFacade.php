@@ -11,12 +11,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
 class AdministratorRoleFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactory $administratorRoleFactory
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactory $administratorRoleDataFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorRoleFactory $administratorRoleFactory,
@@ -26,7 +20,6 @@ class AdministratorRoleFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param string[] $roles
      */
     public function refreshAdministratorRoles(Administrator $administrator, array $roles): void
@@ -53,7 +46,6 @@ class AdministratorRoleFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param string[] $roles
      * @return string[]
      */
@@ -72,9 +64,6 @@ class AdministratorRoleFacade
         return $roles;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     */
     protected function removeAllByAdministrator(Administrator $administrator): void
     {
         $oldAdministratorRoles = $administrator->getAdministratorRoles();
@@ -85,11 +74,6 @@ class AdministratorRoleFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param string $role
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole
-     */
     protected function createNewRole(Administrator $administrator, string $role): AdministratorRole
     {
         $administratorRoleData = $this->administratorRoleDataFactory->create();

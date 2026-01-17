@@ -11,18 +11,11 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class ProductGiftsQuery extends AbstractQuery
 {
-    /**
-     * @param \Overblog\DataLoader\DataLoaderInterface $productGiftsByMainProductIdsBatchLoader
-     */
     public function __construct(
         protected readonly DataLoaderInterface $productGiftsByMainProductIdsBatchLoader,
     ) {
     }
 
-    /**
-     * @param array|\Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function giftsByProductPromiseQuery(array|Product $product): Promise
     {
         if ($product instanceof Product) {

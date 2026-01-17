@@ -29,7 +29,6 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      */
     #[Override]

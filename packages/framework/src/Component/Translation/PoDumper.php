@@ -12,7 +12,6 @@ use Override;
 class PoDumper implements DumperInterface
 {
     /**
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      * @param string $domain
      * @return string
      */

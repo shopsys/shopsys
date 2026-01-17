@@ -20,7 +20,6 @@ class ProductListRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
      * @return int[]
      */
     public function getProductIdsByProductList(ProductList $productList): array
@@ -39,12 +38,6 @@ class ProductListRepository
         return array_column($result, 'id');
     }
 
-    /**
-     * @param string $productListType
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string|null $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
-     */
     public function findProductListByTypeAndCustomerUser(
         string $productListType,
         CustomerUser $customerUser,
@@ -63,8 +56,6 @@ class ProductListRepository
     }
 
     /**
-     * @param string $productListType
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList[]
      */
     public function getProductListsByTypeAndCustomerUser(
@@ -77,11 +68,6 @@ class ProductListRepository
         ]);
     }
 
-    /**
-     * @param string $uuid
-     * @param string|null $productListType
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
-     */
     public function findAnonymousProductList(
         string $uuid,
         ?string $productListType = null,
@@ -98,9 +84,6 @@ class ProductListRepository
         return $this->getRepository()->findOneBy($criteria);
     }
 
-    /**
-     * @param \DateTimeImmutable $olderThan
-     */
     public function removeOldAnonymousProductLists(DateTimeImmutable $olderThan): void
     {
         $this->entityManager->createQueryBuilder()
@@ -112,18 +95,11 @@ class ProductListRepository
             ->execute();
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getRepository(): EntityRepository
     {
         return $this->entityManager->getRepository(ProductList::class);
     }
 
-    /**
-     * @param string $uuid
-     * @return bool
-     */
     public function existsProductListWithUuid(string $uuid): bool
     {
         return $this->getRepository()->count(['uuid' => $uuid]) > 0;

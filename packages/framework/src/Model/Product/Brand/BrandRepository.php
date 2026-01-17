@@ -17,12 +17,6 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException
 
 class BrandRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
@@ -31,18 +25,11 @@ class BrandRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getBrandRepository(): EntityRepository
     {
         return $this->em->getRepository(Brand::class);
     }
 
-    /**
-     * @param int $brandId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
     public function getById(int $brandId): Brand
     {
         $brand = $this->getBrandRepository()->find($brandId);
@@ -64,10 +51,6 @@ class BrandRepository
         return $this->getBrandRepository()->findBy([], ['name' => 'asc']);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
     public function getOneByUuid(string $uuid): Brand
     {
         $brand = $this->getBrandRepository()->findOneBy(['uuid' => $uuid]);
@@ -114,7 +97,6 @@ class BrandRepository
     }
 
     /**
-     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function getBrandsBySearchText(string $searchText): array
@@ -137,7 +119,6 @@ class BrandRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function getAllWithDomainsAndTranslations(DomainConfig $domainConfig): array
@@ -149,7 +130,6 @@ class BrandRepository
 
     /**
      * @param int[] $brandIds
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null>
      */
     public function getByIds(array $brandIds, DomainConfig $domainConfig): array
@@ -173,10 +153,6 @@ class BrandRepository
         return $brands;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getAllWithDomainsAndTranslationsQueryBuilder(DomainConfig $domainConfig): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -190,7 +166,6 @@ class BrandRepository
 
     /**
      * @param int[] $brandIds
-     * @return \Doctrine\ORM\QueryBuilder
      */
     protected function getBrandsByIdsQueryBuilder(array $brandIds): QueryBuilder
     {

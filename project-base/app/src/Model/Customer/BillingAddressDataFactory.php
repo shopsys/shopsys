@@ -14,9 +14,6 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory as BaseBill
  */
 class BillingAddressDataFactory extends BaseBillingAddressDataFactory
 {
-    /**
-     * @return \App\Model\Customer\BillingAddressData
-     */
     #[Override]
     protected function createInstance(): BillingAddressData
     {

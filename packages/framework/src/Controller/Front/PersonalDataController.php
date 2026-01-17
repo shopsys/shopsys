@@ -19,16 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PersonalDataController extends AbstractController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
-     * @param \Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse $xmlResponse
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade $complaintFacade
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade $watchdogFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CustomerUserFacade $customerUserFacade,
@@ -41,10 +31,6 @@ class PersonalDataController extends AbstractController
     ) {
     }
 
-    /**
-     * @param string $hash
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function exportXmlAction(string $hash): Response
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(

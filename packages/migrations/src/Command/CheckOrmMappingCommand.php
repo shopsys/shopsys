@@ -21,9 +21,6 @@ class CheckOrmMappingCommand extends Command
     protected const RETURN_CODE_OK = 0;
     protected const RETURN_CODE_ERROR = 1;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
         parent::__construct();

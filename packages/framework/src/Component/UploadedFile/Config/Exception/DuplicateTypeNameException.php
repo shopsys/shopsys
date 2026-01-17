@@ -8,10 +8,6 @@ use Exception;
 
 class DuplicateTypeNameException extends InvalidUploadedFileConfigException
 {
-    /**
-     * @param string $typeName
-     * @param \Exception|null $previous
-     */
     public function __construct(string $typeName, ?Exception $previous = null)
     {
         $message = sprintf('UploadedFile type name "%s" is not unique.', $typeName);

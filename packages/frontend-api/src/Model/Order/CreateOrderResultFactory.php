@@ -9,19 +9,11 @@ use Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult;
 
 class CreateOrderResultFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrontendApiBundle\Model\Order\CreateOrderResult
-     */
     public function getCreateOrderResultByOrder(Order $order): CreateOrderResult
     {
         return new CreateOrderResult($order);
     }
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult $cartWithModifications
-     * @return \Shopsys\FrontendApiBundle\Model\Order\CreateOrderResult
-     */
     public function getCreateOrderResultByCartWithModifications(
         CartWithModificationsResult $cartWithModifications,
     ): CreateOrderResult {

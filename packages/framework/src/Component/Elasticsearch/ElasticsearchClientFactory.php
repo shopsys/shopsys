@@ -9,10 +9,6 @@ use JsonException;
 
 class ElasticsearchClientFactory
 {
-    /**
-     * @param string $hosts
-     * @return \Elasticsearch\ClientBuilder
-     */
     public static function create(string $hosts): ClientBuilder
     {
         $clientBuilder = new ClientBuilder();
@@ -23,7 +19,6 @@ class ElasticsearchClientFactory
     }
 
     /**
-     * @param string $hosts
      * @return string[]
      */
     protected static function parseHosts(string $hosts): array

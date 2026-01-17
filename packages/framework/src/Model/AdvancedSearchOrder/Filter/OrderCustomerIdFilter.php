@@ -17,19 +17,12 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'customerId';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag
-     */
     public function __construct(
         protected readonly CustomerFacade $customerFacade,
         protected readonly FlashBagInterface $flashBag,
     ) {
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getName(): string
     {
@@ -48,18 +41,12 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
         ];
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getValueFormType(): string
     {
         return NumberType::class;
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getValueFormOptions(): array
     {
@@ -67,7 +54,6 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
     #[Override]

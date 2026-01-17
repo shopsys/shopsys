@@ -11,12 +11,6 @@ class ImageEntityConfig
 {
     public const WITHOUT_NAME_KEY = '__NULL__';
 
-    /**
-     * @param string $entityName
-     * @param string $entityClass
-     * @param array $types
-     * @param array $multipleByType
-     */
     public function __construct(
         protected readonly string $entityName,
         protected readonly string $entityClass,
@@ -25,17 +19,11 @@ class ImageEntityConfig
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getEntityName(): string
     {
         return $this->entityName;
     }
 
-    /**
-     * @return string
-     */
     public function getEntityClass(): string
     {
         return $this->entityClass;
@@ -49,10 +37,6 @@ class ImageEntityConfig
         return $this->types;
     }
 
-    /**
-     * @param string|null $type
-     * @return bool
-     */
     public function isMultiple(?string $type): bool
     {
         $key = Utils::ifNull($type, self::WITHOUT_NAME_KEY);

@@ -21,19 +21,12 @@ class StocksDataFixture extends AbstractReferenceFixture
     private const string ATTR_EXTERNAL = 'externalId';
     public const string STOCK_PREFIX = 'stock_';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockDataFactory $stockDataFactory
-     */
     public function __construct(
         private readonly StockFacade $stockFacade,
         private readonly StockDataFactory $stockDataFactory,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -43,10 +36,6 @@ class StocksDataFixture extends AbstractReferenceFixture
         }
     }
 
-    /**
-     * @param array $demoRow
-     * @return \Shopsys\FrameworkBundle\Model\Stock\StockData
-     */
     protected function initStockData(array $demoRow): StockData
     {
         $stockData = $this->stockDataFactory->create();
@@ -60,9 +49,6 @@ class StocksDataFixture extends AbstractReferenceFixture
         return $stockData;
     }
 
-    /**
-     * @return array
-     */
     private function getDemoData(): array
     {
         $enabledOnFirstDomainOnly = $this->getDomainEnabledArray(true);
@@ -171,7 +157,6 @@ class StocksDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param bool $enabledOnFirstDomain
      * @return array<int, bool>
      */
     private function getDomainEnabledArray(bool $enabledOnFirstDomain): array

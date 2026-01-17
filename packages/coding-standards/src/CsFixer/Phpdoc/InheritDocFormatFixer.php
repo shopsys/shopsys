@@ -101,18 +101,11 @@ SAMPLE,
         return preg_match('/\.php$/ui', $file->getFilename()) === 1;
     }
 
-    /**
-     * @param \PhpCsFixer\DocBlock\Line $line
-     * @return bool
-     */
     private function isInheritDocCandidate(Line $line): bool
     {
         return preg_match('~\{?@[Ii]nherit[dD]oc}?~', $line->getContent()) === 1;
     }
 
-    /**
-     * @param \PhpCsFixer\DocBlock\Line $line
-     */
     private function fixInheritDoc(Line $line): void
     {
         $line->setContent(

@@ -40,11 +40,6 @@ final class RequireOverrideAttributeSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/Correct/NoOverrideNeeded.php'];
     }
 
-    /**
-     * @param string $fileToTest
-     * @param string $fixedFileName
-     * @param string|null $inputFileName
-     */
     #[DataProvider('getFixableFiles')]
     public function testFixableFiles(string $fixedFileName, ?string $inputFileName = null): void
     {

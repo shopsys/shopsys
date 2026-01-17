@@ -12,11 +12,6 @@ use Shopsys\ProductFeed\LuigisBoxBundle\Model\Setting\LuigisBoxFeedSettingEnum;
 
 class LuigisBoxCrudExtension implements PluginCrudExtensionInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\ProductFeed\LuigisBoxBundle\Model\Setting\LuigisBoxFeedSettingEnum $luigisBoxFeedSettingEnum
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly LuigisBoxFeedSettingEnum $luigisBoxFeedSettingEnum,

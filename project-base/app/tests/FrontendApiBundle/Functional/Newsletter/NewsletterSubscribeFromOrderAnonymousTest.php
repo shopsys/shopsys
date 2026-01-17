@@ -39,9 +39,6 @@ class NewsletterSubscribeFromOrderAnonymousTest extends GraphQlTestCase
         $this->assertNull($subscriber);
     }
 
-    /**
-     * @param bool $agreeNewsletterSubscription
-     */
     private function createOrder(bool $agreeNewsletterSubscription): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);

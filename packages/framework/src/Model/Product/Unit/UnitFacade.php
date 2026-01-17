@@ -10,13 +10,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class UnitFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitRepository $unitRepository
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactory $unitFactory
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly UnitRepository $unitRepository,
@@ -26,19 +19,11 @@ class UnitFacade
     ) {
     }
 
-    /**
-     * @param int $unitId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
-     */
     public function getById(int $unitId): Unit
     {
         return $this->unitRepository->getById($unitId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
-     */
     public function create(UnitData $unitData): Unit
     {
         $unit = $this->unitFactory->create($unitData);
@@ -50,11 +35,6 @@ class UnitFacade
         return $unit;
     }
 
-    /**
-     * @param int $unitId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
-     */
     public function edit(int $unitId, UnitData $unitData): Unit
     {
         $unit = $this->unitRepository->getById($unitId);
@@ -66,10 +46,6 @@ class UnitFacade
         return $unit;
     }
 
-    /**
-     * @param int $unitId
-     * @param int|null $newUnitId
-     */
     public function deleteById(int $unitId, ?int $newUnitId = null): void
     {
         $oldUnit = $this->unitRepository->getById($unitId);
@@ -98,25 +74,17 @@ class UnitFacade
         return $this->unitRepository->getAll();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     * @return bool
-     */
     public function isUnitUsed(Unit $unit): bool
     {
         return $this->unitRepository->existsProductWithUnit($unit) || $this->unitRepository->existsParameterWithUnit($unit);
     }
 
-    /**
-     * @return bool
-     */
     public function isAtLeastOneUnitCreated(): bool
     {
         return $this->unitRepository->isAtLeastOneUnitCreated();
     }
 
     /**
-     * @param int $unitId
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit[]
      */
     public function getAllExceptId(int $unitId): array
@@ -124,17 +92,11 @@ class UnitFacade
         return $this->unitRepository->getAllExceptId($unitId);
     }
 
-    /**
-     * @return int
-     */
     protected function getDefaultUnitId(): int
     {
         return $this->setting->get(Setting::DEFAULT_UNIT);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
-     */
     public function getDefaultUnit(): Unit
     {
         $defaultUnitId = $this->getDefaultUnitId();
@@ -142,26 +104,17 @@ class UnitFacade
         return $this->unitRepository->getById($defaultUnitId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     */
     public function setDefaultUnit(Unit $unit): void
     {
         $this->setting->set(Setting::DEFAULT_UNIT, $unit->getId());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     * @return bool
-     */
     public function isUnitDefault(Unit $unit): bool
     {
         return $this->getDefaultUnit() === $unit;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     * @param string $eventType
      * @see \Shopsys\FrameworkBundle\Model\Product\Unit\UnitEvent class
      */
     protected function dispatchUnitEvent(Unit $unit, string $eventType): void
@@ -169,9 +122,6 @@ class UnitFacade
         $this->eventDispatcher->dispatch(new UnitEvent($unit), $eventType);
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->unitRepository->getCount();

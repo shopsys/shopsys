@@ -8,17 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class CustomerFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
-     */
     public function create(CustomerData $customerData): Customer
     {
         $entityClassName = $this->entityNameResolver->resolve(Customer::class);

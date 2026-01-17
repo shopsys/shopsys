@@ -15,9 +15,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class AdminDomainsFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly Domain $domain,
     ) {

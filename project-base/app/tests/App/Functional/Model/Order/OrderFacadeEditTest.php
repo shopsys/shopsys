@@ -288,11 +288,6 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $this->assertThat($this->order->getTotalPriceWithoutVat(), new IsMoneyEqual(Money::create('18092.98')));
     }
 
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param string $name
-     * @return \App\Model\Order\Item\OrderItem
-     */
     private function getOrderItemByName(Order $order, string $name): OrderItem
     {
         foreach ($order->getItems() as $orderItem) {
@@ -307,11 +302,6 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         ));
     }
 
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param int $orderItemId
-     * @return \App\Model\Order\Item\OrderItem
-     */
     private function getOrderItemById(Order $order, int $orderItemId): OrderItem
     {
         foreach ($order->getItems() as $orderItem) {

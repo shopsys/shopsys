@@ -35,7 +35,6 @@ trait OrderItemsTestTrait
     }
 
     /**
-     * @param array $responseData
      * @param \App\Model\Order\Item\OrderItem[] $expectedOrderItems
      * @param int[] $expectedOrderItemsIds
      */
@@ -81,11 +80,6 @@ trait OrderItemsTestTrait
         }
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param array $responseData
-     * @param bool $shouldExist
-     */
     protected function assertProductItemExistsInOrderItemsResponseData(
         Product $product,
         array $responseData,

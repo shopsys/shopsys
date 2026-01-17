@@ -276,10 +276,6 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->assertSame($foundProduct, $foundManyToManySelfReferencingInverseEntity);
     }
 
-    /**
-     * @param int $id
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct
-     */
     private function getProduct(int $id): ExtendedProduct
     {
         $qb = $this->em->createQueryBuilder();
@@ -412,10 +408,6 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->assertSame($foundCategory, $foundManyToManySelfReferencingInverseEntity);
     }
 
-    /**
-     * @param int $id
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory
-     */
     public function getCategory(int $id): ExtendedCategory
     {
         $qb = $this->em->createQueryBuilder();
@@ -442,10 +434,6 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->assertSame('string value', $foundItem->getStringField());
     }
 
-    /**
-     * @param int $id
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedOrder\ExtendedOrderItem
-     */
     private function getOrderItem(int $id): ExtendedOrderItem
     {
         $qb = $this->em->createQueryBuilder();
@@ -460,11 +448,6 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         return $result;
     }
 
-    /**
-     * @param string $parentEntityName
-     * @param string $extendedEntityName
-     * @param int $entityId
-     */
     private function doTestExtendedEntityInstantiation(
         string $parentEntityName,
         string $extendedEntityName,
@@ -536,9 +519,6 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->em->flush();
     }
 
-    /**
-     * @return bool
-     */
     private function isMonorepo(): bool
     {
         return file_exists(__DIR__ . '/../../../../../../parameters_monorepo.yaml');

@@ -13,13 +13,6 @@ use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class StoreOpeningHoursApiProvider
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider $storeOpeningHoursProvider
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
-     * @param \Shopsys\FrontendApiBundle\Model\Store\OpeningHours\OpeningHoursWithDateDataFactory $openingHoursWithDateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory $openingHoursRangeDataFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
@@ -30,7 +23,6 @@ class StoreOpeningHoursApiProvider
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Shopsys\FrontendApiBundle\Model\Store\OpeningHours\OpeningHoursWithDateData[]
      */
     public function getFollowingWeekOpeningHours(Store $store): array
@@ -49,11 +41,6 @@ class StoreOpeningHoursApiProvider
         return $openingHoursData;
     }
 
-    /**
-     * @param \DateTimeImmutable $date
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @return \Shopsys\FrontendApiBundle\Model\Store\OpeningHours\OpeningHoursWithDateData
-     */
     protected function getOpeningHoursDataForDate(DateTimeImmutable $date, Store $store): OpeningHoursWithDateData
     {
         $openingHoursForDate = $this->storeOpeningHoursProvider->getOpeningHoursSetting($store)->forDate($date);
@@ -72,10 +59,6 @@ class StoreOpeningHoursApiProvider
         return $openingHoursData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @return string
-     */
     public function getStatus(Store $store): string
     {
         $now = $this->clock->now()->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));

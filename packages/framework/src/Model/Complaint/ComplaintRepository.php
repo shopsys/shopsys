@@ -13,26 +13,16 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class ComplaintRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getComplaintRepository(): EntityRepository
     {
         return $this->em->getRepository(Complaint::class);
     }
 
-    /**
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getComplaintsQueryBuilder(string $locale): QueryBuilder
     {
         $subQuery = $this->em->createQueryBuilder()
@@ -72,19 +62,12 @@ class ComplaintRepository
             ->setParameter('locale', $locale);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
-     */
     public function findById(int $id): ?Complaint
     {
         return $this->getComplaintRepository()->find($id);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param int $domainId
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
      */
     public function getComplaintsByCustomerUserAndDomainIdAndLocale(

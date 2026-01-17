@@ -24,9 +24,6 @@ class PacketAttributes
 
     protected float $weight;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function __construct(Order $order)
     {
         $this->number = $order->getNumber();
@@ -38,57 +35,36 @@ class PacketAttributes
         $this->weight = $order->getTotalWeight() > 0 ? $order->getTotalWeight() / static::GRAMS_IN_KILOGRAM : 0;
     }
 
-    /**
-     * @return string
-     */
     public function getNumber(): string
     {
         return $this->number;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getSurname(): string
     {
         return $this->surname;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return int
-     */
     public function getAddressId(): int
     {
         return $this->addressId;
     }
 
-    /**
-     * @return float
-     */
     public function getValue(): float
     {
         return $this->value;
     }
 
-    /**
-     * @return float
-     */
     public function getWeight(): float
     {
         return $this->weight;

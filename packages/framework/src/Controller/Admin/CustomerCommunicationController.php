@@ -20,20 +20,12 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_ORDER_SUBMITTED)]
 class CustomerCommunicationController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageSettingFacade $orderContentPageSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     */
     public function __construct(
         protected readonly OrderContentPageSettingFacade $orderContentPageSettingFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/customer-communication/order-submitted/')]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]

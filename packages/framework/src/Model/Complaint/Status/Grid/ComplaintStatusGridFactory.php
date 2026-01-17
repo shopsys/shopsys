@@ -17,12 +17,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class ComplaintStatusGridFactory implements GridFactoryInterface
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
@@ -31,10 +25,6 @@ class ComplaintStatusGridFactory implements GridFactoryInterface
     ) {
     }
 
-    /**
-     * @param string|null $roleConstant
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     #[Override]
     public function create(?string $roleConstant): Grid
     {

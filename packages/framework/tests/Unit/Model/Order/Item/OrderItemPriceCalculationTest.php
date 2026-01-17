@@ -105,9 +105,6 @@ class OrderItemPriceCalculationTest extends TestCase
         $this->assertThat($totalPrice->getVatAmount(), new IsMoneyEqual(Money::create(10)));
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|\PHPUnit\Framework\MockObject\MockObject
-     */
     private function createCurrencyMock(): Currency|MockObject
     {
         $currency = $this->createMock(Currency::class);
@@ -118,9 +115,6 @@ class OrderItemPriceCalculationTest extends TestCase
         return $currency;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|\PHPUnit\Framework\MockObject\MockObject
-     */
     private function createCurrencyFacadeMock(): CurrencyFacade|MockObject
     {
         $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)

@@ -56,9 +56,6 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
 
     protected ?bool $isInsideConstraintClass = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper $phpParserNodeHelper
-     */
     public function __construct(
         protected readonly PhpParserNodeHelper $phpParserNodeHelper,
     ) {
@@ -114,18 +111,11 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
         return null;
     }
 
-    /**
-     * @param \PhpParser\Node\Stmt\Class_ $node
-     * @return bool
-     */
     protected function isConstraintClass(Class_ $node): bool
     {
         return is_subclass_of((string)$node->namespacedName, Constraint::class);
     }
 
-    /**
-     * @param \PhpParser\Node\Stmt\Property $node
-     */
     protected function extractMessagesFromProperty(Property $node): void
     {
         foreach ($node->props as $propertyProperty) {
@@ -140,18 +130,11 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
         }
     }
 
-    /**
-     * @param \PhpParser\Node\PropertyItem $node
-     * @return bool
-     */
     protected function isMessageProperty(PropertyItem $node): bool
     {
         return $this->isMessage($node->name->toString());
     }
 
-    /**
-     * @param \PhpParser\Node\Stmt\ClassMethod $node
-     */
     protected function extractMessagesFromPromotedProperties(ClassMethod $node): void
     {
         foreach ($node->params as $param) {
@@ -176,10 +159,6 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
         }
     }
 
-    /**
-     * @param \PhpParser\Node\Param $param
-     * @return bool
-     */
     protected function isPublicPromotedMessageParam(Param $param): bool
     {
         $isPublic = ($param->flags & Modifiers::PUBLIC) !== 0;
@@ -224,10 +203,6 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
         return null;
     }
 
-    /**
-     * @param string $propertyName
-     * @return bool
-     */
     protected function isMessage(string $propertyName): bool
     {
         return strtolower(substr($propertyName, -7)) === 'message';

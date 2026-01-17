@@ -158,11 +158,6 @@ class GetSliderItemsTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @param array $keys
-     * @param array $actual
-     * @param array $expected
-     */
     private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
     {
         foreach ($keys as $key) {

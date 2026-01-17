@@ -6,26 +6,16 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 class BillingAddressDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
-     */
     protected function createInstance(): BillingAddressData
     {
         return new BillingAddressData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
-     */
     public function create(): BillingAddressData
     {
         return $this->createInstance();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
-     */
     public function createFromBillingAddress(BillingAddress $billingAddress): BillingAddressData
     {
         $billingAddressData = $this->createInstance();
@@ -34,10 +24,6 @@ class BillingAddressDataFactory
         return $billingAddressData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
-     */
     protected function fillFromBillingAddress(BillingAddressData $billingAddressData, BillingAddress $billingAddress)
     {
         $billingAddressData->companyCustomer = $billingAddress->isCompanyCustomer();

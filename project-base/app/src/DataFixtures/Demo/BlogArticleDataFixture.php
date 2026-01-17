@@ -34,13 +34,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
     private int $articleCounter = 1;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory $blogArticleDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityFacade $blogVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
-     */
     public function __construct(
         private readonly BlogArticleFacade $blogArticleFacade,
         private readonly BlogArticleDataFactory $blogArticleDataFactory,
@@ -50,9 +43,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -119,11 +109,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $this->blogVisibilityFacade->refreshBlogCategoriesVisibility();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $parentCategory
-     * @param int $subcategoryOrder
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData
-     */
     private function createSubcategory(BlogCategory $parentCategory, int $subcategoryOrder): BlogCategoryData
     {
         $blogCategoryData = $this->blogCategoryDataFactory->create();
@@ -159,7 +144,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData
      */
     private function createArticle(array $blogCategories): BlogArticleData
     {

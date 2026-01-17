@@ -11,17 +11,11 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class HintsHelper
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly Localization $localization,
     ) {
     }
 
-    /**
-     * @return array
-     */
     public function getDefaultHints(): array
     {
         return [

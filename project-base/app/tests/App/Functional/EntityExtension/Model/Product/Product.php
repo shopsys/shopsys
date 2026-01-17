@@ -75,18 +75,12 @@ class Product extends AbstractTranslatableEntity
         $this->domains = new ArrayCollection();
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\Product\ProductTranslation
-     */
     #[Override]
     protected function createTranslation(): ProductTranslation
     {
         return new ProductTranslation();
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;

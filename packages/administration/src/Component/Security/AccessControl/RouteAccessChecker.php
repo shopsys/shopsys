@@ -11,10 +11,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 final readonly class RouteAccessChecker implements RouteAccessCheckerInterface
 {
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlDataProviderInterface $accessControlDataProvider
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     */
     public function __construct(
         private AccessControlDataProviderInterface $accessControlDataProvider,
         private Security $security,
@@ -23,10 +19,6 @@ final readonly class RouteAccessChecker implements RouteAccessCheckerInterface
 
     /**
      * Check if current user has access to a route with specific HTTP method
-     *
-     * @param string $routeName
-     * @param string|\Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod $httpMethod
-     * @return bool
      */
     #[Override]
     public function hasAccess(string $routeName, HttpMethod|string $httpMethod): bool

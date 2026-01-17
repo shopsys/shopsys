@@ -14,9 +14,6 @@ class Version20250526101812 extends AbstractMigration implements ContainerAwareI
 {
     use MultidomainMigrationTrait;
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -36,12 +33,6 @@ class Version20250526101812 extends AbstractMigration implements ContainerAwareI
         }
     }
 
-    /**
-     * @param string $mailTemplateName
-     * @param int $domainId
-     * @param string $subject
-     * @param string $body
-     */
     private function createMailTemplateIfNotExist(
         string $mailTemplateName,
         int $domainId,

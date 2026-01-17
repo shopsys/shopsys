@@ -9,10 +9,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class FormTimeProvider
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly RequestStack $requestStack,
         protected readonly ClockInterface $clock,
@@ -34,7 +30,6 @@ class FormTimeProvider
 
     /**
      * @param string $name
-     * @param array $options
      * @return bool
      */
     public function isFormTimeValid($name, array $options)

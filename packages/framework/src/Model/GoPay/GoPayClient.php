@@ -24,9 +24,6 @@ class GoPayClient
 
     protected CachedOAuth $oAuth;
 
-    /**
-     * @param array $config
-     */
     public function __construct(protected readonly array $config)
     {
         $browser = new JsonBrowser(new NullLogger(), $this->config['timeout']);
@@ -34,13 +31,6 @@ class GoPayClient
         $this->oAuth = new CachedOAuth(new OAuth2($this->goPay), new InMemoryTokenCache());
     }
 
-    /**
-     * @param string $urlPath
-     * @param string $contentType
-     * @param string $method
-     * @param array|null $data
-     * @return \GoPay\Http\Response
-     */
     protected function sendApiRequest(
         string $urlPath,
         string $contentType,
@@ -66,10 +56,6 @@ class GoPayClient
         return $token->response;
     }
 
-    /**
-     * @param array $rawPayment
-     * @return \GoPay\Http\Response
-     */
     public function sendPaymentToGoPay(array $rawPayment): Response
     {
         $payment = $rawPayment + [
@@ -88,10 +74,6 @@ class GoPayClient
         );
     }
 
-    /**
-     * @param string $id
-     * @return \GoPay\Http\Response
-     */
     public function getStatus(string $id): Response
     {
         $urlPath = '/payments/payment/' . $id;
@@ -111,11 +93,6 @@ class GoPayClient
         return $response;
     }
 
-    /**
-     * @param string $id
-     * @param int $amount
-     * @return \GoPay\Http\Response
-     */
     public function refundTransaction(string $id, int $amount): Response
     {
         $urlPath = '/payments/payment/' . $id . '/refund';
@@ -143,10 +120,6 @@ class GoPayClient
         return $response;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return array
-     */
     public function downloadGoPayPaymentMethodsByCurrency(Currency $currency): array
     {
         $urlPath = '/eshops/eshop/' . $this->goPay->getConfig('goid') . '/payment-instruments/' . $currency->getCode();
@@ -170,17 +143,11 @@ class GoPayClient
         return $response->json['enabledPaymentInstruments'] ?? [];
     }
 
-    /**
-     * @return string
-     */
     public function urlToEmbedJs(): string
     {
         return $this->goPay->buildEmbedUrl();
     }
 
-    /**
-     * @return string
-     */
     public function getLanguage(): string
     {
         return $this->config['language'];

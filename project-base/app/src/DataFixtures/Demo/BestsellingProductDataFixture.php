@@ -15,17 +15,11 @@ use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingPr
 
 class BestsellingProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade $manualBestsellingProductFacade
-     */
     public function __construct(
         private readonly ManualBestsellingProductFacade $manualBestsellingProductFacade,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -47,9 +41,6 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
         ];
     }
 
-    /**
-     * @param int $domainId
-     */
     private function setBestsellingProductsForCategoryPhoto(int $domainId): void
     {
         if ($domainId !== Domain::SECOND_DOMAIN_ID) {
@@ -68,9 +59,6 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
         );
     }
 
-    /**
-     * @param int $domainId
-     */
     private function setBestsellingProductsForCategoryToys(int $domainId): void
     {
         $productsIndexedByPosition = [

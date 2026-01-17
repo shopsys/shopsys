@@ -12,11 +12,6 @@ use Psr\Log\LoggerInterface;
 
 class NormalizingExtractorManager extends ExtractorManager
 {
-    /**
-     * @param \JMS\TranslationBundle\Translation\Extractor\FileExtractor $extractor
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer $messageIdNormalizer
-     */
     public function __construct(
         FileExtractor $extractor,
         LoggerInterface $logger,

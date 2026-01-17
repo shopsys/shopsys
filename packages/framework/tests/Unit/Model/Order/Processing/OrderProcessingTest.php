@@ -50,11 +50,6 @@ class OrderProcessingTest extends TestCase
         $orderProcessor->process($orderInput, $orderData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param int $expectedHandleMethodCalls
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\OrderProcessorMiddlewareInterface
-     */
     public function createMiddlewareInstance(
         OrderProcessingData $orderProcessingData,
         int $expectedHandleMethodCalls,

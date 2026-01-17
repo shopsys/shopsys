@@ -9,19 +9,12 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class DomainAwareSecurityHeadersSetter
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly Setting $setting,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
-     */
     public function onKernelResponse(ResponseEvent $event): void
     {
         if (!$event->isMainRequest()) {

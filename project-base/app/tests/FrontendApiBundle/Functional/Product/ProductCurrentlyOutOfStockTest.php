@@ -54,11 +54,6 @@ class ProductCurrentlyOutOfStockTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param bool $isAllowedNegativeStock
-     * @param bool $setZeroStock
-     * @param bool $expectedIsCurrentlyOutOfStock
-     */
     #[DataProvider('currentlyOutOfStockDataProvider')]
     public function testIsCurrentlyOutOfStockDependsOnNegativeStockSettings(
         bool $isAllowedNegativeStock,

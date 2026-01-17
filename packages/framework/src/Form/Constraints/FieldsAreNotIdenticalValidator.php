@@ -14,7 +14,6 @@ class FieldsAreNotIdenticalValidator extends ConstraintValidator
 {
     /**
      * @param array $values
-     * @param \Symfony\Component\Validator\Constraint $constraint
      */
     #[Override]
     public function validate(mixed $values, Constraint $constraint): void

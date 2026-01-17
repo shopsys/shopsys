@@ -13,12 +13,6 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 class FriendlyUrlFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly EntityNameResolver $entityNameResolver,
@@ -27,13 +21,6 @@ class FriendlyUrlFactory
     ) {
     }
 
-    /**
-     * @param string $routeName
-     * @param int $entityId
-     * @param int $domainId
-     * @param string $slug
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
-     */
     public function create(
         string $routeName,
         int $entityId,
@@ -45,14 +32,6 @@ class FriendlyUrlFactory
         return new $entityClassName($routeName, $entityId, $domainId, $slug);
     }
 
-    /**
-     * @param string $routeName
-     * @param int $entityId
-     * @param string $entityName
-     * @param int $domainId
-     * @param int|null $indexPostfix
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
-     */
     public function createIfValid(
         string $routeName,
         int $entityId,
@@ -71,8 +50,6 @@ class FriendlyUrlFactory
     }
 
     /**
-     * @param string $routeName
-     * @param int $entityId
      * @param string[] $namesByLocale
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
@@ -105,10 +82,6 @@ class FriendlyUrlFactory
         return $friendlyUrls;
     }
 
-    /**
-     * @param string $routeName
-     * @return bool
-     */
     protected function isRouteMultidomain(string $routeName): bool
     {
         $friendlyUrlRouter = $this->domainRouterFactory->getFriendlyUrlRouter($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));

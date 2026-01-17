@@ -20,15 +20,6 @@ class PaymentInstructionFacade
 {
     protected const string PLACEHOLDER_QR_CODE = '{qr_code}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Twig\Environment $twig
-     * @param \Endroid\QrCode\Writer\PngWriter $pngWriter
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailEmbedCollector $mailEmbedCollector
-     * @param \Shopsys\FrameworkBundle\Model\Payment\SpaydValidator $spaydValidator
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly Environment $twig,
@@ -40,30 +31,16 @@ class PaymentInstructionFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string|null
-     */
     public function getPaymentInstructionsForEmail(Order $order): ?string
     {
         return $this->getPaymentInstructions($order, true);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string|null
-     */
     public function getPaymentInstructionsForOrderSubmittedPage(Order $order): ?string
     {
         return $this->getPaymentInstructions($order, false, false);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param bool $forEmail
-     * @param bool $inOrderLocale
-     * @return string|null
-     */
     protected function getPaymentInstructions(Order $order, bool $forEmail, bool $inOrderLocale = true): ?string
     {
         $locale = $inOrderLocale ? $this->domain->getDomainConfigById($order->getDomainId())->getLocale() : $this->domain->getLocale();
@@ -80,12 +57,6 @@ class PaymentInstructionFacade
         return strtr($paymentInstructions, $variablesKeysAndValues);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param bool $forEmail
-     * @param string $locale
-     * @return string
-     */
     protected function getQrCode(Order $order, bool $forEmail, string $locale): string
     {
         if (!$this->customerUserRoleResolver->canCustomerUserSeePrices($order->getCustomerUser())) {
@@ -142,10 +113,6 @@ class PaymentInstructionFacade
         ]);
     }
 
-    /**
-     * @param string $spdString
-     * @return string
-     */
     protected function getQrCodeBase64Data(string $spdString): string
     {
         $qrCode = new QrCode($spdString);
@@ -164,14 +131,6 @@ class PaymentInstructionFacade
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param string $variableSymbol
-     * @param float $amount
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param int $domainId
-     * @return string
-     */
     protected function createSpdString(
         Payment $payment,
         string $variableSymbol,

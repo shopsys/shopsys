@@ -11,7 +11,6 @@ class InverseTransformer implements DataTransformerInterface
 {
     /**
      * @param bool $value
-     * @return bool
      */
     #[Override]
     public function transform($value): bool
@@ -21,7 +20,6 @@ class InverseTransformer implements DataTransformerInterface
 
     /**
      * @param bool $value
-     * @return bool
      */
     #[Override]
     public function reverseTransform($value): bool

@@ -48,15 +48,6 @@ class ExtendedClassesAnnotationsCommand extends Command
 - Adds @method annotations to project classes when there exists a method in parent class that accepts as a parameter or returns an instance of a class that is extended in the project.');
     }
 
-    /**
-     * @param string $projectRootDirectory
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry $classExtensionRegistry
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory $propertyAnnotationsFactory
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory $methodAnnotationsAdder
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder $annotationsAdder
-     */
     public function __construct(
         protected readonly string $projectRootDirectory,
         protected readonly ClassExtensionRegistry $classExtensionRegistry,
@@ -124,7 +115,6 @@ class ExtendedClassesAnnotationsCommand extends Command
     }
 
     /**
-     * @param bool $isDryRun
      * @return string[]
      */
     protected function replaceShopsysWithProjectAnnotations(bool $isDryRun): array
@@ -160,9 +150,6 @@ class ExtendedClassesAnnotationsCommand extends Command
         return $filesForReplacingAnnotations;
     }
 
-    /**
-     * @return \Symfony\Component\Finder\Finder
-     */
     protected function getFinderForReplacingAnnotations(): Finder
     {
         return Finder::create()
@@ -176,7 +163,6 @@ class ExtendedClassesAnnotationsCommand extends Command
     }
 
     /**
-     * @param bool $isDryRun
      * @return string[]
      */
     protected function addPropertyAndMethodAnnotationsToProjectClasses(bool $isDryRun): array

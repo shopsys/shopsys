@@ -32,7 +32,6 @@ final class ForbiddenSuperGlobalSniff implements Sniff
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $file
      * @param int $position
      */
     #[Override]

@@ -12,35 +12,21 @@ use Shopsys\FrameworkBundle\Model\Complaint\Status\Exception\ComplaintStatusNotF
 
 class ComplaintStatusRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getComplaintStatusRepository(): EntityRepository
     {
         return $this->em->getRepository(ComplaintStatus::class);
     }
 
-    /**
-     * @param int $complaintStatusId
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null
-     */
     public function findById(int $complaintStatusId): ?ComplaintStatus
     {
         return $this->getComplaintStatusRepository()->find($complaintStatusId);
     }
 
-    /**
-     * @param int $complaintStatusId
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
-     */
     public function getById(int $complaintStatusId): ComplaintStatus
     {
         $complaintStatus = $this->findById($complaintStatusId);
@@ -54,9 +40,6 @@ class ComplaintStatusRepository
         return $complaintStatus;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
-     */
     public function getDefault(): ComplaintStatus
     {
         $complaintStatus = $this->getComplaintStatusRepository()->findOneBy(['statusType' => ComplaintStatusTypeEnum::STATUS_TYPE_NEW]);
@@ -79,7 +62,6 @@ class ComplaintStatusRepository
     }
 
     /**
-     * @param int $complaintStatusId
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus[]
      */
     public function getAllExceptId(int $complaintStatusId): array
@@ -91,10 +73,6 @@ class ComplaintStatusRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $oldComplaintStatus
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $newComplaintStatus
-     */
     public function replaceComplaintStatus(
         ComplaintStatus $oldComplaintStatus,
         ComplaintStatus $newComplaintStatus,
@@ -106,10 +84,6 @@ class ComplaintStatusRepository
             ->getQuery()->execute();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $complaintStatus
-     * @return bool
-     */
     public function isComplaintStatusUsed(ComplaintStatus $complaintStatus): bool
     {
         $queryBuilder = $this->em->createQueryBuilder();

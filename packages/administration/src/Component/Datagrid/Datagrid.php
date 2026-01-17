@@ -47,8 +47,6 @@ final class Datagrid
     private ?array $defaultOrder = null;
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface $adapter
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param DatagridOptions $options
      */
     public function __construct(
@@ -89,9 +87,6 @@ final class Datagrid
     /**
      * Set identification name that will be used as identifier in datagrid and in row actions.
      * Default identifier is 'id'
-     *
-     * @param string $identifier
-     * @return self
      */
     public function setIdentifier(string $identifier): self
     {
@@ -102,9 +97,6 @@ final class Datagrid
 
     /**
      * Enable or disable pagination in datagrid
-     *
-     * @param bool $pagination
-     * @return self
      */
     public function setPagination(bool $pagination): self
     {
@@ -115,10 +107,6 @@ final class Datagrid
 
     /**
      * Set default order of datagrid
-     *
-     * @param string $field
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\OrderingEnum $order
-     * @return self
      */
     public function setDefaultOrder(string $field, OrderingEnum $order): self
     {
@@ -134,7 +122,6 @@ final class Datagrid
      * Array of field names in order they should be displayed. Field names not present in this array will be displayed at the end.
      *
      * @param string[] $columnIds
-     * @return self
      */
     public function reorder(array $columnIds): self
     {
@@ -146,7 +133,6 @@ final class Datagrid
     /**
      * Define a new field in datagrid
      *
-     * @param string $name
      * @param array{
      *       label?: string,
      *       visible?: bool,
@@ -158,7 +144,6 @@ final class Datagrid
      *       property?: string|null
      *   } $options
      * @phpstan-param FieldOptions $options
-     * @return self
      */
     public function add(string $name, array $options = []): self
     {
@@ -174,7 +159,6 @@ final class Datagrid
     /**
      * Update options of field in datagrid
      *
-     * @param string $name
      * @param array{
      *      label?: string,
      *      visible?: bool,
@@ -186,7 +170,6 @@ final class Datagrid
      *      property?: string|null
      *  } $options
      * @phpstan-param FieldOptions $options
-     * @return self
      */
     public function update(string $name, array $options): self
     {
@@ -201,9 +184,6 @@ final class Datagrid
 
     /**
      * Remove field from datagrid
-     *
-     * @param string $name
-     * @return self
      */
     public function remove(string $name): self
     {
@@ -218,17 +198,12 @@ final class Datagrid
 
     /**
      * Class for managing row actions in datagrid
-     *
-     * @return \Shopsys\AdministrationBundle\Component\Datagrid\DatagridRowActions
      */
     public function actions(): DatagridRowActions
     {
         return $this->actions;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
-     */
     public function createView(): GridView
     {
         $datasource = $this->adapter->getDatasource($this->identificationName, $this->fields->getValues());

@@ -10,18 +10,12 @@ use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 
 class ValueByDateTimeDataPointFormatter
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
-     */
     public function __construct(protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension)
     {
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
-     * @param \DateTimeInterface $startDateTime
-     * @param \DateTimeInterface $endDateTime
-     * @param \DateInterval $interval
      * @return array
      */
     public function normalizeDataPointsByDateTimeIntervals(

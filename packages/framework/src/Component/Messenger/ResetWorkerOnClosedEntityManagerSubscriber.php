@@ -13,9 +13,6 @@ use Symfony\Component\Messenger\Exception\StopWorkerException;
 
 class ResetWorkerOnClosedEntityManagerSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Symfony\Component\Messenger\Event\WorkerMessageFailedEvent $event
-     */
     public function onWorkerMessageFailed(WorkerMessageFailedEvent $event): void
     {
         $exception = $event->getThrowable();
@@ -31,9 +28,6 @@ class ResetWorkerOnClosedEntityManagerSubscriber implements EventSubscriberInter
         }
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {

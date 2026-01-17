@@ -12,10 +12,6 @@ use Twig\TwigFunction;
 
 class CKEditorExtension extends AbstractExtension
 {
-    /**
-     * @param \FOS\CKEditorBundle\Config\CKEditorConfigurationInterface $configuration
-     * @param \FOS\CKEditorBundle\Twig\CKEditorExtension $ckEditorExtension
-     */
     public function __construct(
         protected readonly CKEditorConfigurationInterface $configuration,
         protected readonly BaseCKEditorExtension $ckEditorExtension,
@@ -33,9 +29,6 @@ class CKEditorExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function ckEditorInit(): string
     {
         return sprintf(

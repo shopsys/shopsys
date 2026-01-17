@@ -11,7 +11,6 @@ class RemoveWhitespacesTransformer implements DataTransformerInterface
 {
     /**
      * @param string|null $value
-     * @return string|null
      */
     #[Override]
     public function transform($value): ?string
@@ -21,7 +20,6 @@ class RemoveWhitespacesTransformer implements DataTransformerInterface
 
     /**
      * @param string|null $value
-     * @return string|null
      */
     #[Override]
     public function reverseTransform($value): ?string

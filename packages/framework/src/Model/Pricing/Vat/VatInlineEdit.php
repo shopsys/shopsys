@@ -15,14 +15,6 @@ use Symfony\Component\Form\FormInterface;
 
 class VatInlineEdit extends AbstractGridInlineEdit
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatGridFactory $vatGridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     */
     public function __construct(
         VatGridFactory $vatGridFactory,
         AccessCheckerInterface $accessChecker,
@@ -36,7 +28,6 @@ class VatInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
-     * @return int|string
      */
     #[Override]
     protected function createEntityAndGetId(mixed $vatData): int|string
@@ -47,7 +38,6 @@ class VatInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int|string $vatId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      */
     #[Override]
@@ -56,10 +46,6 @@ class VatInlineEdit extends AbstractGridInlineEdit
         $this->vatFacade->edit($vatId, $vatData);
     }
 
-    /**
-     * @param int|string|null $rowId
-     * @return \Symfony\Component\Form\FormInterface
-     */
     #[Override]
     public function getForm(int|string|null $rowId): FormInterface
     {
@@ -75,9 +61,6 @@ class VatInlineEdit extends AbstractGridInlineEdit
         ]);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getRoleConstant(): string
     {

@@ -32,11 +32,6 @@ class PaymentPrice
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param int $domainId
-     */
     public function __construct(Payment $payment, Money $price, int $domainId)
     {
         $this->payment = $payment;

@@ -23,9 +23,6 @@ class BlogArticlesTest extends GraphQlTestCase
         $this->totalBlogArticlesCount = $blogArticleFacade->getAllBlogArticlesTotalCount();
     }
 
-    /**
-     * @return array
-     */
     private function getBlogArticlesDataProvider(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -80,9 +77,6 @@ class BlogArticlesTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @return string
-     */
     private function getAllBlogArticlesQuery(): string
     {
         return '
@@ -99,10 +93,6 @@ class BlogArticlesTest extends GraphQlTestCase
         ';
     }
 
-    /**
-     * @param int $limit
-     * @return string
-     */
     private function getFirstBlogArticlesQuery(int $limit): string
     {
         return '
@@ -119,9 +109,6 @@ class BlogArticlesTest extends GraphQlTestCase
         ';
     }
 
-    /**
-     * @return string
-     */
     private function getLastBlogArticleQuery(): string
     {
         return '
@@ -138,10 +125,6 @@ class BlogArticlesTest extends GraphQlTestCase
         ';
     }
 
-    /**
-     * @param int $limit
-     * @return string
-     */
     private function getHomepageBlogArticlesQuery(int $limit): string
     {
         return '
@@ -159,7 +142,6 @@ class BlogArticlesTest extends GraphQlTestCase
     }
 
     /**
-     * @param string $firstDomainLocale
      * @return array[]
      */
     private function getExpectedBlogArticlesData(string $firstDomainLocale): array

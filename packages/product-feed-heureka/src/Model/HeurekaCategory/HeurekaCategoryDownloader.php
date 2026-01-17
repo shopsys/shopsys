@@ -13,7 +13,6 @@ class HeurekaCategoryDownloader
 
     /**
      * @param string $heurekaCategoryFeedUrl
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactory $heurekaCategoryDataFactory
      */
     public function __construct(
         $heurekaCategoryFeedUrl,

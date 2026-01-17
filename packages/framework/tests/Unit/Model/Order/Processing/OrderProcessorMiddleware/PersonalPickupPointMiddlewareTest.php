@@ -110,10 +110,6 @@ class PersonalPickupPointMiddlewareTest extends MiddlewareTestCase
         $this->assertNull($actualOrderData->pickupPlaceIdentifier);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store|null $store
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PersonalPickupPointMiddleware
-     */
     private function createPersonalPickupPointMiddleware(?Store $store = null): PersonalPickupPointMiddleware
     {
         $storeFacadeMock = $this->createMock(StoreFacade::class);
@@ -126,10 +122,6 @@ class PersonalPickupPointMiddlewareTest extends MiddlewareTestCase
         return new PersonalPickupPointMiddleware($storeFacadeMock);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     */
     private function addTransportItemToOrderProcessingData(
         Transport $transport,
         OrderProcessingData $orderProcessingData,

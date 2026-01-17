@@ -11,20 +11,12 @@ use App\Model\Product\ProductDataFactory;
 
 class ProductDemoDataFactory
 {
-    /**
-     * @param \App\Model\Product\ProductDataFactory $productDataFactory
-     * @param \App\DataFixtures\Demo\DataSetter\ProductDemoDataSetter $productDemoDataSetter
-     */
     public function __construct(
         private readonly ProductDataFactory $productDataFactory,
         private readonly ProductDemoDataSetter $productDemoDataSetter,
     ) {
     }
 
-    /**
-     * @param string $catnum
-     * @return \App\Model\Product\ProductData
-     */
     public function createDefaultData(string $catnum): ProductData
     {
         $productData = $this->productDataFactory->create();

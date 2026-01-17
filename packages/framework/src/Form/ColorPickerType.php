@@ -22,9 +22,6 @@ final class ColorPickerType extends AbstractType
         return TextType::class;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

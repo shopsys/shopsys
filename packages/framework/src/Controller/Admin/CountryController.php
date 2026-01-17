@@ -23,13 +23,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_COUNTRY)]
 class CountryController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\Grid\CountryGridFactory $countryGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryDataFactory $countryDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly CountryGridFactory $countryGridFactory,
         protected readonly CountryDataFactory $countryDataFactory,
@@ -39,9 +32,6 @@ class CountryController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/country/list/')]
     #[CanView]
     public function listAction(): Response
@@ -53,11 +43,6 @@ class CountryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/country/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -96,10 +81,6 @@ class CountryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/country/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response

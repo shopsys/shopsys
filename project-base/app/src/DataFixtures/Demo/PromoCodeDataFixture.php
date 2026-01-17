@@ -35,15 +35,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     public const string DISABLED_PROMO_CODE_NOMINAL = 'disabled_promo_code_nominal';
     public const string PROMO_CODE_ALL = 'promo_code_all';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductFactory $promoCodeProductFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryFactory $promoCodeCategoryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitFactory $promoCodeLimitFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory $promoCodeFlagFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         private readonly PromoCodeFacade $promoCodeFacade,
         private readonly PromoCodeDataFactory $promoCodeDataFactory,
@@ -55,9 +46,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -206,9 +194,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     */
     private function setDefaultLimit(PromoCode $promoCode): void
     {
         $promoCodeLimit = $this->promoCodeLimitFactory->create('1.0', '10');
@@ -217,9 +202,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     */
     private function setDefaultNominalLimit(PromoCode $promoCode): void
     {
         $promoCodeLimit = $this->promoCodeLimitFactory->create('101', '100');
@@ -228,9 +210,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $this->em->flush();
     }
 
-    /**
-     * @param int $domainId
-     */
     private function createFreeTransportAndPaymentPromoCode(int $domainId): void
     {
         $promoCodeData = $this->promoCodeDataFactory->create();

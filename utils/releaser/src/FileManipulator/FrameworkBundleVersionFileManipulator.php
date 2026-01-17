@@ -19,11 +19,6 @@ final class FrameworkBundleVersionFileManipulator
      */
     private const string FRAMEWORK_BUNDLE_VERSION_PATTERN = "/public const VERSION = '(.+)';/";
 
-    /**
-     * @param string $content
-     * @param \PharIo\Version\Version $version
-     * @return string
-     */
     public function updateFrameworkBundleVersion(string $content, Version $version): string
     {
         return Strings::replace(

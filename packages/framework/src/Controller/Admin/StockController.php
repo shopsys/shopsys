@@ -34,16 +34,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_STOCK)]
 class StockController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockDataFactory $stockDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFacade $stockSettingsDataFacade
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFactory $stockSettingsDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
@@ -56,9 +46,6 @@ class StockController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/stock/list/')]
     #[CanView]
     public function listAction(): Response
@@ -71,9 +58,6 @@ class StockController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/stock/setting/')]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -84,9 +68,6 @@ class StockController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     protected function getStockSettingsForm(): FormInterface
     {
         $stockSettingsData = $this->stockSettingsDataFactory->getForDomainId(
@@ -98,10 +79,6 @@ class StockController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     #[Route(path: '/stock/savesettings/')]
     #[CanEdit]
     public function saveSettingsAction(Request $request): RedirectResponse
@@ -135,10 +112,6 @@ class StockController extends AdminBaseController
         return $this->redirectToRoute('admin_stock_settings');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/stock/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -176,11 +149,6 @@ class StockController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/stock/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -221,10 +189,6 @@ class StockController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/stock/setdefault/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit]
     #[CsrfProtection]
@@ -249,10 +213,6 @@ class StockController extends AdminBaseController
         return $this->redirectToRoute('admin_stock_list');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     #[Route(path: '/stock/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -282,9 +242,6 @@ class StockController extends AdminBaseController
         return $this->redirectToRoute('admin_stock_list');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     protected function getGrid(): Grid
     {
         $queryBuilder = $this->stockFacade->getAllStockQueryBuilder();

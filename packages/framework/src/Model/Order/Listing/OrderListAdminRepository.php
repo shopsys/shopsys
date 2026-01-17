@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class OrderListAdminRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }

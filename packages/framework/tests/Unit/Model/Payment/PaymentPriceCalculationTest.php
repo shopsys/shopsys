@@ -80,13 +80,6 @@ class PaymentPriceCalculationTest extends TestCase
         ];
     }
 
-    /**
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
-     * @param string $vatPercent
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     */
     #[DataProvider('calculateIndependentPriceProvider')]
     public function testCalculateIndependentPrice(
         int $inputPriceType,
@@ -147,15 +140,6 @@ class PaymentPriceCalculationTest extends TestCase
         $this->assertThat($price->getPriceWithVat(), new IsMoneyEqual($priceWithVat));
     }
 
-    /**
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
-     * @param string $vatPercent
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
-     * @param bool $forceFreePrice
-     */
     #[DataProvider('calculatePriceProvider')]
     public function testCalculatePrice(
         int $inputPriceType,

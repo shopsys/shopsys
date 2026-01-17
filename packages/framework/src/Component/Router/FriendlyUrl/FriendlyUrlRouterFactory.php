@@ -12,14 +12,6 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlRouterFactory
 {
-    /**
-     * @param string $friendlyUrlRouterResourceFilepath
-     * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider
-     * @param \Symfony\Contracts\Cache\CacheInterface $mainFriendlyUrlSlugCache
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
-     */
     public function __construct(
         protected string $friendlyUrlRouterResourceFilepath,
         protected readonly LoaderInterface $configLoader,
@@ -30,11 +22,6 @@ class FriendlyUrlRouterFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Symfony\Component\Routing\RequestContext $context
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
-     */
     public function createRouter(DomainConfig $domainConfig, RequestContext $context): FriendlyUrlRouter
     {
         return new FriendlyUrlRouter(

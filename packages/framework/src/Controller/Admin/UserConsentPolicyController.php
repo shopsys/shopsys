@@ -19,20 +19,12 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_USER_CONSENT_POLICY)]
 class UserConsentPolicyController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade $userConsentPolicyFacade
-     */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly UserConsentPolicyFacade $userConsentPolicyFacade,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/user-consent-policy/setting/')]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]

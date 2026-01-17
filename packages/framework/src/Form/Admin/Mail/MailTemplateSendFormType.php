@@ -19,20 +19,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class MailTemplateSendFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator $currentAdministrator
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderFacade $mailTemplateSenderFacade
-     */
     public function __construct(
         protected readonly CurrentAdministrator $currentAdministrator,
         protected readonly MailTemplateSenderFacade $mailTemplateSenderFacade,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -64,9 +56,6 @@ final class MailTemplateSendFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

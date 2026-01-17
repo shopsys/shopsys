@@ -16,9 +16,6 @@ trait MultidomainMigrationTrait
 {
     protected ContainerInterface $container;
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     protected function getDomain(): Domain
     {
         if (!isset($this->container)) {
@@ -50,10 +47,6 @@ trait MultidomainMigrationTrait
         return $this->getDomain()->getAllIncludingDomainConfigsWithoutDataCreated();
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
     protected function getDomainLocale(int $domainId): string
     {
         return $this->getDomain()->getDomainConfigById($domainId)->getLocale();
@@ -73,9 +66,6 @@ trait MultidomainMigrationTrait
         return array_unique($domainLocales);
     }
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface|null $container
-     */
     public function setContainer(?ContainerInterface $container = null): void
     {
         $this->container = $container;

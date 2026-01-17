@@ -27,12 +27,6 @@ use Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
  */
 abstract class AbstractMissingAnnotationsFixer implements FixerInterface
 {
-    /**
-     * @param \PhpCsFixer\WhitespacesFixerConfig $whitespacesFixerConfig
-     * @param \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer $functionsAnalyzer
-     * @param \Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer $phpToDocTypeTransformer
-     * @param \Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector $indentDetector
-     */
     public function __construct(
         protected readonly WhitespacesFixerConfig $whitespacesFixerConfig,
         protected readonly FunctionsAnalyzer $functionsAnalyzer,
@@ -41,10 +35,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     ) {
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     */
     #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
@@ -71,26 +61,14 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         }
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * @param \PhpCsFixer\Tokenizer\Token|null $docToken
-     */
     abstract protected function processFunctionToken(Tokens $tokens, int $index, ?Token $docToken): void;
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @return bool
-     */
     #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_FUNCTION);
     }
 
-    /**
-     * @return bool
-     */
     #[Override]
     public function isRisky(): bool
     {
@@ -115,21 +93,12 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         return 0;
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @return bool
-     */
     #[Override]
     public function supports(SplFileInfo $file): bool
     {
         return (bool)Strings::match($file->getFilename(), '#\.php$#ui');
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * @return bool
-     */
     protected function shouldSkipFunctionToken(Tokens $tokens, int $index): bool
     {
         $nextTokenPosition = $tokens->getNextMeaningfulToken($index);
@@ -138,10 +107,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         return !$tokens[$nextTokenPosition]->isGivenKind(T_STRING);
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Token $docToken
-     * @return bool
-     */
     protected function shouldSkipDocToken(Token $docToken): bool
     {
         if (stripos($docToken->getContent(), 'inheritdoc') !== false) {
@@ -152,11 +117,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         return strpos($docToken->getContent(), "\n") === false;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * @return string
-     */
     protected function resolveIndent(Tokens $tokens, int $index): string
     {
         return str_repeat(
@@ -165,11 +125,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         );
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * @return int
-     */
     protected function getDocIndex(Tokens $tokens, int $index): int
     {
         do {
@@ -183,11 +138,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         return $index;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * @return int
-     */
     public function skipAttributes(Tokens $tokens, int $index): int
     {
         if ($tokens[$index]->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
@@ -209,8 +159,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
 
     /**
      * @param \PhpCsFixer\DocBlock\Line[] $newLines
-     * @param string $indent
-     * @return string
      */
     protected function createDocContentFromLinesAndIndent(array $newLines, string $indent): string
     {
@@ -223,9 +171,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     }
 
     /**
-     * @param \PhpCsFixer\Tokenizer\Token $docToken
      * @param \PhpCsFixer\DocBlock\Line[] $newLines
-     * @return string
      */
     protected function createDocContentFromDocTokenAndNewLines(Token $docToken, array $newLines): string
     {
@@ -242,11 +188,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         return implode('', $lines);
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * @return int
-     */
     protected function getNewDocIndex(Tokens $tokens, int $index): int
     {
         for ($i = $index; $i > 0; --$i) {
@@ -263,9 +204,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     }
 
     /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * @param \PhpCsFixer\Tokenizer\Token $docToken
      * @param \PhpCsFixer\DocBlock\Line[] $newLines
      */
     protected function updateDocWithLines(Tokens $tokens, int $index, Token $docToken, array $newLines): void
@@ -277,10 +215,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     }
 
     /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
      * @param \PhpCsFixer\DocBlock\Line[] $newLines
-     * @param string $indent
      */
     protected function addDocWithLines(Tokens $tokens, int $index, array $newLines, string $indent): void
     {
@@ -292,11 +227,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         $tokens->ensureWhitespaceAtIndex($docBlockIndex, 1, $whitespaceAfterDocBlock);
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * @return \PhpCsFixer\Tokenizer\Token|null
-     */
     private function getDocToken(Tokens $tokens, int $index): ?Token
     {
         $docIndex = $this->getDocIndex($tokens, $index);
@@ -309,11 +239,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         return null;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * @return bool
-     */
     private function isWhitespaceWithNewline(Tokens $tokens, int $index): bool
     {
         if (!$tokens[$index]->isWhitespace()) {
@@ -326,9 +251,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     }
 
     /**
-     * @param \PhpCsFixer\Tokenizer\Token $docToken
      * @param \PhpCsFixer\DocBlock\Line[] $newLines
-     * @return int
      */
     private function resolveOffset(Token $docToken, array $newLines): int
     {
@@ -346,10 +269,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         return count($doc->getLines()) - 1;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Token $docToken
-     * @return int|null
-     */
     private function getLastParamLinePosition(Token $docToken): ?int
     {
         $doc = new DocBlock($docToken->getContent());

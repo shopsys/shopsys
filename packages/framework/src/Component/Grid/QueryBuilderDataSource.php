@@ -15,8 +15,6 @@ class QueryBuilderDataSource implements DataSourceInterface
     protected ?int $totalCount = null;
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string $rowIdSourceColumnName
      * @param array<string, mixed> $hints
      */
     public function __construct(
@@ -26,13 +24,6 @@ class QueryBuilderDataSource implements DataSourceInterface
     ) {
     }
 
-    /**
-     * @param int|null $limit
-     * @param int $page
-     * @param string|null $orderSourceColumnName
-     * @param string $orderDirection
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
     #[Override]
     public function getPaginatedRows(
         ?int $limit = null,
@@ -55,10 +46,6 @@ class QueryBuilderDataSource implements DataSourceInterface
         return $queryPaginator->getResult($page, $limit, $this->getTotalRowsCount());
     }
 
-    /**
-     * @param int|string $rowId
-     * @return array
-     */
     #[Override]
     public function getOneRow(int|string $rowId): array
     {
@@ -68,9 +55,6 @@ class QueryBuilderDataSource implements DataSourceInterface
         return $queryBuilder->getQuery()->getSingleResult(GroupedScalarHydrator::HYDRATION_MODE);
     }
 
-    /**
-     * @return int
-     */
     #[Override]
     public function getTotalRowsCount(): int
     {
@@ -87,11 +71,6 @@ class QueryBuilderDataSource implements DataSourceInterface
         return $this->totalCount;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string $orderSourceColumnName
-     * @param string $orderDirection
-     */
     protected function addQueryOrder(
         QueryBuilder $queryBuilder,
         string $orderSourceColumnName,
@@ -100,10 +79,6 @@ class QueryBuilderDataSource implements DataSourceInterface
         $queryBuilder->orderBy($orderSourceColumnName, $orderDirection);
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param int|string $rowId
-     */
     protected function prepareQueryWithOneRow(QueryBuilder $queryBuilder, int|string $rowId): void
     {
         $queryBuilder
@@ -114,9 +89,6 @@ class QueryBuilderDataSource implements DataSourceInterface
             ->resetDQLPart('orderBy');
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getRowIdSourceColumnName(): string
     {

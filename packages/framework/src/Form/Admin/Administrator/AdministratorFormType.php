@@ -34,12 +34,6 @@ final class AdministratorFormType extends AbstractType
     public const string SCENARIO_CREATE = 'create';
     public const string SCENARIO_EDIT = 'edit';
 
-    /**
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
-     */
     public function __construct(
         private readonly Security $security,
         private readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
@@ -48,10 +42,6 @@ final class AdministratorFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -194,10 +184,6 @@ final class AdministratorFormType extends AbstractType
         $builder->add($builderPromoteGroup);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $adminToEdit
-     * @return bool
-     */
     private function canWorkWithRoles(Administrator|null $adminToEdit): bool
     {
         if ($adminToEdit === null) {
@@ -215,9 +201,6 @@ final class AdministratorFormType extends AbstractType
         return $this->accessChecker->canEdit(AdminRoleConstant::ROLE_ADMINISTRATOR);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     private function getCurrentAdministrator(): Administrator
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $currentAdministrator */
@@ -226,9 +209,6 @@ final class AdministratorFormType extends AbstractType
         return $currentAdministrator;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

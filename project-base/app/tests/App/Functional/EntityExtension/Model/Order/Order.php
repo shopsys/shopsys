@@ -49,9 +49,6 @@ class Order
         $this->uuid = Uuid::uuid4()->toString();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\Order\OrderItem $item
-     */
     public function addItem(OrderItem $item): void
     {
         if (!$this->items->contains($item)) {

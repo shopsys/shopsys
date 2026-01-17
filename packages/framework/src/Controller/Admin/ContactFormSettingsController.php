@@ -20,11 +20,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_CONTACT_FORM)]
 class ContactFormSettingsController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactory $contactFormSettingsDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade $contactFormSettingsFacade
-     */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly ContactFormSettingsDataFactory $contactFormSettingsDataFactory,
@@ -32,10 +27,6 @@ class ContactFormSettingsController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/contact-form/')]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]

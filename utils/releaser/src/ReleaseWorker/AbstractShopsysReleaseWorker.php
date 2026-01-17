@@ -63,8 +63,6 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
     protected string $currentBranchName;
 
     /**
-     * @param \Shopsys\Releaser\Command\SymfonyStyleFactory $symfonyStyleFactory
-     * @param \Shopsys\Releaser\Process\ProcessRunner $processRunner
      * @throws \Shopsys\Releaser\Exception\ShouldNotHappenException
      */
     #[Required]
@@ -79,8 +77,6 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     /**
      * Question helper modifications that only waits for "enter"
-     *
-     * @param string $message
      */
     protected function confirm(string $message): void
     {
@@ -96,8 +92,6 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     /**
      * Check if there are some changes and if so, add them and commit them
-     *
-     * @param string $message
      */
     protected function commit(string $message): void
     {
@@ -111,9 +105,6 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         $this->processRunner->run('git commit --message="' . addslashes($message) . '"');
     }
 
-    /**
-     * @return bool
-     */
     protected function isGitWorkingTreeEmpty(): bool
     {
         return $this->processRunner->run('git status --porcelain') === '';
@@ -141,20 +132,11 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         $this->processRunner->run(sprintf('git config user.email "%s"', addslashes($newEmail)));
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @return string
-     */
     protected function createBranchName(Version $version): string
     {
         return 'rc-' . Strings::webalize($version->getVersionString());
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param bool $suggestWithVprefix
-     * @return \PharIo\Version\Version
-     */
     protected function askForNextDevelopmentVersion(Version $version, bool $suggestWithVprefix = false): Version
     {
         $suggestedDevelopmentVersion = $this->suggestDevelopmentVersion($version, $suggestWithVprefix);
@@ -186,10 +168,6 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     /**
      * Return new development version (e.g. from 7.1.0 to 7.2.0-dev)
-     *
-     * @param \PharIo\Version\Version $version
-     * @param bool $suggestWithVprefix
-     * @return \PharIo\Version\Version
      */
     protected function suggestDevelopmentVersion(Version $version, bool $suggestWithVprefix = false): Version
     {
@@ -202,10 +180,6 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         return new Version($newVersionString);
     }
 
-    /**
-     * @param string $stage
-     * @return bool
-     */
     #[Override]
     public function belongToStage(string $stage): bool
     {

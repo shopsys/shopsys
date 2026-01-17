@@ -33,7 +33,6 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
     private WithdrawalRequestDataFactory $withdrawalRequestDataFactory;
 
     /**
-     * @param array $queryVariables
      * @param int[] $expectedOrderItemsIds
      */
     #[DataProvider('getOrderItemsDataProvider')]
@@ -63,9 +62,6 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
         $this->assertProductExistsInOrderItems($product, false);
     }
 
-    /**
-     * @return iterable
-     */
     public static function getOrderItemsDataProvider(): iterable
     {
         // last 4 order items
@@ -130,10 +126,6 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
         ];
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param bool $shouldExist
-     */
     private function assertProductExistsInOrderItems(Product $product, bool $shouldExist): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetOrderItemsQuery.graphql');

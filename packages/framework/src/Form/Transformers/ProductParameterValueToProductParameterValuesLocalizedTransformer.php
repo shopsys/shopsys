@@ -13,11 +13,6 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ProductParameterValueToProductParameterValuesLocalizedTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedDataFactory $productParameterValuesLocalizedDataFactory
-     */
     public function __construct(
         protected readonly ProductParameterValueDataFactory $productParameterValueDataFactory,
         protected readonly ParameterValueDataFactory $parameterValueDataFactory,

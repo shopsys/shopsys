@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFa
 
 class LuigisBoxArticleFeedItemFacade
 {
-    /**
-     * @param \Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItemFactory $luigisBoxArticleFeedItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
-     */
     public function __construct(
         protected readonly LuigisBoxArticleFeedItemFactory $luigisBoxArticleFeedItemFactory,
         protected readonly CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade,
@@ -20,9 +16,6 @@ class LuigisBoxArticleFeedItemFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int|null $lastSeekId
-     * @param int $maxResults
      * @return iterable<int, \Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItem>
      */
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable

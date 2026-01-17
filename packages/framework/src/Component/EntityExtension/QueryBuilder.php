@@ -10,10 +10,6 @@ use Override;
 
 class QueryBuilder extends BaseQueryBuilder
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         EntityManagerInterface $em,
         protected readonly EntityNameResolver $entityNameResolver,

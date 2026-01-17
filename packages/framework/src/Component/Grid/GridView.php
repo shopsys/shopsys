@@ -30,12 +30,7 @@ class GridView
     protected string|array|null $theme = null;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Twig\Environment $twig
      * @param string|string[] $theme
-     * @param array $templateParameters
      */
     public function __construct(
         protected readonly Grid $grid,
@@ -53,9 +48,6 @@ class GridView
         $this->renderBlock('grid');
     }
 
-    /**
-     * @param string|array|null $removeParameters
-     */
     public function renderHiddenInputs(array|string|null $removeParameters = null): void
     {
         $this->renderBlock('grid_hidden_inputs', [
@@ -63,12 +55,6 @@ class GridView
         ]);
     }
 
-    /**
-     * @param string $name
-     * @param array $parameters
-     * @param bool $echo
-     * @return string|null
-     */
     public function renderBlock(string $name, array $parameters = [], bool $echo = true): ?string
     {
         foreach ($this->getTemplates() as $template) {
@@ -99,11 +85,6 @@ class GridView
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Column $column
-     * @param array|null $row
-     * @param \Symfony\Component\Form\FormView|null $formView
-     */
     public function renderCell(Column $column, ?array $row = null, ?FormView $formView = null): void
     {
         if ($row !== null) {
@@ -148,10 +129,6 @@ class GridView
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\ActionColumn|\Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface $actionColumn
-     * @param array $row
-     */
     public function renderActionCell(ActionColumn|GridRowActionInterface $actionColumn, array $row): void
     {
         if ($actionColumn instanceof ActionColumn) {
@@ -179,9 +156,6 @@ class GridView
         echo $this->twig->render($renderData['template'], [...$renderData['parameters'], 'row' => $row]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Column $column
-     */
     public function renderTitleCell(Column $column): void
     {
         $possibleBlocks = [
@@ -198,11 +172,6 @@ class GridView
         }
     }
 
-    /**
-     * @param array|null $parameters
-     * @param array|string|null $removeParameters
-     * @return string
-     */
     public function getUrl(?array $parameters = null, array|string|null $removeParameters = null): string
     {
         $masterRequest = $this->requestStack->getMainRequest();
@@ -215,10 +184,6 @@ class GridView
         );
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
     protected function blockExists(string $name): bool
     {
         foreach ($this->getTemplates() as $template) {
@@ -230,9 +195,6 @@ class GridView
         return false;
     }
 
-    /**
-     * @return array|string|null
-     */
     public function getTheme(): array|string|null
     {
         return $this->theme;
@@ -268,29 +230,16 @@ class GridView
         return $this->templates;
     }
 
-    /**
-     * @param string $theme
-     * @return \Twig\TemplateWrapper
-     */
     protected function getTemplateFromString(string $theme): TemplateWrapper
     {
         return $this->twig->load($theme);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Column $column
-     * @param array $row
-     * @return mixed
-     */
     protected function getCellValue(Column $column, array $row): mixed
     {
         return $this->grid->getValueFromRowBySourceColumnName($row, $column->getSourceColumnName());
     }
 
-    /**
-     * @param mixed $variable
-     * @return string
-     */
     protected function getVariableType(mixed $variable): string
     {
         return match (gettype($variable)) {

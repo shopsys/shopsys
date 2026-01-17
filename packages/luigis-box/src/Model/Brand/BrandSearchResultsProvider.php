@@ -17,11 +17,6 @@ class BrandSearchResultsProvider extends SearchResultsProvider implements BrandS
 {
     protected const int SEARCH_LIMIT = 50;
 
-    /**
-     * @param string $enabledDomainIds
-     * @param \Overblog\DataLoader\DataLoaderInterface $luigisBoxBatchLoader
-     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory
-     */
     public function __construct(
         string $enabledDomainIds,
         protected readonly DataLoaderInterface $luigisBoxBatchLoader,
@@ -30,10 +25,6 @@ class BrandSearchResultsProvider extends SearchResultsProvider implements BrandS
         parent::__construct($enabledDomainIds);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|array
-     */
     #[Override]
     public function getBrandSearchResults(
         Argument $argument,

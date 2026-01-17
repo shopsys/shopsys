@@ -16,12 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class CartWatcher
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
-     */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
@@ -31,7 +25,6 @@ class CartWatcher
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
     public function getModifiedPriceItemsAndUpdatePrices(Cart $cart)
@@ -63,8 +56,6 @@ class CartWatcher
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
     public function getNotListableItems(Cart $cart, CurrentCustomerUser $currentCustomerUser)

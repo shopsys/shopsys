@@ -18,7 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class RoleRowType extends AbstractType
 {
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      */
     #[Override]
@@ -59,8 +58,6 @@ final class RoleRowType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param array<string, mixed> $options
      */
     #[Override]
@@ -70,9 +67,6 @@ final class RoleRowType extends AbstractType
         $view->vars['available_permissions'] = $options['available_permissions'];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -87,7 +81,6 @@ final class RoleRowType extends AbstractType
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Role $role
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission> $availablePermissions
      * @return array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission>
      */

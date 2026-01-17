@@ -11,9 +11,6 @@ use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class DeleteOldCartsCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     */
     public function __construct(protected readonly CartFacade $cartFacade)
     {
     }

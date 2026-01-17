@@ -27,13 +27,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_SEO_PAGES)]
 class SeoPageController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageGridFactory $seoPageGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory $seoPageDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade $seoPageFacade
-     * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly SeoPageGridFactory $seoPageGridFactory,
@@ -43,9 +36,6 @@ class SeoPageController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/page/list')]
     #[CanView]
     public function listAction(): Response
@@ -57,10 +47,6 @@ class SeoPageController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/page/new')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -102,11 +88,6 @@ class SeoPageController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/page/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -145,10 +126,6 @@ class SeoPageController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/page/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -173,10 +150,6 @@ class SeoPageController extends AdminBaseController
         return $this->redirectToRoute('admin_seopage_list');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/page/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]

@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Navigation;
 class NavigationItemDetail
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[][] $categoriesByColumnNumber
      */
     public function __construct(
@@ -16,9 +15,6 @@ class NavigationItemDetail
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
-     */
     public function getNavigationItem(): NavigationItem
     {
         return $this->navigationItem;

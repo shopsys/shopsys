@@ -8,8 +8,6 @@ class ArrayWithPaginationDataSourceFactory
 {
     /**
      * @param array<int|string, mixed> $data
-     * @param string|null $rowIdSourceColumnName
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSource
      */
     public function create(array $data, ?string $rowIdSourceColumnName = null): ArrayWithPaginationDataSource
     {

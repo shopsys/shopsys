@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 class ParameterFilterChoice
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $values
      */
     public function __construct(
@@ -18,9 +17,6 @@ class ParameterFilterChoice
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
     public function getParameter(): Parameter
     {
         return $this->parameter;

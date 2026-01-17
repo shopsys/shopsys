@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 
 class PaymentTransactionRefundDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction $paymentTransaction
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundData
-     */
     public function createFromPaymentTransaction(PaymentTransaction $paymentTransaction): PaymentTransactionRefundData
     {
         $paymentTransactionRefundData = $this->createInstance();
@@ -20,9 +16,6 @@ class PaymentTransactionRefundDataFactory
         return $paymentTransactionRefundData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundData
-     */
     protected function createInstance(): PaymentTransactionRefundData
     {
         return new PaymentTransactionRefundData();

@@ -33,19 +33,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_PARAMETER_VALUE)]
 class ParameterValueController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionDataFactory $parameterValueConversionDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly ParameterRepository $parameterRepository,
@@ -61,9 +48,6 @@ class ParameterValueController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/parameter-value/list', name: 'admin_parametervalue_list')]
     #[CanView]
     public function listAction(): Response
@@ -91,11 +75,6 @@ class ParameterValueController extends AdminBaseController
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/parameter-value/edit/{id}', name: 'admin_parametervalue_edit', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -135,11 +114,6 @@ class ParameterValueController extends AdminBaseController
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/parameter-values/edit/{id}', name: 'admin_parametervalues_edit', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -183,8 +157,6 @@ class ParameterValueController extends AdminBaseController
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $gridQueryBuilder
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[][]
      */
     protected function getFilesIndexedByParameterValueIds(QueryBuilder $gridQueryBuilder, Grid $grid): array

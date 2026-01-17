@@ -92,9 +92,6 @@ class RoundingPriceInCartTest extends GraphQlTestCase
         $this->currencyFacade->setDomainDefaultCurrency($currencyCzk, Domain::FIRST_DOMAIN_ID);
     }
 
-    /**
-     * @return string
-     */
     public function createCartWithProductTransportAndPayment(): string
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [

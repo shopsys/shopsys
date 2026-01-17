@@ -35,9 +35,6 @@ abstract class GraphQlB2bDomainWithLoginTestCase extends CommonGraphQlWithLoginT
         $this->login();
     }
 
-    /**
-     * @param array $response
-     */
     protected function assertAccessDeniedWarning(array $response): void
     {
         $this->assertResponseContainsArrayOfWarnings($response);
@@ -46,9 +43,6 @@ abstract class GraphQlB2bDomainWithLoginTestCase extends CommonGraphQlWithLoginT
         $this->assertSame(403, $warnings[0]['extensions']['code']);
     }
 
-    /**
-     * @return \App\Model\Customer\User\CustomerUser
-     */
     protected function getCustomerUserByDefaultCredentials(): CustomerUser
     {
         $currentCustomerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(

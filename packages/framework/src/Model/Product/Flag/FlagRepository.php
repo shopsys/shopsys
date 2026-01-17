@@ -16,11 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 
 class FlagRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDependenciesDataFactory $flagDependenciesDataFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OrderByCollationHelper $orderByCollationHelper,
@@ -28,27 +23,16 @@ class FlagRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getFlagRepository(): EntityRepository
     {
         return $this->em->getRepository(Flag::class);
     }
 
-    /**
-     * @param int $flagId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
-     */
     public function findById(int $flagId): ?Flag
     {
         return $this->getFlagRepository()->find($flagId);
     }
 
-    /**
-     * @param int $flagId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public function getById(int $flagId): Flag
     {
         $flag = $this->findById($flagId);
@@ -69,10 +53,6 @@ class FlagRepository
         return $this->getFlagRepository()->findBy(['id' => $flagIds], ['id' => 'asc']);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public function getByUuid(string $uuid): Flag
     {
         $flag = $this->getFlagRepository()->findOneBy(['uuid' => $uuid]);
@@ -103,7 +83,6 @@ class FlagRepository
 
     /**
      * @param int[] $flagsIds
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getVisibleFlagsByIds(array $flagsIds, string $locale): array
@@ -119,9 +98,6 @@ class FlagRepository
         return $flagsQueryBuilder->getQuery()->getResult();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getVisibleQueryBuilder(): QueryBuilder
     {
         return $this->getFlagRepository()->createQueryBuilder('f')
@@ -144,11 +120,6 @@ class FlagRepository
         return array_column($queryBuilder->getQuery()->getArrayResult(), 'id');
     }
 
-    /**
-     * @param int $flagId
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public function getVisibleFlagById(int $flagId, string $locale): Flag
     {
         $flagsQueryBuilder = $this->getVisibleQueryBuilder()
@@ -168,7 +139,6 @@ class FlagRepository
     }
 
     /**
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getAllVisibleFlags(string $locale): array
@@ -182,11 +152,6 @@ class FlagRepository
         return $flagsQueryBuilder->getQuery()->getResult();
     }
 
-    /**
-     * @param string $uuid
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public function getVisibleByUuid(string $uuid, string $locale): Flag
     {
         $flagsQueryBuilder = $this->getVisibleQueryBuilder()
@@ -205,10 +170,6 @@ class FlagRepository
         return $flag;
     }
 
-    /**
-     * @param int $flagId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDependenciesData
-     */
     public function getFlagDependencies(int $flagId): FlagDependenciesData
     {
         $flagDependenciesData = $this->flagDependenciesDataFactory->create();

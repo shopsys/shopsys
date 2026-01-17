@@ -11,16 +11,12 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class FlagRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 
     /**
      * @param int[][] $flagsIds
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Product\Flag\Flag[][]
      */
     public function getFlagsByIds(array $flagsIds, DomainConfig $domainConfig): array

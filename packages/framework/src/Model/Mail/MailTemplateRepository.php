@@ -12,10 +12,6 @@ use Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException;
 
 class MailTemplateRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Localization $localization,
@@ -74,10 +70,6 @@ class MailTemplateRepository
         return $this->getMailTemplateRepository()->findBy($criteria);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function createQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->getMailTemplateRepository()->createQueryBuilder('mt')
@@ -85,10 +77,6 @@ class MailTemplateRepository
             ->setParameter('domainId', $domainId);
     }
 
-    /**
-     * @param int $mailTemplateId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
     public function getById(int $mailTemplateId): MailTemplate
     {
         $mailTemplate = $this->getMailTemplateRepository()->find($mailTemplateId);
@@ -116,10 +104,6 @@ class MailTemplateRepository
         return $countOfEmptyTemplates > 0;
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function createGridQueryBuilder(int $domainId): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder($domainId);

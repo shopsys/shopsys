@@ -44,29 +44,6 @@ class CustomerUserMutation extends BaseTokenMutation
 {
     protected const string VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
 
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
-     * @param \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $userPasswordHasher
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade $registrationFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade $watchdogFacade
-     */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         protected readonly FrontendCustomerUserProvider $frontendCustomerUserProvider,
@@ -93,11 +70,6 @@ class CustomerUserMutation extends BaseTokenMutation
         parent::__construct($tokenStorage);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function changePasswordMutation(Argument $argument, InputValidator $validator): CustomerUser
     {
         $user = $this->runCheckUserIsLogged();
@@ -124,11 +96,6 @@ class CustomerUserMutation extends BaseTokenMutation
         return $customerUser;
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function changePersonalDataMutation(Argument $argument, InputValidator $validator): CustomerUser
     {
         $user = $this->runCheckUserIsLogged();
@@ -146,11 +113,6 @@ class CustomerUserMutation extends BaseTokenMutation
         return $customerUser;
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function changeCompanyDataMutation(Argument $argument, InputValidator $validator): CustomerUser
     {
         $user = $this->runCheckUserIsLogged();
@@ -169,11 +131,6 @@ class CustomerUserMutation extends BaseTokenMutation
         return $customerUser;
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
-     */
     public function registerMutation(Argument $argument, InputValidator $validator): LoginResultData
     {
         $validationGroups = $this->computeValidationGroups($argument);
@@ -191,10 +148,6 @@ class CustomerUserMutation extends BaseTokenMutation
         return $this->loginRegisteredCustomerUser($customerUser);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
-     */
     public function registerByOrderMutation(Argument $argument): LoginResultData
     {
         $input = $argument['input'];
@@ -205,7 +158,6 @@ class CustomerUserMutation extends BaseTokenMutation
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return string[]
      */
     protected function computeValidationGroups(Argument $argument): array
@@ -220,11 +172,6 @@ class CustomerUserMutation extends BaseTokenMutation
         return $validationGroups;
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function addNewCustomerUserMutation(Argument $argument, InputValidator $validator): CustomerUser
     {
         $user = $this->runCheckUserIsLogged();
@@ -238,11 +185,6 @@ class CustomerUserMutation extends BaseTokenMutation
         return $this->customerUserFacade->createCustomerUserWithActivationMail($customer, $customerUserData);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function editCustomerUserPersonalDataMutation(Argument $argument, InputValidator $validator): CustomerUser
     {
         $this->runCheckUserIsLogged();
@@ -260,10 +202,6 @@ class CustomerUserMutation extends BaseTokenMutation
         return $this->customerUserFacade->editCustomerUser($customerUser->getId(), $customerUserData);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return bool
-     */
     public function removeCustomerUserMutation(Argument $argument): bool
     {
         $frontendApiUser = $this->runCheckUserIsLogged();
@@ -287,10 +225,6 @@ class CustomerUserMutation extends BaseTokenMutation
         return true;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUserToDelete
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $currentCustomer
-     */
     protected function checkCustomerUserCanBeDeleted(
         CustomerUser $customerUserToDelete,
         CustomerUser $currentCustomer,
@@ -326,10 +260,6 @@ class CustomerUserMutation extends BaseTokenMutation
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
-     */
     protected function loginRegisteredCustomerUser(CustomerUser $customerUser): LoginResultData
     {
         $deviceId = Uuid::uuid4()->toString();

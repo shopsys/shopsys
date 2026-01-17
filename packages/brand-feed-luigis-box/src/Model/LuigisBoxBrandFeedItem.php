@@ -11,12 +11,6 @@ class LuigisBoxBrandFeedItem implements FeedItemInterface
 {
     public const UNIQUE_BRAND_IDENTIFIER_PREFIX = 'brand';
 
-    /**
-     * @param int $id
-     * @param string $name
-     * @param string $url
-     * @param string|null $imageUrl
-     */
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,
@@ -25,42 +19,27 @@ class LuigisBoxBrandFeedItem implements FeedItemInterface
     ) {
     }
 
-    /**
-     * @return int
-     */
     #[Override]
     public function getSeekId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getIdentity(): string
     {
         return static::UNIQUE_BRAND_IDENTIFIER_PREFIX . '-' . $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @return string|null
-     */
     public function getImageUrl(): ?string
     {
         return $this->imageUrl;

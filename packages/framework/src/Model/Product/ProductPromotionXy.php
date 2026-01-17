@@ -30,9 +30,6 @@ class ProductPromotionXy
     #[ORM\Column(type: 'integer', nullable: false, name: 'free_quantity')]
     protected $freeQuantity;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyData $productPromotionXyData
-     */
     public function __construct(ProductPromotionXyData $productPromotionXyData)
     {
         $this->setData($productPromotionXyData);
@@ -54,9 +51,6 @@ class ProductPromotionXy
         return $this->freeQuantity;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyData $productPromotionXyData
-     */
     public function setData(ProductPromotionXyData $productPromotionXyData): void
     {
         $this->buyQuantity = $productPromotionXyData->buyQuantity;

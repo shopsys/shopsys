@@ -112,10 +112,6 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         );
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return \App\Model\Product\Product
-     */
     private function getRefreshedProductFromDatabase(Product $product): Product
     {
         $this->em->persist($product);
@@ -128,9 +124,6 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         return $this->em->getRepository(Product::class)->find($productId);
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
     private function setVatsAndPrices(ProductData $productData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {

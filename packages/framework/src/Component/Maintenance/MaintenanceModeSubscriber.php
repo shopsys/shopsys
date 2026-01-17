@@ -13,19 +13,12 @@ use Twig\Environment;
 
 class MaintenanceModeSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Maintenance\MaintenanceModeFacade $maintenanceModeFacade
-     * @param \Twig\Environment $twigEnvironment
-     */
     public function __construct(
         protected readonly MaintenanceModeFacade $maintenanceModeFacade,
         protected readonly Environment $twigEnvironment,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $requestEvent
-     */
     public function enableMaintenanceOnRequest(RequestEvent $requestEvent): void
     {
         if ($this->maintenanceModeFacade->isEnabled() === false

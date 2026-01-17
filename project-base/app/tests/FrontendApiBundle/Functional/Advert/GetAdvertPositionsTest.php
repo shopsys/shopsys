@@ -25,9 +25,6 @@ class GetAdvertPositionsTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @return string
-     */
     private function getAllAdvertPositionsQuery(): string
     {
         return '
@@ -40,9 +37,6 @@ class GetAdvertPositionsTest extends GraphQlTestCase
         ';
     }
 
-    /**
-     * @return array
-     */
     private function getExpectedAdvertPositions(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();

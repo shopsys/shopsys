@@ -20,13 +20,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class OrdersQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilterFactory $orderFilterFactory
-     */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly OrderApiFacade $orderApiFacade,
@@ -36,10 +29,6 @@ class OrdersQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|\GraphQL\Executor\Promise\Promise
-     */
     public function ordersQuery(Argument $argument): ConnectionInterface|Promise
     {
         $this->pageSizeValidator->checkMaxPageSize($argument);
@@ -55,11 +44,6 @@ class OrdersQuery extends AbstractQuery
         return $this->getPaginatedCustomerUserOrders($customerUser, $argument);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|\GraphQL\Executor\Promise\Promise
-     */
     protected function getPaginatedCustomerUserOrders(
         CustomerUser $customerUser,
         Argument $argument,
@@ -73,11 +57,6 @@ class OrdersQuery extends AbstractQuery
         return $paginator->auto($argument, $this->orderApiFacade->getCustomerUserOrderCount($customerUser, $filter));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|\GraphQL\Executor\Promise\Promise
-     */
     protected function getPaginatedCustomerOrders(
         Customer $customer,
         Argument $argument,

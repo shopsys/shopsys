@@ -8,11 +8,6 @@ use Exception;
 
 class BrandDomainNotFoundException extends Exception
 {
-    /**
-     * @param int $domainId
-     * @param int|null $brandId
-     * @param \Exception|null $previous
-     */
     public function __construct(int $domainId, ?int $brandId = null, ?Exception $previous = null)
     {
         $brandDescription = $brandId !== null ? sprintf('with ID %d', $brandId) : 'without ID';

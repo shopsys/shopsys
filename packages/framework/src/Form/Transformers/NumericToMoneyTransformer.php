@@ -12,16 +12,12 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class NumericToMoneyTransformer implements DataTransformerInterface
 {
-    /**
-     * @param int $floatScale
-     */
     public function __construct(protected readonly int $floatScale)
     {
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $value
-     * @return string|null
      */
     #[Override]
     public function transform($value): ?string
@@ -39,7 +35,6 @@ class NumericToMoneyTransformer implements DataTransformerInterface
 
     /**
      * @param string|float|int|null $value
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     #[Override]
     public function reverseTransform($value): ?Money

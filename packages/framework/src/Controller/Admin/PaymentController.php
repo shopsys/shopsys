@@ -26,13 +26,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT)]
 class PaymentController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory $paymentDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory $paymentGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     */
     public function __construct(
         protected readonly PaymentDataFactory $paymentDataFactory,
         protected readonly CurrencyFacade $currencyFacade,
@@ -42,10 +35,6 @@ class PaymentController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/payment/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -81,11 +70,6 @@ class PaymentController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/payment/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -126,10 +110,6 @@ class PaymentController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/payment/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -153,9 +133,6 @@ class PaymentController extends AdminBaseController
         return $this->redirectToRoute('admin_transportandpayment_list');
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[CanView]
     public function listAction(): Response
     {

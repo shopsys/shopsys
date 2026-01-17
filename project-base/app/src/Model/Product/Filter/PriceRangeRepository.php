@@ -18,10 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository as BasePri
  */
 class PriceRangeRepository extends BasePriceRangeRepository
 {
-    /**
-     * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
-     */
     public function __construct(
         ProductRepository $productRepository,
         QueryBuilderExtender $queryBuilderExtender,
@@ -31,7 +27,6 @@ class PriceRangeRepository extends BasePriceRangeRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param \App\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
@@ -49,7 +44,6 @@ class PriceRangeRepository extends BasePriceRangeRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $locale
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange

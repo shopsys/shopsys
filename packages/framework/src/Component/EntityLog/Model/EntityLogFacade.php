@@ -12,14 +12,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class EntityLogFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository $entityLogRepository
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Detection\DetectionFacade $detectionFacade
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFactory $entityLogFactory
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogDataFactory $entityLogDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
-     */
     public function __construct(
         protected readonly EntityLogRepository $entityLogRepository,
         protected readonly Localization $localization,
@@ -30,19 +22,11 @@ class EntityLogFacade
     ) {
     }
 
-    /**
-     * @param object|string $objectOrClass
-     * @return string
-     */
     public function getEntityNameByEntity(object|string $objectOrClass): string
     {
         return $this->getEntityNameDataByEntity($objectOrClass)->getShortName();
     }
 
-    /**
-     * @param object|string $objectOrClass
-     * @return \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityNameData
-     */
     public function getEntityNameDataByEntity(object|string $objectOrClass): EntityNameData
     {
         $entityFullyQualifiedName = is_string($objectOrClass) ? $objectOrClass : get_class($objectOrClass);
@@ -57,13 +41,6 @@ class EntityLogFacade
         );
     }
 
-    /**
-     * @param object $entity
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig $loggableEntityConfig
-     * @param string $action
-     * @param array $changes
-     * @return \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog
-     */
     public function createEntityLog(
         object $entity,
         LoggableEntityConfig $loggableEntityConfig,
@@ -93,10 +70,6 @@ class EntityLogFacade
         return $this->entityLogFactory->create($entityLogData);
     }
 
-    /**
-     * @param object $entity
-     * @return int
-     */
     protected function getEntityIdentifierByEntityAndLoggableSetup(object $entity): int
     {
         if (method_exists($entity, 'getId')) {
@@ -106,11 +79,6 @@ class EntityLogFacade
         throw new NotLoggableException(sprintf('Entity %s without ID as primary key is not loggable.', $entity::class));
     }
 
-    /**
-     * @param object $entity
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig $loggableSetup
-     * @return string|null
-     */
     public function getEntityReadableIdentifierByEntityAndLoggableSetup(
         object $entity,
         LoggableEntityConfig $loggableSetup,
@@ -128,9 +96,6 @@ class EntityLogFacade
         return call_user_func([$entity, $functionName]);
     }
 
-    /**
-     * @return string
-     */
     public function getLocaleForEntityLog(): string
     {
         $defaultAdminLocale = $this->administratorLocalizationFacade->getDefaultAdminLocale();

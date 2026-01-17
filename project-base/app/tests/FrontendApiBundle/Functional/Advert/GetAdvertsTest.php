@@ -158,10 +158,6 @@ class GetAdvertsTest extends GraphQlTestCase
         $this->assetAdvertsAreAsExpected($response, $expectedAdvertsData);
     }
 
-    /**
-     * @param array $response
-     * @param array $expectedData
-     */
     private function assetAdvertsAreAsExpected(array $response, array $expectedData): void
     {
         $graphQlType = 'adverts';
@@ -179,9 +175,6 @@ class GetAdvertsTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @return array
-     */
     private function getExpectedAdverts(): array
     {
         $imageFacade = self::getContainer()->get(ImageFacade::class);

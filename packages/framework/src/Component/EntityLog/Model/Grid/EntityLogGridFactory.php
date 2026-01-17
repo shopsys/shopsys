@@ -14,12 +14,6 @@ use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 
 class EntityLogGridFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository $entityLogRepository
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\ResolvedChangesFormatter $resolvedChangesFormatter
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
-     */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly EntityLogRepository $entityLogRepository,
@@ -28,11 +22,6 @@ class EntityLogGridFactory
     ) {
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     public function createByEntityNameAndEntityId(string $entityName, int $entityId): Grid
     {
         $queryBuilder = $this->entityLogRepository->getQueryBuilderByEntityNameAndEntityId($entityName, $entityId);

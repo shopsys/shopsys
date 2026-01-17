@@ -18,8 +18,6 @@ class ChangeSetResolver
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataTypeResolverInterface[] $dataTypeResolvers
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFactory $loggableEntityConfigFactory
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
      */
     public function __construct(
         iterable $dataTypeResolvers,
@@ -50,11 +48,6 @@ class ChangeSetResolver
         $this->dataTypeResolvers = $dataTypeResolversArray;
     }
 
-    /**
-     * @param array $changeSet
-     * @param object $entity
-     * @return array
-     */
     public function resolveChangeSetForEntity(array $changeSet, object $entity): array
     {
         $loggableSetup = $this->loggableEntityConfigFactory->getLoggableSetupByEntity($entity);
@@ -75,10 +68,6 @@ class ChangeSetResolver
         return $resolvedChangeSet;
     }
 
-    /**
-     * @param array $changes
-     * @return \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges|null
-     */
     protected function getResolvedChanges(array $changes): ?ResolvedChanges
     {
         foreach ($this->dataTypeResolvers as $dataTypeResolver) {
@@ -98,8 +87,6 @@ class ChangeSetResolver
 
     /**
      * @param \Doctrine\ORM\PersistentCollection[] $scheduledCollections
-     * @param object $entity
-     * @return array
      */
     public function resolveChangesOnCollectionForEntity(array $scheduledCollections, object $entity): array
     {

@@ -6,27 +6,16 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 class FriendlyUrlDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData
-     */
     protected function createInstance(): FriendlyUrlData
     {
         return new FriendlyUrlData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData
-     */
     public function create(): FriendlyUrlData
     {
         return $this->createInstance();
     }
 
-    /**
-     * @param int $id
-     * @param string $name
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData
-     */
     public function createFromIdAndName(int $id, string $name): FriendlyUrlData
     {
         $friendlyUrlData = $this->create();
@@ -36,10 +25,6 @@ class FriendlyUrlDataFactory
         return $friendlyUrlData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData
-     */
     public function createFromFriendlyUrl(FriendlyUrl $friendlyUrl): FriendlyUrlData
     {
         $friendlyUrlData = $this->createInstance();

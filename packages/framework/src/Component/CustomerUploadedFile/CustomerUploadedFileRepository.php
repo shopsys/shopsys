@@ -13,24 +13,16 @@ use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFil
 
 class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getCustomerUploadedFileRepository(): EntityRepository
     {
         return $this->em->getRepository(CustomerUploadedFile::class);
     }
 
     /**
-     * @param string $entityName
-     * @param int $entityId
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[]
      */
     public function getAllCustomerUploadedFilesByEntity(string $entityName, int $entityId): array
@@ -44,9 +36,6 @@ class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
     }
 
     /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[]
      */
     #[Override]
@@ -66,7 +55,6 @@ class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
     }
 
     /**
-     * @param int $uploadedFileId
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile
      */
     #[Override]
@@ -83,13 +71,6 @@ class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
         return $customerUploadedFile;
     }
 
-    /**
-     * @param int $customerUploadedFileId
-     * @param string $customerUploadedFileSlug
-     * @param string $customerUploadedFileExtension
-     * @param string $hash
-     * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile
-     */
     public function getByIdSlugAndExtensionAndHash(
         int $customerUploadedFileId,
         string $customerUploadedFileSlug,
@@ -110,12 +91,6 @@ class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
         return $customerUploadedFile;
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string $type
-     * @return int
-     */
     public function getNewCustomerUploadedFilePosition(
         string $entityName,
         int $entityId,
@@ -133,12 +108,6 @@ class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
         return $position === null ? 0 : ++$position;
     }
 
-    /**
-     * @param object|null $customerUploadedFile
-     * @param int $customerUploadedFileId
-     * @param string $customerUploadedFileSlug
-     * @param string $customerUploadedFileExtension
-     */
     protected function checkExists(
         ?object $customerUploadedFile,
         int $customerUploadedFileId,

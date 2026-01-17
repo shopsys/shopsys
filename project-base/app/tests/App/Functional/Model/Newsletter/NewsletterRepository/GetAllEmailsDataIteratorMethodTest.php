@@ -31,10 +31,6 @@ class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
         $this->assertNotContainsNewsletterSubscriber($iterator, self::FIRST_DOMAIN_SUBSCRIBER_EMAIL);
     }
 
-    /**
-     * @param \Doctrine\ORM\Internal\Hydration\IterableResult $iterator
-     * @param string $email
-     */
     private function assertContainsNewsletterSubscriber(IterableResult $iterator, string $email): void
     {
         foreach ($iterator as $row) {
@@ -46,10 +42,6 @@ class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
         Assert::fail('Newsletter subscriber was not found, but was expected');
     }
 
-    /**
-     * @param \Doctrine\ORM\Internal\Hydration\IterableResult $iterator
-     * @param string $email
-     */
     private function assertNotContainsNewsletterSubscriber(IterableResult $iterator, string $email): void
     {
         foreach ($iterator as $row) {

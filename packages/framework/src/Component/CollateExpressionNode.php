@@ -37,19 +37,12 @@ class CollateExpressionNode extends FunctionNode
         $this->collation = $collation;
     }
 
-    /**
-     * @param \Doctrine\ORM\Query\Parser $parser
-     */
     #[Override]
     public function parse(Parser $parser): void
     {
         // This is not used as we create the node manually
     }
 
-    /**
-     * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
-     * @return string
-     */
     #[Override]
     public function getSql(SqlWalker $sqlWalker): string
     {

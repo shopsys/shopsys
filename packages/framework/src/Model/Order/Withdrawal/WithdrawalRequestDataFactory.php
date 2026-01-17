@@ -6,9 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
 class WithdrawalRequestDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData
-     */
     public function create(): WithdrawalRequestData
     {
         return $this->createInstance();
@@ -16,7 +13,6 @@ class WithdrawalRequestDataFactory
 
     /**
      * @param array<string, mixed> $data
-     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData
      */
     public function createFromArray(array $data): WithdrawalRequestData
     {
@@ -31,10 +27,6 @@ class WithdrawalRequestDataFactory
         return $withdrawalRequestData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
-     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData
-     */
     public function createFromWithdrawalRequest(WithdrawalRequest $withdrawalRequest): WithdrawalRequestData
     {
         $withdrawalRequestData = $this->createInstance();
@@ -49,9 +41,6 @@ class WithdrawalRequestDataFactory
         return $withdrawalRequestData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData
-     */
     protected function createInstance(): WithdrawalRequestData
     {
         return new WithdrawalRequestData();

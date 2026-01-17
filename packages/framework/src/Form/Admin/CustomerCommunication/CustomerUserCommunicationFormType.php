@@ -18,10 +18,6 @@ final class CustomerUserCommunicationFormType extends AbstractType
     public const string PAYMENT_SUCCESSFUL_CONTENT_FIELD_NAME = 'payment-successful-content';
     public const string PAYMENT_IN_PROCESS_CONTENT_FIELD_NAME = 'payment-in-progress-content';
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -9,9 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ControllerProtected
 {
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[CsrfProtection]
     public function __invoke(): Response
     {

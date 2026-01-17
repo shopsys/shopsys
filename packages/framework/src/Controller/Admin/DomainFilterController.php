@@ -15,20 +15,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class DomainFilterController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
     ) {
     }
 
-    /**
-     * @param string $namespace
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[RequireRole(SystemRole::ADMIN)]
     public function domainFilterTabsAction(string $namespace): Response
     {
@@ -39,12 +31,6 @@ class DomainFilterController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $namespace
-     * @param int|null $domainId
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     #[Route(path: '/multidomain/filter-domain/{namespace}/{domainId}', requirements: ['domainId' => '\d+'])]
     #[RequireRole(SystemRole::ADMIN)]
     public function selectDomainAction(Request $request, string $namespace, ?int $domainId = null): RedirectResponse

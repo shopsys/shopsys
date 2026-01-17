@@ -44,10 +44,6 @@ class SetDefaultDeliveryAddressTest extends GraphQlWithLoginTestCase
         $this->assertEquals($newDeliveryAddress->getUuid(), $data['defaultDeliveryAddress']['uuid']);
     }
 
-    /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     * @return \App\Model\Customer\DeliveryAddress
-     */
     private function createNewDeliveryAddress(CustomerUser $customerUser): DeliveryAddress
     {
         $country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);

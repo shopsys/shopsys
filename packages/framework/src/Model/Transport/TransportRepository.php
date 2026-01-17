@@ -11,9 +11,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException
 
 class TransportRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
@@ -46,7 +43,6 @@ class TransportRepository
     }
 
     /**
-     * @param array $transportIds
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
     public function getAllByIds(array $transportIds)
@@ -111,10 +107,6 @@ class TransportRepository
         return $transport;
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
     public function getOneByUuid(string $uuid): Transport
     {
         $transport = $this->getTransportRepository()->findOneBy(['uuid' => $uuid]);
@@ -126,11 +118,6 @@ class TransportRepository
         return $transport;
     }
 
-    /**
-     * @param string $uuid
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
     public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Transport
     {
         $queryBuilder = $this->getTransportRepository()->createQueryBuilder('t')
@@ -152,8 +139,6 @@ class TransportRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int|null $totalWeight
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
     public function getAllWithEagerLoadedDomainsAndTranslations(
@@ -180,9 +165,6 @@ class TransportRepository
             ->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     */
     public function deleteAllPricesByTransport(Transport $transport): void
     {
         $this->em->createQueryBuilder()

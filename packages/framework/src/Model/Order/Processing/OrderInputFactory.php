@@ -13,20 +13,11 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\Pers
 
 class OrderInputFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput
-     */
     public function create(DomainConfig $domainConfig): OrderInput
     {
         return new OrderInput($domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput
-     */
     public function createFromCart(Cart $cart, DomainConfig $domainConfig): OrderInput
     {
         $orderInput = $this->create($domainConfig);
@@ -49,10 +40,6 @@ class OrderInputFactory
         return $orderInput;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput $orderInput
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function fillItemsByCart(BaseOrderInput $orderInput, Cart $cart): void
     {
         $orderInput->cleanProducts();

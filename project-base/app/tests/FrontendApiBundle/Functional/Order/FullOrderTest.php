@@ -75,10 +75,6 @@ class FullOrderTest extends GraphQlTestCase
         $this->assertSame($expected, $this->createOrderAndGetData($cartUuid));
     }
 
-    /**
-     * @param string $cartUuid
-     * @return array
-     */
     private function createOrderAndGetData(string $cartUuid): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateFullOrderMutation.graphql', [

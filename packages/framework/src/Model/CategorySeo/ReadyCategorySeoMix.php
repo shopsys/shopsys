@@ -104,9 +104,6 @@ class ReadyCategorySeoMix
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
-     */
     public function __construct(ReadyCategorySeoMixData $readyCategorySeoMixData)
     {
         $this->readyCategorySeoMixParameterParameterValues = new ArrayCollection();
@@ -127,9 +124,6 @@ class ReadyCategorySeoMix
         $this->uuid = Uuid::uuid4()->toString();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
-     */
     public function edit(ReadyCategorySeoMixData $readyCategorySeoMixData): void
     {
         $this->category = $readyCategorySeoMixData->category;

@@ -31,12 +31,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class BlogCategoryFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly Domain $domain,
@@ -45,10 +39,6 @@ final class BlogCategoryFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -68,9 +58,6 @@ final class BlogCategoryFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -83,11 +70,6 @@ final class BlogCategoryFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|null $blogCategory
-     * @return string|null
-     */
     private function getCategoryNameForPlaceholder(
         DomainConfig $domainConfig,
         ?BlogCategory $blogCategory = null,
@@ -97,11 +79,6 @@ final class BlogCategoryFormType extends AbstractType
         return $blogCategory === null ? '' : $blogCategory->getName($domainLocale);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createSettingsGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         if ($options['blogCategory'] !== null) {
@@ -152,10 +129,6 @@ final class BlogCategoryFormType extends AbstractType
         return $builderSettingsGroup;
     }
 
-    /**
-     * @param array $options
-     * @return array
-     */
     private function prepareSeoData(array $options): array
     {
         $seoTitlesOptionsByDomainId = [];
@@ -189,11 +162,6 @@ final class BlogCategoryFormType extends AbstractType
         return [$seoTitlesOptionsByDomainId, $seoMetaDescriptionsOptionsByDomainId, $seoH1OptionsByDomainId];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createSeoGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         [$seoTitlesOptionsByDomainId, $seoMetaDescriptionsOptionsByDomainId, $seoH1OptionsByDomainId] = $this->prepareSeoData($options);
@@ -238,10 +206,6 @@ final class BlogCategoryFormType extends AbstractType
         return $builderSeoGroup;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|null $blogCategory
-     * @return int|null
-     */
     private function getBlogCategoryId(?BlogCategory $blogCategory): ?int
     {
         if ($blogCategory !== null) {
@@ -251,10 +215,6 @@ final class BlogCategoryFormType extends AbstractType
         return null;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createDescriptionGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderDescriptionGroup = $builder->create('description', GroupType::class, [
@@ -271,11 +231,6 @@ final class BlogCategoryFormType extends AbstractType
         return $builderDescriptionGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createImageGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $builderImageGroup = $builder->create('image', GroupType::class, [

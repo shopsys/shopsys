@@ -15,10 +15,6 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 
 class GoPayRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OrderRepository $orderRepository,
@@ -26,7 +22,6 @@ class GoPayRepository
     }
 
     /**
-     * @param \DateTimeImmutable $fromDate
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getAllUnpaidGoPayOrders(DateTimeImmutable $fromDate): array

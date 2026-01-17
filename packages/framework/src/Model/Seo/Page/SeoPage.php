@@ -40,9 +40,6 @@ class SeoPage
     #[ORM\Column(type: 'boolean', nullable: false)]
     protected $defaultPage;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
-     */
     public function __construct(
         SeoPageData $seoPageData,
     ) {
@@ -53,9 +50,6 @@ class SeoPage
         $this->setData($seoPageData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
-     */
     public function edit(SeoPageData $seoPageData): void
     {
         $this->setData($seoPageData);
@@ -78,7 +72,6 @@ class SeoPage
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoTitle(int $domainId)
@@ -87,7 +80,6 @@ class SeoPage
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoMetaDescription(int $domainId)
@@ -96,7 +88,6 @@ class SeoPage
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getCanonicalUrl(int $domainId)
@@ -105,7 +96,6 @@ class SeoPage
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoOgTitle(int $domainId)
@@ -114,7 +104,6 @@ class SeoPage
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoOgDescription(int $domainId)
@@ -123,7 +112,6 @@ class SeoPage
     }
 
     /**
-     * @param int $domainId
      * @return string
      */
     public function getPageSlug(int $domainId)
@@ -131,10 +119,6 @@ class SeoPage
         return $this->getSeoPageDomain($domainId)->getPageSlug();
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDomain
-     */
     protected function getSeoPageDomain(int $domainId): SeoPageDomain
     {
         foreach ($this->domains as $seoPageDomain) {
@@ -146,18 +130,12 @@ class SeoPage
         throw new SeoPageDomainNotFoundException($this->id, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
-     */
     protected function setData(SeoPageData $seoPageData): void
     {
         $this->setDomains($seoPageData);
         $this->defaultPage = $seoPageData->defaultPage;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
-     */
     protected function createDomains(SeoPageData $seoPageData): void
     {
         $domainIds = array_keys($seoPageData->seoTitlesIndexedByDomainId);
@@ -171,9 +149,6 @@ class SeoPage
         $this->setDomains($seoPageData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
-     */
     protected function setDomains(SeoPageData $seoPageData): void
     {
         foreach ($this->domains as $seoPageDomain) {

@@ -10,7 +10,6 @@ class UnsupportedSelectionType extends Exception
 {
     /**
      * @param string $selectionType
-     * @param \Exception|null $previous
      */
     public function __construct($selectionType, ?Exception $previous = null)
     {

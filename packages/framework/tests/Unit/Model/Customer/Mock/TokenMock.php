@@ -12,9 +12,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TokenMock implements TokenInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     */
     public function __construct(private readonly CustomerUser $customerUser)
     {
     }
@@ -24,24 +21,15 @@ class TokenMock implements TokenInterface
         return null;
     }
 
-    /**
-     * @param string $data
-     */
     public function unserialize(string $data)
     {
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return '';
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getRoleNames(): array
     {
@@ -52,9 +40,6 @@ class TokenMock implements TokenInterface
     {
     }
 
-    /**
-     * @return \Symfony\Component\Security\Core\User\UserInterface|null
-     */
     #[Override]
     public function getUser(): ?UserInterface
     {
@@ -74,9 +59,6 @@ class TokenMock implements TokenInterface
         return true;
     }
 
-    /**
-     * @param bool $isAuthenticated
-     */
     public function setAuthenticated(bool $isAuthenticated)
     {
     }
@@ -86,37 +68,23 @@ class TokenMock implements TokenInterface
     {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getAttributes(): array
     {
         return [];
     }
 
-    /**
-     * @param array $attributes
-     */
     #[Override]
     public function setAttributes(array $attributes): void
     {
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
     #[Override]
     public function hasAttribute(string $name): bool
     {
         return true;
     }
 
-    /**
-     * @param string $name
-     * @return mixed
-     */
     #[Override]
     public function getAttribute(string $name): mixed
     {
@@ -124,7 +92,6 @@ class TokenMock implements TokenInterface
     }
 
     /**
-     * @param string $name
      * @param mixed $value
      */
     #[Override]
@@ -132,17 +99,11 @@ class TokenMock implements TokenInterface
     {
     }
 
-    /**
-     * @return array
-     */
     public function __serialize(): array
     {
         return [];
     }
 
-    /**
-     * @param array $data
-     */
     public function __unserialize(array $data): void
     {
     }
@@ -152,9 +113,6 @@ class TokenMock implements TokenInterface
         return '';
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getUserIdentifier(): string
     {

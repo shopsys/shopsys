@@ -17,9 +17,6 @@ class BoolAndFunction extends FunctionNode
 
     public Node $stringExpression;
 
-    /**
-     * @param \Doctrine\ORM\Query\Parser $parser
-     */
     #[Override]
     public function parse(Parser $parser)
     {
@@ -30,7 +27,6 @@ class BoolAndFunction extends FunctionNode
     }
 
     /**
-     * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
      * @return string
      */
     #[Override]

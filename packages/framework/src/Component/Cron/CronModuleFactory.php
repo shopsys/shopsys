@@ -8,17 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class CronModuleFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param string $serviceId
-     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModule
-     */
     public function create(string $serviceId): CronModule
     {
         $entityClassName = $this->entityNameResolver->resolve(CronModule::class);

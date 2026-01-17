@@ -8,10 +8,6 @@ use Override;
 
 abstract class AbstractDataTypeResolver implements DataTypeResolverInterface
 {
-    /**
-     * @param array $changes
-     * @return bool
-     */
     #[Override]
     public function isResolvedDataTypeByChanges(array $changes): bool
     {
@@ -26,9 +22,5 @@ abstract class AbstractDataTypeResolver implements DataTypeResolverInterface
         return false;
     }
 
-    /**
-     * @param mixed $value
-     * @return bool
-     */
     abstract protected function isResolvedDataType(mixed $value): bool;
 }

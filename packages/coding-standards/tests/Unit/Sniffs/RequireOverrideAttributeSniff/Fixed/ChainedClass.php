@@ -9,18 +9,12 @@ use Tests\CodingStandards\Unit\Sniffs\RequireOverrideAttributeSniff\Base\Abstrac
 
 class ChainedClass extends AbstractChainedTestClass
 {
-    /**
-     * @return string
-     */
     #[Override]
     public function getName(): string
     {
         return 'name';
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getDescription(): string
     {
@@ -37,9 +31,6 @@ class ChainedClass extends AbstractChainedTestClass
     {
     }
 
-    /**
-     * @return string
-     */
     public function uniqueMethod(): string
     {
         return 'This method should not need Override';

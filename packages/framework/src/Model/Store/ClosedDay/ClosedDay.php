@@ -51,9 +51,6 @@ class ClosedDay
     #[ORM\Column(type: 'boolean')]
     protected $isPublicHoliday;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayData $closedDayData
-     */
     public function __construct(ClosedDayData $closedDayData)
     {
         $this->setData($closedDayData);
@@ -107,17 +104,11 @@ class ClosedDay
         return $this->isPublicHoliday;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayData $closedDayData
-     */
     public function edit(ClosedDayData $closedDayData): void
     {
         $this->setData($closedDayData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayData $closedDayData
-     */
     protected function setData(ClosedDayData $closedDayData): void
     {
         $this->excludedStores = new ArrayCollection($closedDayData->excludedStores);

@@ -18,10 +18,6 @@ class DateTimeFormatterExtension extends AbstractExtension
 {
     protected const HOUR_IN_SECONDS = 60 * 60;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface $dateTimeFormatter
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly DateTimeFormatterInterface $dateTimeFormatter,
         protected readonly Localization $localization,
@@ -176,10 +172,6 @@ class DateTimeFormatterExtension extends AbstractExtension
         return $startDate . ' - ' . $endDate;
     }
 
-    /**
-     * @param int|null $durationInSeconds
-     * @return string
-     */
     public function formatDurationInSeconds(?int $durationInSeconds): string
     {
         if ($durationInSeconds === null) {

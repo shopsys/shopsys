@@ -16,14 +16,6 @@ use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 
 class WithdrawalRequestApiFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalChecker $withdrawalChecker
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessageDispatcher $withdrawalRequestMessageDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
-     */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly OrderDataFactory $orderDataFactory,
@@ -34,10 +26,6 @@ class WithdrawalRequestApiFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData $withdrawalRequestData
-     */
     public function createWithdrawalRequest(Order $order, WithdrawalRequestData $withdrawalRequestData): void
     {
         $this->withdrawalChecker->checkOrderWithdrawal($order);

@@ -11,12 +11,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 final class OrderTotalPrice implements OrderTotalPriceInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $productPriceWithVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $productPriceWithoutVat
-     */
     public function __construct(
         private readonly Money $priceWithVat,
         private readonly Money $priceWithoutVat,

@@ -10,7 +10,6 @@ class CronModuleConfigNotFoundException extends Exception
 {
     /**
      * @param string $serviceId
-     * @param \Exception $previous
      */
     public function __construct($serviceId, ?Exception $previous = null)
     {

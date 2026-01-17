@@ -24,13 +24,6 @@ class DomainRouter extends ChainRouter
     public const int SLUG = 10;
 
     /**
-     * @param \Symfony\Component\Routing\RequestContext $context
-     * @param \Symfony\Component\Routing\RouterInterface $basicRouter
-     * @param \Symfony\Component\Routing\RouterInterface $localizedRouter
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter $friendlyUrlRouter
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     * @param \Psr\Log\LoggerInterface|null $logger
      * @throws \Shopsys\FrameworkBundle\Component\Router\Exception\NotSupportedException
      */
     public function __construct(
@@ -53,8 +46,6 @@ class DomainRouter extends ChainRouter
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $parameters
      * @param int $referenceType
      * @return string
      */
@@ -66,9 +57,6 @@ class DomainRouter extends ChainRouter
         return $this->friendlyUrlRouter->generateByFriendlyUrl($friendlyUrl, $parameters, $referenceType);
     }
 
-    /**
-     * @param \Symfony\Component\Routing\RequestContext $context
-     */
     #[Override]
     public function setContext(RequestContext $context): void
     {
@@ -81,10 +69,6 @@ class DomainRouter extends ChainRouter
         parent::setContext($context);
     }
 
-    /**
-     * @param string $pathinfo
-     * @return array
-     */
     #[Override]
     public function match(string $pathinfo): array
     {
@@ -93,10 +77,6 @@ class DomainRouter extends ChainRouter
         return parent::match($pathinfo);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return array
-     */
     #[Override]
     public function matchRequest(Request $request): array
     {
@@ -105,10 +85,6 @@ class DomainRouter extends ChainRouter
         return parent::matchRequest($request);
     }
 
-    /**
-     * @param string $pathinfo
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
     protected function rebuildRequestByCurrentDomainConfig(string $pathinfo): Request
     {
         $pathinfo = $this->rebuildPathInfoByCurrentDomainConfig($pathinfo);
@@ -136,20 +112,11 @@ class DomainRouter extends ChainRouter
         return Request::create($uri, $context->getMethod(), $context->getParameters(), [], [], $server);
     }
 
-    /**
-     * @param string $pathinfo
-     * @return string
-     */
     protected function rebuildPathInfoByCurrentDomainConfig(string $pathinfo): string
     {
         return $this->filterByDomainConfig($pathinfo, $this->domainConfig);
     }
 
-    /**
-     * @param string $url
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public static function filterByDomainConfig(string $url, DomainConfig $domainConfig): string
     {
         $urlComponents = parse_url($url);
@@ -181,12 +148,6 @@ class DomainRouter extends ChainRouter
         return str_replace($domainUrl, $baseUrl, $url);
     }
 
-    /**
-     * @param string $name
-     * @param array $parameters
-     * @param int $referenceType
-     * @return string
-     */
     #[Override]
     public function generate(
         string $name,

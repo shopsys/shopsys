@@ -13,10 +13,7 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 class AdministratorLocalizationFacade
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param string[] $allowedAdminLocales
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         protected readonly Localization $localization,
@@ -26,10 +23,6 @@ class AdministratorLocalizationFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param string $locale
-     */
     public function setSelectedLocale(Administrator $administrator, string $locale): void
     {
         if (!$this->isAdminLocaleSupported($locale)) {
@@ -41,9 +34,6 @@ class AdministratorLocalizationFacade
         $this->em->flush();
     }
 
-    /**
-     * @return string
-     */
     public function getCurrentAdminLocaleOrDefault(): string
     {
         try {
@@ -70,9 +60,6 @@ class AdministratorLocalizationFacade
         return $this->allowedAdminLocales;
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultAdminLocale(): string
     {
         $allowedAdminLocales = $this->allowedAdminLocales;
@@ -85,10 +72,6 @@ class AdministratorLocalizationFacade
         return $defaultAdminLocale;
     }
 
-    /**
-     * @param string $locale
-     * @return bool
-     */
     protected function isAdminLocaleSupported(string $locale): bool
     {
         return in_array($locale, $this->allowedAdminLocales, true);

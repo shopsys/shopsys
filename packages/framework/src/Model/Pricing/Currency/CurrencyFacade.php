@@ -14,15 +14,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CurrencyFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyRepository $currencyRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactory $currencyFactory
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CurrencyRepository $currencyRepository,
@@ -43,17 +34,12 @@ class CurrencyFacade
         return $this->currencyRepository->getById($currencyId);
     }
 
-    /**
-     * @param string $currencyCode
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     public function getByCode(string $currencyCode): Currency
     {
         return $this->currencyRepository->getByCode($currencyCode);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
     public function create(CurrencyData $currencyData)
@@ -69,7 +55,6 @@ class CurrencyFacade
 
     /**
      * @param int $currencyId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
     public function edit($currencyId, CurrencyData $currencyData)
@@ -131,9 +116,6 @@ class CurrencyFacade
         return $this->getById($this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     */
     public function setDefaultCurrency(Currency $currency)
     {
         $originalDefaultCurrency = $this->getDefaultCurrency();
@@ -143,7 +125,6 @@ class CurrencyFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
      */
     public function setDomainDefaultCurrency(Currency $currency, $domainId)
@@ -152,10 +133,6 @@ class CurrencyFacade
         $this->dispatchCurrencyEvent($currency, CurrencyEvent::UPDATE);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $originalDefaultCurrency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $newDefaultCurrency
-     */
     protected function recalculateExchangeRatesByNewDefaultCurrency(
         Currency $originalDefaultCurrency,
         Currency $newDefaultCurrency,
@@ -193,7 +170,6 @@ class CurrencyFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return bool
      */
     public function isDefaultCurrency(Currency $currency)
@@ -223,11 +199,6 @@ class CurrencyFacade
         return $currenciesIndexedById;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $inputCurrency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $outputCurrency
-     * @return \Litipk\BigNumbers\Decimal
-     */
     public function getExchangeRateForCurrencies(Currency $inputCurrency, Currency $outputCurrency): Decimal
     {
         $inputCurrencyExchangeRate = Decimal::fromString($inputCurrency->getExchangeRate());
@@ -237,8 +208,6 @@ class CurrencyFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param string $eventType
      * @see \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyEvent class
      */
     protected function dispatchCurrencyEvent(Currency $currency, string $eventType): void

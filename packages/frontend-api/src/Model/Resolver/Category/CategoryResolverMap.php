@@ -20,14 +20,6 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 class CategoryResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader
-     * @param \Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
@@ -38,9 +30,6 @@ class CategoryResolverMap extends ResolverMap
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {
@@ -57,11 +46,6 @@ class CategoryResolverMap extends ResolverMap
         ];
     }
 
-    /**
-     * @param string $fieldName
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return mixed
-     */
     protected function mapCommonFields(string $fieldName, Category $category): mixed
     {
         return match ($fieldName) {
@@ -77,11 +61,6 @@ class CategoryResolverMap extends ResolverMap
         };
     }
 
-    /**
-     * @param string $fieldName
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return mixed
-     */
     protected function mapByCategory(string $fieldName, Category $category): mixed
     {
         return match ($fieldName) {
@@ -96,11 +75,6 @@ class CategoryResolverMap extends ResolverMap
         };
     }
 
-    /**
-     * @param string $fieldName
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
-     * @return mixed
-     */
     protected function mapByReadyCategorySeoMix(string $fieldName, ReadyCategorySeoMix $readyCategorySeoMix): mixed
     {
         $category = $readyCategorySeoMix->getCategory();
@@ -117,11 +91,6 @@ class CategoryResolverMap extends ResolverMap
         };
     }
 
-    /**
-     * @param int $entityId
-     * @param string $routeName
-     * @return string
-     */
     protected function getSlug(int $entityId, string $routeName): string
     {
         $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(

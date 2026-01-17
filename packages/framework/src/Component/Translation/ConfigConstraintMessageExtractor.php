@@ -60,11 +60,6 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
         }
     }
 
-    /**
-     * @param array $yamlContent
-     * @param string $pattern
-     * @return array
-     */
     protected function getAllValuesOfArrayKeysByPattern(array $yamlContent, string $pattern): array
     {
         $iterator = new RecursiveArrayIterator($yamlContent);

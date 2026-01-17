@@ -45,9 +45,6 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
         self::assertEmpty($data['modifications']['promoCodeModifications']['noLongerApplicablePromoCode']);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     */
     public function applyValidPromoCodeToDefaultCart(): PromoCode
     {
         $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);

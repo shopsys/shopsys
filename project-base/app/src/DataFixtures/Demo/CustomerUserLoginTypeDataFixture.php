@@ -18,8 +18,6 @@ use Symfony\Component\Clock\DatePoint;
 class CustomerUserLoginTypeDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
@@ -55,9 +53,6 @@ class CustomerUserLoginTypeDataFixture extends AbstractReferenceFixture implemen
         ];
     }
 
-    /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     */
     private function createWebLoginType(CustomerUser $customerUser): void
     {
         $customerUserLoginTypeWebData = $this->customerUserLoginTypeDataFactory->create(
@@ -68,9 +63,6 @@ class CustomerUserLoginTypeDataFixture extends AbstractReferenceFixture implemen
         $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes($customerUserLoginTypeWebData);
     }
 
-    /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     */
     private function createFacebookLoginType(CustomerUser $customerUser): void
     {
         $customerUserLoginTypeFacebookData = $this->customerUserLoginTypeDataFactory->create(

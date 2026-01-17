@@ -17,10 +17,6 @@ final class CrudControllerRouteLoader implements LoaderInterface
     public const string CRUD_ACTION = '_crud_action';
     public const string CRUD_ROLE_CONSTANT = '_crud_role_constant';
 
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry $crudControllerRegistry
-     * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
-     */
     public function __construct(
         private readonly CrudControllerRegistry $crudControllerRegistry,
         private readonly CrudRouteProvider $crudRouteProvider,
@@ -70,10 +66,6 @@ final class CrudControllerRouteLoader implements LoaderInterface
         // No implementation needed
     }
 
-    /**
-     * @param \Symfony\Component\Routing\RouteCollection $routes
-     * @param \Shopsys\AdministrationBundle\Component\Crud\Definition $item
-     */
     private function addRoutesForController(RouteCollection $routes, Definition $item): void
     {
         foreach ($item->getConfig()->getActions() as $actionType) {

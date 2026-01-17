@@ -10,9 +10,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class BlogCategoriesTypeTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
     ) {

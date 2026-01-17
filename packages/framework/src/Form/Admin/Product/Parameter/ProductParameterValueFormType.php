@@ -22,20 +22,12 @@ final class ProductParameterValueFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_TYPE_SLIDER = 'typeSlider';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         private readonly ParameterFacade $parameterFacade,
         private readonly Localization $localization,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -76,9 +68,6 @@ final class ProductParameterValueFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -100,10 +89,6 @@ final class ProductParameterValueFormType extends AbstractType
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @return string
-     */
     protected function getGroupName(Parameter $parameter): string
     {
         return $parameter->getGroup()?->getName($this->localization->getCurrentLocaleForTranslatableEntities()) ?? t('No group');

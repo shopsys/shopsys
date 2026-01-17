@@ -11,9 +11,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundEx
 
 class PricingGroupRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
@@ -85,7 +82,6 @@ class PricingGroupRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return bool
      */
     public function existsCustomerUserWithPricingGroup(PricingGroup $pricingGroup)

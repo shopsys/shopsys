@@ -17,9 +17,6 @@ class SubRequestListener
 
     protected ?Request $masterRequest = null;
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
-     */
     public function onKernelController(ControllerEvent $event): void
     {
         if ($event->isMainRequest()) {
@@ -29,9 +26,6 @@ class SubRequestListener
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $subRequest
-     */
     protected function fillSubRequestFromMasterRequest(Request $subRequest)
     {
         $subRequest->setMethod($this->masterRequest->getMethod());
@@ -43,9 +37,6 @@ class SubRequestListener
         $subRequest->query->replace($subRequestQueryParameters);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
-     */
     public function onKernelResponse(ResponseEvent $event): void
     {
         if ($event->isMainRequest()) {
@@ -57,9 +48,6 @@ class SubRequestListener
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Response $subResponse
-     */
     protected function processSubResponse(Response $subResponse)
     {
         if ($subResponse->isRedirection()) {

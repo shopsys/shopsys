@@ -15,12 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentPriceChangedExcepti
 
 class PaymentValidationFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider $paymentPriceProvider
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -29,10 +23,6 @@ class PaymentValidationFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     public function checkPaymentPrice(Payment $payment, Cart $cart): void
     {
         $calculatedPaymentPrice = $this->paymentPriceProvider->getPaymentPrice(
@@ -48,10 +38,6 @@ class PaymentValidationFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param string|null $cartUuid
-     */
     public function checkPaymentTransportRelation(Payment $payment, ?string $cartUuid): void
     {
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();

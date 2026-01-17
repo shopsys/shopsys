@@ -32,9 +32,6 @@ class CloseNewlyOpenedWindowsHelper extends Module
         $this->closeNewlyOpenedWindows($webDriver->webDriver);
     }
 
-    /**
-     * @param \Facebook\WebDriver\Remote\RemoteWebDriver $webDriver
-     */
     private function closeNewlyOpenedWindows(RemoteWebDriver $webDriver)
     {
         $handles = $webDriver->getWindowHandles();

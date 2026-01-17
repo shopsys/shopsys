@@ -12,12 +12,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
 class MailTemplateAttachmentFilepathProvider
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly FileUpload $fileUpload,
         protected readonly MountManager $mountManager,
@@ -26,10 +20,6 @@ class MailTemplateAttachmentFilepathProvider
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return string
-     */
     public function getTemporaryFilepath(UploadedFile $uploadedFile): string
     {
         $temporaryFilepath = $this->transformStringHelper->removeDriveLetterFromPath(

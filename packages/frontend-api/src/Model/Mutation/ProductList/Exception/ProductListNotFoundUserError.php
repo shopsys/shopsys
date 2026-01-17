@@ -12,10 +12,6 @@ class ProductListNotFoundUserError extends UserError implements UserErrorWithCod
 {
     protected const CODE = 'product-list-not-found';
 
-    /**
-     * @param string $message
-     * @param string $productListType
-     */
     public function __construct(
         string $message,
         protected readonly string $productListType,

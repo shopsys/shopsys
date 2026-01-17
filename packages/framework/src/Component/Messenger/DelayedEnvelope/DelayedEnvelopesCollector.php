@@ -13,9 +13,6 @@ class DelayedEnvelopesCollector
      */
     protected array $delayedEnvelopes = [];
 
-    /**
-     * @param \Symfony\Component\Messenger\Envelope $envelope
-     */
     public function addEnvelope(Envelope $envelope): void
     {
         $this->delayedEnvelopes[] = $envelope;

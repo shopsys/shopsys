@@ -15,15 +15,6 @@ class SitemapDumperFactory
 {
     protected const MAX_ITEMS_IN_FILE = 50000;
 
-    /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer $sitemapFilePrefixer
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly Filesystem $localFilesystem,
@@ -35,10 +26,6 @@ class SitemapDumperFactory
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumper
-     */
     public function createForDomain(int $domainId): SitemapDumper
     {
         return new SitemapDumper(

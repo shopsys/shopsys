@@ -22,7 +22,6 @@ class JoinNoneEmptyExtension extends AbstractExtension
     }
 
     /**
-     * @param array $array
      * @param mixed $glue
      * @return string
      */

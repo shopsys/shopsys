@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData;
 class ParameterSortingHelperTest extends TestCase
 {
     /**
-     * @param string $locale
      * @param string[] $unsortedValues
      * @param string[] $expectedSortedValues
      */
@@ -39,9 +38,6 @@ class ParameterSortingHelperTest extends TestCase
         $this->assertSame($expectedSortedValues, array_values($sortedTexts));
     }
 
-    /**
-     * @return iterable
-     */
     public static function sortParameterValuesProvider(): iterable
     {
         yield 'Czech locale with diacritics' => [
@@ -63,11 +59,6 @@ class ParameterSortingHelperTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $text
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
     private function createParameterValue(string $text, string $locale): ParameterValue
     {
         $parameterValueData = new ParameterValueData();

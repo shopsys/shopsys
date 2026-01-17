@@ -12,19 +12,11 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class BlogArticleQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
-     */
     public function __construct(
         protected readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade,
     ) {
     }
 
-    /**
-     * @param string|null $uuid
-     * @param string|null $urlSlug
-     * @return array
-     */
     public function blogArticleByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): array
     {
         try {

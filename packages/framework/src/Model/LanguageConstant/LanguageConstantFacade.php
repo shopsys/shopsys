@@ -16,14 +16,7 @@ use function GuzzleHttp\json_decode;
 class LanguageConstantFacade
 {
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantRepository $languageConstantRepository
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFactory $languageConstantFactory
      * @param array<string, string> $translationNamespaces
-     * @param string $domainLocalesDirectory
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
-     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -38,8 +31,6 @@ class LanguageConstantFacade
     }
 
     /**
-     * @param string $locale
-     * @param string $namespace
      * @return string[]
      */
     public function getOriginalTranslationsByLocaleIndexedByKey(string $locale, string $namespace): array
@@ -54,7 +45,6 @@ class LanguageConstantFacade
     }
 
     /**
-     * @param string $locale
      * @return array<string, string[]>
      */
     public function getAllOriginalTranslationsByLocaleIndexedByNamespace(string $locale): array
@@ -79,8 +69,6 @@ class LanguageConstantFacade
     }
 
     /**
-     * @param string $locale
-     * @param string $namespace
      * @return string[]
      */
     public function getUserTranslationsByLocaleIndexedByKey(string $locale, string $namespace): array
@@ -89,7 +77,6 @@ class LanguageConstantFacade
     }
 
     /**
-     * @param string $locale
      * @return string[]
      */
     public function getAllUserTranslationsByLocaleIndexedByNamespacedKey(string $locale): array
@@ -97,21 +84,11 @@ class LanguageConstantFacade
         return $this->languageConstantRepository->getAllTranslationsByLocaleIndexedByNamespacedKey($locale);
     }
 
-    /**
-     * @param string $key
-     * @param string $namespace
-     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant|null
-     */
     public function findByKey(string $key, string $namespace): ?LanguageConstant
     {
         return $this->languageConstantRepository->findByKey($key, $namespace);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData $languageConstantData
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant|null $languageConstant
-     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant
-     */
     public function createOrEdit(
         LanguageConstantData $languageConstantData,
         ?LanguageConstant $languageConstant,
@@ -122,11 +99,6 @@ class LanguageConstantFacade
         return $languageConstant;
     }
 
-    /**
-     * @param string $key
-     * @param string $locale
-     * @param string $namespace
-     */
     public function delete(string $key, string $locale, string $namespace): void
     {
         $languageConstant = $this->languageConstantRepository->getByKey($key, $namespace);
@@ -144,10 +116,6 @@ class LanguageConstantFacade
         $this->cleanStorefrontCacheFacade->cleanStorefrontTranslationCache($locale, $namespace);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData $languageConstantData
-     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant
-     */
     protected function create(LanguageConstantData $languageConstantData): LanguageConstant
     {
         $languageConstant = $this->languageConstantFactory->create($languageConstantData);
@@ -158,10 +126,6 @@ class LanguageConstantFacade
         return $languageConstant;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData $languageConstantData
-     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant
-     */
     protected function edit(LanguageConstantData $languageConstantData): LanguageConstant
     {
         $languageConstant = $this->languageConstantRepository->getByKey($languageConstantData->key, $languageConstantData->namespace);
@@ -174,8 +138,6 @@ class LanguageConstantFacade
 
     /**
      * Generate all namespace-specific translation files for the given locale
-     *
-     * @param string $locale
      */
     public function generateAllNamespaceFiles(string $locale): void
     {

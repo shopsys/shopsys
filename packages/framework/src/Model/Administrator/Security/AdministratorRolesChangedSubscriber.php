@@ -15,10 +15,6 @@ class AdministratorRolesChangedSubscriber implements EventSubscriberInterface
 {
     protected bool $rolesChanged = false;
 
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade $administratorRolesChangedFacade
-     */
     public function __construct(
         protected readonly TokenStorageInterface $tokenStorage,
         protected readonly AdministratorRolesChangedFacade $administratorRolesChangedFacade,
@@ -36,9 +32,6 @@ class AdministratorRolesChangedSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
-     */
     public function onKernelRequest(RequestEvent $event): void
     {
         $token = $this->tokenStorage->getToken();

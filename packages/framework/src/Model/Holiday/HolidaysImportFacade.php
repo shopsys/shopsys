@@ -10,20 +10,12 @@ use Spatie\Holidays\Holidays;
 
 class HolidaysImportFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory $closedDayDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
-     */
     public function __construct(
         protected readonly ClosedDayDataFactory $closedDayDataFactory,
         protected readonly ClosedDayFacade $closedDayFacade,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Holiday\HolidaysImportData $holidaysImportData
-     * @return int
-     */
     public function import(HolidaysImportData $holidaysImportData): int
     {
         $importedHolidays = 0;

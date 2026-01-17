@@ -230,9 +230,6 @@ class CategorySeoTest extends GraphQlTestCase
         $this->assertSame($categoryPcSlug, $data['slug']);
     }
 
-    /**
-     * @param array $flags
-     */
     private function assertSelectedFlags(array $flags): void
     {
         $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class);
@@ -246,9 +243,6 @@ class CategorySeoTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @param array $parameters
-     */
     private function assertSelectedParameterCheckboxFilterOptions(array $parameters): void
     {
         $firstDomainLocale = $this->getFirstDomainLocale();
@@ -272,10 +266,6 @@ class CategorySeoTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @param array $additionalVariables
-     * @return array
-     */
     private function getDataForCategorySeoMixPcNewWithUsb(
         array $additionalVariables = [],
     ): array {
@@ -289,9 +279,6 @@ class CategorySeoTest extends GraphQlTestCase
         return $this->getResponseDataForGraphQlType($responseForSeoMix, 'category');
     }
 
-    /**
-     * @return array
-     */
     private function getDataForCategoryWithFiltersMatchingSeoMix(): array
     {
         $firstDomainLocale = $this->getFirstDomainLocale();

@@ -22,12 +22,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class NavigationItemFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
         private readonly CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
@@ -36,18 +30,11 @@ final class NavigationItemFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'navigation_item_form';
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -77,9 +64,6 @@ final class NavigationItemFormType extends AbstractType
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -92,14 +76,6 @@ final class NavigationItemFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param string $fieldName
-     * @param string $label
-     * @param int $index
-     * @param array $categoryPaths
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createCategoryColumnBuilder(
         string $fieldName,
         string $label,
@@ -118,9 +94,6 @@ final class NavigationItemFormType extends AbstractType
             ->addModelTransformer($this->categoriesIdsToCategoriesTransformer);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     private function addColumnFields(FormBuilderInterface $builder): void
     {
         $categoryPaths = $this->categoryFacade->getFullPathsIndexedByIds(

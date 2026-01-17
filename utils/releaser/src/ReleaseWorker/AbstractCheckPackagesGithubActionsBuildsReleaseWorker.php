@@ -18,18 +18,10 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
      */
     private const string STATUS_SUCCESS = 'success';
 
-    /**
-     * @param \Shopsys\Releaser\GithubActions\GithubActionsStatusReporter $githubActionsStatusReporter
-     */
     public function __construct(private readonly GithubActionsStatusReporter $githubActionsStatusReporter)
     {
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -38,15 +30,8 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
         return 'Check GitHub Actions build status for all packages';
     }
 
-    /**
-     * @return string
-     */
     abstract protected function getBranchName(): string;
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

@@ -16,11 +16,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class SelectAdminDomainsController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory $administratorDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly AdministratorDataFactory $administratorDataFactory,
         protected readonly AdministratorFacade $administratorFacade,
@@ -28,9 +23,6 @@ class SelectAdminDomainsController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[RequireRole(SystemRole::ADMIN)]
     public function renderFormAction(): Response
     {
@@ -41,10 +33,6 @@ class SelectAdminDomainsController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route('/domains/filter', name: 'admin_domains_filter', methods: ['POST'])]
     #[RequireRole(SystemRole::ADMIN)]
     public function filterDomainsAction(Request $request): Response

@@ -23,9 +23,6 @@ class BasicHttpAuth implements AuthInterface
         $this->password = $password;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     #[Override]
     public function authenticateRequest(Request $request)
     {

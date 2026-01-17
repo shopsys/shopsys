@@ -49,13 +49,6 @@ class TransportPriceCalculationTest extends TestCase
         ];
     }
 
-    /**
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
-     * @param string $vatPercent
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     */
     #[DataProvider('calculateIndependentPriceProvider')]
     public function testCalculateIndependentPrice(
         int $inputPriceType,

@@ -11,35 +11,21 @@ use Shopsys\FrameworkBundle\Model\Navigation\Exception\NavigationItemNotFoundExc
 
 class NavigationItemRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getEntityRepository(): EntityRepository
     {
         return $this->em->getRepository(NavigationItem::class);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem|null
-     */
     public function findById(int $id): ?NavigationItem
     {
         return $this->getEntityRepository()->find($id);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
-     */
     public function getById(int $id): NavigationItem
     {
         $item = $this->findById($id);
@@ -53,9 +39,6 @@ class NavigationItemRepository
         return $item;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getOrderedItemsQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()

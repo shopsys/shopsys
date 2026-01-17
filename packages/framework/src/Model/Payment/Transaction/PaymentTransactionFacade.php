@@ -8,11 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class PaymentTransactionFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionRepository $paymentTransactionRepository
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFactory $paymentTransactionFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PaymentTransactionRepository $paymentTransactionRepository,
@@ -20,10 +15,6 @@ class PaymentTransactionFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction
-     */
     public function create(PaymentTransactionData $paymentTransactionData): PaymentTransaction
     {
         $paymentTransaction = $this->paymentTransactionFactory->create($paymentTransactionData);
@@ -36,11 +27,6 @@ class PaymentTransactionFacade
         return $paymentTransaction;
     }
 
-    /**
-     * @param int $id
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction
-     */
     public function edit(int $id, PaymentTransactionData $paymentTransactionData): PaymentTransaction
     {
         $paymentTransaction = $this->paymentTransactionRepository->getById($id);
@@ -50,10 +36,6 @@ class PaymentTransactionFacade
         return $paymentTransaction;
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction
-     */
     public function getById(int $id): PaymentTransaction
     {
         return $this->paymentTransactionRepository->getById($id);

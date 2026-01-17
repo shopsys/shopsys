@@ -28,19 +28,6 @@ class DefaultController extends AdminBaseController
 {
     protected const int PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR = 7;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade $statisticsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade $statisticsProcessingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory $arrayDataSourceFactory
-     */
     public function __construct(
         protected readonly StatisticsFacade $statisticsFacade,
         protected readonly StatisticsProcessingFacade $statisticsProcessingFacade,
@@ -56,9 +43,6 @@ class DefaultController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/dashboard/')]
     #[RequireRole(SystemRole::ADMIN)]
     public function dashboardAction(): Response
@@ -128,11 +112,6 @@ class DefaultController extends AdminBaseController
         );
     }
 
-    /**
-     * @param int $previous
-     * @param int $current
-     * @return int
-     */
     protected function getTrendDifference(int $previous, int $current): int
     {
         if ($previous === 0 && $current === 0) {
@@ -167,10 +146,6 @@ class DefaultController extends AdminBaseController
         return $gridViews;
     }
 
-    /**
-     * @param string $instanceName
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
-     */
     protected function createCronGridViewForInstance(string $instanceName): GridView
     {
         $cronModules = $this->cronModuleFacade->findAllIndexedByServiceId();
@@ -272,10 +247,6 @@ class DefaultController extends AdminBaseController
         return $data;
     }
 
-    /**
-     * @param string $serviceId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/cron/schedule/{serviceId}')]
     #[SuperAdminOnly]
     public function scheduleCronAction(string $serviceId): Response
@@ -288,10 +259,6 @@ class DefaultController extends AdminBaseController
         return $this->redirectToRoute('admin_default_dashboard');
     }
 
-    /**
-     * @param string $serviceId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/cron/disable/{serviceId}')]
     #[SuperAdminOnly]
     public function cronDisableAction(string $serviceId): Response
@@ -304,10 +271,6 @@ class DefaultController extends AdminBaseController
         return $this->redirectToRoute('admin_default_dashboard');
     }
 
-    /**
-     * @param string $serviceId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/cron/enable/{serviceId}')]
     #[SuperAdminOnly]
     public function cronEnableAction(string $serviceId): Response
@@ -320,10 +283,6 @@ class DefaultController extends AdminBaseController
         return $this->redirectToRoute('admin_default_dashboard');
     }
 
-    /**
-     * @param string $serviceId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/cron/detail/{serviceId}')]
     #[RequireRole(SystemRole::ADMIN)]
     public function cronDetailAction(string $serviceId): Response

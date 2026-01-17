@@ -18,8 +18,8 @@ use Twig\TwigFunction;
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @method string getProductDisplayName(\App\Model\Product\Product $product)
  * @method string getProductListDisplayName(\App\Model\Product\Product $product)
- * @method \App\Model\Category\Category getProductMainCategory(\App\Model\Product\Product $product, int $domainId)
- * @method \App\Model\Category\Category|null findProductMainCategory(\App\Model\Product\Product $product, int $domainId)
+ * @method \App\Model\Category\Category getProductMainCategory( $product, int $domainId)
+ * @method \App\Model\Category\Category|null findProductMainCategory( $product, int $domainId)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface|null getProductSellingPrice(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValues(\App\Model\Product\Product $product)
  */
@@ -27,8 +27,6 @@ class ProductExtension extends BaseProductExtension
 {
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
-     * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -56,10 +54,6 @@ class ProductExtension extends BaseProductExtension
         return $functions;
     }
 
-    /**
-     * @param string|null $orderingId
-     * @return string
-     */
     public function getOrderingNameByOrderingId(?string $orderingId): string
     {
         if ($orderingId === null) {

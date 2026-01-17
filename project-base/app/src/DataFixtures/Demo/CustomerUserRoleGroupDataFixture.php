@@ -20,19 +20,12 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
     public const string ROLE_GROUP_CATALOG_USER = 'role_group_catalog_user';
     public const string ROLE_GROUP_ACCOUNTANT = 'role_group_accountant';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
-     */
     public function __construct(
         private readonly CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory,
         private readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

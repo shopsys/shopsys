@@ -12,23 +12,16 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class PromoCodeBrandRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder();
     }
 
     /**
-     * @param int $promoCodeId
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrand[]
      */
     public function getAllByPromoCodeId(int $promoCodeId): array
@@ -43,7 +36,6 @@ class PromoCodeBrandRepository
     }
 
     /**
-     * @param int $promoCodeId
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function getBrandsByPromoCodeId(int $promoCodeId): array
@@ -59,7 +51,6 @@ class PromoCodeBrandRepository
     }
 
     /**
-     * @param int $promoCodeId
      * @return int[]
      */
     public function getProductIdsFromBrandsByPromoCodeId(int $promoCodeId): array

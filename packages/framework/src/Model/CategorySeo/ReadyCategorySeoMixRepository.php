@@ -17,12 +17,6 @@ class ReadyCategorySeoMixRepository
 {
     protected const string READY_SEO_CATEGORY_SETUP_CACHE_NAMESPACE = 'readySeoCategorySetup';
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly InMemoryCache $inMemoryCache,
@@ -31,18 +25,11 @@ class ReadyCategorySeoMixRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\Persistence\ObjectRepository
-     */
     protected function getRepository(): ObjectRepository
     {
         return $this->em->getRepository(ReadyCategorySeoMix::class);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null
-     */
     public function findBySelectedCategorySeoMixCombination(
         SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): ?ReadyCategorySeoMix {
@@ -51,19 +38,11 @@ class ReadyCategorySeoMixRepository
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null
-     */
     public function findById(int $id): ?ReadyCategorySeoMix
     {
         return $this->getRepository()->find($id);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null
-     */
     public function findByUuid(string $uuid): ?ReadyCategorySeoMix
     {
         return $this->getRepository()->findOneBy([
@@ -72,7 +51,6 @@ class ReadyCategorySeoMixRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix[]
      */
     public function getAllWithParameter(Parameter $parameter): array
@@ -90,12 +68,8 @@ class ReadyCategorySeoMixRepository
     }
 
     /**
-     * @param int $categoryId
      * @param array<int,int> $parameterValueIdsByParameterId
      * @param int[] $flagIds
-     * @param string|null $ordering
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix
      */
     public function getReadyCategorySeoMixFromFilter(
         int $categoryId,
@@ -143,12 +117,6 @@ class ReadyCategorySeoMixRepository
         return $readyCategorySeoMix;
     }
 
-    /**
-     * @param int $categoryId
-     * @param int $domainId
-     * @param string $combinationJson
-     * @return bool
-     */
     protected function isJsonCombinationSeoCategory(int $categoryId, int $domainId, string $combinationJson): bool
     {
         $readySeoCategorySetup = $this->getReadySeoCategorySetupFromCache($categoryId, $domainId);
@@ -157,8 +125,6 @@ class ReadyCategorySeoMixRepository
     }
 
     /**
-     * @param int $categoryId
-     * @param int $domainId
      * @return string[]
      */
     protected function getReadySeoCategorySetupFromCache(int $categoryId, int $domainId): array
@@ -190,7 +156,6 @@ class ReadyCategorySeoMixRepository
 
     /**
      * @param int[] $categoryIds
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix[][]
      */
     public function getAllIndexedByCategoryId(array $categoryIds, DomainConfig $domainConfig): array

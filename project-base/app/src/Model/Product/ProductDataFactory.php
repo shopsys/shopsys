@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory as BaseProductDataFactory;
 
 /**
- * @method \App\Model\Product\Product[] getAccessoriesData(\App\Model\Product\Product $product)
+ * @method \App\Model\Product\Product[] getAccessoriesData( $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] getParametersData(\App\Model\Product\Product $product)
  * @property \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository

@@ -10,10 +10,6 @@ use Shopsys\FrameworkBundle\Component\Bytes\BytesHelper;
 
 class BytesHelperTest extends TestCase
 {
-    /**
-     * @param string $phpStringBytes
-     * @param int $expectedBytes
-     */
     #[DataProvider('phpStringBytesToBytesDataProvider')]
     public function testConvertPhpStringByteDefinitionToBytes(string $phpStringBytes, int $expectedBytes): void
     {

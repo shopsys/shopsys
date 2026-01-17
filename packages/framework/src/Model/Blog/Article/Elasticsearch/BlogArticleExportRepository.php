@@ -21,18 +21,6 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 class BlogArticleExportRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
-     * @param \Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser $grapesJsParser
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly BlogArticleRepository $blogArticleRepository,
@@ -48,10 +36,6 @@ class BlogArticleExportRepository
     }
 
     /**
-     * @param int $domainId
-     * @param string $locale
-     * @param int $limit
-     * @param int $lastProcessedId
      * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle[]
      */
     public function getVisibleBlogArticlesByDomainIdAndLocale(
@@ -70,8 +54,6 @@ class BlogArticleExportRepository
     }
 
     /**
-     * @param int $domainId
-     * @param string $locale
      * @param int[] $blogArticleIds
      * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle[]
      */
@@ -87,11 +69,6 @@ class BlogArticleExportRepository
             ->getResult();
     }
 
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @return int
-     */
     public function getVisibleBlogArticlesCountByDomainIdAndLocale(int $domainId, string $locale): int
     {
         return (int)($this->em->createQueryBuilder()
@@ -108,12 +85,6 @@ class BlogArticleExportRepository
             ->getQuery()->getSingleScalarResult());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle $blogArticle
-     * @param int $domainId
-     * @param string $locale
-     * @return array
-     */
     public function extractBlogArticle(BlogArticle $blogArticle, int $domainId, string $locale): array
     {
         $blogArticleCategories = $blogArticle->getBlogCategoriesIndexedByDomainId()[$domainId];

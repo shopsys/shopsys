@@ -30,10 +30,6 @@ final class ReleaseCommand extends Command
     private const string DRY_RUN = 'dry-run';
     private const string STAGE = 'stage';
 
-    /**
-     * @param \Shopsys\Releaser\ReleaseWorker\ReleaseWorkerProvider $releaseWorkerProvider
-     * @param \Shopsys\Releaser\Command\SymfonyStyleFactory $symfonyStyleFactory
-     */
     public function __construct(
         private readonly ReleaseWorkerProvider $releaseWorkerProvider,
         private readonly SymfonyStyleFactory $symfonyStyleFactory,
@@ -62,11 +58,6 @@ final class ReleaseCommand extends Command
         $this->addOption(self::INITIAL_BRANCH_NAME, null, InputOption::VALUE_REQUIRED, 'Name of branch you are releasing version on');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -112,10 +103,6 @@ final class ReleaseCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @return string|null
-     */
     private function resolveStage(InputInterface $input): ?string
     {
         $stage = $input->getOption(self::STAGE);
@@ -123,9 +110,6 @@ final class ReleaseCommand extends Command
         return $stage !== null ? (string)$stage : $stage;
     }
 
-    /**
-     * @param string|null $stage
-     */
     private function checkStage(?string $stage): void
     {
         if (in_array($stage, Stage::getAllStages(), true)) {
@@ -139,10 +123,6 @@ final class ReleaseCommand extends Command
         ));
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @return int
-     */
     private function resolveStep(InputInterface $input): int
     {
         $step = $input->getOption(self::RESUME_STEP);
@@ -150,10 +130,6 @@ final class ReleaseCommand extends Command
         return $step !== null ? (int)$step - 1 : 0;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @return string
-     */
     private function resolveInitialBranchName(InputInterface $input): string
     {
         $initialBranchName = $input->getOption(self::INITIAL_BRANCH_NAME);
@@ -165,10 +141,6 @@ final class ReleaseCommand extends Command
         return (string)$initialBranchName;
     }
 
-    /**
-     * @param \Shopsys\Releaser\ReleaseWorker\StageWorkerInterface $releaseWorker
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
-     */
     private function printReleaseWorkerMetadata(
         StageWorkerInterface $releaseWorker,
         SymfonyStyle $symfonyStyle,

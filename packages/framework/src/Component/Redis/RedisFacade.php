@@ -43,10 +43,6 @@ class RedisFacade
         }
     }
 
-    /**
-     * @param \Redis $redisClient
-     * @param string $pattern
-     */
     protected function cleanCacheByScan(Redis $redisClient, string $pattern): void
     {
         $suggestedScanBatchSize = 1000;

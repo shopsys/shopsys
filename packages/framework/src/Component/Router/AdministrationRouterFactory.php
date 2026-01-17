@@ -10,13 +10,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdministrationRouterFactory extends AbstractRouterFactory
 {
-    /**
-     * @param string $routerConfiguration
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param string $cacheDir
-     */
     public function __construct(
         protected readonly string $routerConfiguration,
         protected readonly Domain $domain,
@@ -27,9 +20,6 @@ class AdministrationRouterFactory extends AbstractRouterFactory
         parent::__construct($requestStack, $container, $cacheDir);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter
-     */
     public function getAdministrationRouter(): AdministrationRouter
     {
         $domainConfig = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);

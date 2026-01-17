@@ -46,11 +46,6 @@ class TransportDomain
     #[ORM\ManyToOne(targetEntity: Vat::class)]
     protected $vat;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     */
     public function __construct(Transport $transport, int $domainId, Vat $vat)
     {
         $this->transport = $transport;
@@ -67,9 +62,6 @@ class TransportDomain
         return $this->domainId;
     }
 
-    /**
-     * @param bool $enabled
-     */
     public function setEnabled(bool $enabled)
     {
         $this->enabled = $enabled;

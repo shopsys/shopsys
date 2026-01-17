@@ -17,12 +17,6 @@ use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class ClosedDayRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
@@ -31,10 +25,6 @@ class ClosedDayRepository
     ) {
     }
 
-    /**
-     * @param int $closedDayId
-     * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay
-     */
     public function getById(int $closedDayId): ClosedDay
     {
         $closedDay = $this->getClosedDayRepository()->find($closedDayId);
@@ -47,7 +37,6 @@ class ClosedDayRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
      */
     public function getFollowingWeekClosedDaysNotExcludedForStore(Store $store): array
@@ -73,9 +62,6 @@ class ClosedDayRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \DateTimeInterface $startDate
-     * @param \DateTimeInterface $endDate
      * @return \DateTimeInterface[]
      */
     public function getPublicHolidays(
@@ -92,12 +78,6 @@ class ClosedDayRepository
         return array_column($closedDays, 'date');
     }
 
-    /**
-     * @param int $domainId
-     * @param \DateTimeInterface $startDate
-     * @param \DateTimeInterface $endDate
-     * @return bool
-     */
     public function hasPublicHolidays(
         int $domainId,
         DateTimeInterface $startDate,
@@ -113,12 +93,6 @@ class ClosedDayRepository
         return $result !== null;
     }
 
-    /**
-     * @param int $domainId
-     * @param \DateTimeInterface $startDate
-     * @param \DateTimeInterface $endDate
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createPublicHolidaysQueryBuilder(
         int $domainId,
         DateTimeInterface $startDate,
@@ -137,9 +111,6 @@ class ClosedDayRepository
             ->setParameter('endDate', $endDate);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getClosedDayRepository(): EntityRepository
     {
         return $this->em->getRepository(ClosedDay::class);

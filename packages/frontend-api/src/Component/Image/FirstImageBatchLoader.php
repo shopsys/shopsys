@@ -14,12 +14,6 @@ use Shopsys\FrameworkBundle\Component\Utils\Utils;
 
 class FirstImageBatchLoader
 {
-    /**
-     * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageApiFacade $imageApiFacade
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly ImageApiFacade $imageApiFacade,
@@ -30,7 +24,6 @@ class FirstImageBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData[] $imagesBatchLoadData
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadByBatchData(array $imagesBatchLoadData): Promise
     {
@@ -49,8 +42,6 @@ class FirstImageBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData[] $imagesBatchLoadData
-     * @param string $entityName
-     * @param string $type
      * @return array<string, array|null>
      */
     protected function getImagesByEntityNameAndTypeIndexedByDataId(
@@ -119,10 +110,6 @@ class FirstImageBatchLoader
         return $sortedImages;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     * @return array
-     */
     protected function getResolvedImage(Image $image): array
     {
         return [

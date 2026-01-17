@@ -13,7 +13,6 @@ class UniqueFlagsValidator extends ConstraintValidator
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[] $values
-     * @param \Symfony\Component\Validator\Constraint $constraint
      */
     #[Override]
     public function validate(mixed $values, Constraint $constraint): void

@@ -15,9 +15,6 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 final class AbstractMultiplePickerType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\PropertyAccess\PropertyAccessorInterface $propertyAccessor
-     */
     public function __construct(
         protected readonly PropertyAccessorInterface $propertyAccessor,
     ) {
@@ -51,9 +48,6 @@ final class AbstractMultiplePickerType extends AbstractType
         }
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

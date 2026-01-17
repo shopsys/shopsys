@@ -13,20 +13,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class CategoryFormType extends AbstractType
 {
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
-     */
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly HeurekaCategoryFacade $heurekaCategoryFacade,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param  array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

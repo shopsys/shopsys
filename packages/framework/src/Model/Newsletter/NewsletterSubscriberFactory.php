@@ -9,19 +9,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class NewsletterSubscriberFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param string $email
-     * @param \DateTimeImmutable $createdAt
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
-     */
     public function create(string $email, DateTimeImmutable $createdAt, int $domainId): NewsletterSubscriber
     {
         $entityClassName = $this->entityNameResolver->resolve(NewsletterSubscriber::class);

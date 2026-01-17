@@ -18,9 +18,6 @@ class MigrationsLockComparatorTest extends TestCase
 
     /**
      * @param string[] $orderedMigrationClassesFromLock
-     * @param \Doctrine\Migrations\Version\Version $versionA
-     * @param \Doctrine\Migrations\Version\Version $versionB
-     * @param string $expectedResult
      */
     #[DataProvider('compareDataProvider')]
     public function testCompare(
@@ -43,9 +40,6 @@ class MigrationsLockComparatorTest extends TestCase
         }
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function compareDataProvider(): Iterator
     {
         yield [

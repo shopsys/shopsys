@@ -8,24 +8,15 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ParameterDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly Domain $domain)
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData
-     */
     protected function createInstance(): ParameterData
     {
         return new ParameterData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData
-     */
     public function create(): ParameterData
     {
         $parameterData = $this->createInstance();
@@ -34,9 +25,6 @@ class ParameterDataFactory
         return $parameterData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
-     */
     protected function fillNew(ParameterData $parameterData): void
     {
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -47,10 +35,6 @@ class ParameterDataFactory
         $parameterData->parameterType = Parameter::PARAMETER_TYPE_COMMON;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData
-     */
     public function createFromParameter(Parameter $parameter): ParameterData
     {
         $parameterData = $this->createInstance();
@@ -59,10 +43,6 @@ class ParameterDataFactory
         return $parameterData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     */
     protected function fillFromParameter(ParameterData $parameterData, Parameter $parameter)
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation[] $translations */

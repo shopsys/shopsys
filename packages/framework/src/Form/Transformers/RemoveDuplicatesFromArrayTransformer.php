@@ -11,7 +11,6 @@ class RemoveDuplicatesFromArrayTransformer implements DataTransformerInterface
 {
     /**
      * @param mixed $values
-     * @return mixed
      */
     #[Override]
     public function transform($values): mixed
@@ -21,7 +20,6 @@ class RemoveDuplicatesFromArrayTransformer implements DataTransformerInterface
 
     /**
      * @param array|null $array
-     * @return array|null
      */
     #[Override]
     public function reverseTransform($array): ?array

@@ -50,8 +50,6 @@ class ManualBestsellingProduct
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $position
      */
     public function __construct($domainId, Category $category, Product $product, $position)

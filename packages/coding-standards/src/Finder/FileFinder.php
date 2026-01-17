@@ -14,7 +14,6 @@ final class FileFinder
 {
     /**
      * @param string[] $source
-     * @return \IteratorAggregate
      */
     public function find(array $source): IteratorAggregate
     {

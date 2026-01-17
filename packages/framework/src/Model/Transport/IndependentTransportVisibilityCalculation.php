@@ -8,15 +8,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class IndependentTransportVisibilityCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly Domain $domain)
     {
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param int $domainId
      * @return bool
      */

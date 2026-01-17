@@ -9,9 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductRecalculationRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {

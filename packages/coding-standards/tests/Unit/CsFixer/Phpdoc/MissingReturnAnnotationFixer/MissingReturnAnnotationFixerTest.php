@@ -18,9 +18,6 @@ use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 #[CoversClass(MissingReturnAnnotationFixer::class)]
 final class MissingReturnAnnotationFixerTest extends AbstractFixerTestCase
 {
-    /**
-     * @return \Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer
-     */
     #[Override]
     protected function createFixerService(): MissingReturnAnnotationFixer
     {

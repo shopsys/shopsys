@@ -17,19 +17,12 @@ class WatchdogDataFixture extends AbstractReferenceFixture implements DependentF
     private const string ATTRIBUTE_EMAIL_KEY = 'email';
     private const string ATTRIBUTE_PRODUCT_KEY = 'productId';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade $watchdogFacade
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogDataFactory $watchdogDataFactory
-     */
     public function __construct(
         protected readonly WatchdogFacade $watchdogFacade,
         protected readonly WatchdogDataFactory $watchdogDataFactory,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -109,10 +102,6 @@ class WatchdogDataFixture extends AbstractReferenceFixture implements DependentF
         ];
     }
 
-    /**
-     * @param array $data
-     * @param int $domainId
-     */
     private function createWatchdogFromArray(array $data, int $domainId): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $data[self::ATTRIBUTE_PRODUCT_KEY]);

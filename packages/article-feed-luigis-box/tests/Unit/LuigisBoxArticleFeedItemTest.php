@@ -48,12 +48,6 @@ class LuigisBoxArticleFeedItemTest extends TestCase
         parent::setUp();
     }
 
-    /**
-     * @param int $id
-     * @param string $url
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private function createDomainConfigMock(int $id, string $url, string $locale): DomainConfig
     {
         $domainConfigMock = $this->createMock(DomainConfig::class);
@@ -65,9 +59,6 @@ class LuigisBoxArticleFeedItemTest extends TestCase
         return $domainConfigMock;
     }
 
-    /**
-     * @param array $articleData
-     */
     #[DataProvider('articleFeedItemCreationDataProvider')]
     public function testArticleFeedItemCreation(array $articleData): void
     {
@@ -82,20 +73,12 @@ class LuigisBoxArticleFeedItemTest extends TestCase
         $this->assertLuigisBoxCategoryFeedItemWithImageLink($articleData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param string $url
-     */
     private function mockImageUrl(Article $article, DomainConfig $domain, string $url): void
     {
         $this->imageFacadeMock->method('getImageUrl')
             ->with($domain, $article)->willReturn($url);
     }
 
-    /**
-     * @param array $articleData
-     */
     public function assertLuigisBoxCategoryFeedItemWithImageLink(array $articleData): void
     {
         if ($articleData['imageUrl'] === null) {
@@ -109,9 +92,6 @@ class LuigisBoxArticleFeedItemTest extends TestCase
         self::assertEquals($articleData['imageUrl'] . '?width=100&height=100', $luigisBoxArticleFeedItem->getImageLinkS());
     }
 
-    /**
-     * @return iterable
-     */
     public static function articleFeedItemCreationDataProvider(): iterable
     {
         $commonArticleData = [

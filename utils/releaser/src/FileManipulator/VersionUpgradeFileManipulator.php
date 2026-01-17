@@ -17,12 +17,6 @@ final class VersionUpgradeFileManipulator
 
     private const string HEADLINE_TEMPLATE = '## [Upgrade from %s to %s](https://github.com/shopsys/shopsys/compare/%s...%s)' . PHP_EOL . PHP_EOL . '$1';
 
-    /**
-     * @param string $fileContent
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     public function processFileToString(string $fileContent, Version $version, string $initialBranchName): string
     {
         $content = $this->updateHeadline($version, $fileContent, $initialBranchName);
@@ -36,11 +30,6 @@ final class VersionUpgradeFileManipulator
      *
      * After:
      * ## [Upgrade from v12.0.0 to v12.1.0](https://github.com/shopsys/shopsys/compare/v12.0.0...v12.1.0)
-     *
-     * @param \PharIo\Version\Version $version
-     * @param string $content
-     * @param string $initialBranchName
-     * @return string
      */
     public function updateHeadline(Version $version, string $content, string $initialBranchName): string
     {
@@ -67,11 +56,6 @@ final class VersionUpgradeFileManipulator
      * ## [Upgrade from v12.1.0 to v12.1.1-dev](https://github.com/shopsys/shopsys/compare/v12.0.0...12.1)
      *
      * ## [Upgrade from v12.0.0 to v12.1.0](https://github.com/shopsys/shopsys/compare/v12.0.0...v12.1.0)
-     *
-     * @param \PharIo\Version\Version $version
-     * @param string $content
-     * @param string $initialBranchName
-     * @return string
      */
     private function addNewPatchHeadline(Version $version, string $content, string $initialBranchName): string
     {

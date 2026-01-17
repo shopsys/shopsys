@@ -16,9 +16,6 @@ class OrderEmailFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'customerEmail';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
@@ -54,9 +51,6 @@ class OrderEmailFilter implements AdvancedSearchFilterInterface
         return EmailType::class;
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getValueFormOptions(): array
     {
@@ -82,10 +76,6 @@ class OrderEmailFilter implements AdvancedSearchFilterInterface
         }
     }
 
-    /**
-     * @param string $operator
-     * @return string
-     */
     protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {

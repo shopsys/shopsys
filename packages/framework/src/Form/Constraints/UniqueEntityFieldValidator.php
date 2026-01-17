@@ -12,18 +12,11 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueEntityFieldValidator extends ConstraintValidator
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {

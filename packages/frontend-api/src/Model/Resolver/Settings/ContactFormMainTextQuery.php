@@ -10,19 +10,12 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class ContactFormMainTextQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade $contactFormSettingsFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ContactFormSettingsFacade $contactFormSettingsFacade,
     ) {
     }
 
-    /**
-     * @return string|null
-     */
     public function contactFormMainTextQuery(): ?string
     {
         return $this->contactFormSettingsFacade->getMainText($this->domain->getId());

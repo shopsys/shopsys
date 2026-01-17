@@ -21,7 +21,6 @@ final class RoleCollection implements IteratorAggregate
     private array $roles = [];
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Role $role
      * @throws \RuntimeException If role already exists
      */
     public function add(Role $role): void
@@ -38,7 +37,6 @@ final class RoleCollection implements IteratorAggregate
     }
 
     /**
-     * @param string $constant
      * @param \Closure(\Shopsys\FrameworkBundle\Component\Security\Role\Role): void $closure Function that receives the role and can modify it
      * @throws \RuntimeException If role doesn't exist
      * @example
@@ -56,19 +54,13 @@ final class RoleCollection implements IteratorAggregate
         $closure($this->roles[$constant]);
     }
 
-    /**
-     * @param string $constant
-     * @return bool
-     */
     public function has(string $constant): bool
     {
         return isset($this->roles[$constant]);
     }
 
     /**
-     * @param string $constant
      * @throws \RuntimeException If role with the given constant does not exist
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Role
      */
     public function get(string $constant): Role
     {

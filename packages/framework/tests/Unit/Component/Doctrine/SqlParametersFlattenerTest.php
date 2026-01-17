@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Component\Doctrine\SqlParametersFlattener;
 
 class SqlParametersFlattenerTest extends TestCase
 {
-    /**
-     * @param string $dql
-     * @param array $parameters
-     * @param array $expectedFlattenedParameters
-     */
     #[DataProvider('expandArrayParametersDataProvider')]
     public function testExpandArrayParameters(string $dql, array $parameters, array $expectedFlattenedParameters): void
     {
@@ -25,9 +20,6 @@ class SqlParametersFlattenerTest extends TestCase
         $this->assertSame($expectedFlattenedParameters, $actualFlattenedParameters);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function expandArrayParametersDataProvider(): Iterator
     {
         yield [

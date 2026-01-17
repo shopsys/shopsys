@@ -31,10 +31,6 @@ class HashGenerator
         return $hash;
     }
 
-    /**
-     * @param int $length
-     * @return string
-     */
     public function generateHashWithoutConfusingCharacters(int $length): string
     {
         $numberOfChars = strlen($this->charactersWithoutConfusingCharacters);

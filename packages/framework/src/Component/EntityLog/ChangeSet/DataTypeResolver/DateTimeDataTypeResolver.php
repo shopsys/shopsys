@@ -13,18 +13,11 @@ class DateTimeDataTypeResolver extends AbstractDataTypeResolver
 {
     protected const string DATE_TIME_FORMAT_WITH_TIMEZONE = 'c';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
-     */
     public function __construct(
         protected readonly EntityLogFacade $entityLogFacade,
     ) {
     }
 
-    /**
-     * @param mixed $value
-     * @return bool
-     */
     #[Override]
     protected function isResolvedDataType(mixed $value): bool
     {
@@ -33,7 +26,6 @@ class DateTimeDataTypeResolver extends AbstractDataTypeResolver
 
     /**
      * @param array{0: \DateTimeInterface|null, 1: \DateTimeInterface|null} $changes
-     * @return \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges
      */
     #[Override]
     public function getResolvedChanges(array $changes): ResolvedChanges
@@ -50,9 +42,6 @@ class DateTimeDataTypeResolver extends AbstractDataTypeResolver
         );
     }
 
-    /**
-     * @return int
-     */
     #[Override]
     public function getPriority(): int
     {

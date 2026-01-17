@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 
 class PromoCodeMassGeneratedBatchGridFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly EntityManagerInterface $em,
@@ -25,9 +20,6 @@ class PromoCodeMassGeneratedBatchGridFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     public function create(): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();

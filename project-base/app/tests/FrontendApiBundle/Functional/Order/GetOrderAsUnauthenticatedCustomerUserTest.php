@@ -73,9 +73,6 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @return array
-     */
     public function getOrderDataProvider(): array
     {
         $data = [];
@@ -104,9 +101,6 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
         return $data;
     }
 
-    /**
-     * @return array
-     */
     public function getIncorrectOrderDataProvider(): array
     {
         return [

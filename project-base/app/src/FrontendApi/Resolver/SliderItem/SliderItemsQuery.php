@@ -9,9 +9,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class SliderItemsQuery extends AbstractQuery
 {
-    /**
-     * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
-     */
     public function __construct(private readonly SliderItemFacade $sliderItemFacade)
     {
     }

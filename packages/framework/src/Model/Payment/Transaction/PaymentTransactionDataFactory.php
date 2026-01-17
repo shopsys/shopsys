@@ -8,9 +8,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class PaymentTransactionDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData
-     */
     public function create(): PaymentTransactionData
     {
         $paymentTransaction = $this->createInstance();
@@ -19,10 +16,6 @@ class PaymentTransactionDataFactory
         return $paymentTransaction;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction $paymentTransaction
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData
-     */
     public function createFromPaymentTransaction(PaymentTransaction $paymentTransaction): PaymentTransactionData
     {
         $paymentTransactionData = $this->create();
@@ -39,9 +32,6 @@ class PaymentTransactionDataFactory
         return $paymentTransactionData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData
-     */
     protected function createInstance(): PaymentTransactionData
     {
         return new PaymentTransactionData();

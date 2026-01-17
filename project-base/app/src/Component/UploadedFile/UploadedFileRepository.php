@@ -9,12 +9,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRepository as Bas
 
 class UploadedFileRepository extends BaseUploadedFileRepository
 {
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string $type
-     * @return int
-     */
     public function getUploadedFilesCountByEntityIndexedById(
         string $entityName,
         int $entityId,

@@ -24,21 +24,12 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
         'guzzlehttp/psr7' => '<=1.8.3 || >=2.0.0 <=2.1.0',
     ];
 
-    /**
-     * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
-     * @param \Shopsys\Releaser\IntervalEvaluator $intervalEvaluator
-     */
     public function __construct(
         private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
         private readonly IntervalEvaluator $intervalEvaluator,
     ) {
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -47,10 +38,6 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
         return 'Make sure that "conflict" versions in all composer.json files are closed interval';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

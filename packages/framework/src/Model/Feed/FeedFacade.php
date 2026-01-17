@@ -11,14 +11,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class FeedFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory $feedExportFactory
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository $feedModuleRepository
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly FeedRegistry $feedRegistry,
         protected readonly FeedExportFactory $feedExportFactory,
@@ -29,10 +21,6 @@ class FeedFacade
     ) {
     }
 
-    /**
-     * @param string $feedName
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     public function generateFeed(string $feedName, DomainConfig $domainConfig): void
     {
         $feedExport = $this->createFeedExport($feedName, $domainConfig);
@@ -42,12 +30,6 @@ class FeedFacade
         }
     }
 
-    /**
-     * @param string $feedName
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int|null $lastSeekId
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedExport
-     */
     public function createFeedExport(string $feedName, DomainConfig $domainConfig, ?int $lastSeekId = null): FeedExport
     {
         $feedConfig = $this->feedRegistry->getFeedConfigByName($feedName);
@@ -56,7 +38,6 @@ class FeedFacade
     }
 
     /**
-     * @param bool $onlyForCurrentTime
      * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface[]
      */
     public function getFeedsInfo(bool $onlyForCurrentTime = false): array
@@ -73,7 +54,6 @@ class FeedFacade
     }
 
     /**
-     * @param bool $onlyForCurrentTime
      * @return string[]
      */
     public function getFeedNames(bool $onlyForCurrentTime = false): array
@@ -87,31 +67,16 @@ class FeedFacade
         return $feedNames;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $this->feedPathProvider->getFeedUrl($feedInfo, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $this->feedPathProvider->getFeedFilepath($feedInfo, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return int|null
-     */
     public function getFeedTimestamp(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): ?int
     {
         $filePath = $this->feedPathProvider->getFeedFilepath($feedInfo, $domainConfig);
@@ -137,9 +102,6 @@ class FeedFacade
         $this->markFeedConfigsForScheduling($feedConfigsToSchedule);
     }
 
-    /**
-     * @param string $name
-     */
     public function scheduleFeedByName(string $name): void
     {
         $feedConfigsToSchedule = [$this->feedRegistry->getFeedConfigByName($name)];
@@ -147,10 +109,6 @@ class FeedFacade
         $this->markFeedConfigsForScheduling($feedConfigsToSchedule);
     }
 
-    /**
-     * @param string $name
-     * @param int $domainId
-     */
     public function scheduleFeedByNameAndDomainId(string $name, int $domainId): void
     {
         $feedModule = $this->feedModuleRepository->getFeedModuleByNameAndDomainId($name, $domainId);
@@ -158,18 +116,12 @@ class FeedFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModule $feedModule
-     */
     public function markFeedModuleAsUnscheduled(FeedModule $feedModule): void
     {
         $feedModule->unschedule();
         $this->em->flush();
     }
 
-    /**
-     * @param array $feedConfigsToSchedule
-     */
     protected function markFeedConfigsForScheduling(array $feedConfigsToSchedule): void
     {
         foreach ($feedConfigsToSchedule as $feedConfig) {

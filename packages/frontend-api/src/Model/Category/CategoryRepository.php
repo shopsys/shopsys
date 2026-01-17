@@ -15,11 +15,6 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as FrameworkCatego
 
 class CategoryRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly FrameworkCategoryRepository $categoryRepository,
@@ -28,11 +23,6 @@ class CategoryRepository
     }
 
     /**
-     * @param string $searchText
-     * @param string $locale
-     * @param int $domainId
-     * @param int $offset
-     * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getVisibleCategoriesBySearchText(
@@ -52,12 +42,6 @@ class CategoryRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    /**
-     * @param string $searchText
-     * @param string $locale
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getVisibleCategoriesBySearchTextQueryBuilder(
         string $searchText,
         string $locale,
@@ -71,12 +55,6 @@ class CategoryRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param string $searchText
-     * @param string $locale
-     * @param int $domainId
-     * @return int
-     */
     public function getVisibleCategoriesBySearchTextCount(string $searchText, string $locale, int $domainId): int
     {
         $queryBuilder =
@@ -86,10 +64,6 @@ class CategoryRepository
         return (int)$queryBuilder->getQuery()->getSingleScalarResult();
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getAllVisibleByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->em->getRepository(Category::class)->createQueryBuilder('c')
@@ -102,7 +76,6 @@ class CategoryRepository
 
     /**
      * @param int[][] $categoriesIds
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[][]
      */
     public function getVisibleCategoriesByIds(array $categoriesIds, DomainConfig $domainConfig): array

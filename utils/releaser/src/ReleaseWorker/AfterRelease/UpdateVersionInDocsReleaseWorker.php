@@ -13,11 +13,6 @@ use Shopsys\Releaser\Stage;
 
 final class UpdateVersionInDocsReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -26,10 +21,6 @@ final class UpdateVersionInDocsReleaseWorker extends AbstractShopsysReleaseWorke
         return '[Manually] Update current version in mkdocs.yaml config';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,
@@ -55,10 +46,6 @@ final class UpdateVersionInDocsReleaseWorker extends AbstractShopsysReleaseWorke
         return [Stage::AFTER_RELEASE];
     }
 
-    /**
-     * @param string $fileContent
-     * @return string
-     */
     private function replaceCurrentVersionInMkdocsConfig(string $fileContent): string
     {
         // the "current_version" is under the "extra" key in mkdocs.yml, so it has indentation

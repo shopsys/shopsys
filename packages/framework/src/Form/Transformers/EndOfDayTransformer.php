@@ -11,10 +11,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class EndOfDayTransformer implements DataTransformerInterface
 {
-    /**
-     * @param mixed $value
-     * @return \DateTimeInterface|null
-     */
     #[Override]
     public function transform(mixed $value): ?DateTimeInterface
     {
@@ -25,10 +21,6 @@ class EndOfDayTransformer implements DataTransformerInterface
         return DatePoint::createFromInterface($value)->modify('-1 day');
     }
 
-    /**
-     * @param mixed $value
-     * @return \DateTimeInterface|null
-     */
     #[Override]
     public function reverseTransform(mixed $value): ?DateTimeInterface
     {

@@ -10,10 +10,6 @@ class UrlNormalizer
 {
     /**
      * Normalizes URL by removing domain prefix and ensuring proper format
-     *
-     * @param string|null $url
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string|null
      */
     public static function normalizeUrl(?string $url, DomainConfig $domainConfig): ?string
     {

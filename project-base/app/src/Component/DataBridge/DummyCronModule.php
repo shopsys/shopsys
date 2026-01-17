@@ -11,17 +11,11 @@ use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class DummyCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @param \App\Component\DataBridge\Transfer\DummyImportTransferFacade $dummyImportTransfer
-     */
     public function __construct(
         private readonly DummyImportTransferFacade $dummyImportTransfer,
     ) {
     }
 
-    /**
-     * @param \Monolog\Logger $logger
-     */
     #[Override]
     public function setLogger(Logger $logger): void
     {

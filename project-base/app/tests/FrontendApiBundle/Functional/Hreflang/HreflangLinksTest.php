@@ -30,9 +30,6 @@ class HreflangLinksTest extends GraphQlTestCase
      */
     private SeoSettingFacade $seoSettingFacade;
 
-    /**
-     * @return iterable
-     */
     public static function getHreflangEntitiesDataProvider(): iterable
     {
         yield 'Brand' => [
@@ -85,12 +82,6 @@ class HreflangLinksTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param string $entityReference
-     * @param string $routeName
-     * @param string $graphQlFileName
-     * @param string $graphQlType
-     */
     #[DataProvider('getHreflangEntitiesDataProvider')]
     public function testNoAlternateReturnsOnlyItself(
         string $entityReference,
@@ -133,12 +124,6 @@ class HreflangLinksTest extends GraphQlTestCase
         self::assertEquals($expected, $data);
     }
 
-    /**
-     * @param string $entityReference
-     * @param string $routeName
-     * @param string $graphQlFileName
-     * @param string $graphQlType
-     */
     #[DataProvider('getHreflangEntitiesDataProvider')]
     #[Group('multidomain')]
     public function testAlternateDomainLanguages(
@@ -183,11 +168,6 @@ class HreflangLinksTest extends GraphQlTestCase
         self::assertEquals($expected, $data);
     }
 
-    /**
-     * @param string $routeName
-     * @param object $entity
-     * @return string
-     */
     private function getFriendlyUrlSlug(string $routeName, object $entity): string
     {
         if ($entity instanceof SeoPage) {
@@ -201,12 +181,6 @@ class HreflangLinksTest extends GraphQlTestCase
         );
     }
 
-    /**
-     * @param string $routeName
-     * @param int $domainId
-     * @param object $entity
-     * @return string
-     */
     private function getUrlByRouteNameAndEntityId(string $routeName, int $domainId, object $entity): string
     {
         if ($entity instanceof SeoPage) {

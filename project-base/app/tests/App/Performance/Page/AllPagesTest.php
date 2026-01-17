@@ -175,7 +175,6 @@ class AllPagesTest extends KernelTestCase
     }
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @return \Tests\App\Performance\Page\PerformanceTestSample
      */
     private function doTestRequestDataSet(RequestDataSet $requestDataSet)
@@ -257,7 +256,6 @@ class AllPagesTest extends KernelTestCase
 
     /**
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
-     * @param \Symfony\Component\Console\Output\ConsoleOutput $consoleOutput
      */
     private function printPerformanceTestsSummary(array $performanceTestSamples, ConsoleOutput $consoleOutput)
     {
@@ -278,7 +276,6 @@ class AllPagesTest extends KernelTestCase
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @return \Tests\App\Performance\Page\PerformanceTestSampleQueryCounter
      */
     private function injectQueryCounter(EntityManagerInterface $entityManager)

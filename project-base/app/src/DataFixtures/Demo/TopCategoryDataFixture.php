@@ -13,17 +13,11 @@ use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 
 class TopCategoryDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
-     */
     public function __construct(
         private readonly TopCategoryFacade $topCategoryFacade,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

@@ -17,19 +17,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class TransportAndPaymentController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/transport-and-payment/list/')]
     #[CanView(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT)]
     public function listAction(): Response
@@ -37,10 +30,6 @@ class TransportAndPaymentController extends AdminBaseController
         return $this->render('@ShopsysAdministration/content/transportAndPayment/list.html.twig');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/transport-and-payment/free-transport-and-payment-limit/')]
     #[CanEdit(AdminRoleConstant::ROLE_FREE_TRANSPORT_AND_PAYMENT, methods: [HttpMethod::POST])]
     #[CanView(AdminRoleConstant::ROLE_FREE_TRANSPORT_AND_PAYMENT, methods: [HttpMethod::GET])]

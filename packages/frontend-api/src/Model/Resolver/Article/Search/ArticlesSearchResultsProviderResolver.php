@@ -21,9 +21,6 @@ class ArticlesSearchResultsProviderResolver extends SearchResultsProviderResolve
         parent::__construct($articlesSearchResultsProviders);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getSearchResultsProviderInterface(): string
     {

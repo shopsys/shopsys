@@ -12,18 +12,11 @@ class MailEmbedCollector
 {
     protected const NAMESPACE = 'mail_embeds_namespace';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailEmbedData $mailEmbedData
-     * @return string
-     */
     public function addEmbed(MailEmbedData $mailEmbedData): string
     {
         try {
@@ -50,11 +43,6 @@ class MailEmbedCollector
         }
     }
 
-    /**
-     * @param string $body
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Email $email
-     * @return string
-     */
     public function setEmbedsToMail(string $body, Email $email): string
     {
         foreach ($this->getEmbedsIndexedByKeys() as $mailEmbedData) {
@@ -64,12 +52,6 @@ class MailEmbedCollector
         return $body;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailEmbedData $mailEmbedData
-     * @param string $body
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Email $email
-     * @return string
-     */
     protected function addEmbedDataToMail(MailEmbedData $mailEmbedData, string $body, Email $email): string
     {
         [, $base64] = explode(',', $mailEmbedData->embed, 2);

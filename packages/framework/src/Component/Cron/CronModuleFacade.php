@@ -16,14 +16,6 @@ class CronModuleFacade
     protected const string DURATIONS_CACHE_KEY = 'durations';
     protected const string CRON_MODULES_CACHE_KEY = 'cronModules';
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRepository $cronModuleRepository
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFilter $cronFilter
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRunFactory $cronModuleRunFactory
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CronModuleRepository $cronModuleRepository,
@@ -57,9 +49,6 @@ class CronModuleFacade
         return $this->cronFilter->filterScheduledCronModuleConfigs($cronModuleConfigs, $scheduledServiceIds);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
-     */
     public function unscheduleModule(CronModuleConfig $cronModuleConfig)
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
@@ -67,9 +56,6 @@ class CronModuleFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
-     */
     public function suspendModule(CronModuleConfig $cronModuleConfig)
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
@@ -77,10 +63,6 @@ class CronModuleFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
-     * @return bool
-     */
     public function isModuleDisabled(CronModuleConfig $cronModuleConfig): bool
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
@@ -89,7 +71,6 @@ class CronModuleFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
      * @return bool
      */
     public function isModuleSuspended(CronModuleConfig $cronModuleConfig)
@@ -99,9 +80,6 @@ class CronModuleFacade
         return $cronModule->isSuspended();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
-     */
     public function markCronAsStarted(CronModuleConfig $cronModuleConfig): void
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
@@ -111,9 +89,6 @@ class CronModuleFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
-     */
     public function markCronAsEnded(CronModuleConfig $cronModuleConfig): void
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
@@ -131,9 +106,6 @@ class CronModuleFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
-     */
     public function markCronAsFailed(CronModuleConfig $cronModuleConfig): void
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
@@ -179,9 +151,6 @@ class CronModuleFacade
         );
     }
 
-    /**
-     * @param string $serviceId
-     */
     public function disableCronModuleByServiceId(string $serviceId): void
     {
         $cronModule = $this->getCronModuleByServiceId($serviceId);
@@ -190,9 +159,6 @@ class CronModuleFacade
         $this->em->flush();
     }
 
-    /**
-     * @param string $serviceId
-     */
     public function enableCronModuleByServiceId(string $serviceId): void
     {
         $cronModule = $this->getCronModuleByServiceId($serviceId);
@@ -201,10 +167,6 @@ class CronModuleFacade
         $this->em->flush();
     }
 
-    /**
-     * @param string $serviceId
-     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModule
-     */
     public function getCronModuleByServiceId(string $serviceId): CronModule
     {
         return $this->cronModuleRepository->getCronModuleByServiceId($serviceId);
@@ -222,9 +184,6 @@ class CronModuleFacade
         );
     }
 
-    /**
-     * @param string $serviceId
-     */
     public function schedule(string $serviceId): void
     {
         $cronModule = $this->getCronModuleByServiceId($serviceId);
@@ -234,7 +193,6 @@ class CronModuleFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronModuleRun[]
      */
     public function getAllRunsByCronModule(CronModule $cronModule): array
@@ -254,18 +212,11 @@ class CronModuleFacade
         );
     }
 
-    /**
-     * @param int $numberOfDays
-     */
     public function deleteOldCronModuleRuns(int $numberOfDays): void
     {
         $this->cronModuleRepository->deleteOldCronModuleRuns($numberOfDays);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getRunsByCronModuleQueryBuilder(CronModule $cronModule): QueryBuilder
     {
         return $this->cronModuleRepository->getRunsByCronModuleQueryBuilder($cronModule);

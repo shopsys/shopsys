@@ -14,9 +14,6 @@ enum Permission: string
     case DELETE = 'DELETE';
     case FULL = 'FULL';
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return match ($this) {
@@ -38,7 +35,6 @@ enum Permission: string
      * - DELETE: Includes VIEW (users need to see data to delete it)
      * - VIEW: No subordinate permissions (base level)
      *
-     * @param bool $onlyDirect
      * @return self[]
      */
     public function getSubordinatePermissions(bool $onlyDirect = false): array
@@ -112,7 +108,6 @@ enum Permission: string
      * For a role with permissions [VIEW, EDIT, CREATE], this returns [EDIT, CREATE]
      * because those are the highest-level permissions that don't have subordinates within the role
      *
-     * @param array $permissions
      * @return \Shopsys\FrameworkBundle\Component\Security\Role\Permission[]
      */
     public static function getHighestLevelPermissions(array $permissions): array
@@ -146,7 +141,6 @@ enum Permission: string
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission|string ...$permissions
      * @return string[]
      */
     public static function toValues(Permission|string ...$permissions): array
@@ -158,7 +152,6 @@ enum Permission: string
     }
 
     /**
-     * @param self|string ...$values
      * @return array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission>
      */
     public static function fromValues(Permission|string ...$values): array

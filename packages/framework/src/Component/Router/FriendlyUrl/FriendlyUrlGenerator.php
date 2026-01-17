@@ -19,12 +19,6 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlGenerator extends BaseUrlGenerator
 {
-    /**
-     * @param \Symfony\Component\Routing\RequestContext $context
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider
-     * @param \Symfony\Contracts\Cache\CacheInterface $mainFriendlyUrlSlugCache
-     */
     public function __construct(
         RequestContext $context,
         protected readonly FriendlyUrlRepository $friendlyUrlRepository,
@@ -35,10 +29,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
     }
 
     /**
-     * @param \Symfony\Component\Routing\RouteCollection $routeCollection
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $routeName
-     * @param array $parameters
      * @param int $referenceType
      * @return string
      */
@@ -83,9 +74,6 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
     /**
      * @param string $routeName
-     * @param \Symfony\Component\Routing\Route $route
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $parameters
      * @param int $referenceType
      * @return string
      */
@@ -118,14 +106,6 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         );
     }
 
-    /**
-     * @param string $routeName
-     * @param \Symfony\Component\Routing\Route $route
-     * @param string $slug
-     * @param array $parameters
-     * @param int $referenceType
-     * @return string
-     */
     public function getGeneratedUrlBySlug(
         string $routeName,
         Route $route,
@@ -161,7 +141,6 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param mixed $routeName
      * @param mixed $parameters
      * @param mixed $referenceType
-     * @return string
      */
     #[Override]
     public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
@@ -170,10 +149,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
     }
 
     /**
-     * @param int $domainId
-     * @param string $routeName
      * @param int $entityId
-     * @return string
      */
     protected function getSlug(int $domainId, string $routeName, $entityId): string
     {

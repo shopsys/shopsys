@@ -54,7 +54,6 @@ abstract class AbstractRoutableAction extends AbstractAction
      * If you are linking to page type that requires entity ID, you must provide callable function that will return entity ID.
      *
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $crudController
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
      * @param null|\Closure(mixed): int $id
      * @return $this
      */
@@ -70,7 +69,6 @@ abstract class AbstractRoutableAction extends AbstractAction
     /**
      * Determines if new tab should be opened when action is clicked
      *
-     * @param bool $openInNewTab
      * @return $this
      */
     public function setOpenInNewTab(bool $openInNewTab = true): self

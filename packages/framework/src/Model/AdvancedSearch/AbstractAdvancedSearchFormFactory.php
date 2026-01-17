@@ -12,12 +12,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 abstract class AbstractAdvancedSearchFormFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchConfig $advancedSearchConfig
-     * @param \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchFilterTranslation $advancedSearchFilterTranslation
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation
-     */
     public function __construct(
         protected readonly AdvancedSearchConfig $advancedSearchConfig,
         protected readonly AdvancedSearchFilterTranslation $advancedSearchFilterTranslation,
@@ -55,7 +49,6 @@ abstract class AbstractAdvancedSearchFormFactory
 
     /**
      * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $ruleFilter
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     protected function createRuleFormBuilder($name, AdvancedSearchFilterInterface $ruleFilter)
@@ -77,7 +70,6 @@ abstract class AbstractAdvancedSearchFormFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $filter
      * @return string[]
      */
     protected function getFilterOperatorChoices(AdvancedSearchFilterInterface $filter)

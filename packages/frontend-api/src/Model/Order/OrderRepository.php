@@ -15,9 +15,6 @@ class OrderRepository
 {
     protected EntityManagerInterface $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
@@ -35,8 +32,6 @@ class OrderRepository
     }
 
     /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
     protected function findByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser)
@@ -49,8 +44,6 @@ class OrderRepository
     }
 
     /**
-     * @param string $uuid
-     * @param string $urlHash
      * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
     protected function findByUuidAndUrlHash(string $uuid, string $urlHash)
@@ -62,11 +55,6 @@ class OrderRepository
             ->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function getByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser): Order
     {
         $order = $this->findByUuidAndCustomerUser($uuid, $customerUser);
@@ -82,10 +70,6 @@ class OrderRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param int $limit
-     * @param int $offset
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getCustomerUserOrderLimitedList(
@@ -108,11 +92,6 @@ class OrderRepository
             ->execute();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter
-     * @return int
-     */
     public function getCustomerUserOrderCount(CustomerUser $customerUser, OrderFilter $filter): int
     {
         $queryBuilder = $this->em->createQueryBuilder()
@@ -129,11 +108,6 @@ class OrderRepository
             ->getSingleScalarResult();
     }
 
-    /**
-     * @param string $orderNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function getByOrderNumberAndCustomerUser(string $orderNumber, CustomerUser $customerUser): Order
     {
         $order = $this->findByOrderNumberAndCustomerUser($orderNumber, $customerUser);
@@ -148,11 +122,6 @@ class OrderRepository
         return $order;
     }
 
-    /**
-     * @param string $orderNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
-     */
     protected function findByOrderNumberAndCustomerUser(string $orderNumber, CustomerUser $customerUser): ?Order
     {
         return $this->createOrderQueryBuilder()
@@ -162,10 +131,6 @@ class OrderRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param int $limit
-     * @param int $offset
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $orderFilter
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getCustomerOrderLimitedList(
@@ -187,11 +152,6 @@ class OrderRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $orderFilter
-     * @return int
-     */
     public function getCustomerOrderCount(Customer $customer, OrderFilter $orderFilter): int
     {
         $queryBuilder = $this->createOrderQueryBuilder()
@@ -205,10 +165,7 @@ class OrderRepository
     }
 
     /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @throws \Doctrine\ORM\NonUniqueResultException
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
     protected function findByUuidAndCustomer(string $uuid, Customer $customer): ?Order
     {
@@ -219,11 +176,6 @@ class OrderRepository
             ->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function getByUuidAndCustomer(string $uuid, Customer $customer): Order
     {
         $order = $this->findByUuidAndCustomer($uuid, $customer);
@@ -235,11 +187,6 @@ class OrderRepository
         return $order;
     }
 
-    /**
-     * @param string $orderNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
-     */
     protected function findByOrderNumberAndCustomer(string $orderNumber, Customer $customer): ?Order
     {
         return $this->createOrderQueryBuilder()
@@ -249,11 +196,6 @@ class OrderRepository
             ->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @param string $orderNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function getByOrderNumberAndCustomer(string $orderNumber, Customer $customer): Order
     {
         $order = $this->findByOrderNumberAndCustomer($orderNumber, $customer);
@@ -265,10 +207,6 @@ class OrderRepository
         return $order;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createCustomerUserOrderLimitedList(CustomerUser $customerUser): QueryBuilder
     {
         return $this->createOrderQueryBuilder()
@@ -276,10 +214,6 @@ class OrderRepository
             ->setParameter('customerUser', $customerUser);
     }
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     */
     protected function applyOrderFilterToQueryBuilder(OrderFilter $filter, QueryBuilder $queryBuilder): void
     {
         if ($filter->getCreatedAfter() !== null) {

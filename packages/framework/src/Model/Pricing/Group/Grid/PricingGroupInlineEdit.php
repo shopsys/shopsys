@@ -17,14 +17,6 @@ use Symfony\Component\Form\FormInterface;
 
 class PricingGroupInlineEdit extends AbstractGridInlineEdit
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\Grid\PricingGroupGridFactory $pricingGroupGridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory $pricingGroupDataFactory
-     */
     public function __construct(
         PricingGroupGridFactory $pricingGroupGridFactory,
         AccessCheckerInterface $accessChecker,
@@ -38,7 +30,6 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     * @return int|string
      */
     #[Override]
     protected function createEntityAndGetId(mixed $pricingGroupData): int|string
@@ -52,7 +43,6 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int|string $pricingGroupId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      */
     #[Override]
@@ -61,10 +51,6 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
         $this->pricingGroupFacade->edit($pricingGroupId, $pricingGroupData);
     }
 
-    /**
-     * @param int|string|null $rowId
-     * @return \Symfony\Component\Form\FormInterface
-     */
     #[Override]
     public function getForm(int|string|null $rowId): FormInterface
     {
@@ -79,9 +65,6 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
         return $this->formFactory->create(PricingGroupFormType::class, $pricingGroupData);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getRoleConstant(): string
     {

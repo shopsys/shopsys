@@ -9,9 +9,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class CountriesQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     */
     public function __construct(
         protected readonly CountryFacade $countryFacade,
     ) {

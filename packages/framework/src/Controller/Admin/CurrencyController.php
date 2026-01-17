@@ -20,12 +20,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[SuperAdminOnly]
 class CurrencyController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid\CurrencyInlineEdit $currencyInlineEdit
-     * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly CurrencyInlineEdit $currencyInlineEdit,
@@ -34,9 +28,6 @@ class CurrencyController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/currency/list/')]
     public function listAction(): Response
     {
@@ -47,10 +38,6 @@ class CurrencyController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/currency/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     #[CsrfProtection]
     public function deleteConfirmAction(int $id): Response
@@ -68,10 +55,6 @@ class CurrencyController extends AdminBaseController
         }
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/currency/delete/{id}', requirements: ['id' => '\d+'])]
     #[CsrfProtection]
     public function deleteAction(int $id): Response
@@ -97,10 +80,6 @@ class CurrencyController extends AdminBaseController
         return $this->redirectToRoute('admin_currency_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function settingsAction(Request $request): Response
     {
         $domainNames = [];

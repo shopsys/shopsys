@@ -19,9 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class CleanStorefrontQueryCacheCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
-     */
     public function __construct(
         private readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
@@ -35,11 +32,6 @@ class CleanStorefrontQueryCacheCommand extends Command
         $this->addOption('translations', null, InputOption::VALUE_NONE, 'Clean translations cache');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

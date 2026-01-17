@@ -105,7 +105,6 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @return $this
      */
     public function executeCallsDuringTestExecution(ContainerInterface $container)
@@ -128,7 +127,6 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\Auth\AuthInterface $auth
      * @return $this
      */
     #[Override]
@@ -198,7 +196,6 @@ class RequestDataSet implements RequestDataSetConfig
      * It is used to merge extra RequestDataSet into default RequestDataSet.
      * Values that were not specified in $requestDataSet have no effect on result.
      *
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @return $this
      */
     public function mergeExtraValuesFrom(self $requestDataSet)

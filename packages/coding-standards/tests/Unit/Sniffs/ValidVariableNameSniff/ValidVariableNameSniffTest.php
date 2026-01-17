@@ -28,9 +28,6 @@ final class ValidVariableNameSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/wrong/wrong.inc'];
     }
 
-    /**
-     * @param string $fileToTest
-     */
     #[DataProvider('getWrongFiles')]
     public function testWrongFiles(string $fileToTest): void
     {

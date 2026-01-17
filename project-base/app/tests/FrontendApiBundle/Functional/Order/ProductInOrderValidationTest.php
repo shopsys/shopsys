@@ -57,9 +57,6 @@ class ProductInOrderValidationTest extends GraphQlTestCase
         $this->assertTrue($response['data']['CreateOrder']['cart']['modifications']['someProductWasRemovedFromEshop']);
     }
 
-    /**
-     * @return string
-     */
     private function addProductToCartAndRemoveIt(): string
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
@@ -98,10 +95,6 @@ class ProductInOrderValidationTest extends GraphQlTestCase
         return $cartUuid;
     }
 
-    /**
-     * @param string $cartUuid
-     * @return array
-     */
     private function createOrder(string $cartUuid): array
     {
         $mutation = 'mutation {

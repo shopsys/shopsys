@@ -12,13 +12,6 @@ use Shopsys\ProductFeed\MergadoBundle\Model\Product\MergadoProductRepository;
 
 class MergadoFeedItemFacade
 {
-    /**
-     * @param \Shopsys\ProductFeed\MergadoBundle\Model\Product\MergadoProductRepository $mergadoProductRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader $productParametersBatchLoader
-     * @param \Shopsys\ProductFeed\MergadoBundle\Model\FeedItem\MergadoFeedItemFactory $mergadoFeedItemFactory
-     */
     public function __construct(
         protected readonly MergadoProductRepository $mergadoProductRepository,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -28,12 +21,6 @@ class MergadoFeedItemFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int|null $lastSeekId
-     * @param int $maxResults
-     * @return iterable
-     */
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId());

@@ -11,10 +11,6 @@ final class RoleIdentifierHelper
 {
     /**
      * Get role identifier with specific permission (e.g., ROLE_ORDER_VIEW)
-     *
-     * @param string $roleConstant
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission $permission
-     * @return string
      */
     public static function getIdentifierWithPermission(string $roleConstant, Permission $permission): string
     {
@@ -23,9 +19,6 @@ final class RoleIdentifierHelper
 
     /**
      * Extract base role from role identifier (e.g., ROLE_ORDER_VIEW -> ROLE_ORDER)
-     *
-     * @param string $roleIdentifier
-     * @return string
      */
     public static function getRoleConstantFromIdentifier(string $roleIdentifier): string
     {
@@ -45,9 +38,6 @@ final class RoleIdentifierHelper
 
     /**
      * Extract permission from role identifier (e.g., ROLE_ORDER_VIEW -> Permission::VIEW)
-     *
-     * @param string $roleIdentifier
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null
      */
     public static function getPermissionFromIdentifier(string $roleIdentifier): ?Permission
     {

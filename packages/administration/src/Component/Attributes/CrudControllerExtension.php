@@ -11,7 +11,6 @@ use Webmozart\Assert\Assert;
 final class CrudControllerExtension
 {
     /**
-     * @param string $crudController
      * @param int|null $priority Bigger priority means that the extension will be applied later. Maximum priority is 999. Extensions defined in `App` namespace without priority are automatically executed as the latest
      */
     public function __construct(
@@ -21,17 +20,11 @@ final class CrudControllerExtension
         Assert::lessThan($priority, 1000, sprintf('Priority must be lower than 1000, %d given.', $priority));
     }
 
-    /**
-     * @return string
-     */
     public function getCrudController(): string
     {
         return $this->crudController;
     }
 
-    /**
-     * @return int
-     */
     public function getPriority(): int
     {
         return $this->priority;

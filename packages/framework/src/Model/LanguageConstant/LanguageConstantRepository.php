@@ -12,16 +12,11 @@ use Shopsys\FrameworkBundle\Model\LanguageConstant\Exception\LanguageConstantNot
 
 class LanguageConstantRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected EntityManagerInterface $em)
     {
     }
 
     /**
-     * @param string $locale
-     * @param string $namespace
      * @return string[]
      */
     public function getTranslationsByLocaleIndexedByKey(string $locale, string $namespace): array
@@ -36,7 +31,6 @@ class LanguageConstantRepository
     }
 
     /**
-     * @param string $locale
      * @return string[]
      */
     public function getAllTranslationsByLocaleIndexedByNamespacedKey(string $locale): array
@@ -54,11 +48,6 @@ class LanguageConstantRepository
         return $result;
     }
 
-    /**
-     * @param string $key
-     * @param string $namespace
-     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant
-     */
     public function getByKey(string $key, string $namespace): LanguageConstant
     {
         $languageConstant = $this->findByKey($key, $namespace);
@@ -70,20 +59,11 @@ class LanguageConstantRepository
         return $languageConstant;
     }
 
-    /**
-     * @param string $key
-     * @param string $namespace
-     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant|null
-     */
     public function findByKey(string $key, string $namespace): ?LanguageConstant
     {
         return $this->getRepository()->findOneBy(['key' => $key, 'namespace' => $namespace]);
     }
 
-    /**
-     * @param int $languageConstantId
-     * @return bool
-     */
     public function hasTranslationsByLanguageConstantId(int $languageConstantId): bool
     {
         return $this->getTranslationRepository()
@@ -95,37 +75,21 @@ class LanguageConstantRepository
             ->getSingleScalarResult();
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getRepository(): EntityRepository
     {
         return $this->em->getRepository(LanguageConstant::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getTranslationRepository(): EntityRepository
     {
         return $this->em->getRepository(LanguageConstantTranslation::class);
     }
 
-    /**
-     * @param string $namespace
-     * @param string $key
-     * @return string
-     */
     public function createNamespacedKey(string $namespace, string $key): string
     {
         return $namespace . '::' . $key;
     }
 
-    /**
-     * @param string $locale
-     * @param string $selectFields
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createTranslationQueryBuilder(string $locale, string $selectFields): QueryBuilder
     {
         return $this->getRepository()

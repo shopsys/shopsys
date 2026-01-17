@@ -12,28 +12,18 @@ use Symfony\Component\Messenger\Event\WorkerRunningEvent;
 
 class CloseIdleConnectionSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry
-     * @param \Shopsys\FrameworkBundle\Component\Redis\RedisFacade $redisFacade
-     */
     public function __construct(
         protected readonly ManagerRegistry $managerRegistry,
         protected readonly RedisFacade $redisFacade,
     ) {
     }
 
-    /**
-     * @return iterable
-     */
     #[Override]
     public static function getSubscribedEvents(): iterable
     {
         yield WorkerRunningEvent::class => 'onWorkerRunning';
     }
 
-    /**
-     * @param \Symfony\Component\Messenger\Event\WorkerRunningEvent $event
-     */
     public function onWorkerRunning(WorkerRunningEvent $event): void
     {
         if (!$event->isWorkerIdle()) {

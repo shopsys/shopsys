@@ -12,10 +12,6 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFacade;
 
 class HeurekaFeed implements FeedInterface
 {
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\HeurekaFeedInfo $feedInfo
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFacade $feedItemFacade
-     */
     public function __construct(
         protected readonly HeurekaFeedInfo $feedInfo,
         protected readonly HeurekaFeedItemFacade $feedItemFacade,

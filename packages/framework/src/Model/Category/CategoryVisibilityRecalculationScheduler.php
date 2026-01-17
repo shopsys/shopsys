@@ -10,9 +10,6 @@ class CategoryVisibilityRecalculationScheduler
 {
     protected bool $recalculate = false;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     */
     public function __construct(protected readonly ProductVisibilityFacade $productVisibilityFacade)
     {
     }

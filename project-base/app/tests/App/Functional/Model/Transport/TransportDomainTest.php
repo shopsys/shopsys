@@ -73,7 +73,6 @@ class TransportDomainTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \App\Model\Transport\Transport $transport
      * @return \App\Model\Transport\Transport
      */
     private function getRefreshedTransportFromDatabase(Transport $transport)

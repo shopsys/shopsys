@@ -11,18 +11,11 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Customer\Error\CustomerUserAccessDe
 
 class ProductOrderingModeProvider
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
-     */
     public function __construct(
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return string
-     */
     public function getOrderingModeFromArgument(Argument $argument): string
     {
         $orderingMode = $this->getDefaultOrderingMode($argument);
@@ -40,10 +33,6 @@ class ProductOrderingModeProvider
         return $orderingMode;
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return string
-     */
     public function getDefaultOrderingMode(Argument $argument): string
     {
         if (isset($argument['searchInput']['search'])) {
@@ -53,17 +42,11 @@ class ProductOrderingModeProvider
         return $this->getDefaultOrderingModeForListing();
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultOrderingModeForListing(): string
     {
         return ProductListOrderingConfig::ORDER_BY_PRIORITY;
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultOrderingModeForSearch(): string
     {
         return ProductListOrderingConfig::ORDER_BY_RELEVANCE;

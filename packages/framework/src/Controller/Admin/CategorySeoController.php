@@ -39,18 +39,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_CATEGORY_SEO)]
 class CategorySeoController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFacade $categorySeoFacade
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixGridFactory $readyCategorySeoMixGridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory
-     */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly CategoryFacade $categoryFacade,
@@ -65,9 +53,6 @@ class CategorySeoController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/category/')]
     #[CanView]
     public function listAction(): Response
@@ -82,9 +67,6 @@ class CategorySeoController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/category/new/category')]
     #[CanCreate]
     public function newCategoryAction(): Response
@@ -102,11 +84,6 @@ class CategorySeoController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $categoryId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/category/new/filters/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
     #[CanCreate]
     public function newFiltersAction(Request $request, int $categoryId): Response
@@ -137,11 +114,6 @@ class CategorySeoController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $categoryId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/category/new/combinations/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
     #[CanCreate]
     public function newCombinationsAction(Request $request, int $categoryId): Response
@@ -199,11 +171,6 @@ class CategorySeoController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $categoryId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/category/new/ready-combination/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -302,12 +269,6 @@ class CategorySeoController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $categoryId
-     * @param array $categorySeoFilterFormTypeAllQueries
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
     public function readyCombinationButtonAction(
@@ -324,10 +285,6 @@ class CategorySeoController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/category/ready-combination/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -352,11 +309,6 @@ class CategorySeoController extends AdminBaseController
         return $this->redirectToRoute('admin_categoryseo_list');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
-     * @return \Symfony\Component\Form\FormInterface
-     */
     protected function createCategorySeoFilterForm(
         Category $category,
         CategorySeoFiltersData $categorySeoFiltersData,
@@ -368,13 +320,6 @@ class CategorySeoController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param string $routeName
-     * @param int $categoryId
-     * @param array $categorySeoFilterFormTypeAllQueries
-     * @param bool $isForBackLink
-     * @return string
-     */
     protected function getUrlWithCategoryIdAndAllQueryParameters(
         string $routeName,
         int $categoryId,
@@ -391,11 +336,6 @@ class CategorySeoController extends AdminBaseController
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
-     * @param array|null $categorySeoFilterFormTypeAllQueries
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination|null $selectedCategorySeoMixCombination
-     */
     protected function storeJsonsToReadyCategorySeoMixData(
         ReadyCategorySeoMixData $readyCategorySeoMixData,
         ?array $categorySeoFilterFormTypeAllQueries,

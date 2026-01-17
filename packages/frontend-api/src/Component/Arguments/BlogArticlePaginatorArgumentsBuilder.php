@@ -8,10 +8,6 @@ use Override;
 
 class BlogArticlePaginatorArgumentsBuilder extends AbstractPaginatorArgumentsBuilder
 {
-    /**
-     * @param array $config
-     * @return array
-     */
     #[Override]
     public function toMappingDefinition(array $config): array
     {

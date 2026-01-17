@@ -19,9 +19,6 @@ use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DateTimeFormatterExtensionTest extends TestCase
 {
-    /**
-     * @return array
-     */
     public static function formatDateDataProvider(): array
     {
         return [
@@ -51,7 +48,6 @@ class DateTimeFormatterExtensionTest extends TestCase
 
     /**
      * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Localization\Localization
      */
     protected function createLocalizationMock($locale): Localization
     {
@@ -66,9 +62,6 @@ class DateTimeFormatterExtensionTest extends TestCase
         return $localizationMock;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter
-     */
     protected function createDateTimeFormatter(): DateTimeFormatter
     {
         $displayTimeZoneProvider = new DisplayTimeZoneProvider(DomainConfigHelper::DEFAULT_TIMEZONE_STRING, $this->getMockedDomain());
@@ -77,9 +70,6 @@ class DateTimeFormatterExtensionTest extends TestCase
         return new DateTimeFormatter($dateTimeFormatPatternRepository, $displayTimeZoneProvider);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     private function getMockedDomain(): Domain
     {
         $settingMock = $this->getMockBuilder(Setting::class)

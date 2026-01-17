@@ -11,10 +11,6 @@ class ProductRecalculationDeduplicationFacade
 {
     protected const int TTL = 10800;
 
-    /**
-     * @param \Redis $redisClient
-     * @param bool $isDeduplicationActive
-     */
     public function __construct(
         protected readonly Redis $redisClient,
         protected readonly bool $isDeduplicationActive,
@@ -23,7 +19,6 @@ class ProductRecalculationDeduplicationFacade
 
     /**
      * @param int[] $productIds
-     * @param string $priority
      */
     public function delete(
         array $productIds,
@@ -38,7 +33,6 @@ class ProductRecalculationDeduplicationFacade
 
     /**
      * @param int[] $productIds
-     * @param string $priority
      * @return array<int,string[]>
      */
     public function getScopesIndexedByProductId(
@@ -66,7 +60,6 @@ class ProductRecalculationDeduplicationFacade
     /**
      * @param int[] $productIdsWithMainVariants
      * @param string[] $requestedExportScopes
-     * @param string $priority
      * @return int[]
      */
     public function updateScopesAndReturnProductIdsToDispatch(
@@ -105,8 +98,6 @@ class ProductRecalculationDeduplicationFacade
 
     /**
      * @param string[] $requestedExportScopes
-     * @param false|string $storedScopesJson
-     * @return string
      */
     protected function updateScopesByRequestedScopes(
         array $requestedExportScopes,
@@ -142,7 +133,6 @@ class ProductRecalculationDeduplicationFacade
 
     /**
      * @param int[] $productIds
-     * @param string $priority
      * @return array<int, string|false>
      */
     protected function doGetStoredExportScopes(array $productIds, string $priority): array
@@ -159,10 +149,6 @@ class ProductRecalculationDeduplicationFacade
         return $exportScopesIndexedByProductIds;
     }
 
-    /**
-     * @param string $priority
-     * @return string
-     */
     protected function getCacheKey(string $priority): string
     {
         return 'product_recalculation_ids_' . $priority;

@@ -35,11 +35,6 @@ class BlogArticleBlogCategoryDomain
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle $blogArticle
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param int $domainId
-     */
     public function __construct(BlogArticle $blogArticle, BlogCategory $blogCategory, int $domainId)
     {
         $this->blogArticle = $blogArticle;

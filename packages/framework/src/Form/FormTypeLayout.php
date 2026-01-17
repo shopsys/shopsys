@@ -12,10 +12,6 @@ class FormTypeLayout
     public const string LAYOUT_BLOCK = 'block';
     public const string LAYOUT_INLINE = 'inline';
 
-    /**
-     * @param string $formTypeClass
-     * @return string
-     */
     public function resolveLayoutType(string $formTypeClass): string
     {
         $inlineTypes = [

@@ -17,10 +17,6 @@ use Symfony\Component\Filesystem\Filesystem;
 )]
 class ConfigureDomainsUrlsCommand extends Command
 {
-    /**
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
-     * @param string $configFilepath
-     */
     public function __construct(
         private readonly Filesystem $localFilesystem,
         private readonly string $configFilepath,

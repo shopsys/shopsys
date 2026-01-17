@@ -57,12 +57,6 @@ class HeurekaFeedItemTest extends TestCase
         $this->doSetUp(true);
     }
 
-    /**
-     * @param int $id
-     * @param string $url
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private function createDomainConfigMock(int $id, string $url, string $locale): DomainConfig
     {
         $domainConfigMock = $this->createMock(DomainConfig::class);
@@ -197,9 +191,6 @@ class HeurekaFeedItemTest extends TestCase
         self::assertEquals(self::MOCKED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS, $heurekaFeedItem->getDeliveryDate());
     }
 
-    /**
-     * @param bool $isProductAvailableOnDomain
-     */
     private function doSetUp(bool $isProductAvailableOnDomain): void
     {
         $this->productPriceCalculationForCustomerUserMock = $this->createMock(

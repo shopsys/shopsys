@@ -10,9 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 final class PromoCodeLimitCollectionType extends AbstractType
 {
-    /**
-     * @return string
-     */
     #[Override]
     public function getParent(): string
     {

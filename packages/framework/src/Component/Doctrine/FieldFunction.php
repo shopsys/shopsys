@@ -20,9 +20,6 @@ class FieldFunction extends FunctionNode
      */
     protected array $nextArgumentExpressions;
 
-    /**
-     * @param \Doctrine\ORM\Query\Parser $parser
-     */
     #[Override]
     public function parse(Parser $parser)
     {
@@ -41,7 +38,6 @@ class FieldFunction extends FunctionNode
     }
 
     /**
-     * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
      * @return string
      */
     #[Override]

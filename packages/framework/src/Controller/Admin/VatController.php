@@ -24,12 +24,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_VAT)]
 class VatController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatInlineEdit $vatInlineEdit
-     * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     */
     public function __construct(
         protected readonly VatFacade $vatFacade,
         protected readonly VatInlineEdit $vatInlineEdit,
@@ -38,9 +32,6 @@ class VatController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/vat/list/')]
     #[CanView(methods: [HttpMethod::GET])]
     #[CanEdit(methods: [HttpMethod::POST])]
@@ -53,10 +44,6 @@ class VatController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/vat/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -91,11 +78,6 @@ class VatController extends AdminBaseController
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/vat/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -132,10 +114,6 @@ class VatController extends AdminBaseController
         return $this->redirectToRoute('admin_vat_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
     public function settingsAction(Request $request): Response

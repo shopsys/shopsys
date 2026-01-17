@@ -6,9 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\Translation;
 
 class PhpFileExtractorFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper $phpParserNodeHelper
-     */
     public function __construct(
         protected readonly PhpParserNodeHelper $phpParserNodeHelper,
     ) {

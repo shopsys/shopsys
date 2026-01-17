@@ -31,14 +31,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_PROMO_CODE)]
 class PromoCodeController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory $promoCodeGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeMassGeneratedBatchGridFactory $promoCodeMassGeneratedBatchGridFactory
-     */
     public function __construct(
         protected readonly PromoCodeFacade $promoCodeFacade,
         protected readonly AdministratorGridFacade $administratorGridFacade,
@@ -49,10 +41,6 @@ class PromoCodeController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/promo-code/list')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -71,10 +59,6 @@ class PromoCodeController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     #[Route(path: '/promo-code/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -98,10 +82,6 @@ class PromoCodeController extends AdminBaseController
         return $this->redirectToRoute('admin_promocode_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/promo-code/new')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -144,11 +124,6 @@ class PromoCodeController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/promo-code/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -190,10 +165,6 @@ class PromoCodeController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/promo-code/new-mass-generate')]
     #[CanCreate]
     public function newMassGenerateAction(Request $request): Response
@@ -237,10 +208,6 @@ class PromoCodeController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/promo-code/list-mass-generate-batch')]
     #[CanView]
     public function listMassGenerateBatchAction(Request $request): Response
@@ -256,10 +223,6 @@ class PromoCodeController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $batchId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/promo-code/download-mass-generate-batch/{batchId}')]
     #[CanView]
     public function downloadMassGenerateBatchAction(int $batchId): Response
@@ -272,10 +235,6 @@ class PromoCodeController extends AdminBaseController
         return $this->file($tempFileName, $fileName);
     }
 
-    /**
-     * @param int $batchId
-     * @return string
-     */
     protected function generateCsvFromPromoCodeFromBatchId(int $batchId): string
     {
         $promoCodes = $this->promoCodeFacade->findByMassBatchId($batchId);

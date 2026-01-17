@@ -28,7 +28,6 @@ class CategoryWithPreloadedChildrenFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[][] $categoriesByParentId
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildren[]
      */

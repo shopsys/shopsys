@@ -18,9 +18,6 @@ use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 #[CoversClass(MissingParamAnnotationsFixer::class)]
 final class MissingParamAnnotationsFixerTest extends AbstractFixerTestCase
 {
-    /**
-     * @return \Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer
-     */
     #[Override]
     protected function createFixerService(): MissingParamAnnotationsFixer
     {

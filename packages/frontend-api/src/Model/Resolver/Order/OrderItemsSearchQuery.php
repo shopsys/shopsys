@@ -21,12 +21,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class OrderItemsSearchQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade $orderItemApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilterFactory $orderItemsFilterFactory
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     */
     public function __construct(
         protected readonly OrderItemApiFacade $orderItemApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -35,10 +29,6 @@ class OrderItemsSearchQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|\GraphQL\Executor\Promise\Promise
-     */
     public function orderItemsSearchQuery(Argument $argument): ConnectionInterface|Promise
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
@@ -57,13 +47,6 @@ class OrderItemsSearchQuery extends AbstractQuery
         return $this->getPaginatedCustomerUserOrderItemsSearchList($customerUser, $search, $filter, $argument);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $search
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\Output\Connection
-     */
     protected function getPaginatedCustomerUserOrderItemsSearchList(
         CustomerUser $customerUser,
         string $search,
@@ -77,13 +60,6 @@ class OrderItemsSearchQuery extends AbstractQuery
         return $paginator->auto($argument, $this->orderItemApiFacade->getCustomerUserOrderItemsLimitedSearchListCount($search, $customerUser, $filter));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param string $search
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
-     */
     protected function getPaginatedCustomerOrderItemsSearchList(
         Customer $customer,
         string $search,

@@ -65,10 +65,6 @@ class MoneyType extends Type
         }
     }
 
-    /**
-     * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
-     * @return bool
-     */
     #[Override]
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {

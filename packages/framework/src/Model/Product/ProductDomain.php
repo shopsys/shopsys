@@ -141,7 +141,6 @@ class ProductDomain
     protected $promotionXy;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      */
     public function __construct(Product $product, $domainId)
@@ -392,17 +391,11 @@ class ProductDomain
         return $this->sellingDenied;
     }
 
-    /**
-     * @param bool $sellingDenied
-     */
     public function setSellingDenied(bool $sellingDenied): void
     {
         $this->sellingDenied = $sellingDenied;
     }
 
-    /**
-     * @param bool $domainHidden
-     */
     public function setDomainHidden(bool $domainHidden): void
     {
         $this->domainHidden = $domainHidden;

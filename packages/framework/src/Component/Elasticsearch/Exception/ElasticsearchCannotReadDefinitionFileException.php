@@ -8,9 +8,6 @@ use Exception;
 
 class ElasticsearchCannotReadDefinitionFileException extends Exception
 {
-    /**
-     * @param string $definitionFilepath
-     */
     public function __construct(string $definitionFilepath)
     {
         parent::__construct(sprintf(

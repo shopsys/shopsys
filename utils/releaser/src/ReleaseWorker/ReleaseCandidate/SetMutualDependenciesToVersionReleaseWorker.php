@@ -11,10 +11,6 @@ use Shopsys\Releaser\Stage;
 
 final class SetMutualDependenciesToVersionReleaseWorker extends AbstractSetMutualDependenciesToVersionReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @return string
-     */
     #[Override]
     protected function getVersionString(Version $version): string
     {

@@ -12,19 +12,10 @@ class PriceCalculation
 {
     protected const int PRICE_CALCULATION_MAX_SCALE = 6;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
-     */
     public function __construct(protected readonly Rounding $rounding)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function getVatAmountByPriceWithVat(Money $priceWithVat, Vat $vat, Currency $currency): Money
     {
         $divisor = (string)(1 + (float)$vat->getPercent() / 100);
@@ -34,12 +25,6 @@ class PriceCalculation
         return $this->rounding->roundVatAmount($priceWithVat->subtract($priceWithoutVat), $currency);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     * @param float $vatPercent
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function getVatAmountByPriceWithVatForVatPercent(
         Money $priceWithVat,
         float $vatPercent,
@@ -52,21 +37,11 @@ class PriceCalculation
         return $this->rounding->roundVatAmount($priceWithVat->subtract($priceWithoutVat), $currency);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function applyVatPercent(Money $priceWithoutVat, Vat $vat): Money
     {
         return $this->applyVatByPercent($priceWithoutVat, (float)$vat->getPercent());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
-     * @param float $vatPercent
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function applyVatByPercent(Money $priceWithoutVat, float $vatPercent): Money
     {
         $multiplier = (string)(1 + $vatPercent / 100);

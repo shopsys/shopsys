@@ -12,9 +12,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ShopsysFrontendApiBundle extends Bundle
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function build(ContainerBuilder $container)
     {

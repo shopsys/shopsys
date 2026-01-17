@@ -19,11 +19,6 @@ use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class ProductConnectionFactory
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $frontendApiProductConnectionFactory
-     * @param \Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper $luigisBoxFacetsToProductFilterConfigMapper
-     */
     public function __construct(
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
         protected readonly FrontendApiProductConnectionFactory $frontendApiProductConnectionFactory,
@@ -31,13 +26,6 @@ class ProductConnectionFactory
     ) {
     }
 
-    /**
-     * @param \Closure $retrieveProductClosure
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string|null $orderingMode
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function createConnectionPromiseForSearch(
         Closure $retrieveProductClosure,
         Argument $argument,
@@ -58,14 +46,6 @@ class ProductConnectionFactory
         );
     }
 
-    /**
-     * @param callable $retrieveClosure
-     * @param \Closure $productFilterOptionsClosure
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param string $orderingMode
-     * @param string $defaultOrderingMode
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     protected function getConnectionPromise(
         callable $retrieveClosure,
         Closure $productFilterOptionsClosure,
@@ -85,13 +65,6 @@ class ProductConnectionFactory
         return $promise;
     }
 
-    /**
-     * @param callable $retrieveProductClosure
-     * @param \Closure $productFilterOptionsClosure
-     * @param string $orderingMode
-     * @param string $defaultOrderingMode
-     * @return \Overblog\GraphQLBundle\Relay\Connection\Paginator
-     */
     protected function createPaginator(
         callable $retrieveProductClosure,
         Closure $productFilterOptionsClosure,

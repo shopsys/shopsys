@@ -64,7 +64,6 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \App\Model\Product\Brand\Brand $brand
      * @return \App\Model\Product\Brand\Brand
      */
     private function getRefreshedBrandFromDatabase(Brand $brand)

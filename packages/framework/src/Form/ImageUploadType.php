@@ -26,11 +26,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class ImageUploadType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     */
     public function __construct(
         private readonly ImageFacade $imageFacade,
         private readonly ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer,
@@ -38,9 +33,6 @@ final class ImageUploadType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -71,11 +63,6 @@ final class ImageUploadType extends AbstractType
         );
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -86,10 +73,6 @@ final class ImageUploadType extends AbstractType
         $view->vars['hide_delete_button'] = $options['hide_delete_button'];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -153,7 +136,6 @@ final class ImageUploadType extends AbstractType
     }
 
     /**
-     * @param array $options
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     private function getImagesIndexedById(array $options): array
@@ -165,10 +147,6 @@ final class ImageUploadType extends AbstractType
         return $this->imageFacade->getImagesByEntityIndexedById($options['entity'], $options['image_type']);
     }
 
-    /**
-     * @param array $options
-     * @return bool
-     */
     private function isMultiple(array $options): bool
     {
         if ($options['multiple'] !== null) {

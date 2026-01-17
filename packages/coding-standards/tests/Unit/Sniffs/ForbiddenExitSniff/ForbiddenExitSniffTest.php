@@ -28,9 +28,6 @@ final class ForbiddenExitSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/wrong/wrong.php.inc'];
     }
 
-    /**
-     * @param string $fileToTest
-     */
     #[DataProvider('getWrongFiles')]
     public function testWrongFiles(string $fileToTest): void
     {

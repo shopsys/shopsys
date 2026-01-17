@@ -9,22 +9,12 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class SpecialPriceFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFactory $specialPriceFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceRepository $specialPriceRepository
-     */
     public function __construct(
         protected readonly SpecialPriceFactory $specialPriceFactory,
         protected readonly SpecialPriceRepository $specialPriceRepository,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $basicPrice
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null
-     */
     public function findRelevantSpecialPrice(
         Product $product,
         int $domainId,
@@ -55,8 +45,6 @@ class SpecialPriceFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
      * @param int[] $variantIds
      * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice[]
      */

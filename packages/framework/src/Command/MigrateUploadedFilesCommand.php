@@ -21,11 +21,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class MigrateUploadedFilesCommand extends CheckMigrateUploadedFilesCommand
 {
-    /**
-     * @param string $uploadedFilesDirectory
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(
         string $uploadedFilesDirectory,
         FilesystemOperator $filesystem,
@@ -88,7 +83,6 @@ class MigrateUploadedFilesCommand extends CheckMigrateUploadedFilesCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $style
      * @param string[] $directories
      */
     protected function moveFiles(SymfonyStyle $style, array $directories): void
@@ -110,7 +104,6 @@ class MigrateUploadedFilesCommand extends CheckMigrateUploadedFilesCommand
     }
 
     /**
-     * @param string $directory
      * @return string[]
      */
     protected function listDirectories(string $directory): array
@@ -126,10 +119,6 @@ class MigrateUploadedFilesCommand extends CheckMigrateUploadedFilesCommand
         return $directories;
     }
 
-    /**
-     * @param string $directory
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $style
-     */
     protected function deleteDirectory(string $directory, SymfonyStyle $style): void
     {
         $isDirectoryEmpty = $this->filesystem->listContents($directory)->toArray() === [];

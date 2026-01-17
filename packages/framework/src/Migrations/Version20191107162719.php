@@ -13,9 +13,6 @@ class Version20191107162719 extends AbstractMigration implements ContainerAwareI
 {
     use MultidomainMigrationTrait;
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {

@@ -30,9 +30,6 @@ final class ForbiddenSuperGlobalSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/wrong/post.php.inc'];
     }
 
-    /**
-     * @param string $fileToTest
-     */
     #[DataProvider('getWrongFiles')]
     public function testWrongFiles(string $fileToTest): void
     {

@@ -66,9 +66,6 @@ class Flag extends AbstractTranslatableEntity
     #[ORM\ManyToOne(targetEntity: ProductPromotionXy::class)]
     protected $promotionXy;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
     public function __construct(FlagData $flagData)
     {
         $this->uuid = $flagData->uuid ?: Uuid::uuid4()->toString();
@@ -78,17 +75,11 @@ class Flag extends AbstractTranslatableEntity
         $this->lockedForDeletion = false;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
     public function edit(FlagData $flagData)
     {
         $this->setData($flagData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
     protected function setData(FlagData $flagData): void
     {
         $this->setTranslations($flagData);
@@ -168,9 +159,6 @@ class Flag extends AbstractTranslatableEntity
         return $this->promotionXy;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
     protected function setTranslations(FlagData $flagData)
     {
         foreach ($flagData->name as $locale => $name) {

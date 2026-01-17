@@ -23,9 +23,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepository
 {
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
      * @param \App\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
@@ -72,10 +69,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
     }
 
     /**
-     * @param array $rows
-     * @param string $locale
      * @param \App\Model\Category\Category $category
-     * @return array
      */
     protected function getVisibleParametersIndexedByIdOrderedByParameterPositionInCategory(
         array $rows,

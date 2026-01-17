@@ -353,9 +353,6 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
         $this->assertTrue($data);
     }
 
-    /**
-     * @return \App\Model\Customer\User\CustomerUser
-     */
     private function getAnotherOwnerToDelete(): CustomerUser
     {
         $userToDelete = $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL, $this->domain->getId(), CustomerUser::class);
@@ -367,9 +364,6 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
         return $userToDelete;
     }
 
-    /**
-     * @param \App\Model\Customer\User\CustomerUser $userToDelete
-     */
     private function doTestSuccessfulCustomerUserRemoval(CustomerUser $userToDelete): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/RemoveCustomerUserMutation.graphql', [
@@ -382,9 +376,6 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
         $this->customerUserFacade->getByUuid($userToDelete->getUuid());
     }
 
-    /**
-     * @return \App\Model\Customer\User\CustomerUser
-     */
     private function getCustomerUserFromAnotherCompany(): CustomerUser
     {
         return $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . '13', CustomerUser::class);

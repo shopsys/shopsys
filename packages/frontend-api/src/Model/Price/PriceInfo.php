@@ -24,9 +24,6 @@ class PriceInfo
 
     public bool $isPriceFrom;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
-     */
     public function setSellingPrice(PriceInterface $price): void
     {
         $this->priceWithoutVat = $price->getPriceWithoutVat();

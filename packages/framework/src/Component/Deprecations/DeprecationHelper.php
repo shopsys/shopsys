@@ -9,7 +9,6 @@ use const E_USER_DEPRECATED;
 final class DeprecationHelper
 {
     /**
-     * @param string $message
      * @param mixed $arguments
      */
     public static function trigger(string $message, ...$arguments): void
@@ -20,9 +19,6 @@ final class DeprecationHelper
         );
     }
 
-    /**
-     * @param string $methodName
-     */
     public static function triggerSetterInjection(string $methodName): void
     {
         self::trigger(
@@ -31,10 +27,6 @@ final class DeprecationHelper
         );
     }
 
-    /**
-     * @param string $className
-     * @param string|null $replacement
-     */
     public static function triggerClass(string $className, ?string $replacement = null): void
     {
         $message = sprintf(
@@ -51,10 +43,6 @@ final class DeprecationHelper
         self::trigger($message);
     }
 
-    /**
-     * @param string $methodName
-     * @param string|null $replacement
-     */
     public static function triggerMethod(string $methodName, ?string $replacement = null): void
     {
         $message = sprintf(
@@ -71,9 +59,6 @@ final class DeprecationHelper
         self::trigger($message);
     }
 
-    /**
-     * @param string $className
-     */
     public static function triggerAbstractClass(string $className): void
     {
         self::trigger(
@@ -82,9 +67,6 @@ final class DeprecationHelper
         );
     }
 
-    /**
-     * @param string $methodName
-     */
     public static function triggerAbstractMethod(string $methodName): void
     {
         self::trigger(
@@ -93,16 +75,6 @@ final class DeprecationHelper
         );
     }
 
-    /**
-     * @param string $methodName
-     * @param string $argumentName
-     * @param string $argumentType
-     * @param array $functionArguments
-     * @param int $positionOfArgument
-     * @param mixed $defaultValue
-     * @param bool $required
-     * @return mixed
-     */
     public static function triggerNewArgumentInMethod(
         string $methodName,
         string $argumentName,

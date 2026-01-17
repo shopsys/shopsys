@@ -72,7 +72,6 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
      * @param string[] $availableMigrationClasses
      * @param string[] $orderedMigrationClassesFromLock
      * @param string[] $executedMigrationClasses
-     * @param string $versionClassName
      * @param string[] $expectedMigrationClasses
      */
     #[DataProvider('getPlanUntilVersionDataProvider')]
@@ -96,9 +95,6 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
         }
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function getMigrationsDataProvider(): Iterator
     {
         $versionClass1 = Version20180101000001::class;
@@ -124,9 +120,6 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
         ];
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function getPlanUntilVersionDataProvider(): Iterator
     {
         $versionClass1 = Version20180101000001::class;
@@ -162,7 +155,6 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
      * @param string[] $availableMigrationClasses
      * @param string[] $orderedMigrationClassesFromLock
      * @param string[] $executedMigrationClasses
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator
      */
     private function getMigrationLockPlanCalculator(
         array $availableMigrationClasses,
@@ -187,7 +179,6 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
 
     /**
      * @param string[] $executedMigrationClasses
-     * @return \Doctrine\Migrations\Metadata\ExecutedMigrationsList
      */
     private function getExecutedMigrationsList(array $executedMigrationClasses): ExecutedMigrationsList
     {
@@ -202,7 +193,6 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
 
     /**
      * @param string[] $availableMigrationClasses
-     * @return \Doctrine\Migrations\Metadata\AvailableMigrationsSet
      */
     private function getAvailableMigrationsSet(array $availableMigrationClasses): AvailableMigrationsSet
     {

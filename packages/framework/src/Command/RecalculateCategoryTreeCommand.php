@@ -18,9 +18,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class RecalculateCategoryTreeCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     */
     public function __construct(protected readonly CategoryFacade $categoryFacade)
     {
         parent::__construct();

@@ -16,21 +16,12 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculat
 
 class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     */
     public function __construct(
         protected readonly QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
-     */
     #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,
@@ -49,11 +40,6 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
         return $orderProcessingStack->processNext($orderProcessingData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     */
     protected function addProductOrderItemData(
         OrderData $orderData,
         QuantifiedProduct $quantifiedProduct,

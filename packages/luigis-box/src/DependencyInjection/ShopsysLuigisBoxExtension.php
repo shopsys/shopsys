@@ -13,9 +13,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class ShopsysLuigisBoxExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function prepend(ContainerBuilder $container): void
     {

@@ -14,12 +14,6 @@ use Twig\Environment;
 
 class WithdrawalAdminMailFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Twig\Environment $twig
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly Mailer $mailer,
         protected readonly Setting $setting,
@@ -28,9 +22,6 @@ class WithdrawalAdminMailFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
-     */
     public function sendEmail(WithdrawalRequest $withdrawalRequest): void
     {
         $order = $withdrawalRequest->getOrder();
@@ -50,10 +41,6 @@ class WithdrawalAdminMailFacade
         $this->mailer->sendForDomain($messageData, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
-     * @return string
-     */
     protected function getMailBody(WithdrawalRequest $withdrawalRequest): string
     {
         return $this->twig->render('@ShopsysFramework/Mail/Order/withdrawalAdminMail.html.twig', [
@@ -62,10 +49,6 @@ class WithdrawalAdminMailFacade
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
-     * @return string
-     */
     protected function getMailSubject(WithdrawalRequest $withdrawalRequest): string
     {
         $order = $withdrawalRequest->getOrder();

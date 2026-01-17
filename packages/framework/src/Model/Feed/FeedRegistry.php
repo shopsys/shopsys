@@ -19,13 +19,6 @@ class FeedRegistry
      */
     protected array $feedConfigsByName = [];
 
-    /**
-     * @param string|null $cronTimeZone
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver $cronTimeResolver
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
-     */
     public function __construct(
         protected readonly ?string $cronTimeZone,
         protected readonly CronTimeResolver $cronTimeResolver,
@@ -35,12 +28,6 @@ class FeedRegistry
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInterface $feed
-     * @param string $timeHours
-     * @param string $timeMinutes
-     * @param array $domainIds
-     */
     public function registerFeed(FeedInterface $feed, string $timeHours, string $timeMinutes, array $domainIds): void
     {
         $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);
@@ -93,10 +80,6 @@ class FeedRegistry
         return $this->feedConfigsByName;
     }
 
-    /**
-     * @param string $name
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedConfig
-     */
     public function getFeedConfigByName(string $name): FeedConfig
     {
         if (!array_key_exists($name, $this->feedConfigsByName)) {
@@ -106,9 +89,6 @@ class FeedRegistry
         return $this->feedConfigsByName[$name];
     }
 
-    /**
-     * @param string $name
-     */
     protected function assertNameIsUnique(string $name): void
     {
         if (array_key_exists($name, $this->feedConfigsByName)) {
@@ -116,9 +96,6 @@ class FeedRegistry
         }
     }
 
-    /**
-     * @return int
-     */
     protected function getFeedCronModuleRunEveryMinuteValue(): int
     {
         $feedCronModule = $this->cronConfig->getCronModuleConfigByServiceId(FeedCronModule::class);

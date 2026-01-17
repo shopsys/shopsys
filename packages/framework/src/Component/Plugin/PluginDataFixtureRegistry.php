@@ -13,9 +13,6 @@ class PluginDataFixtureRegistry
      */
     protected array $pluginDataFixtures = [];
 
-    /**
-     * @param \Shopsys\Plugin\PluginDataFixtureInterface $pluginDataFixture
-     */
     public function registerDataFixture(PluginDataFixtureInterface $pluginDataFixture)
     {
         $this->pluginDataFixtures[] = $pluginDataFixture;

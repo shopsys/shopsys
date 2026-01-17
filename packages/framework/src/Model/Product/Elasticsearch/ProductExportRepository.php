@@ -38,27 +38,6 @@ class ProductExportRepository
 {
     protected const string VARIANTS_CACHE_NAMESPACE = 'variants';
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver $parameterValueFileResolver
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ParameterRepository $parameterRepository,
@@ -83,12 +62,7 @@ class ProductExportRepository
     }
 
     /**
-     * @param int $domainId
-     * @param string $locale
-     * @param int $lastProcessedId
-     * @param int $batchSize
      * @param string[] $fields
-     * @return array
      */
     public function getProductsData(
         int $domainId,
@@ -106,11 +80,8 @@ class ProductExportRepository
     }
 
     /**
-     * @param int $domainId
-     * @param string $locale
      * @param int[] $productIds
      * @param string[] $fields
-     * @return array
      */
     public function getProductsDataForIds(int $domainId, string $locale, array $productIds, array $fields): array
     {
@@ -121,10 +92,6 @@ class ProductExportRepository
         return $this->getResults($queryBuilder, $fields, $domainId, $locale);
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     public function getProductTotalCountForDomain(int $domainId): int
     {
         $result = new QueryPaginator($this->createQueryBuilder($domainId));
@@ -133,11 +100,7 @@ class ProductExportRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param string $locale
      * @param string[] $fields
-     * @return array
      */
     protected function extractResult(Product $product, int $domainId, string $locale, array $fields): array
     {
@@ -152,13 +115,6 @@ class ProductExportRepository
         return $exportedResult;
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param string $locale
-     * @param string $field
-     * @return mixed
-     */
     protected function getExportedFieldValue(int $domainId, Product $product, string $locale, string $field): mixed
     {
         return match ($field) {
@@ -226,7 +182,6 @@ class ProductExportRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return int[]
      */
     protected function extractVariantIds(Product $product): array
@@ -240,11 +195,6 @@ class ProductExportRepository
         return $variantIds;
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string
-     */
     protected function extractBrandDetailSlug(int $domainId, Product $product): string
     {
         if ($product->getBrand() === null) {
@@ -254,20 +204,11 @@ class ProductExportRepository
         return $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, 'front_brand_detail', $product->getBrand()->getId());
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string
-     */
     protected function extractDetailSlug(int $domainId, Product $product): string
     {
         return $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, 'front_product_detail', $product->getId());
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createQueryBuilder(int $domainId): QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder()
@@ -285,8 +226,6 @@ class ProductExportRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return int[]
      */
     protected function extractFlags(int $domainId, Product $product): array
@@ -301,8 +240,6 @@ class ProductExportRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return int[]
      */
     protected function extractCategories(int $domainId, Product $product): array
@@ -319,12 +256,6 @@ class ProductExportRepository
         return $categoryIds;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param string $locale
-     * @param int $domainId
-     * @return array
-     */
     protected function extractParametersIncludedVariants(Product $product, string $locale, int $domainId): array
     {
         $products = [];
@@ -347,11 +278,6 @@ class ProductExportRepository
         return $this->parameterValueFileResolver->addIconDataToParameterValuesData($parameterValuesData, $this->domain->getDomainConfigById($domainId));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     protected function extractProductType(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
@@ -367,11 +293,6 @@ class ProductExportRepository
         return $product->getProductType();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return int
-     */
     protected function extractPriorityByProductType(Product $product, int $domainId): int
     {
         $productType = $this->extractProductType($product, $domainId);
@@ -385,11 +306,6 @@ class ProductExportRepository
         };
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return array
-     */
     protected function extractPrices(int $domainId, Product $product): array
     {
         $prices = [];
@@ -412,11 +328,6 @@ class ProductExportRepository
         return $prices;
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return array
-     */
     protected function extractSpecialPrices(int $domainId, Product $product): array
     {
         $variantIds = array_map(
@@ -457,11 +368,6 @@ class ProductExportRepository
         return array_values($return);
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return array
-     */
     protected function extractVisibility(int $domainId, Product $product): array
     {
         $visibility = [];
@@ -479,10 +385,6 @@ class ProductExportRepository
         return $visibility;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return array
-     */
     protected function extractAccessoriesIds(Product $product): array
     {
         $accessoriesIds = [];
@@ -496,7 +398,6 @@ class ProductExportRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return int[]
      */
     protected function extractRelatedProductsIds(Product $product): array
@@ -510,13 +411,6 @@ class ProductExportRepository
         return $relatedProductsIds;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param array $fields
-     * @param int $domainId
-     * @param string $locale
-     * @return array
-     */
     protected function getResults(QueryBuilder $queryBuilder, array $fields, int $domainId, string $locale): array
     {
         $query = $queryBuilder->getQuery();
@@ -536,8 +430,6 @@ class ProductExportRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     protected function getVariantsForDefaultPricingGroup(Product $mainVariant, int $domainId): array
@@ -562,11 +454,6 @@ class ProductExportRepository
         $this->inMemoryCache->deleteAllItemsInNamespace(static::VARIANTS_CACHE_NAMESPACE);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return array
-     */
     protected function extractStoreAvailabilitiesInformation(Product $product, int $domainId): array
     {
         $storeAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId($product, $domainId);
@@ -585,12 +472,6 @@ class ProductExportRepository
         return $result;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
-     * @return array
-     */
     protected function getVariantPrices(Product $product, PricingGroup $pricingGroup, int $domainId): array
     {
         $variantPrices = [];
@@ -607,11 +488,6 @@ class ProductExportRepository
         return $variantPrices;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     protected function extractVat(Product $product, int $domainId): string
     {
         return $product->getVatForDomain($domainId)->getPercent();

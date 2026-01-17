@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter;
 
 class MultidomainEntityDataCreator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter $sqlQuoter
-     */
     public function __construct(
         protected readonly MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade,
         protected readonly EntityManagerInterface $em,

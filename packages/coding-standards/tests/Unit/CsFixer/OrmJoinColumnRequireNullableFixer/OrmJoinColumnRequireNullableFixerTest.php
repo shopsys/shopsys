@@ -10,9 +10,6 @@ use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
 final class OrmJoinColumnRequireNullableFixerTest extends AbstractFixerTestCase
 {
-    /**
-     * @return \Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer
-     */
     #[Override]
     protected function createFixerService(): OrmJoinColumnRequireNullableFixer
     {

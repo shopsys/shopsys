@@ -31,21 +31,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class SocialNetworkFacade
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade $registrationFacade
-     * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory $socialNetworkConfigFactory
-     * @param \Monolog\Logger $logger
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
-     * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly RegistrationDataFactory $registrationDataFactory,
         protected readonly RegistrationFacade $registrationFacade,
@@ -63,12 +48,6 @@ class SocialNetworkFacade
     ) {
     }
 
-    /**
-     * @param string $type
-     * @param string $redirectUrl
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
-     */
     public function login(string $type, string $redirectUrl, SessionInterface $session): LoginResultData
     {
         try {
@@ -116,9 +95,6 @@ class SocialNetworkFacade
         }
     }
 
-    /**
-     * @param \Hybridauth\User\Profile $userProfile
-     */
     protected function validateDataFromSocialNetwork(Profile $userProfile): void
     {
         $violations = $this->validator->validate($userProfile->email, [

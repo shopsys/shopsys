@@ -22,15 +22,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ReadyCategorySeoMixFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFactory $readyCategorySeoMixFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ReadyCategorySeoMixRepository $readyCategorySeoMixRepository,
@@ -42,12 +33,6 @@ class ReadyCategorySeoMixFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData $urlListData
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix
-     */
     public function createOrEdit(
         SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
         ReadyCategorySeoMixData $readyCategorySeoMixData,
@@ -88,29 +73,17 @@ class ReadyCategorySeoMixFacade
         return $readyCategorySeoMix;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null
-     */
     public function findBySelectedCategorySeoMixCombination(
         SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): ?ReadyCategorySeoMix {
         return $this->readyCategorySeoMixRepository->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null
-     */
     public function findById(int $id): ?ReadyCategorySeoMix
     {
         return $this->readyCategorySeoMixRepository->findById($id);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix
-     */
     public function getById(int $id): ReadyCategorySeoMix
     {
         $readyCategorySeoMix = $this->readyCategorySeoMixRepository->findById($id);
@@ -122,10 +95,6 @@ class ReadyCategorySeoMixFacade
         return $readyCategorySeoMix;
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix
-     */
     public function getByUuid(string $uuid): ReadyCategorySeoMix
     {
         $readyCategorySeoMix = $this->readyCategorySeoMixRepository->findByUuid($uuid);
@@ -137,19 +106,12 @@ class ReadyCategorySeoMixFacade
         return $readyCategorySeoMix;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
-     */
     public function delete(ReadyCategorySeoMix $readyCategorySeoMix): void
     {
         $this->em->remove($readyCategorySeoMix);
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData $urlListData
-     */
     protected function saveReadyCategoryMixFriendlyUrls(
         ReadyCategorySeoMix $readyCategorySeoMix,
         UrlListData $urlListData,
@@ -176,9 +138,6 @@ class ReadyCategorySeoMixFacade
         $this->friendlyUrlFacade->saveUrlListFormData('front_category_seo', $readyCategorySeoMix->getId(), $urlListDataForMainFriendlyUrl);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
-     */
     protected function validateReadyCategoryMixFriendlyUrls(ReadyCategorySeoMix $readyCategorySeoMix): void
     {
         $readyCategorySeoMixAllFriendlyUrls = $this->friendlyUrlFacade->getAllByRouteNameAndEntityId('front_category_seo', $readyCategorySeoMix->getId());
@@ -208,11 +167,8 @@ class ReadyCategorySeoMixFacade
     }
 
     /**
-     * @param int $categoryId
      * @param array<int, array{parameter: string, values: string[], minimalValue: float|null, maximalValue: float|null}> $parametersFilterData
      * @param string[] $flagUuids
-     * @param string|null $orderingMode
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null
      */
     public function findReadyCategorySeoMixByQueryInputData(
         int $categoryId,
@@ -242,7 +198,6 @@ class ReadyCategorySeoMixFacade
     /**
      * @param array<int, array{parameter: string, values: string[], minimalValue: float|null, maximalValue: float|null}> $parametersFilterData
      * @param string[] $flagUuids
-     * @param string|null $ordering
      */
     protected function checkPossibilityToFindReadyCategorySeoMix(
         array $parametersFilterData,
@@ -279,8 +234,6 @@ class ReadyCategorySeoMixFacade
     }
 
     /**
-     * @param array $categoryIds
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix[][]
      */
     public function getAllIndexedByCategoryId(array $categoryIds, DomainConfig $domainConfig): array
@@ -298,7 +251,6 @@ class ReadyCategorySeoMixFacade
 
     /**
      * @param array<int, array{parameter: string, values: string[], minimalValue: float|null, maximalValue: float|null}> $parametersFilterData
-     * @param string $currentLocale
      * @return array<int,int>
      */
     protected function getParameterValueIdsByParameterId(array $parametersFilterData, string $currentLocale): array

@@ -18,10 +18,7 @@ class Localization
     protected ?array $allLocales = null;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param string[] $allowedAdminLocales
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -33,8 +30,6 @@ class Localization
 
     /**
      * The proper locale is set into request in @see \Shopsys\FrameworkBundle\Model\Localization\LocalizationListener::onKernelRequest()
-     *
-     * @return string
      */
     public function getRequestLocale(): string
     {
@@ -51,9 +46,6 @@ class Localization
      * The method is handy when you need to get the entity translations in the admin locale.
      * It has a safety net in form of a fallback domain ID that ensures the method always returns a valid locale from the entity translations point of view.
      * The fallback is necessary for setup with the admin locale is different from the storefront domain locales.
-     *
-     * @param int $fallbackLocaleDomainId
-     * @return string
      */
     public function getCurrentLocaleForTranslatableEntities(
         int $fallbackLocaleDomainId = Domain::FIRST_DOMAIN_ID,
@@ -63,11 +55,6 @@ class Localization
         return $this->getFallbackLocaleIfLocaleIsNotUsedOnAnyDomain($requestLocale, $fallbackLocaleDomainId);
     }
 
-    /**
-     * @param string $locale
-     * @param int $fallbackLocaleDomainId
-     * @return string
-     */
     public function getFallbackLocaleIfLocaleIsNotUsedOnAnyDomain(
         string $locale,
         int $fallbackLocaleDomainId = Domain::FIRST_DOMAIN_ID,
@@ -91,20 +78,11 @@ class Localization
         return $this->allLocales;
     }
 
-    /**
-     * @param string $locale
-     * @param string|null $displayLocale
-     * @return string
-     */
     public function getLanguageName(string $locale, ?string $displayLocale = null): string
     {
         return Locale::getDisplayLanguage($locale, $displayLocale);
     }
 
-    /**
-     * @param string $locale
-     * @return string
-     */
     public function getCollationByLocale(string $locale): string
     {
         return $locale . '-x-icu';

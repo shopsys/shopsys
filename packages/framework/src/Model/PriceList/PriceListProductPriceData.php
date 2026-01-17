@@ -23,17 +23,11 @@ class PriceListProductPriceData
      */
     public $basicPrice;
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function getDiscount(): Money
     {
         return $this->basicPrice->subtract($this->priceAmount);
     }
 
-    /**
-     * @return bool
-     */
     public function hasDiscount(): bool
     {
         return $this->basicPrice->isGreaterThan($this->priceAmount);

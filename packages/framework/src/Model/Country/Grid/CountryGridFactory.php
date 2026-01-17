@@ -15,12 +15,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class CountryGridFactory implements GridFactoryInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryRepository $countryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly CountryRepository $countryRepository,
         protected readonly GridFactory $gridFactory,
@@ -29,10 +23,6 @@ class CountryGridFactory implements GridFactoryInterface
     ) {
     }
 
-    /**
-     * @param string|null $roleConstant
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     #[Override]
     public function create(?string $roleConstant): Grid
     {

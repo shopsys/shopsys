@@ -8,9 +8,6 @@ use Nette\Utils\Json;
 
 class PackageNamesProvider
 {
-    /**
-     * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
-     */
     public function __construct(
         private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
     ) {

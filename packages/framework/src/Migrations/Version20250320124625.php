@@ -10,9 +10,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20250320124625 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -30,9 +27,6 @@ class Version20250320124625 extends AbstractMigration
         $this->sql('ALTER TABLE stores ALTER longitude TYPE NUMERIC(20, 10) USING longitude::NUMERIC(20,10)');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function down(Schema $schema): void
     {

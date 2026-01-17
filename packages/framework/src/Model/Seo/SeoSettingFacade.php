@@ -17,11 +17,6 @@ class SeoSettingFacade
     public const SEO_ROBOTS_TXT_CONTENT = 'seoRobotsTxtContent';
     public const SEO_ALTERNATIVE_DOMAINS = 'seoAlternativeDomains';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade $blogArticleExportQueueFacade
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
@@ -73,10 +68,6 @@ class SeoSettingFacade
         return $this->setting->getForDomain(self::SEO_TITLE_ADD_ON, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
     public function getRobotsTxtContent(int $domainId): ?string
     {
         return $this->setting->getForDomain(self::SEO_ROBOTS_TXT_CONTENT, $domainId);
@@ -109,17 +100,12 @@ class SeoSettingFacade
         $this->setting->setForDomain(self::SEO_TITLE_ADD_ON, $value, $domainId);
     }
 
-    /**
-     * @param string|null $value
-     * @param int $domainId
-     */
     public function setRobotsTxtContent(?string $value, int $domainId): void
     {
         $this->setting->setForDomain(self::SEO_ROBOTS_TXT_CONTENT, $value, $domainId);
     }
 
     /**
-     * @param int $domainId
      * @return int[]
      */
     public function getAlternativeDomainsForDomain(int $domainId): array

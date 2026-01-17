@@ -68,11 +68,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $this->currentBaseDomainUrl = $this->domain->getCurrentDomainConfig()->getBaseUrl();
     }
 
-    /**
-     * @param string $query
-     * @param string $jsonExpected
-     * @param string $jsonVariables
-     */
     protected function assertQueryWithExpectedJson(
         string $query,
         string $jsonExpected,
@@ -85,11 +80,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         );
     }
 
-    /**
-     * @param string $query
-     * @param array $expected
-     * @param array $variables
-     */
     protected function assertQueryWithExpectedArray(string $query, array $expected, array $variables = []): void
     {
         $response = $this->getResponseForQuery($query, $variables);
@@ -100,11 +90,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $this->assertEquals($expected, Json::decode($result, true), $result);
     }
 
-    /**
-     * @param string $query
-     * @param array $variables
-     * @return array
-     */
     protected function getResponseContentForQuery(string $query, array $variables = []): array
     {
         $content = $this->getResponseForQuery($query, $variables)->getContent();
@@ -112,11 +97,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         return Json::decode($content, true);
     }
 
-    /**
-     * @param string $query
-     * @param array $variables
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     private function getResponseForQuery(string $query, array $variables): Response
     {
         $path = $this->getLocalizedPathOnFirstDomainByRouteName('overblog_graphql_endpoint');
@@ -133,7 +113,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     }
 
     /**
-     * @param string $pathToFile
      * @param array<string, mixed> $variables
      * @param array<int, string> $filePaths
      * @param array<int, string[]> $filePathsVariablesMap
@@ -181,55 +160,31 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         return json_decode(self::$client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
     }
 
-    /**
-     * @return string
-     */
     protected function getLocaleForFirstDomain(): string
     {
         return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
     }
 
-    /**
-     * @param string $uri
-     * @return string
-     */
     protected function getFullUrlPath(string $uri): string
     {
         return $this->domain->getCurrentDomainConfig()->getUrl() . $uri;
     }
 
-    /**
-     * @param string $uri
-     * @return string
-     */
     protected function getBaseUrlPath(string $uri): string
     {
         return $this->domain->getCurrentDomainConfig()->getBaseUrl() . $uri;
     }
 
-    /**
-     * @param array $response
-     * @return array
-     */
     protected function getErrorsFromResponse(array $response): array
     {
         return $response['errors'];
     }
 
-    /**
-     * @param array $response
-     * @return array
-     */
     protected function getErrorsExtensionValidationFromResponse(array $response): array
     {
         return $this->getErrorsFromResponse($response)[0]['extensions']['validation'];
     }
 
-    /**
-     * @param array $response
-     * @param string $graphQlType
-     * @return array|bool
-     */
     protected function getResponseDataForGraphQlType(array $response, string $graphQlType): array|bool
     {
         if (!array_key_exists('data', $response)) {
@@ -249,10 +204,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         return $response['data'][$graphQlType];
     }
 
-    /**
-     * @param array $response
-     * @param string $graphQlType
-     */
     protected function assertResponseContainsArrayOfDataForGraphQlType(array $response, string $graphQlType): void
     {
         $this->assertArrayHasKey('data', $response);
@@ -260,18 +211,12 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $this->assertIsArray($response['data'][$graphQlType]);
     }
 
-    /**
-     * @param array $response
-     */
     protected function assertResponseContainsArrayOfErrors(array $response): void
     {
         $this->assertArrayHasKey('errors', $response);
         $this->assertIsArray($response['errors']);
     }
 
-    /**
-     * @param array $response
-     */
     protected function assertResponseContainsArrayOfWarnings(array $response): void
     {
         $this->assertArrayHasKey('extensions', $response);
@@ -279,18 +224,11 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $this->assertIsArray($response['extensions']['warnings']);
     }
 
-    /**
-     * @param array $response
-     * @return array
-     */
     public function getWarningsFromResponse(array $response): array
     {
         return $response['extensions']['warnings'];
     }
 
-    /**
-     * @param array $response
-     */
     protected function assertResponseContainsArrayOfExtensionValidationErrors(array $response): void
     {
         $this->assertResponseContainsArrayOfErrors($response);
@@ -302,12 +240,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $this->assertIsArray($errors[0]['extensions']['validation']);
     }
 
-    /**
-     * @param string $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param int $quantity
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     private function getConvertedPriceToDomainDefaultCurrency(
         string $priceWithoutVat,
         Vat $vat,
@@ -342,12 +274,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         );
     }
 
-    /**
-     * @param string $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param int $quantity
-     * @return array
-     */
     protected function getSerializedPriceConvertedToDomainDefaultCurrency(
         string $priceWithoutVat,
         Vat $vat,
@@ -362,12 +288,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         ];
     }
 
-    /**
-     * @param string $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param int $quantity
-     * @return string
-     */
     protected function getMutationPriceConvertedToDomainDefaultCurrency(
         string $priceWithoutVat,
         Vat $vat,
@@ -382,10 +302,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         }';
     }
 
-    /**
-     * @param string $price
-     * @return string
-     */
     protected function getFormattedMoneyAmountConvertedToDomainDefaultCurrency(string $price): string
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
@@ -401,10 +317,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         return $this->moneyFormatterHelper->formatWithMaxFractionDigits($money);
     }
 
-    /**
-     * @param string $price
-     * @return string
-     */
     protected function getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency(string $price): string
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
@@ -417,10 +329,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         return $this->moneyFormatterHelper->formatWithMaxFractionDigits($money);
     }
 
-    /**
-     * @param string $price
-     * @return string
-     */
     protected function getFormattedMoneyAmountWithoutVatConvertedToDomainDefaultCurrency(string $price): string
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
@@ -435,9 +343,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
 
     /**
      * Compare the expected array while ignoring the order of the elements
-     *
-     * @param array $expectedArray
-     * @param array $actualArray
      */
     public function assertArrayElements(array $expectedArray, array $actualArray): void
     {
@@ -465,10 +370,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         return $uploadedFiles;
     }
 
-    /**
-     * @param array $data
-     * @return array
-     */
     protected function resolveReferenceDataAccessors(array $data): array
     {
         array_walk_recursive($data, function (&$value) {
@@ -486,9 +387,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         return $data;
     }
 
-    /**
-     * @param array $response
-     */
     protected function assertAccessDeniedError(array $response): void
     {
         $this->assertResponseContainsArrayOfErrors($response);
@@ -498,11 +396,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $this->assertSame(403, $errors[0]['extensions']['code']);
     }
 
-    /**
-     * @param array $response
-     * @param string $expectedErrorUserCode
-     * @param int|null $expectedErrorCode
-     */
     protected function assertUserError(
         array $response,
         string $expectedErrorUserCode,
@@ -532,10 +425,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         );
     }
 
-    /**
-     * @param object $entity
-     * @return array
-     */
     protected function getFilesByEntity(object $entity): array
     {
         $files = $this->uploadedFileFacade->getUploadedFilesByEntity($entity);
@@ -553,7 +442,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     }
 
     /**
-     * @param string $graphQlType
      * @param string[] $excludedFields
      * @return string[]
      */

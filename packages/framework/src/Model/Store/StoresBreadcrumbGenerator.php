@@ -12,9 +12,6 @@ use function t;
 
 class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
     ) {
@@ -22,7 +19,6 @@ class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 
     /**
      * @param string $routeName
-     * @param array $routeParameters
      * @return array|\Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     #[Override]

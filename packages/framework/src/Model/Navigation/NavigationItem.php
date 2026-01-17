@@ -53,17 +53,11 @@ class NavigationItem implements OrderableEntityInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $routeName;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
-     */
     public function __construct(NavigationItemData $navigationItemData)
     {
         $this->setData($navigationItemData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
-     */
     public function edit(NavigationItemData $navigationItemData): void
     {
         $this->setData($navigationItemData);
@@ -118,9 +112,6 @@ class NavigationItem implements OrderableEntityInterface
         return $this->domainId;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
-     */
     protected function setData(NavigationItemData $navigationItemData): void
     {
         $this->name = $navigationItemData->name;

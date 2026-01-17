@@ -16,44 +16,29 @@ class ProductHasPromotionXyFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'productHasPromotionXy';
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getName(): string
     {
         return self::NAME;
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getAllowedOperators(): array
     {
         return [self::OPERATOR_IS, self::OPERATOR_IS_NOT];
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormTypeInterface|string
-     */
     #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
         return HiddenType::class;
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getValueFormOptions(): array
     {
@@ -61,7 +46,6 @@ class ProductHasPromotionXyFilter implements AdvancedSearchFilterInterface
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
     #[Override]

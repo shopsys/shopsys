@@ -55,9 +55,6 @@ class GetArticleTest extends GraphQlTestCase
         $this->assertSame($expectedErrorMessage, $errors[0]['message']);
     }
 
-    /**
-     * @return array
-     */
     private function getArticleDataProvider(): array
     {
         $data = [];
@@ -78,10 +75,6 @@ class GetArticleTest extends GraphQlTestCase
         return $data;
     }
 
-    /**
-     * @param string $uuid
-     * @return string
-     */
     private function getArticleQuery(string $uuid): string
     {
         return '

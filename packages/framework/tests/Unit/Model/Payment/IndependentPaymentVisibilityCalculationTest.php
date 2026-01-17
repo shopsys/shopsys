@@ -41,16 +41,6 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
         );
     }
 
-    /**
-     * @param bool $canSeePrices
-     * @param bool $isOnlinePayment
-     * @param bool $isHidden
-     * @param bool $isDeleted
-     * @param bool $isHiddenByGoPay
-     * @param string $name
-     * @param bool $isEnabled
-     * @param bool $expectedResult
-     */
     #[DataProvider('paymentVisibilityProvider')]
     public function testIsIndependentlyVisible(
         bool $canSeePrices,
@@ -75,9 +65,6 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
         $this->assertEquals($expectedResult, $this->paymentVisibilityCalculation->isIndependentlyVisible($paymentMock, 1));
     }
 
-    /**
-     * @return array
-     */
     public static function paymentVisibilityProvider(): array
     {
         return [

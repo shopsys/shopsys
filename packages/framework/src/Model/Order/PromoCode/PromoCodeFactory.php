@@ -8,17 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class PromoCodeFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $data
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     */
     public function create(PromoCodeData $data): PromoCode
     {
         $entityClassName = $this->entityNameResolver->resolve(PromoCode::class);

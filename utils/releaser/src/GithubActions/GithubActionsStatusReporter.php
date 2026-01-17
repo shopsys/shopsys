@@ -30,10 +30,6 @@ final class GithubActionsStatusReporter
      */
     private array $statusForPackages = [];
 
-    /**
-     * @param \Shopsys\Releaser\Packagist\PackageProvider $packageProvider
-     * @param \Shopsys\Releaser\Guzzle\ApiCaller $apiCaller
-     */
     public function __construct(
         private readonly PackageProvider $packageProvider,
         private readonly ApiCaller $apiCaller,
@@ -41,9 +37,6 @@ final class GithubActionsStatusReporter
     }
 
     /**
-     * @param string $organization
-     * @param string $branch
-     * @param string $githubToken
      * @return string[]
      */
     public function getStatusForPackagesByOrganizationAndBranch(
@@ -68,7 +61,6 @@ final class GithubActionsStatusReporter
 
     /**
      * @param string[] $packages
-     * @param string $branch
      * @return string[]
      */
     private function createApiUrls(array $packages, string $branch): array
@@ -82,9 +74,6 @@ final class GithubActionsStatusReporter
         return $apiUrls;
     }
 
-    /**
-     * @param string $responseJson
-     */
     private function processResponse(string $responseJson): void
     {
         $arrayResponse = json_decode($responseJson, true, 512, JSON_THROW_ON_ERROR);

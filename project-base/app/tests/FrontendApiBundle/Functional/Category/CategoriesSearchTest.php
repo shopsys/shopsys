@@ -60,11 +60,6 @@ class CategoriesSearchTest extends GraphQlTestCase
         $this->assertCategories($response, $categoriesExpected);
     }
 
-    /**
-     * @param array $response
-     * @param array $categories
-     * @param bool $found
-     */
     protected function assertCategories(array $response, array $categories, bool $found = true): void
     {
         $graphQlType = 'categoriesSearch';

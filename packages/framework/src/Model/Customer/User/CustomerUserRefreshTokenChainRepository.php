@@ -10,10 +10,6 @@ use Psr\Clock\ClockInterface;
 
 class CustomerUserRefreshTokenChainRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClockInterface $clock,
@@ -29,7 +25,6 @@ class CustomerUserRefreshTokenChainRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain[]
      */
     public function findCustomersTokenChains(CustomerUser $customerUser): array
@@ -37,9 +32,6 @@ class CustomerUserRefreshTokenChainRepository
         return $this->getCustomerUserRefreshTokenChainRepository()->findBy(['customerUser' => $customerUser]);
     }
 
-    /**
-     * @param string $deviceId
-     */
     public function removeCustomerUserRefreshTokenChainsByDeviceId(string $deviceId): void
     {
         $this->em->createQueryBuilder()
@@ -50,10 +42,6 @@ class CustomerUserRefreshTokenChainRepository
             ->execute();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string|null $excludedDeviceId
-     */
     public function removeAllCustomerUserRefreshTokenChains(
         CustomerUser $customerUser,
         ?string $excludedDeviceId = null,
@@ -79,11 +67,6 @@ class CustomerUserRefreshTokenChainRepository
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $deviceId
-     * @return array
-     */
     public function findCustomersTokenChainsByDeviceId(CustomerUser $customerUser, string $deviceId): array
     {
         return $this->getCustomerUserRefreshTokenChainRepository()->createQueryBuilder('curtc')
@@ -98,9 +81,6 @@ class CustomerUserRefreshTokenChainRepository
             ->getQuery()->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain $refreshTokenChain
-     */
     public function removeCustomerRefreshTokenChain(CustomerUserRefreshTokenChain $refreshTokenChain): void
     {
         $this->em->remove($refreshTokenChain);

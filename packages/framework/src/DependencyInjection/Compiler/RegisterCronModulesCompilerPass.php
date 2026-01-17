@@ -13,9 +13,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterCronModulesCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function process(ContainerBuilder $container): void
     {
@@ -50,7 +47,6 @@ class RegisterCronModulesCompilerPass implements CompilerPassInterface
 
     /**
      * @param array<string, array{run_every_min: int|null, timeout_iterated_cron_sec: int|null}> $cronInstances
-     * @param string $instanceName
      * @return array{run_every_min: int, timeout_iterated_cron_sec: int}
      */
     private function getInstanceConfig(array $cronInstances, string $instanceName): array

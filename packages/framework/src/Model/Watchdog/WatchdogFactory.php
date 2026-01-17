@@ -8,18 +8,11 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class WatchdogFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogData $watchdogData
-     * @return \Shopsys\FrameworkBundle\Model\Watchdog\Watchdog
-     */
     public function create(WatchdogData $watchdogData): Watchdog
     {
         $entityClassName = $this->entityNameResolver->resolve(Watchdog::class);

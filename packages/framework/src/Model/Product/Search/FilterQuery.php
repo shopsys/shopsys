@@ -50,10 +50,6 @@ class FilterQuery
 
     protected bool $isFilteringBySpecialPriceActive = false;
 
-    /**
-     * @param string $indexName
-     * @param int $sellingPriceType
-     */
     public function __construct(
         protected readonly string $indexName,
         protected readonly int $sellingPriceType,
@@ -65,10 +61,6 @@ class FilterQuery
      * Default Elasticsearch ordering is by relevance, represented by _score field
      * In case you need to alter the ordering by relevance behavior, you can add condition
      * if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_RELEVANCE)
-     *
-     * @param string $orderingModeId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function applyOrdering(string $orderingModeId, PricingGroup $pricingGroup): self
     {
@@ -128,7 +120,6 @@ class FilterQuery
     }
 
     /**
-     * @param int $pricingGroupId
      * @return array[]
      */
     protected function getMinCurrentSellingPriceRuntimeField(int $pricingGroupId): array
@@ -193,7 +184,6 @@ class FilterQuery
     }
 
     /**
-     * @param int $pricingGroupId
      * @return array[]
      */
     public function getMaxCurrentSellingPriceRuntimeField(int $pricingGroupId): array
@@ -265,7 +255,6 @@ class FilterQuery
     }
 
     /**
-     * @param int $pricingGroupId
      * @return array[]
      */
     protected function getHasActiveSpecialPriceRuntimeField(int $pricingGroupId): array
@@ -341,9 +330,6 @@ class FilterQuery
         ];
     }
 
-    /**
-     * @return array
-     */
     protected function getInquirySorting(): array
     {
         return [
@@ -356,9 +342,6 @@ class FilterQuery
         ];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function applyOrderingByIdAscending(): self
     {
         $clone = clone $this;
@@ -372,7 +355,6 @@ class FilterQuery
 
     /**
      * @param int[] $ids
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function applyOrderingByIdsArray(array $ids): self
     {
@@ -403,10 +385,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @param array $parameters
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function filterByParameters(array $parameters): self
     {
         $clone = clone $this;
@@ -441,12 +419,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $minimalPrice
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $maximalPrice
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function filterByPrices(
         PricingGroup $pricingGroup,
         ?Money $minimalPrice = null,
@@ -506,10 +478,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @param int $categoryId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function filterByCategory(int $categoryId): self
     {
         $clone = clone $this;
@@ -525,7 +493,6 @@ class FilterQuery
 
     /**
      * @param int[] $brandIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function filterByBrands(array $brandIds): self
     {
@@ -542,7 +509,6 @@ class FilterQuery
 
     /**
      * @param int[] $flagIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function filterByFlags(array $flagIds): self
     {
@@ -559,7 +525,6 @@ class FilterQuery
 
     /**
      * @param int[] $productIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function filterByProductIds(array $productIds): self
     {
@@ -576,7 +541,6 @@ class FilterQuery
 
     /**
      * @param string[] $productUuids
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function filterByProductUuids(array $productUuids): self
     {
@@ -591,9 +555,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function filterOutVariants(): self
     {
         $clone = clone $this;
@@ -607,9 +568,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function filterOnlyInStock(): self
     {
         $clone = clone $this;
@@ -623,9 +581,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function filterOnlyInStockOrAllowedNegativeStock(): self
     {
         $clone = clone $this;
@@ -651,10 +606,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @param \DateTimeImmutable $sellingFrom
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function filterBySellingFrom(DateTimeImmutable $sellingFrom): self
     {
         $clone = clone $this;
@@ -681,9 +632,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function filterOnlySellable(): self
     {
         $clone = clone $this;
@@ -697,10 +645,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function filterOnlyVisible(PricingGroup $pricingGroup): self
     {
         $clone = clone $this;
@@ -733,10 +677,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function filterWithActiveSpecialPriceOnly(PricingGroup $pricingGroup): self
     {
         $clone = clone $this;
@@ -751,10 +691,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @param string $text
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     protected function simpleSearch(string $text): self
     {
         $clone = clone $this;
@@ -770,10 +706,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @param string $text
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function search(string $text): self
     {
         if (mb_strlen($text) < SearchSetting::SIMPLE_SEARCH_THRESHOLD) {
@@ -808,10 +740,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @param int $page
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function setPage(int $page): self
     {
         $clone = clone $this;
@@ -821,10 +749,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function setLimit(int $limit): self
     {
         $clone = clone $this;
@@ -834,10 +758,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @param int $from
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function setFrom(int $from): self
     {
         $clone = clone $this;
@@ -847,9 +767,6 @@ class FilterQuery
         return $clone;
     }
 
-    /**
-     * @return array
-     */
     public function getQuery(): array
     {
         $query = [
@@ -879,9 +796,6 @@ class FilterQuery
         return $query;
     }
 
-    /**
-     * @return array
-     */
     protected function matchAll(): array
     {
         return [
@@ -889,11 +803,6 @@ class FilterQuery
         ];
     }
 
-    /**
-     * @param int $page
-     * @param int $limit
-     * @return int
-     */
     protected function countFrom(int $page, int $limit): int
     {
         return ($page - 1) * $limit;
@@ -902,8 +811,6 @@ class FilterQuery
     /**
      * Applies all filters and calculate standard (non pluses) numbers
      * For flags, brands and stock
-     *
-     * @return array
      */
     public function getAbsoluteNumbersAggregationQuery(): array
     {
@@ -952,8 +859,6 @@ class FilterQuery
      * Applies all filters and calculate standard (non pluses) numbers
      * For flags, brands, stock, parameters
      * Parameters aggregation have nested structure in result [parameter_id][parameter_value_id]
-     *
-     * @return array
      */
     public function getAbsoluteNumbersWithParametersQuery(): array
     {
@@ -988,7 +893,6 @@ class FilterQuery
      * We are looking for count of products that meet all filters and don't have any of already selected flags
      *
      * @param int[] $selectedFlags
-     * @return array
      */
     public function getFlagsPlusNumbersQuery(array $selectedFlags): array
     {
@@ -1030,7 +934,6 @@ class FilterQuery
      * We are looking for count of products that meet all filters and don't have any of already selected brand
      *
      * @param int[] $selectedBrandsIds
-     * @return array
      */
     public function getBrandsPlusNumbersQuery(array $selectedBrandsIds): array
     {
@@ -1073,10 +976,6 @@ class FilterQuery
      *
      * This query makes sense only within a single parameter, so it have to be executed for all parameters
      * (that have selected value and can have plus numbers)
-     *
-     * @param int $selectedParameterId
-     * @param array $selectedValuesIds
-     * @return array
      */
     public function getParametersPlusNumbersQuery(int $selectedParameterId, array $selectedValuesIds): array
     {
@@ -1151,9 +1050,6 @@ class FilterQuery
      * Applies all filters for filter
      * For flags, brands, stock, parameters, min and max price
      * Parameters aggregation have nested structure in result [parameter_id][parameter_value_id]
-     *
-     * @param int $pricingGroupId
-     * @return array
      */
     public function getAggregationQueryForProductFilterConfig(int $pricingGroupId): array
     {
@@ -1192,9 +1088,6 @@ class FilterQuery
         return $query;
     }
 
-    /**
-     * @return array
-     */
     public function getAggregationQueryForProductCountInCategories(): array
     {
         $query = $this->getQuery();
@@ -1210,9 +1103,6 @@ class FilterQuery
     /**
      * Applies all filters for filter
      * For flags, brands, stock, min and max price
-     *
-     * @param int $pricingGroupId
-     * @return array
      */
     public function getAggregationQueryForProductFilterConfigWithoutParameters(int $pricingGroupId): array
     {
@@ -1226,7 +1116,6 @@ class FilterQuery
 
     /**
      * @param string[] $fields
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function restrictFields(array $fields): self
     {
@@ -1239,7 +1128,6 @@ class FilterQuery
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $sliderParametersData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function filterBySliderParameters(array $sliderParametersData): self
     {

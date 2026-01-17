@@ -16,10 +16,6 @@ class MigrationsLock
      */
     protected ?array $parsedMigrationsLock = null;
 
-    /**
-     * @param string $migrationsLockFilePath
-     * @param \Psr\Log\LoggerInterface $logger
-     */
     public function __construct(
         protected readonly string $migrationsLockFilePath,
         protected readonly LoggerInterface $logger,
@@ -69,9 +65,6 @@ class MigrationsLock
         return $skippedMigrationClasses;
     }
 
-    /**
-     * @param \Doctrine\Migrations\Metadata\AvailableMigrationsList $availableMigrationsList
-     */
     public function saveNewMigrations(AvailableMigrationsList $availableMigrationsList): void
     {
         $this->load();
@@ -89,9 +82,6 @@ class MigrationsLock
         $this->save();
     }
 
-    /**
-     * @return array
-     */
     protected function load(): array
     {
         if ($this->parsedMigrationsLock === null) {

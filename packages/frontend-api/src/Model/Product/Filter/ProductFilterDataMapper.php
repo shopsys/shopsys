@@ -23,12 +23,6 @@ class ProductFilterDataMapper
      */
     protected array $parameterValuesByUuid = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
-     */
     public function __construct(
         protected readonly FlagFacade $flagFacade,
         protected readonly BrandFacade $brandFacade,
@@ -37,10 +31,6 @@ class ProductFilterDataMapper
     ) {
     }
 
-    /**
-     * @param array $frontendApiFilter
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
-     */
     public function mapFrontendApiFilterToProductFilterData(array $frontendApiFilter): ProductFilterData
     {
         $productFilterData = $this->productFilterDataFactory->create();
@@ -63,7 +53,6 @@ class ProductFilterDataMapper
     }
 
     /**
-     * @param array $parameterAndValueUuids
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[]
      */
     protected function getParametersAndValuesByUuids(array $parameterAndValueUuids): array
@@ -103,9 +92,6 @@ class ProductFilterDataMapper
         return $parametersFilterData;
     }
 
-    /**
-     * @param array $parameterAndValueUuids
-     */
     protected function loadParametersAndValuesFromArray(array $parameterAndValueUuids): void
     {
         $parameterUuids = [];

@@ -86,10 +86,6 @@ class AddPaymentMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $paymentPrice
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
-     */
     private function createPaymentPriceCalculationMock(Price $paymentPrice): PaymentPriceCalculation
     {
         $paymentPriceCalculation = $this->createMock(PaymentPriceCalculation::class);
@@ -98,10 +94,6 @@ class AddPaymentMiddlewareTest extends MiddlewareTestCase
         return $paymentPriceCalculation;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $paymentPrice
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddPaymentMiddleware
-     */
     private function createAddPaymentMiddleware(Price $paymentPrice): AddPaymentMiddleware
     {
         return new AddPaymentMiddleware(

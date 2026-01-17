@@ -78,11 +78,6 @@ class LuigisBoxFeedItemTest extends TestCase
         $this->doSetUp(true);
     }
 
-    /**
-     * @param int $id
-     * @param string $code
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     private function createCurrencyMock(int $id, string $code): Currency
     {
         $currencyMock = $this->createMock(Currency::class);
@@ -93,13 +88,6 @@ class LuigisBoxFeedItemTest extends TestCase
         return $currencyMock;
     }
 
-    /**
-     * @param int $id
-     * @param string $url
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private function createDomainConfigMock(int $id, string $url, string $locale, Currency $currency): DomainConfig
     {
         $domainConfigMock = $this->createMock(DomainConfig::class);
@@ -114,11 +102,6 @@ class LuigisBoxFeedItemTest extends TestCase
         return $domainConfigMock;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     */
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
         $productPrice = new ProductPrice($price, $this->createMock(PricingGroup::class), false);
@@ -127,32 +110,18 @@ class LuigisBoxFeedItemTest extends TestCase
             ->with($product, $domain->getId(), null)->willReturn($productPricesResult);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param string $url
-     */
     private function mockProductUrl(Product $product, DomainConfig $domain, string $url): void
     {
         $this->productUrlsBatchLoaderMock->method('getProductUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param string $url
-     */
     private function mockProductImageUrl(Product $product, DomainConfig $domain, string $url): void
     {
         $this->productUrlsBatchLoaderMock->method('getProductImageUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
-    /**
-     * @param bool $productIsAvailableOnStock
-     * @param int $expectedRank
-     */
     #[DataProvider('luigisBoxFeedItemDataProvider')]
     public function testMinimalLuigisBoxFeedItemIsCreatable(bool $productIsAvailableOnStock, int $expectedRank): void
     {
@@ -168,9 +137,6 @@ class LuigisBoxFeedItemTest extends TestCase
         self::assertSame($expectedRank, $luigisBoxProductFeedItem->getAvailabilityRank());
     }
 
-    /**
-     * @return iterable
-     */
     public static function luigisBoxFeedItemDataProvider(): iterable
     {
         yield 'product is available on stock' => [
@@ -215,9 +181,6 @@ class LuigisBoxFeedItemTest extends TestCase
         self::assertEquals(self::IMAGE_URL . '?width=100&height=100', $luigisBoxProductFeedItem->getImageLinkS());
     }
 
-    /**
-     * @param bool $isProductAvailableOnStock
-     */
     private function doSetUp(bool $isProductAvailableOnStock): void
     {
         $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
@@ -296,9 +259,6 @@ class LuigisBoxFeedItemTest extends TestCase
         );
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem $luigisBoxProductFeedItem
-     */
     private function assertCommonFields(LuigisBoxProductFeedItem $luigisBoxProductFeedItem): void
     {
         self::assertSame(self::PRODUCT_IDENTITY, $luigisBoxProductFeedItem->getIdentity());

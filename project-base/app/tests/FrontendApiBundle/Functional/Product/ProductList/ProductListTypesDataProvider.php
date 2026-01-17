@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 
 class ProductListTypesDataProvider
 {
-    /**
-     * @return \Iterator
-     */
     public static function getProductListTypes(): Iterator
     {
         foreach (ReflectionHelper::getAllPublicClassConstants(ProductListTypeEnum::class) as $productListType) {

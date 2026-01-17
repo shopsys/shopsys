@@ -9,20 +9,12 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class StockSettingsDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Stock\StockSettingsData
-     */
     public function getForDomainId(int $domainId): StockSettingsData
     {
         $settings = new StockSettingsData();

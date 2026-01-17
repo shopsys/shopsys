@@ -10,26 +10,18 @@ use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 
 class FeedModuleRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactory $feedModuleFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly FeedModuleFactory $feedModuleFactory,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getFeedModuleRepository(): EntityRepository
     {
         return $this->em->getRepository(FeedModule::class);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedConfig $feedConfig
      * @return \Shopsys\FrameworkBundle\Model\Feed\FeedModule[]
      */
     public function getFeedModulesByConfigIndexedByDomainId(FeedConfig $feedConfig): array
@@ -60,11 +52,6 @@ class FeedModuleRepository
         return $feedModules;
     }
 
-    /**
-     * @param string $name
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedModule
-     */
     public function getFeedModuleByNameAndDomainId(string $name, int $domainId): FeedModule
     {
         $feedModule = $this->getFeedModuleRepository()->findOneBy([
@@ -88,7 +75,6 @@ class FeedModuleRepository
     }
 
     /**
-     * @param string $feedName
      * @return \Shopsys\FrameworkBundle\Model\Feed\FeedModule[]
      */
     public function findFeedModulesByName(string $feedName): array

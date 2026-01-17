@@ -298,10 +298,6 @@ class RouteAccessControlDataProviderTest extends TestCase
         $this->assertEmpty($routeData->accessControlRules);
     }
 
-    /**
-     * @param string $environment
-     * @return \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider
-     */
     private function createProvider(string $environment): RouteAccessControlDataProvider
     {
         return new RouteAccessControlDataProvider(
@@ -315,11 +311,6 @@ class RouteAccessControlDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param string $path
-     * @param string|null $controller
-     * @return \Symfony\Component\Routing\Route
-     */
     private function createRoute(string $path, ?string $controller): Route
     {
         $defaults = [];

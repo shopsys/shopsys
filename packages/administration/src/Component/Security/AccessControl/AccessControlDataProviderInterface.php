@@ -11,10 +11,6 @@ interface AccessControlDataProviderInterface
      */
     public function getAll(): array;
 
-    /**
-     * @param string $routeName
-     * @return \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData|null
-     */
     public function findRouteByName(string $routeName): ?RouteAccessControlData;
 
     public function clearCache(): void;

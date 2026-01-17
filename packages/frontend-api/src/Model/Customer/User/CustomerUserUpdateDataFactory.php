@@ -14,12 +14,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory as
 
 class CustomerUserUpdateDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     */
     public function __construct(
         protected readonly FrameworkCustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         protected readonly BillingAddressDataFactory $billingAddressDataFactory,
@@ -28,11 +22,6 @@ class CustomerUserUpdateDataFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
-     */
     public function createFromCustomerUserWithArgument(
         CustomerUser $customerUser,
         Argument $argument,
@@ -51,11 +40,6 @@ class CustomerUserUpdateDataFactory
         return $customerUserUpdateData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
-     */
     public function createCompanyFromCustomerUserWithArgument(
         CustomerUser $customerUser,
         Argument $argument,
@@ -81,19 +65,11 @@ class CustomerUserUpdateDataFactory
         return $customerUserUpdateData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
-     */
     public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserUpdateData
     {
         return $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
     }
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData $registrationData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
-     */
     public function createFromRegistrationData(RegistrationData $registrationData): CustomerUserUpdateData
     {
         $billingAddressData = $this->billingAddressDataFactory->create();

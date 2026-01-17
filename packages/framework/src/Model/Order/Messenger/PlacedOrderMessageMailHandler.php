@@ -15,12 +15,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class PlacedOrderMessageMailHandler
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly OrderMailFacade $orderMailFacade,
@@ -29,9 +23,6 @@ class PlacedOrderMessageMailHandler
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessage $placedOrderMessage
-     */
     public function __invoke(PlacedOrderMessage $placedOrderMessage): void
     {
         try {

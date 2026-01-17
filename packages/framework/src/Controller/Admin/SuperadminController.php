@@ -24,17 +24,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[SuperAdminOnly]
 class SuperadminController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleList $moduleList
-     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\DelayedPricingSetting $delayedPricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(
         protected readonly ModuleList $moduleList,
         protected readonly ModuleFacade $moduleFacade,
@@ -48,10 +37,6 @@ class SuperadminController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/superadmin/pricing/')]
     public function pricingAction(Request $request): Response
     {
@@ -82,19 +67,12 @@ class SuperadminController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/superadmin/urls/')]
     public function urlsAction(): Response
     {
         return $this->render('@ShopsysAdministration/content/superadmin/urlsListGrid.html.twig');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/superadmin/modules/')]
     public function modulesAction(Request $request): Response
     {
@@ -124,10 +102,6 @@ class SuperadminController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/superadmin/mail-whitelist')]
     public function mailWhitelistAction(Request $request): Response
     {

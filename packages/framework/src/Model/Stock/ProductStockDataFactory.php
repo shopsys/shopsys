@@ -6,18 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\Stock;
 
 class ProductStockDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStockData
-     */
     protected function create(): ProductStockData
     {
         return new ProductStockData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
-     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStockData
-     */
     public function createFromStock(Stock $stock): ProductStockData
     {
         $productStockData = $this->create();
@@ -27,10 +20,6 @@ class ProductStockDataFactory
         return $productStockData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStock $productStock
-     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStockData
-     */
     public function createFromProductStock(ProductStock $productStock): ProductStockData
     {
         $productStockData = $this->create();

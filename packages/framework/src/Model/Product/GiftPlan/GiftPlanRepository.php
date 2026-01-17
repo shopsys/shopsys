@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class GiftPlanRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
@@ -25,27 +20,16 @@ class GiftPlanRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getRepository(): EntityRepository
     {
         return $this->em->getRepository(GiftPlan::class);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan|null
-     */
     public function findById(int $id): ?GiftPlan
     {
         return $this->getRepository()->find($id);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan
-     */
     public function getById(int $id): GiftPlan
     {
         $giftPlan = $this->findById($id);
@@ -59,7 +43,6 @@ class GiftPlanRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $mainProducts
-     * @param int $domainId
      * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Product[]>
      */
     public function findActiveGiftProductsByMainProducts(array $mainProducts, int $domainId): array
@@ -101,8 +84,6 @@ class GiftPlanRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainProduct
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan[]
      */
     public function findActiveGiftPlansByMainProductAndDomainId(Product $mainProduct, int $domainId): array
@@ -125,7 +106,6 @@ class GiftPlanRepository
 
     /**
      * @param int[] $mainProductIds
-     * @param int $domainId
      * @return int[][]
      */
     public function findActiveGiftProductIdsByMainProductIds(array $mainProductIds, int $domainId): array
@@ -176,7 +156,6 @@ class GiftPlanRepository
     }
 
     /**
-     * @param int $giftProductId
      * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan[]
      */
     public function findByGiftProductId(int $giftProductId): array

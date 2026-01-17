@@ -12,10 +12,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class ArticlesQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchFacade $articleElasticsearchFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ArticleElasticsearchFacade $articleElasticsearchFacade,
@@ -23,7 +19,6 @@ class ArticlesQuery extends AbstractQuery
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param string[] $placements
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */

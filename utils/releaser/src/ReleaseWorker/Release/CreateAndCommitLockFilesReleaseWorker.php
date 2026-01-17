@@ -11,11 +11,6 @@ use Shopsys\Releaser\Stage;
 
 final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -24,10 +19,6 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
         return 'Create or update and commit composer.lock, symfony.lock, package-lock.json, and migrations-lock.yml and [Manually] push it';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

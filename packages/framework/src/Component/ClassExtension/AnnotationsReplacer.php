@@ -10,11 +10,6 @@ use Roave\BetterReflection\Reflection\ReflectionProperty;
 
 class AnnotationsReplacer
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\TypehintHelper $typehintHelper
-     */
     public function __construct(
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
         protected readonly DocBlockParser $docBlockParser,
@@ -22,10 +17,6 @@ class AnnotationsReplacer
     ) {
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
     public function replaceIn(string $string): string
     {
         return preg_replace(
@@ -35,10 +26,6 @@ class AnnotationsReplacer
         );
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
-     * @return string
-     */
     public function replaceInMethodReturnType(ReflectionMethod $reflectionMethod): string
     {
         $methodReturnTypes = $this->docBlockParser->getReturnTypes($reflectionMethod->getDocComment());
@@ -51,10 +38,6 @@ class AnnotationsReplacer
         return implode('|', $replacedReturnTypes);
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
-     * @return string
-     */
     public function replaceInPropertyType(ReflectionProperty $reflectionProperty): string
     {
         $type = $this->docBlockParser->getPropertyType($reflectionProperty);
@@ -70,10 +53,6 @@ class AnnotationsReplacer
         return $this->replaceIn((string)$type);
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionParameter $reflectionParameter
-     * @return string
-     */
     public function replaceInParameterType(ReflectionParameter $reflectionParameter): string
     {
         $type = $this->docBlockParser->getParameterType($reflectionParameter);

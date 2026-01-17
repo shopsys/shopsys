@@ -13,10 +13,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ProductInOrderValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
@@ -24,7 +20,6 @@ class ProductInOrderValidator extends ConstraintValidator
     }
 
     /**
-     * @param mixed $value
      * @param \Shopsys\FrontendApiBundle\Component\Constraints\ProductInOrder $constraint
      */
     #[Override]

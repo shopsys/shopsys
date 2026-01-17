@@ -9,19 +9,10 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 
 class BlogArticleBlogCategoryDomainFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle $blogArticle
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomain
-     */
     public function create(
         BlogArticle $blogArticle,
         BlogCategory $blogCategory,

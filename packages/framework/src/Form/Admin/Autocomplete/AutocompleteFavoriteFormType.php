@@ -21,13 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class AutocompleteFavoriteFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\BrandsIdsToBrandsTransformer $brandsIdsToBrandsTransformer
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer
-     */
     public function __construct(
         protected readonly BrandFacade $brandFacade,
         protected readonly CategoryFacade $categoryFacade,

@@ -15,17 +15,11 @@ use Symfony\Component\Mime\Message;
 
 class EnvelopeListener implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
-     */
     public function __construct(
         protected readonly MailerSettingProvider $mailerSettingProvider,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Mailer\Event\MessageEvent $event
-     */
     public function onMessage(MessageEvent $event): void
     {
         $message = $event->getMessage();
@@ -57,8 +51,6 @@ class EnvelopeListener implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\Mime\Message $message
-     * @param string $headerName
      * @return \Symfony\Component\Mime\Address[]
      */
     protected function getAddressesFromMessageHeader(Message $message, string $headerName): array
@@ -74,7 +66,6 @@ class EnvelopeListener implements EventSubscriberInterface
 
     /**
      * @param \Symfony\Component\Mime\Address[] $originalRecipients
-     * @param int $domainId
      * @return \Symfony\Component\Mime\Address[]
      */
     protected function getAllowedRecipientsOnDomain(array $originalRecipients, int $domainId): array

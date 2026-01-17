@@ -38,12 +38,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class TransportFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportTypeProvider $transportTypeProvider
-     */
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
         private readonly TransportFacade $transportFacade,
@@ -52,10 +46,6 @@ final class TransportFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -239,9 +229,6 @@ final class TransportFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -256,10 +243,6 @@ final class TransportFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function validateTransportPricesOnDomain(
         TransportData $transportData,
         ExecutionContextInterface $context,

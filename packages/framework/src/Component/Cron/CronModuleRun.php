@@ -52,13 +52,6 @@ class CronModuleRun
     #[ORM\Column(type: 'integer', nullable: false)]
     protected $duration;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
-     * @param string $status
-     * @param \DateTimeImmutable $startedAt
-     * @param \DateTimeImmutable $finishedAt
-     * @param int $duration
-     */
     public function __construct(
         CronModule $cronModule,
         string $status,

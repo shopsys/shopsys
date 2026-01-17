@@ -10,10 +10,6 @@ use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 
 class StoresBatchLoader
 {
-    /**
-     * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly StoreFacade $storeFacade,
@@ -22,7 +18,6 @@ class StoresBatchLoader
 
     /**
      * @param int[] $storeIds
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadByIds(array $storeIds): Promise
     {

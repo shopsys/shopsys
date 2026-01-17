@@ -9,10 +9,6 @@ use Shopsys\FrontendApiBundle\Component\Validation\Exception\MaxAllowedLimitUser
 
 class PageSizeValidator
 {
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param int $maxAllowedItems
-     */
     public function checkMaxPageSize(
         Argument $argument,
         int $maxAllowedItems = 100,

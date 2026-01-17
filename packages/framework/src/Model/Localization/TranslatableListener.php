@@ -12,10 +12,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class TranslatableListener extends PrezentTranslatableListener
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Metadata\MetadataFactory $factory
-     */
     public function __construct(
         protected readonly Domain $domain,
         MetadataFactory $factory,
@@ -48,9 +44,6 @@ class TranslatableListener extends PrezentTranslatableListener
         return $self;
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     */
     public function postPersist(LifecycleEventArgs $args)
     {
         $this->postLoad($args);

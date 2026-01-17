@@ -23,13 +23,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class TransportInCartValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Transport\TransportValidationFacade $transportValidationFacade
-     */
     public function __construct(
         protected readonly TransportFacade $transportFacade,
         protected readonly Domain $domain,
@@ -40,7 +33,6 @@ class TransportInCartValidator extends ConstraintValidator
     }
 
     /**
-     * @param mixed $value
      * @param \Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart $constraint
      */
     #[Override]
@@ -73,11 +65,6 @@ class TransportInCartValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param string|null $pickupPlaceIdentifier
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart $transportInCartConstraint
-     */
     protected function checkRequiredPickupPlaceIdentifier(
         Transport $transport,
         ?string $pickupPlaceIdentifier,
@@ -93,11 +80,6 @@ class TransportInCartValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param string|null $pickupPlaceIdentifier
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart $transportInCartConstraint
-     */
     protected function checkPersonalPickupStoreAvailability(
         Transport $transport,
         ?string $pickupPlaceIdentifier,
@@ -113,11 +95,6 @@ class TransportInCartValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param string|null $cartUuid
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart $transportInCartConstraint
-     */
     protected function checkTransportWeightLimit(
         Transport $transport,
         ?string $cartUuid,
@@ -135,11 +112,6 @@ class TransportInCartValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param string|null $cartUuid
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart $transportInCartConstraint
-     */
     protected function checkTransportAvailabilityForProductsInCart(
         Transport $transport,
         ?string $cartUuid,
@@ -157,11 +129,6 @@ class TransportInCartValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param string|null $cartUuid
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart $transportInCartConstraint
-     */
     protected function checkTransportPaymentRelation(
         Transport $transport,
         ?string $cartUuid,

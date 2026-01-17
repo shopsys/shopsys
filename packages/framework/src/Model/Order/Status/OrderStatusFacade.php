@@ -11,13 +11,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 
 class OrderStatusFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactory $orderStatusFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OrderStatusRepository $orderStatusRepository,
@@ -28,7 +21,6 @@ class OrderStatusFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusFormData
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
     public function create(OrderStatusData $orderStatusFormData)
@@ -47,7 +39,6 @@ class OrderStatusFacade
 
     /**
      * @param int $orderStatusId
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
     public function edit($orderStatusId, OrderStatusData $orderStatusData)
@@ -96,7 +87,6 @@ class OrderStatusFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @return bool
      */
     public function isOrderStatusUsed(OrderStatus $orderStatus)
@@ -113,7 +103,6 @@ class OrderStatusFacade
     }
 
     /**
-     * @param string $statusType
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
     public function getAllByType(string $statusType): array
@@ -121,10 +110,6 @@ class OrderStatusFacade
         return $this->orderStatusRepository->getAllByType($statusType);
     }
 
-    /**
-     * @param string $statusType
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     */
     public function getByType(string $statusType): OrderStatus
     {
         return $this->orderStatusRepository->getByType($statusType);

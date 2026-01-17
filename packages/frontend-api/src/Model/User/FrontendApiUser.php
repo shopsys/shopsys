@@ -18,12 +18,7 @@ class FrontendApiUser implements UserInterface
     public const CLAIM_ADMINISTRATOR_UUID = 'administratorUuid';
 
     /**
-     * @param string $uuid
-     * @param string $fullName
-     * @param string $email
-     * @param string $deviceId
      * @param string[] $roles
-     * @param string|null $administratorUuid
      */
     public function __construct(
         protected readonly string $uuid,
@@ -35,42 +30,27 @@ class FrontendApiUser implements UserInterface
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getRoles(): array
     {
         return $this->roles;
     }
 
-    /**
-     * @return string
-     */
     public function getPassword(): string
     {
         return '';
     }
 
-    /**
-     * @return string
-     */
     public function getSalt(): string
     {
         return '';
     }
 
-    /**
-     * @return string
-     */
     public function getUsername(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getUserIdentifier(): string
     {
@@ -82,33 +62,21 @@ class FrontendApiUser implements UserInterface
     {
     }
 
-    /**
-     * @return string
-     */
     public function getUuid(): string
     {
         return $this->uuid;
     }
 
-    /**
-     * @return string
-     */
     public function getFullName(): string
     {
         return $this->fullName;
     }
 
-    /**
-     * @return string
-     */
     public function getDeviceId(): string
     {
         return $this->deviceId;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAdministratorUuid(): ?string
     {
         return $this->administratorUuid;

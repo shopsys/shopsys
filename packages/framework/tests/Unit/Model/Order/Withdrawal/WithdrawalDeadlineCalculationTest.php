@@ -65,9 +65,6 @@ class WithdrawalDeadlineCalculationTest extends TestCase
         $this->assertEquals('UTC', $deadline->getTimezone()->getName());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalDeadlineCalculation
-     */
     private function createWithdrawalDeadlineCalculation(): WithdrawalDeadlineCalculation
     {
         $withdrawalSetting = $this->createMock(WithdrawalSetting::class);

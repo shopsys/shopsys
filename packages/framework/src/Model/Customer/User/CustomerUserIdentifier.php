@@ -12,7 +12,6 @@ class CustomerUserIdentifier
 
     /**
      * @param string $cartIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
     public function __construct($cartIdentifier, protected readonly ?CustomerUser $customerUser = null)
     {

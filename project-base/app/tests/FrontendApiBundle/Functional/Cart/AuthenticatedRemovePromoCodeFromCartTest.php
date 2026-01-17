@@ -52,9 +52,6 @@ class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
         self::assertEmpty($data['modifications']['promoCodeModifications']['noLongerApplicablePromoCode']);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     */
     public function applyValidPromoCodeToCustomerCart(): PromoCode
     {
         $promoCodeReference = PromoCodeDataFixture::VALID_PROMO_CODE;

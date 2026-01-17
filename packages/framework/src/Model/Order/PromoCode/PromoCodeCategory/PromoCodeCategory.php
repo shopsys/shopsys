@@ -28,10 +28,6 @@ class PromoCodeCategory
     #[ORM\Id]
     protected $category;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
     public function __construct(PromoCode $promoCode, Category $category)
     {
         $this->promoCode = $promoCode;

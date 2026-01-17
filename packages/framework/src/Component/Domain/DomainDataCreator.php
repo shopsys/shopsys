@@ -20,17 +20,6 @@ class DomainDataCreator
 {
     public const TEMPLATE_DOMAIN_ID = 1;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository $settingValueRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityDataCreator $multidomainEntityDataCreator
-     * @param \Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator $translatableEntityDataCreator
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory $pricingGroupDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly Setting $setting,
@@ -106,9 +95,6 @@ class DomainDataCreator
         return $this->domain->getDomainConfigById(self::TEMPLATE_DOMAIN_ID)->getLocale();
     }
 
-    /**
-     * @param int $domainId
-     */
     protected function processDefaultPricingGroupForNewDomain(int $domainId)
     {
         $pricingGroup = $this->createDefaultPricingGroupForNewDomain($domainId);
@@ -116,7 +102,6 @@ class DomainDataCreator
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
     protected function createDefaultPricingGroupForNewDomain(int $domainId)
@@ -128,19 +113,12 @@ class DomainDataCreator
         return $this->pricingGroupFacade->create($pricingGroupData, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     */
     protected function processDefaultVatForNewDomain(int $domainId): void
     {
         $vat = $this->createDefaultVatForNewDomain($domainId);
         $this->setting->setForDomain(Vat::SETTING_DEFAULT_VAT, $vat->getId(), $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
     protected function createDefaultVatForNewDomain(int $domainId): Vat
     {
         $domain = $this->domain->getDomainConfigById($domainId);

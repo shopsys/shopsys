@@ -44,18 +44,12 @@ class ForbiddenDoctrineDefaultValueSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/correct/missing_default_value_annotation.php'];
     }
 
-    /**
-     * @param string $fileToTest
-     */
     #[DataProvider('getWrongFiles')]
     public function testWrongFiles(string $fileToTest): void
     {
         $this->runWrongFilesTest($fileToTest);
     }
 
-    /**
-     * @param string $fileToTest
-     */
     #[DataProvider('getCorrectFiles')]
     public function testCorrectFiles(string $fileToTest): void
     {
