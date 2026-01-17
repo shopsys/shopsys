@@ -204,3 +204,19 @@ For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use 
 ### added styles for grapesjs on localhost ([#4385](https://github.com/shopsys/shopsys/pull/4385))
 
 -   run `make generate-tailwind-for-admin` for genereting Tailwind styles to run GrapesJS localy
+
+#### upgrade to Symfony 6.4 ([#4394](https://github.com/shopsys/shopsys/pull/4394))
+
+-   see upgrade notes of Symfony:
+    -   https://github.com/symfony/symfony/blob/6.4/UPGRADE-6.0.md
+    -   https://github.com/symfony/symfony/blob/6.4/UPGRADE-6.1.md
+    -   https://github.com/symfony/symfony/blob/6.4/UPGRADE-6.2.md
+    -   https://github.com/symfony/symfony/blob/6.4/UPGRADE-6.3.md
+    -   https://github.com/symfony/symfony/blob/6.4/UPGRADE-6.4.md
+-   `Session` Symfony service no longer exists and sessions should be accessed via `Request` object
+-   replace typehints of `\Symfony\Bridge\Monolog\Logger` with `\Psr\Log\LoggerInterface` or `\Monolog\Logger`
+-   `sensio/framework-extra-bundle` package has been removed as it is no longer supported
+-   `Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler` service definition has been moved from project-base to framework
+    -   remove the service definition from your `config/services.yaml` if you have it defined there
+    -   the service is now marked as lazy to prevent calling Redis during builds on CI
+-   see #project-base-diff to update your project
