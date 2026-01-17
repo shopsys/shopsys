@@ -125,7 +125,9 @@ use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
 use SlevomatCodingStandard\Sniffs\PHP\ForbiddenClassesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\NullableTypeForNullDefaultValueSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
@@ -258,6 +260,8 @@ return ECSConfig::configure()
         ParentCallSpacingSniff::class,
         UselessIfConditionWithReturnSniff::class,
         RequireOverrideAttributeSniff::class,
+        ParameterTypeHintSniff::class,
+        ReturnTypeHintSniff::class,
     ])
     ->withConfiguredRule(CyclomaticComplexitySniff::class, [
         'absoluteComplexity' => CyclomaticComplexitySniffSetting::DEFAULT_ABSOLUTE_COMPLEXITY,
@@ -354,4 +358,14 @@ return ECSConfig::configure()
         // rule breaks jms/translation-bundle as it fails on this usage: `[, $b] = $var`
         // won't do any changes after upgrade
         ListSyntaxFixer::class => null,
+        // Enable MissingAnyTypeHint only
+        ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT,
+        ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_MISSING_TRAVERSABLE_TYPE_HINT_SPECIFICATION,
+        ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_USELESS_ANNOTATION,
+        ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_USELESS_SUPPRESS,
+        ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT,
+        ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_MISSING_TRAVERSABLE_TYPE_HINT_SPECIFICATION,
+        ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_USELESS_ANNOTATION,
+        ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_USELESS_SUPPRESS,
+        ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_LESS_SPECIFIC_NATIVE_TYPE_HINT,
     ]);
