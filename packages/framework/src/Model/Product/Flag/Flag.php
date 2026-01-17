@@ -75,7 +75,7 @@ class Flag extends AbstractTranslatableEntity
         $this->lockedForDeletion = false;
     }
 
-    public function edit(FlagData $flagData)
+    public function edit(FlagData $flagData): void
     {
         $this->setData($flagData);
     }
@@ -159,7 +159,7 @@ class Flag extends AbstractTranslatableEntity
         return $this->promotionXy;
     }
 
-    protected function setTranslations(FlagData $flagData)
+    protected function setTranslations(FlagData $flagData): void
     {
         foreach ($flagData->name as $locale => $name) {
             $this->translation($locale)->setName($name);

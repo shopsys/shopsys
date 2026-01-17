@@ -52,7 +52,7 @@ class FrontendApiTypeMaker extends AbstractMaker
     }
 
     #[Override]
-    public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
+    public function interact(InputInterface $input, ConsoleStyle $io, Command $command): void
     {
         $this->selectedEntityClass = $this->entityChoiceHelper->askForEntity($io, 'What is the entity you want to create the API types for?');
 
@@ -164,12 +164,12 @@ class FrontendApiTypeMaker extends AbstractMaker
     }
 
     #[Override]
-    public function configureCommand(Command $command, InputConfiguration $inputConfig)
+    public function configureCommand(Command $command, InputConfiguration $inputConfig): void
     {
     }
 
     #[Override]
-    public function configureDependencies(DependencyBuilder $dependencies)
+    public function configureDependencies(DependencyBuilder $dependencies): void
     {
     }
 }

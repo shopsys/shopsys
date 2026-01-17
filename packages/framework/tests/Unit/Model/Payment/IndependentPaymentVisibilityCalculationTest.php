@@ -51,7 +51,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
         string $name,
         bool $isEnabled,
         bool $expectedResult,
-    ) {
+    ): void {
         $paymentMock = $this->createMock(Payment::class);
         $paymentMock->method('isOnlinePayment')->willReturn($isOnlinePayment);
         $paymentMock->method('isHidden')->willReturn($isHidden);

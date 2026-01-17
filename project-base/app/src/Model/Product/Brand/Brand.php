@@ -30,7 +30,7 @@ class Brand extends BaseBrand
      * @param \App\Model\Product\Brand\BrandData $brandData
      */
     #[Override]
-    public function edit(BaseBrandData $brandData)
+    public function edit(BaseBrandData $brandData): void
     {
         parent::edit($brandData);
     }

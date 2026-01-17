@@ -16,7 +16,7 @@ class GridOrderingFacade
     /**
      * @param string $entityClass
      */
-    public function saveOrdering($entityClass, array $rowIds)
+    public function saveOrdering($entityClass, array $rowIds): void
     {
         $entityRepository = $this->getEntityRepository($entityClass);
         $position = 0;

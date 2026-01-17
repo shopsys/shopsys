@@ -11,7 +11,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotA
 
 class AbstractMigrationTest extends TestCase
 {
-    public function testAddSqlException()
+    public function testAddSqlException(): void
     {
         $abstractMigrationMock = $this->getMockBuilder(AbstractMigration::class)
             ->disableOriginalConstructor()

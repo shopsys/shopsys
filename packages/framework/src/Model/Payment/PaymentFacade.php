@@ -50,7 +50,7 @@ class PaymentFacade
         return $payment;
     }
 
-    public function edit(Payment $payment, PaymentData $paymentData)
+    public function edit(Payment $payment, PaymentData $paymentData): void
     {
         $payment->edit($paymentData);
         $this->updatePaymentPrices(
@@ -73,14 +73,14 @@ class PaymentFacade
     /**
      * @param int $id
      */
-    public function deleteById($id)
+    public function deleteById($id): void
     {
         $payment = $this->getById($id);
         $payment->markAsDeleted();
         $this->em->flush();
     }
 
-    protected function setAdditionalDataAndFlush(Payment $payment, PaymentData $paymentData)
+    protected function setAdditionalDataAndFlush(Payment $payment, PaymentData $paymentData): void
     {
         $transports = $this->transportRepository->getAllByIds($paymentData->transports);
         $payment->setTransports($transports);

@@ -28,7 +28,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
      */
     private TransportDataFactory $transportDataFactory;
 
-    public function testIsIndependentlyVisible()
+    public function testIsIndependentlyVisible(): void
     {
         $enabledOnDomains = [
             Domain::FIRST_DOMAIN_ID => true,
@@ -48,7 +48,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         );
     }
 
-    public function testIsIndependentlyVisibleEmptyName()
+    public function testIsIndependentlyVisibleEmptyName(): void
     {
         $transportData = $this->transportDataFactory->create();
         $names = [];
@@ -76,7 +76,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         );
     }
 
-    public function testIsIndependentlyVisibleNotOnDomain()
+    public function testIsIndependentlyVisibleNotOnDomain(): void
     {
         $enabledOnDomains = [
             Domain::FIRST_DOMAIN_ID => false,
@@ -96,7 +96,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         );
     }
 
-    public function testIsIndependentlyVisibleHidden()
+    public function testIsIndependentlyVisibleHidden(): void
     {
         $enabledOnDomains = [
             Domain::FIRST_DOMAIN_ID => true,

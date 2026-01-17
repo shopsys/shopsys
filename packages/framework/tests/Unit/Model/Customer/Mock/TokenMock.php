@@ -21,7 +21,7 @@ class TokenMock implements TokenInterface
         return null;
     }
 
-    public function unserialize(string $data)
+    public function unserialize(string $data): void
     {
     }
 
@@ -36,7 +36,7 @@ class TokenMock implements TokenInterface
         return [];
     }
 
-    public function getCredentials()
+    public function getCredentials(): void
     {
     }
 
@@ -59,7 +59,7 @@ class TokenMock implements TokenInterface
         return true;
     }
 
-    public function setAuthenticated(bool $isAuthenticated)
+    public function setAuthenticated(bool $isAuthenticated): void
     {
     }
 

@@ -17,7 +17,7 @@ class JsFileExtractor implements FileVisitorInterface
     protected const DUMP_FILE = 'translationsDump.json';
 
     #[Override]
-    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
+    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue): void
     {
         if ($this->isFileTranslationDump($file) === false) {
             return;
@@ -51,7 +51,7 @@ class JsFileExtractor implements FileVisitorInterface
     }
 
     #[Override]
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
     }
 

@@ -15,7 +15,7 @@ use SplFileInfo;
 
 class JsFileExtractorTest extends TestCase
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         /*
          * the method that generates this file is tested elsewhere (project-base/app/assets/js/commands/translations/parseFile.test.js)

@@ -136,7 +136,7 @@ class CategoryFacade
     /**
      * @param int $categoryId
      */
-    public function deleteById($categoryId)
+    public function deleteById($categoryId): void
     {
         $category = $this->categoryRepository->getById($categoryId);
 

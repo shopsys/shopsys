@@ -24,7 +24,7 @@ class PricingGroupDataFactory
         return $pricingGroupData;
     }
 
-    protected function fillFromPricingGroup(PricingGroupData $pricingGroupData, PricingGroup $pricingGroup)
+    protected function fillFromPricingGroup(PricingGroupData $pricingGroupData, PricingGroup $pricingGroup): void
     {
         $pricingGroupData->name = $pricingGroup->getName();
     }

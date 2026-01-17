@@ -54,7 +54,7 @@ class OrderStatusFacade
      * @param int $orderStatusId
      * @param int|null $newOrderStatusId
      */
-    public function deleteById($orderStatusId, $newOrderStatusId = null)
+    public function deleteById($orderStatusId, $newOrderStatusId = null): void
     {
         $orderStatus = $this->orderStatusRepository->getById($orderStatusId);
         $orderStatus->checkForDelete();

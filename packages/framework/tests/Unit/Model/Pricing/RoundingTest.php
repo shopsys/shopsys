@@ -68,7 +68,7 @@ class RoundingTest extends TestCase
         $expectedAsPriceWithVat,
         $expectedAsPriceWithoutVat,
         $expectedAsVatAmount,
-    ) {
+    ): void {
         $rounding = new Rounding();
 
         $currency = $this->createCurrency(Currency::ROUNDING_TYPE_INTEGER);
@@ -140,7 +140,7 @@ class RoundingTest extends TestCase
         string $roundingType,
         Money $inputPrice,
         Money $outputPrice,
-    ) {
+    ): void {
         $currency = $this->createCurrency($roundingType);
 
         $rounding = new Rounding();

@@ -185,7 +185,7 @@ class TranslationReplaceSourceCommand extends Command
      * @see \Symfony\Component\Translation\Loader\PoFileLoader::addMessage
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $translationSourceReplacements
      */
-    private function parsePoFileItem(array &$translationSourceReplacements, array $item)
+    private function parsePoFileItem(array &$translationSourceReplacements, array $item): void
     {
         $sourceFileReferences = [];
 
@@ -400,7 +400,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
      * @param string[] $searchedPathNames
      */
-    private function replaceAllInFiles(array $replacements, array $searchedPathNames, OutputInterface $output)
+    private function replaceAllInFiles(array $replacements, array $searchedPathNames, OutputInterface $output): void
     {
         if (file_exists(self::FILE_NAME_REPLACEMENT_ERRORS)) {
             rename(
@@ -504,7 +504,7 @@ class TranslationReplaceSourceCommand extends Command
     /**
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
      */
-    private function replaceSourcesInPoFiles(array $replacements, DirectoryIterator $directory)
+    private function replaceSourcesInPoFiles(array $replacements, DirectoryIterator $directory): void
     {
         foreach ($directory as $item) {
             if ($item->isFile() && $item->getExtension() === 'po') {
@@ -568,7 +568,7 @@ class TranslationReplaceSourceCommand extends Command
         $expectedCount,
         $isExpectedCountExact,
         OutputInterface $output,
-    ) {
+    ): void {
         if ($realCount === null) {
             $output->writeln(
                 sprintf(

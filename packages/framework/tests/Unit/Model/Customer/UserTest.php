@@ -11,7 +11,7 @@ use Tests\FrameworkBundle\Unit\TestCase;
 
 class UserTest extends TestCase
 {
-    public function testGetFullNameReturnsLastnameAndFirstnameForUser()
+    public function testGetFullNameReturnsLastnameAndFirstnameForUser(): void
     {
         $customerUserData = TestCustomerProvider::getTestCustomerUserData(false);
         $customerUser = new CustomerUser($customerUserData);
@@ -19,7 +19,7 @@ class UserTest extends TestCase
         $this->assertSame('Lastname Firstname', $customerUser->getFullName());
     }
 
-    public function testGetFullNameReturnsCompanyNameForCompanyUser()
+    public function testGetFullNameReturnsCompanyNameForCompanyUser(): void
     {
         $customerUser = TestCustomerProvider::getTestCustomerUser();
 
@@ -74,7 +74,7 @@ class UserTest extends TestCase
         $resetPasswordHashValidThrough,
         $sentHash,
         $isExpectedValid,
-    ) {
+    ): void {
         $customerUser = TestCustomerProvider::getTestCustomerUser();
 
         $this->setValueOfProtectedProperty($customerUser, 'resetPasswordHash', $resetPasswordHash);

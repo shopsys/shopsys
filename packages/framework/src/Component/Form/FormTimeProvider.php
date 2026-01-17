@@ -78,7 +78,7 @@ class FormTimeProvider
     /**
      * @param string $name
      */
-    public function removeFormTime($name)
+    public function removeFormTime($name): void
     {
         $key = $this->getSessionKey($name);
         $this->requestStack->getSession()->remove($key);

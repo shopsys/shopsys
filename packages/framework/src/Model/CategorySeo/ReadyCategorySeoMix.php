@@ -165,7 +165,7 @@ class ReadyCategorySeoMix
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
      */
-    public function setFlag($flag)
+    public function setFlag($flag): void
     {
         $this->flag = $flag;
     }
@@ -181,7 +181,7 @@ class ReadyCategorySeoMix
     /**
      * @param string $ordering
      */
-    public function setOrdering($ordering)
+    public function setOrdering($ordering): void
     {
         $this->ordering = $ordering;
     }

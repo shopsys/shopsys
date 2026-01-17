@@ -87,7 +87,7 @@ class PaymentPriceCalculationTest extends TestCase
         string $vatPercent,
         Money $priceWithoutVat,
         Money $priceWithVat,
-    ) {
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->onlyMethods(['getInputPriceType'])
             ->disableOriginalConstructor()
@@ -149,7 +149,7 @@ class PaymentPriceCalculationTest extends TestCase
         Money $priceWithVat,
         Price $productsPrice,
         bool $forceFreePrice,
-    ) {
+    ): void {
         $priceLimit = Money::create(1000);
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->onlyMethods(['getInputPriceType', 'getFreeTransportAndPaymentPriceLimit'])

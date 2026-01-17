@@ -82,7 +82,7 @@ class CreateApplicationDirectoriesCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function createMiscellaneousDirectories(OutputInterface $output)
+    private function createMiscellaneousDirectories(OutputInterface $output): void
     {
         $publicDirectories = $this->getPublicDirectories();
         $internalDirectories = $this->getInternalDirectories();
@@ -96,14 +96,14 @@ class CreateApplicationDirectoriesCommand extends Command
         $output->writeln('<fg=green>Miscellaneous application directories were successfully created.</fg=green>');
     }
 
-    private function createImageDirectories(OutputInterface $output)
+    private function createImageDirectories(OutputInterface $output): void
     {
         $this->imageDirectoryStructureCreator->makeImageDirectories();
 
         $output->writeln('<fg=green>Directories for images were successfully created.</fg=green>');
     }
 
-    private function createUploadedFileDirectories(OutputInterface $output)
+    private function createUploadedFileDirectories(OutputInterface $output): void
     {
         $this->uploadedFileDirectoryStructureCreator->makeUploadedFileDirectories();
 

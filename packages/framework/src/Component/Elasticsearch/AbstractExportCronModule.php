@@ -21,12 +21,12 @@ abstract class AbstractExportCronModule implements SimpleCronModuleInterface
     }
 
     #[Override]
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
     }
 
     #[Override]
-    public function run()
+    public function run(): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index::getName(), $domainId);

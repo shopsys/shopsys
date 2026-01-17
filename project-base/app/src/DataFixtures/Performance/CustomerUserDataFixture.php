@@ -46,7 +46,7 @@ class CustomerUserDataFixture
         $this->userCountPerDomain = $userCountPerDomain;
     }
 
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();

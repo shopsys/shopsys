@@ -38,7 +38,7 @@ class CreateDomainsDbFunctionsCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function doExecute(OutputInterface $output)
+    private function doExecute(OutputInterface $output): void
     {
         $output->writeln('Start of creating db functions.');
 

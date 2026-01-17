@@ -39,7 +39,7 @@ class Unit extends AbstractTranslatableEntity
         $this->setData($unitData);
     }
 
-    public function edit(UnitData $unitData)
+    public function edit(UnitData $unitData): void
     {
         $this->setData($unitData);
     }
@@ -66,7 +66,7 @@ class Unit extends AbstractTranslatableEntity
         return $this->translation($locale)->getName();
     }
 
-    protected function setTranslations(UnitData $unitData)
+    protected function setTranslations(UnitData $unitData): void
     {
         foreach ($unitData->name as $locale => $name) {
             $this->translation($locale)->setName($name);

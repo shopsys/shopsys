@@ -58,7 +58,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     /**
      * @param array $values
      */
-    protected function validateExists($values, UniqueSlugsOnDomains $constraint)
+    protected function validateExists($values, UniqueSlugsOnDomains $constraint): void
     {
         foreach ($values as $urlData) {
             $domainId = $urlData[UrlListData::FIELD_DOMAIN];

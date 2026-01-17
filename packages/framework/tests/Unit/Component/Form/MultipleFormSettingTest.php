@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting;
 
 class MultipleFormSettingTest extends TestCase
 {
-    public function testCurrentFormIsMultiple()
+    public function testCurrentFormIsMultiple(): void
     {
         $multipleFormSetting = new MultipleFormSetting();
         $multipleFormSetting->currentFormIsMultiple();
@@ -17,7 +17,7 @@ class MultipleFormSettingTest extends TestCase
         $this->assertTrue($multipleFormSetting->isCurrentFormMultiple());
     }
 
-    public function testCurrentFormIsNotMultiple()
+    public function testCurrentFormIsNotMultiple(): void
     {
         $multipleFormSetting = new MultipleFormSetting();
         $multipleFormSetting->currentFormIsNotMultiple();
@@ -25,14 +25,14 @@ class MultipleFormSettingTest extends TestCase
         $this->assertFalse($multipleFormSetting->isCurrentFormMultiple());
     }
 
-    public function testDefaultValue()
+    public function testDefaultValue(): void
     {
         $multipleFormSetting = new MultipleFormSetting();
 
         $this->assertSame(MultipleFormSetting::DEFAULT_MULTIPLE, $multipleFormSetting->isCurrentFormMultiple());
     }
 
-    public function testReset()
+    public function testReset(): void
     {
         $multipleFormSetting = new MultipleFormSetting();
 

@@ -55,7 +55,7 @@ class CachedBestsellingProductFacade
     /**
      * @param int $domainId
      */
-    public function invalidateCacheByDomainIdAndCategory($domainId, Category $category)
+    public function invalidateCacheByDomainIdAndCategory($domainId, Category $category): void
     {
         $pricingGroups = $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);
 

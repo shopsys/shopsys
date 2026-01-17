@@ -37,7 +37,7 @@ class HeurekaSetting
      * @param string $apiKey
      * @param int $domainId
      */
-    public function setApiKeyForDomain($apiKey, $domainId)
+    public function setApiKeyForDomain($apiKey, $domainId): void
     {
         $this->setting->setForDomain(static::HEUREKA_API_KEY, $apiKey, $domainId);
     }
@@ -46,7 +46,7 @@ class HeurekaSetting
      * @param string $heurekaWidgetCode
      * @param int $domainId
      */
-    public function setHeurekaShopCertificationWidgetForDomain($heurekaWidgetCode, $domainId)
+    public function setHeurekaShopCertificationWidgetForDomain($heurekaWidgetCode, $domainId): void
     {
         $this->setting->setForDomain(static::HEUREKA_WIDGET_CODE, $heurekaWidgetCode, $domainId);
     }

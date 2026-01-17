@@ -53,7 +53,7 @@ class BasePriceCalculationTest extends TestCase
         Money $basePriceWithoutVat,
         Money $basePriceWithVat,
         Money $basePriceVatAmount,
-    ) {
+    ): void {
         $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);

@@ -11,7 +11,7 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 
 class SortableNullsWalkerTest extends TransactionFunctionalTestCase
 {
-    public function testWalkOrderByItemAsc()
+    public function testWalkOrderByItemAsc(): void
     {
         $queryBuilder = $this->em->createQueryBuilder();
 
@@ -26,7 +26,7 @@ class SortableNullsWalkerTest extends TransactionFunctionalTestCase
         $this->assertStringEndsWith('ASC NULLS FIRST', $query->getSQL());
     }
 
-    public function testWalkOrderByItemDesc()
+    public function testWalkOrderByItemDesc(): void
     {
         $queryBuilder = $this->em->createQueryBuilder();
 
@@ -41,7 +41,7 @@ class SortableNullsWalkerTest extends TransactionFunctionalTestCase
         $this->assertStringEndsWith('DESC NULLS LAST', $query->getSQL());
     }
 
-    public function testWalkOrderByItemWithoutOrdering()
+    public function testWalkOrderByItemWithoutOrdering(): void
     {
         $queryBuilder = $this->em->createQueryBuilder();
 

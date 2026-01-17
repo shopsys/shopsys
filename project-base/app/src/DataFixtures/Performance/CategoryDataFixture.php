@@ -42,7 +42,7 @@ class CategoryDataFixture
         $this->categoriesCreated = 0;
     }
 
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         $progressBar = $this->progressBarFactory->create($output, $this->recursivelyCountCategoriesInCategoryTree());
 
@@ -57,7 +57,7 @@ class CategoryDataFixture
      * @param \App\Model\Category\Category $parentCategory
      * @param int $categoryLevel
      */
-    private function recursivelyCreateCategoryTree($parentCategory, ProgressBar $progressBar, $categoryLevel = 0)
+    private function recursivelyCreateCategoryTree($parentCategory, ProgressBar $progressBar, $categoryLevel = 0): void
     {
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {
             $categoryData = $this->getRandomCategoryDataByParentCategory($parentCategory);

@@ -26,7 +26,7 @@ class SubRequestListener
         }
     }
 
-    protected function fillSubRequestFromMasterRequest(Request $subRequest)
+    protected function fillSubRequestFromMasterRequest(Request $subRequest): void
     {
         $subRequest->setMethod($this->masterRequest->getMethod());
         $subRequest->request = $this->masterRequest->request;
@@ -48,7 +48,7 @@ class SubRequestListener
         }
     }
 
-    protected function processSubResponse(Response $subResponse)
+    protected function processSubResponse(Response $subResponse): void
     {
         if ($subResponse->isRedirection()) {
             if ($this->redirectResponse !== null) {

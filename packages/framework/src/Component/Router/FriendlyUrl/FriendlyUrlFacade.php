@@ -38,7 +38,7 @@ class FriendlyUrlFacade
      * @param int $entityId
      * @param string[] $namesByLocale
      */
-    public function createFriendlyUrls($routeName, $entityId, array $namesByLocale)
+    public function createFriendlyUrls($routeName, $entityId, array $namesByLocale): void
     {
         $friendlyUrls = $this->friendlyUrlFactory->createForAllDomains($routeName, $entityId, $namesByLocale);
 
@@ -56,7 +56,7 @@ class FriendlyUrlFacade
      * @param string $entityName
      * @param int $domainId
      */
-    public function createFriendlyUrlForDomain($routeName, $entityId, $entityName, $domainId)
+    public function createFriendlyUrlForDomain($routeName, $entityId, $entityName, $domainId): void
     {
         $friendlyUrl = $this->friendlyUrlFactory->createIfValid($routeName, $entityId, (string)$entityName, $domainId);
 
@@ -70,7 +70,7 @@ class FriendlyUrlFacade
     /**
      * @param string $entityName
      */
-    protected function resolveUniquenessOfFriendlyUrl(FriendlyUrl $friendlyUrl, $entityName)
+    protected function resolveUniquenessOfFriendlyUrl(FriendlyUrl $friendlyUrl, $entityName): void
     {
         $attempt = 0;
 
@@ -168,7 +168,7 @@ class FriendlyUrlFacade
      * @param string $routeName
      * @param int $entityId
      */
-    public function saveUrlListFormData($routeName, $entityId, UrlListData $urlListData)
+    public function saveUrlListFormData($routeName, $entityId, UrlListData $urlListData): void
     {
         $toFlush = [];
 
@@ -201,7 +201,7 @@ class FriendlyUrlFacade
         }
     }
 
-    protected function setFriendlyUrlAsMain(FriendlyUrl $mainFriendlyUrl)
+    protected function setFriendlyUrlAsMain(FriendlyUrl $mainFriendlyUrl): void
     {
         $friendlyUrls = $this->friendlyUrlRepository->getAllByRouteNameAndEntityIdAndDomainId(
             $mainFriendlyUrl->getRouteName(),

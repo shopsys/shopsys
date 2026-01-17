@@ -21,7 +21,7 @@ use Symfony\Component\Clock\DatePoint;
 
 class CronFacadeTest extends TestCase
 {
-    public function testRunModuleByServiceId()
+    public function testRunModuleByServiceId(): void
     {
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
         $cronModuleServiceMock = $this->getMockBuilder(SimpleCronModuleInterface::class)->getMock();
@@ -36,7 +36,7 @@ class CronFacadeTest extends TestCase
         $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->runModuleByServiceId($serviceId);
     }
 
-    public function testRunIteratedModuleByServiceId()
+    public function testRunIteratedModuleByServiceId(): void
     {
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
         $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
@@ -58,7 +58,7 @@ class CronFacadeTest extends TestCase
         $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->runModuleByServiceId($serviceId);
     }
 
-    public function testScheduleModulesByTime()
+    public function testScheduleModulesByTime(): void
     {
         $validCronModuleServiceMock = $this->getMockBuilder(SimpleCronModuleInterface::class)->getMock();
         $validServiceId = get_class($validCronModuleServiceMock);
@@ -86,7 +86,7 @@ class CronFacadeTest extends TestCase
         $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->scheduleModulesByTime(new DatePoint());
     }
 
-    public function testRunScheduledModules()
+    public function testRunScheduledModules(): void
     {
         $scheduledCronModuleServiceMock = $this->getMockBuilder(SimpleCronModuleInterface::class)->getMock();
         $scheduledServiceId = get_class($scheduledCronModuleServiceMock);

@@ -38,7 +38,7 @@ class ArticleDataFactory
         return $articleData;
     }
 
-    protected function fillFromArticle(ArticleData $articleData, Article $article)
+    protected function fillFromArticle(ArticleData $articleData, Article $article): void
     {
         $articleData->name = $article->getName();
         $articleData->text = $this->ensureCorrectGrapesJsFormatHelper->ensureStringIsInCorrectGrapesJsFormat(
@@ -64,7 +64,7 @@ class ArticleDataFactory
             );
     }
 
-    protected function fillNew(ArticleData $articleData, int $domainId)
+    protected function fillNew(ArticleData $articleData, int $domainId): void
     {
         $articleData->domainId = $domainId;
     }

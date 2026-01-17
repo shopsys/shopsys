@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 class NoAuth implements AuthInterface
 {
     #[Override]
-    public function authenticateRequest(Request $request)
+    public function authenticateRequest(Request $request): void
     {
     }
 }

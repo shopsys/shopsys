@@ -24,8 +24,10 @@ class BillingAddressDataFactory
         return $billingAddressData;
     }
 
-    protected function fillFromBillingAddress(BillingAddressData $billingAddressData, BillingAddress $billingAddress)
-    {
+    protected function fillFromBillingAddress(
+        BillingAddressData $billingAddressData,
+        BillingAddress $billingAddress,
+    ): void {
         $billingAddressData->companyCustomer = $billingAddress->isCompanyCustomer();
         $billingAddressData->companyName = $billingAddress->getCompanyName();
         $billingAddressData->companyNumber = $billingAddress->getCompanyNumber();

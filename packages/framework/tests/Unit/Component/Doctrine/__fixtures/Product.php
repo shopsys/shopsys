@@ -30,7 +30,7 @@ class Product extends BaseProduct
     public function edit(
         array $productCategoryDomains,
         BaseProductData $productData,
-    ) {
+    ): void {
         parent::edit($productCategoryDomains, $productData);
     }
 }

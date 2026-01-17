@@ -40,7 +40,7 @@ class UnitDataFactory
         return $unitData;
     }
 
-    protected function fillFromUnit(UnitData $unitData, Unit $unit)
+    protected function fillFromUnit(UnitData $unitData, Unit $unit): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation[] $translations */
         $translations = $unit->getTranslations();

@@ -18,7 +18,7 @@ use Tests\FrameworkBundle\Test\Provider\TestOrderProvider;
 
 class OrderTest extends TestCase
 {
-    public function testGetProductItems()
+    public function testGetProductItems(): void
     {
         $payment = new Payment(new PaymentData());
         $orderData = TestOrderProvider::getTestOrderData();
@@ -89,7 +89,7 @@ class OrderTest extends TestCase
         $this->assertCount(1, $order->getProductItems());
     }
 
-    public function testOrderWithDeliveryAddressSameAsBillingAddress()
+    public function testOrderWithDeliveryAddressSameAsBillingAddress(): void
     {
         $orderData = TestOrderProvider::getTestOrderData();
         $countryData = new CountryData();
@@ -118,7 +118,7 @@ class OrderTest extends TestCase
         $this->assertSame($country, $order->getDeliveryCountry());
     }
 
-    public function testOrderWithoutDeliveryAddressSameAsBillingAddress()
+    public function testOrderWithoutDeliveryAddressSameAsBillingAddress(): void
     {
         $orderData = TestOrderProvider::getTestOrderData();
         $order = new Order($orderData, 'orderNumber', 'urlHash', null);
@@ -133,7 +133,7 @@ class OrderTest extends TestCase
         $this->assertSame($orderData->country, $order->getDeliveryCountry());
     }
 
-    public function testOrderCanBeCreatedWithSpecificCreatedAt()
+    public function testOrderCanBeCreatedWithSpecificCreatedAt(): void
     {
         $orderData = TestOrderProvider::getTestOrderData();
         $customerUser = null;

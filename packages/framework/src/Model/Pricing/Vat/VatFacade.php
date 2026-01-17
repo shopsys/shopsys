@@ -76,7 +76,7 @@ class VatFacade
      * @param int $vatId
      * @param int|null $newVatId
      */
-    public function deleteById($vatId, $newVatId = null)
+    public function deleteById($vatId, $newVatId = null): void
     {
         $oldVat = $this->vatRepository->getById($vatId);
         $newVat = $newVatId ? $this->vatRepository->getById($newVatId) : null;

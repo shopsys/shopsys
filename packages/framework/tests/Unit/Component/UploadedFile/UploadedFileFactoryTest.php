@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory;
 
 class UploadedFileFactoryTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $temporaryFilename = 'temporaryFilename.tmp';
         $temporaryFilepath = 'path/' . $temporaryFilename;

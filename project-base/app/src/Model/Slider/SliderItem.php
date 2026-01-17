@@ -49,7 +49,7 @@ class SliderItem extends BaseSliderItem
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      */
     #[Override]
-    public function edit($sliderItemData)
+    public function edit($sliderItemData): void
     {
         parent::edit($sliderItemData);
 

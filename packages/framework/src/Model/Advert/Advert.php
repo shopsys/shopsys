@@ -96,7 +96,7 @@ class Advert
         $this->setData($advertData);
     }
 
-    public function edit(AdvertData $advertData)
+    public function edit(AdvertData $advertData): void
     {
         $this->setData($advertData);
     }

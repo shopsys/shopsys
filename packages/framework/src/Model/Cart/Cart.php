@@ -111,7 +111,7 @@ class Cart
         $this->promoCodes = new ArrayCollection();
     }
 
-    public function addItem(CartItem $item)
+    public function addItem(CartItem $item): void
     {
         if (!$this->items->contains($item)) {
             $this->items->add($item);
@@ -122,7 +122,7 @@ class Cart
     /**
      * @param int $itemId
      */
-    public function removeItemById($itemId)
+    public function removeItemById($itemId): void
     {
         foreach ($this->items as $item) {
             if ($item->getId() === $itemId) {
@@ -137,7 +137,7 @@ class Cart
         throw new InvalidCartItemException($message);
     }
 
-    public function clean()
+    public function clean(): void
     {
         $this->items->clear();
     }
@@ -166,7 +166,7 @@ class Cart
         return $this->getItemsCount() === 0;
     }
 
-    public function changeQuantities(array $quantitiesByItemId)
+    public function changeQuantities(array $quantitiesByItemId): void
     {
         foreach ($this->items as $item) {
             if (array_key_exists($item->getId(), $quantitiesByItemId)) {
@@ -257,7 +257,7 @@ class Cart
     /**
      * @param \DateTimeImmutable $modifiedAt
      */
-    public function setModifiedAt($modifiedAt)
+    public function setModifiedAt($modifiedAt): void
     {
         $this->modifiedAt = $modifiedAt;
     }

@@ -11,7 +11,7 @@ use Tests\App\Performance\Page\PerformanceTestSample;
 
 class PerformanceResultsCsvExporterTest extends TestCase
 {
-    public function testExportJmeterCsvReportWritesExpectedHeader()
+    public function testExportJmeterCsvReportWritesExpectedHeader(): void
     {
         $outputFilename = $this->getTemporaryFilename();
 
@@ -35,7 +35,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
         $this->assertCsvRowEquals($expectedLine, $outputFilename, 0);
     }
 
-    public function testExportJmeterCsvReportRoundsDuration()
+    public function testExportJmeterCsvReportRoundsDuration(): void
     {
         $outputFilename = $this->getTemporaryFilename();
 
@@ -90,7 +90,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
      * @param string $filename
      * @param int $lineIndex
      */
-    private function assertCsvRowEquals(array $expectedLine, $filename, $lineIndex)
+    private function assertCsvRowEquals(array $expectedLine, $filename, $lineIndex): void
     {
         $actualLine = $this->getCsvLine($filename, $lineIndex);
 

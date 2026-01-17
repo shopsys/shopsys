@@ -24,7 +24,7 @@ class BasicHttpAuth implements AuthInterface
     }
 
     #[Override]
-    public function authenticateRequest(Request $request)
+    public function authenticateRequest(Request $request): void
     {
         $request->server->set('PHP_AUTH_USER', $this->username);
 

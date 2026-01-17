@@ -29,7 +29,7 @@ class CronModuleFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[] $cronModuleConfigs
      */
-    public function scheduleModules(array $cronModuleConfigs)
+    public function scheduleModules(array $cronModuleConfigs): void
     {
         foreach ($cronModuleConfigs as $cronModuleConfig) {
             $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
@@ -49,14 +49,14 @@ class CronModuleFacade
         return $this->cronFilter->filterScheduledCronModuleConfigs($cronModuleConfigs, $scheduledServiceIds);
     }
 
-    public function unscheduleModule(CronModuleConfig $cronModuleConfig)
+    public function unscheduleModule(CronModuleConfig $cronModuleConfig): void
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
         $cronModule->unschedule();
         $this->em->flush();
     }
 
-    public function suspendModule(CronModuleConfig $cronModuleConfig)
+    public function suspendModule(CronModuleConfig $cronModuleConfig): void
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
         $cronModule->suspend();

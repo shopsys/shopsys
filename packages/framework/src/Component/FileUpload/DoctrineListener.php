@@ -13,7 +13,7 @@ class DoctrineListener
     {
     }
 
-    public function prePersist(LifecycleEventArgs $args)
+    public function prePersist(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
 
@@ -22,7 +22,7 @@ class DoctrineListener
         }
     }
 
-    public function preUpdate(PreUpdateEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getEntity();
 
@@ -31,7 +31,7 @@ class DoctrineListener
         }
     }
 
-    public function postPersist(LifecycleEventArgs $args)
+    public function postPersist(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
 
@@ -40,7 +40,7 @@ class DoctrineListener
         }
     }
 
-    public function postUpdate(LifecycleEventArgs $args)
+    public function postUpdate(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
 

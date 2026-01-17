@@ -32,7 +32,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
      * @param string|null $searchText
      */
     #[Override]
-    public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText)
+    public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText): void
     {
         $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
 

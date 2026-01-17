@@ -65,7 +65,7 @@ class PriceListProductPrice
     /**
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceList $priceList
      */
-    public function setPriceList($priceList)
+    public function setPriceList($priceList): void
     {
         $this->priceList = $priceList;
     }

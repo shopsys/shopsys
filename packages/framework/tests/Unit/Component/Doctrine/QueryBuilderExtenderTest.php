@@ -86,7 +86,7 @@ class QueryBuilderExtenderTest extends TestCase
         ];
     }
 
-    public function testDifferentAlias()
+    public function testDifferentAlias(): void
     {
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()

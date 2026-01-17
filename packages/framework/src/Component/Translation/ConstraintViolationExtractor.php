@@ -86,7 +86,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
         return null;
     }
 
-    protected function setCurrentExecutionContextVariableNamesFromNode(ClassMethod $node)
+    protected function setCurrentExecutionContextVariableNamesFromNode(ClassMethod $node): void
     {
         $this->currentExecutionContextVariableNames = [];
 
@@ -123,7 +123,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
             && $node->name->name === 'addViolation';
     }
 
-    protected function extractMessage(MethodCall $methodCall)
+    protected function extractMessage(MethodCall $methodCall): void
     {
         $firstArgumentWithMessage = reset($methodCall->args);
 

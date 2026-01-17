@@ -162,13 +162,13 @@ class VatRepository
         return $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 
-    public function replaceVat(Vat $oldVat, Vat $newVat)
+    public function replaceVat(Vat $oldVat, Vat $newVat): void
     {
         $this->replacePaymentsVat($oldVat, $newVat);
         $this->replaceTransportsVat($oldVat, $newVat);
     }
 
-    protected function replacePaymentsVat(Vat $oldVat, Vat $newVat)
+    protected function replacePaymentsVat(Vat $oldVat, Vat $newVat): void
     {
         $this->em->createQueryBuilder()
             ->update(PaymentDomain::class, 'pd')
@@ -177,7 +177,7 @@ class VatRepository
             ->getQuery()->execute();
     }
 
-    protected function replaceTransportsVat(Vat $oldVat, Vat $newVat)
+    protected function replaceTransportsVat(Vat $oldVat, Vat $newVat): void
     {
         $this->em->createQueryBuilder()
             ->update(TransportDomain::class, 'td')

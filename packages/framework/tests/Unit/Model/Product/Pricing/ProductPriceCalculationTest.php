@@ -72,7 +72,7 @@ class ProductPriceCalculationTest extends TestCase
         );
     }
 
-    public function testCalculatePriceOfMainVariantWithoutAnySellableVariants()
+    public function testCalculatePriceOfMainVariantWithoutAnySellableVariants(): void
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::PRICE_TYPE_WITHOUT_VAT,
@@ -91,7 +91,7 @@ class ProductPriceCalculationTest extends TestCase
         $productPriceCalculation->calculatePrice($product, $pricingGroup->getDomainId(), $pricingGroup);
     }
 
-    public function testGetMinimumPriceEmptyArray()
+    public function testGetMinimumPriceEmptyArray(): void
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::PRICE_TYPE_WITHOUT_VAT,
@@ -106,7 +106,7 @@ class ProductPriceCalculationTest extends TestCase
      * @param mixed $minimumPrice
      */
     #[DataProvider('getMinimumPriceProvider')]
-    public function testGetMinimumPrice(array $prices, $minimumPrice)
+    public function testGetMinimumPrice(array $prices, $minimumPrice): void
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::PRICE_TYPE_WITHOUT_VAT,
@@ -147,7 +147,7 @@ class ProductPriceCalculationTest extends TestCase
      * @param mixed $arePricesDifferent
      */
     #[DataProvider('getArePricesDifferentProvider')]
-    public function testArePricesDifferent(array $prices, $arePricesDifferent)
+    public function testArePricesDifferent(array $prices, $arePricesDifferent): void
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::PRICE_TYPE_WITHOUT_VAT,
@@ -183,7 +183,7 @@ class ProductPriceCalculationTest extends TestCase
         ];
     }
 
-    public function testArePricesDifferentEmptyArray()
+    public function testArePricesDifferentEmptyArray(): void
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::PRICE_TYPE_WITHOUT_VAT,

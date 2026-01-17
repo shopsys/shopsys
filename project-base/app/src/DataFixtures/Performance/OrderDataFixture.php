@@ -75,7 +75,7 @@ class OrderDataFixture
         $this->performanceProductIds = [];
     }
 
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -100,7 +100,7 @@ class OrderDataFixture
         $this->sqlLoggerFacade->reenableLogging();
     }
 
-    private function createOrder()
+    private function createOrder(): void
     {
         $customerUser = $this->getRandomCustomerUserOrNull();
         $orderData = $this->createOrderData($customerUser);
@@ -201,7 +201,7 @@ class OrderDataFixture
         return $quantifiedProducts;
     }
 
-    private function loadPerformanceProductIds()
+    private function loadPerformanceProductIds(): void
     {
         $firstPerformanceProduct = $this->persistentReferenceFacade->getReference(
             PerformanceProductDataFixture::FIRST_PERFORMANCE_PRODUCT,
@@ -228,7 +228,7 @@ class OrderDataFixture
         return $this->faker->randomElements($this->performanceProductIds, $count);
     }
 
-    private function loadPerformanceUserIdsOnFirstDomain()
+    private function loadPerformanceUserIdsOnFirstDomain(): void
     {
         $firstPerformanceUser = $this->persistentReferenceFacade->getReference(
             PerformanceUserDataFixture::FIRST_PERFORMANCE_USER,

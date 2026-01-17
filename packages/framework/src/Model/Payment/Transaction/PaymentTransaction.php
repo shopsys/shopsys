@@ -237,7 +237,7 @@ class PaymentTransaction
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
      */
-    public function setPayment($payment)
+    public function setPayment($payment): void
     {
         $this->payment = $payment;
     }

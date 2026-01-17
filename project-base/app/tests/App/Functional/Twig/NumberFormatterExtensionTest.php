@@ -41,7 +41,7 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
      * @param mixed $result
      */
     #[DataProvider('formatNumberDataProvider')]
-    public function testFormatNumber($input, $locale, $result)
+    public function testFormatNumber($input, $locale, $result): void
     {
         $localizationMock = $this->getMockBuilder(Localization::class)
             ->disableOriginalConstructor()

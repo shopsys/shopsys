@@ -46,7 +46,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * createRequest or handleRequest method.
      */
     #[DataProvider('httpResponseTestDataProvider')]
-    final public function testHttpResponse(RequestDataSet $requestDataSet)
+    final public function testHttpResponse(RequestDataSet $requestDataSet): void
     {
         if ($requestDataSet->isSkipped()) {
             $message = sprintf('Test for route "%s" was skipped.', $requestDataSet->getRouteName());
@@ -151,7 +151,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         return static::$kernel->handle($request);
     }
 
-    protected function assertResponse(Response $response, RequestDataSet $requestDataSet)
+    protected function assertResponse(Response $response, RequestDataSet $requestDataSet): void
     {
         $failMessage = sprintf(
             'Failed asserting that status code %d for route "%s" is identical to expected %d',

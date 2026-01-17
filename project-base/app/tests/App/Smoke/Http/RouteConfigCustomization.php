@@ -32,7 +32,7 @@ class RouteConfigCustomization
         $this->container = $container->get('test.service_container');
     }
 
-    public function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
+    public function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $this->filterRoutesForTesting($routeConfigCustomizer);
         $this->configureGeneralRules($routeConfigCustomizer);
@@ -40,7 +40,7 @@ class RouteConfigCustomization
         $this->configureFrontendRoutes($routeConfigCustomizer);
     }
 
-    private function filterRoutesForTesting(RouteConfigCustomizer $routeConfigCustomizer)
+    private function filterRoutesForTesting(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer
             ->customize(function (RouteConfig $config, RouteInfo $info) {
@@ -102,7 +102,7 @@ class RouteConfigCustomization
             });
     }
 
-    private function configureGeneralRules(RouteConfigCustomizer $routeConfigCustomizer)
+    private function configureGeneralRules(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer
             ->customize(function (RouteConfig $config, RouteInfo $info) {
@@ -146,7 +146,7 @@ class RouteConfigCustomization
             });
     }
 
-    private function configureAdminRoutes(RouteConfigCustomizer $routeConfigCustomizer)
+    private function configureAdminRoutes(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer
             ->customize(function (RouteConfig $config, RouteInfo $info) {
@@ -431,7 +431,7 @@ class RouteConfigCustomization
             });
     }
 
-    private function configureFrontendRoutes(RouteConfigCustomizer $routeConfigCustomizer)
+    private function configureFrontendRoutes(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer->customize(function (RouteConfig $config, RouteInfo $info) {
             if (preg_match('~^front_~', $info->getRouteName())) {

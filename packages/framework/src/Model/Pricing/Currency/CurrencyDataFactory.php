@@ -24,7 +24,7 @@ class CurrencyDataFactory
         return $currencyData;
     }
 
-    protected function fillFromCurrency(CurrencyData $currencyData, Currency $currency)
+    protected function fillFromCurrency(CurrencyData $currencyData, Currency $currency): void
     {
         $currencyData->name = $currency->getName();
         $currencyData->code = $currency->getCode();

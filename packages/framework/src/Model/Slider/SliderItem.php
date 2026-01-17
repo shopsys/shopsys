@@ -97,7 +97,7 @@ class SliderItem implements OrderableEntityInterface
         $this->setData($sliderItemData);
     }
 
-    public function edit(SliderItemData $sliderItemData)
+    public function edit(SliderItemData $sliderItemData): void
     {
         $this->setData($sliderItemData);
     }
@@ -159,7 +159,7 @@ class SliderItem implements OrderableEntityInterface
      * @param int $position
      */
     #[Override]
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
@@ -207,7 +207,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @param \DateTimeImmutable|null $datetimeVisibleFrom
      */
-    public function setDatetimeVisibleFrom($datetimeVisibleFrom)
+    public function setDatetimeVisibleFrom($datetimeVisibleFrom): void
     {
         $this->datetimeVisibleFrom = $datetimeVisibleFrom;
     }
@@ -223,7 +223,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @param \DateTimeImmutable|null $datetimeVisibleTo
      */
-    public function setDatetimeVisibleTo($datetimeVisibleTo)
+    public function setDatetimeVisibleTo($datetimeVisibleTo): void
     {
         $this->datetimeVisibleTo = $datetimeVisibleTo;
     }

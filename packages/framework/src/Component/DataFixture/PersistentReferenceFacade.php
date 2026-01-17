@@ -41,7 +41,7 @@ class PersistentReferenceFacade
      * @param string $name
      * @param object $object
      */
-    public function persistReference($name, $object)
+    public function persistReference($name, $object): void
     {
         if (!is_object($object)) {
             throw new ObjectRequiredException($object);

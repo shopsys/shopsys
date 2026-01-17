@@ -69,7 +69,7 @@ class Watchdog
         $this->validUntil = $watchdogData->validUntil ?? new DatePoint(static::VALIDITY_PERIOD);
     }
 
-    public function updateValidity()
+    public function updateValidity(): void
     {
         $this->updatedAt = new DatePoint();
         $this->validUntil = new DatePoint(static::VALIDITY_PERIOD);

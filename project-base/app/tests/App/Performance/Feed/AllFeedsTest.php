@@ -43,7 +43,7 @@ class AllFeedsTest extends KernelTestCase
         $this->minDuration = static::getContainer()->getParameter('shopsys.performance_test.feed.min_duration_seconds');
     }
 
-    public function testAllFeedsGeneration()
+    public function testAllFeedsGeneration(): void
     {
         $consoleOutput = new ConsoleOutput();
 
@@ -145,7 +145,7 @@ class AllFeedsTest extends KernelTestCase
         PerformanceTestSample $performanceTestSample,
         $maxDuration,
         $realDuration,
-    ) {
+    ): void {
         $minDuration = $this->minDuration;
 
         if ($realDuration < $minDuration) {
@@ -226,7 +226,7 @@ class AllFeedsTest extends KernelTestCase
     /**
      * @param \Tests\App\Performance\Feed\PerformanceTestSample[] $performanceTestSamples
      */
-    private function assertSamplesAreSuccessful(array $performanceTestSamples)
+    private function assertSamplesAreSuccessful(array $performanceTestSamples): void
     {
         $failMessages = [];
 
@@ -251,7 +251,7 @@ class AllFeedsTest extends KernelTestCase
      * @param \Tests\App\Performance\Feed\PerformanceTestSample[] $performanceTestSamples
      * @param string $jmeterOutputFilename
      */
-    private function exportJmeterCsvReport(array $performanceTestSamples, $jmeterOutputFilename)
+    private function exportJmeterCsvReport(array $performanceTestSamples, $jmeterOutputFilename): void
     {
         $jmeterCsvReporter = new JmeterCsvReporter();
         $performanceResultsCsvExporter = new PerformanceResultsCsvExporter($jmeterCsvReporter);

@@ -42,7 +42,7 @@ class PerformanceTestSample
     /**
      * @param string $message
      */
-    public function setMessage($message)
+    public function setMessage($message): void
     {
         $this->message = $message;
     }
@@ -50,7 +50,7 @@ class PerformanceTestSample
     /**
      * @param string $failMessage
      */
-    public function addFailMessage($failMessage)
+    public function addFailMessage($failMessage): void
     {
         $this->failMessages[] = $failMessage;
     }

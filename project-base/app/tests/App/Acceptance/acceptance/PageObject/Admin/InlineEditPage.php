@@ -12,7 +12,7 @@ class InlineEditPage extends AbstractPage
     /**
      * @param int|null $rowId
      */
-    public function startInlineEdit($rowId)
+    public function startInlineEdit($rowId): void
     {
         $class = $this->getRowCssLocator($rowId) . ' .test-inline-edit-edit';
         $element = $this->webDriver->findElement(WebDriverBy::cssSelector($class));
@@ -21,7 +21,7 @@ class InlineEditPage extends AbstractPage
         $this->tester->waitForAjax();
     }
 
-    public function createNewRow()
+    public function createNewRow(): void
     {
         $this->tester->clickByCss('.test-inline-edit-add');
         $this->tester->waitForAjax();
@@ -30,7 +30,7 @@ class InlineEditPage extends AbstractPage
     /**
      * @param int $rowId
      */
-    public function delete($rowId)
+    public function delete($rowId): void
     {
         $class = $this->getRowCssLocator($rowId) . ' .test-type-delete';
         $this->tester->scrollTo(['css' => $class]);
@@ -46,7 +46,7 @@ class InlineEditPage extends AbstractPage
      * @param string $columnName
      * @param string $value
      */
-    public function changeInputValue($rowId, $columnName, $value)
+    public function changeInputValue($rowId, $columnName, $value): void
     {
         $class = $this->getRowCssLocator($rowId) . ' .test-grid-column-' . $columnName . ' input';
         $this->tester->scrollTo(['css' => $class]);
@@ -59,7 +59,7 @@ class InlineEditPage extends AbstractPage
     /**
      * @param int|null $rowId
      */
-    public function save($rowId)
+    public function save($rowId): void
     {
         $class = $this->getRowCssLocator($rowId) . ' .test-inline-edit-save';
         $this->tester->scrollTo(['css' => $class]);
@@ -91,12 +91,12 @@ class InlineEditPage extends AbstractPage
      * @param string $columnName
      * @param string $text
      */
-    public function assertSeeInColumn($rowId, $columnName, $text)
+    public function assertSeeInColumn($rowId, $columnName, $text): void
     {
         $this->tester->seeInCss($text, $this->getRowCssLocator($rowId) . ' .test-grid-column-' . $columnName);
     }
 
-    public function assertSeeInColumnPercent(int $rowId, string $text)
+    public function assertSeeInColumnPercent(int $rowId, string $text): void
     {
         $formattedPercent = $this->tester->getFormattedPercentAdmin($text);
         $this->assertSeeInColumn($rowId, 'percent', $formattedPercent);
@@ -105,7 +105,7 @@ class InlineEditPage extends AbstractPage
     /**
      * @param int $rowId
      */
-    public function assertDontSeeRow($rowId)
+    public function assertDontSeeRow($rowId): void
     {
         $this->tester->dontSeeElement(['css' => $this->getRowCssLocator($rowId)]);
     }

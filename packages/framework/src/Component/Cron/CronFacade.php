@@ -21,7 +21,7 @@ class CronFacade
     ) {
     }
 
-    public function scheduleModulesByTime(DateTimeInterface $roundedTime)
+    public function scheduleModulesByTime(DateTimeInterface $roundedTime): void
     {
         $cronModuleConfigsToSchedule = $this->cronConfig->getCronModuleConfigsByTime($roundedTime);
         $this->cronModuleFacade->scheduleModules($cronModuleConfigsToSchedule);
@@ -76,14 +76,14 @@ class CronFacade
     /**
      * @param string $serviceId
      */
-    public function runModuleByServiceId($serviceId)
+    public function runModuleByServiceId($serviceId): void
     {
         $cronModuleConfig = $this->cronConfig->getCronModuleConfigByServiceId($serviceId);
 
         $this->runSingleModule($cronModuleConfig);
     }
 
-    protected function runSingleModule(CronModuleConfig $cronModuleConfig)
+    protected function runSingleModule(CronModuleConfig $cronModuleConfig): void
     {
         if ($this->cronModuleFacade->isModuleDisabled($cronModuleConfig) === true) {
             return;

@@ -82,7 +82,7 @@ class ComplaintItem
         $this->setData($complaintItemData);
     }
 
-    protected function setData(ComplaintItemData $complaintItemData)
+    protected function setData(ComplaintItemData $complaintItemData): void
     {
         $this->uuid = $complaintItemData->uuid ?? Uuid::uuid4()->toString();
         $this->orderItem = $complaintItemData->orderItem;
@@ -168,7 +168,7 @@ class ComplaintItem
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
      */
-    public function setComplaint($complaint)
+    public function setComplaint($complaint): void
     {
         $this->complaint = $complaint;
     }

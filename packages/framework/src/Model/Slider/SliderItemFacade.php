@@ -75,7 +75,7 @@ class SliderItemFacade
     /**
      * @param int $sliderItemId
      */
-    public function delete($sliderItemId)
+    public function delete($sliderItemId): void
     {
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
 
