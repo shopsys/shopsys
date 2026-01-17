@@ -21,7 +21,7 @@ final class Price implements PriceInterface
      * {@inheritdoc}
      */
     #[Override]
-    public static function zero(): self
+    public static function zero(): static
     {
         return new self(Money::zero(), Money::zero());
     }
@@ -57,7 +57,7 @@ final class Price implements PriceInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function add(PriceInterface $priceToAdd): self
+    public function add(PriceInterface $priceToAdd): static
     {
         return new self(
             $this->priceWithoutVat->add($priceToAdd->getPriceWithoutVat()),
@@ -69,7 +69,7 @@ final class Price implements PriceInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function subtract(PriceInterface $priceToSubtract): self
+    public function subtract(PriceInterface $priceToSubtract): static
     {
         return new self(
             $this->priceWithoutVat->subtract($priceToSubtract->getPriceWithoutVat()),
@@ -81,7 +81,7 @@ final class Price implements PriceInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function multiply(int|string $multiplier): self
+    public function multiply(int|string $multiplier): static
     {
         return new self(
             $this->priceWithoutVat->multiply($multiplier),
@@ -93,7 +93,7 @@ final class Price implements PriceInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function inverse(): self
+    public function inverse(): static
     {
         return $this->multiply(-1);
     }
@@ -121,7 +121,7 @@ final class Price implements PriceInterface
      * {@inheritdoc}
      */
     #[Override]
-    public static function createHiddenPrice(): self
+    public static function createHiddenPrice(): static
     {
         return new self(
             new HiddenMoney(),

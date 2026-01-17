@@ -11,7 +11,7 @@ interface ProductPriceInterface
 {
     public function isPriceFrom(): bool;
 
-    public static function createHiddenProductPrice(PricingGroup $pricingGroup): self;
+    public static function createHiddenProductPrice(PricingGroup $pricingGroup): static;
 
     public function getPrice(): PriceInterface;
 

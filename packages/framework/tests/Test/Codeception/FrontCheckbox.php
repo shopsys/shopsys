@@ -13,7 +13,7 @@ use Override;
  */
 class FrontCheckbox extends AbstractCheckbox
 {
-    public static function createByCss(ActorInterface $tester, string $cssSelector): self
+    public static function createByCss(ActorInterface $tester, string $cssSelector): static
     {
         return new static($tester, $cssSelector);
     }

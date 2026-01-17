@@ -18,27 +18,27 @@ class HiddenMoney extends Money
      * {@inheritdoc}
      */
     #[Override]
-    public static function create($value): Money
+    public static function create($value): static
     {
-        return new self();
+        return new static();
     }
 
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public static function createFromFloat(float $float, int $scale): Money
+    public static function createFromFloat(float $float, int $scale): static
     {
-        return new self();
+        return new static();
     }
 
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public static function zero(): Money
+    public static function zero(): static
     {
-        return new self();
+        return new static();
     }
 
     /**
@@ -54,7 +54,7 @@ class HiddenMoney extends Money
      * {@inheritdoc}
      */
     #[Override]
-    public function add(Money $money): Money
+    public function add(Money $money): static
     {
         return $this;
     }
@@ -63,7 +63,7 @@ class HiddenMoney extends Money
      * {@inheritdoc}
      */
     #[Override]
-    public function subtract(Money $money): Money
+    public function subtract(Money $money): static
     {
         return $this;
     }
@@ -72,7 +72,7 @@ class HiddenMoney extends Money
      * {@inheritdoc}
      */
     #[Override]
-    public function multiply($multiplier): Money
+    public function multiply($multiplier): static
     {
         return $this;
     }
@@ -81,7 +81,7 @@ class HiddenMoney extends Money
      * {@inheritdoc}
      */
     #[Override]
-    public function divide($divisor, int $scale): Money
+    public function divide($divisor, int $scale): static
     {
         return $this;
     }
@@ -90,7 +90,7 @@ class HiddenMoney extends Money
      * {@inheritdoc}
      */
     #[Override]
-    public function round(int $scale): Money
+    public function round(int $scale): static
     {
         return $this;
     }

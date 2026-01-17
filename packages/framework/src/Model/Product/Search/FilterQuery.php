@@ -62,7 +62,7 @@ class FilterQuery
      * In case you need to alter the ordering by relevance behavior, you can add condition
      * if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_RELEVANCE)
      */
-    public function applyOrdering(string $orderingModeId, PricingGroup $pricingGroup): self
+    public function applyOrdering(string $orderingModeId, PricingGroup $pricingGroup): static
     {
         $clone = clone $this;
 
@@ -342,7 +342,7 @@ class FilterQuery
         ];
     }
 
-    public function applyOrderingByIdAscending(): self
+    public function applyOrderingByIdAscending(): static
     {
         $clone = clone $this;
 
@@ -356,7 +356,7 @@ class FilterQuery
     /**
      * @param int[] $ids
      */
-    public function applyOrderingByIdsArray(array $ids): self
+    public function applyOrderingByIdsArray(array $ids): static
     {
         $clone = clone $this;
 
@@ -385,7 +385,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function filterByParameters(array $parameters): self
+    public function filterByParameters(array $parameters): static
     {
         $clone = clone $this;
 
@@ -423,7 +423,7 @@ class FilterQuery
         PricingGroup $pricingGroup,
         ?Money $minimalPrice = null,
         ?Money $maximalPrice = null,
-    ): self {
+    ): static {
         $clone = clone $this;
         $priceGte = null;
         $priceLte = null;
@@ -478,7 +478,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function filterByCategory(int $categoryId): self
+    public function filterByCategory(int $categoryId): static
     {
         $clone = clone $this;
 
@@ -494,7 +494,7 @@ class FilterQuery
     /**
      * @param int[] $brandIds
      */
-    public function filterByBrands(array $brandIds): self
+    public function filterByBrands(array $brandIds): static
     {
         $clone = clone $this;
 
@@ -510,7 +510,7 @@ class FilterQuery
     /**
      * @param int[] $flagIds
      */
-    public function filterByFlags(array $flagIds): self
+    public function filterByFlags(array $flagIds): static
     {
         $clone = clone $this;
 
@@ -526,7 +526,7 @@ class FilterQuery
     /**
      * @param int[] $productIds
      */
-    public function filterByProductIds(array $productIds): self
+    public function filterByProductIds(array $productIds): static
     {
         $clone = clone $this;
 
@@ -542,7 +542,7 @@ class FilterQuery
     /**
      * @param string[] $productUuids
      */
-    public function filterByProductUuids(array $productUuids): self
+    public function filterByProductUuids(array $productUuids): static
     {
         $clone = clone $this;
 
@@ -555,7 +555,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function filterOutVariants(): self
+    public function filterOutVariants(): static
     {
         $clone = clone $this;
 
@@ -568,7 +568,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function filterOnlyInStock(): self
+    public function filterOnlyInStock(): static
     {
         $clone = clone $this;
 
@@ -581,7 +581,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function filterOnlyInStockOrAllowedNegativeStock(): self
+    public function filterOnlyInStockOrAllowedNegativeStock(): static
     {
         $clone = clone $this;
 
@@ -606,7 +606,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function filterBySellingFrom(DateTimeImmutable $sellingFrom): self
+    public function filterBySellingFrom(DateTimeImmutable $sellingFrom): static
     {
         $clone = clone $this;
 
@@ -632,7 +632,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function filterOnlySellable(): self
+    public function filterOnlySellable(): static
     {
         $clone = clone $this;
 
@@ -645,7 +645,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function filterOnlyVisible(PricingGroup $pricingGroup): self
+    public function filterOnlyVisible(PricingGroup $pricingGroup): static
     {
         $clone = clone $this;
 
@@ -677,7 +677,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function filterWithActiveSpecialPriceOnly(PricingGroup $pricingGroup): self
+    public function filterWithActiveSpecialPriceOnly(PricingGroup $pricingGroup): static
     {
         $clone = clone $this;
         $clone->isFilteringBySpecialPriceActive = true;
@@ -691,7 +691,7 @@ class FilterQuery
         return $clone;
     }
 
-    protected function simpleSearch(string $text): self
+    protected function simpleSearch(string $text): static
     {
         $clone = clone $this;
 
@@ -706,7 +706,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function search(string $text): self
+    public function search(string $text): static
     {
         if (mb_strlen($text) < SearchSetting::SIMPLE_SEARCH_THRESHOLD) {
             return $this->simpleSearch($text);
@@ -740,7 +740,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function setPage(int $page): self
+    public function setPage(int $page): static
     {
         $clone = clone $this;
 
@@ -749,7 +749,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function setLimit(int $limit): self
+    public function setLimit(int $limit): static
     {
         $clone = clone $this;
 
@@ -758,7 +758,7 @@ class FilterQuery
         return $clone;
     }
 
-    public function setFrom(int $from): self
+    public function setFrom(int $from): static
     {
         $clone = clone $this;
 
@@ -1117,7 +1117,7 @@ class FilterQuery
     /**
      * @param string[] $fields
      */
-    public function restrictFields(array $fields): self
+    public function restrictFields(array $fields): static
     {
         $clone = clone $this;
 
@@ -1129,7 +1129,7 @@ class FilterQuery
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $sliderParametersData
      */
-    public function filterBySliderParameters(array $sliderParametersData): self
+    public function filterBySliderParameters(array $sliderParametersData): static
     {
         $clone = clone $this;
 

@@ -66,7 +66,7 @@ class MailTemplateVariables
     {
     }
 
-    public function withNewName(string $readableName): self
+    public function withNewName(string $readableName): static
     {
         $clone = clone $this;
 

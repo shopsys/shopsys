@@ -44,7 +44,7 @@ abstract class AbstractFilterQuery
         $this->limit = static::DEFAULT_LIMIT;
     }
 
-    public function setLimit(?int $limit): self
+    public function setLimit(?int $limit): static
     {
         $clone = clone $this;
         $clone->limit = $limit ?? static::DEFAULT_LIMIT;
@@ -52,7 +52,7 @@ abstract class AbstractFilterQuery
         return $clone;
     }
 
-    public function setFrom(?int $from): self
+    public function setFrom(?int $from): static
     {
         $clone = clone $this;
         $clone->from = $from ?? static::DEFAULT_FROM;

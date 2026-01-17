@@ -9,7 +9,7 @@ use Override;
 final class Action extends AbstractRoutableAction
 {
     #[Override]
-    public static function create(string $name, string $label, ?string $icon = null): self
+    public static function create(string $name, string $label, ?string $icon = null): static
     {
         return new self($name, $label, $icon);
     }
