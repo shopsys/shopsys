@@ -6,36 +6,22 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 class ProductParameterValueDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     */
     public function __construct(
         protected readonly ParameterValueDataFactory $parameterValueDataFactory,
         protected readonly ParameterFacade $parameterFacade,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData
-     */
     protected function createInstance(): ProductParameterValueData
     {
         return new ProductParameterValueData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData
-     */
     public function create(): ProductParameterValueData
     {
         return $this->createInstance();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue $productParameterValue
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData
-     */
     public function createFromProductParameterValue(
         ProductParameterValue $productParameterValue,
     ): ProductParameterValueData {
@@ -45,10 +31,6 @@ class ProductParameterValueDataFactory
         return $productParameterValueData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData $productParameterValueData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue $productParameterValue
-     */
     protected function fillFromProductParameterValue(
         ProductParameterValueData $productParameterValueData,
         ProductParameterValue $productParameterValue,
@@ -60,7 +42,6 @@ class ProductParameterValueDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData $productParameterValuesLocalizedData
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
      */
     public function createMultipleFromProductParameterValuesLocalizedData(

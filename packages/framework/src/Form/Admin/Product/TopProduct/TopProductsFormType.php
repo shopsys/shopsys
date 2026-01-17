@@ -14,17 +14,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class TopProductsFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
-     */
     public function __construct(private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer)
     {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -43,9 +36,6 @@ final class TopProductsFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -23,10 +23,6 @@ class PromotionProductCartPriceTest extends GraphQlTestCase
         $this->promotionProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 154, Product::class);
     }
 
-    /**
-     * @param int $requestedQuantity
-     * @param int $expectedFreebies
-     */
     #[DataProvider('promotionQuantitiesProvider')]
     public function testPromotionProductPriceIsCalculatedCorrectly(int $requestedQuantity, int $expectedFreebies): void
     {

@@ -10,7 +10,6 @@ class DuplicateNameException extends Exception
 {
     /**
      * @param string $name
-     * @param \Exception|null $previous
      */
     public function __construct($name, ?Exception $previous = null)
     {

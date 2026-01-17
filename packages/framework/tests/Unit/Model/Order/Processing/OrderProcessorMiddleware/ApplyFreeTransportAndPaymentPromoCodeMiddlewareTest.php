@@ -34,9 +34,6 @@ class ApplyFreeTransportAndPaymentPromoCodeMiddlewareTest extends MiddlewareTest
         $this->assertTrue($result->orderInput->isFreeTransportAndPaymentPromoCodeApplied());
     }
 
-    /**
-     * @param string $promoCodeType
-     */
     #[DataProvider('getUnsupportedPromoCodeTypesDataProvider')]
     public function testUnsupportedPromoCodeTypeIsNotAdded(string $promoCodeType): void
     {
@@ -58,9 +55,6 @@ class ApplyFreeTransportAndPaymentPromoCodeMiddlewareTest extends MiddlewareTest
         $this->assertFalse($result->orderInput->isFreeTransportAndPaymentPromoCodeApplied());
     }
 
-    /**
-     * @return iterable
-     */
     public static function getUnsupportedPromoCodeTypesDataProvider(): iterable
     {
         yield [PromoCodeTypeEnum::DISCOUNT_TYPE_PERCENT];

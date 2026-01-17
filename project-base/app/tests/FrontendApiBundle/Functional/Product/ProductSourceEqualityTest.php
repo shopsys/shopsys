@@ -22,9 +22,6 @@ class ProductSourceEqualityTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param int $productId
-     */
     #[DataProvider('getProductsIdsToTest')]
     public function testProductReturnsTheSameData(int $productId): void
     {
@@ -53,9 +50,6 @@ class ProductSourceEqualityTest extends GraphQlTestCase
         self::assertEquals($productArrayData, $productEntityData);
     }
 
-    /**
-     * @return string
-     */
     public function getAllProductFields(): string
     {
         return '

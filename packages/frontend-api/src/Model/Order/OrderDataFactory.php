@@ -19,16 +19,6 @@ class OrderDataFactory
 {
     protected const string ORDER_ORIGIN_GRAPHQL = 'Frontend API';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     */
     public function __construct(
         protected readonly FrameworkOrderDataFactory $orderDataFactory,
         protected readonly Domain $domain,
@@ -41,10 +31,6 @@ class OrderDataFactory
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     public function createOrderDataFromArgument(Argument $argument): OrderData
     {
         $input = $argument['input'];
@@ -61,11 +47,6 @@ class OrderDataFactory
         return $orderData;
     }
 
-    /**
-     * @param array $input
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     protected function withResolvedFields(array $input, OrderData $orderData): OrderData
     {
         $cloneOrderData = clone $orderData;

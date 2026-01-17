@@ -17,19 +17,12 @@ class AdvertResolverMap extends ResolverMap
     protected const string RESOLVER_ADVERT_IMAGE = 'AdvertImage';
     protected const string RESOLVER_CATEGORIES_FIELD = 'categories';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
-     */
     public function __construct(
         protected readonly ImageFacade $imageFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {
@@ -48,10 +41,6 @@ class AdvertResolverMap extends ResolverMap
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
-     * @return string
-     */
     protected function getResolverType(Advert $advert): string
     {
         $type = $advert->getType();
@@ -67,10 +56,6 @@ class AdvertResolverMap extends ResolverMap
         throw new TypeNotImplementedException($type);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     protected function mapVisibleCategories(Advert $advert): Promise
     {
         return $this->categoriesBatchLoader->load($advert->getCategoryIds());

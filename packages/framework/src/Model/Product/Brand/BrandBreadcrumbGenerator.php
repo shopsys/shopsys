@@ -11,16 +11,12 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository $brandRepository
-     */
     public function __construct(protected readonly BrandRepository $brandRepository)
     {
     }
 
     /**
      * @param string $routeName
-     * @param array $routeParameters
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     #[Override]

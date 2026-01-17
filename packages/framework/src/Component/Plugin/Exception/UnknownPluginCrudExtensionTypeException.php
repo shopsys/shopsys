@@ -11,7 +11,6 @@ class UnknownPluginCrudExtensionTypeException extends Exception
     /**
      * @param string $unknownType
      * @param string[] $knownTypes
-     * @param \Exception|null $previous
      */
     public function __construct($unknownType, array $knownTypes, ?Exception $previous = null)
     {

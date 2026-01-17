@@ -27,11 +27,6 @@ final class FlagDataFixture extends AbstractReferenceFixture
     public const string FLAG_PRODUCT_GIFT = 'product_gift';
     private const string UUID_NAMESPACE = 'a1c4c08b-6e61-47b7-a41d-89f21bc570a1';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \App\Model\Product\Flag\FlagDataFactory $flagDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly FlagFacade $flagFacade,
         private readonly FlagDataFactory $flagDataFactory,
@@ -39,9 +34,6 @@ final class FlagDataFixture extends AbstractReferenceFixture
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -122,10 +114,6 @@ final class FlagDataFixture extends AbstractReferenceFixture
         $this->addReference(self::FLAG_PRODUCT_GIFT, $giftFlag);
     }
 
-    /**
-     * @param string $rgbColor
-     * @return \App\Model\Product\Flag\FlagData
-     */
     private function createFlagData(string $rgbColor): FlagData
     {
         $flagData = $this->flagDataFactory->create();
@@ -137,10 +125,6 @@ final class FlagDataFixture extends AbstractReferenceFixture
         return $flagData;
     }
 
-    /**
-     * @param \App\Model\Product\Flag\FlagData $flagData
-     * @param string $referenceName
-     */
     private function createFlag(FlagData $flagData, string $referenceName): void
     {
         $flag = $this->flagFacade->create($flagData);

@@ -19,10 +19,6 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem as BaseCartItem;
  */
 class CartItem extends BaseCartItem
 {
-    /**
-     * @param string|null $locale
-     * @return string|null
-     */
     #[Override]
     public function getName(?string $locale = null): ?string
     {

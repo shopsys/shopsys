@@ -19,9 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ListExportScopesCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig $productExportScopeConfig
-     */
     public function __construct(
         protected readonly ProductExportScopeConfig $productExportScopeConfig,
     ) {

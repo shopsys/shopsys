@@ -39,10 +39,6 @@ class OpeningHoursRange
      */
     protected $openingHours;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeData $openingHoursRangeData
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHours
-     */
     public function __construct(OpeningHoursRangeData $openingHoursRangeData, OpeningHours $openingHours)
     {
         $this->openingHours = $openingHours;

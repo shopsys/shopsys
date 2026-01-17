@@ -17,13 +17,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\PersonalData\PersonalDataQuery;
 
 class PersonalDataMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade $personalDataAccessMailFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\PersonalData\PersonalDataQuery $personalDataPageResolver
-     */
     public function __construct(
         protected readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
         protected readonly PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory,
@@ -34,8 +27,6 @@ class PersonalDataMutation extends AbstractMutation
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return array<string, string>
      */
     public function requestPersonalDataAccessMutation(Argument $argument, InputValidator $validator): array

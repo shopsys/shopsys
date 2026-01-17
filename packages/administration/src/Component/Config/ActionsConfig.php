@@ -50,8 +50,6 @@ class ActionsConfig
     /**
      * Add action to be displayed on specific page (ActionType)
      *
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     * @param \Shopsys\AdministrationBundle\Component\Action\AbstractAction $action
      * @return $this
      */
     public function add(ActionType $actionType, AbstractAction $action): self
@@ -66,8 +64,6 @@ class ActionsConfig
     /**
      * Update existing action with new configuration
      *
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     * @param string $actionName
      * @param \Closure(\Shopsys\AdministrationBundle\Component\Action\AbstractAction): \Shopsys\AdministrationBundle\Component\Action\AbstractAction $callable
      * @return $this
      */
@@ -85,8 +81,6 @@ class ActionsConfig
     /**
      * Remove action
      *
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     * @param string $actionName
      * @return $this
      */
     public function remove(ActionType $actionType, string $actionName): self
@@ -99,7 +93,6 @@ class ActionsConfig
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
      * @return \Shopsys\AdministrationBundle\Component\Action\AbstractAction[]
      */
     public function getActions(ActionType $actionType): array

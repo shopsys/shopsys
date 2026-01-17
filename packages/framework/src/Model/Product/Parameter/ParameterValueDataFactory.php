@@ -8,24 +8,15 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 
 class ParameterValueDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
-     */
     public function __construct(protected UploadedFileDataFactory $uploadedFileDataFactory)
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData
-     */
     protected function createInstance(): ParameterValueData
     {
         return new ParameterValueData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData
-     */
     public function create(): ParameterValueData
     {
         $parameterValueData = $this->createInstance();
@@ -35,10 +26,6 @@ class ParameterValueDataFactory
         return $parameterValueData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData
-     */
     public function createFromParameterValue(ParameterValue $parameterValue): ParameterValueData
     {
         $parameterValueData = $this->createInstance();
@@ -48,10 +35,6 @@ class ParameterValueDataFactory
         return $parameterValueData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterValueData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
-     */
     protected function fillFromParameterValue(ParameterValueData $parameterValueData, ParameterValue $parameterValue)
     {
         $parameterValueData->text = $parameterValue->getText();

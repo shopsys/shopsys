@@ -14,11 +14,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PaymentInOrderValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     */
     public function __construct(
         protected readonly PaymentFacade $paymentFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -27,7 +22,6 @@ class PaymentInOrderValidator extends ConstraintValidator
     }
 
     /**
-     * @param mixed $value
      * @param \Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder $constraint
      */
     #[Override]

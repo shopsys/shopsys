@@ -30,9 +30,6 @@ class UploadedFile extends AbstractUploadedFile implements TranslatableInterface
     protected $translations;
 
     /**
-     * @param string $temporaryFilename
-     * @param string $uploadedFilename
-     * @param string $slug
      * @param array<string, string> $namesIndexedByLocale
      */
     public function __construct(
@@ -56,10 +53,6 @@ class UploadedFile extends AbstractUploadedFile implements TranslatableInterface
         return new UploadedFileTranslation();
     }
 
-    /**
-     * @param string|null $locale
-     * @return string|null
-     */
     public function getTranslatedName(?string $locale = null): ?string
     {
         return $this->translation($locale)->getName();
@@ -90,18 +83,12 @@ class UploadedFile extends AbstractUploadedFile implements TranslatableInterface
         return $namesByLocale;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getUploadKey(): string
     {
         return static::UPLOAD_KEY;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getFileForUploadCategory(): string
     {

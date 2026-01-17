@@ -109,19 +109,11 @@ SAMPLE,
         return preg_match('/\.php$/ui', $file->getFilename()) === 1;
     }
 
-    /**
-     * @param \PhpCsFixer\DocBlock\Annotation $annotation
-     * @return bool
-     */
     private function isRelationAnnotation(Annotation $annotation): bool
     {
         return preg_match('~@ORM\\\(ManyToOne|OneToOne)\\(~', $annotation->getContent()) === 1;
     }
 
-    /**
-     * @param \PhpCsFixer\DocBlock\DocBlock $doc
-     * @param \PhpCsFixer\DocBlock\Annotation $relationAnnotation
-     */
     private function fixRelationAnnotation(DocBlock $doc, Annotation $relationAnnotation): void
     {
         $joinColumnAnnotation = $this->findJoinColumnAnnotation($doc);
@@ -133,10 +125,6 @@ SAMPLE,
         }
     }
 
-    /**
-     * @param \PhpCsFixer\DocBlock\DocBlock $doc
-     * @return \PhpCsFixer\DocBlock\Annotation|null
-     */
     private function findJoinColumnAnnotation(DocBlock $doc): ?Annotation
     {
         foreach ($doc->getAnnotations() as $annotation) {
@@ -148,10 +136,6 @@ SAMPLE,
         return null;
     }
 
-    /**
-     * @param \PhpCsFixer\DocBlock\DocBlock $doc
-     * @param \PhpCsFixer\DocBlock\Annotation $relationAnnotation
-     */
     private function addJoinColumnAnnotation(DocBlock $doc, Annotation $relationAnnotation): void
     {
         $matches = null;
@@ -160,10 +144,6 @@ SAMPLE,
         $lastLine->setContent($lastLine->getContent() . $matches[0][0] . ' @ORM\JoinColumn(nullable=false)' . "\n");
     }
 
-    /**
-     * @param \PhpCsFixer\DocBlock\DocBlock $doc
-     * @param \PhpCsFixer\DocBlock\Annotation $joinColumnAnnotation
-     */
     private function extendJoinColumnAnnotation(DocBlock $doc, Annotation $joinColumnAnnotation): void
     {
         $firstLine = $doc->getLine($joinColumnAnnotation->getStart());

@@ -47,9 +47,6 @@ class RegisterByOrderTest extends GraphQlTestCase
         $this->assertOrderCannotBePairedUserErrorIsReturned($response);
     }
 
-    /**
-     * @param int $orderId
-     */
     #[DataProvider('registerByOrderIsNotPossibleDataProvider')]
     public function testRegisterByOrderIsNotPossible(int $orderId): void
     {
@@ -63,9 +60,6 @@ class RegisterByOrderTest extends GraphQlTestCase
         $this->assertOrderCannotBePairedUserErrorIsReturned($response);
     }
 
-    /**
-     * @return iterable
-     */
     public static function registerByOrderIsNotPossibleDataProvider(): iterable
     {
         yield 'order of registered customer user' => [
@@ -77,9 +71,6 @@ class RegisterByOrderTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param \App\Model\Order\Order $order
-     */
     private function assertCustomerUserIsRegisteredByOrder(Order $order): void
     {
         $registeredCustomerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($order->getEmail(), $order->getDomainId());
@@ -112,9 +103,6 @@ class RegisterByOrderTest extends GraphQlTestCase
         $this->assertSame($registeredCustomerUserDeliveryAddress->getCountry()->getId(), $order->getDeliveryCountry()->getId());
     }
 
-    /**
-     * @param array $response
-     */
     private function assertOrderCannotBePairedUserErrorIsReturned(array $response): void
     {
         $this->assertUserError($response, 'register-by-order-is-not-possible');

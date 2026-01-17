@@ -11,17 +11,11 @@ class CountryDataModifierVersion20190121094400
      */
     private array $tmpIds;
 
-    /**
-     * @param array $data
-     */
     public function __construct(private readonly array $data)
     {
         $this->tmpIds = [];
     }
 
-    /**
-     * @return array
-     */
     public function getGroupedByCode(): array
     {
         $tmp = [];
@@ -33,9 +27,6 @@ class CountryDataModifierVersion20190121094400
         return $tmp;
     }
 
-    /**
-     * @return array
-     */
     public function getNewIdCodePair(): array
     {
         $data = $this->groupDataIntoDomains($this->data);
@@ -53,17 +44,11 @@ class CountryDataModifierVersion20190121094400
         return $tmp;
     }
 
-    /**
-     * @return array
-     */
     public function getAllCodes(): array
     {
         return array_keys($this->getNewIdCodePair());
     }
 
-    /**
-     * @return array
-     */
     public function getAllIds(): array
     {
         $tmp = [];
@@ -75,10 +60,6 @@ class CountryDataModifierVersion20190121094400
         return $tmp;
     }
 
-    /**
-     * @param int $oldId
-     * @return int
-     */
     public function getNewId(int $oldId): int
     {
         if (count($this->tmpIds) === 0) {
@@ -100,7 +81,6 @@ class CountryDataModifierVersion20190121094400
     /**
      * @param int $domainId
      * @param string $countryCode
-     * @return bool
      */
     private function codeExistsForDomain($domainId, $countryCode): bool
     {
@@ -113,11 +93,6 @@ class CountryDataModifierVersion20190121094400
         return false;
     }
 
-    /**
-     * @param int $domainId
-     * @param string $countryCode
-     * @return array
-     */
     public function getDomainDataForCountry(int $domainId, string $countryCode): array
     {
         $codeIdPairs = $this->getNewIdCodePair();
@@ -130,11 +105,6 @@ class CountryDataModifierVersion20190121094400
         ];
     }
 
-    /**
-     * @param int $domainId
-     * @param string $countryCode
-     * @return array
-     */
     public function getTranslatableDataForCountry(int $domainId, string $countryCode): array
     {
         $codeIdPairs = $this->getNewIdCodePair();
@@ -145,11 +115,6 @@ class CountryDataModifierVersion20190121094400
         ];
     }
 
-    /**
-     * @param int $domainId
-     * @param string $countryCode
-     * @return string
-     */
     private function getNameForCountryAndDomain(int $domainId, string $countryCode): string
     {
         foreach ($this->data as $row) {
@@ -161,9 +126,6 @@ class CountryDataModifierVersion20190121094400
         return $countryCode;
     }
 
-    /**
-     * @return array
-     */
     public function getObsoleteCountryIds(): array
     {
         $obsoleteIds = [];
@@ -177,10 +139,6 @@ class CountryDataModifierVersion20190121094400
         return array_values(array_diff($obsoleteIds, $usedIds));
     }
 
-    /**
-     * @param array $data
-     * @return array
-     */
     private function groupDataIntoDomains(array $data): array
     {
         $tmp = [];

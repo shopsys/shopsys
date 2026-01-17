@@ -13,9 +13,6 @@ final class ExceptionListener
 {
     private ?Throwable $lastThrowable = null;
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
-     */
     public function onKernelException(ExceptionEvent $event): void
     {
         $throwable = $event->getThrowable();
@@ -28,9 +25,6 @@ final class ExceptionListener
         $this->lastThrowable = $event->getThrowable();
     }
 
-    /**
-     * @return \Throwable|null
-     */
     public function getLastThrowable(): ?Throwable
     {
         return $this->lastThrowable;

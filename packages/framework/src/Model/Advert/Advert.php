@@ -92,25 +92,16 @@ class Advert
      */
     protected $datetimeVisibleTo;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
-     */
     public function __construct(AdvertData $advertData)
     {
         $this->setData($advertData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
-     */
     public function edit(AdvertData $advertData)
     {
         $this->setData($advertData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
-     */
     protected function setData(AdvertData $advertData): void
     {
         $this->domainId = $advertData->domainId;

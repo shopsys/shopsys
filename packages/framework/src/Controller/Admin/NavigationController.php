@@ -28,13 +28,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_NAVIGATION)]
 class NavigationController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade $navigationItemFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDataFactory $navigationItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly NavigationItemFacade $navigationItemFacade,
         protected readonly GridFactory $gridFactory,
@@ -44,9 +37,6 @@ class NavigationController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/navigation/list/')]
     #[CanView]
     public function listAction(): Response
@@ -60,10 +50,6 @@ class NavigationController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/navigation/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -101,11 +87,6 @@ class NavigationController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/navigation/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -146,10 +127,6 @@ class NavigationController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/navigation/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -174,10 +151,6 @@ class NavigationController extends AdminBaseController
         return $this->redirectToRoute('admin_navigation_list');
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     protected function getGrid(int $domainId): Grid
     {
         $queryBuilder = $this->navigationItemFacade->getOrderedItemsByDomainQueryBuilder($domainId);

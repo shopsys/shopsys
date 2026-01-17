@@ -16,7 +16,6 @@ final class PackageProvider
     private const string PACKAGE_NAMES = 'packageNames';
 
     /**
-     * @param string $organization
      * @param string[] $excludePackages
      * @return string[]
      */
@@ -32,7 +31,6 @@ final class PackageProvider
     }
 
     /**
-     * @param string $organization
      * @param string[] $excludedPackages
      * @return mixed[]
      */
@@ -48,10 +46,6 @@ final class PackageProvider
         return $packagesWithVersions;
     }
 
-    /**
-     * @param array $json
-     * @param string $url
-     */
     private function ensureIsValidResponse(array $json, string $url): void
     {
         if (isset($json[self::PACKAGE_NAMES])) {
@@ -64,7 +58,6 @@ final class PackageProvider
     }
 
     /**
-     * @param string $package
      * @return string[]
      */
     private function getPackageVersions(string $package): array

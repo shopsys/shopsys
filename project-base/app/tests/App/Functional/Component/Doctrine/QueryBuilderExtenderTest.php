@@ -19,11 +19,6 @@ class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
      */
     private QueryBuilderExtender $queryBuilderExtender;
 
-    /**
-     * @param string $firstJoinedEntity
-     * @param string $secondJoinedEntity
-     * @param string $expectedJoinedEntity
-     */
     #[DataProvider('extendJoinWithExtendedEntityProvider')]
     public function testExtendJoinWithExtendedEntity(
         string $firstJoinedEntity,
@@ -44,9 +39,6 @@ class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
         );
     }
 
-    /**
-     * @return array
-     */
     public static function extendJoinWithExtendedEntityProvider(): array
     {
         return [

@@ -8,34 +8,21 @@ use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileD
 
 class ComplaintItemDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory $customerUploadedFileDataFactory
-     */
     public function __construct(
         protected readonly CustomerUploadedFileDataFactory $customerUploadedFileDataFactory,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData
-     */
     public function create(): ComplaintItemData
     {
         return $this->createInstance();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData
-     */
     protected function createInstance(): ComplaintItemData
     {
         return new ComplaintItemData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem $complaintItem
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData
-     */
     public function createFromComplaintItem(ComplaintItem $complaintItem): ComplaintItemData
     {
         $complaintItemData = $this->createInstance();

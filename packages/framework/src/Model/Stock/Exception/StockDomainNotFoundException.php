@@ -8,11 +8,6 @@ use Exception;
 
 class StockDomainNotFoundException extends Exception
 {
-    /**
-     * @param int|null $stockId
-     * @param int $domainId
-     * @param \Exception|null $previous
-     */
     public function __construct(?int $stockId, int $domainId, ?Exception $previous = null)
     {
         $stockDescription = $stockId !== null ? sprintf('with ID "%d"', $stockId) : 'without ID';

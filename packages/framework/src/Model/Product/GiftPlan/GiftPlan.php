@@ -72,9 +72,6 @@ class GiftPlan
      */
     protected $validTo;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanData $giftPlanData
-     */
     public function __construct(GiftPlanData $giftPlanData)
     {
         $this->uuid = $giftPlanData->uuid ?? Uuid::uuid4()->toString();
@@ -83,17 +80,11 @@ class GiftPlan
         $this->setData($giftPlanData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanData $giftPlanData
-     */
     public function edit(GiftPlanData $giftPlanData): void
     {
         $this->setData($giftPlanData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanData $giftPlanData
-     */
     protected function setData(GiftPlanData $giftPlanData)
     {
         $this->name = $giftPlanData->name;

@@ -6,10 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\ClassExtension\Exception;
 
 class DocBlockParserAmbiguousTagException extends DocBlockParserException
 {
-    /**
-     * @param string $tagName
-     * @param string $propertyPath
-     */
     public function __construct(string $tagName, string $propertyPath)
     {
         parent::__construct(

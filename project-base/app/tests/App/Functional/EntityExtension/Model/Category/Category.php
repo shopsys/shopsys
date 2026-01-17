@@ -98,18 +98,12 @@ class Category extends AbstractTranslatableEntity
         $this->lft = 1;
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\Category\CategoryTranslation
-     */
     #[Override]
     protected function createTranslation(): CategoryTranslation
     {
         return new CategoryTranslation();
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;

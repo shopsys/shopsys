@@ -17,10 +17,6 @@ class RequestStack extends BaseRequestStack
 {
     private ?SessionInterface $session = null;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(
         private readonly ContainerInterface $container,
         private readonly BaseRequestStack $requestStack,

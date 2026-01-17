@@ -120,49 +120,31 @@ class ExtendedProduct extends Product
         $this->manyToManySelfReferencingInverseEntities = new ArrayCollection();
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
-     */
     public function getManyToOneUnidirectionalEntity(): UnidirectionalEntity
     {
         return $this->manyToOneUnidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $manyToOneUnidirectionalEntity
-     */
     public function setManyToOneUnidirectionalEntity(UnidirectionalEntity $manyToOneUnidirectionalEntity): void
     {
         $this->manyToOneUnidirectionalEntity = $manyToOneUnidirectionalEntity;
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
-     */
     public function getOneToOneUnidirectionalEntity(): UnidirectionalEntity
     {
         return $this->oneToOneUnidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $oneToOneUnidirectionalEntity
-     */
     public function setOneToOneUnidirectionalEntity(UnidirectionalEntity $oneToOneUnidirectionalEntity): void
     {
         $this->oneToOneUnidirectionalEntity = $oneToOneUnidirectionalEntity;
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ProductOneToOneBidirectionalEntity
-     */
     public function getOneToOneBidirectionalEntity(): ProductOneToOneBidirectionalEntity
     {
         return $this->oneToOneBidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity
-     */
     public function setOneToOneBidirectionalEntity(
         ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity,
     ): void {
@@ -170,17 +152,11 @@ class ExtendedProduct extends Product
         $this->oneToOneBidirectionalEntity = $oneToOneBidirectionalEntity;
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct
-     */
     public function getOneToOneSelfReferencingEntity(): self
     {
         return $this->oneToOneSelfReferencingEntity;
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct $oneToOneSelfReferencingEntity
-     */
     public function setOneToOneSelfReferencingEntity(self $oneToOneSelfReferencingEntity): void
     {
         $this->oneToOneSelfReferencingEntity = $oneToOneSelfReferencingEntity;
@@ -194,9 +170,6 @@ class ExtendedProduct extends Product
         return $this->oneToManyBidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ProductOneToManyBidirectionalEntity $oneToManyBidirectionalEntity
-     */
     public function addOneToManyBidirectionalEntity(
         ProductOneToManyBidirectionalEntity $oneToManyBidirectionalEntity,
     ): void {
@@ -212,9 +185,6 @@ class ExtendedProduct extends Product
         return $this->oneToManyUnidirectionalWithJoinTableEntities->getValues();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity
-     */
     public function addOneToManyUnidirectionalWithJoinTableEntity(
         UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity,
     ): void {
@@ -229,17 +199,11 @@ class ExtendedProduct extends Product
         return $this->oneToManySelfReferencingEntities->getValues();
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct
-     */
     public function getOneToManySelfReferencingInverseEntity(): self
     {
         return $this->oneToManySelfReferencingInverseEntity;
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct $oneToManySelfReferencing
-     */
     public function addOneToManySelfReferencingEntity(self $oneToManySelfReferencing): void
     {
         $oneToManySelfReferencing->oneToManySelfReferencingInverseEntity = $this;
@@ -254,9 +218,6 @@ class ExtendedProduct extends Product
         return $this->manyToManyUnidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $manyToManyUnidirectionalEntity
-     */
     public function addManyToManyUnidirectionalEntity(UnidirectionalEntity $manyToManyUnidirectionalEntity): void
     {
         $this->manyToManyUnidirectionalEntities->add($manyToManyUnidirectionalEntity);
@@ -270,9 +231,6 @@ class ExtendedProduct extends Product
         return $this->manyToManyBidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ProductManyToManyBidirectionalEntity $manyToManyBidirectionalEntity
-     */
     public function addManyToManyBidirectionalEntity(
         ProductManyToManyBidirectionalEntity $manyToManyBidirectionalEntity,
     ): void {
@@ -296,34 +254,22 @@ class ExtendedProduct extends Product
         return $this->manyToManySelfReferencingInverseEntities->getValues();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct $manyToManySelfReferencing
-     */
     public function addManyToManySelfReferencingEntity(self $manyToManySelfReferencing): void
     {
         $manyToManySelfReferencing->manyToManySelfReferencingInverseEntities->add($this);
         $this->manyToManySelfReferencingEntities->add($manyToManySelfReferencing);
     }
 
-    /**
-     * @return string|null
-     */
     public function getStringField(): ?string
     {
         return $this->stringField;
     }
 
-    /**
-     * @param string|null $stringField
-     */
     public function setStringField(?string $stringField): void
     {
         $this->stringField = $stringField;
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProductTranslation
-     */
     #[Override]
     protected function createTranslation(): ExtendedProductTranslation
     {

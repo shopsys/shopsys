@@ -21,11 +21,6 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
 {
     protected MetadataStorage $metadataStorage;
 
-    /**
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository $migrationsLockRepository
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockComparator $migrationsLockComparator
-     * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
-     */
     public function __construct(
         protected readonly MigrationsLockRepository $migrationsLockRepository,
         protected readonly MigrationsLockComparator $migrationsLockComparator,
@@ -34,21 +29,12 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
         $this->metadataStorage = $dependencyFactory->getMetadataStorage();
     }
 
-    /**
-     * @param array $versions
-     * @param string $direction
-     * @return \Doctrine\Migrations\Metadata\MigrationPlanList
-     */
     #[Override]
     public function getPlanForVersions(array $versions, string $direction): MigrationPlanList
     {
         throw new MethodIsNotAllowedException(sprintf('Method "%s" is not supported, use "getPlanUntilVersion"', __METHOD__));
     }
 
-    /**
-     * @param \Doctrine\Migrations\Version\Version $to
-     * @return \Doctrine\Migrations\Metadata\MigrationPlanList
-     */
     #[Override]
     public function getPlanUntilVersion(Version $to): MigrationPlanList
     {
@@ -69,9 +55,6 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
         return new MigrationPlanList($migrationsToExecute, Direction::UP);
     }
 
-    /**
-     * @return \Doctrine\Migrations\Metadata\AvailableMigrationsList
-     */
     #[Override]
     public function getMigrations(): AvailableMigrationsList
     {
@@ -84,9 +67,7 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
     }
 
     /**
-     * @param \Doctrine\Migrations\Metadata\AvailableMigration $availableMigration
      * @param \Doctrine\Migrations\Metadata\ExecutedMigration[] $executedMigrations
-     * @return bool
      */
     protected function shouldExecuteMigration(AvailableMigration $availableMigration, array $executedMigrations): bool
     {

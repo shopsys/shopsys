@@ -28,10 +28,6 @@ class ConstantVisibilityRequiredSniff implements Sniff
         return [T_CONST];
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param $constPosition
-     */
     #[Override]
     public function process(File $file, $constPosition): void
     {
@@ -50,11 +46,6 @@ class ConstantVisibilityRequiredSniff implements Sniff
         $file->addError('Constant must have access modifier', $constPosition, self::class);
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $constPosition
-     * @return bool
-     */
     private function isConstInsideClass(File $file, int $constPosition): bool
     {
         $classStartPosition = $file->findPrevious(T_CLASS, $constPosition);
@@ -69,11 +60,6 @@ class ConstantVisibilityRequiredSniff implements Sniff
         return $constPosition > $classStartPosition && $constPosition < $classEndPosition;
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $constPosition
-     * @return bool
-     */
     private function isConstWithAccessModifier(File $file, int $constPosition): bool
     {
         $previousTokenEndPosition = $this->findScopeSearchEndPosition($file, $constPosition);
@@ -87,11 +73,6 @@ class ConstantVisibilityRequiredSniff implements Sniff
         return (bool)$accessModifierStartPosition;
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $constPosition
-     * @return bool
-     */
     private function isConstWithAccessAnnotation(File $file, int $constPosition): bool
     {
         $previousTokenEndPosition = $this->findScopeSearchEndPosition($file, $constPosition);
@@ -109,11 +90,6 @@ class ConstantVisibilityRequiredSniff implements Sniff
         return $this->phpDocContainsAccessTag($file, $phpDocStartPosition);
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $phpDocStartPosition
-     * @return bool
-     */
     private function phpDocContainsAccessTag(File $file, int $phpDocStartPosition): bool
     {
         $tokens = $file->getTokens();
@@ -142,11 +118,6 @@ class ConstantVisibilityRequiredSniff implements Sniff
         return false;
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $constPosition
-     * @return int
-     */
     private function findScopeSearchEndPosition(File $file, int $constPosition): int
     {
         return $file->findPrevious([T_SEMICOLON, T_CLOSE_CURLY_BRACKET], $constPosition) ?: 0;

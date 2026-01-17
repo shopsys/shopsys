@@ -10,13 +10,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FlagFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository $flagRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory $flagFactory
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly FlagRepository $flagRepository,
@@ -26,10 +19,6 @@ class FlagFacade
     ) {
     }
 
-    /**
-     * @param int $flagId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public function getById(int $flagId): Flag
     {
         return $this->flagRepository->getById($flagId);
@@ -44,17 +33,12 @@ class FlagFacade
         return $this->flagRepository->getByIds($flagIds);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public function getByUuid(string $uuid): Flag
     {
         return $this->flagRepository->getByUuid($uuid);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
     public function create(FlagData $flagData)
@@ -72,7 +56,6 @@ class FlagFacade
 
     /**
      * @param int $flagId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
     public function edit($flagId, FlagData $flagData)
@@ -112,8 +95,6 @@ class FlagFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @param string $eventType
      * @see \Shopsys\FrameworkBundle\Model\Product\Flag\FlagEvent class
      */
     protected function dispatchFlagEvent(Flag $flag, string $eventType): void
@@ -132,7 +113,6 @@ class FlagFacade
 
     /**
      * @param int[] $flagsIds
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getVisibleFlagsByIds(array $flagsIds, string $locale): array
@@ -150,7 +130,6 @@ class FlagFacade
     }
 
     /**
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getAllVisibleFlags(string $locale): array
@@ -158,30 +137,16 @@ class FlagFacade
         return $this->flagRepository->getAllVisibleFlags($locale);
     }
 
-    /**
-     * @param string $uuid
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public function getVisibleByUuid(string $uuid, string $locale): Flag
     {
         return $this->flagRepository->getVisibleByUuid($uuid, $locale);
     }
 
-    /**
-     * @param int $flagId
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public function getVisibleFlagById(int $flagId, string $locale): Flag
     {
         return $this->flagRepository->getVisibleFlagById($flagId, $locale);
     }
 
-    /**
-     * @param int $flagId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDependenciesData
-     */
     public function getFlagDependencies(int $flagId): FlagDependenciesData
     {
         return $this->flagRepository->getFlagDependencies($flagId);

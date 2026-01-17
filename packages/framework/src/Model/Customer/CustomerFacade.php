@@ -10,13 +10,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupSettin
 
 class CustomerFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactory $customerFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository $customerRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupSetting $customerUserRoleGroupSetting
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CustomerFactory $customerFactory,
@@ -26,10 +19,6 @@ class CustomerFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
-     */
     public function create(CustomerData $customerData): Customer
     {
         $customer = $this->customerFactory->create($customerData);
@@ -39,11 +28,6 @@ class CustomerFacade
         return $customer;
     }
 
-    /**
-     * @param int $customerId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
-     */
     public function edit(int $customerId, CustomerData $customerData): Customer
     {
         $customer = $this->customerRepository->getById($customerId);
@@ -53,9 +37,6 @@ class CustomerFacade
         return $customer;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     */
     public function deleteIfNoCustomerUsersLeft(Customer $customer): void
     {
         if ($this->customerRepository->isWithoutCustomerUsers($customer)) {
@@ -63,9 +44,6 @@ class CustomerFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     */
     public function deleteAll(Customer $customer): void
     {
         foreach ($this->getCustomerUsers($customer) as $customerUser) {
@@ -76,19 +54,12 @@ class CustomerFacade
         $this->delete($customer);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     */
     protected function delete(Customer $customer): void
     {
         $this->em->remove($customer);
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return bool
-     */
     public function isB2bFeaturesEnabledByCustomer(Customer $customer): bool
     {
         $domainConfig = $this->domain->getDomainConfigById($customer->getDomainId());
@@ -97,7 +68,6 @@ class CustomerFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser[]
      */
     public function getCustomerUsers(Customer $customer): array
@@ -105,19 +75,11 @@ class CustomerFacade
         return $this->customerRepository->getCustomerUsers($customer);
     }
 
-    /**
-     * @param int $customerId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
-     */
     public function getById(int $customerId): Customer
     {
         return $this->customerRepository->getById($customerId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return bool
-     */
     public function hasMultipleCustomerUsersWithDefaultCustomerUserRoleGroup(Customer $customer): bool
     {
         $defaultCustomerUserRoleGroup = $this->customerUserRoleGroupSetting->getDefaultCustomerUserRoleGroup();

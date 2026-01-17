@@ -13,19 +13,12 @@ class WatchdogCronModule implements IteratedCronModuleInterface
 {
     protected Logger $logger;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade $watchdogFacade
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMailFacade $watchdogMailFacade
-     */
     public function __construct(
         protected readonly WatchdogFacade $watchdogFacade,
         protected readonly WatchdogMailFacade $watchdogMailFacade,
     ) {
     }
 
-    /**
-     * @param \Monolog\Logger $logger
-     */
     #[Override]
     public function setLogger(Logger $logger)
     {

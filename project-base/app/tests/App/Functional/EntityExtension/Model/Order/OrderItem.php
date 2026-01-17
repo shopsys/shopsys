@@ -53,9 +53,6 @@ class OrderItem
      */
     protected ?Product $product = null;
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\Order\Order $order
-     */
     public function __construct(
         Order $order,
     ) {

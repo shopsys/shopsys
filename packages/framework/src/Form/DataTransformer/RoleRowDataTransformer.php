@@ -13,7 +13,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 final class RoleRowDataTransformer implements DataTransformerInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Role $role
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission> $availablePermissions
      */
     public function __construct(

@@ -66,11 +66,6 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
         $this->assertSame($expectedCountry, $actualOrderData->deliveryCountry);
     }
 
-    /**
-     * @param string|null $deliveryAddressUuid
-     * @param bool $createCustomerUser
-     * @param bool $createDeliveryAddress
-     */
     #[DataProvider('noDeliveryIsSetDataProvider')]
     public function testNoDeliveryAddressIsSet(
         ?string $deliveryAddressUuid,
@@ -112,9 +107,6 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
         $this->assertNull($actualOrderData->deliveryCountry);
     }
 
-    /**
-     * @return iterable
-     */
     public static function noDeliveryIsSetDataProvider(): iterable
     {
         yield 'no delivery address uuid' => [
@@ -136,12 +128,6 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @param string|null $deliveryAddressUuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\SetDeliveryAddressByDeliveryAddressUuidMiddleware
-     */
     private function createSetDeliveryAddressByDeliveryAddressUuidMiddleware(
         ?DeliveryAddress $deliveryAddress,
         ?string $deliveryAddressUuid,
@@ -157,9 +143,6 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
         return new SetDeliveryAddressByDeliveryAddressUuidMiddleware($deliveryAddressFacadeMock);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     private function createCustomerUser(): CustomerUser
     {
         $customerUser = $this->createMock(CustomerUser::class);

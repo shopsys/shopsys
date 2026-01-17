@@ -174,9 +174,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      */
     protected $resetPasswordHashValidThrough;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     */
     public function __construct(AdministratorData $administratorData)
     {
         $this->lastActivity = new DatePoint();
@@ -189,17 +186,11 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->setData($administratorData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     */
     public function edit(AdministratorData $administratorData): void
     {
         $this->setData($administratorData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     */
     protected function setData(AdministratorData $administratorData): void
     {
         $this->email = $administratorData->email;
@@ -209,10 +200,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->displayOnlyDomainIds = $administratorData->displayOnlyDomainIds;
     }
 
-    /**
-     * @param string $gridId
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit|null
-     */
     public function getGridLimit(string $gridId): ?AdministratorGridLimit
     {
         foreach ($this->gridLimits as $gridLimit) {
@@ -241,9 +228,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         return $this->username;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getUserIdentifier(): string
     {
@@ -267,9 +251,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getPassword(): string
     {
@@ -324,9 +305,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->realName = $realName;
     }
 
-    /**
-     * @param string $passwordHash
-     */
     public function setPasswordHash(string $passwordHash)
     {
         $this->password = $passwordHash;
@@ -451,9 +429,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         return null; // bcrypt include salt in password hash
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
-     */
     public function restoreGridLimit(Grid $grid)
     {
         $gridLimit = $this->getGridLimit($grid->getId());
@@ -463,9 +438,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit $administratorGridLimit
-     */
     public function addGridLimit(AdministratorGridLimit $administratorGridLimit): void
     {
         $this->gridLimits->add($administratorGridLimit);
@@ -507,63 +479,42 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         return $this->uuid;
     }
 
-    /**
-     * @return bool
-     */
     #[Override]
     public function isEmailAuthEnabled(): bool
     {
         return $this->twoFactorAuthenticationType === self::TWO_FACTOR_AUTHENTICATION_TYPE_EMAIL;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getEmailAuthRecipient(): string
     {
         return $this->getEmail();
     }
 
-    /**
-     * @return string|null
-     */
     #[Override]
     public function getEmailAuthCode(): ?string
     {
         return $this->emailAuthenticationCode;
     }
 
-    /**
-     * @param string $authCode
-     */
     #[Override]
     public function setEmailAuthCode(string $authCode): void
     {
         $this->emailAuthenticationCode = $authCode;
     }
 
-    /**
-     * @return bool
-     */
     #[Override]
     public function isGoogleAuthenticatorEnabled(): bool
     {
         return $this->twoFactorAuthenticationType === self::TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getGoogleAuthenticatorUsername(): string
     {
         return $this->getUsername();
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getGoogleAuthenticatorSecret(): string
     {
@@ -585,17 +536,11 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
     }
 
-    /**
-     * @return bool
-     */
     public function hasGeneratedGoogleAuthenticatorSecret(): bool
     {
         return $this->googleAuthenticatorSecret !== null;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabledTwoFactorAuth(): bool
     {
         return in_array($this->twoFactorAuthenticationType, self::TWO_FACTOR_AUTHENTICATION_TYPES, true);
@@ -666,10 +611,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         return $this->resetPasswordHash;
     }
 
-    /**
-     * @param string|null $hash
-     * @return bool
-     */
     #[Override]
     public function isResetPasswordHashValid(?string $hash): bool
     {

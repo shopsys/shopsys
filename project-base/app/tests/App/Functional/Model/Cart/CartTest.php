@@ -85,9 +85,6 @@ class CartTest extends TransactionFunctionalTestCase
         $this->assertTrue($cart->isEmpty());
     }
 
-    /**
-     * @return \App\Model\Product\Product
-     */
     private function createProduct(): Product
     {
         /** @var \App\Model\Product\ProductData $productData */
@@ -98,9 +95,6 @@ class CartTest extends TransactionFunctionalTestCase
         return Product::create($productData);
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
     private function setVatsAndPrices(ProductData $productData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {

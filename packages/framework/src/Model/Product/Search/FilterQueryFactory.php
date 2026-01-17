@@ -16,14 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class FilterQueryFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         protected readonly ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -34,23 +26,11 @@ class FilterQueryFactory
     ) {
     }
 
-    /**
-     * @param string $indexName
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function create(string $indexName): FilterQuery
     {
         return new FilterQuery($indexName, $this->pricingSetting->getSellingPriceType());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param int $page
-     * @param int $limit
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createListableProductsByCategory(
         ProductFilterData $productFilterData,
         string $orderingModeId,
@@ -63,13 +43,6 @@ class FilterQueryFactory
         return $this->filterByCategory($filterQuery, $category);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param int $page
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createWithProductFilterData(
         ProductFilterData $productFilterData,
         string $orderingModeId,
@@ -82,14 +55,6 @@ class FilterQueryFactory
             ->applyOrdering($orderingModeId, $this->currentCustomerUser->getPricingGroup());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param int $page
-     * @param int $limit
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createListableProductsByBrand(
         ProductFilterData $productFilterData,
         string $orderingModeId,
@@ -102,7 +67,6 @@ class FilterQueryFactory
     }
 
     /**
-     * @return string
      * @internal visibility of this method will be changed to protected in next major version
      */
     public function getIndexName(): string
@@ -113,9 +77,6 @@ class FilterQueryFactory
         )->getIndexAlias();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createListable(): FilterQuery
     {
         return $this->createVisible()
@@ -123,20 +84,12 @@ class FilterQueryFactory
             ->filterOutVariants();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createVisible(): FilterQuery
     {
         return $this->create($this->getIndexName())
             ->filterOnlyVisible($this->currentCustomerUser->getPricingGroup());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createListableProductsByCategoryWithPriceAndStockFilter(
         Category $category,
         ProductFilterData $productFilterData,
@@ -146,11 +99,6 @@ class FilterQueryFactory
         return $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
     }
 
-    /**
-     * @param int $brandId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createListableProductsByBrandIdWithPriceAndStockFilter(
         int $brandId,
         ProductFilterData $productFilterData,
@@ -162,10 +110,6 @@ class FilterQueryFactory
         return $filterQuery;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createListableProductsWithPriceAndStockFilter(ProductFilterData $productFilterData): FilterQuery
     {
         $filterQuery = $this->createListable();
@@ -174,11 +118,6 @@ class FilterQueryFactory
         return $filterQuery;
     }
 
-    /**
-     * @param string $searchText
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createListableProductsBySearchTextWithPriceAndStockFilter(
         string $searchText,
         ProductFilterData $productFilterData,
@@ -190,11 +129,6 @@ class FilterQueryFactory
         return $filterQuery;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function addPricesAndStockFromFilterDataToQuery(
         ProductFilterData $productFilterData,
         FilterQuery $filterQuery,
@@ -211,7 +145,6 @@ class FilterQueryFactory
 
     /**
      * @param int[] $productIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function createVisibleProductsByProductIdsFilter(array $productIds): FilterQuery
     {
@@ -222,8 +155,6 @@ class FilterQueryFactory
 
     /**
      * @param int[] $productIds
-     * @param int|null $limit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function createListableProductsByProductIdsFilter(array $productIds, ?int $limit = null): FilterQuery
     {
@@ -240,8 +171,6 @@ class FilterQueryFactory
 
     /**
      * @param int[] $productIds
-     * @param int|null $limit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function createSellableProductsByProductIdsFilter(array $productIds, ?int $limit = null): FilterQuery
     {
@@ -258,8 +187,6 @@ class FilterQueryFactory
 
     /**
      * @param int[] $productIds
-     * @param int|null $limit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function createSellableProductGiftsByProductIdsFilter(array $productIds, ?int $limit = null): FilterQuery
     {
@@ -278,7 +205,6 @@ class FilterQueryFactory
 
     /**
      * @param string[] $productUuids
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function createVisibleProductsByProductUuidsFilter(array $productUuids): FilterQuery
     {
@@ -288,7 +214,6 @@ class FilterQueryFactory
 
     /**
      * @param string[] $productUuids
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function createSellableProductsByProductUuidsFilter(array $productUuids): FilterQuery
     {
@@ -298,7 +223,6 @@ class FilterQueryFactory
 
     /**
      * @param string[] $productUuids
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function createSellableProductIdsByProductUuidsFilter(array $productUuids): FilterQuery
     {
@@ -306,10 +230,6 @@ class FilterQueryFactory
             ->restrictFields(['id']);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createListableWithProductFilter(ProductFilterData $productFilterData): FilterQuery
     {
         $filterQuery = $this->createListable();
@@ -331,8 +251,6 @@ class FilterQueryFactory
 
     /**
      * @param int[] $productIds
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function createOnlyExistingProductIdsFilterQuery(array $productIds, int $domainId): FilterQuery
     {
@@ -343,11 +261,6 @@ class FilterQueryFactory
             ->restrictFields(['id']);
     }
 
-    /**
-     * @param int $flagId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createListableProductsByFlagIdWithPriceAndStockFilter(
         int $flagId,
         ProductFilterData $productFilterData,
@@ -358,20 +271,11 @@ class FilterQueryFactory
         return $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     public function createVisibleForCategory(Category $category): FilterQuery
     {
         return $this->filterByCategory($this->createVisible(), $category);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     protected function filterByCategory(FilterQuery $filterQuery, Category $category): FilterQuery
     {
         return $this->categoryAutomatedFilterFacade->applyFiltersByCategory($filterQuery, $category);

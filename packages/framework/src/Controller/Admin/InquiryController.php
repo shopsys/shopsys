@@ -21,13 +21,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_INQUIRY)]
 class InquiryController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryGridFactory $inquiryGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade $inquiryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly InquiryGridFactory $inquiryGridFactory,
         protected readonly InquiryFacade $inquiryFacade,
@@ -37,10 +30,6 @@ class InquiryController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/inquiry/list/')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -74,10 +63,6 @@ class InquiryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/inquiry/detail/{id}', requirements: ['id' => '\d+'])]
     #[CanView]
     public function detailAction(int $id): Response

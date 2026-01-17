@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class WithdrawalDeadlineCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSetting $withdrawalSetting
-     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\BusinessDayCalculation $businessDayCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
-     */
     public function __construct(
         protected readonly WithdrawalSetting $withdrawalSetting,
         protected readonly BusinessDayCalculation $businessDayCalculation,
@@ -25,10 +20,6 @@ class WithdrawalDeadlineCalculation
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \DateTimeInterface|null
-     */
     public function getWithdrawalDeadline(Order $order): ?DateTimeInterface
     {
         $deliveredAt = $order->getDeliveredAt();

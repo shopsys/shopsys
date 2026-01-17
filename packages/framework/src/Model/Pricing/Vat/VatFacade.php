@@ -13,14 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDisp
 
 class VatFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository $vatRepository
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory $vatFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly VatRepository $vatRepository,
@@ -41,7 +33,6 @@ class VatFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
      */
     public function getAllForDomain(int $domainId): array
@@ -50,8 +41,6 @@ class VatFacade
     }
 
     /**
-     * @param int $domainId
-     * @param int $vatId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
      */
     public function getAllForDomainExceptId(int $domainId, int $vatId): array
@@ -59,11 +48,6 @@ class VatFacade
         return $this->vatRepository->getAllForDomainExceptId($domainId, $vatId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
     public function create(VatData $vatData, int $domainId): Vat
     {
         $vat = $this->vatFactory->create($vatData, $domainId);
@@ -75,7 +59,6 @@ class VatFacade
 
     /**
      * @param int $vatId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
     public function edit($vatId, VatData $vatData)
@@ -139,10 +122,6 @@ class VatFacade
         return count($vatsForDelete);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
     public function getDefaultVatForDomain(int $domainId): Vat
     {
         $defaultVatId = $this->setting->getForDomain(Vat::SETTING_DEFAULT_VAT, $domainId);
@@ -150,17 +129,12 @@ class VatFacade
         return $this->vatRepository->getById($defaultVatId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param int $domainId
-     */
     public function setDefaultVatForDomain(Vat $vat, int $domainId): void
     {
         $this->setting->setForDomain(Vat::SETTING_DEFAULT_VAT, $vat->getId(), $domainId);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @return bool
      */
     public function isVatUsed(Vat $vat)
@@ -177,7 +151,6 @@ class VatFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
      */
     public function getAllForDomainIncludingMarkedForDeletion(int $domainId): array

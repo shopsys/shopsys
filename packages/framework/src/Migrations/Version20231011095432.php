@@ -12,9 +12,6 @@ class Version20231011095432 extends AbstractMigration
 {
     private const WRONG_MIGRATION_VERSON = 'Shopsys\ProductFeed\GoogleBundle\Migrations\Version20230220115918';
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {

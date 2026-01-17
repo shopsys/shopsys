@@ -10,9 +10,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20171005091354 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -60,7 +57,6 @@ class Version20171005091354 extends AbstractMigration
     }
 
     /**
-     * @param array $valuesByKey
      * @param string $context
      */
     private function insertHeurekaDataValues(array $valuesByKey, $context)

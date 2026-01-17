@@ -8,10 +8,6 @@ use Exception;
 
 class UnknownNameTranslationForOrderStatusReferenceNameException extends Exception
 {
-    /**
-     * @param string $referenceName
-     * @param \Exception|null $previous
-     */
     public function __construct(string $referenceName, ?Exception $previous = null)
     {
         parent::__construct(

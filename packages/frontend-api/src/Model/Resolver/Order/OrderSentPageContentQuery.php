@@ -15,12 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderSentPageNotAva
 
 class OrderSentPageContentQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade $orderContentPageFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPageFactory $paymentContentPageFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly OrderContentPageFacade $orderContentPageFacade,
@@ -29,10 +23,6 @@ class OrderSentPageContentQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param string $orderUuid
-     * @return \Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPage
-     */
     public function orderPaymentPageContentQuery(string $orderUuid): PaymentContentPage
     {
         $order = $this->orderApiFacade->getByUuid($orderUuid);
@@ -56,10 +46,6 @@ class OrderSentPageContentQuery extends AbstractQuery
         );
     }
 
-    /**
-     * @param string $orderUuid
-     * @return string
-     */
     public function orderSentPageContentQuery(string $orderUuid): string
     {
         $order = $this->orderApiFacade->getByUuid($orderUuid);
@@ -69,9 +55,6 @@ class OrderSentPageContentQuery extends AbstractQuery
         return $this->orderContentPageFacade->getOrderSentPageContent($order);
     }
 
-    /**
-     * @param \DateTimeInterface|null $checkDateTime
-     */
     public function assertDateTimeIsRecent(?DateTimeInterface $checkDateTime): void
     {
         $fiveMinutesAgo = $this->clock->now()->modify('-5 minutes');

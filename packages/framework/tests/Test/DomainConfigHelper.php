@@ -12,18 +12,6 @@ class DomainConfigHelper
     public const string DEFAULT_EXAMPLE_COM_BASE_URL = 'https://example.com:8080';
     public const string DEFAULT_TIMEZONE_STRING = 'Europe/Prague';
 
-    /**
-     * @param int $id
-     * @param string $url
-     * @param string $name
-     * @param string $locale
-     * @param string $dateTimeZoneString
-     * @param string $baseUrl
-     * @param string $type
-     * @param bool $loadDemoData
-     * @param string|null $postfix
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public static function getDomainConfig(
         int $id = 1,
         string $url = self::DEFAULT_EXAMPLE_COM_BASE_URL,

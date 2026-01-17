@@ -14,21 +14,12 @@ use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
 class ContactFormMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade $contactFormFacade
-     * @param \Psr\Log\LoggerInterface $logger
-     */
     public function __construct(
         protected readonly ContactFormFacade $contactFormFacade,
         protected readonly LoggerInterface $logger,
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return bool
-     */
     public function contactFormMutation(Argument $argument, InputValidator $validator): bool
     {
         $validator->validate();
@@ -51,10 +42,6 @@ class ContactFormMutation extends AbstractMutation
         return true;
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData
-     */
     protected function createContactFormDataFromArgument(Argument $argument): ContactFormData
     {
         $contactFormData = new ContactFormData();

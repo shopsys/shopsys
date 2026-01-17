@@ -80,9 +80,6 @@ class BlogArticle extends AbstractTranslatableEntity
      */
     protected $uuid;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData $blogArticleData
-     */
     public function __construct(BlogArticleData $blogArticleData)
     {
         $this->translations = new ArrayCollection();
@@ -98,10 +95,6 @@ class BlogArticle extends AbstractTranslatableEntity
         $this->uuid = $blogArticleData->uuid ?: Uuid::uuid4()->toString();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData $blogArticleData
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory
-     */
     public function edit(
         BlogArticleData $blogArticleData,
         BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
@@ -124,7 +117,6 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @param string|null $locale
      * @return string|null
      */
     public function getName(?string $locale = null)
@@ -146,10 +138,6 @@ class BlogArticle extends AbstractTranslatableEntity
         return $namesByLocale;
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDomain
-     */
     protected function getDomain(int $domainId): BlogArticleDomain
     {
         foreach ($this->domains as $blogArticleDomain) {
@@ -162,7 +150,6 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[][] $blogCategoriesByDomainId
      */
     public function setCategories(
@@ -176,9 +163,7 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $newBlogCategories
-     * @param int $domainId
      */
     protected function createNewBlogArticleBlogCategoryDomains(
         BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
@@ -197,7 +182,6 @@ class BlogArticle extends AbstractTranslatableEntity
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $newBlogCategories
-     * @param int $domainId
      */
     protected function removeOldBlogArticleBlogCategoryDomains(array $newBlogCategories, int $domainId): void
     {
@@ -211,7 +195,6 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomain[]
      */
     protected function getBlogArticleBlogCategoryDomainsByDomainIdIndexedByCategoryId(int $domainId): array
@@ -241,9 +224,6 @@ class BlogArticle extends AbstractTranslatableEntity
         return $blogCategoriesByDomainId;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData $blogArticleData
-     */
     protected function setTranslations(BlogArticleData $blogArticleData): void
     {
         foreach ($blogArticleData->names as $locale => $name) {
@@ -260,7 +240,6 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoTitle(int $domainId)
@@ -269,7 +248,6 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoH1(int $domainId)
@@ -278,7 +256,6 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isVisible(int $domainId)
@@ -287,7 +264,6 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoMetaDescription(int $domainId)
@@ -296,7 +272,6 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @param string|null $locale
      * @return string|null
      */
     public function getDescription(?string $locale = null)
@@ -318,18 +293,12 @@ class BlogArticle extends AbstractTranslatableEntity
         return $descriptionsByLocale;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleTranslation
-     */
     #[Override]
     protected function createTranslation(): BlogArticleTranslation
     {
         return new BlogArticleTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData $blogArticleData
-     */
     protected function setDomains(BlogArticleData $blogArticleData): void
     {
         foreach ($this->domains as $blogArticleDomain) {
@@ -340,9 +309,6 @@ class BlogArticle extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData $blogArticleData
-     */
     public function createDomains(BlogArticleData $blogArticleData): void
     {
         $domainIds = array_keys($blogArticleData->seoTitles);
@@ -402,7 +368,6 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @param string|null $locale
      * @return string|null
      */
     public function getPerex(?string $locale = null)

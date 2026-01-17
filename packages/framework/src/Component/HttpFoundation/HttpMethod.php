@@ -27,10 +27,6 @@ enum HttpMethod: string
         return array_map(fn (self $method) => $method->value, self::cases());
     }
 
-    /**
-     * @param string|self $method
-     * @return self
-     */
     public static function getValidHttpMethod(self|string $method): self
     {
         if ($method instanceof self) {

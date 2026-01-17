@@ -12,16 +12,12 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class NotSelectedDomainToShowValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly Domain $domain)
     {
     }
 
     /**
      * @param array $values
-     * @param \Symfony\Component\Validator\Constraint $constraint
      */
     #[Override]
     public function validate(mixed $values, Constraint $constraint): void

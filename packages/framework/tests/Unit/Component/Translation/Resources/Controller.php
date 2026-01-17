@@ -10,9 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class Controller extends AbstractController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Translation\Translator $translator
-     */
     public function __construct(
         protected readonly Translator $translator,
     ) {

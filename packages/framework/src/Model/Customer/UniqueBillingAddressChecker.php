@@ -9,20 +9,12 @@ use Shopsys\FrameworkBundle\Model\Customer\Exception\BillingAddressCompanyNumber
 
 class UniqueBillingAddressChecker
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressRepository $billingAddressRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly BillingAddressRepository $billingAddressRepository,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     * @param int $domainId
-     */
     public function checkUniqueBillingAddressData(BillingAddressData $billingAddressData, int $domainId): void
     {
         $companyNumber = $billingAddressData->companyNumber;
@@ -30,10 +22,6 @@ class UniqueBillingAddressChecker
         $this->checkUniqueBillingAddressByNumber($companyNumber, $domainId);
     }
 
-    /**
-     * @param string|null $companyNumber
-     * @param int $domainId
-     */
     public function checkUniqueBillingAddressByNumber(?string $companyNumber, int $domainId): void
     {
         $domain = $this->domain->getDomainConfigById($domainId);
@@ -57,11 +45,6 @@ class UniqueBillingAddressChecker
         throw new BillingAddressCompanyNumberIsNotUniqueException($message);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $ignoredBillingAddress
-     * @param int $domainId
-     */
     public function checkUniqueBillingAddressDataIgnoringBillingAddress(
         BillingAddressData $billingAddressData,
         BillingAddress $ignoredBillingAddress,
@@ -72,11 +55,6 @@ class UniqueBillingAddressChecker
         $this->checkUniqueBillingAddressCompanyNumberIgnoringBillingAddress($companyNumber, $ignoredBillingAddress, $domainId);
     }
 
-    /**
-     * @param string|null $companyNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $ignoredBillingAddress
-     * @param int $domainId
-     */
     public function checkUniqueBillingAddressCompanyNumberIgnoringBillingAddress(
         ?string $companyNumber,
         BillingAddress $ignoredBillingAddress,

@@ -16,9 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ProductsType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductsIdsToProductsTransformer $productsIdsToProductsTransformer
-     */
     public function __construct(private readonly ProductsIdsToProductsTransformer $productsIdsToProductsTransformer)
     {
     }
@@ -47,9 +44,6 @@ final class ProductsType extends AbstractType
         $view->vars['top_info_title'] = $options['top_info_title'];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

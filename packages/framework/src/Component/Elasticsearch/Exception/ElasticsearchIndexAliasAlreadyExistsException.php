@@ -8,9 +8,6 @@ use Exception;
 
 class ElasticsearchIndexAliasAlreadyExistsException extends Exception
 {
-    /**
-     * @param string $indexAlias
-     */
     public function __construct(string $indexAlias)
     {
         parent::__construct(sprintf(

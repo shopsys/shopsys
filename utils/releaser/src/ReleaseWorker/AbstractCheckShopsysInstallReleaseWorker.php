@@ -9,10 +9,6 @@ use PharIo\Version\Version;
 
 abstract class AbstractCheckShopsysInstallReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,
@@ -23,9 +19,6 @@ abstract class AbstractCheckShopsysInstallReleaseWorker extends AbstractShopsysR
         $this->confirm('Confirm Shopsys project-base installation works');
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     */
     abstract protected function writeInstructionsForProjectBasePreparation(Version $version): void;
 
     protected function writeInstructionsForInstallation(): void

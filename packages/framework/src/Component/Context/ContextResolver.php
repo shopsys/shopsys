@@ -72,7 +72,6 @@ final class ContextResolver implements ContextResolverInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Context\AbstractContext $context
      * @throws \InvalidArgumentException if context with same identifier already exists
      */
     private function addContext(AbstractContext $context): void
@@ -90,7 +89,6 @@ final class ContextResolver implements ContextResolverInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Context\AbstractContext $context
      * @param array<string> $visitedStack Stack of visited context identifiers for cycle detection
      * @throws \InvalidArgumentException if circular dependency is detected or required context is missing
      */
@@ -144,7 +142,6 @@ final class ContextResolver implements ContextResolverInterface
     /**
      * Check if a context and all its required contexts match in the current environment
      *
-     * @param \Shopsys\FrameworkBundle\Component\Context\AbstractContext $context
      * @return bool True if context and all its dependencies match
      */
     private function contextMatches(AbstractContext $context): bool

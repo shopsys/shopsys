@@ -12,11 +12,6 @@ use Shopsys\Releaser\FilesProvider\PackageNamesProvider;
 
 abstract class AbstractSetMutualDependenciesToVersionReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
-     * @param \Shopsys\Releaser\FileManipulator\ComposerJsonFileManipulator $composerJsonFileManipulator
-     * @param \Shopsys\Releaser\FilesProvider\PackageNamesProvider $packageNamesProvider
-     */
     public function __construct(
         protected readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
         protected readonly ComposerJsonFileManipulator $composerJsonFileManipulator,
@@ -24,17 +19,8 @@ abstract class AbstractSetMutualDependenciesToVersionReleaseWorker extends Abstr
     ) {
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @return string
-     */
     abstract protected function getVersionString(Version $version): string;
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -43,10 +29,6 @@ abstract class AbstractSetMutualDependenciesToVersionReleaseWorker extends Abstr
         return sprintf('Set mutual package dependencies to "%s" version', $this->getVersionString($version));
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

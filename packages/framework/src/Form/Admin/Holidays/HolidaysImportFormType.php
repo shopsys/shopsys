@@ -24,11 +24,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class HolidaysImportFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly CountryFacade $countryFacade,
         private readonly RouterInterface $router,
@@ -36,10 +31,6 @@ final class HolidaysImportFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -85,7 +76,6 @@ final class HolidaysImportFormType extends AbstractType
 
     /**
      * @param bool[] $selectedDomains
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function validateSelectedDomains(array $selectedDomains, ExecutionContextInterface $context): void
     {
@@ -98,9 +88,6 @@ final class HolidaysImportFormType extends AbstractType
         }
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

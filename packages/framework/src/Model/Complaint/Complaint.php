@@ -159,7 +159,6 @@ class Complaint
     protected $bankAccountNumber;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[] $complaintItems
      */
     public function __construct(ComplaintData $complaintData, array $complaintItems)
@@ -177,9 +176,6 @@ class Complaint
         $this->setItems($complaintItems);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
-     */
     public function edit(ComplaintData $complaintData): void
     {
         $this->setData($complaintData);
@@ -321,9 +317,6 @@ class Complaint
         return $this->items->getValues();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
-     */
     protected function setData(ComplaintData $complaintData): void
     {
         $this->deliveryFirstName = $complaintData->deliveryFirstName;
@@ -386,9 +379,6 @@ class Complaint
         return $this->manualDocumentNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getOrderNumberOrManualDocumentNumber(): string
     {
         return $this->order?->getNumber() ?? $this->manualDocumentNumber;

@@ -13,10 +13,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
  */
 class MessageBusDecorator implements MessageBusInterface
 {
-    /**
-     * @param string $transportDsn
-     * @param \Symfony\Component\Messenger\MessageBusInterface $messageBus
-     */
     public function __construct(
         protected readonly string $transportDsn,
         protected readonly MessageBusInterface $messageBus,

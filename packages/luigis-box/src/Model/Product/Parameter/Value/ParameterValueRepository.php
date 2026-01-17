@@ -10,10 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
 class ParameterValueRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OrderByCollationHelper $orderByCollationHelper,
@@ -22,7 +18,6 @@ class ParameterValueRepository
 
     /**
      * @param string[] $parameterValues
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     public function getExistingParameterValuesByValuesAndLocale(array $parameterValues, string $locale): array
@@ -41,7 +36,6 @@ class ParameterValueRepository
 
     /**
      * @param string[] $parameterValues,
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     public function getSliderParameterValuesForMinAndMaxByLocale(

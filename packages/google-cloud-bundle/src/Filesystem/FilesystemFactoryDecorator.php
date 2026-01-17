@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Component\Filesystem\FilesystemFactoryInterface;
 
 class FilesystemFactoryDecorator implements FilesystemFactoryInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Filesystem\FilesystemFactoryInterface $inner
-     * @param string $googleCloudProjectId
-     * @param string $googleCloudStorageBucketName
-     */
     public function __construct(
         private readonly FilesystemFactoryInterface $inner,
         private readonly string $googleCloudProjectId,
@@ -25,9 +20,6 @@ class FilesystemFactoryDecorator implements FilesystemFactoryInterface
     ) {
     }
 
-    /**
-     * @return \League\Flysystem\FilesystemOperator
-     */
     #[Override]
     public function create(): FilesystemOperator
     {

@@ -40,9 +40,6 @@ class EntityExtensionSubscriberTest extends TransactionFunctionalTestCase
         $this->assertEquals($expectedOrderByValue, $classMetadata->associationMappings['flags']['orderBy']);
     }
 
-    /**
-     * @return bool
-     */
     private function isMonorepo(): bool
     {
         return file_exists(__DIR__ . '/../../../../../../parameters_monorepo.yaml');

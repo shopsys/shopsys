@@ -14,10 +14,6 @@ use Twig\TwigFunction;
 
 class DomainExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly InMemoryCache $inMemoryCache,
@@ -73,10 +69,6 @@ class DomainExtension extends AbstractExtension
         return $this->getDomain()->isMultidomain();
     }
 
-    /**
-     * @param string $locale
-     * @return string
-     */
     public function getDomainUrlByLocale(string $locale): string
     {
         foreach ($this->domain->getAll() as $domain) {
@@ -88,17 +80,11 @@ class DomainExtension extends AbstractExtension
         throw new NoDomainSelectedException('Domain for locale `' . $locale . '` not found;');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function getFirstDomainConfig(): DomainConfig
     {
         return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
     }
 
-    /**
-     * @return int
-     */
     public function getDomainsCount(): int
     {
         return $this->inMemoryCache->getOrSaveValue(

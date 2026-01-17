@@ -8,16 +8,12 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class OpeningHoursRangeFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHours
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeData[] $openingHoursRangesData
      * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRange[]
      */
@@ -32,11 +28,6 @@ class OpeningHoursRangeFactory
         return $openingHoursRanges;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeData $openingHoursRangeData
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHours
-     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRange
-     */
     protected function create(
         OpeningHoursRangeData $openingHoursRangeData,
         OpeningHours $openingHours,

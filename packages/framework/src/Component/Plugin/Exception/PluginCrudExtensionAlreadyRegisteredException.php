@@ -11,7 +11,6 @@ class PluginCrudExtensionAlreadyRegisteredException extends Exception
     /**
      * @param string $type
      * @param string $key
-     * @param \Exception|null $previous
      */
     public function __construct($type, $key, ?Exception $previous = null)
     {

@@ -13,12 +13,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 
 class ComplaintMailFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail $complaintMail
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     */
     public function __construct(
         protected readonly Mailer $mailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
@@ -27,9 +21,6 @@ class ComplaintMailFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
-     */
     public function sendEmail(Complaint $complaint): void
     {
         $mailTemplate = $this->getMailTemplateByStatusAndDomainId($complaint->getStatus(), $complaint->getDomainId());
@@ -41,11 +32,6 @@ class ComplaintMailFacade
         $this->sendMailTemplate($mailTemplate, $complaint);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $complaintStatus
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
     public function getMailTemplateByStatusAndDomainId(ComplaintStatus $complaintStatus, int $domainId): MailTemplate
     {
         $templateName = $this->complaintMail->getMailTemplateNameByStatus($complaintStatus);
@@ -53,11 +39,6 @@ class ComplaintMailFacade
         return $this->mailTemplateFacade->getWrappedWithGrapesJsBody($templateName, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
-     * @param string|null $forceSendTo
-     */
     public function sendMailTemplate(
         MailTemplate $mailTemplate,
         Complaint $complaint,

@@ -50,10 +50,6 @@ class CountryDomain
      */
     protected $priority;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
-     * @param int $domainId
-     */
     public function __construct(Country $country, int $domainId)
     {
         $this->country = $country;
@@ -70,17 +66,11 @@ class CountryDomain
         return $this->domainId;
     }
 
-    /**
-     * @param bool $enabled
-     */
     public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;

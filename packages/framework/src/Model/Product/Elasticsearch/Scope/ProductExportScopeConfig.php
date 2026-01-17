@@ -157,7 +157,6 @@ class ProductExportScopeConfig
     }
 
     /**
-     * @param string $scopeName
      * @param string[] $exportFields
      * @param string[] $preconditions
      */
@@ -171,7 +170,6 @@ class ProductExportScopeConfig
     }
 
     /**
-     * @param string $scopeName
      * @param string[] $exportFields
      */
     protected function addExportFieldsToExistingScopeRule(string $scopeName, array $exportFields): void
@@ -186,11 +184,6 @@ class ProductExportScopeConfig
         );
     }
 
-    /**
-     * @param string $scopeName
-     * @param array $exportFields
-     * @param array $preconditions
-     */
     protected function overwriteExportScopeRule(
         string $scopeName,
         array $exportFields,

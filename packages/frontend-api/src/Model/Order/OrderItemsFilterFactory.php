@@ -9,18 +9,11 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 
 class OrderItemsFilterFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     */
     public function __construct(
         protected readonly OrderStatusFacade $orderStatusFacade,
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter
-     */
     public function createFromArgument(Argument $argument): OrderItemsFilter
     {
         if (!isset($argument['filter'])) {

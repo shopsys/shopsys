@@ -51,12 +51,6 @@ class TransportPrice
      */
     protected $maxWeight;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param int $domainId
-     * @param int|null $maxWeight
-     */
     public function __construct(Transport $transport, Money $price, int $domainId, ?int $maxWeight)
     {
         $this->transport = $transport;

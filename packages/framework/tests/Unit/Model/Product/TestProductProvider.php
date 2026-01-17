@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitData;
 
 class TestProductProvider
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
     public static function getTestProductData(): ProductData
     {
         $unitData = new UnitData();

@@ -122,9 +122,6 @@ class ProductsTest extends ProductsGraphQlTestCase
         $this->assertEquals($arrayExpected, $queryResult, json_encode($queryResult));
     }
 
-    /**
-     * @return array
-     */
     private function getExpectedDataForSixthProduct(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -270,9 +267,6 @@ class ProductsTest extends ProductsGraphQlTestCase
         $this->assertQueryWithExpectedJson($query, $jsonExpected);
     }
 
-    /**
-     * @return string
-     */
     private function getExpectedDataForLastProduct(): string
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();

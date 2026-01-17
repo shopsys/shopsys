@@ -21,9 +21,6 @@ use Tests\CodingStandards\Unit\CsFixer\ChainedFixer;
 #[CoversClass(MissingReturnAnnotationFixer::class)]
 final class FunctionAnnotationFixerTest extends AbstractFixerTestCase
 {
-    /**
-     * @return \Tests\CodingStandards\Unit\CsFixer\ChainedFixer
-     */
     #[Override]
     protected function createFixerService(): ChainedFixer
     {

@@ -49,9 +49,6 @@ class CartTransportTest extends GraphQlTestCase
         self::assertEquals($this->getExpectedTransport(), $transportResponse);
     }
 
-    /**
-     * @return array
-     */
     private function getExpectedTransport(): array
     {
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $this->domain->getId(), Vat::class);
@@ -203,10 +200,6 @@ class CartTransportTest extends GraphQlTestCase
         $this->assertSame($pickupPlaceIdentifier, $responseData['selectedPickupPlaceIdentifier']);
     }
 
-    /**
-     * @param string $transportReferenceName
-     * @return array
-     */
     private function addDemoTransportToDemoCart(string $transportReferenceName): array
     {
         $transport = $this->getReference($transportReferenceName, Transport::class);
@@ -220,11 +213,6 @@ class CartTransportTest extends GraphQlTestCase
         return $this->addTransportToDemoCart($transport->getUuid(), $pickupPlaceIdentifier);
     }
 
-    /**
-     * @param string $transportUuid
-     * @param string|null $pickupPlaceIdentifier
-     * @return array
-     */
     private function addTransportToDemoCart(string $transportUuid, ?string $pickupPlaceIdentifier = null): array
     {
         $pickupPlaceIdentifierLine = '';
@@ -264,10 +252,6 @@ class CartTransportTest extends GraphQlTestCase
         $this->getResponseContentForQuery($removeTransportFromCartMutation);
     }
 
-    /**
-     * @param string $getCartWithTransportQuery
-     * @return array|null
-     */
     private function getTransportResponse(string $getCartWithTransportQuery): ?array
     {
         $response = $this->getResponseContentForQuery($getCartWithTransportQuery);
@@ -275,10 +259,6 @@ class CartTransportTest extends GraphQlTestCase
         return $this->getResponseDataForGraphQlType($response, 'cart')['transport'];
     }
 
-    /**
-     * @param array $response
-     * @return array|null
-     */
     private function getTransportResponseAfterAddingToCart(array $response): ?array
     {
         return $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart']['transport'];

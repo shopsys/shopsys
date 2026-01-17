@@ -18,16 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class MergadoFeedItemFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader $productParametersBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $availabilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Psr\Log\LoggerInterface $logger
-     */
     public function __construct(
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
@@ -40,11 +30,6 @@ class MergadoFeedItemFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\ProductFeed\MergadoBundle\Model\FeedItem\MergadoFeedItem
-     */
     public function createForProduct(Product $product, DomainConfig $domainConfig): MergadoFeedItem
     {
         $domainId = $domainConfig->getId();
@@ -75,11 +60,6 @@ class MergadoFeedItemFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return array
-     */
     protected function getProductUsp(Product $product, int $domainId): array
     {
         return array_filter([
@@ -92,8 +72,6 @@ class MergadoFeedItemFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[]
      */
     protected function getOtherProductImages(Product $product, DomainConfig $domainConfig): array

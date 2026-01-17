@@ -46,9 +46,6 @@ class CustomerUserLoginType
      */
     protected $externalId;
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeData $customerUserLoginTypeData
-     */
     public function __construct(
         CustomerUserLoginTypeData $customerUserLoginTypeData,
     ) {

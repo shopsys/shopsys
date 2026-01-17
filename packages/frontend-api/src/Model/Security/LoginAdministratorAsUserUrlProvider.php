@@ -13,20 +13,12 @@ use Symfony\Component\Routing\RouterInterface;
 
 class LoginAdministratorAsUserUrlProvider extends BaseLoginAdministratorAsUserUrlProvider
 {
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     */
     public function __construct(
         protected readonly RouterInterface $router,
         protected RouteCsrfProtector $routeCsrfProtector,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return string
-     */
     #[Override]
     public function getLoginAsCustomerUserUrl(CustomerUser $customerUser): string
     {

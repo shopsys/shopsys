@@ -14,18 +14,11 @@ use Symfony\Component\Routing\Attribute\Route;
 #[SuperAdminOnly]
 class CspHeaderController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(
         protected readonly Setting $setting,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: 'superadmin/csp-header-setting/')]
     public function settingAction(Request $request): Response
     {

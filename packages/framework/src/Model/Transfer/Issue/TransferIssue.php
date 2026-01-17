@@ -64,10 +64,6 @@ class TransferIssue
      */
     protected $deletedAt;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Transfer $transfer
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueData $transferIssueData
-     */
     public function __construct(Transfer $transfer, TransferIssueData $transferIssueData)
     {
         $this->createdAt = new DatePoint();

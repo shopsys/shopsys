@@ -84,10 +84,6 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
         }
     }
 
-    /**
-     * @param string $operator
-     * @return string
-     */
     protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {

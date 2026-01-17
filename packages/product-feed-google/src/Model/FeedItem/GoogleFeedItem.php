@@ -17,20 +17,6 @@ class GoogleFeedItem implements FeedItemInterface
     protected const AVAILABILITY_OUT_OF_STOCK = 'out_of_stock';
     protected const AVAILABILITY_IN_STOCK = 'in_stock';
 
-    /**
-     * @param int $id
-     * @param string $name
-     * @param bool $sellingDenied
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null $specialPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param string $url
-     * @param string|null $brandName
-     * @param string|null $description
-     * @param string|null $ean
-     * @param string|null $partno
-     * @param string|null $imgUrl
-     */
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,
@@ -47,90 +33,57 @@ class GoogleFeedItem implements FeedItemInterface
     ) {
     }
 
-    /**
-     * @return int
-     */
     #[Override]
     public function getSeekId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getBrand(): ?string
     {
         return $this->brandName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
     public function getLink(): string
     {
         return $this->url;
     }
 
-    /**
-     * @return string|null
-     */
     public function getImageLink(): ?string
     {
         return $this->imgUrl;
     }
 
-    /**
-     * @return string
-     */
     public function getAvailability(): string
     {
         return $this->sellingDenied ? static::AVAILABILITY_OUT_OF_STOCK : static::AVAILABILITY_IN_STOCK;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getPrice(): PriceInterface
     {
         return $this->price;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null
-     */
     public function getSpecialPrice(): ?SpecialPrice
     {
         return $this->specialPrice;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     public function getCurrency(): Currency
     {
         return $this->currency;

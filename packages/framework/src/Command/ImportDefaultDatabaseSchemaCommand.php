@@ -17,9 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ImportDefaultDatabaseSchemaCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
-     */
     public function __construct(private readonly DatabaseSchemaFacade $databaseSchemaFacade)
     {
         parent::__construct();

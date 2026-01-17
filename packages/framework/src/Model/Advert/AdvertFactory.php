@@ -8,17 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class AdvertFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $data
-     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert
-     */
     public function create(AdvertData $data): Advert
     {
         $entityClassName = $this->entityNameResolver->resolve(Advert::class);

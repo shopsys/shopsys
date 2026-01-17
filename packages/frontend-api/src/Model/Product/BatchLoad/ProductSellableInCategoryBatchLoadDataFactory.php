@@ -10,8 +10,6 @@ class ProductSellableInCategoryBatchLoadDataFactory
 {
     /**
      * @param int[] $productIds
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductSellableInCategoryBatchLoadData
      */
     public function create(array $productIds, Category $category): ProductSellableInCategoryBatchLoadData
     {

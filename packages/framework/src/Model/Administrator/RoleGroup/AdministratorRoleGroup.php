@@ -39,26 +39,17 @@ class AdministratorRoleGroup
      */
     protected $roles;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
-     */
     public function __construct(AdministratorRoleGroupData $administratorRoleGroupData)
     {
         $this->roles = [];
         $this->setData($administratorRoleGroupData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
-     */
     public function edit(AdministratorRoleGroupData $administratorRoleGroupData): void
     {
         $this->setData($administratorRoleGroupData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
-     */
     protected function setData(AdministratorRoleGroupData $administratorRoleGroupData): void
     {
         $this->name = $administratorRoleGroupData->name;
@@ -101,8 +92,6 @@ class AdministratorRoleGroup
      *
      * System-managed roles are created and maintained by the application
      * and should not be modified by end users
-     *
-     * @return bool
      */
     public function isSystemManaged(): bool
     {

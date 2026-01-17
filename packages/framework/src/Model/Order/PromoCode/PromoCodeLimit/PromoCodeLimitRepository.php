@@ -11,15 +11,11 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 
 class PromoCodeLimitRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected EntityManagerInterface $em)
     {
     }
 
     /**
-     * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit[]
      */
     public function getLimitsByPromoCodeId(int $id): array
@@ -33,9 +29,6 @@ class PromoCodeLimitRepository
             ->execute();
     }
 
-    /**
-     * @param int $id
-     */
     public function deleteByPromoCodeId(int $id): void
     {
         $this->getQueryBuilder()
@@ -46,19 +39,11 @@ class PromoCodeLimitRepository
             ->execute();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalPriceAmount
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit|null
-     */
     public function getHighestLimitByPromoCodeAndTotalPrice(
         PromoCode $promoCode,
         Money $totalPriceAmount,

@@ -33,19 +33,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 class ImageFacade extends BaseImageFacade
 {
     /**
-     * @param string $imageUrlPrefix
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \App\Component\Image\ImageRepository $imageRepository
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactory $imageFactory
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
-     * @param \Symfony\Contracts\Cache\CacheInterface|\Symfony\Component\Cache\Adapter\AdapterInterface $cache
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         string $imageUrlPrefix,
@@ -81,7 +69,6 @@ class ImageFacade extends BaseImageFacade
 
     /**
      * @param mixed $entity
-     * @param array $images
      */
     #[Override]
     public function deleteImages($entity, array $images): void

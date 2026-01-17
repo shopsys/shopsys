@@ -8,10 +8,6 @@ use Exception;
 
 class AlreadyAppliedPromoCodeException extends PromoCodeException
 {
-    /**
-     * @param string $promoCode
-     * @param \Exception|null $previous
-     */
     public function __construct(string $promoCode, ?Exception $previous = null)
     {
         parent::__construct(t('Promo code "%promoCode%" is already applied.', [

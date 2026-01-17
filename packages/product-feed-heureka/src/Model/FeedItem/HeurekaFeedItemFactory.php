@@ -19,15 +19,6 @@ class HeurekaFeedItemFactory
 {
     protected const string HEUREKA_CATEGORY_FULL_NAMES_CACHE_NAMESPACE = 'heurekaCategoryFullNames';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader $productDataBatchLoader
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly HeurekaProductDataBatchLoader $productDataBatchLoader,
@@ -39,11 +30,6 @@ class HeurekaFeedItemFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItem
-     */
     public function create(Product $product, DomainConfig $domainConfig): HeurekaFeedItem
     {
         $mainVariantId = $product->isVariant() ? $product->getMainVariant()->getId() : null;
@@ -65,10 +51,6 @@ class HeurekaFeedItemFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string|null
-     */
     protected function getBrandName(Product $product): ?string
     {
         $brand = $product->getBrand();
@@ -76,11 +58,6 @@ class HeurekaFeedItemFactory
         return $brand !== null ? $brand->getName() : null;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     protected function getPrice(Product $product, DomainConfig $domainConfig): PriceInterface
     {
         return $this->productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
@@ -89,11 +66,6 @@ class HeurekaFeedItemFactory
         )->sellingProductPrice->getPrice();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string|null
-     */
     protected function getHeurekaCategoryFullName(Product $product, DomainConfig $domainConfig): ?string
     {
         $mainCategory = $this->categoryFacade->findProductMainCategoryByDomainId($product, $domainConfig->getId());
@@ -105,10 +77,6 @@ class HeurekaFeedItemFactory
         return null;
     }
 
-    /**
-     * @param int $categoryId
-     * @return string|null
-     */
     protected function findHeurekaCategoryFullNameByCategoryIdUsingCache(int $categoryId): ?string
     {
         $key = (string)$categoryId;
@@ -122,10 +90,6 @@ class HeurekaFeedItemFactory
         );
     }
 
-    /**
-     * @param int $categoryId
-     * @return string|null
-     */
     protected function findHeurekaCategoryFullNameByCategoryId(int $categoryId): ?string
     {
         $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryId($categoryId);
@@ -133,11 +97,6 @@ class HeurekaFeedItemFactory
         return $heurekaCategory !== null ? $heurekaCategory->getFullName() : null;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return int|null
-     */
     protected function getProductAvailabilityDays(Product $product, int $domainId): ?int
     {
         if ($this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId)) {

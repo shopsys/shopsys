@@ -54,9 +54,6 @@ class ParameterValue
      */
     protected $rgbHex;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
-     */
     public function __construct(ParameterValueData $parameterData)
     {
         $this->text = $parameterData->text;
@@ -66,9 +63,6 @@ class ParameterValue
         $this->rgbHex = $parameterData->rgbHex;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
-     */
     public function edit(ParameterValueData $parameterData)
     {
         $this->text = $parameterData->text;

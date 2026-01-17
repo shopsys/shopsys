@@ -8,15 +8,11 @@ use Doctrine\ORM\QueryBuilder;
 
 class AdvancedSearchQueryBuilderExtender
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchConfig $advancedSearchConfig
-     */
     public function __construct(protected readonly AdvancedSearchConfig $advancedSearchConfig)
     {
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $advancedSearchData
      */
     public function extendByAdvancedSearchData(QueryBuilder $queryBuilder, array $advancedSearchData)

@@ -27,8 +27,6 @@ class Domain implements DomainIdsProviderInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      */
     public function __construct(
         protected readonly array $domainConfigs,
@@ -37,41 +35,26 @@ class Domain implements DomainIdsProviderInterface
     ) {
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->getCurrentDomainConfig()->getId();
     }
 
-    /**
-     * @return string
-     */
     public function getLocale(): string
     {
         return $this->getCurrentDomainConfig()->getLocale();
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->getCurrentDomainConfig()->getName();
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->getCurrentDomainConfig()->getUrl();
     }
 
-    /**
-     * @return bool
-     */
     public function isHttps(): bool
     {
         return $this->getCurrentDomainConfig()->isHttps();
@@ -138,10 +121,6 @@ class Domain implements DomainIdsProviderInterface
         return $this->domainConfigs;
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function getDomainConfigById(int $domainId): DomainConfig
     {
         foreach ($this->domainConfigs as $domainConfig) {
@@ -153,17 +132,11 @@ class Domain implements DomainIdsProviderInterface
         throw new InvalidDomainIdException();
     }
 
-    /**
-     * @param int $domainId
-     */
     public function switchDomainById(int $domainId): void
     {
         $this->currentDomainConfig = $this->getDomainConfigById($domainId);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function switchDomainByRequest(Request $request): void
     {
         $requestBaseUrl = $request->getSchemeAndHttpHost();
@@ -185,7 +158,6 @@ class Domain implements DomainIdsProviderInterface
     }
 
     /**
-     * @param string $requestBaseUrl
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
     protected function getDomainConfigsSortedFromLongestPostfix(string $requestBaseUrl): array
@@ -208,11 +180,6 @@ class Domain implements DomainIdsProviderInterface
         return $matchingConfigs;
     }
 
-    /**
-     * @param string $requestPath
-     * @param string $postfix
-     * @return bool
-     */
     protected function pathMatchesDomainPostfix(string $requestPath, string $postfix): bool
     {
         if ($postfix === '/') {
@@ -222,9 +189,6 @@ class Domain implements DomainIdsProviderInterface
         return $requestPath === $postfix || str_starts_with($requestPath, $postfix . '/');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function getCurrentDomainConfig(): DomainConfig
     {
         if ($this->currentDomainConfig === null) {
@@ -234,33 +198,21 @@ class Domain implements DomainIdsProviderInterface
         return $this->currentDomainConfig;
     }
 
-    /**
-     * @return bool
-     */
     public function isMultidomain(): bool
     {
         return count($this->getAll()) > 1;
     }
 
-    /**
-     * @return \DateTimeZone
-     */
     public function getDateTimeZone(): DateTimeZone
     {
         return $this->getCurrentDomainConfig()->getDateTimeZone();
     }
 
-    /**
-     * @return bool
-     */
     public function isB2b(): bool
     {
         return $this->getCurrentDomainConfig()->isB2b();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig|null
-     */
     public function findFirstB2bDomain(): ?DomainConfig
     {
         foreach ($this->getAll() as $domainConfig) {
@@ -305,34 +257,21 @@ class Domain implements DomainIdsProviderInterface
         return $domains;
     }
 
-    /**
-     * @return bool
-     */
     public function hasAdminAllDomainsEnabled(): bool
     {
         return count($this->getAdminEnabledDomainIds()) === count($this->getAllIds());
     }
 
-    /**
-     * @return string|null
-     */
     public function getPostfix(): ?string
     {
         return $this->getCurrentDomainConfig()->getPostfix();
     }
 
-    /**
-     * @return string
-     */
     public function getBaseUrl(): string
     {
         return $this->getCurrentDomainConfig()->getBaseUrl();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @return int
-     */
     public function getFirstDomainIdMatchingAdminSelectedLocale(Administrator $administrator): int
     {
         $adminLocale = $administrator->getSelectedLocale();
@@ -347,7 +286,6 @@ class Domain implements DomainIdsProviderInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $inputDomainConfig
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
     public function getAllWithSameBaseUrl(DomainConfig $inputDomainConfig): array
@@ -363,10 +301,6 @@ class Domain implements DomainIdsProviderInterface
         return $domainsWithSameBaseUrl;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return bool
-     */
     public function isMainDomainWithinSameBaseUrlGroup(DomainConfig $domainConfig): bool
     {
         if ($domainConfig->getPostfix() === null) {

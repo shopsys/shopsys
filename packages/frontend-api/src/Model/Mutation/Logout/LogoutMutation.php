@@ -10,10 +10,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class LogoutMutation extends BaseTokenMutation
 {
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
-     */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
@@ -21,9 +17,6 @@ class LogoutMutation extends BaseTokenMutation
         parent::__construct($tokenStorage);
     }
 
-    /**
-     * @return array
-     */
     public function logoutMutation(): array
     {
         $user = $this->runCheckUserIsLogged();

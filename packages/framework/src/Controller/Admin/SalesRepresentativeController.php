@@ -29,14 +29,6 @@ class SalesRepresentativeController extends AdminBaseController
 {
     protected const int DISPLAYED_CUSTOMERS_WHILE_DELETING_SALES_REPRESENTATIVE_COUNT = 10;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactory $salesRepresentativeDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade $salesRepresentativeFacade
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeGridFactory $salesRepresentativeGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
-     */
     public function __construct(
         protected readonly SalesRepresentativeDataFactory $salesRepresentativeDataFactory,
         protected readonly SalesRepresentativeFacade $salesRepresentativeFacade,
@@ -47,9 +39,6 @@ class SalesRepresentativeController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/sales-representative/list/')]
     #[CanView]
     public function listAction(): Response
@@ -61,10 +50,6 @@ class SalesRepresentativeController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/sales-representative/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -96,11 +81,6 @@ class SalesRepresentativeController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/sales-representative/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -146,10 +126,6 @@ class SalesRepresentativeController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/sales-representative/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -173,10 +149,6 @@ class SalesRepresentativeController extends AdminBaseController
         return $this->redirectToRoute('admin_salesrepresentative_list');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/sales-representative/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]

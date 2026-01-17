@@ -16,11 +16,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Flag\Exception\FlagNotFoundUserErro
 
 class FlagQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     */
     public function __construct(
         protected readonly FlagFacade $flagFacade,
         protected readonly Domain $domain,
@@ -28,11 +23,6 @@ class FlagQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param string|null $uuid
-     * @param string|null $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public function flagByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): Flag
     {
         if ($uuid !== null) {
@@ -50,10 +40,6 @@ class FlagQuery extends AbstractQuery
         throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
-    /**
-     * @param string $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     protected function getVisibleOnDomainBySlug(string $urlSlug): Flag
     {
         $urlSlug = ltrim($urlSlug, '/');

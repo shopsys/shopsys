@@ -10,7 +10,6 @@ class ProductSellableInCategoryBatchLoadData
 {
     /**
      * @param int[] $productIds
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
     public function __construct(
         public readonly array $productIds,

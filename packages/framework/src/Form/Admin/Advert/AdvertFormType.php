@@ -35,20 +35,12 @@ final class AdvertFormType extends AbstractType
     public const string SCENARIO_CREATE = 'create';
     public const string SCENARIO_EDIT = 'edit';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     */
     public function __construct(
         private readonly AdvertPositionRegistry $advertPositionRegistry,
         private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -203,9 +195,6 @@ final class AdvertFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

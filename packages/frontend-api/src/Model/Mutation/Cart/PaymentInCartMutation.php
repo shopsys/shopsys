@@ -14,12 +14,6 @@ use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
 class PaymentInCartMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade $cartWatcherFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade $cartPaymentFacade
-     */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
@@ -28,10 +22,6 @@ class PaymentInCartMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult
-     */
     public function changePaymentInCartMutation(Argument $argument): CartWithModificationsResult
     {
         $input = $argument['input'];

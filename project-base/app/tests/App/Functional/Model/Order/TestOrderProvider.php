@@ -13,9 +13,6 @@ use Tests\FrameworkBundle\Test\Provider\TestOrderProvider as BaseTestOrderProvid
  */
 class TestOrderProvider extends BaseTestOrderProvider
 {
-    /**
-     * @return \App\Model\Order\OrderData
-     */
     #[Override]
     protected static function createOrderDataInstance(): OrderData
     {

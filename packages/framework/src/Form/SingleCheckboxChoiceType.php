@@ -22,9 +22,6 @@ final class SingleCheckboxChoiceType extends AbstractType
         return ChoiceType::class;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -34,10 +31,6 @@ final class SingleCheckboxChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -14,18 +14,11 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class ParameterValueFilesQuery extends AbstractQuery
 {
-    /**
-     * @param \Overblog\DataLoader\DataLoaderInterface $filesBatchLoader
-     */
     public function __construct(
         protected readonly DataLoaderInterface $filesBatchLoader,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption $parameterValueFilterOption
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function colorIconByParameterValueFilterOptionPromiseQuery(
         ParameterValueFilterOption $parameterValueFilterOption,
     ): Promise {

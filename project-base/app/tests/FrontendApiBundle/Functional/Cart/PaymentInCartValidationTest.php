@@ -81,10 +81,6 @@ class PaymentInCartValidationTest extends GraphQlTestCase
         $this->assertSame(PaymentInCart::INVALID_PAYMENT_TRANSPORT_COMBINATION_ERROR, $validationErrors['input'][0]['code']);
     }
 
-    /**
-     * @param string $paymentUuid
-     * @return array
-     */
     private function addPaymentToDemoCart(string $paymentUuid): array
     {
         return $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
@@ -93,17 +89,11 @@ class PaymentInCartValidationTest extends GraphQlTestCase
         ]);
     }
 
-    /**
-     * @return array
-     */
     private function addNonExistingPaymentToDemoCart(): array
     {
         return $this->addPaymentToDemoCart(Uuid::uuid4()->toString());
     }
 
-    /**
-     * @param \App\Model\Payment\Payment $payment
-     */
     private function hidePayment(Payment $payment): void
     {
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
@@ -111,9 +101,6 @@ class PaymentInCartValidationTest extends GraphQlTestCase
         $this->paymentFacade->edit($payment, $paymentData);
     }
 
-    /**
-     * @param \App\Model\Payment\Payment $payment
-     */
     private function disablePaymentOnFirstDomain(Payment $payment): void
     {
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
@@ -121,9 +108,6 @@ class PaymentInCartValidationTest extends GraphQlTestCase
         $this->paymentFacade->edit($payment, $paymentData);
     }
 
-    /**
-     * @param string $transportUuid
-     */
     private function addTransportToDemoCart(string $transportUuid): void
     {
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [

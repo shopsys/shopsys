@@ -40,8 +40,6 @@ class BreadcrumbResolver
     }
 
     /**
-     * @param string $routeName
-     * @param array $routeParameters
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     public function resolveBreadcrumbItems(string $routeName, array $routeParameters = []): array
@@ -59,20 +57,12 @@ class BreadcrumbResolver
         }
     }
 
-    /**
-     * @param string $routeName
-     * @return bool
-     */
     public function hasGeneratorForRoute(string $routeName): bool
     {
         return array_key_exists($routeName, $this->breadcrumbGeneratorsByRouteName);
     }
 
     /**
-     * @param int $domainId
-     * @param string $routeName
-     * @param array $routeParameters
-     * @param string|null $locale
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     public function resolveBreadcrumbItemsOnDomain(

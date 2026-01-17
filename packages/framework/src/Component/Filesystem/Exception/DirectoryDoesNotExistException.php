@@ -10,7 +10,6 @@ class DirectoryDoesNotExistException extends Exception
 {
     /**
      * @param string $path
-     * @param \Exception|null $previous
      */
     public function __construct($path, ?Exception $previous = null)
     {

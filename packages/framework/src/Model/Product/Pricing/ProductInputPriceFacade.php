@@ -20,13 +20,6 @@ class ProductInputPriceFacade
      */
     protected IterableResult|array|null $productRowsIterator = null;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PricingSetting $pricingSetting,
@@ -37,7 +30,6 @@ class ProductInputPriceFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return array<int, array<int, \Shopsys\FrameworkBundle\Component\Money\Money|null>>
      */
     public function getManualInputPricesDataIndexedByDomainIdAndPricingGroupId(Product $product): array
@@ -54,9 +46,6 @@ class ProductInputPriceFacade
         return $manualInputPricesDataByPricingGroupId;
     }
 
-    /**
-     * @return bool
-     */
     public function replaceBatchVatAndRecalculateInputPrices(): bool
     {
         if ($this->productRowsIterator === null) {

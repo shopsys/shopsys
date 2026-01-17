@@ -14,12 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class IndexFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository $indexRepository
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(
         protected readonly IndexRepository $indexRepository,
         protected readonly ProgressBarFactory $progressBarFactory,
@@ -28,10 +22,6 @@ class IndexFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function create(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $output->writeln(sprintf(
@@ -57,10 +47,6 @@ class IndexFacade
         $this->createAlias($indexDefinition, $output);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function delete(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $output->writeln(sprintf(
@@ -72,11 +58,6 @@ class IndexFacade
         $this->indexRepository->deleteIndexByIndexDefinition($indexDefinition);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function export(AbstractIndex $index, IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $output->writeln(sprintf(
@@ -133,11 +114,6 @@ class IndexFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function exportChanged(
         AbstractIndex $index,
         IndexDefinition $indexDefinition,
@@ -196,10 +172,6 @@ class IndexFacade
         $output->writeln('');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function migrate(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $indexName = $indexDefinition->getIndexName();
@@ -229,8 +201,6 @@ class IndexFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param int[] $restrictToIds
      * @param string[] $fields
      */
@@ -268,10 +238,6 @@ class IndexFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function createIndexWhenNoAliasFound(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         try {
@@ -286,10 +252,6 @@ class IndexFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function createIndexWhenNeeded(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         try {
@@ -303,10 +265,6 @@ class IndexFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @return string
-     */
     protected function resolveExistingIndexName(IndexDefinition $indexDefinition): string
     {
         return $this->indexRepository->findCurrentIndexNameForAlias(
@@ -314,10 +272,6 @@ class IndexFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function createAlias(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $output->writeln(sprintf(
@@ -329,10 +283,6 @@ class IndexFacade
         $this->indexRepository->createAlias($indexDefinition);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @return bool
-     */
     protected function isIndexUpToDate(IndexDefinition $indexDefinition): bool
     {
         $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());

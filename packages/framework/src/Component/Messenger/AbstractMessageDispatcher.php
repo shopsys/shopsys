@@ -16,7 +16,6 @@ abstract class AbstractMessageDispatcher
     /**
      * Set mandatory dependencies with setter injection to keep constructor clean for extending classes
      *
-     * @param \Shopsys\FrameworkBundle\Component\Messenger\MessageDispatcherDependency $messageDispatcherDependency
      * @internal This method is public only for the purpose of setter injection
      */
     #[Required]

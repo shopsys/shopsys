@@ -18,11 +18,6 @@ class ProductIndexBackupFacade
 
     protected IndicesNamespace $indices;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository $indexRepository
-     * @param \Elasticsearch\Client $elasticsearchClient
-     */
     public function __construct(
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
         protected readonly IndexRepository $indexRepository,
@@ -58,10 +53,6 @@ class ProductIndexBackupFacade
         $this->isSnapshotCreated = false;
     }
 
-    /**
-     * @param string $sourceIndexName
-     * @param string $targetIndexName
-     */
     protected function cloneIndexToIndex(string $sourceIndexName, string $targetIndexName): void
     {
         if ($this->indices->exists(['index' => $targetIndexName])) {
@@ -84,10 +75,6 @@ class ProductIndexBackupFacade
         $this->setWriteBlock($targetIndexName, false);
     }
 
-    /**
-     * @param string $indexName
-     * @param bool $blocking
-     */
     protected function setWriteBlock(string $indexName, bool $blocking): void
     {
         $this->indices->putSettings([
@@ -98,25 +85,16 @@ class ProductIndexBackupFacade
         ]);
     }
 
-    /**
-     * @return string
-     */
     protected function getFirstDomainIndexName(): string
     {
         return $this->getFirstDomainIndexDefinition()->getVersionedIndexName();
     }
 
-    /**
-     * @return string
-     */
     protected function getBackupIndexName(): string
     {
         return $this->getFirstDomainIndexName() . '__backup';
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition
-     */
     protected function getFirstDomainIndexDefinition(): IndexDefinition
     {
         return $this->indexDefinitionLoader->getIndexDefinition(

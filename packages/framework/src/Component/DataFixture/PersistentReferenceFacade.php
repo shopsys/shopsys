@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceN
 
 class PersistentReferenceFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceRepository $persistentReferenceRepository
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactory $persistentReferenceFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PersistentReferenceRepository $persistentReferenceRepository,
@@ -27,7 +22,6 @@ class PersistentReferenceFacade
 
     /**
      * @template T
-     * @param string $name
      * @param class-string<T>|null $entityClassName
      * @return T
      */
@@ -78,9 +72,7 @@ class PersistentReferenceFacade
     }
 
     /**
-     * @param string $name
      * @param object $object
-     * @param int $domainId
      */
     public function persistReferenceForDomain(string $name, $object, int $domainId): void
     {
@@ -90,8 +82,6 @@ class PersistentReferenceFacade
 
     /**
      * @template T
-     * @param string $name
-     * @param int $domainId
      * @param class-string<T>|null $entityClassName
      * @return T
      */
@@ -102,11 +92,6 @@ class PersistentReferenceFacade
         return $this->getReference($referenceName, $entityClassName);
     }
 
-    /**
-     * @param string $name
-     * @param int $domainId
-     * @return string
-     */
     protected function createDomainReferenceName(string $name, int $domainId): string
     {
         return sprintf('%s_%s', $name, $domainId);

@@ -18,10 +18,6 @@ enum FriendlyUrlRouteEnum: string
     case FRONT_STORES_DETAIL = 'front_stores_detail';
     case FRONT_FLAG_DETAIL = 'front_flag_detail';
 
-    /**
-     * @param \App\Component\FriendlyUrl\FriendlyUrlRouteEnum $case
-     * @return array
-     */
     public static function getOptionsForCase(self $case): array
     {
         return match ($case) {

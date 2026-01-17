@@ -14,13 +14,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class PromotedProductsQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
-     */
     public function __construct(
         protected readonly TopProductFacade $topProductFacade,
         protected readonly Domain $domain,

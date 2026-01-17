@@ -11,9 +11,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class PromoCodeFlagTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory $promoCodeFlagFactory
-     */
     public function __construct(
         protected readonly PromoCodeFlagFactory $promoCodeFlagFactory,
     ) {
@@ -21,7 +18,6 @@ class PromoCodeFlagTransformer implements DataTransformerInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag|null $value
-     * @return array|null
      */
     #[Override]
     public function transform($value): ?array
@@ -38,7 +34,6 @@ class PromoCodeFlagTransformer implements DataTransformerInterface
 
     /**
      * @param mixed $value
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag|null
      */
     #[Override]
     public function reverseTransform($value): ?PromoCodeFlag

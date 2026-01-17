@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ZboziProductDomainFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainRepository $zboziProductDomainRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ZboziProductDomainRepository $zboziProductDomainRepository,
@@ -33,7 +28,6 @@ class ZboziProductDomainFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]
      */
     public function getZboziProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
@@ -90,7 +84,6 @@ class ZboziProductDomainFacade
 
     /**
      * @param int $productId
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
      */
     protected function saveZboziProductDomain($productId, ZboziProductDomainData $zboziProductDomainData)
     {

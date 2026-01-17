@@ -14,11 +14,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade as BaseUpl
  */
 class UploadedFileFacade extends BaseUploadedFileFacade
 {
-    /**
-     * @param object $entity
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
-     * @param string $type
-     */
     public function manageSingleFile(
         object $entity,
         UploadedFileData $uploadedFileData,

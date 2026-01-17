@@ -10,7 +10,6 @@ class InvalidServiceException extends Exception
 {
     /**
      * @param string $serviceName
-     * @param \Exception|null $previous
      */
     public function __construct($serviceName, ?Exception $previous = null)
     {

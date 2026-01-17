@@ -16,38 +16,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class BlogCategoriesType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\BlogCategoriesTypeTransformer $blogCategoriesTypeTransformer
-     */
     public function __construct(
         protected readonly BlogCategoriesTypeTransformer $blogCategoriesTypeTransformer,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['domain_id'] = $options['domain_id'];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addViewTransformer($this->blogCategoriesTypeTransformer);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -71,9 +56,6 @@ final class BlogCategoriesType extends AbstractType
         $resolver->setNormalizer('entry_options', $entryOptionsNormalizer);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getParent(): string
     {

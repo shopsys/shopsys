@@ -12,17 +12,11 @@ use Shopsys\FrameworkBundle\Model\Store\Exception\StoreNotFoundException;
 
 class StoreRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getStoreRepository(): EntityRepository
     {
         /** @var \Doctrine\ORM\EntityRepository $repository */
@@ -31,10 +25,6 @@ class StoreRepository
         return $repository;
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store
-     */
     public function getById(int $id): Store
     {
         /** @var \Shopsys\FrameworkBundle\Model\Store\Store|null $store */
@@ -47,9 +37,6 @@ class StoreRepository
         return $store;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -57,18 +44,11 @@ class StoreRepository
             ->from(Store::class, 's');
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getAllStoresQueryBuilder(): QueryBuilder
     {
         return $this->getQueryBuilder()->orderBy('s.position, s.id', 'ASC');
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getStoresByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->getAllStoresQueryBuilder()
@@ -76,9 +56,6 @@ class StoreRepository
             ->setParameter('domainId', $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     */
     public function changeDefaultStore(Store $store): void
     {
         $this->em->createQueryBuilder()
@@ -92,9 +69,6 @@ class StoreRepository
     }
 
     /**
-     * @param int $domainId
-     * @param int|null $limit
-     * @param int|null $offset
      * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
      */
     public function getStoresByDomainId(int $domainId, ?int $limit = null, ?int $offset = null): array
@@ -112,20 +86,11 @@ class StoreRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    /**
-     * @param string $externalId
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store|null
-     */
     public function findStoreByExternalId(string $externalId): ?Store
     {
         return $this->getStoreRepository()->findOneBy(['externalId' => $externalId]);
     }
 
-    /**
-     * @param string $uuid
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store
-     */
     public function getByUuidAndDomainId(string $uuid, int $domainId): Store
     {
         $store = $this->getStoresByDomainIdQueryBuilder($domainId)
@@ -141,11 +106,6 @@ class StoreRepository
         return $store;
     }
 
-    /**
-     * @param int $id
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store
-     */
     public function getByIdAndDomainId(int $id, int $domainId): Store
     {
         $store = $this->getStoresByDomainIdQueryBuilder($domainId)

@@ -122,12 +122,6 @@ class FilterQueryTest extends TestCase
         $this->assertEquals($expectedQuery, $actualQuery);
     }
 
-    /**
-     * @param int|null $limit
-     * @param int|null $offset
-     * @param int $expectedSize
-     * @param int $expectedFrom
-     */
     #[DataProvider('offsetAndLimitDataProvider')]
     public function testFilterWithOffsetAndLimit(?int $limit, ?int $offset, int $expectedSize, int $expectedFrom): void
     {
@@ -170,9 +164,6 @@ class FilterQueryTest extends TestCase
         ];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
-     */
     private function getBlogCategoryWithId1(): BlogCategory
     {
         $blogCategoryData = new BlogCategoryData();

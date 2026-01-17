@@ -30,7 +30,6 @@ class GoPayQueryTest extends GraphQlTestCase
     }
 
     /**
-     * @param string $firstDomainCurrencyCode
      * @return array[]
      */
     private function getExpectedData(string $firstDomainCurrencyCode): array

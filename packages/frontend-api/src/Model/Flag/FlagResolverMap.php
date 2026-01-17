@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 class FlagResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
@@ -46,10 +41,6 @@ class FlagResolverMap extends ResolverMap
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @return string
-     */
     protected function getSlug(Flag $flag): string
     {
         $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(

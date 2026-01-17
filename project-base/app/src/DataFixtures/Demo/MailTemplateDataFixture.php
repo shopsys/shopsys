@@ -20,11 +20,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory;
 
 class MailTemplateDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory $mailTemplateFactory
-     * @param \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly MailTemplateFactory $mailTemplateFactory,
         private readonly MailTemplateDataFactory $mailTemplateDataFactory,
@@ -32,9 +27,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -59,12 +51,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         }
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param string $name
-     * @param \App\Model\Mail\MailTemplateData $mailTemplateData
-     * @param int $domainId
-     */
     private function createMailTemplate(
         ObjectManager $manager,
         string $name,
@@ -107,11 +93,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         ];
     }
 
-    /**
-     * @param string $locale
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param int $domainId
-     */
     private function createOrderPlacedMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
@@ -152,11 +133,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $this->createMailTemplate($manager, 'order_status_1', $mailTemplateData, $domainId);
     }
 
-    /**
-     * @param string $locale
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param int $domainId
-     */
     private function createOrderProcessedMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
@@ -188,11 +164,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $this->createMailTemplate($manager, 'order_status_2', $mailTemplateData, $domainId);
     }
 
-    /**
-     * @param string $locale
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param int $domainId
-     */
     private function createOrderFinishedMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
@@ -224,11 +195,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $this->createMailTemplate($manager, 'order_status_3', $mailTemplateData, $domainId);
     }
 
-    /**
-     * @param string $locale
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param int $domainId
-     */
     private function createOrderCanceledMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
@@ -260,11 +226,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $this->createMailTemplate($manager, 'order_status_4', $mailTemplateData, $domainId);
     }
 
-    /**
-     * @param string $locale
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param int $domainId
-     */
     private function createResetPasswordMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
@@ -282,11 +243,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $this->createMailTemplate($manager, MailTemplate::RESET_PASSWORD_NAME, $mailTemplateData, $domainId);
     }
 
-    /**
-     * @param string $locale
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param int $domainId
-     */
     private function createAdministratorResetPasswordMailTemplate(
         string $locale,
         ObjectManager $manager,
@@ -307,11 +263,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $this->createMailTemplate($manager, ResetPasswordMail::MAIL_TEMPLATE_NAME, $mailTemplateData, $domainId);
     }
 
-    /**
-     * @param string $locale
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param int $domainId
-     */
     private function createRegistrationCompleteMailTemplate(
         string $locale,
         ObjectManager $manager,
@@ -340,11 +291,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $this->createMailTemplate($manager, MailTemplate::REGISTRATION_CONFIRM_NAME, $mailTemplateData, $domainId);
     }
 
-    /**
-     * @param string $locale
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param int $domainId
-     */
     private function createPersonalInformationOverviewMailTemplate(
         string $locale,
         ObjectManager $manager,
@@ -371,11 +317,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_ACCESS_NAME, $mailTemplateData, $domainId);
     }
 
-    /**
-     * @param string $locale
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param int $domainId
-     */
     private function createPersonalInformationExportMailTemplate(
         string $locale,
         ObjectManager $manager,
@@ -402,11 +343,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_EXPORT_NAME, $mailTemplateData, $domainId);
     }
 
-    /**
-     * @param string $locale
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param int $domainId
-     */
     private function createCustomerActivationMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();

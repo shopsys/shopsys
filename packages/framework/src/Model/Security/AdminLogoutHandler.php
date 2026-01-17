@@ -10,10 +10,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 class AdminLogoutHandler
 {
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade $administratorLoginFacade
-     */
     public function __construct(
         protected readonly RouterInterface $router,
         protected readonly AdministratorLoginFacade $administratorLoginFacade,
@@ -21,7 +17,6 @@ class AdminLogoutHandler
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function onLogoutSuccess(Request $request)

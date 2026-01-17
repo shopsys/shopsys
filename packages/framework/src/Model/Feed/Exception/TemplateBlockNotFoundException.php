@@ -11,7 +11,6 @@ class TemplateBlockNotFoundException extends Exception
     /**
      * @param string $blockName
      * @param string $templateName
-     * @param \Exception|null $previous
      */
     public function __construct($blockName, $templateName, ?Exception $previous = null)
     {

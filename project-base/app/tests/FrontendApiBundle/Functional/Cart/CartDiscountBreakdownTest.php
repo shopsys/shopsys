@@ -214,7 +214,6 @@ class CartDiscountBreakdownTest extends GraphQlTestCase
     }
 
     /**
-     * @param string $cartUuid
      * @return array<string, mixed>
      */
     private function getCartWithDiscountBreakdown(string $cartUuid): array

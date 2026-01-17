@@ -15,11 +15,6 @@ class ProductElasticsearchBatchRepository
 
     public const TOTALS_KEY = 'totals';
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Component\Elasticsearch\MultipleSearchQueryFactory $multipleSearchQueryFactory
-     * @param \Elasticsearch\Client $client
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
-     */
     public function __construct(
         protected readonly MultipleSearchQueryFactory $multipleSearchQueryFactory,
         protected readonly Client $client,
@@ -29,7 +24,6 @@ class ProductElasticsearchBatchRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery[] $filterQueries
-     * @return array
      */
     public function getBatchedProductsAndTotalsByFilterQueries(array $filterQueries): array
     {

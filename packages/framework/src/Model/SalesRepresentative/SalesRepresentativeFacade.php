@@ -11,10 +11,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 class SalesRepresentativeFacade
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeRepository $salesRepresentativeRepository
      * @param \Doctrine\ORM\EntityManager $entityManager
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFactory $salesRepresentativeFactory
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      */
     public function __construct(
         protected readonly SalesRepresentativeRepository $salesRepresentativeRepository,
@@ -24,18 +21,11 @@ class SalesRepresentativeFacade
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllQueryBuilder(): QueryBuilder
     {
         return $this->salesRepresentativeRepository->getAllQueryBuilder();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData $salesRepresentativeData
-     * @return \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative
-     */
     public function create(SalesRepresentativeData $salesRepresentativeData): SalesRepresentative
     {
         $salesRepresentative = $this->salesRepresentativeFactory->create($salesRepresentativeData);
@@ -48,19 +38,11 @@ class SalesRepresentativeFacade
         return $salesRepresentative;
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative
-     */
     public function getById(int $id): SalesRepresentative
     {
         return $this->salesRepresentativeRepository->getById($id);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative $salesRepresentative
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData $salesRepresentativeData
-     */
     public function edit(
         SalesRepresentative $salesRepresentative,
         SalesRepresentativeData $salesRepresentativeData,
@@ -71,9 +53,6 @@ class SalesRepresentativeFacade
         $this->imageFacade->manageImages($salesRepresentative, $salesRepresentativeData->image);
     }
 
-    /**
-     * @param int $id
-     */
     public function delete(int $id): void
     {
         $salesRepresentative = $this->salesRepresentativeRepository->getById($id);

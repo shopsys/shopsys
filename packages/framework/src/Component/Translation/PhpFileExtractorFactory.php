@@ -8,10 +8,6 @@ use Doctrine\Common\Annotations\DocParser;
 
 class PhpFileExtractorFactory
 {
-    /**
-     * @param \Doctrine\Common\Annotations\DocParser $docParser
-     * @param \Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper $phpParserNodeHelper
-     */
     public function __construct(
         protected readonly DocParser $docParser,
         protected readonly PhpParserNodeHelper $phpParserNodeHelper,

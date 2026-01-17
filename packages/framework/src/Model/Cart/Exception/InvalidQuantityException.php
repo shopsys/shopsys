@@ -13,7 +13,6 @@ class InvalidQuantityException extends Exception
     /**
      * @param mixed $invalidValue
      * @param string $message
-     * @param \Exception|null $previous
      */
     public function __construct($invalidValue, $message = '', ?Exception $previous = null)
     {

@@ -18,21 +18,12 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 
 abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     */
     public function __construct(
         protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
         protected readonly PromoCodeFacade $promoCodeFacade,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
-     */
     #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,
@@ -79,11 +70,7 @@ abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareIn
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param int[] $validProductIds
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $appliedPromoCode
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit $promoCodeLimit
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
      */
     abstract protected function createAndAddOrderItemData(
         OrderData $orderData,

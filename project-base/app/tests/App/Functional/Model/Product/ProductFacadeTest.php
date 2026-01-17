@@ -43,11 +43,6 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
      */
     private ProductInputPriceDataFactory $productInputPriceDataFactory;
 
-    /**
-     * @param bool $hidden
-     * @param bool $sellingDenied
-     * @param bool $calculatedSellingDenied
-     */
     #[DataProvider('getTestSellingDeniedDataProvider')]
     public function testSellingDenied(
         bool $hidden,
@@ -85,9 +80,6 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($calculatedSellingDenied, $productFromDb->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID), 'Calculated selling denied:');
     }
 
-    /**
-     * @return array
-     */
     public static function getTestSellingDeniedDataProvider(): array
     {
         return [

@@ -118,9 +118,6 @@ class CronModule
         $this->suspended = true;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;

@@ -61,9 +61,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
      */
     private ProductInputPriceDataFactory $productInputPriceDataFactory;
 
-    /**
-     * @return \App\Model\Product\ProductData
-     */
     private function getDefaultProductData(): ProductData
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
@@ -85,9 +82,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         return $productData;
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
     private function setDescriptionForAllDomain(ProductData $productData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -97,10 +91,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         }
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $price
-     */
     private function setPriceAndVatForAllDomains(ProductData $productData, ?Money $price): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -123,10 +113,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         }
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
     private function createVatForDomain(int $domainId): Vat
     {
         $vatData = new VatData();
@@ -139,10 +125,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         return $vat;
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
-     */
     private function createProductAndGetVisibility(ProductData $productData): ProductVisibility
     {
         $product = $this->productFacade->create($productData);
@@ -160,10 +142,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         return $this->getVisibilityForProduct($productAgain);
     }
 
-    /**
-     * @param \App\Model\Product\Product $productAgain
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
-     */
     private function getVisibilityForProduct(Product $productAgain): ProductVisibility
     {
         $pricingGroup = $this->getReferenceForDomain(
@@ -240,10 +218,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     */
     private function createImage(string $entityName, int $entityId): void
     {
         $namesIndexedByLocale = [];

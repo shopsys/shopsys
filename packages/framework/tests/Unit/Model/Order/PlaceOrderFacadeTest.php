@@ -102,9 +102,6 @@ class PlaceOrderFacadeTest extends TestCase
         $placeOrderFacade->placeOrder($orderData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade
-     */
     private function createPlaceOrderFacadeMock(): PlaceOrderFacade
     {
         $order = $this->createMock(Order::class);

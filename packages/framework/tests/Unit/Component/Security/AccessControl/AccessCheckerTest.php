@@ -21,8 +21,6 @@ class AccessCheckerTest extends TestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission[] $availablePermissions
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission $permission
-     * @param string $expectedRoleIdentifier
      */
     #[DataProvider('hasPermissionDataProvider')]
     public function testHasPermissionPassesCorrectRoleIdentifierToAuthorizationChecker(
@@ -70,7 +68,6 @@ class AccessCheckerTest extends TestCase
 
     /**
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission> $availablePermissions
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Role
      */
     private function createRole(array $availablePermissions = []): Role
     {

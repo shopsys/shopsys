@@ -10,25 +10,16 @@ abstract class Property
 
     public EntityTypeEnum $entityType;
 
-    /**
-     * @return bool
-     */
     public function isForTranslation(): bool
     {
         return $this->entityType === EntityTypeEnum::TRANSLATION;
     }
 
-    /**
-     * @return bool
-     */
     public function isForDomain(): bool
     {
         return $this->entityType === EntityTypeEnum::DOMAIN;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAdditionalInformation(): ?string
     {
         return null;
@@ -39,27 +30,14 @@ abstract class Property
      */
     abstract public function getAnnotationLines(): array;
 
-    /**
-     * @param \Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum $collectionTypeHintType
-     * @return string
-     */
     abstract public function getTypeHint(
         CollectionTypeHintTypeEnum $collectionTypeHintType = CollectionTypeHintTypeEnum::COLLECTION,
     ): string;
 
-    /**
-     * @return string
-     */
     abstract public function getGetterName(): string;
 
-    /**
-     * @return bool
-     */
     abstract public function isCollection(): bool;
 
-    /**
-     * @return string|null
-     */
     public function getAnnotationForDataObject(): ?string
     {
         $type = null;

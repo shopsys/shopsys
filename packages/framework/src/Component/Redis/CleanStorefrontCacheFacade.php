@@ -16,18 +16,11 @@ class CleanStorefrontCacheFacade
     public const string SLIDER_ITEMS_QUERY_KEY_PART = 'SliderItemsQuery';
     public const string NOTIFICATION_BARS_QUERY_KEY_PART = 'NotificationBars';
 
-    /**
-     * @param \Redis $storefrontGraphqlQueryClient
-     */
     public function __construct(
         protected readonly Redis $storefrontGraphqlQueryClient,
     ) {
     }
 
-    /**
-     * @param string $locale
-     * @param string|null $namespace
-     */
     public function cleanStorefrontTranslationCache(string $locale = '', ?string $namespace = null): void
     {
         if ($namespace !== null) {
@@ -39,18 +32,12 @@ class CleanStorefrontCacheFacade
         $this->cleanStorefrontCacheByKeyPattern($keyPattern);
     }
 
-    /**
-     * @param string $queryKey
-     */
     public function cleanStorefrontGraphqlQueryCache(string $queryKey = ''): void
     {
         $keyPattern = 'queryCache:' . $queryKey . '*';
         $this->cleanStorefrontCacheByKeyPattern($keyPattern);
     }
 
-    /**
-     * @param string $keyPattern
-     */
     protected function cleanStorefrontCacheByKeyPattern(string $keyPattern): void
     {
         $prefix = (string)$this->storefrontGraphqlQueryClient->getOption(Redis::OPT_PREFIX);

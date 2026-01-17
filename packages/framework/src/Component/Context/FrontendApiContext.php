@@ -9,10 +9,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 final class FrontendApiContext extends AbstractContext
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Shopsys\FrameworkBundle\Component\Context\ResolveContextHelper $resolveContextHelper
-     */
     public function __construct(
         private readonly RequestStack $requestStack,
         private readonly ResolveContextHelper $resolveContextHelper,

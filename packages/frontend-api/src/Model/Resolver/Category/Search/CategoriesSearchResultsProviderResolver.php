@@ -21,9 +21,6 @@ class CategoriesSearchResultsProviderResolver extends SearchResultsProviderResol
         parent::__construct($categoriesSearchResultsProviders);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getSearchResultsProviderInterface(): string
     {

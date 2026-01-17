@@ -16,10 +16,6 @@ class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterf
 {
     protected const string ROUTE_NAME = 'front_flag_detail';
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory $friendlyUrlDataFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly FriendlyUrlDataFactory $friendlyUrlDataFactory,
@@ -27,7 +23,6 @@ class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterf
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
     #[Override]
@@ -55,9 +50,6 @@ class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterf
         return $friendlyUrlsData;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getRouteName(): string
     {

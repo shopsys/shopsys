@@ -60,9 +60,6 @@ class Watchdog
      */
     protected $validUntil;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogData $watchdogData
-     */
     public function __construct(WatchdogData $watchdogData)
     {
         $this->product = $watchdogData->product;

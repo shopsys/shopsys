@@ -16,12 +16,6 @@ class ProductCachedAttributesFacade
     protected const string BASIC_PRICES_CACHE_NAMESPACE = 'basicPricesByProductId';
     protected const string PARAMETER_VALUES_CACHE_NAMESPACE = 'parameterValuesByProductId';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ParameterRepository $parameterRepository,
@@ -30,10 +24,6 @@ class ProductCachedAttributesFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface|null
-     */
     public function getProductBasicPrice(Product $product): ?ProductPriceInterface
     {
         return $this->inMemoryCache->getOrSaveValue(
@@ -50,8 +40,6 @@ class ProductCachedAttributesFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param string|null $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
     public function getProductParameterValues(Product $product, ?string $locale = null): array

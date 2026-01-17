@@ -12,19 +12,11 @@ use Shopsys\Releaser\Stage;
 
 final class TagPhpImageReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \Shopsys\Releaser\FileManipulator\DockerfileVersionFileManipulator $dockerfileVersionFileManipulator
-     */
     public function __construct(
         private readonly DockerfileVersionFileManipulator $dockerfileVersionFileManipulator,
     ) {
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -33,10 +25,6 @@ final class TagPhpImageReleaseWorker extends AbstractShopsysReleaseWorker
         return sprintf('Tag %s with the same version as the release and replace FROM in Dockerfile', AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME);
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

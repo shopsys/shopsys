@@ -40,18 +40,12 @@ final class ForbiddenDoctrineInheritanceSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/Correct/EntityWithoutInheritanceMapping.php'];
     }
 
-    /**
-     * @param string $fileToTest
-     */
     #[DataProvider('getWrongFiles')]
     public function testWrongFiles(string $fileToTest): void
     {
         $this->runWrongFilesTest($fileToTest);
     }
 
-    /**
-     * @param string $fileToTest
-     */
     #[DataProvider('getCorrectFiles')]
     public function testCorrectFiles(string $fileToTest): void
     {

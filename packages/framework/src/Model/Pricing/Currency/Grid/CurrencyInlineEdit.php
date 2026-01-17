@@ -16,13 +16,6 @@ use Symfony\Component\Form\FormInterface;
 
 class CurrencyInlineEdit extends AbstractGridInlineEdit
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid\CurrencyGridFactory $currencyGridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory $currencyDataFactory
-     */
     public function __construct(
         CurrencyGridFactory $currencyGridFactory,
         AccessCheckerInterface $accessChecker,
@@ -35,7 +28,6 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     * @return int|string
      */
     #[Override]
     protected function createEntityAndGetId(mixed $currencyData): int|string
@@ -46,7 +38,6 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int|string $currencyId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      */
     #[Override]
@@ -55,10 +46,6 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
         $this->currencyFacade->edit($currencyId, $currencyData);
     }
 
-    /**
-     * @param int|string|null $rowId
-     * @return \Symfony\Component\Form\FormInterface
-     */
     #[Override]
     public function getForm(int|string|null $rowId): FormInterface
     {
@@ -74,10 +61,6 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
         ]);
     }
 
-    /**
-     * @param int|null $currencyId
-     * @return bool
-     */
     protected function isDefaultCurrencyId(?int $currencyId): bool
     {
         if ($currencyId !== null) {
@@ -91,9 +74,6 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
         return false;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getRoleConstant(): string
     {

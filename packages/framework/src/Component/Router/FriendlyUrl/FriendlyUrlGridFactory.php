@@ -16,12 +16,6 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
 {
     protected QuickSearchFormData $quickSearchFormData;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
-     */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
@@ -31,26 +25,16 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
         $this->quickSearchFormData = new QuickSearchFormData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData
-     */
     public function getQuickSearchFormData(): QuickSearchFormData
     {
         return $this->quickSearchFormData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchFormData
-     */
     public function setQuickSearchFormData(QuickSearchFormData $quickSearchFormData): void
     {
         $this->quickSearchFormData = $quickSearchFormData;
     }
 
-    /**
-     * @param int|null $redirectCode
-     * @return string
-     */
     public function getReadableNameForRedirectCode(?int $redirectCode): string
     {
         if ($redirectCode === null) {
@@ -64,10 +48,6 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
         return t('302 (Temporary redirect)');
     }
 
-    /**
-     * @param string $routeName
-     * @return string
-     */
     public function getReadableNameForRouteName(string $routeName): string
     {
         $readableNamesByRouteName = [
@@ -88,10 +68,6 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
         return $routeName;
     }
 
-    /**
-     * @param string|null $roleConstant
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     #[Override]
     public function create(?string $roleConstant): Grid
     {

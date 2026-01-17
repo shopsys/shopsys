@@ -18,10 +18,7 @@ use Webmozart\Assert\Assert;
 class RouteAccessControlData
 {
     /**
-     * @param string|null $routeName
      * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRule[] $accessControlRules
-     * @param string $controllerClass
-     * @param string $controllerMethod
      */
     public function __construct(
         public readonly ?string $routeName,
@@ -32,9 +29,6 @@ class RouteAccessControlData
         Assert::allIsInstanceOf($accessControlRules, AccessControlRule::class);
     }
 
-    /**
-     * @return bool
-     */
     public function hasAnyRules(): bool
     {
         return $this->accessControlRules !== [];
@@ -75,8 +69,6 @@ class RouteAccessControlData
 
     /**
      * Format controller info as "ShortClassName::methodName"
-     *
-     * @return string
      */
     public function formatControllerInfo(): string
     {

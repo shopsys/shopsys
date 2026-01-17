@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 
 class LoggableEntityConfigFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigCacheFacade $loggableSetupCacheFacade
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
-     */
     public function __construct(
         protected readonly LoggableEntityConfigCacheFacade $loggableSetupCacheFacade,
         protected readonly EntityManagerInterface $em,
@@ -23,10 +18,6 @@ class LoggableEntityConfigFactory
     ) {
     }
 
-    /**
-     * @param object|string $objectOrClass
-     * @return \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig
-     */
     public function getLoggableSetupByEntity(object|string $objectOrClass): LoggableEntityConfig
     {
         $entityNameData = $this->entityLogFacade->getEntityNameDataByEntity($objectOrClass);
@@ -59,10 +50,6 @@ class LoggableEntityConfigFactory
         return $loggableSetup;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig $loggableSetup
-     * @param \ReflectionClass $reflectionClass
-     */
     protected function initLoggableProperties(
         LoggableEntityConfig $loggableSetup,
         ReflectionClass $reflectionClass,
@@ -84,10 +71,6 @@ class LoggableEntityConfigFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig $loggableSetup
-     * @param \ReflectionClass $reflectionClass
-     */
     protected function initLoggableUnderParent(
         LoggableEntityConfig $loggableSetup,
         ReflectionClass $reflectionClass,
@@ -126,10 +109,6 @@ class LoggableEntityConfigFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig $loggableSetup
-     * @param \ReflectionClass $reflectionClass
-     */
     protected function initIdentificationOfEntity(
         LoggableEntityConfig $loggableSetup,
         ReflectionClass $reflectionClass,
@@ -150,10 +129,6 @@ class LoggableEntityConfigFactory
         }
     }
 
-    /**
-     * @param \ReflectionClass $reflectionClass
-     * @return string|null
-     */
     protected function getStrategyByReflectionClass(ReflectionClass $reflectionClass): ?string
     {
         $attributes = $reflectionClass->getAttributes(Loggable::class, ReflectionAttribute::IS_INSTANCEOF);

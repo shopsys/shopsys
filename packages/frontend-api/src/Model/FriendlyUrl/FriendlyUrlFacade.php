@@ -10,22 +10,12 @@ use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
 class FriendlyUrlFacade
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly FriendlyUrlRepository $friendlyUrlRepository,
         protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @param string $routeName
-     * @param string $slug
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
-     */
     public function getFriendlyUrlByRouteNameAndSlug(int $domainId, string $routeName, string $slug): FriendlyUrl
     {
         $friendlyUrl = $this->friendlyUrlRepository->findFriendlyUrlBySlugAndRouteName($domainId, $routeName, $slug);

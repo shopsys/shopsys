@@ -17,17 +17,6 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductUponInquiryFilter
 
 class ProductAdvancedSearchConfig extends AdvancedSearchConfig
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCatnumFilter $productCatnumFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductNameFilter $productNameFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductPartnoFilter $productPartnoFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductFlagFilter $productFlagFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCalculatedSellingDeniedFilter $productCalculatedSellingDeniedFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductBrandFilter $productBrandFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCategoryFilter $productCategoryFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductUponInquiryFilter $productUponInquiryFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductHasPromotionXyFilter $productHasPromotionFilter
-     */
     public function __construct(
         ProductCatnumFilter $productCatnumFilter,
         ProductNameFilter $productNameFilter,
@@ -52,9 +41,6 @@ class ProductAdvancedSearchConfig extends AdvancedSearchConfig
         $this->registerFilter($productHasPromotionFilter);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $filter
-     */
     protected function unregisterFilter(AdvancedSearchFilterInterface $filter): void
     {
         $filterName = $filter->getName();

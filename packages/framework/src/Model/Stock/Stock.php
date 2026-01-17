@@ -70,9 +70,6 @@ class Stock implements OrderableEntityInterface
      */
     protected $position;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
-     */
     public function __construct(StockData $stockData)
     {
         $this->domains = new ArrayCollection();
@@ -81,18 +78,12 @@ class Stock implements OrderableEntityInterface
         $this->setData($stockData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
-     */
     public function edit(StockData $stockData): void
     {
         $this->setDomains($stockData);
         $this->setData($stockData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
-     */
     public function setData(StockData $stockData): void
     {
         $this->name = $stockData->name;
@@ -117,9 +108,6 @@ class Stock implements OrderableEntityInterface
         return $this->name;
     }
 
-    /**
-     * @return bool
-     */
     public function isDefault(): bool
     {
         return $this->isDefault;
@@ -133,10 +121,6 @@ class Stock implements OrderableEntityInterface
         return $this->note;
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
     public function isEnabled(int $domainId): bool
     {
         return $this->getStockDomain($domainId)->isEnabled();
@@ -178,9 +162,6 @@ class Stock implements OrderableEntityInterface
         $this->position = $position;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
-     */
     protected function createDomains(StockData $stockData): void
     {
         $domainIds = array_keys($stockData->isEnabledByDomain);
@@ -193,9 +174,6 @@ class Stock implements OrderableEntityInterface
         $this->setDomains($stockData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
-     */
     protected function setDomains(StockData $stockData): void
     {
         foreach ($this->domains as $stockDomain) {
@@ -204,10 +182,6 @@ class Stock implements OrderableEntityInterface
         }
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Stock\StockDomain
-     */
     public function getStockDomain(int $domainId): StockDomain
     {
         foreach ($this->domains as $stockDomain) {

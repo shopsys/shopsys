@@ -54,35 +54,22 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
      */
     protected $slug;
 
-    /**
-     * @return string
-     */
     public function getSlugWithExtension(): string
     {
         return $this->slug . '.' . $this->extension;
     }
 
-    /**
-     * @return string
-     */
     public function getTemporaryFilename(): string
     {
         return $this->temporaryFilename;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getFilename(): string
     {
         return $this->id . '.' . $this->extension;
     }
 
-    /**
-     * @param string $key
-     * @param string $originalFilename
-     */
     #[Override]
     public function setFileAsUploaded(string $key, string $originalFilename): void
     {
@@ -93,9 +80,6 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
         $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
     }
 
-    /**
-     * @param string $key
-     */
     #[Override]
     public function setFileKeyAsUploaded(string $key): void
     {
@@ -115,9 +99,6 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
     public function getNameWithExtension(): string
     {
         return $this->name . '.' . $this->extension;
@@ -173,14 +154,8 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
         return $this->modifiedAt;
     }
 
-    /**
-     * @return string
-     */
     abstract protected function getUploadKey(): string;
 
-    /**
-     * @return string
-     */
     abstract protected function getFileForUploadCategory(): string;
 
     /**
@@ -204,9 +179,6 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
         return $files;
     }
 
-    /**
-     * @param string $temporaryFilename
-     */
     public function setTemporaryFilename(string $temporaryFilename): void
     {
         $this->temporaryFilename = $temporaryFilename;

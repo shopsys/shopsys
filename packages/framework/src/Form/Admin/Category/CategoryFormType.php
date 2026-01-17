@@ -39,15 +39,6 @@ final class CategoryFormType extends AbstractType
     public const string SCENARIO_CREATE = 'create';
     public const string SCENARIO_EDIT = 'edit';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade
-     */
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
         private readonly Domain $domain,
@@ -59,10 +50,6 @@ final class CategoryFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -250,9 +237,6 @@ final class CategoryFormType extends AbstractType
         $this->buildFilterParameters($builder, $options['category']);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -266,11 +250,6 @@ final class CategoryFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
-     * @return string
-     */
     private function getCategoryNameForPlaceholder(DomainConfig $domainConfig, ?Category $category = null): string
     {
         $domainLocale = $domainConfig->getLocale();
@@ -278,10 +257,6 @@ final class CategoryFormType extends AbstractType
         return $category === null ? '' : $category->getName($domainLocale) ?? '';
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
-     */
     protected function buildFilterParameters(
         FormBuilderInterface $builder,
         ?Category $category,

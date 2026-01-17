@@ -8,17 +8,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ParameterValueConversionDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionData
-     */
     protected function createInstance(): ParameterValueConversionData
     {
         return new ParameterValueConversionData();
@@ -46,10 +40,6 @@ class ParameterValueConversionDataFactory
         return $parameterValueConversionsData;
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
     protected function convertStringToNumericValue(string $value): string
     {
         $value = str_replace([',', ' '], ['.', ''], $value);

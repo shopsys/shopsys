@@ -89,9 +89,6 @@ class BillingAddress
      */
     protected $uuid;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     */
     public function __construct(BillingAddressData $billingAddressData)
     {
         $this->customer = $billingAddressData->customer;
@@ -100,17 +97,11 @@ class BillingAddress
         $this->setData($billingAddressData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     */
     public function edit(BillingAddressData $billingAddressData)
     {
         $this->setData($billingAddressData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     */
     protected function setData(BillingAddressData $billingAddressData): void
     {
         $this->street = $billingAddressData->street;

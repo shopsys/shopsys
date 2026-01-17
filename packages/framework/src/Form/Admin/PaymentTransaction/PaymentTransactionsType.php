@@ -28,9 +28,6 @@ final class PaymentTransactionsType extends AbstractType
         $view->vars['order'] = $order;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -39,9 +36,6 @@ final class PaymentTransactionsType extends AbstractType
             ->addAllowedTypes('order', [Order::class]);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getParent(): string
     {

@@ -15,12 +15,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class ArticleExportMessageHandler
 {
-    /**
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry $indexRegistry
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     */
     public function __construct(
         protected readonly LoggerInterface $logger,
         protected readonly IndexFacade $indexFacade,
@@ -29,9 +23,6 @@ class ArticleExportMessageHandler
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessage $articleExportMessage
-     */
     public function __invoke(ArticleExportMessage $articleExportMessage): void
     {
         try {

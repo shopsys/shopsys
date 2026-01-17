@@ -11,13 +11,6 @@ class IndexDefinition
 {
     protected AbstractIndex $index;
 
-    /**
-     * @param string $indexName
-     * @param string $definitionsDirectory
-     * @param string $indexPrefix
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionModifier $indexDefinitionModifier
-     */
     public function __construct(
         protected readonly string $indexName,
         protected readonly string $definitionsDirectory,
@@ -27,9 +20,6 @@ class IndexDefinition
     ) {
     }
 
-    /**
-     * @return array
-     */
     public function getDefinition(): array
     {
         $decodedDefinition = json_decode($this->getDefinitionFileContent(), true);
@@ -44,17 +34,11 @@ class IndexDefinition
         return $this->indexDefinitionModifier->modifyDefinition($decodedDefinition);
     }
 
-    /**
-     * @return string
-     */
     protected function getDefinitionFilepath(): string
     {
         return $this->definitionsDirectory . $this->getIndexName() . '/' . $this->getDomainId() . '.json';
     }
 
-    /**
-     * @return string
-     */
     protected function getDefinitionFileContent(): string
     {
         $definitionFilepath = $this->getDefinitionFilepath();
@@ -66,25 +50,16 @@ class IndexDefinition
         return file_get_contents($definitionFilepath);
     }
 
-    /**
-     * @return string
-     */
     protected function getDocumentDefinitionVersion(): string
     {
         return md5(serialize($this->getDefinition()));
     }
 
-    /**
-     * @return string
-     */
     public function getVersionedIndexName(): string
     {
         return sprintf('%s_%s', $this->getIndexAlias(), $this->getDocumentDefinitionVersion());
     }
 
-    /**
-     * @return string
-     */
     public function getIndexAlias(): string
     {
         if ($this->indexPrefix === '') {
@@ -94,17 +69,11 @@ class IndexDefinition
         return sprintf('%s_%s_%s', $this->indexPrefix, $this->getIndexName(), $this->getDomainId());
     }
 
-    /**
-     * @return string
-     */
     public function getIndexName(): string
     {
         return $this->indexName;
     }
 
-    /**
-     * @return int
-     */
     public function getDomainId(): int
     {
         return $this->domainId;

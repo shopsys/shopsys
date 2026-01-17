@@ -12,20 +12,12 @@ use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 
 class RegistrationDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CountryFacade $countryFacade,
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData
-     */
     public function createWithArgument(Argument $argument): RegistrationData
     {
         $input = $argument['input'];
@@ -44,10 +36,6 @@ class RegistrationDataFactory
         return $registrationData;
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData
-     */
     public function createForDomainId(int $domainId): RegistrationData
     {
         $registrationData = $this->create();
@@ -56,18 +44,11 @@ class RegistrationDataFactory
         return $registrationData;
     }
 
-    /**
-     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData
-     */
     public function create(): RegistrationData
     {
         return new RegistrationData();
     }
 
-    /**
-     * @param \Hybridauth\User\Profile $profile
-     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData
-     */
     public function createFromSocialNetworkProfile(Profile $profile): RegistrationData
     {
         $registrationData = $this->createForDomainId($this->domain->getId());

@@ -17,9 +17,6 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function process(ContainerBuilder $container): void
     {
@@ -62,23 +59,11 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         }
     }
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param string $serviceId
-     * @param string|null $aliasId
-     * @return bool
-     */
     private function isShopsysClassWithAlias(ContainerBuilder $container, string $serviceId, ?string $aliasId): bool
     {
         return $this->isShopsysClass($serviceId) && ($container->hasAlias($serviceId) && $this->isProjectClass($aliasId));
     }
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param string $serviceId
-     * @param string|null $aliasId
-     * @return bool
-     */
     private function isShopsysClassWithAliasRegisteredAsService(
         ContainerBuilder $container,
         string $serviceId,
@@ -97,19 +82,11 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         }
     }
 
-    /**
-     * @param string $serviceId
-     * @return bool
-     */
     private function isShopsysClass(string $serviceId): bool
     {
         return str_starts_with($serviceId, 'Shopsys\\') !== false;
     }
 
-    /**
-     * @param string|null $serviceId
-     * @return bool
-     */
     private function isProjectClass(?string $serviceId): bool
     {
         if ($serviceId === null) {
@@ -119,11 +96,6 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         return str_starts_with($serviceId, 'App') !== false;
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $shopsysClassBetterReflection
-     * @param \Symfony\Component\DependencyInjection\Definition $classExtensionRegistryDefinition
-     * @param string $aliasId
-     */
     private function addAllVariantsOfServiceToClassExtension(
         ReflectionClass $shopsysClassBetterReflection,
         Definition $classExtensionRegistryDefinition,
@@ -144,12 +116,6 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         }
     }
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param string $serviceId
-     * @param string|null $aliasId
-     * @return string
-     */
     private function getCorrectServiceIdIfServiceIsNotExtendedByAlias(
         ContainerBuilder $container,
         string $serviceId,

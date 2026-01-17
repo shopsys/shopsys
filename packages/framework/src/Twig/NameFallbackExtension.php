@@ -21,11 +21,6 @@ class NameFallbackExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string|null $value
-     * @param string|null $fallbackValue
-     * @return string
-     */
     public function getNameWithFallbackOnEmpty(?string $value, ?string $fallbackValue = null): string
     {
         if ($value === null || $value === '') {

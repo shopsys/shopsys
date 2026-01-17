@@ -20,11 +20,6 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
 
     protected const ADMIN_WYSIWYG_ENTRY = 'admin-wysiwyg';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param string $entrypointsPath
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer $wysiwygCdnDataTransformer
-     */
     public function __construct(
         private readonly Localization $localization,
         private readonly string $entrypointsPath,
@@ -80,7 +75,6 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
 
     /**
      * @param array<string, string> $variables
-     * @return string
      */
     private function buildVariablesHelpHtml(array $variables): string
     {
@@ -101,9 +95,6 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
         );
     }
 
-    /**
-     * @return array
-     */
     private function getContentCss(): array
     {
         $entrypointsOutput = [];

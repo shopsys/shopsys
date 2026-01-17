@@ -63,25 +63,16 @@ class NotificationBar
      */
     protected $hidden;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
-     */
     public function __construct(NotificationBarData $notificationBarData)
     {
         $this->setData($notificationBarData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
-     */
     public function edit(NotificationBarData $notificationBarData): void
     {
         $this->setData($notificationBarData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
-     */
     protected function setData(NotificationBarData $notificationBarData): void
     {
         $this->uuid = $notificationBarData->uuid ?? Uuid::uuid4()->toString();

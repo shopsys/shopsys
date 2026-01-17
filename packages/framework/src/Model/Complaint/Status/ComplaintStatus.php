@@ -38,10 +38,6 @@ class ComplaintStatus extends AbstractTranslatableEntity
      */
     protected $statusType;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
-     * @param string $statusType
-     */
     public function __construct(ComplaintStatusData $complaintStatusData, string $statusType)
     {
         $this->translations = new ArrayCollection();
@@ -49,17 +45,11 @@ class ComplaintStatus extends AbstractTranslatableEntity
         $this->setData($complaintStatusData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
-     */
     public function edit(ComplaintStatusData $complaintStatusData): void
     {
         $this->setData($complaintStatusData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
-     */
     protected function setData(ComplaintStatusData $complaintStatusData): void
     {
         $this->setTranslations($complaintStatusData);
@@ -82,9 +72,6 @@ class ComplaintStatus extends AbstractTranslatableEntity
         return $this->translation($locale)->getName();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
-     */
     protected function setTranslations(ComplaintStatusData $complaintStatusData): void
     {
         foreach ($complaintStatusData->name as $locale => $name) {

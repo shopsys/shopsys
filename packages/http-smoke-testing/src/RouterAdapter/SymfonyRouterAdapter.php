@@ -21,9 +21,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
 {
     private AnnotationReader $annotationsReader;
 
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     */
     public function __construct(private readonly RouterInterface $router)
     {
         AnnotationRegistry::registerLoader('class_exists');
@@ -46,10 +43,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return $allRouteInfo;
     }
 
-    /**
-     * @param \Symfony\Component\Routing\Route $route
-     * @return array
-     */
     private function extractAnnotationsForRoute(Route $route): array
     {
         if ($route->hasDefault('_controller')) {
@@ -59,10 +52,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return [];
     }
 
-    /**
-     * @param string $controller
-     * @return array
-     */
     private function extractAnnotationForController(string $controller): array
     {
         try {
@@ -74,10 +63,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return $this->getControllerMethodAnnotations($reflectionMethod);
     }
 
-    /**
-     * @param \ReflectionMethod $reflectionMethod
-     * @return array
-     */
     private function getControllerMethodAnnotations(ReflectionMethod $reflectionMethod): array
     {
         $annotations = [];
@@ -91,10 +76,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return $annotations;
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
-     * @return string|null
-     */
     #[Override]
     public function generateUri(RequestDataSet $requestDataSet): ?string
     {

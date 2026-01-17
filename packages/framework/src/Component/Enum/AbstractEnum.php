@@ -18,9 +18,6 @@ class AbstractEnum
         return array_diff($publicConstants, $this->getUnusedConstants());
     }
 
-    /**
-     * @param string $case
-     */
     public function validateCase(string $case): void
     {
         if (!in_array($case, $this->getAllCases(), true)) {

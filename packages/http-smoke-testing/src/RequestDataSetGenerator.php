@@ -17,9 +17,6 @@ class RequestDataSetGenerator implements RouteConfig
      */
     private array $extraRequestDataSets;
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteInfo $routeInfo
-     */
     public function __construct(private readonly RouteInfo $routeInfo)
     {
         $this->defaultRequestDataSet = new RequestDataSet($this->routeInfo->getRouteName());
@@ -37,10 +34,6 @@ class RequestDataSetGenerator implements RouteConfig
         }
     }
 
-    /**
-     * @param int $index
-     * @return \Shopsys\HttpSmokeTesting\RequestDataSet
-     */
     private function getRequestDataSetForIteration(int $index): RequestDataSet
     {
         if ($index === 0) {
@@ -50,10 +43,6 @@ class RequestDataSetGenerator implements RouteConfig
         return $this->addExtraRequestDataSet();
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
-     * @param \Shopsys\HttpSmokeTesting\Annotation\DataSet $annotation
-     */
     private function fulfillRequestDataSetFromAnnotation(RequestDataSet $requestDataSet, DataSet $annotation): void
     {
         if ($annotation->statusCode) {

@@ -10,7 +10,6 @@ class InvalidPromoCodeException extends PromoCodeException
 {
     /**
      * @param string $invalidPromoCode
-     * @param \Exception|null $previous
      */
     public function __construct($invalidPromoCode, ?Exception $previous = null)
     {

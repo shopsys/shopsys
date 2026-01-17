@@ -18,17 +18,11 @@ class ExtendedProductTranslation extends ProductTranslation
      */
     protected string $productDetailName;
 
-    /**
-     * @return string
-     */
     public function getProductDetailName(): string
     {
         return $this->productDetailName;
     }
 
-    /**
-     * @param string $productDetailName
-     */
     public function setProductDetailName(string $productDetailName): void
     {
         $this->productDetailName = $productDetailName;

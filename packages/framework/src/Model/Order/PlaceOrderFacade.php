@@ -17,18 +17,6 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 
 class PlaceOrderFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher $placedOrderMessageDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     */
     public function __construct(
         protected readonly OrderStatusRepository $orderStatusRepository,
         protected readonly OrderNumberSequenceRepository $orderNumberSequenceRepository,
@@ -43,11 +31,6 @@ class PlaceOrderFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param string|null $deliveryAddressUuid
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function placeOrder(
         OrderData $orderData,
         ?string $deliveryAddressUuid = null,
@@ -97,10 +80,6 @@ class PlaceOrderFacade
         return $order;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function createOrderOnly(OrderData $orderData): Order
     {
         if ($orderData->status === null) {
@@ -129,10 +108,6 @@ class PlaceOrderFacade
         return $order;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function fillOrderItems(Order $order, OrderData $orderData): void
     {
         $alreadyCreatedOrderItems = [];
@@ -165,20 +140,11 @@ class PlaceOrderFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @return string
-     */
     protected function generateCacheKey(OrderItemData $orderItemData): string
     {
         return spl_object_hash($orderItemData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     protected function createSpecificOrderItem(
         OrderItemData $orderItemData,
         Order $order,

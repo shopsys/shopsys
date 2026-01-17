@@ -18,9 +18,6 @@ class Version20240403091822 extends AbstractMigration implements ContainerAwareI
     private const string TRANSPORT_TYPE_PACKETERY = 'packetery';
     private const string TRANSPORT_TYPE_PERSONAL_PICKUP = 'personal_pickup';
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {

@@ -49,12 +49,6 @@ class PaginationResultTest extends TestCase
         yield [1, null, 20, true];
     }
 
-    /**
-     * @param int $page
-     * @param int|null $pageSize
-     * @param int $totalCount
-     * @param bool $expectedIsFirst
-     */
     #[DataProvider('getTestIsFirstPageData')]
     public function testIsFirstPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsFirst)
     {
@@ -78,12 +72,6 @@ class PaginationResultTest extends TestCase
         yield [1, null, 20, true];
     }
 
-    /**
-     * @param int $page
-     * @param int|null $pageSize
-     * @param int $totalCount
-     * @param bool $expectedIsLast
-     */
     #[DataProvider('getTestIsLastPageData')]
     public function testIsLastPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsLast)
     {
@@ -103,12 +91,6 @@ class PaginationResultTest extends TestCase
         yield [1, null, 20, null];
     }
 
-    /**
-     * @param int $page
-     * @param int|null $pageSize
-     * @param int $totalCount
-     * @param int|null $expectedPrevious
-     */
     #[DataProvider('getTestGetPreviousPageData')]
     public function testGetPreviousPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedPrevious)
     {
@@ -130,12 +112,6 @@ class PaginationResultTest extends TestCase
         yield [1, null, 20, null];
     }
 
-    /**
-     * @param int $page
-     * @param int|null $pageSize
-     * @param int $totalCount
-     * @param int|null $expectedNext
-     */
     #[DataProvider('getTestGetNextPageData')]
     public function testGetNextPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedNext)
     {

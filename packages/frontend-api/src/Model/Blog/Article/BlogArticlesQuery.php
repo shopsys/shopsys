@@ -12,16 +12,12 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class BlogArticlesQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
-     */
     public function __construct(
         protected readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade,
     ) {
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return object|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
      */
     public function blogArticlesQuery(Argument $argument)
@@ -38,8 +34,6 @@ class BlogArticlesQuery extends AbstractQuery
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
      * @return object|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
      */
     public function blogArticleByCategoryQuery(Argument $argument, BlogCategory $blogCategory)

@@ -15,12 +15,6 @@ use Shopsys\FrameworkBundle\Model\Localization\TranslatableListener;
 
 class TestTranslatableListener extends TranslatableListener
 {
-    /**
-     * @param \Metadata\MetadataFactory $factory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     */
     public function __construct(
         MetadataFactory $factory,
         Domain $domain,
@@ -47,9 +41,6 @@ class TestTranslatableListener extends TranslatableListener
         }
     }
 
-    /**
-     * @return string
-     */
     protected function getFirstDomainLocale(): string
     {
         return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();

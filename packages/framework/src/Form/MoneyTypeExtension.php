@@ -18,10 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class MoneyTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
-     */
     public function __construct(
         private readonly Localization $localization,
         private readonly CurrencyRepositoryInterface $intlCurrencyRepository,
@@ -80,7 +76,6 @@ final class MoneyTypeExtension extends AbstractTypeExtension
      * Returns the pattern for this locale. Always places currency symbol after widget.
      * The pattern contains the placeholder "{{ widget }}" where the HTML tag should be inserted
      *
-     * @return string
      * @see \Symfony\Component\Form\Extension\Core\Type\MoneyType::getPattern()
      */
     private function getPattern(): string

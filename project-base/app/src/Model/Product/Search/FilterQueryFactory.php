@@ -39,7 +39,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
 class FilterQueryFactory extends BaseFilterQueryFactory
 {
     /**
-     * @param string $indexName
      * @return \App\Model\Product\Search\FilterQuery
      */
     #[Override]

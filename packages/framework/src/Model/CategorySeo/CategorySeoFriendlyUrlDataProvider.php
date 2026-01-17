@@ -13,7 +13,6 @@ class CategorySeoFriendlyUrlDataProvider implements FriendlyUrlDataProviderInter
     protected const string ROUTE_NAME = 'front_category_seo';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
     #[Override]
@@ -22,9 +21,6 @@ class CategorySeoFriendlyUrlDataProvider implements FriendlyUrlDataProviderInter
         return [];
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getRouteName(): string
     {

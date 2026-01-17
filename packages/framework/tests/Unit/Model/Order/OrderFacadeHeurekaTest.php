@@ -90,11 +90,6 @@ class OrderFacadeHeurekaTest extends TestCase
         $this->runHeurekaTest($heurekaFacade);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderFacade
-     */
     private function createOrderFacade(HeurekaFacade $heurekaFacade, Order $order): OrderFacade
     {
         $orderRepositoryMock = $this->createMock(OrderRepository::class);
@@ -138,10 +133,6 @@ class OrderFacadeHeurekaTest extends TestCase
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
-     * @param bool $heurekaAgreement
-     */
     private function runHeurekaTest(HeurekaFacade $heurekaFacade, bool $heurekaAgreement = true): void
     {
         $order = $this->createOrderMock($heurekaAgreement);
@@ -149,9 +140,6 @@ class OrderFacadeHeurekaTest extends TestCase
         $orderFacade->sendHeurekaOrderInfo($order->getId());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     private function createDomain(): Domain
     {
         $domainConfig = DomainConfigHelper::getDomainConfig();
@@ -165,7 +153,6 @@ class OrderFacadeHeurekaTest extends TestCase
     }
 
     /**
-     * @param bool $heurekaAgreement
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
      */
     private function createOrderMock(bool $heurekaAgreement): MockObject

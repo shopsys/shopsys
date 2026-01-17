@@ -42,18 +42,12 @@ class ParameterGroup extends AbstractTranslatableEntity implements OrderableEnti
      */
     protected $position;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData $parameterGroupData
-     */
     public function __construct(ParameterGroupData $parameterGroupData)
     {
         $this->translations = new ArrayCollection();
         $this->setTranslations($parameterGroupData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData $parameterGroupData
-     */
     public function edit(ParameterGroupData $parameterGroupData): void
     {
         $this->setTranslations($parameterGroupData);
@@ -68,9 +62,6 @@ class ParameterGroup extends AbstractTranslatableEntity implements OrderableEnti
         return new ParameterGroupTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData $parameterGroupData
-     */
     protected function setTranslations(ParameterGroupData $parameterGroupData): void
     {
         foreach ($parameterGroupData->name as $locale => $name) {

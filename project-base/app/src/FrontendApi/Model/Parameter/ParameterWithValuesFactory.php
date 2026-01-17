@@ -13,10 +13,6 @@ use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory as Base
  */
 class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
 {
-    /**
-     * @param array $productData
-     * @return array
-     */
     #[Override]
     public function createParametersArrayFromProductArray(array $productData): array
     {
@@ -38,10 +34,6 @@ class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
         return $parametersWithValues;
     }
 
-    /**
-     * @param array $product
-     * @return array
-     */
     #[Override]
     protected function mapParameterArray(array $product): array
     {

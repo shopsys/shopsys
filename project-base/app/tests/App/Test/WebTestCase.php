@@ -87,16 +87,12 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
 
-    /**
-     * @return \Psr\Container\ContainerInterface
-     */
     #[Override]
     abstract public function createContainer(): ContainerInterface;
 
     /**
      * @param array<string, mixed> $options
      * @param array<string, mixed> $server
-     * @return \Tests\App\Test\Client
      */
     #[Override]
     protected static function createClient(array $options = [], array $server = []): Client
@@ -109,7 +105,6 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
 
     /**
      * @template T
-     * @param string $referenceName
      * @param class-string<T>|null $entityClassName
      * @return T
      */
@@ -120,8 +115,6 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
 
     /**
      * @template T
-     * @param string $referenceName
-     * @param int $domainId
      * @param class-string<T>|null $entityClassName
      * @return T
      */
@@ -134,10 +127,7 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
     }
 
     /**
-     * @param string $routeName
      * @param array<string, mixed> $parameters
-     * @param int $pathType
-     * @return string
      */
     protected function getLocalizedPathOnFirstDomainByRouteName(
         string $routeName,
@@ -159,17 +149,11 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         }
     }
 
-    /**
-     * @return string
-     */
     protected function getFirstDomainLocale(): string
     {
         return $this->domain->getLocale();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     protected function getFirstDomainCurrency(): Currency
     {
         return $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
@@ -264,9 +248,6 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         $injector->inject($this);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
     protected function createRequest(): Request
     {
         $request = Request::create('/');
@@ -283,11 +264,6 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         return $request;
     }
 
-    /**
-     * @param string $expected
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $actual
-     * @param string $message
-     */
     final public function assertMoney(string $expected, Money $actual, string $message = ''): void
     {
         self::assertThat(
@@ -297,9 +273,6 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         );
     }
 
-    /**
-     * @return int
-     */
     protected function getInputPriceType(): int
     {
         return $this->setting->get(PricingSetting::INPUT_PRICE_TYPE);

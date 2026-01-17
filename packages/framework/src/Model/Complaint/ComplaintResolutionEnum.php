@@ -54,10 +54,6 @@ class ComplaintResolutionEnum extends AbstractEnum
         return $returnArray;
     }
 
-    /**
-     * @param string $value
-     * @return bool
-     */
     public function isMoneyReturn(string $value): bool
     {
         return $value === static::MONEY_RETURN;

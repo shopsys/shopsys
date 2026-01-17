@@ -8,19 +8,12 @@ use Psr\Clock\ClockInterface;
 
 class ComplaintDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemDataFactory $complaintItemDataFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly ComplaintItemDataFactory $complaintItemDataFactory,
         protected readonly ClockInterface $clock,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData
-     */
     public function create(): ComplaintData
     {
         $complaintData = $this->createInstance();
@@ -29,18 +22,11 @@ class ComplaintDataFactory
         return $complaintData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData
-     */
     protected function createInstance(): ComplaintData
     {
         return new ComplaintData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData
-     */
     public function createFromComplaint(Complaint $complaint): ComplaintData
     {
         $complaintData = $this->createInstance();
@@ -50,10 +36,6 @@ class ComplaintDataFactory
         return $complaintData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
-     */
     protected function fillFromComplaint(
         ComplaintData $complaintData,
         Complaint $complaint,

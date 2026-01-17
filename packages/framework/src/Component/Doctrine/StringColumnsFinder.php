@@ -34,7 +34,6 @@ class StringColumnsFinder
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadataInfo
      * @return string[]
      */
     protected function getStringColumnNames(ClassMetadataInfo $classMetadataInfo)

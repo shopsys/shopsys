@@ -47,42 +47,6 @@ use Webmozart\Assert\Assert;
 
 class OrderFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDeliveryDateFacade $orderDeliveryDateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OrderNumberSequenceRepository $orderNumberSequenceRepository,
@@ -121,10 +85,6 @@ class OrderFacade
     ) {
     }
 
-    /**
-     * @param int $orderId
-     * @return bool
-     */
     public function sendHeurekaOrderInfo(int $orderId): bool
     {
         $order = $this->getById($orderId);
@@ -143,11 +103,6 @@ class OrderFacade
         return true;
     }
 
-    /**
-     * @param int $orderId
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function edit(int $orderId, OrderData $orderData): Order
     {
         $order = $this->orderRepository->getById($orderId);
@@ -183,10 +138,6 @@ class OrderFacade
         return $order;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function processWithdrawalRequest(Order $order, OrderData $orderData): void
     {
         if ($orderData->withdrawalRequestData === null) {
@@ -218,9 +169,6 @@ class OrderFacade
         }
     }
 
-    /**
-     * @param int $orderId
-     */
     public function deleteById(int $orderId): void
     {
         $order = $this->orderRepository->getById($orderId);
@@ -230,7 +178,6 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getCustomerUserOrderList(CustomerUser $customerUser): array
@@ -239,9 +186,6 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param int $limit
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getLastCustomerOrdersByLimit(Customer $customer, int $limit, string $locale): array
@@ -250,8 +194,6 @@ class OrderFacade
     }
 
     /**
-     * @param string $email
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getOrderListForEmailByDomainId(string $email, int $domainId): array
@@ -259,10 +201,6 @@ class OrderFacade
         return $this->orderRepository->getOrderListForEmailByDomainId($email, $domainId);
     }
 
-    /**
-     * @param int $orderId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function getById(int $orderId): Order
     {
         return $this->orderRepository->getById($orderId);
@@ -277,39 +215,21 @@ class OrderFacade
         return $this->orderRepository->findByIds($ids);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function getByUuid(string $uuid): Order
     {
         return $this->orderRepository->getByUuid($uuid);
     }
 
-    /**
-     * @param string $urlHash
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function getByUrlHashAndDomain(string $urlHash, int $domainId): Order
     {
         return $this->orderRepository->getByUrlHashAndDomain($urlHash, $domainId);
     }
 
-    /**
-     * @param string $orderNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function getByOrderNumberAndUser(string $orderNumber, CustomerUser $customerUser): Order
     {
         return $this->orderRepository->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): QueryBuilder
     {
         return $this->orderRepository->getOrderListQueryBuilderByQuickSearchData(
@@ -318,10 +238,6 @@ class OrderFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function refreshOrderItemsWithoutTransportAndPayment(Order $order, OrderData $orderData): void
     {
         $orderItemsWithoutTransportAndPaymentData = $orderData->getItemsWithoutTransportAndPayment();
@@ -355,11 +271,6 @@ class OrderFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     */
     protected function calculateOrderItemDataPrices(
         OrderItemData $orderItemData,
         int $domainId,
@@ -396,10 +307,6 @@ class OrderFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     protected function updateTransportAndPaymentNamesInOrderData(OrderData $orderData, Order $order): void
     {
         $orderLocale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
@@ -417,9 +324,6 @@ class OrderFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function setOrderPaymentStatusPageValidFromNow(Order $order): void
     {
         $order->setOrderPaymentStatusPageValidFromNow();
@@ -427,11 +331,6 @@ class OrderFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param bool $updatePaymentPrice
-     */
     public function changeOrderPayment(Order $order, Payment $payment, bool $updatePaymentPrice = true): void
     {
         $previousPaymentItems = $order->getItemsByType(OrderItemTypeEnum::TYPE_PAYMENT);
@@ -461,10 +360,6 @@ class OrderFacade
         $this->edit($order->getId(), $orderData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $trackingNumber
-     */
     public function updateTrackingNumber(Order $order, string $trackingNumber): void
     {
         $order->setTrackingNumber($trackingNumber);
@@ -472,7 +367,6 @@ class OrderFacade
     }
 
     /**
-     * @param string $transportType
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getAllWithoutTrackingNumberByTransportType(string $transportType): array
@@ -480,11 +374,6 @@ class OrderFacade
         return $this->orderRepository->getAllWithoutTrackingNumberByTransportType($transportType);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     public function createOrderDataFromCart(Cart $cart, DomainConfig $domainConfig): OrderData
     {
         $orderData = $this->orderDataFactory->create();
@@ -492,12 +381,6 @@ class OrderFacade
         return $this->fillOrderDataFromCart($orderData, $cart, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     protected function fillOrderDataFromCart(OrderData $orderData, Cart $cart, DomainConfig $domainConfig): OrderData
     {
         $orderInput = $this->orderInputFactory->createFromCart($cart, $domainConfig);
@@ -508,9 +391,6 @@ class OrderFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function updatePaymentByLastPaymentTransaction(Order $order): void
     {
         $lastPaymentTransaction = $order->getLastTransaction();

@@ -12,10 +12,6 @@ use Symfony\Component\Validator\ConstraintViolation;
 
 class FrontendApiLogger implements LoggerInterface
 {
-    /**
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param bool $isValidationLoggedAsError
-     */
     public function __construct(
         protected readonly LoggerInterface $logger,
         protected readonly bool $isValidationLoggedAsError,

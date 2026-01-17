@@ -85,12 +85,6 @@ class TotalItemsPriceBeforeDiscountTest extends GraphQlTestCase
         );
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $productQuantity
-     * @param string|null $cartUuid
-     * @return array
-     */
     private function addTestingProductToCart(Product $product, int $productQuantity, ?string $cartUuid = null): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
@@ -102,12 +96,6 @@ class TotalItemsPriceBeforeDiscountTest extends GraphQlTestCase
         return $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart'];
     }
 
-    /**
-     * @param array $cart
-     * @param \App\Model\Transport\Transport $transport
-     * @param string $pickupPlaceIdentifier
-     * @return array
-     */
     private function addTransportToCart(array $cart, Transport $transport, string $pickupPlaceIdentifier): array
     {
         return $this->getResponseContentForGql(
@@ -120,11 +108,6 @@ class TotalItemsPriceBeforeDiscountTest extends GraphQlTestCase
         );
     }
 
-    /**
-     * @param array $cart
-     * @param \App\Model\Payment\Payment $payment
-     * @return array
-     */
     private function addPaymentToCart(array $cart, Payment $payment): array
     {
         return $this->getResponseContentForGql(

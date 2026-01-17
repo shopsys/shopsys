@@ -46,11 +46,6 @@ final class CrudRouteProvider
         ],
     ];
 
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Crud\Definition $item
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
-     * @return \Shopsys\AdministrationBundle\Component\Router\CrudRouteItem
-     */
     public function generate(Definition $item, ActionType $pageType): CrudRouteItem
     {
         return new CrudRouteItem(
@@ -61,22 +56,11 @@ final class CrudRouteProvider
         );
     }
 
-    /**
-     * @param string $controllerName
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
-     * @return string
-     */
     private function generateRouteName(string $controllerName, ActionType $pageType): string
     {
         return 'admin_crud_' . CrudTransformationHelper::transformToRouteName($controllerName) . '_' . $pageType->value;
     }
 
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Crud\Definition $item
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
-     * @param string|null $routePrefix
-     * @return \Symfony\Component\Routing\Route
-     */
     private function generateRoute(
         Definition $item,
         ActionType $pageType,

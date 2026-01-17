@@ -14,14 +14,9 @@ class MessageData
     /**
      * @param string|array<string> $toEmail
      * @param string|array<string>|null $bccEmail
-     * @param string $body
-     * @param string $subject
-     * @param string $fromEmail
-     * @param string $fromName
      * @param string[] $variablesReplacementsForBody
      * @param string[] $variablesReplacementsForSubject
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $attachments
-     * @param string|null $replyTo
      */
     public function __construct(
         public string|array $toEmail,

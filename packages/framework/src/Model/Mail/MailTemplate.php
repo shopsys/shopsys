@@ -83,7 +83,6 @@ class MailTemplate
     /**
      * @param string $name
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
      */
     public function __construct($name, $domainId, MailTemplateData $mailTemplateData)
     {
@@ -92,9 +91,6 @@ class MailTemplate
         $this->edit($mailTemplateData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
-     */
     public function edit(MailTemplateData $mailTemplateData)
     {
         $this->bccEmail = $mailTemplateData->bccEmail;

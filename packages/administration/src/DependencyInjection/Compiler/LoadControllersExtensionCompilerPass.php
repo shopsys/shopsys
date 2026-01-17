@@ -15,9 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class LoadControllersExtensionCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function process(ContainerBuilder $container): void
     {
@@ -42,8 +39,6 @@ class LoadControllersExtensionCompilerPass implements CompilerPassInterface
     /**
      * Processes a service definition for a controller extensions
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param string $id
      * @return array{extensionClass: string, controllerClass: string, priority: int}|null
      */
     private function processService(ContainerBuilder $container, string $id): ?array
@@ -82,9 +77,6 @@ class LoadControllersExtensionCompilerPass implements CompilerPassInterface
 
     /**
      * Retrieves the CrudControllerExtension attribute from a reflection class.
-     *
-     * @param \ReflectionClass $reflectionClass
-     * @return \Shopsys\AdministrationBundle\Component\Attributes\CrudControllerExtension|null
      */
     private function getCrudControllerExtensionAttribute(ReflectionClass $reflectionClass): ?CrudControllerExtension
     {

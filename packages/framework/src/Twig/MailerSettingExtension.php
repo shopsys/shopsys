@@ -12,10 +12,6 @@ use Twig\TwigFunction;
 
 class MailerSettingExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly MailerSettingProvider $mailerSettingProvider,
         protected readonly Domain $domain,
@@ -34,9 +30,6 @@ class MailerSettingExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return bool
-     */
     public function isMailerSettingUnusual(): bool
     {
         if ($this->mailerSettingProvider->isDeliveryDisabled()) {
@@ -52,9 +45,6 @@ class MailerSettingExtension extends AbstractExtension
         return false;
     }
 
-    /**
-     * @return string
-     */
     public function getMailerSettingInfo(): string
     {
         if ($this->mailerSettingProvider->isDeliveryDisabled()) {
@@ -70,9 +60,6 @@ class MailerSettingExtension extends AbstractExtension
         return t('No email whitelist is enabled, all emails will be sent.');
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'shopsys.twig.mailer_setting_extension';

@@ -37,11 +37,6 @@ class ProductManualInputPrice
      */
     protected $inputPrice;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $inputPrice
-     */
     public function __construct(Product $product, PricingGroup $pricingGroup, ?Money $inputPrice)
     {
         $this->product = $product;

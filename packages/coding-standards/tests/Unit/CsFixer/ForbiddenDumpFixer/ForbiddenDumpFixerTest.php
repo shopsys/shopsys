@@ -10,9 +10,6 @@ use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
 final class ForbiddenDumpFixerTest extends AbstractFixerTestCase
 {
-    /**
-     * @return \Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer
-     */
     #[Override]
     protected function createFixerService(): ForbiddenDumpFixer
     {

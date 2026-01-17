@@ -8,9 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ZboziProductDomainRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {

@@ -15,9 +15,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
 
 class ApplyFreeTransportAndPaymentPromoCodeMiddleware implements OrderProcessorMiddlewareInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     */
     public function __construct(protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade)
     {
     }

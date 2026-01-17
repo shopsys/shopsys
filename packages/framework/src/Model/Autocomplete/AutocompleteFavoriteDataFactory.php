@@ -6,18 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\Autocomplete;
 
 class AutocompleteFavoriteDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteFacade $autocompleteFavoriteFacade
-     */
     public function __construct(
         protected readonly AutocompleteFavoriteFacade $autocompleteFavoriteFacade,
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteData
-     */
     public function createForDomain(int $domainId): AutocompleteFavoriteData
     {
         $autocompleteFavoriteData = $this->createInstance();
@@ -29,9 +22,6 @@ class AutocompleteFavoriteDataFactory
         return $autocompleteFavoriteData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteData
-     */
     public function createInstance(): AutocompleteFavoriteData
     {
         return new AutocompleteFavoriteData();

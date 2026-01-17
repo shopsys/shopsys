@@ -46,9 +46,6 @@ class RolesCommand extends Command
     private array $roleSectionsProvidersByContext;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     * @param \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param iterable<\Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\AbstractRoleHierarchyProvider> $hierarchyProviders
      * @param iterable<class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>,\Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider> $roleSectionsProviders
      */
@@ -94,11 +91,6 @@ class RolesCommand extends Command
             ->setHelp(sprintf('Displays roles organized by context. Filter by name/constant (cannot be used with --hierarchy), use --context for specific context. Shows detailed view with routes when ≤%s roles found. Use --hierarchy to display role inheritance instead of roles.', self::DETAIL_VIEW_THRESHOLD));
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -148,8 +140,6 @@ class RolesCommand extends Command
     }
 
     /**
-     * @param string|null $contextFilter
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return array<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>|null
      */
     private function getContexts(?string $contextFilter, SymfonyStyle $io): ?array
@@ -180,8 +170,6 @@ class RolesCommand extends Command
 
     /**
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contextClass
-     * @param string|null $searchFilter
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return array<\Shopsys\FrameworkBundle\Component\Security\Role\Role>|null
      */
     private function loadAndFilterRoles(string $contextClass, ?string $searchFilter, SymfonyStyle $io): ?array
@@ -213,11 +201,7 @@ class RolesCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Shopsys\FrameworkBundle\Component\Context\AbstractContext $context
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $roles
-     * @param string|null $searchFilter
      */
     private function displayRoles(
         SymfonyStyle $io,
@@ -247,7 +231,6 @@ class RolesCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $roles
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contextClass
      */
@@ -272,8 +255,6 @@ class RolesCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $roles
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contextClass
      */
@@ -302,9 +283,6 @@ class RolesCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Role $role
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contextClass
      */
     private function dispatchDetailEvent(
@@ -322,9 +300,7 @@ class RolesCommand extends Command
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Role $role
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contextClass
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Section\RoleSection
      */
     private function getSection(Role $role, string $contextClass): RoleSection
     {
@@ -337,7 +313,6 @@ class RolesCommand extends Command
 
     /**
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission> $permissions
-     * @return string
      */
     private function formatPermissions(array $permissions): string
     {
@@ -351,10 +326,6 @@ class RolesCommand extends Command
         ));
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param \Shopsys\FrameworkBundle\Component\Context\AbstractContext $context
-     */
     private function displayRoleHierarchy(SymfonyStyle $io, AbstractContext $context): void
     {
         $contextClass = $context->getIdentifier();

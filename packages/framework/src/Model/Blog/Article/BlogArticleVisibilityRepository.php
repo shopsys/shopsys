@@ -12,10 +12,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class BlogArticleVisibilityRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected EntityManagerInterface $em,
         protected Domain $domain,
@@ -41,9 +37,6 @@ class BlogArticleVisibilityRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     protected function refreshBlogArticlesVisibilityOnDomain(DomainConfig $domainConfig): void
     {
         $this->em->getConnection()->executeStatement(

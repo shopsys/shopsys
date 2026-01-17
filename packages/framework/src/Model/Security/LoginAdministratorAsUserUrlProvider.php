@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class LoginAdministratorAsUserUrlProvider
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return string|null
-     */
     public function getLoginAsCustomerUserUrl(CustomerUser $customerUser): ?string
     {
         return null;

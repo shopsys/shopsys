@@ -19,15 +19,11 @@ class ElasticsearchTracer extends AbstractLogger
 {
     protected ?string $lastRequestCurl = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection $elasticsearchRequestCollection
-     */
     public function __construct(protected readonly ElasticsearchRequestCollection $elasticsearchRequestCollection)
     {
     }
 
     /**
-     * @param string $requestMessage
      * @return mixed
      */
     protected function extractData(string $requestMessage)
@@ -43,7 +39,6 @@ class ElasticsearchTracer extends AbstractLogger
 
     /**
      * @param mixed $requestData
-     * @return string
      */
     protected function formatData($requestData): string
     {
@@ -53,7 +48,6 @@ class ElasticsearchTracer extends AbstractLogger
     /**
      * @param mixed $level
      * @param string $message
-     * @param array $context
      */
     #[Override]
     public function log($level, $message, array $context = []): void
@@ -77,7 +71,6 @@ class ElasticsearchTracer extends AbstractLogger
 
     /**
      * @param string $message
-     * @param array $context
      */
     protected function logRequest($message, array $context = []): void
     {

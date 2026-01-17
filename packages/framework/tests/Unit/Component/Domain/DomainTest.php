@@ -22,17 +22,11 @@ class DomainTest extends TestCase
     private const int TEST_DOMAIN_ID_5 = 5;
     private const int TEST_DOMAIN_ID_6 = 6;
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private static function createDomainConfigFirst(): DomainConfig
     {
         return DomainConfigHelper::getDomainConfig();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private static function createDomainConfigSecond(): DomainConfig
     {
         return DomainConfigHelper::getDomainConfig(
@@ -44,9 +38,6 @@ class DomainTest extends TestCase
         );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private static function createDomainConfigWithPostfix(): DomainConfig
     {
         return DomainConfigHelper::getDomainConfig(
@@ -116,11 +107,6 @@ class DomainTest extends TestCase
     /**
      * @dataProvider switchDomainByRequestDataProvider
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
-     * @param string $requestHost
-     * @param string $requestPath
-     * @param int $expectedDomainId
-     * @param string $expectedLocale
-     * @param string $description
      */
     public function testSwitchDomainByRequest(
         array $domainConfigs,

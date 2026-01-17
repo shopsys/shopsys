@@ -30,12 +30,6 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
 
     private const string UUID_NAMESPACE = '0338e624-c961-4475-a29d-c90080d02d1f';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanDataFactory $giftPlanDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade $giftPlanFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
-     */
     public function __construct(
         private readonly GiftPlanDataFactory $giftPlanDataFactory,
         private readonly GiftPlanFacade $giftPlanFacade,
@@ -44,9 +38,6 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager)
     {
@@ -98,10 +89,6 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanData $giftPlanData
-     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan
-     */
     private function createGiftPlan(GiftPlanData $giftPlanData): GiftPlan
     {
         $giftPlanData->uuid = Uuid::uuid5(
@@ -119,9 +106,6 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
         return $giftPlan;
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getDependencies(): array
     {

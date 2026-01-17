@@ -8,25 +8,16 @@ use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
 class SalesRepresentativeDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     */
     public function __construct(
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData
-     */
     protected function createInstance(): SalesRepresentativeData
     {
         return new SalesRepresentativeData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData
-     */
     public function create(): SalesRepresentativeData
     {
         $salesRepresentativeData = $this->createInstance();
@@ -35,18 +26,11 @@ class SalesRepresentativeDataFactory
         return $salesRepresentativeData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData $salesRepresentativeData
-     */
     protected function fillNew(SalesRepresentativeData $salesRepresentativeData): void
     {
         $salesRepresentativeData->image = $this->imageUploadDataFactory->create();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative $salesRepresentative
-     * @return \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData
-     */
     public function createFromSalesRepresentative(SalesRepresentative $salesRepresentative): SalesRepresentativeData
     {
         $salesRepresentativeData = $this->createInstance();

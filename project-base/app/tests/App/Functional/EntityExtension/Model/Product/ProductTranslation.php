@@ -25,9 +25,6 @@ class ProductTranslation extends AbstractTranslation
      */
     protected ?string $name = null;
 
-    /**
-     * @param string|null $name
-     */
     public function setName(?string $name): void
     {
         $this->name = $name;

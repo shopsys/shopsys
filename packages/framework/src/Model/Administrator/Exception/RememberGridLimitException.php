@@ -12,7 +12,6 @@ class RememberGridLimitException extends Exception
 
     /**
      * @param string $gridId
-     * @param \Exception|null $previous
      */
     public function __construct($gridId, ?Exception $previous = null)
     {

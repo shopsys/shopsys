@@ -83,9 +83,6 @@ class DeliveryAddress
      */
     protected $uuid;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     */
     public function __construct(DeliveryAddressData $deliveryAddressData)
     {
         $this->customer = $deliveryAddressData->customer;
@@ -93,17 +90,11 @@ class DeliveryAddress
         $this->setData($deliveryAddressData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     */
     public function edit(DeliveryAddressData $deliveryAddressData)
     {
         $this->setData($deliveryAddressData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     */
     protected function setData(DeliveryAddressData $deliveryAddressData): void
     {
         $this->street = $deliveryAddressData->street;
@@ -204,9 +195,6 @@ class DeliveryAddress
         return $this->uuid;
     }
 
-    /**
-     * @return string
-     */
     public function getFullAddress(): string
     {
         return $this->street . ', ' . $this->city . ', ' . $this->postcode;

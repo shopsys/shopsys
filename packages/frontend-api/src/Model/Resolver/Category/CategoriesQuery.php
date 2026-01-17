@@ -10,19 +10,12 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class CategoriesQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @return array
-     */
     public function categoriesQuery(): array
     {
         return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId(

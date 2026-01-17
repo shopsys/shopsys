@@ -11,12 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FriendlyUrlGeneratorFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderRegistry $friendlyUrlDataProviderConfig
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DomainRouterFactory $domainRouterFactory,
@@ -25,9 +19,6 @@ class FriendlyUrlGeneratorFacade
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function generateUrlsForSupportedEntities(OutputInterface $output): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -43,11 +34,6 @@ class FriendlyUrlGeneratorFacade
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return int
-     */
     protected function generateUrlsByDomainConfig(OutputInterface $output, DomainConfig $domainConfig): int
     {
         $totalCountOfCreatedUrls = 0;
@@ -74,11 +60,6 @@ class FriendlyUrlGeneratorFacade
         return $totalCountOfCreatedUrls;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string $routeName
-     * @return int
-     */
     protected function generateUrlsByRoute(DomainConfig $domainConfig, string $routeName): int
     {
         $countOfCreatedUrls = 0;

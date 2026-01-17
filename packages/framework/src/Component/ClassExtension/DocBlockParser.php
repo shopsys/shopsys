@@ -22,7 +22,6 @@ class DocBlockParser
     }
 
     /**
-     * @param string|null $docBlock
      * @return \phpDocumentor\Reflection\Type[]
      */
     public function getReturnTypes(?string $docBlock): array
@@ -36,10 +35,6 @@ class DocBlockParser
         return array_map(static fn (TagWithType $tag) => $tag->getType(), $tags);
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionParameter $reflectionParameter
-     * @return \phpDocumentor\Reflection\Type|null
-     */
     public function getParameterType(ReflectionParameter $reflectionParameter): ?Type
     {
         $docBlock = $reflectionParameter->getDeclaringFunction()->getDocComment();
@@ -65,10 +60,6 @@ class DocBlockParser
         return $paramType;
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
-     * @return \phpDocumentor\Reflection\Type|null
-     */
     public function getPropertyType(ReflectionProperty $reflectionProperty): ?Type
     {
         $docBlock = $reflectionProperty->getDocComment();

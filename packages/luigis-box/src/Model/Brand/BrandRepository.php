@@ -12,11 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 
 class BrandRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
@@ -24,9 +19,6 @@ class BrandRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getBrandRepository(): EntityRepository
     {
         return $this->em->getRepository(Brand::class);

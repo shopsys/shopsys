@@ -18,9 +18,6 @@ class CronConfig
      */
     protected array $cronModuleConfigs;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver $cronTimeResolver
-     */
     public function __construct(
         protected readonly CronTimeResolver $cronTimeResolver,
     ) {
@@ -29,14 +26,6 @@ class CronConfig
 
     /**
      * @param \Shopsys\Plugin\Cron\SimpleCronModuleInterface|\Shopsys\Plugin\Cron\IteratedCronModuleInterface|mixed $service
-     * @param string $serviceId
-     * @param string $timeHours
-     * @param string $timeMinutes
-     * @param string $instanceName
-     * @param string|null $readableName
-     * @param string|null $readableFrequency
-     * @param int $runEveryMin
-     * @param int $timeoutIteratedCronSec
      */
     public function registerCronModuleInstance(
         $service,
@@ -70,7 +59,6 @@ class CronConfig
     }
 
     /**
-     * @param \DateTimeInterface $roundedTime
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
     public function getCronModuleConfigsByTime(DateTimeInterface $roundedTime): array
@@ -86,10 +74,6 @@ class CronConfig
         return $matchedCronConfigs;
     }
 
-    /**
-     * @param string $serviceId
-     * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig
-     */
     public function getCronModuleConfigByServiceId(string $serviceId): CronModuleConfig
     {
         foreach ($this->cronModuleConfigs as $cronConfig) {
@@ -102,7 +86,6 @@ class CronConfig
     }
 
     /**
-     * @param string $instanceName
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
     public function getCronModuleConfigsForInstance(string $instanceName): array

@@ -12,20 +12,12 @@ use Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFa
 
 class ArticlesSearchResultsProvider implements ArticlesSearchResultsProviderInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|array
-     */
     #[Override]
     public function getArticlesSearchResults(
         Argument $argument,
@@ -37,10 +29,6 @@ class ArticlesSearchResultsProvider implements ArticlesSearchResultsProviderInte
         );
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
     #[Override]
     public function isEnabledOnDomain(int $domainId): bool
     {

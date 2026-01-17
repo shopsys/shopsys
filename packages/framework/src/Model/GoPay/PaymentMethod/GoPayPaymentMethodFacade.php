@@ -16,18 +16,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class GoPayPaymentMethodFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory $goPayClientFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository $goPayPaymentMethodRepository
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftRepository $goPayBankSwiftRepository
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFactory $goPayPaymentMethodFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GoPayClientFactory $goPayClientFactory,
@@ -42,10 +30,6 @@ class GoPayPaymentMethodFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData $paymentMethodData
-     * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod
-     */
     public function create(GoPayPaymentMethodData $paymentMethodData): GoPayPaymentMethod
     {
         $paymentMethod = $this->goPayPaymentMethodFactory->create($paymentMethodData);
@@ -55,10 +39,6 @@ class GoPayPaymentMethodFacade
         return $paymentMethod;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData $goPayPaymentMethodData
-     */
     protected function edit(
         GoPayPaymentMethod $goPayPaymentMethod,
         GoPayPaymentMethodData $goPayPaymentMethodData,
@@ -67,9 +47,6 @@ class GoPayPaymentMethodFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     public function downloadAndUpdatePaymentMethods(DomainConfig $domainConfig): void
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainConfig->getId());
@@ -119,11 +96,6 @@ class GoPayPaymentMethodFacade
         return $this->goPayPaymentMethodRepository->getAllTypeIdentifiers();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData $goPayPaymentMethodData
-     * @param array $goPayMethodRawData
-     * @param string $language
-     */
     public function setFromGoPayRawData(
         GoPayPaymentMethodData $goPayPaymentMethodData,
         array $goPayMethodRawData,
@@ -137,11 +109,6 @@ class GoPayPaymentMethodFacade
         $goPayPaymentMethodData->available = true;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     * @param array $goPayMethodRawData
-     * @param string $language
-     */
     protected function editByRawData(
         GoPayPaymentMethod $goPayPaymentMethod,
         array $goPayMethodRawData,
@@ -154,13 +121,6 @@ class GoPayPaymentMethodFacade
         $this->updateSwiftsFromRawData($goPayPaymentMethod, $goPayMethodRawData);
     }
 
-    /**
-     * @param array $goPayMethodRawData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param string $language
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod
-     */
     protected function createFromRawData(
         array $goPayMethodRawData,
         Currency $currency,
@@ -179,10 +139,6 @@ class GoPayPaymentMethodFacade
         return $paymentMethod;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     * @param array $goPayMethodRawData
-     */
     protected function updateSwiftsFromRawData(GoPayPaymentMethod $goPayPaymentMethod, array $goPayMethodRawData): void
     {
         $bankSwiftsBySwift = $this->goPayBankSwiftRepository->getAllIndexedBySwiftByPaymentMethod($goPayPaymentMethod);

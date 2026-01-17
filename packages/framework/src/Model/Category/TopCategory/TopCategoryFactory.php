@@ -9,19 +9,10 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class TopCategoryFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
-     * @param int $position
-     * @return \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategory
-     */
     public function create(
         Category $category,
         int $domainId,

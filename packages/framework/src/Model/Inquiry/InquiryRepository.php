@@ -12,26 +12,16 @@ use Shopsys\FrameworkBundle\Model\Inquiry\Exception\InquiryNotFoundException;
 
 class InquiryRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getInquiryRepository(): EntityRepository
     {
         return $this->em->getRepository(Inquiry::class);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry
-     */
     public function getById(int $id): Inquiry
     {
         $inquiry = $this->getInquiryRepository()->find($id);
@@ -43,10 +33,6 @@ class InquiryRepository
         return $inquiry;
     }
 
-    /**
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getInquiriesQueryBuilder(string $locale): QueryBuilder
     {
         return $this->getInquiryRepository()

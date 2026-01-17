@@ -22,9 +22,6 @@ class AllFeedsTest extends FunctionalTestCase
      */
     private FilesystemOperator $filesystem;
 
-    /**
-     * @return array
-     */
     public function getAllFeedExportCreationData(): array
     {
         // Method setUp is called only before each test, data providers are called even before that
@@ -61,10 +58,6 @@ class AllFeedsTest extends FunctionalTestCase
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     private function cleanUp(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): void
     {
         $feedFilepath = $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig);

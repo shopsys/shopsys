@@ -139,7 +139,6 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
     /**
      * @param array $enabledForDomains
      * @param bool $hidden
-     * @param bool $deleted
      * @return \App\Model\Transport\Transport
      */
     public function getDefaultTransport($enabledForDomains, $hidden, bool $deleted = false)

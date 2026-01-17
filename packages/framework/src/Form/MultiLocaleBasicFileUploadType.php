@@ -19,11 +19,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class MultiLocaleBasicFileUploadType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
-     */
     public function __construct(
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly UploadedFileConfig $uploadedFileConfig,
@@ -31,9 +26,6 @@ final class MultiLocaleBasicFileUploadType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -43,11 +35,6 @@ final class MultiLocaleBasicFileUploadType extends AbstractType
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -56,10 +43,6 @@ final class MultiLocaleBasicFileUploadType extends AbstractType
         $view->vars['multiple'] = $options['multiple'];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

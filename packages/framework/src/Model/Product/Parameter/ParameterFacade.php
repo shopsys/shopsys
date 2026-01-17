@@ -19,19 +19,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParameterFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactory $parameterFactory
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\DeleteReadyCategorySeoMixFacade $deleteReadyCategorySeoMixFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterSortingHelper $parameterSortingHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ParameterRepository $parameterRepository,
@@ -56,19 +43,11 @@ class ParameterFacade
         return $this->parameterRepository->getById($parameterId);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
     public function getByUuid(string $uuid): Parameter
     {
         return $this->parameterRepository->getByUuid($uuid);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
     public function getParameterValueByUuid(string $uuid): ParameterValue
     {
         return $this->parameterRepository->getParameterValueByUuid($uuid);
@@ -83,7 +62,6 @@ class ParameterFacade
     }
 
     /**
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getAllWithTranslations(string $locale): array
@@ -92,7 +70,6 @@ class ParameterFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
     public function create(ParameterData $parameterData)
@@ -115,12 +92,6 @@ class ParameterFacade
         return $this->parameterRepository->findParameterByNames($namesByLocale);
     }
 
-    /**
-     * @param string $name
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null $excludeParameter
-     * @return bool
-     */
     public function existsParameterByName(string $name, string $locale, ?Parameter $excludeParameter = null): bool
     {
         return $this->parameterRepository->existsParameterByName($name, $locale, $excludeParameter);
@@ -128,7 +99,6 @@ class ParameterFacade
 
     /**
      * @param int $parameterId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
     public function edit($parameterId, ParameterData $parameterData)
@@ -158,12 +128,6 @@ class ParameterFacade
         $this->em->flush();
     }
 
-    /**
-     * @param string $valueText
-     * @param string|null $numericValue
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
     public function getParameterValueByValueTextNumericValueAndLocale(
         string $valueText,
         ?string $numericValue,
@@ -172,12 +136,6 @@ class ParameterFacade
         return $this->parameterRepository->getParameterValueByValueTextNumericValueAndLocale($valueText, $numericValue, $locale);
     }
 
-    /**
-     * @param string $valueText
-     * @param string|null $numericValue
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null
-     */
     public function findParameterValueByValueTextNumericValueAndLocale(
         string $valueText,
         ?string $numericValue,
@@ -205,8 +163,6 @@ class ParameterFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @param string $eventType
      * @see \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterEvent class
      */
     protected function dispatchParameterEvent(Parameter $parameter, string $eventType): void
@@ -234,7 +190,6 @@ class ParameterFacade
 
     /**
      * @param int[][] $parameterValueIdsIndexedByParameterId
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
     public function getParameterFilterChoicesByIds(array $parameterValueIdsIndexedByParameterId, string $locale): array
@@ -262,7 +217,6 @@ class ParameterFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return int[]
      */
     public function getParametersIdsSortedByPositionFilteredByCategory(Category $category): array
@@ -273,11 +227,6 @@ class ParameterFacade
         );
     }
 
-    /**
-     * @param int $parameterValueId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterValueData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
     public function editParameterValue(int $parameterValueId, ParameterValueData $parameterValueData): ParameterValue
     {
         $parameterValue = $this->parameterRepository->getParameterValueById($parameterValueId);
@@ -301,17 +250,12 @@ class ParameterFacade
         return $parameterValue;
     }
 
-    /**
-     * @param int $parameterValueId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
     public function getParameterValueById(int $parameterValueId): ParameterValue
     {
         return $this->parameterRepository->getParameterValueById($parameterValueId);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     public function getParameterValuesByParameter(Parameter $parameter): array
@@ -320,7 +264,6 @@ class ParameterFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionData[] $parameterValuesConversionDataIndexedByParameterValueId
      */
     public function updateParameterValuesByConversion(
@@ -355,18 +298,11 @@ class ParameterFacade
         return $this->parameterRepository->getSliderParametersWithoutTheirsNumericValueFilled();
     }
 
-    /**
-     * @return int
-     */
     public function getCountOfSliderParametersWithoutTheirsNumericValueFilled(): int
     {
         return $this->parameterRepository->getCountOfSliderParametersWithoutTheirsNumericValueFilled();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @return int
-     */
     public function getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(Parameter $parameter): int
     {
         return $this->parameterRepository->getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder($parameter);
@@ -390,11 +326,6 @@ class ParameterFacade
         return $this->parameterRepository->getParameterValueIdsIndexedByUuids($parameterValueUuids);
     }
 
-    /**
-     * @param string $text
-     * @param string $locale
-     * @return int
-     */
     public function getParameterValueIdByText(string $text, string $locale): int
     {
         try {

@@ -116,13 +116,6 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         ],
     ];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     */
     public function __construct(
         private readonly GoPayPaymentMethodFacade $goPayPaymentMethodFacade,
         private readonly GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory,
@@ -132,9 +125,6 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -157,12 +147,6 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
-    /**
-     * @param array $data
-     * @param string $locale
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData
-     */
     private function getGoPayPaymentMethodData(
         array $data,
         string $locale,
@@ -181,11 +165,6 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         return $goPayPaymentMethodData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     * @param array $swiftData
-     * @param string $locale
-     */
     private function createGoPayBankSwift(
         GoPayPaymentMethod $goPayPaymentMethod,
         array $swiftData,
@@ -201,12 +180,6 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->goPayBankSwiftFacade->create($goPayBankSwiftData);
     }
 
-    /**
-     * @param string|null $referenceName
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData $goPayPaymentMethodData
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod
-     */
     private function createGoPayPaymentMethod(
         ?string $referenceName,
         GoPayPaymentMethodData $goPayPaymentMethodData,

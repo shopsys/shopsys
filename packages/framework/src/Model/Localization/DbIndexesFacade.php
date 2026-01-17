@@ -6,10 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Localization;
 
 class DbIndexesFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Model\Localization\DbIndexesRepository $dbIndexesRepository
-     */
     public function __construct(
         protected readonly Localization $localization,
         protected readonly DbIndexesRepository $dbIndexesRepository,

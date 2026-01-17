@@ -8,16 +8,12 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class PerformanceTestSummaryPrinter
 {
-    /**
-     * @param \Tests\App\Performance\Page\PerformanceTestSampleQualifier $performanceTestSampleQualifier
-     */
     public function __construct(private readonly PerformanceTestSampleQualifier $performanceTestSampleQualifier)
     {
     }
 
     /**
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
-     * @param \Symfony\Component\Console\Output\ConsoleOutput $consoleOutput
      */
     public function printSummary(
         array $performanceTestSamples,
@@ -55,10 +51,6 @@ class PerformanceTestSummaryPrinter
         }
     }
 
-    /**
-     * @param \Tests\App\Performance\Page\PerformanceTestSample $performanceTestSample
-     * @param \Symfony\Component\Console\Output\ConsoleOutput $consoleOutput
-     */
     private function printSample(
         PerformanceTestSample $performanceTestSample,
         ConsoleOutput $consoleOutput,

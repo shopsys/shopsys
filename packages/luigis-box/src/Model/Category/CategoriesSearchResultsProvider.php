@@ -18,11 +18,6 @@ use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class CategoriesSearchResultsProvider extends SearchResultsProvider implements CategoriesSearchResultsProviderInterface
 {
-    /**
-     * @param string $enabledDomainIds
-     * @param \Overblog\DataLoader\DataLoaderInterface $luigisBoxBatchLoader
-     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory
-     */
     public function __construct(
         string $enabledDomainIds,
         protected readonly DataLoaderInterface $luigisBoxBatchLoader,
@@ -31,10 +26,6 @@ class CategoriesSearchResultsProvider extends SearchResultsProvider implements C
         parent::__construct($enabledDomainIds);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
-     */
     #[Override]
     public function getCategoriesSearchResults(
         Argument $argument,

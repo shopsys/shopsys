@@ -23,13 +23,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundU
 
 class ProductListMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory $productListDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListApiFacade $productListApiFacade
-     */
     public function __construct(
         protected readonly ProductListFacade $productListFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -39,10 +32,6 @@ class ProductListMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList
-     */
     public function addProductToListMutation(Argument $argument): ProductList
     {
         $input = $argument['input'];
@@ -82,10 +71,6 @@ class ProductListMutation extends AbstractMutation
         }
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
-     */
     public function removeProductFromListMutation(Argument $argument): ?ProductList
     {
         $input = $argument['input'];
@@ -112,10 +97,6 @@ class ProductListMutation extends AbstractMutation
         }
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
-     */
     public function removeProductListMutation(Argument $argument): ?ProductList
     {
         $input = $argument['input'];

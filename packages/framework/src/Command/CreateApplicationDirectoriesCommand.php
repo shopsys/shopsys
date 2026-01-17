@@ -48,11 +48,6 @@ class CreateApplicationDirectoriesCommand extends Command
      * @param array $defaultPublicDirectories
      * @param array|null $internalDirectories
      * @param array|null $publicDirectories
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
-     * @param \Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator $imageDirectoryStructureCreator
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator $uploadedFileDirectoryStructureCreator
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\DirectoryStructureCreator $customerUploadedFileDirectoryStructureCreator
      */
     public function __construct(
         $defaultInternalDirectories,
@@ -87,9 +82,6 @@ class CreateApplicationDirectoriesCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     private function createMiscellaneousDirectories(OutputInterface $output)
     {
         $publicDirectories = $this->getPublicDirectories();
@@ -104,9 +96,6 @@ class CreateApplicationDirectoriesCommand extends Command
         $output->writeln('<fg=green>Miscellaneous application directories were successfully created.</fg=green>');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     private function createImageDirectories(OutputInterface $output)
     {
         $this->imageDirectoryStructureCreator->makeImageDirectories();
@@ -114,9 +103,6 @@ class CreateApplicationDirectoriesCommand extends Command
         $output->writeln('<fg=green>Directories for images were successfully created.</fg=green>');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     private function createUploadedFileDirectories(OutputInterface $output)
     {
         $this->uploadedFileDirectoryStructureCreator->makeUploadedFileDirectories();
@@ -152,9 +138,6 @@ class CreateApplicationDirectoriesCommand extends Command
         return $directories;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function createCustomerUploadedFileDirectories(OutputInterface $output): void
     {
         $this->customerUploadedFileDirectoryStructureCreator->makeCustomerUploadedFileDirectories();

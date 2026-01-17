@@ -32,9 +32,6 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
 
     public ?int $cronBatchSize = null;
 
-    /**
-     * @param \App\Component\DataBridge\Transfer\BridgeImportTransferDependency $bridgeImportTransferDependency
-     */
     public function __construct(BridgeImportTransferDependency $bridgeImportTransferDependency)
     {
         $this->sqlLoggerFacade = $bridgeImportTransferDependency->getSqlLoggerFacade();
@@ -44,9 +41,6 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
         $this->bridgeConfig = $bridgeImportTransferDependency->getBridgeConfig();
     }
 
-    /**
-     * @return bool
-     */
     public function runTransfer(): bool
     {
         if (!$this->bridgeConfig->isEnabled()) {
@@ -66,10 +60,6 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
         return $runNextIteration;
     }
 
-    /**
-     * @param \Generator $bridgeData
-     * @return bool
-     */
     protected function processItems(Generator $bridgeData): bool
     {
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -150,23 +140,14 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
         return false;
     }
 
-    /**
-     * @param array $bridgeData
-     */
     abstract protected function processItem(array $bridgeData): void;
 
     abstract protected function doBeforeTransfer(): void;
 
     abstract protected function doAfterTransfer(): void;
 
-    /**
-     * @return \Generator
-     */
     abstract protected function getData(): Generator;
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getServiceIdentifier(): string
     {

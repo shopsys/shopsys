@@ -26,9 +26,6 @@ class TranslationExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'translation';
@@ -39,12 +36,6 @@ class TranslationExtension extends AbstractExtension
      *
      * Helpful for protection from XSS when providing user input as translation argument
      *
-     * @param \Twig\Environment $twig
-     * @param string $message
-     * @param array $arguments
-     * @param string|null $translationDomain
-     * @param string|null $locale
-     * @return string
      * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::trans()
      */
     public function transHtml(
@@ -62,10 +53,6 @@ class TranslationExtension extends AbstractExtension
 
     /**
      * Escapes all elements in array with default twig "escape" filter
-     *
-     * @param \Twig\Environment $twig
-     * @param array $elements
-     * @return array
      */
     protected function getEscapedElements(Environment $twig, array $elements): array
     {

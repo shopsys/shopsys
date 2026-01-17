@@ -93,9 +93,6 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         $this->assertMatchesRegularExpression("/Order with order number '\d+' not found./", $errors[0]['message']);
     }
 
-    /**
-     * @return array
-     */
     private function getOrderDataForCurrentlyLoggedCustomerUserProvider(): array
     {
         $data = [];
@@ -125,9 +122,6 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         return $data;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     private function getOrderOfNotCurrentlyLoggedCustomerUser(): Order
     {
         return $this->orderFacade->getById(7);

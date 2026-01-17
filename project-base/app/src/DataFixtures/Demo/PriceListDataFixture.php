@@ -27,12 +27,6 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
     public const string ACTIVE_ITEMS_ON_SALE_REFERENCE = 'items_on_sale';
     public const string FUTURE_PROMOTED_PRODUCTS_REFERENCE = 'promoted_products';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade $priceListFacade
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory $priceListDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceDataFactory $priceListProductPriceDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
-     */
     public function __construct(
         private readonly PriceListFacade $priceListFacade,
         private readonly PriceListDataFactory $priceListDataFactory,
@@ -41,9 +35,6 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -103,14 +94,6 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
         }
     }
 
-    /**
-     * @param string $productId
-     * @param string $priceValue
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData
-     */
     private function createPriceListProductPriceData(
         string $productId,
         string $priceValue,

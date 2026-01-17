@@ -149,9 +149,6 @@ class Store implements OrderableEntityInterface
      */
     protected $distance = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
-     */
     public function __construct(StoreData $storeData)
     {
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
@@ -161,9 +158,6 @@ class Store implements OrderableEntityInterface
         $this->setData($storeData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
-     */
     public function edit(StoreData $storeData)
     {
         $this->setData($storeData);
@@ -177,9 +171,6 @@ class Store implements OrderableEntityInterface
         $this->openingHours = new ArrayCollection($openingHours);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
-     */
     public function setData(StoreData $storeData): void
     {
         $this->isDefault = $storeData->isDefault;
@@ -231,9 +222,6 @@ class Store implements OrderableEntityInterface
         return $this->stock;
     }
 
-    /**
-     * @return bool
-     */
     public function isDefault(): bool
     {
         return $this->isDefault;

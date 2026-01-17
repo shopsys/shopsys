@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 
 class DomainIconProcessor
 {
-    /**
-     * @param \Monolog\Logger $logger
-     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     */
     public function __construct(
         protected readonly Logger $logger,
         protected readonly ImageProcessor $imageProcessor,
@@ -25,11 +20,6 @@ class DomainIconProcessor
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @param string $filepath
-     * @param string $domainImagesDirectory
-     */
     public function saveIcon(
         int $domainId,
         string $filepath,

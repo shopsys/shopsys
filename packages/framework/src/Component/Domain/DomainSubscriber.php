@@ -14,19 +14,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class DomainSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ContextResolverInterface $contextResolver,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
-     */
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();

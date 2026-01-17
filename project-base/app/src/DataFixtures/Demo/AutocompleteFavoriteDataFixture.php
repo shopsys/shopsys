@@ -17,11 +17,6 @@ use Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteFacade;
 
 class AutocompleteFavoriteDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteDataFactory $autocompleteFavoriteDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteFacade $autocompleteFavoriteFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly AutocompleteFavoriteDataFactory $autocompleteFavoriteDataFactory,
         private readonly AutocompleteFavoriteFacade $autocompleteFavoriteFacade,
@@ -29,9 +24,6 @@ class AutocompleteFavoriteDataFixture extends AbstractReferenceFixture implement
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -40,9 +32,6 @@ class AutocompleteFavoriteDataFixture extends AbstractReferenceFixture implement
         }
     }
 
-    /**
-     * @param int $domainId
-     */
     private function loadForDomain(int $domainId): void
     {
         $autocompleteFavoriteData = $this->autocompleteFavoriteDataFactory->createInstance();
@@ -116,9 +105,6 @@ class AutocompleteFavoriteDataFixture extends AbstractReferenceFixture implement
         return $brands;
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getDependencies(): array
     {

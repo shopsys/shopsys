@@ -11,10 +11,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class GoPayClient extends BaseGoPayClient
 {
-    /**
-     * @param array $rawPayment
-     * @return \GoPay\Http\Response
-     */
     #[Override]
     public function sendPaymentToGoPay(array $rawPayment): Response
     {
@@ -30,10 +26,6 @@ class GoPayClient extends BaseGoPayClient
         return $response;
     }
 
-    /**
-     * @param string $id
-     * @return \GoPay\Http\Response
-     */
     #[Override]
     public function getStatus(string $id): Response
     {
@@ -47,11 +39,6 @@ class GoPayClient extends BaseGoPayClient
         return $response;
     }
 
-    /**
-     * @param string $id
-     * @param int $amount
-     * @return \GoPay\Http\Response
-     */
     #[Override]
     public function refundTransaction(string $id, int $amount): Response
     {
@@ -65,10 +52,6 @@ class GoPayClient extends BaseGoPayClient
         return $response;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return array
-     */
     #[Override]
     public function downloadGoPayPaymentMethodsByCurrency(Currency $currency): array
     {

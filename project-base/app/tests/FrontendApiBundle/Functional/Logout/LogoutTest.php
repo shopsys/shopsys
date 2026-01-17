@@ -17,9 +17,6 @@ class LogoutTest extends GraphQlWithLoginTestCase
         $this->assertTrue($isLogoutSuccess);
     }
 
-    /**
-     * @return string
-     */
     private function getLogoutQuery(): string
     {
         return '

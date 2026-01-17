@@ -86,17 +86,11 @@ class PaymentTransaction
      */
     protected $externalPaymentMethod;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
-     */
     public function __construct(PaymentTransactionData $paymentTransactionData)
     {
         $this->setData($paymentTransactionData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
-     */
     protected function setData(PaymentTransactionData $paymentTransactionData): void
     {
         $this->order = $paymentTransactionData->order;
@@ -110,9 +104,6 @@ class PaymentTransaction
         $this->externalPaymentMethod = $paymentTransactionData->externalPaymentMethod;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
-     */
     public function edit(PaymentTransactionData $paymentTransactionData): void
     {
         $this->setData($paymentTransactionData);
@@ -142,9 +133,6 @@ class PaymentTransaction
         return $this->payment;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
     public function getPaymentThrowExceptionIfNull(): Payment
     {
         if ($this->payment === null) {
@@ -190,33 +178,21 @@ class PaymentTransaction
         return $this->refundedAmount;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function getRefundableAmount(): Money
     {
         return $this->getPaidAmount()->subtract($this->getRefundedAmount());
     }
 
-    /**
-     * @return bool
-     */
     public function isRefundable(): bool
     {
         return $this->payment->isGoPay() && in_array($this->externalPaymentStatus, [PaymentStatus::PARTIALLY_REFUNDED, PaymentStatus::PAID], true);
     }
 
-    /**
-     * @return bool
-     */
     public function isPartiallyRefunded(): bool
     {
         return $this->payment->isGoPay() && $this->externalPaymentStatus === PaymentStatus::PARTIALLY_REFUNDED;
     }
 
-    /**
-     * @return bool
-     */
     public function isPaid(): bool
     {
         if ($this->payment === null) {
@@ -226,9 +202,6 @@ class PaymentTransaction
         return $this->payment->isGoPay() && $this->externalPaymentStatus === PaymentStatus::PAID;
     }
 
-    /**
-     * @return bool
-     */
     public function hasPaymentInProcess(): bool
     {
         if ($this->payment === null) {

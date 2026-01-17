@@ -18,7 +18,6 @@ class TransactionalMasterRequestListener
 
     /**
      * @param \Traversable<int, \Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestConditionProviderInterface> $transactionalMasterRequestConditionProviders
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         protected readonly Traversable $transactionalMasterRequestConditionProviders,
@@ -31,9 +30,6 @@ class TransactionalMasterRequestListener
         static::$isManuallyRollbacked = true;
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
-     */
     public function onKernelRequest(RequestEvent $event): void
     {
         if (!$this->inTransaction && $this->shouldBeginTransaction($event)) {
@@ -42,9 +38,6 @@ class TransactionalMasterRequestListener
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
-     */
     public function onKernelResponse(ResponseEvent $event): void
     {
         if ($this->inTransaction && !static::$isManuallyRollbacked) {
@@ -53,9 +46,6 @@ class TransactionalMasterRequestListener
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
-     */
     public function onKernelException(ExceptionEvent $event): void
     {
         if ($this->inTransaction) {
@@ -64,10 +54,6 @@ class TransactionalMasterRequestListener
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
-     * @return bool
-     */
     protected function shouldBeginTransaction(RequestEvent $event): bool
     {
         foreach ($this->transactionalMasterRequestConditionProviders as $transactionalMasterRequestConditionProvider) {

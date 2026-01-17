@@ -23,9 +23,6 @@ final class StockFormType extends AbstractType
 {
     private ?Stock $stock;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
-     */
     public function __construct(
         private readonly StockFacade $stockFacade,
     ) {
@@ -103,10 +100,6 @@ final class StockFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param string|null $externalId
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function sameStockExternalIdValidation(?string $externalId, ExecutionContextInterface $context): void
     {
         if ($externalId === null) {

@@ -19,13 +19,10 @@ class ProductsBatchLoaderTest extends TestCase
 {
     private SyncPromiseAdapter $promiseAdapter;
 
-    /** @var \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchProvider&\PHPUnit\Framework\MockObject\MockObject */
     private ProductElasticsearchBatchProvider|MockObject $productElasticsearchBatchProvider;
 
-    /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain&\PHPUnit\Framework\MockObject\MockObject */
     private Domain|MockObject $domain;
 
-    /** @var \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade&\PHPUnit\Framework\MockObject\MockObject */
     private GiftPlanFacade|MockObject $giftPlanFacade;
 
     #[Override]
@@ -181,9 +178,6 @@ class ProductsBatchLoaderTest extends TestCase
         $this->assertSame([[], [], [], []], $result);
     }
 
-    /**
-     * @return \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductsBatchLoader
-     */
     private function createLoader(): ProductsBatchLoader
     {
         return new ProductsBatchLoader(
@@ -196,7 +190,6 @@ class ProductsBatchLoaderTest extends TestCase
 
     /**
      * @param \GraphQL\Executor\Promise\Promise $promise
-     * @return mixed
      */
     private function resolvePromise($promise): mixed
     {

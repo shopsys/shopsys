@@ -48,18 +48,6 @@ class AdministratorController extends AdminBaseController
 {
     protected const int MAX_ADMINISTRATOR_ACTIVITIES_COUNT = 10;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade $administratorActivityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory $administratorDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade $administratorRolesChangedFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade $administratorPasswordFacade
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly AdministratorFacade $administratorFacade,
         protected readonly GridFactory $gridFactory,
@@ -74,9 +62,6 @@ class AdministratorController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/list/')]
     #[CanView]
     public function listAction(): Response
@@ -111,11 +96,6 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/edit/{id}', requirements: ['id' => '\d+'])]
     #[RequireRole(SystemRole::ADMIN)]
     public function editAction(Request $request, int $id): Response
@@ -187,10 +167,6 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $administratorId
-     */
     protected function denyAccessUnlessHimselfOrGranted(Request $request, int $administratorId): void
     {
         $currentAdministrator = $this->getCurrentAdministrator();
@@ -207,9 +183,6 @@ class AdministratorController extends AdminBaseController
         }
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/my-account/')]
     #[RequireRole(SystemRole::ADMIN)]
     public function myAccountAction(): Response
@@ -222,10 +195,6 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -262,10 +231,6 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -297,12 +262,6 @@ class AdministratorController extends AdminBaseController
         return $this->redirectToRoute('admin_administrator_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @param string $twoFactorAuthenticationType
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(
         path: '/administrator/enable-two-factor-authentication/{id}/{twoFactorAuthenticationType}',
         name: 'admin_administrator_enable-two-factor-authentication',
@@ -345,11 +304,6 @@ class AdministratorController extends AdminBaseController
         return $this->enableGoogleAuthTwoFactorAuthentication($request, $administrator);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     protected function enableEmailTwoFactorAuthentication(Request $request, Administrator $administrator): Response
     {
         $formSendEmail = $this->createSendEmailForm();
@@ -377,11 +331,6 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     protected function enableGoogleAuthTwoFactorAuthentication(
         Request $request,
         Administrator $administrator,
@@ -408,10 +357,6 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param string $code
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     protected function validateEmailCode(string $code, ExecutionContextInterface $context): void
     {
         if ($this->getCurrentAdministrator()->getEmailAuthCode() === null || $code !== $this->getCurrentAdministrator()->getEmailAuthCode()) {
@@ -419,10 +364,6 @@ class AdministratorController extends AdminBaseController
         }
     }
 
-    /**
-     * @param string $code
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     protected function validateGoogleAuthCode(string $code, ExecutionContextInterface $context): void
     {
         if (!$this->administratorTwoFactorAuthenticationFacade->isGoogleAuthenticatorCodeValid($this->getCurrentAdministrator(), $code)) {
@@ -430,11 +371,6 @@ class AdministratorController extends AdminBaseController
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/disable-two-factor-authentication/{id}', name: 'admin_administrator_disable-two-factor-authentication', requirements: ['id' => '\d+'])]
     #[RequireRole(SystemRole::ADMIN)]
     public function disableTwoFactorAuthenticationAction(Request $request, int $id): Response
@@ -486,11 +422,6 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param callable $twoFactorCodeValidationCallback
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @return \Symfony\Component\Form\FormInterface
-     */
     protected function createVerificationForm(
         callable $twoFactorCodeValidationCallback,
         Administrator $administrator,
@@ -523,9 +454,6 @@ class AdministratorController extends AdminBaseController
         return $form;
     }
 
-    /**
-     * @param \Symfony\Component\Security\Core\User\UserInterface|null $loggedUser
-     */
     protected function securitySafeCheck(?UserInterface $loggedUser): void
     {
         if (!$loggedUser instanceof Administrator) {
@@ -536,9 +464,6 @@ class AdministratorController extends AdminBaseController
         }
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     protected function createSendEmailForm(): FormInterface
     {
         /** @var \Symfony\Component\Form\FormFactoryInterface $formFactory */
@@ -554,10 +479,6 @@ class AdministratorController extends AdminBaseController
         return $formSendEmail;
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/send-reset-password/{id}', name: 'admin_administrator_send-reset-password', requirements: ['id' => '\d+'])]
     #[RequireRole(SystemRole::ADMIN)]
     #[CsrfProtection]
@@ -577,10 +498,6 @@ class AdministratorController extends AdminBaseController
         return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/promote-to-superadmin/{id}', name: 'admin_administrator_promote-to-superadmin', requirements: ['id' => '\d+'])]
     #[SuperAdminOnly]
     #[CsrfProtection]
@@ -604,10 +521,6 @@ class AdministratorController extends AdminBaseController
         return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/set-new-password/', name: 'admin_administrator_set-new-password')]
     #[PublicAccess]
     public function setNewPasswordAction(Request $request): Response

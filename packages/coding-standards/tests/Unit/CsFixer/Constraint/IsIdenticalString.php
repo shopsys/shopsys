@@ -17,9 +17,6 @@ class IsIdenticalString extends Constraint
 {
     private IsIdentical $isIdentical;
 
-    /**
-     * @param mixed $value
-     */
     public function __construct(private readonly mixed $value)
     {
         $this->isIdentical = new IsIdentical($this->value);
@@ -27,9 +24,6 @@ class IsIdenticalString extends Constraint
 
     /**
      * @param mixed $other
-     * @param string $description
-     * @param bool $returnResult
-     * @return bool|null
      */
     #[Override]
     public function evaluate($other, string $description = '', bool $returnResult = false): ?bool
@@ -53,9 +47,6 @@ class IsIdenticalString extends Constraint
         }
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function toString(): string
     {
@@ -64,7 +55,6 @@ class IsIdenticalString extends Constraint
 
     /**
      * @param mixed $other
-     * @return string
      */
     #[Override]
     protected function additionalFailureDescription($other): string

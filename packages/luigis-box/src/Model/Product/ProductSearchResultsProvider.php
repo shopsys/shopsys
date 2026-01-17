@@ -22,18 +22,6 @@ use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class ProductSearchResultsProvider extends SearchResultsProvider implements ProductSearchResultsProviderInterface
 {
-    /**
-     * @param string $enabledDomainIds
-     * @param \Shopsys\LuigisBoxBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
-     * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient $client
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper
-     * @param \Overblog\DataLoader\DataLoaderInterface $luigisBoxBatchLoader
-     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper
-     * @param \Shopsys\LuigisBoxBundle\Model\Facet\FacetFactory $facetFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     */
     public function __construct(
         string $enabledDomainIds,
         protected readonly ProductConnectionFactory $productConnectionFactory,
@@ -49,10 +37,6 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
         parent::__construct($enabledDomainIds);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     #[Override]
     public function getProductsSearchResults(
         Argument $argument,

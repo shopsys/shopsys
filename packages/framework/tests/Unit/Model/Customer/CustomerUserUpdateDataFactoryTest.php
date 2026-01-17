@@ -174,9 +174,6 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $this->assertSame($order->getDeliveryTelephone(), $customerUserUpdateData->deliveryAddressData->telephone);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
-     */
     private function getCustomerUserUpdateDataFactory(): CustomerUserUpdateDataFactory
     {
         return new CustomerUserUpdateDataFactory(

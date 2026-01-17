@@ -14,18 +14,11 @@ final class ErrorIdLogProcessor implements EventSubscriberInterface, ResetInterf
 {
     private ?string $errorId = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
-     */
     public function __construct(
         private readonly ErrorIdProvider $errorIdProvider,
     ) {
     }
 
-    /**
-     * @param \Monolog\LogRecord $record
-     * @return \Monolog\LogRecord
-     */
     public function __invoke(LogRecord $record): LogRecord
     {
         if ($this->errorId !== null) {

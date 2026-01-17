@@ -28,13 +28,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_ADMINISTRATOR)]
 class AdministratorRoleGroupController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
         protected readonly GridFactory $gridFactory,
@@ -44,9 +37,6 @@ class AdministratorRoleGroupController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/groups/list/')]
     #[CanView]
     public function listAction(): Response
@@ -69,10 +59,6 @@ class AdministratorRoleGroupController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/groups/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -113,11 +99,6 @@ class AdministratorRoleGroupController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/groups/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -169,11 +150,6 @@ class AdministratorRoleGroupController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/groups/copy/{id}', requirements: ['id' => '\d+'])]
     #[CanCreate]
     public function copyAction(Request $request, int $id): Response
@@ -200,10 +176,6 @@ class AdministratorRoleGroupController extends AdminBaseController
         }
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/groups/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]

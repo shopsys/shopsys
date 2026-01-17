@@ -41,12 +41,6 @@ class LoginAsUserExchangeToken
      */
     protected $expiresAt;
 
-    /**
-     * @param string $token
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param \DateTimeImmutable $expiresAt
-     */
     public function __construct(
         string $token,
         CustomerUser $customerUser,

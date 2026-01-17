@@ -10,12 +10,6 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 class CustomerUserRefreshTokenChainFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactory $customerUserRefreshTokenChainDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactory $customerUserRefreshTokenChainFactory
-     * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
-     */
     public function __construct(
         protected readonly CustomerUserRefreshTokenChainDataFactory $customerUserRefreshTokenChainDataFactory,
         protected readonly CustomerUserRefreshTokenChainFactory $customerUserRefreshTokenChainFactory,
@@ -24,14 +18,6 @@ class CustomerUserRefreshTokenChainFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $tokenChain
-     * @param string $deviceId
-     * @param \DateTimeImmutable $tokenExpiration
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administrator
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain
-     */
     public function createCustomerUserRefreshTokenChain(
         CustomerUser $customerUser,
         string $tokenChain,
@@ -51,12 +37,6 @@ class CustomerUserRefreshTokenChainFacade
         return $this->customerUserRefreshTokenChainFactory->create($customerUserRefreshTokenChainData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $secretChain
-     * @param string $deviceId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain|null
-     */
     public function findCustomersTokenChainByCustomerUserAndSecretChainAndDeviceId(
         CustomerUser $customerUser,
         string $secretChain,
@@ -77,18 +57,11 @@ class CustomerUserRefreshTokenChainFacade
         return null;
     }
 
-    /**
-     * @param string $deviceId
-     */
     public function removeCustomerUserRefreshTokenChainsByDeviceId(string $deviceId): void
     {
         $this->customerUserRefreshTokenChainRepository->removeCustomerUserRefreshTokenChainsByDeviceId($deviceId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string|null $excludedDeviceId
-     */
     public function removeAllCustomerUserRefreshTokenChains(
         CustomerUser $customerUser,
         ?string $excludedDeviceId = null,
@@ -96,9 +69,6 @@ class CustomerUserRefreshTokenChainFacade
         $this->customerUserRefreshTokenChainRepository->removeAllCustomerUserRefreshTokenChains($customerUser, $excludedDeviceId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain $refreshTokenChain
-     */
     public function removeCustomerRefreshTokenChain(CustomerUserRefreshTokenChain $refreshTokenChain): void
     {
         $this->customerUserRefreshTokenChainRepository->removeCustomerRefreshTokenChain($refreshTokenChain);

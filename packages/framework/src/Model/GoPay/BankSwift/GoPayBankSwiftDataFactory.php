@@ -6,18 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\GoPay\BankSwift;
 
 class GoPayBankSwiftDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftData
-     */
     public function createInstance(): GoPayBankSwiftData
     {
         return new GoPayBankSwiftData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwift $goPayBankSwift
-     * @return \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftData
-     */
     public function createFromGoPayBankSwift(GoPayBankSwift $goPayBankSwift): GoPayBankSwiftData
     {
         $goPayBankSwiftData = $this->createInstance();

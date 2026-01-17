@@ -6,9 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\AbstractUploadedFile;
 
 interface UploadedFileInterface
 {
-    /**
-     * @return string
-     */
     public function getFilename(): string;
 
     /**

@@ -13,10 +13,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class CspHeaderSettingFormType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

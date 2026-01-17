@@ -13,13 +13,6 @@ use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFac
 
 class TransportPriceCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFacade $transportPriceFacade
-     * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
-     */
     public function __construct(
         protected readonly BasePriceCalculation $basePriceCalculation,
         protected readonly PricingSetting $pricingSetting,
@@ -29,14 +22,6 @@ class TransportPriceCalculation
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $productsPrice
-     * @param int $domainId
-     * @param int $cartTotalWeight
-     * @param bool $forceFreeTransport
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function calculatePrice(
         Transport $transport,
         PriceInterface $productsPrice,
@@ -53,10 +38,6 @@ class TransportPriceCalculation
         return $this->calculateIndependentPrice($transportPrice);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPrice $transportPrice
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function calculateIndependentPrice(TransportPrice $transportPrice): PriceInterface
     {
         $domainId = $transportPrice->getDomainId();

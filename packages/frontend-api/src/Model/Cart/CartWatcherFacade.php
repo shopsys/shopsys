@@ -20,19 +20,6 @@ class CartWatcherFacade
 {
     protected CartWithModificationsResult $cartWithModificationsResult;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartPromoCodeFacade $cartPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResultFactory $cartWithModificationsResultFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade $giftCartFacade
-     */
     public function __construct(
         protected readonly CartWatcher $cartWatcher,
         protected readonly EntityManagerInterface $em,
@@ -48,10 +35,6 @@ class CartWatcherFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult
-     */
     public function getCheckedCartWithModifications(Cart $cart): CartWithModificationsResult
     {
         $this->cartWithModificationsResult = $this->cartWithModificationsResultFactory->create($cart);
@@ -71,9 +54,6 @@ class CartWatcherFacade
         return $this->cartWithModificationsResult;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkRemovedProductsItems(Cart $cart): void
     {
         foreach ($cart->getItems() as $cartItem) {
@@ -86,9 +66,6 @@ class CartWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkModifiedPrices(Cart $cart): void
     {
         $modifiedItems = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
@@ -98,9 +75,6 @@ class CartWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkNotListableItems(Cart $cart): void
     {
         $notVisibleItems = $this->cartWatcher->getNotListableItems($cart, $this->currentCustomerUser);
@@ -113,9 +87,6 @@ class CartWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkProductGiftCartItemsValidity(Cart $cart): void
     {
         $removedItems = $this->giftCartFacade->refreshProductGiftCartItemsAndGetInvalidItems($cart, $this->domain->getId());
@@ -127,9 +98,6 @@ class CartWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkPromoCodeValidity(Cart $cart): void
     {
         foreach ($cart->getAllAppliedPromoCodes() as $promoCode) {
@@ -142,9 +110,6 @@ class CartWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkStockQuantities(Cart $cart): void
     {
         foreach ($cart->getItems() as $cartItem) {
@@ -180,9 +145,6 @@ class CartWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function setPromoCodes(Cart $cart): void
     {
         $orderData = $this->orderFacade->createOrderDataFromCart($cart, $this->domain->getCurrentDomainConfig());

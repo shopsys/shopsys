@@ -18,10 +18,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class ProductPricesWithVatSelectType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     */
     public function __construct(
         protected readonly VatFacade $vatFacade,
         protected readonly ProductFacade $productFacade,
@@ -58,9 +54,6 @@ final class ProductPricesWithVatSelectType extends AbstractType
             );
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

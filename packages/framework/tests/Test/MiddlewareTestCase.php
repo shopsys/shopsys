@@ -25,9 +25,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class MiddlewareTestCase extends TestCase
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack
-     */
     protected function createOrderProcessingStack(): OrderProcessingStack
     {
         $middleware = $this->createMock(OrderProcessorMiddlewareInterface::class);
@@ -41,9 +38,6 @@ class MiddlewareTestCase extends TestCase
         return new OrderProcessingStack([$middleware]);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
-     */
     protected function createOrderProcessingData(): OrderProcessingData
     {
         $orderItemTypeEnum = new OrderItemTypeEnum();
@@ -69,9 +63,6 @@ class MiddlewareTestCase extends TestCase
         return new OrderProcessingData($orderInput, $orderData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory
-     */
     protected function createOrderItemDataFactory(): OrderItemDataFactory
     {
         $orderItemPriceCalculation = $this->createMock(OrderItemPriceCalculation::class);
@@ -80,11 +71,6 @@ class MiddlewareTestCase extends TestCase
         return new OrderItemDataFactory($orderItemPriceCalculation, $pricingSettingMock);
     }
 
-    /**
-     * @param string $currencyCode
-     * @param string $roundingType
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
     protected function createCurrencyFacade(
         string $currencyCode = Currency::CODE_EUR,
         string $roundingType = Currency::ROUNDING_TYPE_HUNDREDTHS,
@@ -101,17 +87,11 @@ class MiddlewareTestCase extends TestCase
         return $currencyFacade;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
     protected function createVat(): Vat
     {
         return $this->createMock(Vat::class);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     protected function createDomainConfigMock(): DomainConfig
     {
         $domainConfigMock = $this->createMock(DomainConfig::class);

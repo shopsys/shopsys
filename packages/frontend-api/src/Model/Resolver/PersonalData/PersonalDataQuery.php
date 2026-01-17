@@ -23,17 +23,6 @@ class PersonalDataQuery extends AbstractQuery
 {
     protected DomainRouter $router;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataExportFacade $personalDataExportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade $complaintFacade
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly Domain $domain,
@@ -61,11 +50,6 @@ class PersonalDataQuery extends AbstractQuery
         ];
     }
 
-    /**
-     * @param string $hash
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return array
-     */
     public function personalDataAccessQuery(string $hash, InputValidator $validator): array
     {
         $validator->validate();

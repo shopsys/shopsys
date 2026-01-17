@@ -11,21 +11,12 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 
 class FreeTransportAndPaymentFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
-     */
     public function __construct(
         protected readonly PricingSetting $pricingSetting,
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @param bool $forceFreeTransportAndPayment
-     * @return bool
-     */
     public function isActive(int $domainId, bool $forceFreeTransportAndPayment): bool
     {
         if (!$this->customerUserRoleResolver->canCurrentCustomerUserSeePrices()) {
@@ -39,12 +30,6 @@ class FreeTransportAndPaymentFacade
         return $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId) !== null;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $productsPrice
-     * @param int $domainId
-     * @param bool $forceFreeTransportAndPayment
-     * @return bool
-     */
     public function isFree(PriceInterface $productsPrice, int $domainId, bool $forceFreeTransportAndPayment): bool
     {
         if (!$this->customerUserRoleResolver->canCurrentCustomerUserSeePrices()) {
@@ -64,12 +49,6 @@ class FreeTransportAndPaymentFacade
         return $remainingFreeTransportAmount->isLessThanOrEqualTo(Money::zero());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $productsPrice
-     * @param int $domainId
-     * @param bool $forceFreeTransportAndPayment
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function getRemainingAmount(
         PriceInterface $productsPrice,
         int $domainId,
@@ -82,21 +61,11 @@ class FreeTransportAndPaymentFacade
         return Money::zero();
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
     protected function getFreeTransportAndPaymentPriceLimitOnDomain(int $domainId): ?Money
     {
         return $this->pricingSetting->getFreeTransportAndPaymentPriceLimit($domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $productsPrice
-     * @param bool $forceFreeTransportAndPayment
-     * @return bool
-     */
     public function isFreeTransportAndPaymentApplied(
         int $domainId,
         PriceInterface $productsPrice,
@@ -105,11 +74,6 @@ class FreeTransportAndPaymentFacade
         return $this->isActive($domainId, $forceFreeTransportAndPayment) && $this->getRemainingAmount($productsPrice, $domainId, $forceFreeTransportAndPayment)->isZero();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $productsPrice
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
     protected function getDifferenceAmountBetweenLimitAndProductsPrice(
         PriceInterface $productsPrice,
         int $domainId,

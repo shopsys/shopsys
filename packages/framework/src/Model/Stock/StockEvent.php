@@ -27,25 +27,15 @@ class StockEvent extends Event
      */
     public const DELETE = 'stock.delete';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
-     * @param bool $hasChangedDomains
-     */
     public function __construct(protected Stock $stock, protected bool $hasChangedDomains = false)
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock
-     */
     public function getStock(): Stock
     {
         return $this->stock;
     }
 
-    /**
-     * @return bool
-     */
     public function hasChangedDomains(): bool
     {
         return $this->hasChangedDomains === true;

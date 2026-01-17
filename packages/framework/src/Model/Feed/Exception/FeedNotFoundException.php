@@ -8,11 +8,6 @@ use Exception;
 
 class FeedNotFoundException extends Exception
 {
-    /**
-     * @param string $name
-     * @param int|null $domainId
-     * @param \Exception|null $previous
-     */
     public function __construct(
         string $name,
         ?int $domainId = null,

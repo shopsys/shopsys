@@ -140,9 +140,6 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $this->assertCount(1, $notListableItems);
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
     private function setVatsAndPrices(ProductData $productData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -153,10 +150,6 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         }
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
-     */
     public function createCartItemMock(ProductData $productData): CartItem
     {
         $product = Product::create($productData);
@@ -173,9 +166,6 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         return $cartItemMock;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
     public function createCustomerUserMock(): CurrentCustomerUser
     {
         $expectedPricingGroup = $this->getReferenceForDomain(
@@ -196,9 +186,6 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         return $currentCustomerUserMock;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
-     */
     public function createProductVisibilityFacadeMock(): ProductVisibilityFacade
     {
         $productVisibilityMock = $this->getMockBuilder(ProductVisibility::class)

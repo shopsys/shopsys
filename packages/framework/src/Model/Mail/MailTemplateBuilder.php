@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade;
 
 class MailTemplateBuilder
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
-     */
     public function __construct(
         protected readonly MailSettingFacade $mailSettingFacade,
         protected readonly Domain $domain,
@@ -22,20 +17,11 @@ class MailTemplateBuilder
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @param string $imageNameWithExtension
-     * @return string
-     */
     public function getMailImageSrc(int $domainId, string $imageNameWithExtension): string
     {
         return $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($domainId)) . '/public/frontend/mail/' . $imageNameWithExtension;
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
     protected function getFooterTextTableRow(int $domainId): string
     {
         $footerTextTableRow = '';
@@ -58,19 +44,11 @@ class MailTemplateBuilder
         return $footerTextTableRow;
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
     protected function getFooterText(int $domainId): ?string
     {
         return $this->mailSettingFacade->getFooterText($domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
     protected function getFooterIconsTableRow(int $domainId): string
     {
         $footerIconsTableRow = '';
@@ -89,10 +67,6 @@ class MailTemplateBuilder
         return $footerIconsTableRow;
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
     protected function getFooterIcons(int $domainId): string
     {
         $footerIconsHtml = '';
@@ -114,11 +88,6 @@ class MailTemplateBuilder
         return $footerIconsHtml;
     }
 
-    /**
-     * @param int $domainId
-     * @param string|null $content
-     * @return string
-     */
     public function getMailTemplateWithContent(int $domainId, ?string $content = ''): string
     {
         return <<<EOT

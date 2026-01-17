@@ -11,10 +11,6 @@ use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
 class ArticleRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClockInterface $clock,
@@ -136,9 +132,6 @@ class ArticleRepository
         return $article;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllVisibleQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -160,11 +153,6 @@ class ArticleRepository
         ]);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $placement
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
         int $domainId,
         string $placement,
@@ -175,7 +163,6 @@ class ArticleRepository
     }
 
     /**
-     * @param int $domainId
      * @return int[]
      */
     public function getAllIdsByDomainId(int $domainId): array

@@ -24,9 +24,6 @@ class ImageProcessor
      */
     protected array $supportedImageExtensions;
 
-    /**
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     */
     public function __construct(
         protected readonly FilesystemOperator $filesystem,
     ) {
@@ -39,10 +36,6 @@ class ImageProcessor
         ];
     }
 
-    /**
-     * @param string $filepath
-     * @return string
-     */
     protected function getExtensionThrowExceptionIfNotSupported(string $filepath): string
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
@@ -54,10 +47,6 @@ class ImageProcessor
         return $extension;
     }
 
-    /**
-     * @param string $filepath
-     * @return string
-     */
     public function getEncodedImageUri(string $filepath): string
     {
         $this->getExtensionThrowExceptionIfNotSupported($filepath);
@@ -75,10 +64,6 @@ class ImageProcessor
         );
     }
 
-    /**
-     * @param string $filepath
-     * @return string
-     */
     public function convertToShopFormatAndGetNewFilename(string $filepath): string
     {
         $filename = pathinfo($filepath, PATHINFO_FILENAME);

@@ -22,9 +22,6 @@ class RoutingExtension implements ExtensionInterface
 {
     public const string ROUTE_NAME_EXTRA = 'route_name';
 
-    /**
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $generator
-     */
     public function __construct(protected readonly UrlGeneratorInterface $generator)
     {
     }

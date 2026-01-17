@@ -20,7 +20,6 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $file
      * @param int $classPosition
      */
     #[Override]
@@ -46,12 +45,6 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
         }
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $classPosition
-     * @param int $phpDocStartPosition
-     * @return array
-     */
     private function findPhpDocTags(File $file, int $classPosition, int $phpDocStartPosition): array
     {
         $phpDocEndPosition = $file->findPrevious(T_DOC_COMMENT_CLOSE_TAG, $classPosition);
@@ -68,9 +61,6 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
         return $result;
     }
 
-    /**
-     * @param array $token
-     */
     private function isDoctrineInheritanceAnnotation(array $token)
     {
         $content = $token['content'];

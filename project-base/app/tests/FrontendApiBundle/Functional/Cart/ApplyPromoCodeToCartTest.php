@@ -235,10 +235,6 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         self::assertTrue($cart->isPromoCodeApplied($promoCode->getCode()), 'Promo code have to be applied after merging cart after login');
     }
 
-    /**
-     * @param string|null $promoCodeReferenceName
-     * @param string $expectedError
-     */
     #[DataProvider('getInvalidPromoCodesDataProvider')]
     public function testApplyInvalidPromoCode(?string $promoCodeReferenceName, string $expectedError): void
     {
@@ -274,9 +270,6 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         self::assertEquals(PromoCodeConstraint::INVALID_ERROR, $violations['input.promoCode'][0]['code']);
     }
 
-    /**
-     * @return iterable
-     */
     public static function getInvalidPromoCodesDataProvider(): iterable
     {
         yield [null, PromoCodeConstraint::INVALID_ERROR];
@@ -292,9 +285,6 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         yield [PromoCodeDataFixture::PROMO_CODE_FOR_VIP_PRICING_GROUP, PromoCodeConstraint::NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR];
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     */
     private function hideProduct(Product $product): void
     {
         $productData = $this->productDataFactory->createFromProduct($product);
@@ -304,10 +294,6 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $this->handleDispatchedRecalculationMessages();
     }
 
-    /**
-     * @param string $email
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
     private function findCartOfCustomerByEmail(string $email): ?Cart
     {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
@@ -336,11 +322,6 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $this->getResponseDataForGraphQlType($response, 'ChangePaymentInCart');
     }
 
-    /**
-     * @param string $promoCode
-     * @param string $cartUuid
-     * @return array
-     */
     private function applyPromoCodeToCartAndGetResponseData(
         string $promoCode,
         string $cartUuid = CartDataFixture::CART_UUID,
@@ -350,11 +331,6 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         return $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
     }
 
-    /**
-     * @param string $promoCode
-     * @param string $cartUuid
-     * @return array
-     */
     private function applyPromoCodeToCart(string $promoCode, string $cartUuid = CartDataFixture::CART_UUID): array
     {
         return $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ApplyPromoCodeToCart.graphql', [

@@ -40,9 +40,6 @@ class OpeningHours
      */
     protected $openingHoursRanges;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData $openingHourData
-     */
     public function __construct(OpeningHoursData $openingHourData)
     {
         $this->setData($openingHourData);
@@ -96,9 +93,6 @@ class OpeningHours
         $this->openingHoursRanges = new ArrayCollection($openingHoursRanges);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData $openingHourData
-     */
     protected function setData(OpeningHoursData $openingHourData): void
     {
         $this->dayOfWeek = $openingHourData->dayOfWeek;

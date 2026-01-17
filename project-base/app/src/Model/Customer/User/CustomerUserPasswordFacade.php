@@ -18,10 +18,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade as Ba
 class CustomerUserPasswordFacade extends BaseCustomerUserPasswordFacade
 {
     /**
-     * @param string $email
-     * @param int $domainId
-     * @param string|null $resetPasswordHash
-     * @param string $newPassword
      * @return \App\Model\Customer\User\CustomerUser
      */
     #[Override]

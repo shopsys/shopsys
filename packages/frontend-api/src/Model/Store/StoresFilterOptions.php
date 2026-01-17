@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Store;
 class StoresFilterOptions
 {
     /**
-     * @param string|null $searchText
      * @param array{latitude: string, longitude: string}|null $coordinates
      */
     public function __construct(
@@ -16,9 +15,6 @@ class StoresFilterOptions
     ) {
     }
 
-    /**
-     * @return string|null
-     */
     public function getSearchText(): ?string
     {
         return $this->searchText;

@@ -44,9 +44,6 @@ class CartTotalItemsPriceTest extends GraphQlTestCase
         ]);
     }
 
-    /**
-     * @param string $cartUuid
-     */
     private function addPaymentCardToCart(string $cartUuid): void
     {
         $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
@@ -64,9 +61,6 @@ class CartTotalItemsPriceTest extends GraphQlTestCase
         $this->getResponseContentForQuery($changePaymentInCartMutation);
     }
 
-    /**
-     * @param string $cartUuid
-     */
     private function addTransportPplToCart(string $cartUuid): void
     {
         $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
@@ -84,10 +78,6 @@ class CartTotalItemsPriceTest extends GraphQlTestCase
         $this->getResponseContentForQuery($changeTransportInCartMutation);
     }
 
-    /**
-     * @param string $cartUuid
-     * @return array
-     */
     private function getCartResponse(string $cartUuid): array
     {
         $getCartQuery = '

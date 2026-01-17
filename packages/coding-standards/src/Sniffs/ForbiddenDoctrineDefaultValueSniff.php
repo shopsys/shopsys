@@ -13,9 +13,6 @@ use const T_DOC_COMMENT_OPEN_TAG;
 
 class ForbiddenDoctrineDefaultValueSniff implements Sniff
 {
-    /**
-     * @return array
-     */
     #[Override]
     public function register(): array
     {
@@ -23,7 +20,6 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $file
      * @param int $classPosition
      */
     #[Override]
@@ -47,18 +43,12 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
         }
     }
 
-    /**
-     * @param string $annotationString
-     * @return bool
-     */
     protected function annotationContainsDefaultValue(string $annotationString): bool
     {
         return (bool)preg_match('~options\s*=\s*\{\s*.*"default"~', $annotationString);
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $startPosition
      * @return int[]
      */
     protected function getAllDocBlockOpeningTagPositions(File $file, int $startPosition): array

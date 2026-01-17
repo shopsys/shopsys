@@ -8,12 +8,6 @@ use Ramsey\Uuid\Uuid;
 
 class SearchInputTestUtils
 {
-    /**
-     * @param string|\Tests\FrontendApiBundle\Test\ReferenceDataAccessor $search
-     * @param bool $isAutocomplete
-     * @param string|null $userIdentifier
-     * @return array
-     */
     public static function createSearchInputQueryVariables(
         string|ReferenceDataAccessor $search,
         bool $isAutocomplete = false,

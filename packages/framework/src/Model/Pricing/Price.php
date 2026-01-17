@@ -12,10 +12,6 @@ final class Price implements PriceInterface
 {
     private Money $vatAmount;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     */
     public function __construct(private readonly Money $priceWithoutVat, private readonly Money $priceWithVat)
     {
         $this->vatAmount = $priceWithVat->subtract($priceWithoutVat);

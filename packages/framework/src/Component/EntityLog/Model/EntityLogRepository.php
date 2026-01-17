@@ -10,27 +10,16 @@ use Doctrine\ORM\QueryBuilder;
 
 class EntityLogRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getRepository(): EntityRepository
     {
         return $this->em->getRepository(EntityLog::class);
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getQueryBuilderByEntityNameAndEntityId(string $entityName, int $entityId): QueryBuilder
     {
         return $this->getRepository()->createQueryBuilder('el')
@@ -43,8 +32,6 @@ class EntityLogRepository
     }
 
     /**
-     * @param string $entityName
-     * @param int $entityId
      * @return \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog[]
      */
     public function getEntityLogsFromLastLogCollection(string $entityName, int $entityId): array

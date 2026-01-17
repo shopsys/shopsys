@@ -16,9 +16,6 @@ class BridgeConfig
 
     private string $password;
 
-    /**
-     * @param array $bridgeConfig
-     */
     public function __construct(array $bridgeConfig)
     {
         $optionsResolver = new OptionsResolver();
@@ -55,33 +52,21 @@ class BridgeConfig
         $this->password = $bridgeConfig['password'];
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @return string
-     */
     public function getBaseUri(): string
     {
         return $this->baseUri;
     }
 
-    /**
-     * @return string
-     */
     public function getUser(): string
     {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
     public function getPassword(): string
     {
         return $this->password;

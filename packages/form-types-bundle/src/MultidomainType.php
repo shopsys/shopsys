@@ -16,10 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class MultidomainType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface $domainIdsProvider
-     * @param \Shopsys\FrameworkBundle\Form\FormTypeLayout $formTypeLayout
-     */
     public function __construct(
         private readonly DomainIdsProviderInterface $domainIdsProvider,
         private readonly FormTypeLayout $formTypeLayout,
@@ -52,9 +48,6 @@ final class MultidomainType extends AbstractType
         }
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

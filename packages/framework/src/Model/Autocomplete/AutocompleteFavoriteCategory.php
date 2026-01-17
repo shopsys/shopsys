@@ -36,11 +36,6 @@ class AutocompleteFavoriteCategory implements OrderableEntityInterface
      */
     protected $position;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
-     * @param int $position
-     */
     public function __construct(Category $category, int $domainId, int $position)
     {
         $this->category = $category;

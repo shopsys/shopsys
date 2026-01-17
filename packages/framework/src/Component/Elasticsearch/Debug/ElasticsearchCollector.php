@@ -12,9 +12,6 @@ use Throwable;
 
 class ElasticsearchCollector extends DataCollector
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection $elasticsearchRequestCollection
-     */
     public function __construct(protected readonly ElasticsearchRequestCollection $elasticsearchRequestCollection)
     {
     }
@@ -47,9 +44,6 @@ class ElasticsearchCollector extends DataCollector
         return 'shopsys.elasticsearch_collector';
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;

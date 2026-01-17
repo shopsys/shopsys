@@ -22,13 +22,6 @@ class PacketeryClient implements TransferIdentificationInterface
 {
     protected TransferLoggerInterface $transferLogger;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Packetery\PacketeryConfig $packeteryConfig
-     * @param \Shopsys\FrameworkBundle\Component\Packetery\PacketeryRenderer $packeteryRenderer
-     * @param \Symfony\Contracts\HttpClient\HttpClientInterface $client
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerFactory $transferLoggerFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     */
     public function __construct(
         protected readonly PacketeryConfig $packeteryConfig,
         protected readonly PacketeryRenderer $packeteryRenderer,
@@ -38,9 +31,6 @@ class PacketeryClient implements TransferIdentificationInterface
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface
-     */
     protected function getTransferLogger(): TransferLoggerInterface
     {
         if (!isset($this->transferLogger)) {
@@ -50,10 +40,6 @@ class PacketeryClient implements TransferIdentificationInterface
         return $this->transferLogger;
     }
 
-    /**
-     * @param string $xml
-     * @return \Symfony\Contracts\HttpClient\ResponseInterface
-     */
     protected function restApiPostRequest(string $xml): ResponseInterface
     {
         return $this->client->request(
@@ -63,10 +49,6 @@ class PacketeryClient implements TransferIdentificationInterface
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
     public function createPacketXml(Order $order): string
     {
         $packetAttributes = new PacketAttributes($order);
@@ -126,10 +108,6 @@ class PacketeryClient implements TransferIdentificationInterface
         $logger->persistAllLoggedTransferIssues();
     }
 
-    /**
-     * @param \Symfony\Contracts\HttpClient\ResponseInterface $responseXml
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     protected function saveTrackingNumberFromResponse(ResponseInterface $responseXml, Order $order): void
     {
         $logger = $this->getTransferLogger();
@@ -170,27 +148,18 @@ class PacketeryClient implements TransferIdentificationInterface
         );
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getTransferName(): string
     {
         return 'Send packet data to packetery';
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getTransferIdentifier(): string
     {
         return 'packetsExport';
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getServiceIdentifier(): string
     {

@@ -11,18 +11,10 @@ use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFac
 
 class FreeTransportAndPaymentInformationMiddleware implements OrderProcessorMiddlewareInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
-     */
     public function __construct(protected readonly FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
-     */
     #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,

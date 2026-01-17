@@ -43,10 +43,6 @@ class CustomTransFiltersVisitor implements NodeVisitorInterface
         return $node;
     }
 
-    /**
-     * @param \Twig\Node\Expression\FilterExpression $filterExpressionNode
-     * @param string $newFilterName
-     */
     protected function replaceCustomFilterName(FilterExpression $filterExpressionNode, string $newFilterName): void
     {
         $filterNameConstantNode = $filterExpressionNode->getNode('filter');

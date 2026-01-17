@@ -148,9 +148,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      */
     protected $lastSecurityChange;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     */
     public function __construct(CustomerUserData $customerUserData)
     {
         $this->domainId = $customerUserData->domainId;
@@ -163,17 +160,11 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->setData($customerUserData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     */
     public function edit(CustomerUserData $customerUserData)
     {
         $this->setData($customerUserData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     */
     protected function setData(CustomerUserData $customerUserData): void
     {
         $this->firstName = $customerUserData->firstName;
@@ -193,9 +184,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->email = mb_strtolower($email);
     }
 
-    /**
-     * @param string $passwordHash
-     */
     public function setPasswordHash(string $passwordHash): void
     {
         $this->password = $passwordHash;
@@ -287,18 +275,12 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getUserIdentifier(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getPassword(): string
     {
@@ -426,10 +408,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->resetPasswordHashValidThrough = (new DatePoint())->modify('+48 hours');
     }
 
-    /**
-     * @param string|null $hash
-     * @return bool
-     */
     #[Override]
     public function isResetPasswordHashValid(?string $hash): bool
     {
@@ -456,9 +434,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         return $this->uuid;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain $customerUserRefreshTokenChain
-     */
     public function addRefreshTokenChain(CustomerUserRefreshTokenChain $customerUserRefreshTokenChain): void
     {
         $this->refreshTokenChain->add($customerUserRefreshTokenChain);
@@ -472,9 +447,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         return $this->getCustomer()->getBillingAddress()->isActivated();
     }
 
-    /**
-     * @return bool
-     */
     public function hasPasswordSet(): bool
     {
         return $this->password !== null;

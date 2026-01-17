@@ -27,17 +27,6 @@ class LuigisBoxProductFeedItemFactory
     protected const int MEDIUM_IMAGE_SIZE = 200;
     protected const int LARGE_IMAGE_SIZE = 600;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly CurrencyFacade $currencyFacade,
@@ -51,11 +40,6 @@ class LuigisBoxProductFeedItemFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem
-     */
     public function create(Product $product, DomainConfig $domainConfig): LuigisBoxProductFeedItem
     {
         $locale = $domainConfig->getLocale();
@@ -105,10 +89,6 @@ class LuigisBoxProductFeedItemFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface $productPrice
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     protected function getProperAmountUsingSellingPriceType(ProductPriceInterface $productPrice): Money
     {
         if ($this->pricingSetting->getSellingPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
@@ -118,28 +98,17 @@ class LuigisBoxProductFeedItemFactory
         return $productPrice->getPrice()->getPriceWithoutVat();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     protected function getCurrency(DomainConfig $domainConfig): Currency
     {
         return $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainConfig->getId());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return int
-     */
     protected function getAvailabilityRank(Product $product, DomainConfig $domainConfig): int
     {
         return $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainConfig->getId()) ? 1 : $this->setting->getForDomain(LuigisBoxFeedSettingEnum::LUIGIS_BOX_RANK, $domainConfig->getId());
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return array<int, string>
      */
     protected function getCategoryHierarchyNamesByCategoryId(Product $product, DomainConfig $domainConfig): array
@@ -167,8 +136,6 @@ class LuigisBoxProductFeedItemFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param string $locale
      * @return array<string, string>
      */
     protected function getParameterValuesIndexedByName(Product $product, string $locale): array

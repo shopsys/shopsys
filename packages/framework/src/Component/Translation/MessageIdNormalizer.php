@@ -19,7 +19,6 @@ class MessageIdNormalizer
     }
 
     /**
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      * @return \JMS\TranslationBundle\Model\MessageCatalogue
      */
     public function getNormalizedCatalogue(MessageCatalogue $catalogue)
@@ -43,7 +42,6 @@ class MessageIdNormalizer
     }
 
     /**
-     * @param \JMS\TranslationBundle\Model\Message $message
      * @param string $domain
      * @return \JMS\TranslationBundle\Model\Message
      */

@@ -16,13 +16,7 @@ class ParameterFilterData
      */
     public $values = [];
 
-    /**
-     * @var float|null
-     */
     public ?float $minimalValue = null;
 
-    /**
-     * @var float|null
-     */
     public ?float $maximalValue = null;
 }

@@ -8,19 +8,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class CategoryFacade
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Category\CategoryRepository $categoryRepository
-     */
     public function __construct(protected readonly CategoryRepository $categoryRepository)
     {
     }
 
     /**
-     * @param string $search
-     * @param string $locale
-     * @param int $domainId
-     * @param int $offset
-     * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getVisibleCategoriesBySearchText(
@@ -39,12 +31,6 @@ class CategoryFacade
         );
     }
 
-    /**
-     * @param string $searchText
-     * @param string $locale
-     * @param int $domainId
-     * @return int
-     */
     public function getVisibleCategoriesBySearchTextCount(string $searchText, string $locale, int $domainId): int
     {
         return $this->categoryRepository->getVisibleCategoriesBySearchTextCount($searchText, $locale, $domainId);
@@ -52,7 +38,6 @@ class CategoryFacade
 
     /**
      * @param int[][] $categoriesIds
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[][]
      */
     public function getVisibleCategoriesByIds(array $categoriesIds, DomainConfig $domainConfig): array

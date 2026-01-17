@@ -10,10 +10,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CreateWatchdogTest extends GraphQlTestCase
 {
-    /**
-     * @param string $email
-     * @param int $productId
-     */
     #[DataProvider('createWatchdogDataProvider')]
     public function testCreateWatchdog(
         string $email,
@@ -33,10 +29,6 @@ class CreateWatchdogTest extends GraphQlTestCase
         $this->assertTrue($data);
     }
 
-    /**
-     * @param string $email
-     * @param int $productId
-     */
     #[DataProvider('createWatchdogDataProvider')]
     public function testInvalidProductUuid(
         string $email,
@@ -55,10 +47,6 @@ class CreateWatchdogTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfErrors($response);
     }
 
-    /**
-     * @param string $email
-     * @param int $productId
-     */
     #[DataProvider('createWatchdogDataProvider')]
     public function testMainVariantProductUuid(
         string $email,
@@ -81,10 +69,6 @@ class CreateWatchdogTest extends GraphQlTestCase
         $this->assertSame('a59f8293-2803-4571-b307-2b4ce72d39b4', $validation['code']);
     }
 
-    /**
-     * @param string $email
-     * @param int $productId
-     */
     #[DataProvider('createWatchdogDataProvider')]
     public function testInquiryProductUuid(
         string $email,
@@ -107,9 +91,6 @@ class CreateWatchdogTest extends GraphQlTestCase
         $this->assertSame('bd70a05a-6bbb-4783-b9b2-c42824fa067d', $validation['code']);
     }
 
-    /**
-     * @return iterable
-     */
     public static function createWatchdogDataProvider(): iterable
     {
         yield [

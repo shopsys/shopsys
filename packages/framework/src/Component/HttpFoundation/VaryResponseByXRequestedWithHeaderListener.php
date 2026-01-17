@@ -18,9 +18,6 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
  */
 class VaryResponseByXRequestedWithHeaderListener
 {
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
-     */
     public function onKernelResponse(ResponseEvent $event): void
     {
         if ($event->isMainRequest()) {

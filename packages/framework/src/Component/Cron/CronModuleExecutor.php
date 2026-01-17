@@ -22,12 +22,6 @@ class CronModuleExecutor
 
     protected DateTimeImmutable $startedAt;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
-     * @param \Monolog\Logger $logger
-     * @param \Shopsys\FrameworkBundle\Component\Bytes\BytesHelper $bytesHelper
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly CronConfig $cronConfig,
         protected readonly Logger $logger,
@@ -80,8 +74,6 @@ class CronModuleExecutor
 
     /**
      * @phpstan-impure
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronConfig
-     * @return bool
      */
     public function canRun(CronModuleConfig $cronConfig): bool
     {

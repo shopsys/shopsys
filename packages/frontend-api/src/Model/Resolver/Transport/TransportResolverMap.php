@@ -12,19 +12,12 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class TransportResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly PaymentFacade $paymentFacade,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

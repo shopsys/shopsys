@@ -9,9 +9,6 @@ use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 
 class ImageRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
@@ -119,7 +116,6 @@ class ImageRepository
     }
 
     /**
-     * @param array $entitiesOrEntityIds
      * @param string $entityName
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
@@ -142,12 +138,6 @@ class ImageRepository
         return $imagesByEntityId;
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string|null $type
-     * @return int
-     */
     public function getNewImagePosition(string $entityName, int $entityId, ?string $type = null): int
     {
         $queryBuilder = $this->getImageRepository()

@@ -16,13 +16,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class WithdrawalRequestMessageHandler
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalAdminMailFacade $withdrawalAdminMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     */
     public function __construct(
         protected readonly OrderMailFacade $orderMailFacade,
         protected readonly WithdrawalAdminMailFacade $withdrawalAdminMailFacade,
@@ -32,9 +25,6 @@ class WithdrawalRequestMessageHandler
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessage $message
-     */
     public function __invoke(WithdrawalRequestMessage $message): void
     {
         try {

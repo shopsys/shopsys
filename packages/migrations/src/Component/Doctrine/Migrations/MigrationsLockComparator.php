@@ -10,18 +10,10 @@ use Override;
 
 class MigrationsLockComparator implements Comparator
 {
-    /**
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock $migrationsLock
-     */
     public function __construct(protected readonly MigrationsLock $migrationsLock)
     {
     }
 
-    /**
-     * @param \Doctrine\Migrations\Version\Version $a
-     * @param \Doctrine\Migrations\Version\Version $b
-     * @return int
-     */
     #[Override]
     public function compare(Version $a, Version $b): int
     {
@@ -44,20 +36,11 @@ class MigrationsLockComparator implements Comparator
         return $aIndex - $bIndex;
     }
 
-    /**
-     * @param \Doctrine\Migrations\Version\Version $a
-     * @param \Doctrine\Migrations\Version\Version $b
-     * @return int
-     */
     protected function compareVersionsAlphabetically(Version $a, Version $b): int
     {
         return strcmp($this->getVersionWithoutNamespace($a), $this->getVersionWithoutNamespace($b));
     }
 
-    /**
-     * @param \Doctrine\Migrations\Version\Version $version
-     * @return string
-     */
     protected function getVersionWithoutNamespace(Version $version): string
     {
         $versionString = (string)$version;

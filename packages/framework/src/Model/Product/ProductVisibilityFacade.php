@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class ProductVisibilityFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     */
     public function __construct(
         protected readonly ProductVisibilityRepository $productVisibilityRepository,
         protected readonly Domain $domain,
@@ -36,8 +31,6 @@ class ProductVisibilityFacade
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility[]
      */
     public function findProductVisibilitiesByDomainIdAndProduct(int $domainId, Product $product): array
@@ -46,9 +39,7 @@ class ProductVisibilityFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param array<int, int> $defaultPricingGroupIdsIndexedByDomainId
-     * @return bool
      */
     public function isProductVisibleOnAllDomains(
         Product $product,
@@ -63,9 +54,7 @@ class ProductVisibilityFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param array<int, int> $defaultPricingGroupIdsIndexedByDomainId
-     * @return bool
      */
     public function isProductVisibleOnSomeDomains(
         Product $product,
@@ -79,12 +68,6 @@ class ProductVisibilityFacade
         return $count > 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
-     */
     public function getProductVisibility(
         Product $product,
         PricingGroup $pricingGroup,
@@ -93,10 +76,6 @@ class ProductVisibilityFacade
         return $this->productVisibilityRepository->getProductVisibility($product, $pricingGroup, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
-     */
     public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, int $domainId): void
     {
         $this->productVisibilityRepository->createAndRefreshProductVisibilitiesForPricingGroup($pricingGroup, $domainId);
@@ -113,7 +92,6 @@ class ProductVisibilityFacade
 
     /**
      * @param int[] $productIds
-     * @param bool $defaultVisibility
      * @return array<int, bool>
      */
     protected function getProductsVisibilityIndexedByProductId(array $productIds, bool $defaultVisibility): array
@@ -148,7 +126,6 @@ class ProductVisibilityFacade
 
     /**
      * @param int[] $productIds
-     * @param int $domainId
      * @return bool[]
      */
     protected function getProductsVisibilitiesByDomainIndexedByProductId(array $productIds, int $domainId): array

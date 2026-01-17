@@ -11,18 +11,11 @@ use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageNotFoundException;
 
 class SeoPageRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @param int $seoPageId
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
-     */
     public function getById(int $seoPageId): SeoPage
     {
         /** @var \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage|null $seoPage */
@@ -45,9 +38,6 @@ class SeoPageRepository
         return $this->getSeoPageRepository()->findAll();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllQueryBuilder(): QueryBuilder
     {
         return $this->getSeoPageRepository()->createQueryBuilder('sp')
@@ -55,19 +45,11 @@ class SeoPageRepository
             ->join('sp.domains', 'spd');
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getSeoPageRepository(): EntityRepository
     {
         return $this->em->getRepository(SeoPage::class);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $pageSlug
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
-     */
     public function getByDomainIdAndPageSlug(int $domainId, string $pageSlug): SeoPage
     {
         $seoPage = $this->findByDomainIdAndPageSlug($domainId, $pageSlug);
@@ -81,11 +63,6 @@ class SeoPageRepository
         return $seoPage;
     }
 
-    /**
-     * @param int $domainId
-     * @param string $pageSlug
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage|null
-     */
     public function findByDomainIdAndPageSlug(int $domainId, string $pageSlug): ?SeoPage
     {
         $seoPage = $this->getSeoPageRepository()

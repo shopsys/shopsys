@@ -10,10 +10,6 @@ use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageExcep
 
 class FrontendApiUserFactory
 {
-    /**
-     * @param \Lcobucci\JWT\UnencryptedToken $token
-     * @return \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser
-     */
     public function createFromToken(UnencryptedToken $token): FrontendApiUser
     {
         $this->assertAllClaimsExists($token->claims());
@@ -28,9 +24,6 @@ class FrontendApiUserFactory
         );
     }
 
-    /**
-     * @param \Lcobucci\JWT\Token\DataSet $claims
-     */
     protected function assertAllClaimsExists(DataSet $claims): void
     {
         if (

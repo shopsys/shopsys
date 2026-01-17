@@ -258,10 +258,6 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         self::assertTrue($paymentModifications['paymentUnavailable']);
     }
 
-    /**
-     * @param int $productQuantity
-     * @return array
-     */
     private function addTestingProductToNewCart(int $productQuantity): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
@@ -299,10 +295,6 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $this->handleDispatchedRecalculationMessages();
     }
 
-    /**
-     * @param int $productQuantity
-     * @return array
-     */
     private function addTestingProductToExistingCartAndGetTransportModifications(int $productQuantity): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
@@ -315,9 +307,6 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         return $data['cart']['modifications']['transportModifications'];
     }
 
-    /**
-     * @return array
-     */
     private function getTransportModificationsForCartQuery(): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql');
@@ -326,9 +315,6 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         return $data['modifications']['transportModifications'];
     }
 
-    /**
-     * @return array
-     */
     private function getPaymentModifications(): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql');
@@ -337,10 +323,6 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         return $data['modifications']['paymentModifications'];
     }
 
-    /**
-     * @param \App\Model\Transport\Transport $transport
-     * @param string|null $pickupPlaceIdentifier
-     */
     private function addTransportToExistingCart(Transport $transport, ?string $pickupPlaceIdentifier = null): void
     {
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
@@ -349,9 +331,6 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         ]);
     }
 
-    /**
-     * @param string $transportReferenceName
-     */
     private function changeTransportPrice(string $transportReferenceName): void
     {
         // refresh transport, so we're able to work with it as with an entity
@@ -361,9 +340,6 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $this->transportFacade->edit($transport, $transportData);
     }
 
-    /**
-     * @param string $transportReferenceName
-     */
     private function hideTransport(string $transportReferenceName): void
     {
         // refresh transport, so we're able to work with it as with an entity
@@ -373,9 +349,6 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $this->transportFacade->edit($transport, $transportData);
     }
 
-    /**
-     * @param \App\Model\Payment\Payment $payment
-     */
     private function addPaymentToExistingCart(Payment $payment): void
     {
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
@@ -383,9 +356,6 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         ]);
     }
 
-    /**
-     * @param string $paymentReferenceName
-     */
     private function changePaymentPrice(string $paymentReferenceName): void
     {
         $payment = $this->getReference($paymentReferenceName, Payment::class);
@@ -394,9 +364,6 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $this->paymentFacade->edit($payment, $paymentData);
     }
 
-    /**
-     * @param \App\Model\Transport\Transport $transport
-     */
     private function setTransportAsExcludedForTestingProduct(Transport $transport): void
     {
         // refresh testing product

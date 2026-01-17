@@ -34,11 +34,6 @@ final class ArticleFormType extends AbstractType
     private const string VALIDATION_GROUP_TYPE_SITE = 'typeSite';
     private const string VALIDATION_GROUP_TYPE_LINK = 'typeLink';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
-     */
     public function __construct(
         private readonly SeoSettingFacade $seoSettingFacade,
         private readonly Domain $domain,
@@ -46,10 +41,6 @@ final class ArticleFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -200,9 +191,6 @@ final class ArticleFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -231,7 +219,6 @@ final class ArticleFormType extends AbstractType
     }
 
     /**
-     * @param array $options
      * @return array<string, int|string|null>
      */
     private function getSeoMetaDescriptionAttributes(array $options): array

@@ -17,9 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class LoadPluginDataFixturesCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginDataFixtureFacade $pluginDataFixtureFacade
-     */
     public function __construct(private readonly PluginDataFixtureFacade $pluginDataFixtureFacade)
     {
         parent::__construct();

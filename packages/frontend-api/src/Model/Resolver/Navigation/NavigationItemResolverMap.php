@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetail;
 
 class NavigationItemResolverMap extends ResolverMap
 {
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

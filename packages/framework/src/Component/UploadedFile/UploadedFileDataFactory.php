@@ -8,34 +8,20 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig
 
 class UploadedFileDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     */
     public function __construct(protected readonly UploadedFileFacade $uploadedFileFacade)
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
-     */
     public function createInstance(): UploadedFileData
     {
         return new UploadedFileData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
-     */
     public function create(): UploadedFileData
     {
         return $this->createInstance();
     }
 
-    /**
-     * @param object $entity
-     * @param string $type
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
-     */
     public function createByEntity(
         object $entity,
         string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
@@ -50,10 +36,6 @@ class UploadedFileDataFactory
         return $uploadedFileData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
-     * @param array $uploadedFiles
-     */
     protected function fillByUploadedFiles(UploadedFileData $uploadedFileData, array $uploadedFiles): void
     {
         $uploadedFileData->orderedFiles = $uploadedFiles;

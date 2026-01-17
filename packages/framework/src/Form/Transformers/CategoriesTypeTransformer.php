@@ -10,9 +10,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class CategoriesTypeTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     */
     public function __construct(protected readonly CategoryFacade $categoryFacade)
     {
     }

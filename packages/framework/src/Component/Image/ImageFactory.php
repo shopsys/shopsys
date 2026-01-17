@@ -12,11 +12,6 @@ use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 
 class ImageFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         protected readonly ImageProcessor $imageProcessor,
         protected readonly FileUpload $fileUpload,
@@ -24,14 +19,6 @@ class ImageFactory
     ) {
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param array $namesIndexedByLocale
-     * @param string $temporaryFilename
-     * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
-     */
     protected function create(
         string $entityName,
         int $entityId,
@@ -48,11 +35,6 @@ class ImageFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig $imageEntityConfig
-     * @param int $entityId
-     * @param array $names
-     * @param array $temporaryFilenames
-     * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     public function createMultiple(

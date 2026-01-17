@@ -43,9 +43,6 @@ class GoogleFeedItemTest extends TestCase
         $this->doSetUp(true);
     }
 
-    /**
-     * @param bool $isProductAvailableOnStock
-     */
     private function doSetUp(bool $isProductAvailableOnStock): void
     {
         $productPriceCalculation = $this->createProductPriceCalculationMock(Price::zero());
@@ -85,11 +82,6 @@ class GoogleFeedItemTest extends TestCase
         $this->mockProductUrl($this->defaultProduct, $this->defaultDomain, 'https://example.com/product-1');
     }
 
-    /**
-     * @param int $id
-     * @param string $code
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     private function createCurrencyMock(int $id, string $code): Currency
     {
         $currencyMock = $this->createMock(Currency::class);
@@ -100,13 +92,6 @@ class GoogleFeedItemTest extends TestCase
         return $currencyMock;
     }
 
-    /**
-     * @param int $id
-     * @param string $url
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private function createDomainConfigMock(int $id, string $url, string $locale, Currency $currency): DomainConfig
     {
         $domainConfigMock = $this->createMock(DomainConfig::class);
@@ -121,10 +106,6 @@ class GoogleFeedItemTest extends TestCase
         return $domainConfigMock;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
-     */
     private function createProductPriceCalculationMock(Price $price): ProductPriceCalculation
     {
         $productPrice = new ProductPrice($price, $this->createMock(PricingGroup::class), false);
@@ -136,22 +117,12 @@ class GoogleFeedItemTest extends TestCase
         return $productPriceCalculationMock;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param string $url
-     */
     private function mockProductUrl(Product $product, DomainConfig $domain, string $url): void
     {
         $this->productUrlsBatchLoaderMock->method('getProductUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param string $url
-     */
     private function mockProductImageUrl(Product $product, DomainConfig $domain, string $url): void
     {
         $this->productUrlsBatchLoaderMock->method('getProductImageUrl')

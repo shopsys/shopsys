@@ -13,10 +13,6 @@ class ProductParametersBatchLoader
 {
     protected const string PARAMETERS_CACHE_NAMESPACE = 'parametersByProductIdAndName';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly ProductCollectionFacade $productCollectionFacade,
         protected readonly InMemoryCache $inMemoryCache,
@@ -25,7 +21,6 @@ class ProductParametersBatchLoader
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
     public function loadForProducts(array $products, DomainConfig $domainConfig): void
     {
@@ -43,8 +38,6 @@ class ProductParametersBatchLoader
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[]
      */
     public function getProductParametersByName(Product $product, DomainConfig $domainConfig): array
@@ -58,11 +51,6 @@ class ProductParametersBatchLoader
         throw new ProductParametersNotLoadedException($product, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     protected function getKey(Product $product, DomainConfig $domainConfig): string
     {
         return $domainConfig->getId() . '-' . $product->getId();

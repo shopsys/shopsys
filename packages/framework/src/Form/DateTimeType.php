@@ -14,16 +14,10 @@ final class DateTimeType extends AbstractType
 {
     protected const string FORMAT_PHP = 'dd.MM.yyyy HH:mm:ss';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
-     */
     public function __construct(protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider)
     {
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

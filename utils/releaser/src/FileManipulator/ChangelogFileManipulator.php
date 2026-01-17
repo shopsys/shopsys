@@ -8,12 +8,6 @@ use Nette\Utils\Strings;
 
 final class ChangelogFileManipulator
 {
-    /**
-     * @param string $fileContent
-     * @param string $currentReleaseHeadlinePattern
-     * @param string $todayInString
-     * @return string
-     */
     public function updateReleaseDateOfCurrentReleaseToToday(
         string $fileContent,
         string $currentReleaseHeadlinePattern,

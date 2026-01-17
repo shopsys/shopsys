@@ -181,9 +181,6 @@ class OrderPriceCalculationTest extends TestCase
         $this->assertThat($roundingPrice, new IsMoneyEqual(Money::create('0.1')));
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
     protected function createOrderProductMock(): MockObject
     {
         $orderProductMock = $this->createMock(OrderItem::class);
@@ -193,9 +190,6 @@ class OrderPriceCalculationTest extends TestCase
         return $orderProductMock;
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
     protected function createOrderPaymentMock(): MockObject
     {
         $orderProductMock = $this->createMock(OrderItem::class);
@@ -205,9 +199,6 @@ class OrderPriceCalculationTest extends TestCase
         return $orderProductMock;
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
     protected function createOrderTransportMock(): MockObject
     {
         $orderProductMock = $this->createMock(OrderItem::class);

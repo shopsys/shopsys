@@ -25,9 +25,6 @@ class CreateDatabaseCommand extends Command
 
     private ManagerRegistry $doctrineRegistry;
 
-    /**
-     * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry
-     */
     public function __construct(
         ManagerRegistry $managerRegistry,
     ) {
@@ -52,9 +49,6 @@ class CreateDatabaseCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
-     */
     private function createDatabaseIfNotExists(SymfonyStyle $symfonyStyleIo)
     {
         $defaultConnection = $this->getDefaultConnection();
@@ -83,9 +77,6 @@ class CreateDatabaseCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
-     */
     private function createExtensionsIfNotExist(SymfonyStyle $symfonyStyleIo)
     {
         // Extensions are created in schema "pg_catalog" in order to be able to DROP
@@ -102,9 +93,6 @@ class CreateDatabaseCommand extends Command
         $symfonyStyleIo->success('Extension pg_trgm is created');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
-     */
     private function switchConnectionToSuperuser(SymfonyStyle $symfonyStyleIo)
     {
         if (!$this->isConnectedAsSuperuser()) {

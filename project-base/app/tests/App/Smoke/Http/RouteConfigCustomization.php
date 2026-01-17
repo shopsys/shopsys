@@ -27,17 +27,11 @@ class RouteConfigCustomization
 
     private ContainerInterface $container;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container->get('test.service_container');
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     public function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $this->filterRoutesForTesting($routeConfigCustomizer);
@@ -46,9 +40,6 @@ class RouteConfigCustomization
         $this->configureFrontendRoutes($routeConfigCustomizer);
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     private function filterRoutesForTesting(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $routeConfigCustomizer
@@ -111,9 +102,6 @@ class RouteConfigCustomization
             });
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     private function configureGeneralRules(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $routeConfigCustomizer
@@ -158,9 +146,6 @@ class RouteConfigCustomization
             });
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     private function configureAdminRoutes(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $routeConfigCustomizer
@@ -446,9 +431,6 @@ class RouteConfigCustomization
             });
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     private function configureFrontendRoutes(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $routeConfigCustomizer->customize(function (RouteConfig $config, RouteInfo $info) {
@@ -461,7 +443,6 @@ class RouteConfigCustomization
     /**
      * @template T
      * @param string $name
-     * @param int|null $domainId
      * @param class-string<T>|null $entityClassName
      * @return T
      */

@@ -74,16 +74,10 @@ class ContextResolverTest extends TestCase
         $matchesCallCount = 0;
 
         $context = new class($matchesCallCount) extends AbstractContext {
-            /**
-             * @param int $matchesCallCount
-             */
             public function __construct(private int &$matchesCallCount)
             {
             }
 
-            /**
-             * @return bool
-             */
             #[Override]
             public function matches(): bool
             {
@@ -92,9 +86,6 @@ class ContextResolverTest extends TestCase
                 return true;
             }
 
-            /**
-             * @return string
-             */
             public function getDescription(): string
             {
                 return 'Test context for caching';

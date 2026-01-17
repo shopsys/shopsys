@@ -13,10 +13,6 @@ use Symfony\Component\Clock\DatePoint;
 
 class SpecialPriceRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClockInterface $clock,
@@ -24,8 +20,6 @@ class SpecialPriceRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
      * @return array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productListName: string, productListId: int, productId: int}|null
      */
     public function findRelevantSpecialPrice(Product $product, int $domainId): ?array
@@ -37,8 +31,6 @@ class SpecialPriceRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
      * @param int[] $variantIds
      * @return array<int, array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productListName: string, productListId: int, productId: int}>
      */
@@ -50,10 +42,7 @@ class SpecialPriceRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
      * @param int[] $variantIds
-     * @return \Doctrine\ORM\QueryBuilder
      */
     protected function getCurrentAndFutureSpecialPricesQueryBuilder(
         Product $product,

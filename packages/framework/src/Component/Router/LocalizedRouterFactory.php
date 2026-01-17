@@ -21,8 +21,6 @@ class LocalizedRouterFactory
 
     /**
      * @param string $localeRoutersResourcesFilepathMask
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param string $cacheDir
      */
     public function __construct(
         $localeRoutersResourcesFilepathMask,
@@ -35,7 +33,6 @@ class LocalizedRouterFactory
 
     /**
      * @param string $locale
-     * @param \Symfony\Component\Routing\RequestContext $context
      * @return \Symfony\Component\Routing\Router
      */
     public function getRouter($locale, RequestContext $context)
@@ -61,28 +58,16 @@ class LocalizedRouterFactory
         return $this->routersByLocaleAndHost[$locale][$context->getHost()];
     }
 
-    /**
-     * @param string $locale
-     * @return string
-     */
     protected function getLocaleRouterResourceByLocale(string $locale): string
     {
         return str_replace('*', $locale, $this->localeRoutersResourcesFilepathMask);
     }
 
-    /**
-     * @param string $locale
-     * @return string
-     */
     protected function getRoutingCacheDir(string $locale): string
     {
         return $this->cacheDir . '/' . $locale;
     }
 
-    /**
-     * @param string $locale
-     * @return array
-     */
     protected function getRouterOptions(string $locale): array
     {
         $options = [];

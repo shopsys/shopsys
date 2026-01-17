@@ -21,20 +21,12 @@ class EntityShouldHaveFactoryRule implements Rule
         'Translations',
     ];
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getNodeType(): string
     {
         return InClassNode::class;
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     * @param \PHPStan\Analyser\Scope $scope
-     * @return array
-     */
     #[Override]
     public function processNode(Node $node, Scope $scope): array
     {
@@ -74,11 +66,6 @@ class EntityShouldHaveFactoryRule implements Rule
         ];
     }
 
-    /**
-     * @param string $className
-     * @param \PHPStan\Node\InClassNode $node
-     * @return bool
-     */
     private function isCheckedEntity(string $className, InClassNode $node): bool
     {
         foreach (self::IGNORED_SUFFIXES as $ignoredSuffix) {
@@ -90,10 +77,6 @@ class EntityShouldHaveFactoryRule implements Rule
         return str_contains($node->getDocComment()?->getText() ?? '', '@ORM\Entity');
     }
 
-    /**
-     * @param string $className
-     * @return bool
-     */
     private function factoryUsesEntityNameResolver(string $className): bool
     {
         $reflectionClass = new ReflectionClass($className);

@@ -16,9 +16,6 @@ class EntityNameResolverTest extends TestCase
     public const STRING_WITH_SPACES_ON_BORDERS = ' string ';
     public const STRING_WITHOUT_SPACES_ON_BORDERS = 'string';
 
-    /**
-     * @return array
-     */
     public static function resolvingProvider(): array
     {
         return [
@@ -58,11 +55,6 @@ class EntityNameResolverTest extends TestCase
         ];
     }
 
-    /**
-     * @param array $map
-     * @param string $value
-     * @param string $expected
-     */
     #[DataProvider('resolvingProvider')]
     public function testResolving(array $map, string $value, string $expected): void
     {
@@ -71,9 +63,6 @@ class EntityNameResolverTest extends TestCase
         $this->assertSame($expected, $resolvedValue);
     }
 
-    /**
-     * @return array
-     */
     public static function resolvingInStringsProvider(): array
     {
         $resolveDataProvider = static::resolvingProvider();
@@ -102,11 +91,6 @@ class EntityNameResolverTest extends TestCase
         ];
     }
 
-    /**
-     * @param array $map
-     * @param string $value
-     * @param string $expected
-     */
     #[DataProvider('resolvingInStringsProvider')]
     public function testResolvingInStrings(array $map, string $value, string $expected): void
     {
@@ -184,9 +168,6 @@ class EntityNameResolverTest extends TestCase
         $object = new class() {
             private string $property = 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity';
 
-            /**
-             * @return string
-             */
             public function getProperty(): string
             {
                 return $this->property;
@@ -206,9 +187,6 @@ class EntityNameResolverTest extends TestCase
         $innerObject = new class() {
             private string $property = 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity';
 
-            /**
-             * @return string
-             */
             public function getProperty(): string
             {
                 return $this->property;

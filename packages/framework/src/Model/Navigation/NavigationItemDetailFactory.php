@@ -8,9 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class NavigationItemDetailFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
-     */
     public function __construct(
         protected readonly NavigationItemCategoryFacade $navigationItemCategoryFacade,
     ) {
@@ -18,7 +15,6 @@ class NavigationItemDetailFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem[] $navigationItems
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetail[]
      */
     public function createDetails(array $navigationItems, DomainConfig $domainConfig): array

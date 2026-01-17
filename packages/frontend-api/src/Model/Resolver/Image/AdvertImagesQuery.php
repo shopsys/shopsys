@@ -12,11 +12,6 @@ class AdvertImagesQuery extends ImagesQuery
 {
     protected const ENTITY_NAME = 'noticer';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function imagesByAdvertPromiseQuery(Advert $advert, ?string $type): Promise
     {
         return $this->imagesBatchLoader->load(
@@ -28,11 +23,6 @@ class AdvertImagesQuery extends ImagesQuery
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function mainImageByAdvertPromiseQuery(Advert $advert, ?string $type): Promise
     {
         return $this->mainImageByEntityIdPromiseQuery($advert->getId(), static::ENTITY_NAME, $type);

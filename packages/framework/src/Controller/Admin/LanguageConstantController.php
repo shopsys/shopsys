@@ -28,12 +28,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_LANGUAGE_CONSTANTS)]
 class LanguageConstantController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantDataFactory $languageConstantDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantGridFactory $languageConstantGridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     */
     public function __construct(
         protected readonly LanguageConstantFacade $languageConstantFacade,
         protected readonly LanguageConstantDataFactory $languageConstantDataFactory,
@@ -42,10 +36,6 @@ class LanguageConstantController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/constant/list/')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -67,10 +57,6 @@ class LanguageConstantController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/constant/edit/')]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -131,10 +117,6 @@ class LanguageConstantController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/constant/delete/')]
     #[CanDelete]
     #[CsrfProtection]
@@ -168,9 +150,6 @@ class LanguageConstantController extends AdminBaseController
         return $this->redirectToRoute('admin_languageconstant_list');
     }
 
-    /**
-     * @return string
-     */
     protected function getSelectedLocale(): string
     {
         return $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();

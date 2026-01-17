@@ -14,16 +14,6 @@ use Shopsys\FrameworkBundle\Component\Router\UrlNormalizer;
 
 class NavigationItemFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemRepository $navigationItemRepository
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetailFactory $navigationItemDetailFactory
-     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFactory $navigationItemFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly EntityManagerDecorator $em,
         protected readonly NavigationItemRepository $navigationItemRepository,
@@ -36,18 +26,11 @@ class NavigationItemFacade
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getOrderedItemsQueryBuilder(): QueryBuilder
     {
         return $this->navigationItemRepository->getOrderedItemsQueryBuilder();
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getOrderedItemsByDomainQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->getOrderedItemsQueryBuilder()->where('ni.domainId = :domainId')
@@ -55,7 +38,6 @@ class NavigationItemFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetail[]
      */
     public function getOrderedNavigationItemDetails(DomainConfig $domainConfig): array
@@ -65,19 +47,11 @@ class NavigationItemFacade
         return $this->navigationItemDetailFactory->createDetails($navigationItems, $domainConfig);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
-     */
     public function getById(int $id): NavigationItem
     {
         return $this->navigationItemRepository->getById($id);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
-     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
-     */
     public function create(NavigationItemData $navigationItemData): NavigationItem
     {
         $this->fixUrlInNavigationItemData($navigationItemData);
@@ -96,11 +70,6 @@ class NavigationItemFacade
         return $navigationItem;
     }
 
-    /**
-     * @param int $id
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
-     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
-     */
     public function edit(int $id, NavigationItemData $navigationItemData): NavigationItem
     {
         $navigationItem = $this->getById($id);
@@ -119,18 +88,12 @@ class NavigationItemFacade
         return $navigationItem;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
-     */
     protected function fixUrlInNavigationItemData(NavigationItemData $navigationItemData): void
     {
         $domainConfig = $this->domain->getDomainConfigById($navigationItemData->domainId);
         $navigationItemData->url = UrlNormalizer::normalizeUrl($navigationItemData->url, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
-     */
     public function delete(NavigationItem $navigationItem): void
     {
         $this->em->remove($navigationItem);
@@ -139,9 +102,6 @@ class NavigationItemFacade
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::NAVIGATION_QUERY_KEY_PART);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
-     */
     protected function setNavigationItemRouteName(NavigationItem $navigationItem): void
     {
         $friendlyUrl = $this->friendlyUrlFacade->findByDomainIdAndSlug($navigationItem->getDomainId(), trim($navigationItem->getUrl(), '/'));

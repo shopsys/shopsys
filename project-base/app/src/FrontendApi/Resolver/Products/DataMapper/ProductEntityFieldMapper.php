@@ -33,7 +33,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @property \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
  * @method string|null getShortDescription(\App\Model\Product\Product $product)
  * @method string getLink(\App\Model\Product\Product $product)
- * @method \App\Model\Category\Category[] getCategories(\App\Model\Product\Product $product)
+ * @method \App\Model\Category\Category[] getCategories( $product)
  * @method array{name: string, status: string} getAvailability(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getAccessoriesPromise(\App\Model\Product\Product $product)
  * @method string|null getDescription(\App\Model\Product\Product $product)
@@ -66,27 +66,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleCountByIdsBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
-     * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
-     * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
-     * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
      */
     public function __construct(
         Domain $domain,
@@ -130,35 +110,22 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         );
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return string
-     */
     public function getName(Product $product): string
     {
         return $product->getName($this->domain->getLocale()) ?? '';
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return string|null
-     */
     public function getPartNumber(Product $product): ?string
     {
         return $product->getPartno();
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return string
-     */
     public function getCatalogNumber(Product $product): string
     {
         return $product->getCatnum();
     }
 
     /**
-     * @param \App\Model\Product\Product $product
      * @return \App\Model\Product\Flag\Flag[]
      */
     public function getFlags(Product $product): array
@@ -197,7 +164,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * Method is overridden, so it returns parameters for the variants too.
      *
      * @param \App\Model\Product\Product $product
-     * @return array
      */
     #[Override]
     public function getParameters(BaseProduct $product): array
@@ -219,7 +185,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     }
 
     /**
-     * @param \App\Model\Product\Product $product
      * @return string[]
      */
     public function getUsps(Product $product): array
@@ -227,10 +192,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         return $product->getAllNonEmptyShortDescriptionUsp($this->domain->getId());
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return array
-     */
     public function getBreadcrumb(Product $product): array
     {
         return $this->breadcrumbFacade->getBreadcrumbOnDomain(
@@ -241,10 +202,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         );
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function getCategoriesPromise(Product $product): Promise
     {
         $categories = $product->getCategoriesIndexedByDomainId()[$this->domain->getId()];
@@ -253,10 +210,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         return $this->categoriesBatchLoader->load($categoryIds);
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function getRelatedProductsPromise(Product $product): Promise
     {
         $relatedProducts = $product->getRelatedProducts();
@@ -265,10 +218,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         return $this->productsSellableByIdsBatchLoader->load($relatedProductsIds);
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return \GraphQL\Executor\Promise\Promise|null
-     */
     public function getBrandPromise(Product $product): ?Promise
     {
         $brand = $product->getBrand();

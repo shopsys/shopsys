@@ -6,10 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 class SeoPageSlugTransformer
 {
-    /**
-     * @param string $friendlyUrl
-     * @return string
-     */
     public function transformFriendlyUrlToSeoPageSlug(string $friendlyUrl): string
     {
         $pageSlug = ltrim($friendlyUrl, '/');

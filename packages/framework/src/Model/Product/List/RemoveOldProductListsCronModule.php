@@ -11,10 +11,6 @@ use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class RemoveOldProductListsCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly ProductListFacade $productListFacade,
         protected readonly ClockInterface $clock,

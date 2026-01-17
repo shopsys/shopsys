@@ -44,8 +44,6 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * You must configure the provided RequestDataSets by implementing customizeRouteConfigs method.
      * If you need custom behavior for creating or handling requests in your application you should override the
      * createRequest or handleRequest method.
-     *
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      */
     #[DataProvider('httpResponseTestDataProvider')]
     final public function testHttpResponse(RequestDataSet $requestDataSet)
@@ -118,13 +116,10 @@ abstract class HttpSmokeTestCase extends KernelTestCase
 
     /**
      * This method must be implemented to customize and configure the test cases for individual routes
-     *
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
     abstract protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer);
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @return \Symfony\Component\HttpFoundation\Request
      */
     protected static function createRequest(RequestDataSet $requestDataSet)
@@ -149,7 +144,6 @@ abstract class HttpSmokeTestCase extends KernelTestCase
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleRequest(Request $request)
@@ -157,10 +151,6 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         return static::$kernel->handle($request);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
-     */
     protected function assertResponse(Response $response, RequestDataSet $requestDataSet)
     {
         $failMessage = sprintf(
@@ -177,7 +167,6 @@ abstract class HttpSmokeTestCase extends KernelTestCase
     }
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @param string $message
      * @return string
      */

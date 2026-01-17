@@ -43,12 +43,7 @@ class BasePriceCalculationTest extends TestCase
     }
 
     /**
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
      * @param mixed $vatPercent
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceWithVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceVatAmount
      */
     #[DataProvider('calculateBasePriceProvider')]
     public function testCalculateBasePriceRoundedByCurrency(

@@ -34,7 +34,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method \Shopsys\FrameworkBundle\Model\Order\OrderEditResult edit(\App\Model\Order\OrderData $orderData)
  * @method \App\Model\Payment\Payment getPayment()
  * @method \App\Model\Transport\Transport getTransport()
- * @method \App\Model\Order\Item\OrderItem[] getItemsByType(string $type)
+ * @method \App\Model\Order\Item\OrderItem[] getItemsByType( $type)
  * @method \App\Model\Order\Item\OrderItem[] getDiscountItems()
  * @method \App\Model\Order\Item\OrderItem[] getRoundingItems()
  * @method \App\Model\Order\Item\OrderItem getTransportItem()
@@ -49,8 +49,6 @@ class Order extends BaseOrder
 {
     /**
      * @param \App\Model\Order\OrderData $orderData
-     * @param string $orderNumber
-     * @param string $urlHash
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      */
     public function __construct(

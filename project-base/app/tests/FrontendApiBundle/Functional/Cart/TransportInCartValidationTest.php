@@ -122,19 +122,11 @@ class TransportInCartValidationTest extends GraphQlTestCase
         $this->assertSame(TransportInCart::UNAVAILABLE_TRANSPORT_ERROR, $validationErrors['input'][0]['code']);
     }
 
-    /**
-     * @return array
-     */
     private function addNonExistingTransportToDemoCart(): array
     {
         return $this->addTransportToDemoCart(Uuid::uuid4()->toString());
     }
 
-    /**
-     * @param string $transportUuid
-     * @param string|null $pickupPlaceIdentifier
-     * @return array
-     */
     private function addTransportToDemoCart(string $transportUuid, ?string $pickupPlaceIdentifier = null): array
     {
         return $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
@@ -144,9 +136,6 @@ class TransportInCartValidationTest extends GraphQlTestCase
         ]);
     }
 
-    /**
-     * @return array
-     */
     private function addTransportWithNonExistingPickupPlaceToDemoCart(): array
     {
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
@@ -154,9 +143,6 @@ class TransportInCartValidationTest extends GraphQlTestCase
         return $this->addTransportToDemoCart($transport->getUuid(), Uuid::uuid4()->toString());
     }
 
-    /**
-     * @return array
-     */
     private function addCzechPostTransportToDemoCart(): array
     {
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class);
@@ -164,9 +150,6 @@ class TransportInCartValidationTest extends GraphQlTestCase
         return $this->addTransportToDemoCart($transport->getUuid());
     }
 
-    /**
-     * @param \App\Model\Transport\Transport $transport
-     */
     private function hideTransport(Transport $transport): void
     {
         $transportData = $this->transportDataFactory->createFromTransport($transport);
@@ -174,9 +157,6 @@ class TransportInCartValidationTest extends GraphQlTestCase
         $this->transportFacade->edit($transport, $transportData);
     }
 
-    /**
-     * @param \App\Model\Transport\Transport $transport
-     */
     private function disableTransportOnFirstDomain(Transport $transport): void
     {
         $transportData = $this->transportDataFactory->createFromTransport($transport);
@@ -184,9 +164,6 @@ class TransportInCartValidationTest extends GraphQlTestCase
         $this->transportFacade->edit($transport, $transportData);
     }
 
-    /**
-     * @param string $paymentUuid
-     */
     private function addPaymentToDemoCart(string $paymentUuid): void
     {
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [

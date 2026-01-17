@@ -18,10 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CreateDomainsDbFunctionsCommand extends Command
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\DomainDbFunctionsFacade $domainDbFunctionsFacade
-     */
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly DomainDbFunctionsFacade $domainDbFunctionsFacade,
@@ -42,9 +38,6 @@ class CreateDomainsDbFunctionsCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     private function doExecute(OutputInterface $output)
     {
         $output->writeln('Start of creating db functions.');

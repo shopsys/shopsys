@@ -13,12 +13,6 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 
 class OrderPaymentStatusPageMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory $goPayClientFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly Domain $domain,
@@ -27,10 +21,6 @@ class OrderPaymentStatusPageMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return string
-     */
     public function setOrderPaymentStatusPageValidityHashMutation(Argument $argument): string
     {
         $uuid = $argument['orderUuid'];

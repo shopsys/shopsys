@@ -12,28 +12,17 @@ use Shopsys\FrameworkBundle\Model\NotificationBar\Exception\NotificationBarNotFo
 
 class NotificationBarRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClockInterface $clock,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getNotificationBarRepository(): EntityRepository
     {
         return $this->em->getRepository(NotificationBar::class);
     }
 
-    /**
-     * @param int $notificationBarId
-     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar
-     */
     public function getById(int $notificationBarId): NotificationBar
     {
         $notificationBar = $this->getNotificationBarRepository()->find($notificationBarId);
@@ -48,7 +37,6 @@ class NotificationBarRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar[]|null
      */
     public function findVisibleAndValidByDomainId(int $domainId): ?array
@@ -64,10 +52,6 @@ class NotificationBarRepository
             ->getQuery()->execute();
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllByDomainIdQueryBuilderForGrid(int $domainId): QueryBuilder
     {
         return $this->getAllByDomainIdQueryBuilder($domainId)
@@ -76,10 +60,6 @@ class NotificationBarRepository
             ->orderBy('nb.id');
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getAllByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->getNotificationBarRepository()->createQueryBuilder('nb')

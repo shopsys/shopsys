@@ -10,9 +10,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20250326101147 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -23,9 +20,6 @@ class Version20250326101147 extends AbstractMigration
         $this->sql('INSERT INTO setting_values (name, domain_id, type, value) VALUES (\'sellingPriceType\', 0, \'integer\', ?)', [$inputPriceType]);
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function down(Schema $schema): void
     {

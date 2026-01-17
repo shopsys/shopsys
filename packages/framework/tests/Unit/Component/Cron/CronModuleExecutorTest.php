@@ -81,10 +81,6 @@ class CronModuleExecutorTest extends TestCase
         $cronModuleExecutor->runModule($cronModuleServiceMock, true);
     }
 
-    /**
-     * @param array $servicesIndexedById
-     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor
-     */
     private function getCronModuleExecutor(array $servicesIndexedById): CronModuleExecutor
     {
         $cronTimeResolver = new CronTimeResolver();

@@ -11,10 +11,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Search\SearchResultsProviderInterfa
 
 interface CategoriesSearchResultsProviderInterface extends SearchResultsProviderInterface
 {
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
-     */
     public function getCategoriesSearchResults(
         Argument $argument,
     ): Promise|ConnectionInterface;

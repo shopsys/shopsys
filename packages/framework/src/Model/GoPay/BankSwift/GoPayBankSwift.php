@@ -62,9 +62,6 @@ class GoPayBankSwift
      */
     protected $isOnline;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftData $goPayBankSwiftData
-     */
     public function __construct(GoPayBankSwiftData $goPayBankSwiftData)
     {
         $this->swift = $goPayBankSwiftData->swift;
@@ -75,9 +72,6 @@ class GoPayBankSwift
         $this->isOnline = $goPayBankSwiftData->isOnline;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftData $goPayBankSwiftData
-     */
     public function edit(GoPayBankSwiftData $goPayBankSwiftData): void
     {
         $this->name = $goPayBankSwiftData->name;

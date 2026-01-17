@@ -53,9 +53,6 @@ class NotNullableColumnsFinderTest extends TestCase
         $this->assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @return array
-     */
     private function getAssociationMappings(): array
     {
         $associationMapping1['joinColumns'] = [

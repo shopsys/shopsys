@@ -28,13 +28,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_STORE)]
 class StoreController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreDataFactory $storeDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
         protected readonly StoreDataFactory $storeDataFactory,
@@ -44,9 +37,6 @@ class StoreController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/store/list/')]
     #[CanView]
     public function listAction(): Response
@@ -56,9 +46,6 @@ class StoreController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     protected function getGrid(): Grid
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -81,10 +68,6 @@ class StoreController extends AdminBaseController
         return $grid;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/store/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -120,11 +103,6 @@ class StoreController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/store/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -162,10 +140,6 @@ class StoreController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/store/delete/{id}', name: 'admin_store_delete', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -195,10 +169,6 @@ class StoreController extends AdminBaseController
         return $this->redirectToRoute('admin_store_list');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/store/setdefault/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit]
     #[CsrfProtection]

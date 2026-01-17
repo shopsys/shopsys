@@ -31,14 +31,6 @@ class PaymentServiceFacade
      */
     protected array $paymentServices;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\GoPayFacade $goPayFacade
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationDataFactory $paymentSetupCreationDataFactory
-     */
     public function __construct(
         protected readonly PaymentTransactionFacade $paymentTransactionFacade,
         protected readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
@@ -51,10 +43,6 @@ class PaymentServiceFacade
         $this->paymentServices[PaymentTypeEnum::TYPE_GOPAY] = $goPayFacade;
     }
 
-    /**
-     * @param string $paymentType
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceInterface
-     */
     protected function getPaymentServiceFacadeByPaymentType(string $paymentType): PaymentServiceInterface
     {
         if (array_key_exists($paymentType, $this->paymentServices)) {
@@ -64,10 +52,6 @@ class PaymentServiceFacade
         throw new PaymentServiceFacadeNotRegisteredException($paymentType);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationData
-     */
     public function payOrder(Order $order): PaymentSetupCreationData
     {
         $paymentTransactionData = $this->paymentTransactionDataFactory->create();
@@ -91,10 +75,6 @@ class PaymentServiceFacade
         return $paymentSetupCreationData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return bool
-     */
     public function updatePaymentTransactionsByOrder(Order $order): bool
     {
         $updated = false;
@@ -121,10 +101,6 @@ class PaymentServiceFacade
         return $updated;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction $paymentTransaction
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $refundAmount
-     */
     public function refundTransaction(PaymentTransaction $paymentTransaction, Money $refundAmount): void
     {
         $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);

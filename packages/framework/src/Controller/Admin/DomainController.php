@@ -27,14 +27,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_DOMAIN)]
 class DomainController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\DomainFacade $domainFacade
-     * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
-     * @param \Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory $arrayDataSourceFactory
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
@@ -45,9 +37,6 @@ class DomainController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[RequireRole(SystemRole::ADMIN)]
     public function domainTabsAction(): Response
     {
@@ -57,11 +46,6 @@ class DomainController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/multidomain/select-domain/{id}', requirements: ['id' => '\d+'])]
     #[RequireRole(SystemRole::ADMIN)]
     public function selectDomainAction(Request $request, int $id): Response
@@ -77,9 +61,6 @@ class DomainController extends AdminBaseController
         return $this->redirect($referer);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/domain/list')]
     #[CanView]
     public function listAction(): Response
@@ -100,11 +81,6 @@ class DomainController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/domain/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -150,9 +126,6 @@ class DomainController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function localeTabsAction(): Response
     {
         $domainConfigs = [];

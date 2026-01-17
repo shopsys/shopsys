@@ -15,10 +15,6 @@ class GrapesJsParser
 {
     protected const GJS_PRODUCTS_SEPARATOR = '|||';
 
-    /**
-     * @param string|null $text
-     * @return string|null
-     */
     public function parse(?string $text): ?string
     {
         if ($text === null) {
@@ -58,9 +54,6 @@ class GrapesJsParser
         return $this->getConfiguredSanitizer()->sanitize($newText);
     }
 
-    /**
-     * @return \Symfony\Component\HtmlSanitizer\HtmlSanitizer
-     */
     protected function getConfiguredSanitizer(): HtmlSanitizer
     {
         $config = (new HtmlSanitizerConfig())

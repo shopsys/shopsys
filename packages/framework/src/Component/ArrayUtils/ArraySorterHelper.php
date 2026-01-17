@@ -8,11 +8,6 @@ use Collator;
 
 class ArraySorterHelper
 {
-    /**
-     * @param string $valueKey
-     * @param array $array
-     * @param string $locale
-     */
     public function sortArrayAlphabeticallyByValue(string $valueKey, array &$array, string $locale): void
     {
         $collator = new Collator($locale);

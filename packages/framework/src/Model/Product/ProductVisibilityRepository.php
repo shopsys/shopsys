@@ -15,12 +15,6 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductVisibilityNotFoundExc
 
 class ProductVisibilityRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerDecorator $em,
         protected readonly Domain $domain,
@@ -44,7 +38,6 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
      */
     public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, $domainId)
@@ -73,8 +66,6 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
      */
@@ -98,7 +89,6 @@ class ProductVisibilityRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility[]
      */
     public function findProductVisibilitiesByDomainIdAndProduct($domainId, Product $product): array
@@ -110,9 +100,7 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param array<int, int> $defaultPricingGroupIdsIndexedByDomainId
-     * @return int
      */
     public function getCountOfDomainsProductIsVisibleOn(
         Product $product,
@@ -316,8 +304,6 @@ class ProductVisibilityRepository
 
     /**
      * @param int[] $productIds
-     * @param int $pricingGroupId
-     * @param int $domainId
      * @return bool[]
      */
     public function getProductsVisibilitiesByPricingGroupAndDomainIndexedByProductId(

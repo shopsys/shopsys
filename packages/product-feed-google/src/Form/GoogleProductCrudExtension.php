@@ -13,11 +13,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GoogleProductCrudExtension implements PluginCrudExtensionInterface
 {
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainFacade $googleProductDomainFacade
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainDataFactory $googleProductDomainDataFactory
-     */
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly GoogleProductDomainFacade $googleProductDomainFacade,
@@ -96,7 +91,6 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
      * @param string $propertyName
      * @param bool $propertyValue
      */

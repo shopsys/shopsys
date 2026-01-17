@@ -28,9 +28,6 @@ class NumberFormatHelper extends Module
 
     private LocalizationHelper $localizationHelper;
 
-    /**
-     * @param \Codeception\TestInterface $test
-     */
     #[Override]
     public function _before(TestInterface $test): void
     {
@@ -47,9 +44,6 @@ class NumberFormatHelper extends Module
 
     /**
      * It is not possible to use this method for converting total prices of an order or in cart (because of the price calculation)
-     *
-     * @param string $price
-     * @return string
      */
     public function getPriceWithVatConvertedToDomainDefaultCurrency(string $price): string
     {
@@ -63,20 +57,11 @@ class NumberFormatHelper extends Module
         return $money->getAmount();
     }
 
-    /**
-     * @param string $number
-     * @param string $locale
-     * @return string
-     */
     public function getNumberFromLocalizedFormat(string $number, string $locale): string
     {
         return $this->numberFormatter->parse($number, ['locale' => $locale]);
     }
 
-    /**
-     * @param string $number
-     * @return string
-     */
     public function getFormattedPercentAdmin(string $number): string
     {
         $formattedNumberWithPercentSymbol = $this->numberFormatterExtension->formatPercent(
@@ -91,9 +76,6 @@ class NumberFormatHelper extends Module
      * The output of the CurrencyFormatter::format() method may contain non-breaking spaces that are not recognized by Codeception
      * so we need to replace them with regular spaces here.
      * See https://stackoverflow.com/questions/12837682/non-breaking-utf-8-0xc2a0-space-and-preg-replace-strange-behaviour
-     *
-     * @param string $text
-     * @return string
      */
     private function normalizeSpaces(string $text): string
     {

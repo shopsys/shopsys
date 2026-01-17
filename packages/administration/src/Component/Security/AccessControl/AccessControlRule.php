@@ -34,9 +34,6 @@ final readonly class AccessControlRule
 
     /**
      * Check if this rule applies to the given HTTP method
-     *
-     * @param \Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod $httpMethod
-     * @return bool
      */
     public function appliesToMethod(HttpMethod $httpMethod): bool
     {
@@ -57,8 +54,6 @@ final readonly class AccessControlRule
 
     /**
      * Get the role identifier string (with permission suffix if applicable)
-     *
-     * @return string
      */
     public function getRoleIdentifier(): string
     {
@@ -72,9 +67,7 @@ final readonly class AccessControlRule
     /**
      * Check if user with given role checker callback has access
      *
-     * @param \Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod $httpMethod
      * @param callable(string): bool $hasRoleCallback
-     * @return bool
      */
     public function hasAccess(HttpMethod $httpMethod, callable $hasRoleCallback): bool
     {

@@ -29,13 +29,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_PARAMETER_GROUP)]
 class ParameterGroupController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly ParameterGroupFacade $parameterGroupFacade,
         protected readonly GridFactory $gridFactory,
@@ -45,9 +38,6 @@ class ParameterGroupController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/parameter-group/list/')]
     #[CanView]
     public function listAction(): Response
@@ -59,10 +49,6 @@ class ParameterGroupController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/parameter-group/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -97,11 +83,6 @@ class ParameterGroupController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/parameter-group/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -139,10 +120,6 @@ class ParameterGroupController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     #[Route(path: '/product/parameter-group/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -165,9 +142,6 @@ class ParameterGroupController extends AdminBaseController
         return $this->redirectToRoute('admin_parametergroup_list');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     protected function getGrid(): Grid
     {
         $queryBuilder = $this->parameterGroupFacade->getOrderedParameterGroupsQueryBuilder($this->localization->getCurrentLocaleForTranslatableEntities());

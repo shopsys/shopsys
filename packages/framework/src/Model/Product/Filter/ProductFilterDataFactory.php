@@ -8,18 +8,11 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 
 class ProductFilterDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
-     */
     public function create(): ProductFilterData
     {
         return new ProductFilterData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     */
     public function updateProductFilterDataFromReadyCategorySeoMix(
         ReadyCategorySeoMix $readyCategorySeoMix,
         ProductFilterData $productFilterData,

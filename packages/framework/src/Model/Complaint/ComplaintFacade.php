@@ -12,13 +12,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class ComplaintFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintRepository $complaintRepository
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade $complaintMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
-     */
     public function __construct(
         protected readonly ComplaintRepository $complaintRepository,
         protected readonly EntityManagerInterface $em,
@@ -28,10 +21,6 @@ class ComplaintFacade
     ) {
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
-     */
     public function getById(int $id): Complaint
     {
         $complaint = $this->complaintRepository->findById($id);
@@ -43,10 +32,6 @@ class ComplaintFacade
         return $complaint;
     }
 
-    /**
-     * @param int $id
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
-     */
     public function edit(int $id, ComplaintData $complaintData): void
     {
         $complaint = $this->getById($id);
@@ -66,9 +51,6 @@ class ComplaintFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param int $domainId
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
      */
     public function getComplaintsByCustomerUserAndDomainIdAndLocale(
@@ -80,7 +62,6 @@ class ComplaintFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[] $complaintItemsData
      */
     protected function editItems(Complaint $complaint, array $complaintItemsData): void

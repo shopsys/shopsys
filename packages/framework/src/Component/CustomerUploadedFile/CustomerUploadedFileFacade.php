@@ -25,16 +25,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
  */
 class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
 {
-    /**
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig $customerUploadedFileConfig
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository $customerUploadedFileRepository
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileLocator $customerUploadedFileLocator
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFactory $customerUploadedFileFactory
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
-     */
     public function __construct(
         FilesystemOperator $filesystem,
         EntityManagerInterface $em,
@@ -48,12 +38,6 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         parent::__construct($filesystem, $em, $transformStringHelper);
     }
 
-    /**
-     * @param object $entity
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileData $customerUploadedFileData
-     * @param string $type
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     */
     public function manageFiles(
         object $entity,
         CustomerUploadedFileData $customerUploadedFileData,
@@ -101,14 +85,6 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         $this->deleteFiles($entity, $customerUploadedFileData->filesToDelete);
     }
 
-    /**
-     * @param object $entity
-     * @param string $entityName
-     * @param string $type
-     * @param string $temporaryFilename
-     * @param string $uploadedFilename
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     */
     protected function uploadFile(
         object $entity,
         string $entityName,
@@ -133,15 +109,6 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         $this->em->flush();
     }
 
-    /**
-     * @param object $entity
-     * @param string $entityName
-     * @param string $type
-     * @param array $temporaryFilenames
-     * @param array $uploadedFilenames
-     * @param int $existingFilesCount
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     */
     protected function uploadFiles(
         object $entity,
         string $entityName,
@@ -172,7 +139,6 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
-     * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[] $customerUploadedFiles
      */
     public function deleteFiles(object $entity, array $customerUploadedFiles): void
@@ -191,9 +157,6 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         $this->em->flush();
     }
 
-    /**
-     * @param object $entity
-     */
     public function deleteAllUploadedFilesByEntity(object $entity): void
     {
         $customerUploadedFiles = $this->customerUploadedFileRepository->getAllCustomerUploadedFilesByEntity(
@@ -204,11 +167,6 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         $this->deleteFiles($entity, $customerUploadedFiles);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
-     * @return string
-     */
     public function getCustomerUploadedFileDownloadUrl(
         DomainConfig $domainConfig,
         CustomerUploadedFile $customerUploadedFile,
@@ -216,11 +174,6 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         return $this->customerUploadedFileLocator->getCustomerUploadedFileDownloadUrl($domainConfig, $customerUploadedFile);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
-     * @return string
-     */
     public function getCustomerUploadedFileViewUrl(
         DomainConfig $domainConfig,
         CustomerUploadedFile $customerUploadedFile,
@@ -242,9 +195,6 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         $this->em->flush();
     }
 
-    /**
-     * @param array $fileNamesIndexedByFileId
-     */
     #[Override]
     protected function updateFilenamesAndSlugs(array $fileNamesIndexedByFileId): void
     {
@@ -259,13 +209,6 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         }
     }
 
-    /**
-     * @param int $customerUploadedFileId
-     * @param string $customerUploadedFileSlug
-     * @param string $customerUploadedFileExtension
-     * @param string $hash
-     * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile
-     */
     public function getByIdSlugExtensionAndHash(
         int $customerUploadedFileId,
         string $customerUploadedFileSlug,
@@ -284,37 +227,24 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface
-     */
     #[Override]
     protected function getRepository(): UploadedFileRepositoryInterface
     {
         return $this->customerUploadedFileRepository;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileLocatorInterface
-     */
     #[Override]
     protected function getFileLocator(): UploadedFileLocatorInterface
     {
         return $this->customerUploadedFileLocator;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface
-     */
     #[Override]
     protected function getUploadedFileConfig(): UploadedFileConfigInterface
     {
         return $this->customerUploadedFileConfig;
     }
 
-    /**
-     * @param string|null $hash
-     * @return bool
-     */
     public function isAccessToFileDenied(?string $hash): bool
     {
         return !$hash && !$this->administratorFrontSecurityFacade->isAdministratorLogged();

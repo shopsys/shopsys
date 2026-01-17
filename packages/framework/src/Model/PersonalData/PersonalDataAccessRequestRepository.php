@@ -9,10 +9,6 @@ use Psr\Clock\ClockInterface;
 
 class PersonalDataAccessRequestRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClockInterface $clock,

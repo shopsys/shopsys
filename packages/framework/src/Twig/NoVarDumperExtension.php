@@ -24,9 +24,6 @@ class NoVarDumperExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'no_var_dumper_extension';

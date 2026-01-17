@@ -14,21 +14,12 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
  */
 class FilterQueryFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
     ) {
     }
 
-    /**
-     * @param int|null $offset
-     * @param int|null $limit
-     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
-     */
     public function create(?int $offset = null, ?int $limit = null): FilterQuery
     {
         $filterQuery = new FilterQuery($this->getIndexName());
@@ -39,36 +30,21 @@ class FilterQueryFactory
         return $filterQueryIncludingOffsetAndLimit;
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
-     */
     public function createFilteredByUuid(string $uuid): FilterQuery
     {
         return $this->create()->filterByUuid($uuid);
     }
 
-    /**
-     * @param string $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
-     */
     public function createFilteredBySlug(string $urlSlug): FilterQuery
     {
         return $this->create()->filterBySlug($urlSlug);
     }
 
-    /**
-     * @param int $articleId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
-     */
     public function createFilteredById(int $articleId): FilterQuery
     {
         return $this->create()->filterById($articleId);
     }
 
-    /**
-     * @return string
-     */
     protected function getIndexName(): string
     {
         return $this->indexDefinitionLoader->getIndexDefinition(ArticleIndex::getName(), $this->domain->getId())->getIndexAlias();

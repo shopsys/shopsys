@@ -8,11 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ModuleFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Module\EnabledModuleRepository $enabledModuleRepository
-     * @param \Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactory $enabledModuleFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly EnabledModuleRepository $enabledModuleRepository,

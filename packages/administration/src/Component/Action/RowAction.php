@@ -23,9 +23,6 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
 
     /**
      * Sets additional classes for row action. Use this method to add custom classes. Default classes are required for proper functionality.
-     *
-     * @param string $additionalClass
-     * @return self
      */
     public function setAdditionalClass(string $additionalClass): self
     {
@@ -36,9 +33,6 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
 
     /**
      * If you want to show confirm dialog before action is executed, use this method to set confirm message.
-     *
-     * @param string $confirmMessage
-     * @return self
      */
     public function setConfirmMessage(string $confirmMessage): self
     {
@@ -49,9 +43,6 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
 
     /**
      * In case you want to disable tooltip for row action, use this method. Tooltip is enabled by default.
-     *
-     * @param bool $render
-     * @return self
      */
     public function showTooltip(bool $render = true): self
     {
@@ -60,12 +51,6 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
         return $this;
     }
 
-    /**
-     * @param string $name
-     * @param string $label
-     * @param string|null $icon
-     * @return self
-     */
     #[Override]
     public static function create(string $name, string $label, ?string $icon = null): self
     {
@@ -78,9 +63,6 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
 
     /**
      * Validate action configuration before rendering
-     *
-     * @param mixed $data
-     * @return bool
      */
     #[Override]
     public function validate(mixed $data): bool
@@ -92,18 +74,12 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
         return parent::validate($data);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getTemplate(): string
     {
         return '@ShopsysAdministration/datagrid/row_action.html.twig';
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function getTemplateParameters(): array
     {

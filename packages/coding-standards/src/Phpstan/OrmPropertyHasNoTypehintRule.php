@@ -16,20 +16,12 @@ class OrmPropertyHasNoTypehintRule implements Rule
 {
     private const CHECKED_NAMESPACE = 'Shopsys\\';
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     * @param \PHPStan\Analyser\Scope $scope
-     * @return array
-     */
     #[Override]
     public function processNode(Node $node, Scope $scope): array
     {
@@ -60,10 +52,6 @@ class OrmPropertyHasNoTypehintRule implements Rule
         return [];
     }
 
-    /**
-     * @param \PHPStan\Reflection\PropertyReflection $property
-     * @return bool
-     */
     private function hasOrmAnnotation(PropertyReflection $property): bool
     {
         return $property->getDocComment() !== null && str_contains($property->getDocComment(), '@ORM\\');

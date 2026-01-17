@@ -39,10 +39,6 @@ final class AutoCardGroupableExtension extends AbstractTypeExtension
         $this->markChildrenWithCardMetadata($view, $form);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     */
     private function markChildrenWithCardMetadata(FormView $view, FormInterface $form): void
     {
         $hasAutoCardableFields = false;
@@ -76,7 +72,6 @@ final class AutoCardGroupableExtension extends AbstractTypeExtension
 
     /**
      * @param class-string $typeClass
-     * @return bool
      */
     private function isInvisibleType(string $typeClass): bool
     {

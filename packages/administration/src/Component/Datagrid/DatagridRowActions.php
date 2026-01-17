@@ -21,10 +21,6 @@ final class DatagridRowActions
         $this->rowActions = new ArrayCollection();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface $rowAction
-     * @return self
-     */
     public function add(GridRowActionInterface $rowAction): self
     {
         $name = $rowAction->getName();
@@ -40,9 +36,7 @@ final class DatagridRowActions
 
     /**
      * @template T of \Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface
-     * @param string $name
      * @param \Closure(T): T $rowAction
-     * @return self
      */
     public function update(string $name, Closure $rowAction): self
     {
@@ -61,10 +55,6 @@ final class DatagridRowActions
         return $this;
     }
 
-    /**
-     * @param string $name
-     * @return self
-     */
     public function delete(string $name): self
     {
         if (!$this->rowActions->containsKey($name)) {
@@ -80,7 +70,6 @@ final class DatagridRowActions
      * Reorder row actions by given order.
      *
      * @param string[] $orderedRowActionNames
-     * @return self
      */
     public function reorder(array $orderedRowActionNames): self
     {

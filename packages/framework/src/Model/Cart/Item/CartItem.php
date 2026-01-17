@@ -71,13 +71,6 @@ class CartItem
      */
     protected $type;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $quantity
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPrice
-     * @param string $type
-     */
     public function __construct(
         Cart $cart,
         Product $product,
@@ -94,9 +87,6 @@ class CartItem
         $this->setType($type);
     }
 
-    /**
-     * @param int $newQuantity
-     */
     public function changeQuantity(int $newQuantity): void
     {
         if ($newQuantity <= 0) {
@@ -126,10 +116,6 @@ class CartItem
         return $this->product;
     }
 
-    /**
-     * @param string|null $locale
-     * @return string|null
-     */
     public function getName(?string $locale = null): ?string
     {
         return $this->getProduct()->getName($locale);
@@ -159,10 +145,6 @@ class CartItem
         $this->watchedPrice = $watchedPrice;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
-     * @return bool
-     */
     public function isSimilarItemAs(self $cartItem): bool
     {
         return $this->getProduct()->getId() === $cartItem->getProduct()->getId() && $this->getType() === $cartItem->getType();
@@ -181,9 +163,6 @@ class CartItem
         $this->addedAt = new DatePoint();
     }
 
-    /**
-     * @return bool
-     */
     public function hasProduct(): bool
     {
         return $this->product !== null;
@@ -213,26 +192,16 @@ class CartItem
         $this->type = $type;
     }
 
-    /**
-     * @return bool
-     */
     public function isProductGift(): bool
     {
         return $this->type === CartItemTypeEnum::TYPE_PRODUCT_GIFT;
     }
 
-    /**
-     * @return bool
-     */
     public function isProduct(): bool
     {
         return $this->type === CartItemTypeEnum::TYPE_PRODUCT;
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     public function getFreeQuantity(int $domainId): int
     {
         $product = $this->getProduct();

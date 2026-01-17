@@ -34,10 +34,6 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
      */
     private CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @param bool $shouldMerge
-     * @param array $expectedProducts
-     */
     #[DataProvider('getAddOrderItemsToCartDataProvider')]
     public function testOrderItemsAreCorrectlyAddedToCart(bool $shouldMerge, array $expectedProducts): void
     {
@@ -147,9 +143,6 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
         $this->assertSame($response['items'], $expectedProducts);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
     private function findCartOfCurrentCustomer(): ?Cart
     {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
@@ -160,10 +153,6 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
         return $this->cartFacade->findCartByCustomerUserIdentifier($customerUserIdentifier);
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $productQuantity
-     */
     private function addProductToCustomerCart(Product $product, int $productQuantity): void
     {
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
@@ -172,9 +161,6 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
         ]);
     }
 
-    /**
-     * @return string
-     */
     public function createMinimalOrderQuery(): string
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
@@ -197,10 +183,6 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
         return $data['order']['uuid'];
     }
 
-    /**
-     * @param string|null $cartUuid
-     * @return string
-     */
     private function getMutation(?string $cartUuid): string
     {
         return 'mutation {
@@ -226,11 +208,6 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
                     }';
     }
 
-    /**
-     * @param string $orderUuid
-     * @param string $cartUuid
-     * @return string
-     */
     private function getOrderRepeatMutation(string $orderUuid, string $cartUuid = ''): string
     {
         return 'mutation {

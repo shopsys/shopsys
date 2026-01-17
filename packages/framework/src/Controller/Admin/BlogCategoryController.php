@@ -29,14 +29,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_BLOG_CATEGORY)]
 class BlogCategoryController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly BlogCategoryDataFactory $blogCategoryDataFactory,
@@ -47,11 +39,6 @@ class BlogCategoryController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/blog/category/edit/{id}', name: 'admin_blogcategory_edit', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -91,10 +78,6 @@ class BlogCategoryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/blog/category/new/', name: 'admin_blogcategory_new')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -130,10 +113,6 @@ class BlogCategoryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/blog/category/list/', name: 'admin_blogcategory_list')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -162,8 +141,6 @@ class BlogCategoryController extends AdminBaseController
 
     /**
      * @see node_modules/@shopsys/framework/js/admin/components/CategoryTreeSorting.js
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/category/apply-sorting/', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
     #[CanEdit]
@@ -177,10 +154,6 @@ class BlogCategoryController extends AdminBaseController
         return new Response('OK - dummy');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/blog/category/delete/{id}', name: 'admin_blogcategory_delete', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -204,11 +177,6 @@ class BlogCategoryController extends AdminBaseController
         return $this->redirectToRoute('admin_blogcategory_list');
     }
 
-    /**
-     * @param int $domainId
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     #[Route(path: '/blog/category/branch/{domainId}/{id}', name: 'admin_blogcategory_loadbranchjson', requirements: ['domainId' => '\d+', 'id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
     #[CanView]
     public function loadBranchJsonAction(int $domainId, int $id): JsonResponse

@@ -11,9 +11,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function process(ContainerBuilder $container): void
     {

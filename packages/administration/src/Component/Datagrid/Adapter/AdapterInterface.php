@@ -9,9 +9,7 @@ use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 interface AdapterInterface
 {
     /**
-     * @param string $identificationName
      * @param array<\Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor> $fields
-     * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
      */
     public function getDatasource(string $identificationName, array $fields): DataSourceInterface;
 }

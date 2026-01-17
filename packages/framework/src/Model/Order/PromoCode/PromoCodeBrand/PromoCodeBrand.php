@@ -30,10 +30,6 @@ class PromoCodeBrand
      */
     protected $brand;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     */
     public function __construct(PromoCode $promoCode, Brand $brand)
     {
         $this->promoCode = $promoCode;

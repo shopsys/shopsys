@@ -12,19 +12,12 @@ use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class StoreResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {
@@ -35,10 +28,6 @@ class StoreResolverMap extends ResolverMap
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @return string
-     */
     protected function getSlug(Store $store): string
     {
         $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(

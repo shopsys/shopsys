@@ -27,16 +27,10 @@ class ParameterGroupEvent extends Event
      */
     public const DELETE = 'parameterGroup.delete';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup $parameterGroup
-     */
     public function __construct(protected readonly ParameterGroup $parameterGroup)
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
-     */
     public function getParameterGroup(): ParameterGroup
     {
         return $this->parameterGroup;

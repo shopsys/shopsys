@@ -84,16 +84,6 @@ class PaymentDomain
      */
     protected $bicSwift;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null $goPayPaymentMethod
-     * @param bool $hiddenByGoPay
-     * @param string|null $accountNumber
-     * @param string|null $iban
-     * @param string|null $bic
-     */
     public function __construct(
         Payment $payment,
         int $domainId,
@@ -131,9 +121,6 @@ class PaymentDomain
         return $this->enabled;
     }
 
-    /**
-     * @param bool $enabled
-     */
     public function setEnabled(bool $enabled)
     {
         $this->enabled = $enabled;
@@ -171,9 +158,6 @@ class PaymentDomain
         $this->goPayPaymentMethod = $goPayPaymentMethod;
     }
 
-    /**
-     * @param bool $state
-     */
     public function setHiddenByGoPay(bool $state): void
     {
         $this->hiddenByGoPay = $state;

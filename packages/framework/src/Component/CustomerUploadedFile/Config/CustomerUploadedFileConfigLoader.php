@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigLoad
 
 class CustomerUploadedFileConfigLoader extends UploadedFileConfigLoader
 {
-    /**
-     * @param string $filename
-     * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig
-     */
     #[Override]
     public function loadFromYaml(string $filename): CustomerUploadedFileConfig
     {

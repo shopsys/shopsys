@@ -13,9 +13,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class PaymentRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
@@ -85,7 +82,6 @@ class PaymentRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
     public function getAllByTransport(Transport $transport)
@@ -97,10 +93,6 @@ class PaymentRepository
             ->getResult();
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
     public function getOneByUuid(string $uuid): Payment
     {
         $payment = $this->getPaymentRepository()->findOneBy(['uuid' => $uuid]);
@@ -112,11 +104,6 @@ class PaymentRepository
         return $payment;
     }
 
-    /**
-     * @param string $uuid
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
     public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Payment
     {
         $queryBuilder = $this->getPaymentRepository()->createQueryBuilder('p')
@@ -139,8 +126,6 @@ class PaymentRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
     public function getByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod, int $domainId): array
@@ -156,7 +141,6 @@ class PaymentRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
     public function getAllWithEagerLoadedDomainsAndTranslations(DomainConfig $domainConfig): array
@@ -171,12 +155,6 @@ class PaymentRepository
             ->getQuery()->execute();
     }
 
-    /**
-     * @param string $externalPaymentMethod
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
-     */
     public function findPaymentByExternalMethodTransportAndDomainId(
         string $externalPaymentMethod,
         Transport $transport,

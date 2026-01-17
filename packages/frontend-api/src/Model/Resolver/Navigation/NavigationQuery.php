@@ -10,10 +10,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class NavigationQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade $navigationItemFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly NavigationItemFacade $navigationItemFacade,
         protected readonly Domain $domain,

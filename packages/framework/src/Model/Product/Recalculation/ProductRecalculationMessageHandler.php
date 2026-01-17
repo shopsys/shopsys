@@ -14,29 +14,17 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
 {
     use BatchHandlerTrait;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationFacade $productRecalculationFacade
-     * @param \Psr\Log\LoggerInterface $logger
-     */
     public function __construct(
         protected readonly ProductRecalculationFacade $productRecalculationFacade,
         protected readonly LoggerInterface $logger,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage $message
-     * @param \Symfony\Component\Messenger\Handler\Acknowledger|null $ack
-     * @return mixed
-     */
     public function __invoke(AbstractProductRecalculationMessage $message, ?Acknowledger $ack = null): mixed
     {
         return $this->handle($message, $ack);
     }
 
-    /**
-     * @param array $jobs
-     */
     protected function process(array $jobs): void
     {
         $priorities = [];
@@ -58,7 +46,6 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
 
     /**
      * @param int[] $productIds
-     * @param string $priority
      * @param \Symfony\Component\Messenger\Handler\Acknowledger[] $acknowledgers
      */
     protected function processPriority(array $productIds, string $priority, array $acknowledgers): void
@@ -80,10 +67,6 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage $message
-     * @return string
-     */
     protected function getPriority(AbstractProductRecalculationMessage $message): string
     {
         return match (true) {
@@ -105,7 +88,6 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
 
     /**
      * @param \Symfony\Component\Messenger\Handler\Acknowledger[] $acknowledgers
-     * @param \Throwable $e
      */
     protected function nackAll(array $acknowledgers, Throwable $e): void
     {

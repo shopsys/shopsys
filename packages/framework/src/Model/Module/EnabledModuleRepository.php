@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Model\Module\Exception\UnsupportedModuleException;
 
 class EnabledModuleRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleList $moduleList
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ModuleList $moduleList,

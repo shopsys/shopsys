@@ -16,10 +16,6 @@ class EntityNameResolver
     ) {
     }
 
-    /**
-     * @param string $entityName
-     * @return string
-     */
     public function resolve(string $entityName): string
     {
         return $this->entityExtensionMap[$entityName] ?? $entityName;
@@ -48,9 +44,6 @@ class EntityNameResolver
 
     /**
      * Replace every occurrence of the original FQNs with word borders on both sides and not followed by a back-slash
-     *
-     * @param string $string
-     * @return string
      */
     protected function resolveInString(string $string): string
     {
@@ -62,10 +55,6 @@ class EntityNameResolver
         return $string;
     }
 
-    /**
-     * @param array $array
-     * @return array
-     */
     protected function resolveInArray(array $array): array
     {
         return array_map([$this, 'resolveIn'], $array);

@@ -36,17 +36,6 @@ class PriceListController extends AdminBaseController
 {
     protected const string DOMAIN_FILTER_NAMESPACE = 'priceList';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListGridFactory $priceListGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade $priceListFacade
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory $priceListDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum $priceListCsvColumnsEnum
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly PriceListGridFactory $priceListGridFactory,
         protected readonly PriceListFacade $priceListFacade,
@@ -60,9 +49,6 @@ class PriceListController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/pricing/price-list/list/')]
     #[CanView]
     public function listAction(): Response
@@ -87,10 +73,6 @@ class PriceListController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/pricing/price-list/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -129,11 +111,6 @@ class PriceListController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/pricing/price-list/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -173,10 +150,6 @@ class PriceListController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     #[Route(path: '/pricing/price-list/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -200,10 +173,6 @@ class PriceListController extends AdminBaseController
         return $this->redirectToRoute('admin_pricelist_list');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/pricing/price-list/export/{id}', requirements: ['id' => '\d+'])]
     #[CanView]
     public function exportAction(int $id): Response
@@ -226,10 +195,6 @@ class PriceListController extends AdminBaseController
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/pricing/price-list/import')]
     #[CanCreate]
     public function importAction(Request $request): Response
@@ -310,10 +275,6 @@ class PriceListController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/pricing/price-list/loadMetadata/{id}', requirements: ['id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
     #[CanView]
     public function loadMetadataAction(int $id): Response

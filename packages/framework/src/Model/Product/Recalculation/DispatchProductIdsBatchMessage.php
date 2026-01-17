@@ -9,7 +9,6 @@ class DispatchProductIdsBatchMessage
     /**
      * @param int[] $productIds
      * @param string[] $exportScopes
-     * @param string $productRecalculationPriorityEnum
      */
     public function __construct(
         public readonly array $productIds = [],

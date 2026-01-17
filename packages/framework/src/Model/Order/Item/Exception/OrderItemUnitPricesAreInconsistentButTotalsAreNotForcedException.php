@@ -11,11 +11,6 @@ use Throwable;
 
 class OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException extends RuntimeException
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $calculatedPriceWithoutVat
-     * @param \Throwable|null $previous
-     */
     public function __construct(OrderItem $orderItem, Money $calculatedPriceWithoutVat, ?Throwable $previous = null)
     {
         $message = sprintf(

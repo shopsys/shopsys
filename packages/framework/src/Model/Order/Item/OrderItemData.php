@@ -93,35 +93,23 @@ class OrderItemData
      */
     public $relatedOrderItemsData = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $unitPrice
-     */
     public function setUnitPrice(PriceInterface $unitPrice): void
     {
         $this->unitPriceWithVat = $unitPrice->getPriceWithVat();
         $this->unitPriceWithoutVat = $unitPrice->getPriceWithoutVat();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalPrice
-     */
     public function setTotalPrice(PriceInterface $totalPrice): void
     {
         $this->totalPriceWithVat = $totalPrice->getPriceWithVat();
         $this->totalPriceWithoutVat = $totalPrice->getPriceWithoutVat();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getTotalPrice(): PriceInterface
     {
         return new Price($this->totalPriceWithoutVat, $this->totalPriceWithVat);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getUnitPrice(): PriceInterface
     {
         return new Price($this->unitPriceWithoutVat, $this->unitPriceWithVat);

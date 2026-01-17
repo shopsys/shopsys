@@ -18,12 +18,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CreateWithdrawalVoter extends Voter
 {
-    /**
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly Security $security,
         protected readonly CurrentCustomerUser $currentCustomerUser,

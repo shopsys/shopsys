@@ -9,9 +9,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 
 class TestCurrencyProvider
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     public static function getTestCurrency(): Currency
     {
         $currencyData = new CurrencyData();

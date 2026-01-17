@@ -18,9 +18,6 @@ final class TimedFormTypeExtension extends AbstractTypeExtension
     public const string OPTION_ENABLED = 'timed_spam_enabled';
     public const string OPTION_MINIMUM_SECONDS = 'timed_spam_minimum_seconds';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider $formTimeProvider
-     */
     public function __construct(protected readonly FormTimeProvider $formTimeProvider)
     {
     }
@@ -41,11 +38,6 @@ final class TimedFormTypeExtension extends AbstractTypeExtension
         ));
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     #[Override]
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
@@ -54,9 +46,6 @@ final class TimedFormTypeExtension extends AbstractTypeExtension
         }
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

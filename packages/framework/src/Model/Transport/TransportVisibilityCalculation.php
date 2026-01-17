@@ -12,11 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class TransportVisibilityCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(
         protected readonly IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation,
         protected readonly IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation,
@@ -25,7 +20,6 @@ class TransportVisibilityCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $allPaymentsOnDomain
      * @param int $domainId
      * @return bool
@@ -41,7 +35,6 @@ class TransportVisibilityCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param int $domainId
      * @return bool
      */
@@ -79,7 +72,6 @@ class TransportVisibilityCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
     public function filterTransportsByProductsInCart(array $transports, Cart $cart): array
@@ -90,7 +82,6 @@ class TransportVisibilityCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @return int[]
      */
     protected function getExcludedTransportIdsByProductsInCart(Cart $cart): array

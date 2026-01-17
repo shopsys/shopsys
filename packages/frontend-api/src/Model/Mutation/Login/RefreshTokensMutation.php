@@ -18,12 +18,6 @@ use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 
 class RefreshTokensMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory
-     */
     public function __construct(
         protected readonly TokenFacade $tokenFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
@@ -32,10 +26,6 @@ class RefreshTokensMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrontendApiBundle\Model\Security\TokensData
-     */
     public function refreshTokensMutation(Argument $argument): TokensData
     {
         $refreshToken = $argument['input']['refreshToken'];
@@ -84,9 +74,6 @@ class RefreshTokensMutation extends AbstractMutation
         return $tokens;
     }
 
-    /**
-     * @param \Lcobucci\JWT\Token\DataSet $claims
-     */
     protected function assertClaimsExists(DataSet $claims): void
     {
         if (!$claims->has(FrontendApiUser::CLAIM_UUID) || !$claims->has(FrontendApiUser::CLAIM_SECRET_CHAIN) || !$claims->has(FrontendApiUser::CLAIM_DEVICE_ID)) {

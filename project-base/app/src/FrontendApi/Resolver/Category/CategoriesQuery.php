@@ -16,7 +16,6 @@ class CategoriesQuery extends BaseCategoriesQuery
 {
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -28,9 +27,6 @@ class CategoriesQuery extends BaseCategoriesQuery
         );
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function categoriesQuery(): array
     {

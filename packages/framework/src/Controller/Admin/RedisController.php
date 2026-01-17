@@ -13,18 +13,11 @@ use Symfony\Component\Routing\Attribute\Route;
 #[SuperAdminOnly]
 class RedisController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
-     */
     public function __construct(
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/superadmin/redis/clean-storefront-query-cache')]
     public function cleanAction(Request $request): Response
     {
@@ -37,10 +30,6 @@ class RedisController extends AdminBaseController
         return $this->redirectToRoute('admin_redis_show');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/superadmin/redis/show-clean-storefront-query-cache')]
     public function showAction(Request $request): Response
     {

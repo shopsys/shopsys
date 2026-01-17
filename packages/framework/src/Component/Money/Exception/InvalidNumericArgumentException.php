@@ -8,10 +8,6 @@ use Throwable;
 
 class InvalidNumericArgumentException extends MoneyException
 {
-    /**
-     * @param string $value
-     * @param \Throwable $previous
-     */
     public function __construct(string $value, Throwable $previous)
     {
         $message = sprintf('Invalid numeric argument: "%s"', $value);

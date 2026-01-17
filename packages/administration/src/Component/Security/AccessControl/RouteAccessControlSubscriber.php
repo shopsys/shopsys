@@ -22,12 +22,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 final class RouteAccessControlSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface $routeAccessChecker
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     * @param \Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor $attributeProcessor
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     */
     public function __construct(
         private readonly RouteAccessCheckerInterface $routeAccessChecker,
         private readonly ContextResolverInterface $contextResolver,
@@ -47,9 +41,6 @@ final class RouteAccessControlSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
-     */
     public function onKernelController(ControllerEvent $event): void
     {
         if (!$this->contextResolver->isCurrentContext(AdminContext::class)) {
@@ -75,9 +66,6 @@ final class RouteAccessControlSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
-     */
     private function handleSubrequestAccess(ControllerEvent $event): void
     {
         $controllerCallable = $event->getController();

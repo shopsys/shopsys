@@ -13,12 +13,6 @@ use Throwable;
 
 class CronFacade
 {
-    /**
-     * @param \Monolog\Logger $logger
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor $cronModuleExecutor
-     */
     public function __construct(
         protected readonly Logger $logger,
         protected readonly CronConfig $cronConfig,
@@ -27,18 +21,12 @@ class CronFacade
     ) {
     }
 
-    /**
-     * @param \DateTimeInterface $roundedTime
-     */
     public function scheduleModulesByTime(DateTimeInterface $roundedTime)
     {
         $cronModuleConfigsToSchedule = $this->cronConfig->getCronModuleConfigsByTime($roundedTime);
         $this->cronModuleFacade->scheduleModules($cronModuleConfigsToSchedule);
     }
 
-    /**
-     * @param string $instanceName
-     */
     public function runScheduledModulesForInstance(string $instanceName): void
     {
         $cronModuleConfigs = $this->cronConfig->getCronModuleConfigsForInstance($instanceName);
@@ -49,7 +37,6 @@ class CronFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[] $cronModuleConfigs
-     * @param string $instanceName
      */
     protected function runModules(array $cronModuleConfigs, string $instanceName): void
     {
@@ -96,9 +83,6 @@ class CronFacade
         $this->runSingleModule($cronModuleConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
-     */
     protected function runSingleModule(CronModuleConfig $cronModuleConfig)
     {
         if ($this->cronModuleFacade->isModuleDisabled($cronModuleConfig) === true) {
@@ -155,7 +139,6 @@ class CronFacade
     }
 
     /**
-     * @param string $instanceName
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
     public function getAllForInstance(string $instanceName): array

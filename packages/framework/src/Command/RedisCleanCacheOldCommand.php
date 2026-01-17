@@ -17,9 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class RedisCleanCacheOldCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Redis\RedisVersionsFacade $redisVersionsFacade
-     */
     public function __construct(private readonly RedisVersionsFacade $redisVersionsFacade)
     {
         parent::__construct();

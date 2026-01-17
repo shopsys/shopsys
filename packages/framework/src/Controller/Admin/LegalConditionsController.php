@@ -19,11 +19,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class LegalConditionsController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSetting $withdrawalSetting
-     */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly LegalConditionsFacade $legalConditionsFacade,
@@ -31,10 +26,6 @@ class LegalConditionsController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/legal-conditions/setting/')]
     #[CanEdit(AdminRoleConstant::ROLE_LEGAL_CONDITIONS, methods: [HttpMethod::POST])]
     #[CanView(AdminRoleConstant::ROLE_LEGAL_CONDITIONS, methods: [HttpMethod::GET])]
@@ -75,10 +66,6 @@ class LegalConditionsController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/legal-conditions/privacy-policy/')]
     #[CanEdit(AdminRoleConstant::ROLE_PRIVACY_POLICY, methods: [HttpMethod::POST])]
     #[CanView(AdminRoleConstant::ROLE_PRIVACY_POLICY, methods: [HttpMethod::GET])]

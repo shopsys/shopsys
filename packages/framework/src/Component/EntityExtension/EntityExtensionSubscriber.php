@@ -100,9 +100,6 @@ class EntityExtensionSubscriber implements EventSubscriber
         $this->isEntityMapLoaded = true;
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs
-     */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs): void
     {
         $this->configuration = $eventArgs->getEntityManager()->getConfiguration();
@@ -130,9 +127,6 @@ class EntityExtensionSubscriber implements EventSubscriber
         $this->updateAssociationMappingsToMappedSuperclasses($currentClassMetadata);
     }
 
-    /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
-     */
     protected function setAssociationMappings(ClassMetadata $classMetadata): void
     {
         $currentEntityClass = $classMetadata->getName();
@@ -168,9 +162,6 @@ class EntityExtensionSubscriber implements EventSubscriber
 
     /**
      * @param \ReflectionProperty[] $overridingClassProperties
-     * @param string $parentClassPropertyName
-     * @param string $overridingClassName
-     * @return bool
      */
     protected function checkIsOverriddenPropertyInChildClass(
         array $overridingClassProperties,
@@ -186,9 +177,6 @@ class EntityExtensionSubscriber implements EventSubscriber
         return false;
     }
 
-    /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $metadata
-     */
     protected function setFieldMappings(ClassMetadata $metadata): void
     {
         $currentEntityClass = $metadata->getName();
@@ -206,7 +194,6 @@ class EntityExtensionSubscriber implements EventSubscriber
 
     /**
      * @param class-string $entityClass
-     * @return bool
      */
     protected function isExtendedEntity(string $entityClass): bool
     {
@@ -215,7 +202,6 @@ class EntityExtensionSubscriber implements EventSubscriber
 
     /**
      * @param class-string $entityClass
-     * @return bool
      */
     protected function isParentEntity(string $entityClass): bool
     {
@@ -224,7 +210,6 @@ class EntityExtensionSubscriber implements EventSubscriber
 
     /**
      * @param class-string $entityClass
-     * @return bool
      */
     protected function isOneOfRegisteredEntities(string $entityClass): bool
     {
@@ -243,7 +228,6 @@ class EntityExtensionSubscriber implements EventSubscriber
 
     /**
      * @param class-string $entityClass
-     * @return \Doctrine\ORM\Mapping\ClassMetadata
      */
     protected function getClassMetadataForEntity(string $entityClass): ClassMetadata
     {
@@ -263,9 +247,6 @@ class EntityExtensionSubscriber implements EventSubscriber
         return $classMetadata;
     }
 
-    /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
-     */
     protected function updateAssociationMappingsToMappedSuperclasses(ClassMetadata $classMetadata): void
     {
         foreach ($classMetadata->getAssociationMappings() as $name => $mapping) {
@@ -302,7 +283,6 @@ class EntityExtensionSubscriber implements EventSubscriber
     }
 
     /**
-     * @param string $classNameCandidate
      * @param class-string $parentClass
      * @return class-string
      */

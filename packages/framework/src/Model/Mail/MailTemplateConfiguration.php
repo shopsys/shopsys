@@ -36,13 +36,6 @@ class MailTemplateConfiguration
      */
     protected array $mailTemplateVariables = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailTemplateVariablesProvider $inquiryMailTemplateVariablesProvider
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMailTemplateVariablesProvider $watchdogMailTemplateVariablesProvider
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail $complaintMail
-     */
     public function __construct(
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly ComplaintStatusFacade $complaintStatusFacade,
@@ -59,10 +52,6 @@ class MailTemplateConfiguration
         $this->registerWatchdogMailTemplate();
     }
 
-    /**
-     * @param string $slug
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     public function getMailTemplateVariablesBySlug(string $slug): MailTemplateVariables
     {
         if (!array_key_exists($slug, $this->mailTemplateVariables)) {
@@ -72,9 +61,6 @@ class MailTemplateConfiguration
         return $this->mailTemplateVariables[$slug];
     }
 
-    /**
-     * @return array
-     */
     public function getReadableNamesIndexedBySlug(): array
     {
         return array_map(
@@ -85,10 +71,6 @@ class MailTemplateConfiguration
         );
     }
 
-    /**
-     * @param string $mailTemplateSlug
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables $mailTemplateVariables
-     */
     public function addMailTemplateVariables(
         string $mailTemplateSlug,
         MailTemplateVariables $mailTemplateVariables,
@@ -102,9 +84,6 @@ class MailTemplateConfiguration
         $this->mailTemplateVariables[$mailTemplateSlug] = $mailTemplateVariables;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     protected function createOrderStatusMailTemplateVariables(): MailTemplateVariables
     {
         $mailTemplateVariables = new MailTemplateVariables('', self::TYPE_ORDER_STATUS);
@@ -183,9 +162,6 @@ class MailTemplateConfiguration
             );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     protected function createComplaintStatusMailTemplateVariables(): MailTemplateVariables
     {
         $mailTemplateVariables = new MailTemplateVariables('', self::TYPE_COMPLAINT_STATUS);
@@ -226,9 +202,6 @@ class MailTemplateConfiguration
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     protected function createRegistrationConfirmationMailTemplateVariables(): MailTemplateVariables
     {
         $mailTemplateVariables = new MailTemplateVariables(t('Registration confirmation'));
@@ -245,9 +218,6 @@ class MailTemplateConfiguration
             );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     protected function createResetPasswordMailTemplateVariables(): MailTemplateVariables
     {
         $mailTemplateVariables = new MailTemplateVariables(t('Forgotten password sending'));
@@ -262,9 +232,6 @@ class MailTemplateConfiguration
             );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     protected function createPersonalDataExportMailTemplateVariables(): MailTemplateVariables
     {
         $mailTemplateVariables = new MailTemplateVariables(t('Personal information export'));
@@ -280,9 +247,6 @@ class MailTemplateConfiguration
             );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     protected function createPersonalDataAccessMailTemplateVariables(): MailTemplateVariables
     {
         $mailTemplateVariables = new MailTemplateVariables(t('Personal information overview'));
@@ -298,9 +262,6 @@ class MailTemplateConfiguration
             );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     protected function createAdministratorResetPasswordMailTemplateVariables(): MailTemplateVariables
     {
         $mailTemplateVariables = new MailTemplateVariables(t('Forgotten administrator password sending'));
@@ -338,9 +299,6 @@ class MailTemplateConfiguration
         $this->addMailTemplateVariables(AdministratorResetPasswordMail::MAIL_TEMPLATE_NAME, $mailTemplateVariables);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     protected function createTwoFactorAuthenticationCodeMailTemplateVariables(): MailTemplateVariables
     {
         $mailTemplateVariables = new MailTemplateVariables(t('Two factor authentication code'));
@@ -360,9 +318,6 @@ class MailTemplateConfiguration
         $this->addMailTemplateVariables(TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplateVariables);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     protected function createCustomerActivationMailTemplateVariables(): MailTemplateVariables
     {
         $mailTemplateVariables = new MailTemplateVariables(t('Customer activation'));

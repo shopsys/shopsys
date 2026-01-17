@@ -14,17 +14,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class MenuItemsGrantedRolesSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface $routeAccessChecker
-     */
     public function __construct(
         private readonly RouteAccessCheckerInterface $routeAccessChecker,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {
@@ -33,18 +27,12 @@ final class MenuItemsGrantedRolesSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
-     */
     public function removeNotGrantedItemsFromMenu(ConfigureMenuEvent $event): void
     {
         $rootMenu = $event->getMenu();
         $this->removeNotGrantedItems($rootMenu);
     }
 
-    /**
-     * @param \Knp\Menu\ItemInterface $rootMenu
-     */
     private function removeNotGrantedItems(ItemInterface $rootMenu): void
     {
         foreach ($rootMenu as $menuItem) {
@@ -65,9 +53,6 @@ final class MenuItemsGrantedRolesSubscriber implements EventSubscriberInterface
     /**
      * Check if user has access to menu item including all its subsections
      * A menu item is accessible if the user has access to it OR any of its children
-     *
-     * @param \Knp\Menu\ItemInterface $menuItem
-     * @return bool
      */
     private function hasAccessToMenuItemIncludingSubsections(ItemInterface $menuItem): bool
     {
@@ -88,9 +73,6 @@ final class MenuItemsGrantedRolesSubscriber implements EventSubscriberInterface
 
     /**
      * Check if user has access to a specific menu item
-     *
-     * @param \Knp\Menu\ItemInterface $menuItem
-     * @return bool
      */
     private function hasAccessToMenuItem(ItemInterface $menuItem): bool
     {

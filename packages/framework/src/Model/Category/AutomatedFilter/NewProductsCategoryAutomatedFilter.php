@@ -13,9 +13,6 @@ class NewProductsCategoryAutomatedFilter implements CategoryAutomatedFilterInter
     protected const int MAX_PRODUCT_AGE_IN_DAYS = 30;
     public const string DATABASE_VALUE = 'newProducts';
 
-    /**
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly ClockInterface $clock,
     ) {

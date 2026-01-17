@@ -8,9 +8,6 @@ use Exception;
 
 class LuigisBoxSettingNotFoundException extends Exception
 {
-    /**
-     * @param array $criteria
-     */
     public function __construct(array $criteria)
     {
         $message = sprintf('LuigisBoxSetting not found for criteria: %s', json_encode($criteria));

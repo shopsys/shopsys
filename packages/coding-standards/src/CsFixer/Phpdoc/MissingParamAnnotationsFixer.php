@@ -17,9 +17,6 @@ use Shopsys\CodingStandards\Helper\PhpdocRegex;
 
 final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
 {
-    /**
-     * @return \PhpCsFixer\FixerDefinition\FixerDefinitionInterface
-     */
     #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -29,11 +26,6 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
         );
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * @param \PhpCsFixer\Tokenizer\Token|null $docToken
-     */
     #[Override]
     protected function processFunctionToken(Tokens $tokens, int $index, ?Token $docToken): void
     {
@@ -70,8 +62,6 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
 
     /**
      * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis[] $argumentAnalyses
-     * @param \PhpCsFixer\Tokenizer\Token $docToken
-     * @return array
      */
     private function filterArgumentAnalysesFromExistingParamAnnotations(
         array $argumentAnalyses,
@@ -91,9 +81,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
     }
 
     /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis $argumentAnalyses
-     * @param string $indent
      * @return \PhpCsFixer\DocBlock\Line[]
      */
     private function createParamLinesFromArgumentAnalyses(

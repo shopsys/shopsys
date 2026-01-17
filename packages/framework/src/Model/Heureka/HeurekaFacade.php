@@ -8,11 +8,6 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class HeurekaFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationFactory $heurekaShopCertificationFactory
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting $heurekaSetting
-     */
     public function __construct(
         protected readonly HeurekaShopCertificationFactory $heurekaShopCertificationFactory,
         protected readonly HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper,
@@ -20,9 +15,6 @@ class HeurekaFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function sendOrderInfo(Order $order): void
     {
         $heurekaShopCertification = $this->heurekaShopCertificationFactory->create($order);

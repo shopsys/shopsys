@@ -11,23 +11,16 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class PromoCodePricingGroupRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder();
     }
 
     /**
-     * @param int $promoCodeId
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroup[]
      */
     public function getAllByPromoCodeId(int $promoCodeId): array
@@ -42,7 +35,6 @@ class PromoCodePricingGroupRepository
     }
 
     /**
-     * @param int $promoCodeId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
     public function getPricingGroupsByPromoCodeId(int $promoCodeId): array

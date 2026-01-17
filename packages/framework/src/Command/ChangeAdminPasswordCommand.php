@@ -24,10 +24,6 @@ class ChangeAdminPasswordCommand extends Command
 {
     private const ARG_USERNAME = 'username';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade $administratorPasswordFacade
-     */
     public function __construct(
         private readonly AdministratorFacade $administratorFacade,
         private readonly AdministratorPasswordFacade $administratorPasswordFacade,
@@ -65,8 +61,6 @@ class ChangeAdminPasswordCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return string
      */
     private function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io)

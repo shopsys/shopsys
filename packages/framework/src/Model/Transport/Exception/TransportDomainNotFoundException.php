@@ -8,11 +8,6 @@ use Exception;
 
 class TransportDomainNotFoundException extends Exception
 {
-    /**
-     * @param int $domainId
-     * @param int|null $transportId
-     * @param \Exception|null $previous
-     */
     public function __construct(int $domainId, ?int $transportId = null, ?Exception $previous = null)
     {
         $transportDescription = $transportId !== null ? sprintf('with ID %d', $transportId) : 'without ID';

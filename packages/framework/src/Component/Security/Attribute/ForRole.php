@@ -12,9 +12,6 @@ use Attribute;
 #[Attribute(Attribute::TARGET_CLASS)]
 final readonly class ForRole
 {
-    /**
-     * @param string $role
-     */
     public function __construct(
         public string $role,
     ) {

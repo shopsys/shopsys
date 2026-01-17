@@ -10,7 +10,6 @@ class UnsupportedCurrencyException extends Exception
 {
     /**
      * @param string $currencyCode
-     * @param \Exception|null $previous
      */
     public function __construct($currencyCode, ?Exception $previous = null)
     {

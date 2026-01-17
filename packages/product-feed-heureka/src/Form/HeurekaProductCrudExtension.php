@@ -12,11 +12,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
 {
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade $heurekaProductDomainFacade
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactory $heurekaProductDomainDataFactory
-     */
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly HeurekaProductDomainFacade $heurekaProductDomainFacade,

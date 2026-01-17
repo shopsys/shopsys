@@ -11,10 +11,6 @@ use Shopsys\FrameworkBundle\Component\Image\Image;
 
 class ImageApiRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
         protected readonly EntityNameResolver $entityNameResolver,
@@ -23,8 +19,6 @@ class ImageApiRepository
 
     /**
      * @param int[] $entityIds
-     * @param string $entityName
-     * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]|null[]
      */
     public function getImagesByTypeAndPositionIndexedByEntityId(
@@ -69,8 +63,6 @@ class ImageApiRepository
 
     /**
      * @param int[] $entityIds
-     * @param string $entityName
-     * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[][]
      */
     public function getAllImagesIndexedByEntityId(array $entityIds, string $entityName, ?string $type): array

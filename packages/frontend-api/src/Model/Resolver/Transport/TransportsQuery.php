@@ -11,11 +11,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class TransportsQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     */
     public function __construct(
         protected readonly TransportFacade $transportFacade,
         protected readonly CartApiFacade $cartApiFacade,
@@ -24,7 +19,6 @@ class TransportsQuery extends AbstractQuery
     }
 
     /**
-     * @param string|null $cartUuid
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
     public function transportsQuery(?string $cartUuid = null): array

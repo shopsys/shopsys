@@ -96,10 +96,6 @@ class InlineEditPage extends AbstractPage
         $this->tester->seeInCss($text, $this->getRowCssLocator($rowId) . ' .test-grid-column-' . $columnName);
     }
 
-    /**
-     * @param int $rowId
-     * @param string $text
-     */
     public function assertSeeInColumnPercent(int $rowId, string $text)
     {
         $formattedPercent = $this->tester->getFormattedPercentAdmin($text);

@@ -89,14 +89,6 @@ class Grid
     protected ?string $title = null;
 
     /**
-     * @param string $id
-     * @param string $roleConstant
-     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     * @param \Twig\Environment $twig
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException
      */
     public function __construct(
@@ -122,12 +114,7 @@ class Grid
     }
 
     /**
-     * @param string $id
-     * @param string $sourceColumnName
-     * @param string $title
-     * @param bool $sortable
      * @param array{template?: string, help?: string }&array<string, mixed> $options
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Column
      */
     public function addColumn(
         string $id,
@@ -147,14 +134,6 @@ class Grid
         return $column;
     }
 
-    /**
-     * @param string $type
-     * @param string $name
-     * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
-     */
     public function addActionColumn(
         string $type,
         string $name,
@@ -180,12 +159,6 @@ class Grid
         return $actionColumn;
     }
 
-    /**
-     * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
-     */
     public function addEditActionColumn(
         string $route,
         array $bindingRouteParams = [],
@@ -200,12 +173,6 @@ class Grid
         );
     }
 
-    /**
-     * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
-     */
     public function addDeleteActionColumn(
         string $route,
         array $bindingRouteParams = [],
@@ -220,10 +187,6 @@ class Grid
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface $rowAction
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface
-     */
     public function addRowAction(GridRowActionInterface $rowAction): GridRowActionInterface
     {
         $this->actionColumns[] = $rowAction;
@@ -231,9 +194,6 @@ class Grid
         return $rowAction;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface $inlineEditService
-     */
     public function setInlineEditService(GridInlineEditInterface $inlineEditService): void
     {
         if ($inlineEditService->canAddNewRow() === false && $this->accessChecker->canEdit($this->roleConstant) === false) {
@@ -243,34 +203,21 @@ class Grid
         $this->inlineEditService = $inlineEditService;
     }
 
-    /**
-     * @return bool
-     */
     public function isInlineEdit(): bool
     {
         return $this->inlineEditService !== null;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface|null
-     */
     public function getInlineEditService(): ?GridInlineEditInterface
     {
         return $this->inlineEditService;
     }
 
-    /**
-     * @param array $row
-     * @return mixed
-     */
     public function getRowId(array $row): mixed
     {
         return $this->getValueFromRowBySourceColumnName($row, $this->dataSource->getRowIdSourceColumnName());
     }
 
-    /**
-     * @param string $classAttribute
-     */
     public function setActionColumnClassAttribute(string $classAttribute): void
     {
         $this->actionColumnClassAttribute = $classAttribute;
@@ -278,7 +225,6 @@ class Grid
 
     /**
      * @param string|string[] $viewTheme
-     * @param array $viewParameters
      */
     public function setTheme(array|string $viewTheme, array $viewParameters = []): void
     {
@@ -286,9 +232,6 @@ class Grid
         $this->viewTemplateParameters = $viewParameters;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
-     */
     public function createView(): GridView
     {
         $gridView = $this->createViewWithoutRows();
@@ -301,10 +244,6 @@ class Grid
         return $gridView;
     }
 
-    /**
-     * @param int|string $rowId
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
-     */
     public function createViewWithOneRow(int|string $rowId): GridView
     {
         $gridView = $this->createViewWithoutRows();
@@ -313,9 +252,6 @@ class Grid
         return $gridView;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
-     */
     public function createViewWithoutRows(): GridView
     {
         $this->rows = [];
@@ -340,9 +276,6 @@ class Grid
         $this->enableSelecting = true;
     }
 
-    /**
-     * @param int $limit
-     */
     public function setDefaultLimit(int $limit): void
     {
         if (!$this->isLimitFromRequest) {
@@ -350,10 +283,6 @@ class Grid
         }
     }
 
-    /**
-     * @param string $columnId
-     * @param string $direction
-     */
     public function setDefaultOrder(string $columnId, string $direction = DataSourceInterface::ORDER_ASC): void
     {
         if (!$this->isOrderFromRequest) {
@@ -362,9 +291,6 @@ class Grid
         }
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
@@ -378,10 +304,6 @@ class Grid
         return $this->columnsById;
     }
 
-    /**
-     * @param string $columnId
-     * @return bool
-     */
     public function existsColumn(string $columnId): bool
     {
         return array_key_exists($columnId, $this->columnsById);
@@ -395,34 +317,21 @@ class Grid
         return $this->actionColumns;
     }
 
-    /**
-     * @return array
-     */
     public function getRows(): array
     {
         return $this->rows;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabledPaging(): bool
     {
         return $this->enablePaging;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabledSelecting(): bool
     {
         return $this->enableSelecting && $this->accessChecker->canEdit($this->roleConstant);
     }
 
-    /**
-     * @param array $row
-     * @return bool
-     */
     public function isRowSelected(array $row): bool
     {
         $rowId = $this->getRowId($row);
@@ -430,25 +339,16 @@ class Grid
         return in_array($rowId, $this->selectedRowIds, true);
     }
 
-    /**
-     * @return array
-     */
     public function getSelectedRowIds(): array
     {
         return $this->selectedRowIds;
     }
 
-    /**
-     * @return int
-     */
     public function getLimit(): int
     {
         return $this->limit;
     }
 
-    /**
-     * @param int $limit
-     */
     protected function setLimit(int $limit): void
     {
         if (in_array($limit, $this->allowedLimits, true)) {
@@ -456,49 +356,31 @@ class Grid
         }
     }
 
-    /**
-     * @return array
-     */
     public function getAllowedLimits(): array
     {
         return $this->allowedLimits;
     }
 
-    /**
-     * @return int|null
-     */
     public function getTotalCount(): ?int
     {
         return $this->totalCount;
     }
 
-    /**
-     * @return int
-     */
     public function getPage(): int
     {
         return $this->page;
     }
 
-    /**
-     * @return int
-     */
     public function getPageCount(): ?int
     {
         return $this->pageCount;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrderSourceColumnName(): ?string
     {
         return $this->orderSourceColumnName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrderSourceColumnNameWithDirection(): ?string
     {
         $prefix = '';
@@ -510,33 +392,21 @@ class Grid
         return $prefix . $this->getOrderSourceColumnName();
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrderDirection(): ?string
     {
         return $this->orderDirection;
     }
 
-    /**
-     * @return string
-     */
     public function getActionColumnClassAttribute(): string
     {
         return $this->actionColumnClassAttribute;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
     public function getPaginationResults(): PaginationResult
     {
         return $this->paginationResults;
     }
 
-    /**
-     * @param string $orderString
-     */
     protected function setOrderingByOrderString(string $orderString): void
     {
         if (substr($orderString, 0, 1) === '-') {
@@ -582,10 +452,6 @@ class Grid
         }
     }
 
-    /**
-     * @param array|string|null $removeParameters
-     * @return array
-     */
     public function getGridParameters(array|string|null $removeParameters = []): array
     {
         $gridParameters = [];
@@ -611,11 +477,6 @@ class Grid
         return $gridParameters;
     }
 
-    /**
-     * @param array|string|null $parameters
-     * @param array|string|null $removeParameters
-     * @return array
-     */
     public function getUrlGridParameters(
         array|string|null $parameters = null,
         array|string|null $removeParameters = null,
@@ -628,11 +489,6 @@ class Grid
         return [self::GET_PARAMETER => [$this->getId() => $gridParameters]];
     }
 
-    /**
-     * @param array|string|null $parameters
-     * @param array|string|null $removeParameters
-     * @return array
-     */
     public function getUrlParameters(
         array|string|null $parameters = null,
         array|string|null $removeParameters = null,
@@ -671,9 +527,6 @@ class Grid
         $this->rows = $this->paginationResults->getResults();
     }
 
-    /**
-     * @param int|string $rowId
-     */
     protected function loadRowsWithOneRow(int|string $rowId): void
     {
         $this->rows = [$this->dataSource->getOneRow($rowId)];
@@ -686,11 +539,6 @@ class Grid
         $this->page = min($this->page, $this->pageCount);
     }
 
-    /**
-     * @param array $row
-     * @param string $sourceColumnName
-     * @return mixed
-     */
     public function getValueFromRowBySourceColumnName(array $row, string $sourceColumnName): mixed
     {
         if (array_key_exists($sourceColumnName, $row)) {
@@ -720,9 +568,6 @@ class Grid
         return $row[$sourceColumnName];
     }
 
-    /**
-     * @param string $entityClass
-     */
     public function enableDragAndDrop(string $entityClass): void
     {
         $this->orderingEntityClass = $entityClass;
@@ -733,25 +578,16 @@ class Grid
         $this->multipleDragAndDrop = true;
     }
 
-    /**
-     * @return bool
-     */
     public function isDragAndDrop(): bool
     {
         return $this->orderingEntityClass !== null && $this->accessChecker->canEdit($this->roleConstant);
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrderingEntityClass(): ?string
     {
         return $this->orderingEntityClass;
     }
 
-    /**
-     * @return bool
-     */
     public function isMultipleDragAndDrop(): bool
     {
         return $this->multipleDragAndDrop && $this->accessChecker->canEdit($this->roleConstant);
@@ -771,17 +607,11 @@ class Grid
         $this->columnsById = [...$orderedColumns, ...$this->columnsById];
     }
 
-    /**
-     * @param string $title
-     */
     public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTitle(): ?string
     {
         return $this->title;

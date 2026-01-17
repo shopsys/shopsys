@@ -12,8 +12,6 @@ class RouteInfo
 
     /**
      * @param string $routeName
-     * @param \Symfony\Component\Routing\Route $route
-     * @param array $annotations
      */
     public function __construct($routeName, private readonly Route $route, private readonly array $annotations = [])
     {
@@ -74,9 +72,6 @@ class RouteInfo
         return $compiledRoute->getVariables();
     }
 
-    /**
-     * @return array
-     */
     public function getAnnotations(): array
     {
         return $this->annotations;

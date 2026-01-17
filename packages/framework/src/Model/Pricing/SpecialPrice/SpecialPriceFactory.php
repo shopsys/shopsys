@@ -14,11 +14,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class SpecialPriceFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     */
     public function __construct(
         protected readonly BasePriceCalculation $basePriceCalculation,
         protected readonly PricingSetting $pricingSetting,
@@ -26,25 +21,11 @@ class SpecialPriceFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice
-     */
     protected function createInstance(): SpecialPrice
     {
         return new SpecialPrice();
     }
 
-    /**
-     * @param \DateTimeInterface $validFrom
-     * @param \DateTimeInterface $validTo
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $specialPriceAmount
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param int $priceListId
-     * @param string $priceListName
-     * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice
-     */
     public function createWithCalculations(
         DateTimeInterface $validFrom,
         DateTimeInterface $validTo,
@@ -72,15 +53,6 @@ class SpecialPriceFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
-     * @param \DateTimeInterface $validFrom
-     * @param \DateTimeInterface $validTo
-     * @param int $priceListId
-     * @param string $priceListName
-     * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice
-     */
     public function create(
         PriceInterface $price,
         DateTimeInterface $validFrom,

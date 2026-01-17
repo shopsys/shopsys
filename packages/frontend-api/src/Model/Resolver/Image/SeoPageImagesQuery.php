@@ -10,10 +10,6 @@ use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
 
 class SeoPageImagesQuery extends ImagesQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function ogImageBySeoPageQuery(SeoPage $seoPage): Promise
     {
         return $this->mainImageByEntityPromiseQuery(

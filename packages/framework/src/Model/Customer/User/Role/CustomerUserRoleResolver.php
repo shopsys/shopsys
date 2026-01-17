@@ -11,11 +11,6 @@ use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
 class CustomerUserRoleResolver
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleHierarchyProvider $customerUserRoleHierarchyProvider
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly CustomerUserRoleHierarchyProvider $customerUserRoleHierarchyProvider,
         protected readonly Security $security,
@@ -24,7 +19,6 @@ class CustomerUserRoleResolver
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return string[]
      */
     public function getRolesForCustomerUser(CustomerUser $customerUser): array
@@ -43,10 +37,6 @@ class CustomerUserRoleResolver
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @return bool
-     */
     public function canCustomerUserSeePrices(?CustomerUser $customerUser): bool
     {
         if ($customerUser === null) {
@@ -58,9 +48,6 @@ class CustomerUserRoleResolver
         return in_array(CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES, $roles, true);
     }
 
-    /**
-     * @return bool
-     */
     public function canCurrentCustomerUserSeePrices(): bool
     {
         if ($this->security->getUser() === null) {

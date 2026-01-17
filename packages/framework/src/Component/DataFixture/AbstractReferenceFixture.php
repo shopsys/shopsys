@@ -16,9 +16,6 @@ abstract class AbstractReferenceFixture implements FixtureInterface
 
     protected DomainsForDataFixtureProvider $domainsForDataFixtureProvider;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     #[Required]
     public function removeLoggingMiddlewareFromEntityManager(EntityManagerInterface $entityManager): void
     {
@@ -30,18 +27,12 @@ abstract class AbstractReferenceFixture implements FixtureInterface
         $entityManager->clear();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     */
     #[Required]
     public function autowirePersistentReferenceFacade(PersistentReferenceFacade $persistentReferenceFacade): void
     {
         $this->persistentReferenceFacade = $persistentReferenceFacade;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider $domainsForDataFixtureProvider
-     */
     #[Required]
     public function autowireDomainsForDataFixturesProvider(
         DomainsForDataFixtureProvider $domainsForDataFixtureProvider,
@@ -49,10 +40,6 @@ abstract class AbstractReferenceFixture implements FixtureInterface
         $this->domainsForDataFixtureProvider = $domainsForDataFixtureProvider;
     }
 
-    /**
-     * @param string $name
-     * @param object $object
-     */
     public function addReference(string $name, object $object): void
     {
         $this->persistentReferenceFacade->persistReference($name, $object);
@@ -60,7 +47,6 @@ abstract class AbstractReferenceFixture implements FixtureInterface
 
     /**
      * @template T
-     * @param string $name
      * @param class-string<T>|null $entityClassName
      * @return T
      */
@@ -69,11 +55,6 @@ abstract class AbstractReferenceFixture implements FixtureInterface
         return $this->persistentReferenceFacade->getReference($name, $entityClassName);
     }
 
-    /**
-     * @param string $name
-     * @param object $object
-     * @param int $domainId
-     */
     public function addReferenceForDomain(string $name, object $object, int $domainId): void
     {
         $this->persistentReferenceFacade->persistReferenceForDomain($name, $object, $domainId);
@@ -81,8 +62,6 @@ abstract class AbstractReferenceFixture implements FixtureInterface
 
     /**
      * @template T
-     * @param string $name
-     * @param int $domainId
      * @param class-string<T>|null $entityClassName
      * @return T
      */

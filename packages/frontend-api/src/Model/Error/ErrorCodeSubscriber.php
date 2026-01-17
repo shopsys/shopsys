@@ -12,9 +12,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ErrorCodeSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Overblog\GraphQLBundle\Event\ErrorFormattingEvent $event
-     */
     public function onErrorFormatting(ErrorFormattingEvent $event): void
     {
         $error = $event->getError();

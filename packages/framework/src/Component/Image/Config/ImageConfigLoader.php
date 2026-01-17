@@ -26,20 +26,12 @@ class ImageConfigLoader
      */
     protected array $foundEntityNames;
 
-    /**
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         protected readonly Filesystem $filesystem,
         protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 
-    /**
-     * @param string $filename
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
-     */
     public function loadFromYaml(string $filename): ImageConfig
     {
         $yamlParser = new Parser();
@@ -62,7 +54,6 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $outputConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */
     public function loadFromArray(array $outputConfig): array
@@ -84,9 +75,6 @@ class ImageConfigLoader
         return $this->foundEntityConfigs;
     }
 
-    /**
-     * @param array $entityConfig
-     */
     protected function processEntityConfig(array $entityConfig): void
     {
         $entityClass = $entityConfig[ImageConfigDefinition::CONFIG_CLASS];
@@ -107,7 +95,6 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $typesConfig
      * @return string[]
      */
     protected function prepareTypes(array $typesConfig): array
@@ -128,7 +115,6 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $entityConfig
      * @return array<string, bool>
      */
     protected function getMultipleByType(array $entityConfig): array

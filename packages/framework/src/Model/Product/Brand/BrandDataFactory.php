@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BrandDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
@@ -22,17 +17,11 @@ class BrandDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData
-     */
     protected function createInstance(): BrandData
     {
         return new BrandData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData
-     */
     public function create(): BrandData
     {
         $brandData = $this->createInstance();
@@ -41,9 +30,6 @@ class BrandDataFactory
         return $brandData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     */
     protected function fillNew(BrandData $brandData): void
     {
         $brandData->image = $this->imageUploadDataFactory->create();
@@ -59,10 +45,6 @@ class BrandDataFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData
-     */
     public function createFromBrand(Brand $brand): BrandData
     {
         $brandData = $this->createInstance();
@@ -71,10 +53,6 @@ class BrandDataFactory
         return $brandData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     */
     protected function fillFromBrand(BrandData $brandData, Brand $brand): void
     {
         $brandData->name = $brand->getName();

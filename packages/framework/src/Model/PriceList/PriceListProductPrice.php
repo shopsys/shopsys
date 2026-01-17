@@ -40,9 +40,6 @@ class PriceListProductPrice
      */
     protected $priceList;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData $priceListProductPriceData
-     */
     public function __construct(
         PriceListProductPriceData $priceListProductPriceData,
     ) {

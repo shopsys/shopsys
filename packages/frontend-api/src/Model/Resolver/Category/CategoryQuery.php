@@ -28,16 +28,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvide
 
 class CategoryQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
         protected readonly Domain $domain,
@@ -50,10 +40,6 @@ class CategoryQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
     protected function getByUuid(string $uuid): Category
     {
         try {
@@ -64,8 +50,6 @@ class CategoryQuery extends AbstractQuery
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function categoriesFilteredByProductFilterForFlagQuery(Argument $argument, Flag $flag): array
@@ -82,12 +66,6 @@ class CategoryQuery extends AbstractQuery
         return $this->categoryFacade->getCategoriesOfProductByFilterData($productFilterData);
     }
 
-    /**
-     * @param \GraphQL\Type\Definition\ResolveInfo $info
-     * @param string|null $uuid
-     * @param string|null $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix
-     */
     public function categoryOrSeoMixByUuidOrUrlSlugQuery(
         ResolveInfo $info,
         ?string $uuid = null,
@@ -156,11 +134,6 @@ class CategoryQuery extends AbstractQuery
         throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
-    /**
-     * @param \GraphQL\Type\Definition\ResolveInfo $info
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null
-     */
     protected function findMatchingReadyCategorySeoMix(ResolveInfo $info, Category $category): ?ReadyCategorySeoMix
     {
         $variableValues = $info->variableValues;
@@ -177,10 +150,6 @@ class CategoryQuery extends AbstractQuery
         }
     }
 
-    /**
-     * @param \GraphQL\Type\Definition\ResolveInfo $resolveInfo
-     * @return bool
-     */
     protected function isFilterSet(ResolveInfo $resolveInfo): bool
     {
         $variableValues = $resolveInfo->variableValues;
@@ -203,11 +172,6 @@ class CategoryQuery extends AbstractQuery
         return count($flags) > 0;
     }
 
-    /**
-     * @param \GraphQL\Type\Definition\ResolveInfo $resolveInfo
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
-     * @return bool
-     */
     protected function isSortingDifferentFromReadyCategorySeoMix(
         ResolveInfo $resolveInfo,
         ReadyCategorySeoMix $readyCategorySeoMix,

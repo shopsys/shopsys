@@ -17,19 +17,11 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ApplyPromotionXyMiddleware implements OrderProcessorMiddlewareInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     */
     public function __construct(
         protected readonly OrderItemDataFactory $orderItemDataFactory,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
-     */
     #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,
@@ -50,12 +42,6 @@ class ApplyPromotionXyMiddleware implements OrderProcessorMiddlewareInterface
         return $orderProcessingStack->processNext($orderProcessingData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $productItem
-     * @param int $freeQuantity
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     */
     public function createAndAddOrderItemData(
         OrderData $orderData,
         OrderItemData $productItem,
@@ -75,12 +61,6 @@ class ApplyPromotionXyMiddleware implements OrderProcessorMiddlewareInterface
         $orderData->addTotalProductPriceAdjustmentsDiscount($discountOrderItemData->getTotalPrice()->inverse());
     }
 
-    /**
-     * @param int $freeQuantity
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $productItem
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
-     */
     protected function createDiscountOrderItemData(
         int $freeQuantity,
         OrderItemData $productItem,
@@ -99,11 +79,6 @@ class ApplyPromotionXyMiddleware implements OrderProcessorMiddlewareInterface
         return $discountOrderItemData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string
-     */
     protected function getOrderItemName(
         DomainConfig $domainConfig,
         Product $product,

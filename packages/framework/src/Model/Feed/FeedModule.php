@@ -32,10 +32,6 @@ class FeedModule
      */
     protected $scheduled;
 
-    /**
-     * @param string $name
-     * @param int $domainId
-     */
     public function __construct(string $name, int $domainId)
     {
         $this->name = $name;
@@ -69,9 +65,6 @@ class FeedModule
         $this->scheduled = false;
     }
 
-    /**
-     * @return bool
-     */
     public function isScheduled(): bool
     {
         return $this->scheduled;

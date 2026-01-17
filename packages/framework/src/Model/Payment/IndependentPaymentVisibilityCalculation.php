@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 
 class IndependentPaymentVisibilityCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
@@ -20,7 +16,6 @@ class IndependentPaymentVisibilityCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param int $domainId
      * @return bool
      */

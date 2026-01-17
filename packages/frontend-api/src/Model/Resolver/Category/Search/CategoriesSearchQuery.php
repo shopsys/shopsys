@@ -12,20 +12,12 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class CategoriesSearchQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderResolver $categoriesSearchResultsProviderResolver
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CategoriesSearchResultsProviderResolver $categoriesSearchResultsProviderResolver,
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
-     */
     public function categoriesSearchQuery(Argument $argument): Promise|ConnectionInterface
     {
         $this->pageSizeValidator->checkMaxPageSize($argument);

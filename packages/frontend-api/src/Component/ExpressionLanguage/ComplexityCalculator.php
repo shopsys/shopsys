@@ -11,12 +11,6 @@ use Overblog\GraphQLBundle\Definition\Argument;
  */
 class ComplexityCalculator
 {
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param int $oneItemComplexity
-     * @param int $defaultCount
-     * @return int
-     */
     public static function calculate(Argument $argument, int $oneItemComplexity, int $defaultCount): int
     {
         if ($argument->offsetExists('first')) {

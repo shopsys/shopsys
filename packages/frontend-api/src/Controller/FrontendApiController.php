@@ -14,12 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FrontendApiController
 {
-    /**
-     * @param \Overblog\GraphQLBundle\Controller\GraphController $graphController
-     * @param \Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker $enabledOnDomainChecker
-     * @param \Shopsys\FrontendApiBundle\Model\GraphqlConfigurator $graphqlConfigurator
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Detection\DetectionFacade $detectionFacade
-     */
     public function __construct(
         protected readonly GraphController $graphController,
         protected readonly EnabledOnDomainChecker $enabledOnDomainChecker,
@@ -28,11 +22,6 @@ class FrontendApiController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string|null $schemaName
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function endpointAction(Request $request, ?string $schemaName = null): Response
     {
         $this->detectionFacade->setFrontendApiSourceAndUserIdentifier();
@@ -46,11 +35,6 @@ class FrontendApiController
         return $this->graphController->endpointAction($request, $schemaName);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string|null $schemaName
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function batchEndpointAction(Request $request, ?string $schemaName = null): Response
     {
         $this->detectionFacade->setFrontendApiSourceAndUserIdentifier();
@@ -64,9 +48,6 @@ class FrontendApiController
         return $this->graphController->batchEndpointAction($request, $schemaName);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     protected function createApiNotEnabledResponse(): Response
     {
         return new JsonResponse([

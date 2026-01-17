@@ -84,11 +84,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     protected $temporaryFilename;
 
     /**
-     * @param string $entityName
-     * @param int $entityId
      * @param string[] $namesIndexedByLocale
-     * @param string|null $temporaryFilename
-     * @param string|null $type
      */
     public function __construct(
         string $entityName,
@@ -106,10 +102,6 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         $this->position = static::DEFAULT_IMAGE_POSITION;
     }
 
-    /**
-     * @param string|null $locale
-     * @return string|null
-     */
     public function getName(?string $locale = null): ?string
     {
         return $this->translation($locale)->getName();
@@ -129,9 +121,6 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         return $namesByLocale;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Image\ImageTranslation
-     */
     #[Override]
     protected function createTranslation(): ImageTranslation
     {
@@ -169,10 +158,6 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         return $files;
     }
 
-    /**
-     * @param string $key
-     * @param string $originalFilename
-     */
     #[Override]
     public function setFileAsUploaded(string $key, string $originalFilename): void
     {
@@ -183,9 +168,6 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
     }
 
-    /**
-     * @param string $key
-     */
     #[Override]
     public function setFileKeyAsUploaded(string $key): void
     {
@@ -196,9 +178,6 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         $this->temporaryFilename = null;
     }
 
-    /**
-     * @param string|null $temporaryFilename
-     */
     public function setTemporaryFilename(?string $temporaryFilename): void
     {
         $this->temporaryFilename = $temporaryFilename;
@@ -222,9 +201,6 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         return $this->position;
     }
 
-    /**
-     * @return string
-     */
     public function getFilename(): string
     {
         return $this->id . '.' . $this->extension;
@@ -279,10 +255,6 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         return $this->modifiedAt;
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     */
     public function checkForDelete(string $entityName, int $entityId): void
     {
         if ($this->entityName !== $entityName || $this->entityId !== $entityId) {
@@ -297,10 +269,6 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         }
     }
 
-    /**
-     * @param string|null $friendlyUrlSlug
-     * @return string
-     */
     public function getSeoFilename(?string $friendlyUrlSlug): string
     {
         $slug = '';

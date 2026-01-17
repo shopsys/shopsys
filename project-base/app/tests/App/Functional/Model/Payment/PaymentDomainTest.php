@@ -76,7 +76,6 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \App\Model\Payment\Payment $payment
      * @return \App\Model\Payment\Payment
      */
     private function getRefreshedPaymentFromDatabase(Payment $payment)
@@ -91,9 +90,6 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
         return $this->em->getRepository(Payment::class)->find($paymentId);
     }
 
-    /**
-     * @return \App\Model\Payment\PaymentData
-     */
     private function createPaymentData(): PaymentData
     {
         /** @var \App\Model\Payment\PaymentData $paymentData */

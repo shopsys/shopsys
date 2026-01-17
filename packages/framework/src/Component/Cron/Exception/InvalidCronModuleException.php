@@ -10,7 +10,6 @@ class InvalidCronModuleException extends Exception
 {
     /**
      * @param string $serviceId
-     * @param \Exception|null $previous
      */
     public function __construct($serviceId, ?Exception $previous = null)
     {

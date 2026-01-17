@@ -69,9 +69,6 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
         $this->assertSame($expected, $this->createOrderAndGetData($cartUuid));
     }
 
-    /**
-     * @return array
-     */
     protected function getExpectedOrderItems(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -128,10 +125,6 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param string $cartUuid
-     * @return array
-     */
     private function createOrderAndGetData(string $cartUuid): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateFullOrderMutation.graphql', [
@@ -162,9 +155,6 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
         return $this->getResponseDataForGraphQlType($response, 'CreateOrder');
     }
 
-    /**
-     * @return string
-     */
     private function addProductsToCart(): string
     {
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);

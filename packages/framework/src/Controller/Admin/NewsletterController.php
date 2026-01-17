@@ -25,12 +25,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_NEWSLETTER)]
 class NewsletterController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
@@ -39,10 +33,6 @@ class NewsletterController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/newsletter/list/')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -77,7 +67,6 @@ class NewsletterController extends AdminBaseController
     }
 
     /**
-     * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/newsletter/delete/{id}', requirements: ['id' => '\d+'])]
@@ -103,9 +92,6 @@ class NewsletterController extends AdminBaseController
         return $this->redirectToRoute('admin_newsletter_list');
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     */
     #[Route(path: '/newsletter/export-csv/')]
     #[CanView]
     public function exportAction(): StreamedResponse
@@ -120,9 +106,6 @@ class NewsletterController extends AdminBaseController
         return $response;
     }
 
-    /**
-     * @param int $domainId
-     */
     protected function streamCsvExport(int $domainId): void
     {
         $output = new SplFileObject('php://output', 'w+');

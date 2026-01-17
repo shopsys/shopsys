@@ -8,9 +8,6 @@ use IntlDateFormatter;
 
 class CustomDateTimeFormatPatternRepositoryFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPatternRepository
-     */
     public function create(): DateTimeFormatPatternRepository
     {
         $customDateTimeFormatPatternRepository = new DateTimeFormatPatternRepository();

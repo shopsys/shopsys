@@ -11,15 +11,8 @@ interface EntityFileUploadInterface
      */
     public function getTemporaryFilesForUpload(): array;
 
-    /**
-     * @param string $key
-     * @param string $originalFilename
-     */
     public function setFileAsUploaded(string $key, string $originalFilename): void;
 
-    /**
-     * @param string $key
-     */
     public function setFileKeyAsUploaded(string $key): void;
 
     /**

@@ -20,14 +20,6 @@ class AdvancedSearchComplaintFacade
 {
     public const string RULES_FORM_NAME = 'as';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\ComplaintAdvancedSearchFormFactory $complaintAdvancedSearchFormFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory $ruleFormViewDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintRepository $complaintRepository
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly ComplaintAdvancedSearchFormFactory $complaintAdvancedSearchFormFactory,
         protected readonly AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
@@ -38,10 +30,6 @@ class AdvancedSearchComplaintFacade
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createAdvancedSearchComplaintForm(Request $request): FormInterface
     {
         $rawRulesData = $request->get(static::RULES_FORM_NAME);
@@ -57,11 +45,6 @@ class AdvancedSearchComplaintFacade
         );
     }
 
-    /**
-     * @param string $filterName
-     * @param string|int $index
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createRuleForm(string $filterName, string|int $index): FormInterface
     {
         $rulesData = [
@@ -71,10 +54,6 @@ class AdvancedSearchComplaintFacade
         return $this->complaintAdvancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesData);
     }
 
-    /**
-     * @param array $advancedSearchData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): QueryBuilder
     {
         $queryBuilder = $this->complaintRepository->getComplaintsQueryBuilder($this->localization->getCurrentLocaleForTranslatableEntities());
@@ -83,10 +62,6 @@ class AdvancedSearchComplaintFacade
         return $queryBuilder;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getComplaintListQueryBuilderByQuickSearchData(
         QuickSearchFormData $quickSearchData,
     ): QueryBuilder {
@@ -131,10 +106,6 @@ class AdvancedSearchComplaintFacade
         return $queryBuilder;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
-     */
     public function isAdvancedSearchComplaintFormSubmitted(Request $request): bool
     {
         $rulesData = $request->get(static::RULES_FORM_NAME);

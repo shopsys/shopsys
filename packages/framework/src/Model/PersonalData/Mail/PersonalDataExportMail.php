@@ -20,12 +20,6 @@ class PersonalDataExportMail implements MessageFactoryInterface
     public const VARIABLE_URL = '{url}';
     public const VARIABLE_DOMAIN = '{domain}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataExportFacade $personalDataExportFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly Setting $setting,
@@ -35,7 +29,6 @@ class PersonalDataExportMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
@@ -86,10 +79,6 @@ class PersonalDataExportMail implements MessageFactoryInterface
         ];
     }
 
-    /**
-     * @param string $hash
-     * @return string
-     */
     protected function getVariablePersonalDataAccessUrl(string $hash): string
     {
         return $this->personalDataExportFacade->getPersonalDataExportLink($hash);

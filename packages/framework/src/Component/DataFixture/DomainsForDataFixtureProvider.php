@@ -14,9 +14,6 @@ class DomainsForDataFixtureProvider
      */
     protected ?array $allowedDemoDataDomains = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly Domain $domain,
     ) {
@@ -62,9 +59,6 @@ class DomainsForDataFixtureProvider
         return array_unique($allowedLocales);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function getFirstAllowedDomainConfig(): DomainConfig
     {
         $allowedDomains = $this->getAllowedDemoDataDomains();
@@ -72,10 +66,6 @@ class DomainsForDataFixtureProvider
         return reset($allowedDomains);
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
     public function isDomainIdAllowed(int $domainId): bool
     {
         return array_key_exists($domainId, $this->getAllowedDemoDataDomains());

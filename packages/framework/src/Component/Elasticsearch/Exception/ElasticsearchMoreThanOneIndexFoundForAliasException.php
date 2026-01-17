@@ -8,10 +8,6 @@ use Exception;
 
 class ElasticsearchMoreThanOneIndexFoundForAliasException extends Exception
 {
-    /**
-     * @param string $alias
-     * @param array $indexesFound
-     */
     public function __construct(string $alias, array $indexesFound)
     {
         parent::__construct(sprintf(

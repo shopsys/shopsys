@@ -14,11 +14,6 @@ class StockSettingsDataFacade
 {
     public const int PLUGIN_COMMON_ID = 0;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
@@ -26,10 +21,6 @@ class StockSettingsDataFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockSettingsData $stockSettingsData
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     public function edit(StockSettingsData $stockSettingsData, DomainConfig $domainConfig): void
     {
         $domainId = $domainConfig->getId();

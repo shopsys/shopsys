@@ -13,18 +13,11 @@ class LuigisBoxArticleFeedItemFactory
     protected const int MEDIUM_IMAGE_SIZE = 200;
     protected const int LARGE_IMAGE_SIZE = 600;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
-     */
     public function __construct(
         protected readonly ImageUrlWithSizeHelper $imageUrlWithSizeHelper,
     ) {
     }
 
-    /**
-     * @param array $articleData
-     * @return \Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItem
-     */
     public function create(array $articleData): LuigisBoxArticleFeedItem
     {
         $imageUrl = $articleData['imageUrl'] ?? null;

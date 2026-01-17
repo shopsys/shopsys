@@ -8,10 +8,6 @@ use Exception;
 
 class UploadedFileTypeConfigNotFoundException extends Exception
 {
-    /**
-     * @param string $typeName
-     * @param \Exception|null $previous
-     */
     public function __construct(string $typeName, ?Exception $previous = null)
     {
         $message = sprintf('Uploaded file type config name "%s" not found.', $typeName);

@@ -16,13 +16,6 @@ use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain;
 
 class ZboziFeedItemFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader $productParametersBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
@@ -32,12 +25,6 @@ class ZboziFeedItemFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain|null $zboziProductDomain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItem
-     */
     public function create(
         Product $product,
         ?ZboziProductDomain $zboziProductDomain,
@@ -66,10 +53,6 @@ class ZboziFeedItemFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string|null
-     */
     protected function getBrandName(Product $product): ?string
     {
         $brand = $product->getBrand();
@@ -77,11 +60,6 @@ class ZboziFeedItemFactory
         return $brand !== null ? $brand->getName() : null;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     protected function getPrice(Product $product, DomainConfig $domainConfig): PriceInterface
     {
         return $this->productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
@@ -91,8 +69,6 @@ class ZboziFeedItemFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[]
      */
     protected function getPathToMainCategory(Product $product, DomainConfig $domainConfig): array

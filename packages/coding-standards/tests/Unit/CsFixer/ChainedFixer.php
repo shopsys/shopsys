@@ -18,9 +18,6 @@ class ChainedFixer implements FixerInterface
      */
     private array $fixers = [];
 
-    /**
-     * @param \PhpCsFixer\Fixer\FixerInterface $fixer
-     */
     public function registerFixer(FixerInterface $fixer): void
     {
         $this->fixers[] = $fixer;
@@ -100,9 +97,6 @@ class ChainedFixer implements FixerInterface
         return false;
     }
 
-    /**
-     * @return \PhpCsFixer\FixerDefinition\FixerDefinitionInterface
-     */
     #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {

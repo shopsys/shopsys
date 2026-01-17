@@ -39,9 +39,6 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
         }
     }
 
-    /**
-     * @return \PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface
-     */
     #[Override]
     public function getConfigurationDefinition(): FixerConfigurationResolverInterface
     {
@@ -53,10 +50,6 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
         );
     }
 
-    /**
-     * @param array $configuration
-     * @return array
-     */
     private function extractNamespaces(array $configuration): array
     {
         if (!array_key_exists(self::OPTION_ANALYZED_NAMESPACE, $configuration)) {
@@ -114,10 +107,6 @@ private function method()
         return !$this->isFinalClass($tokens) && $tokens->isAnyTokenKindsFound([T_PRIVATE, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE]) && $this->checkNamespace($tokens);
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @return bool
-     */
     private function checkNamespace(Tokens $tokens): bool
     {
         try {
@@ -136,9 +125,7 @@ private function method()
     }
 
     /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @throws \Shopsys\CodingStandards\Exception\NamespaceNotFoundException
-     * @return string
      */
     private function getNamespace(Tokens $tokens): string
     {
@@ -156,20 +143,11 @@ private function method()
         throw new NamespaceNotFoundException('No namespace found');
     }
 
-    /**
-     * @param string $fullNamespace
-     * @param string $namespacePrefix
-     * @return bool
-     */
     private function namespaceStartsWith(string $fullNamespace, string $namespacePrefix): bool
     {
         return strncmp($fullNamespace, $namespacePrefix, strlen($namespacePrefix)) === 0;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @return bool
-     */
     private function isFinalClass(Tokens $tokens): bool
     {
         foreach ($tokens as $index => $token) {

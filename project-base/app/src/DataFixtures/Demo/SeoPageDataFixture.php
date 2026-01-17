@@ -27,13 +27,6 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         self::FIRST_DEMO_SEO_PAGE => 'First Demo Seo Page',
     ];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageRepository $seoPageRepository
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade $seoPageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory $seoPageDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageSlugTransformer $seoPageSlugTransformer
-     */
     public function __construct(
         private readonly Domain $domain,
         private readonly SeoPageRepository $seoPageRepository,
@@ -43,9 +36,6 @@ class SeoPageDataFixture extends AbstractReferenceFixture
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -100,11 +90,6 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int|null $seoPageId
-     */
     private function fillSeoPageData(
         SeoPageData $seoPageData,
         DomainConfig $domainConfig,
@@ -131,12 +116,6 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         $seoPageData->canonicalUrlsIndexedByDomainId[$domainId] = $canonicalUrl;
     }
 
-    /**
-     * @param string $pageName
-     * @param string $value
-     * @param string $locale
-     * @return string
-     */
     private function formatAttributeValue(string $pageName, string $value, string $locale): string
     {
         return sprintf('%s\'s %s (%s)', $pageName, $value, $locale);

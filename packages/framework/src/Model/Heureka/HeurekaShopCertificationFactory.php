@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class HeurekaShopCertificationFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting $heurekaSetting
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly HeurekaSetting $heurekaSetting,
@@ -23,7 +18,6 @@ class HeurekaShopCertificationFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Heureka\ShopCertification
      */
     public function create(Order $order)

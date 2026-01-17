@@ -26,8 +26,6 @@ final class RolesType extends AbstractType
     private array $roleSectionsProvidersByContext;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
-     * @param bool $useSimplePermissions
      * @param iterable<class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>,\Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider> $roleSectionsProviders
      */
     public function __construct(
@@ -40,7 +38,6 @@ final class RolesType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      */
     #[Override]
@@ -73,8 +70,6 @@ final class RolesType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param array<string, mixed> $options
      */
     #[Override]
@@ -87,9 +82,6 @@ final class RolesType extends AbstractType
         $view->vars['permission_dependencies'] = $this->getPermissionDependencies($availablePermissions);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -192,7 +184,6 @@ final class RolesType extends AbstractType
      *
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $context
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $roles
-     * @param bool $renderSections
      * @return array<string, array<\Shopsys\FrameworkBundle\Component\Security\Role\Role>>
      */
     private function buildGridSections(string $context, array $roles, bool $renderSections): array
@@ -213,9 +204,7 @@ final class RolesType extends AbstractType
     }
 
     /**
-     * @param string $sectionIdentifier
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $context
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Section\RoleSection
      */
     private function getRoleSection(
         string $sectionIdentifier,

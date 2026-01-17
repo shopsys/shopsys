@@ -18,13 +18,6 @@ class DomainIconRuntime implements RuntimeExtensionInterface
      */
     protected ?array $icons = null;
 
-    /**
-     * @param string $kernelProjectDir
-     * @param \Twig\Environment $twigEnvironment
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\DomainFacade $domainFacade
-     * @param \Symfony\Component\Asset\Packages $assetPackages
-     */
     public function __construct(
         protected readonly string $kernelProjectDir,
         protected readonly Environment $twigEnvironment,
@@ -34,11 +27,6 @@ class DomainIconRuntime implements RuntimeExtensionInterface
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @param array $attr
-     * @return string
-     */
     public function renderDomainIcon(int $domainId, array $attr = []): string
     {
         $this->loadIcons();

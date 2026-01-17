@@ -9,11 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class GoogleProductDomainFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainRepository $googleProductDomainRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GoogleProductDomainRepository $googleProductDomainRepository,
@@ -72,7 +67,6 @@ class GoogleProductDomainFacade
 
     /**
      * @param int $productId
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
      */
     protected function saveGoogleProductDomain($productId, GoogleProductDomainData $googleProductDomainData)
     {

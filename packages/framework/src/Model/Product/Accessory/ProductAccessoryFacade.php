@@ -9,18 +9,11 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductAccessoryFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
-     */
     public function __construct(protected readonly ProductAccessoryRepository $productAccessoryRepository)
     {
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getOfferedAccessories(
@@ -33,7 +26,6 @@ class ProductAccessoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessory[]
      */
     public function getAllAccessories(Product $product): array

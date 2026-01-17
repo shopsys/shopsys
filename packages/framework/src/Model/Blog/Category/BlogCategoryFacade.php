@@ -18,19 +18,6 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\RootLevelBlogCategoryA
 
 class BlogCategoryFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryRepository $blogCategoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFactory $blogCategoryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryWithPreloadedChildrenFactory $blogCategoryWithPreloadedChildrenFactory
-     * @param \Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade $blogArticleExportQueueFacade
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly BlogCategoryRepository $blogCategoryRepository,
@@ -46,19 +33,11 @@ class BlogCategoryFacade
     ) {
     }
 
-    /**
-     * @param int $blogCategoryId
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
-     */
     public function getById(int $blogCategoryId): BlogCategory
     {
         return $this->blogCategoryRepository->getById($blogCategoryId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData $blogCategoryData
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
-     */
     public function create(BlogCategoryData $blogCategoryData): BlogCategory
     {
         $rootCategory = $this->getRootBlogCategory();
@@ -85,11 +64,6 @@ class BlogCategoryFacade
         return $blogCategory;
     }
 
-    /**
-     * @param int $blogCategoryId
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData $blogCategoryData
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
-     */
     public function edit(int $blogCategoryId, BlogCategoryData $blogCategoryData): BlogCategory
     {
         $rootCategory = $this->getRootBlogCategory();
@@ -119,9 +93,6 @@ class BlogCategoryFacade
         return $blogCategory;
     }
 
-    /**
-     * @param int $blogCategoryId
-     */
     public function deleteById(int $blogCategoryId): void
     {
         $blogCategory = $this->blogCategoryRepository->getById($blogCategoryId);
@@ -140,7 +111,6 @@ class BlogCategoryFacade
     }
 
     /**
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
     public function getTranslatedAll(string $locale): array
@@ -158,7 +128,6 @@ class BlogCategoryFacade
     }
 
     /**
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryWithPreloadedChildren[]
      */
     public function getAllBlogCategoriesWithPreloadedChildren(string $locale): array
@@ -169,8 +138,6 @@ class BlogCategoryFacade
     }
 
     /**
-     * @param int $domainId
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryWithPreloadedChildren[]
      */
     public function getVisibleBlogCategoriesWithPreloadedChildrenOnDomain(int $domainId, string $locale): array
@@ -181,8 +148,6 @@ class BlogCategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
     public function getVisibleBlogCategoriesInPathFromRootOnDomain(BlogCategory $blogCategory, int $domainId): array
@@ -191,7 +156,6 @@ class BlogCategoryFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
     public function getAllVisibleChildrenWithRootByDomainId(int $domainId): array
@@ -200,8 +164,6 @@ class BlogCategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $category
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
     public function getAllVisibleChildrenByBlogCategoryAndDomainId(BlogCategory $category, int $domainId): array
@@ -210,8 +172,6 @@ class BlogCategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
     public function getTranslatedAllWithoutBranch(BlogCategory $blogCategory, string $locale): array
@@ -219,19 +179,11 @@ class BlogCategoryFacade
         return $this->blogCategoryRepository->getTranslatedAllWithoutBranch($blogCategory, $locale);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
-     */
     public function getRootBlogCategory(): BlogCategory
     {
         return $this->blogCategoryRepository->getRootBlogCategory();
     }
 
-    /**
-     * @param int $domainId
-     * @param int $blogCategoryId
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
-     */
     public function getVisibleOnDomainById(int $domainId, int $blogCategoryId): BlogCategory
     {
         $blogCategory = $this->getById($blogCategoryId);
@@ -245,11 +197,6 @@ class BlogCategoryFacade
         return $blogCategory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle $blogArticle
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
-     */
     public function getBlogArticleMainBlogCategoryOnDomain(BlogArticle $blogArticle, int $domainId): BlogCategory
     {
         return $this->blogCategoryRepository->getBlogArticleMainBlogCategoryOnDomain($blogArticle, $domainId);
@@ -264,18 +211,12 @@ class BlogCategoryFacade
         return $this->blogCategoryRepository->getByIds($blogCategoryIds);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
-     */
     public function getVisibleByUuid(int $domainId, string $uuid): BlogCategory
     {
         return $this->blogCategoryRepository->getVisibleByUuid($domainId, $uuid);
     }
 
     /**
-     * @param int $domainId
      * @param int[] $blogCategoryIds
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
@@ -284,9 +225,6 @@ class BlogCategoryFacade
         return $this->blogCategoryRepository->getVisibleByIds($domainId, $blogCategoryIds);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     */
     protected function scheduleArticlesToExportByCategory(BlogCategory $blogCategory): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -338,16 +276,12 @@ class BlogCategoryFacade
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
     }
 
-    /**
-     * @return int|null
-     */
     public function findVisibleMainBlogCategoryIdOnCurrentDomain(): ?int
     {
         return $this->blogCategoryRepository->findVisibleMainBlogCategoryIdOnDomain($this->domain->getId());
     }
 
     /**
-     * @param int $domainsCount
      * @return array<int, string>
      */
     public function getVisibilityOfBlogCategoriesIndexedById(int $domainsCount): array

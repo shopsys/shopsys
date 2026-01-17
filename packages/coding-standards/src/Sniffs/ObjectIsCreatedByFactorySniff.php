@@ -22,7 +22,6 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $file
      * @param int $position
      */
     #[Override]
@@ -56,9 +55,6 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
     /**
      * We can not use Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming::getClassName()
      * as it does not include namespace of declared class.
-     *
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @return string|null
      */
     private function getFirstClassNameInFile(File $file): ?string
     {

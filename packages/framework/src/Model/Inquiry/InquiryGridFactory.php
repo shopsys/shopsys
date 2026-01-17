@@ -15,11 +15,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 
 class InquiryGridFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly AdministratorGridFacade $administratorGridFacade,
@@ -27,11 +22,6 @@ class InquiryGridFactory
     ) {
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
-     */
     public function createView(
         QueryBuilder $queryBuilder,
         Administrator $administrator,

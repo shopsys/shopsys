@@ -8,9 +8,5 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 interface TransactionalMasterRequestConditionProviderInterface
 {
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
-     * @return bool
-     */
     public function shouldBeginTransaction(RequestEvent $event): bool;
 }

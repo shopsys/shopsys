@@ -51,26 +51,17 @@ class SalesRepresentative
      */
     protected $telephone;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData $salesRepresentativeData
-     */
     public function __construct(SalesRepresentativeData $salesRepresentativeData)
     {
         $this->uuid = $salesRepresentativeData->uuid ?: Uuid::uuid4()->toString();
         $this->setData($salesRepresentativeData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData $salesRepresentativeData
-     */
     public function edit(SalesRepresentativeData $salesRepresentativeData): void
     {
         $this->setData($salesRepresentativeData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData $salesRepresentativeData
-     */
     protected function setData(SalesRepresentativeData $salesRepresentativeData): void
     {
         $this->firstName = $salesRepresentativeData->firstName;

@@ -11,20 +11,12 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\UnsupportedFeature
 
 class ArticleIndex extends AbstractIndex
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportRepository $articleExportRepository
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ArticleExportRepository $articleExportRepository,
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     #[Override]
     public function getTotalCount(int $domainId): int
     {
@@ -32,11 +24,7 @@ class ArticleIndex extends AbstractIndex
     }
 
     /**
-     * @param int $domainId
-     * @param int $lastProcessedId
-     * @param int $batchSize
      * @param string[] $fields
-     * @return array
      */
     #[Override]
     public function getExportDataForBatch(
@@ -58,10 +46,7 @@ class ArticleIndex extends AbstractIndex
     }
 
     /**
-     * @param int $domainId
-     * @param array $restrictToIds
      * @param string[] $fields
-     * @return array
      */
     #[Override]
     public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
@@ -78,9 +63,6 @@ class ArticleIndex extends AbstractIndex
         return $results;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public static function getName(): string
     {

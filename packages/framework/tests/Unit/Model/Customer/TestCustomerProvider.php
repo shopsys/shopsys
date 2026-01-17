@@ -23,18 +23,11 @@ use Symfony\Component\Clock\DatePoint;
 
 class TestCustomerProvider
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public static function getTestCustomerUser(): CustomerUser
     {
         return new CustomerUser(self::getTestCustomerUserData());
     }
 
-    /**
-     * @param bool $isCompany
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     public static function getTestCustomerUserData(bool $isCompany = true): CustomerUserData
     {
         $pricingGroupData = new PricingGroupData();
@@ -73,9 +66,6 @@ class TestCustomerProvider
         return $customerUserData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     public static function getEmptyTestCustomerUserData(): CustomerUserData
     {
         $pricingGroupData = new PricingGroupData();
@@ -103,11 +93,6 @@ class TestCustomerProvider
         return $customerUserData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param bool $isCompany
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
-     */
     public static function getBillingAddressData(Customer $customer, bool $isCompany = true): BillingAddressData
     {
         $billingCountryData = new CountryData();
@@ -131,10 +116,6 @@ class TestCustomerProvider
         return $billingAddressData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
-     */
     public static function getEmptyBillingAddressData(Customer $customer): BillingAddressData
     {
         $billingAddressData = new BillingAddressData();
@@ -144,10 +125,6 @@ class TestCustomerProvider
         return $billingAddressData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
-     */
     public static function getDeliveryAddressData(Customer $customer): DeliveryAddressData
     {
         $deliveryCountryData = new CountryData();
@@ -169,10 +146,6 @@ class TestCustomerProvider
         return $deliveryAddressData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
-     */
     public static function getEmptyDeliveryAddressData(Customer $customer): DeliveryAddressData
     {
         $deliveryAddressData = new DeliveryAddressData();

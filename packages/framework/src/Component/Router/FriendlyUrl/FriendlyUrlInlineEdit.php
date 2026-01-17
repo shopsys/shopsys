@@ -23,14 +23,6 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
 {
     protected QuickSearchFormData $gridQuickSearchFormData;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory $friendlyUrlDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     */
     public function __construct(
         FriendlyUrlGridFactory $gridFactory,
         AccessCheckerInterface $accessChecker,
@@ -44,10 +36,6 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
         $this->gridQuickSearchFormData = new QuickSearchFormData();
     }
 
-    /**
-     * @param int|string|null $rowId
-     * @return \Symfony\Component\Form\FormInterface
-     */
     #[Override]
     public function getForm(int|string|null $rowId): FormInterface
     {
@@ -57,9 +45,6 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
         return $this->formFactory->create(FriendlyUrlFormType::class, $friendlyUrlData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     #[Override]
     public function getGrid(): Grid
     {
@@ -71,9 +56,6 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
         return $grid;
     }
 
-    /**
-     * @return bool
-     */
     #[Override]
     public function canAddNewRow(): bool
     {
@@ -81,7 +63,6 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int|string $rowId
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData $formData
      */
     #[Override]
@@ -94,34 +75,22 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
         );
     }
 
-    /**
-     * @param mixed $formData
-     */
     #[Override]
     protected function createEntityAndGetId(mixed $formData): never
     {
         throw new LogicException('Creating a new unused friendly URL is not supported.');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData
-     */
     public function getGridQuickSearchFormData(): QuickSearchFormData
     {
         return $this->gridQuickSearchFormData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $gridQuickSearchFormData
-     */
     public function setGridQuickSearchFormData(QuickSearchFormData $gridQuickSearchFormData): void
     {
         $this->gridQuickSearchFormData = $gridQuickSearchFormData;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getRoleConstant(): string
     {

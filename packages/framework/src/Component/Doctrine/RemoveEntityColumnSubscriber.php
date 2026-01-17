@@ -24,9 +24,6 @@ class RemoveEntityColumnSubscriber implements EventSubscriber
         ];
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs
-     */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs): void
     {
         $classMetadata = $eventArgs->getClassMetadata();
@@ -40,10 +37,6 @@ class RemoveEntityColumnSubscriber implements EventSubscriber
         }
     }
 
-    /**
-     * @param string $propertyName
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
-     */
     protected function removeColumnFromEntityMappings(string $propertyName, ClassMetadata $classMetadata): void
     {
         $classMetadata->associationMappings = $this->removeMappingByKey($propertyName, $classMetadata->associationMappings);
@@ -52,11 +45,6 @@ class RemoveEntityColumnSubscriber implements EventSubscriber
         $classMetadata->fieldNames = $this->removeMappingByValue($propertyName, $classMetadata->fieldNames);
     }
 
-    /**
-     * @param string $propertyName
-     * @param array $mapping
-     * @return array
-     */
     protected function removeMappingByKey(string $propertyName, array $mapping): array
     {
         if (array_key_exists($propertyName, $mapping)) {
@@ -66,11 +54,6 @@ class RemoveEntityColumnSubscriber implements EventSubscriber
         return $mapping;
     }
 
-    /**
-     * @param string $propertyName
-     * @param array $mapping
-     * @return array
-     */
     protected function removeMappingByValue(string $propertyName, array $mapping): array
     {
         $key = array_search($propertyName, $mapping, true);

@@ -15,7 +15,6 @@ class UniqueCollectionValidator extends ConstraintValidator
 {
     /**
      * @param array $values
-     * @param \Symfony\Component\Validator\Constraint $constraint
      */
     #[Override]
     public function validate(mixed $values, Constraint $constraint): void
@@ -45,10 +44,8 @@ class UniqueCollectionValidator extends ConstraintValidator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueCollection $constraint
      * @param mixed $value1
      * @param mixed $value2
-     * @return bool
      */
     protected function areValuesEqual(UniqueCollection $constraint, $value1, $value2): bool
     {
@@ -66,10 +63,8 @@ class UniqueCollectionValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $fields
      * @param mixed $value1
      * @param mixed $value2
-     * @return bool
      */
     protected function areValuesEqualInFields(array $fields, $value1, $value2): bool
     {
@@ -85,11 +80,6 @@ class UniqueCollectionValidator extends ConstraintValidator
         return true;
     }
 
-    /**
-     * @param mixed $value
-     * @param string $field
-     * @return mixed
-     */
     protected function getFieldValue(mixed $value, string $field): mixed
     {
         return PropertyAccess::createPropertyAccessor()->getValue($value, $field);

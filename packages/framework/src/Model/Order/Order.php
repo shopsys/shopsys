@@ -376,12 +376,6 @@ class Order
      */
     protected $freeTransportAndPaymentApplied;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param string $orderNumber
-     * @param string $urlHash
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     */
     public function __construct(
         OrderData $orderData,
         string $orderNumber,
@@ -439,9 +433,6 @@ class Order
         return $paymentTransactions;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction|null
-     */
     public function getLastGoPayTransaction(): ?PaymentTransaction
     {
         $lastTransaction = $this->paymentTransactions->last();
@@ -453,17 +444,11 @@ class Order
         return null;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction|null
-     */
     public function getLastTransaction(): ?PaymentTransaction
     {
         return $this->paymentTransactions->last() ?: null;
     }
 
-    /**
-     * @return bool
-     */
     public function isMaxTransactionCountReached(): bool
     {
         return $this->paymentTransactions->count() >= static::MAX_TRANSACTION_COUNT;
@@ -485,9 +470,6 @@ class Order
         return $returnArray;
     }
 
-    /**
-     * @return bool
-     */
     public function isPaid(): bool
     {
         foreach ($this->paymentTransactions as $paymentTransaction) {
@@ -499,9 +481,6 @@ class Order
         return false;
     }
 
-    /**
-     * @return bool
-     */
     public function hasPaymentInProcess(): bool
     {
         foreach ($this->paymentTransactions as $paymentTransaction) {
@@ -513,25 +492,16 @@ class Order
         return false;
     }
 
-    /**
-     * @return int
-     */
     public function getPaymentTransactionsCount(): int
     {
         return $this->paymentTransactions->count();
     }
 
-    /**
-     * @return string|null
-     */
     public function getLastExternalPaymentUrl(): ?string
     {
         return $this->getLastGoPayTransaction()?->getExternalPaymentUrl();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction $paymentTransaction
-     */
     public function addPaymentTransaction(PaymentTransaction $paymentTransaction): void
     {
         $this->paymentTransactions->add($paymentTransaction);
@@ -553,9 +523,6 @@ class Order
         return $this->freeTransportAndPaymentApplied;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function editData(OrderData $orderData): void
     {
         $this->fillCommonFields($orderData);
@@ -564,9 +531,6 @@ class Order
         $this->editOrderPayment($orderData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function fillCommonFields(OrderData $orderData): void
     {
         $this->firstName = $orderData->firstName;
@@ -600,9 +564,6 @@ class Order
         $this->freeTransportAndPaymentApplied = $orderData->freeTransportAndPaymentApplied;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function editOrderTransport(OrderData $orderData): void
     {
         $orderTransportData = $orderData->orderTransport;
@@ -610,9 +571,6 @@ class Order
         $this->getTransportItem()->edit($orderTransportData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function editOrderPayment(OrderData $orderData): void
     {
         $orderPaymentData = $orderData->orderPayment;
@@ -620,9 +578,6 @@ class Order
         $this->getPaymentItem()->edit($orderPaymentData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function setDeliveryAddress(OrderData $orderData): void
     {
         $this->deliveryAddressSameAsBillingAddress = $orderData->deliveryAddressSameAsBillingAddress;
@@ -648,9 +603,6 @@ class Order
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $item
-     */
     public function addItem(OrderItem $item): void
     {
         if (!$this->items->contains($item)) {
@@ -658,9 +610,6 @@ class Order
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $item
-     */
     public function removeItem(OrderItem $item): void
     {
         if ($item->isTypeTransport()) {
@@ -761,9 +710,6 @@ class Order
         return new Price($this->totalPriceWithoutVat, $this->totalPriceWithVat);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function getTotalVatAmount(): Money
     {
         return $this->totalPriceWithVat->subtract($this->totalPriceWithoutVat);
@@ -777,10 +723,6 @@ class Order
         return $this->currency;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $orderTotalPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $productsTotalPrice
-     */
     public function setTotalPrices(PriceInterface $orderTotalPrice, PriceInterface $productsTotalPrice): void
     {
         $this->totalPriceWithVat = $orderTotalPrice->getPriceWithVat();
@@ -913,7 +855,6 @@ class Order
     }
 
     /**
-     * @param string $type
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
     public function getItemsByType(string $type): array
@@ -932,9 +873,6 @@ class Order
         return $this->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public function getTransportItem(): OrderItem
     {
         $transports = $this->getItemsByType(OrderItemTypeEnum::TYPE_TRANSPORT);
@@ -946,9 +884,6 @@ class Order
         return reset($transports);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public function getPaymentItem(): OrderItem
     {
         $payments = $this->getItemsByType(OrderItemTypeEnum::TYPE_PAYMENT);
@@ -1200,18 +1135,11 @@ class Order
         return $this->origin;
     }
 
-    /**
-     * @return bool
-     */
     public function isCancelled(): bool
     {
         return $this->status->getType() === OrderStatusTypeEnum::TYPE_CANCELED;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderEditResult
-     */
     public function edit(OrderData $orderData): OrderEditResult
     {
         $statusChanged = $this->getStatus() !== $orderData->status;
@@ -1233,9 +1161,6 @@ class Order
         $this->orderPaymentStatusPageValidityHash = null;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getTotalProductsPrice(): PriceInterface
     {
         return new Price($this->totalProductPriceWithoutVat, $this->totalProductPriceWithVat);
@@ -1273,9 +1198,6 @@ class Order
         $this->trackingNumber = $trackingNumber;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTrackingUrl(): ?string
     {
         $trackingUrl = $this->transport->getTrackingUrl();
@@ -1328,17 +1250,11 @@ class Order
         $this->orderPaymentStatusPageValidityHash = $orderPaymentStatusPageValidityHash;
     }
 
-    /**
-     * @return bool
-     */
     public function isCompanyCustomer(): bool
     {
         return $this->getCompanyName() !== null && $this->getCompanyNumber() !== null;
     }
 
-    /**
-     * @return int
-     */
     public function getTotalWeight(): int
     {
         $totalWeight = 0;
@@ -1355,9 +1271,6 @@ class Order
         return $totalWeight;
     }
 
-    /**
-     * @return bool
-     */
     public function hasExternalPayment(): bool
     {
         return !in_array($this->getPayment()->getType(), PaymentTypeEnum::INTERNAL_PAYMENTS, true);

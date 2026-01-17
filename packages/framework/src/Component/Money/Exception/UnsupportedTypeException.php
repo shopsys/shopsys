@@ -14,7 +14,6 @@ class UnsupportedTypeException extends MoneyException
     /**
      * @param mixed $value
      * @param string[] $supportedTypes
-     * @param \Throwable|null $previous
      */
     public function __construct($value, array $supportedTypes, ?Throwable $previous = null)
     {

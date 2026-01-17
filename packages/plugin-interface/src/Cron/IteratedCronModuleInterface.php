@@ -20,9 +20,6 @@ use Monolog\Logger;
  */
 interface IteratedCronModuleInterface
 {
-    /**
-     * @param \Monolog\Logger $logger
-     */
     public function setLogger(Logger $logger);
 
     /**

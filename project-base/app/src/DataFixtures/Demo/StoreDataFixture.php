@@ -42,13 +42,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const string ATTR_IMAGE = 'image';
     public const string STORE_PREFIX = 'store_';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreDataFactory $storeDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHourDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory $openingHoursRangeDataFactory
-     */
     public function __construct(
         private readonly StoreFacade $storeFacade,
         private readonly StoreDataFactory $storeDataFactory,
@@ -58,9 +51,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -70,9 +60,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
-    /**
-     * @return array
-     */
     private function getDemoData(): array
     {
         $firstDomainConfig = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig();
@@ -320,10 +307,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         return $stores;
     }
 
-    /**
-     * @param array $demoRow
-     * @return \Shopsys\FrameworkBundle\Model\Store\StoreData
-     */
     private function initStoreData(array $demoRow): StoreData
     {
         $domainId = $demoRow[self::ATTR_DOMAIN_ID];
@@ -352,9 +335,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         return $storeData;
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getDependencies(): array
     {

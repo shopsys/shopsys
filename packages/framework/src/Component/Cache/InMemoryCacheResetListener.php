@@ -6,9 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\Cache;
 
 class InMemoryCacheResetListener
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly InMemoryCache $inMemoryCache,
     ) {

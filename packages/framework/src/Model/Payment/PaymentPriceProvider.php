@@ -14,11 +14,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class PaymentPriceProvider
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     */
     public function __construct(
         protected readonly OrderInputFactory $orderInputFactory,
         protected readonly OrderDataFactory $orderDataFactory,
@@ -26,12 +21,6 @@ class PaymentPriceProvider
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getPaymentPrice(Cart $cart, Payment $payment, DomainConfig $domainConfig): PriceInterface
     {
         $orderInput = $this->orderInputFactory->createFromCart($cart, $domainConfig);

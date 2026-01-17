@@ -12,9 +12,6 @@ use Shopsys\Releaser\Stage;
 
 final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \Shopsys\Releaser\Packagist\PackageProvider $packageProvider
-     */
     public function __construct(private readonly PackageProvider $packageProvider)
     {
     }
@@ -28,11 +25,6 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
         return [Stage::AFTER_RELEASE];
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -41,10 +33,6 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
         return 'Check there are new versions of all packages on packagist';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

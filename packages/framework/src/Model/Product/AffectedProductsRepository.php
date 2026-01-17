@@ -17,9 +17,6 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class AffectedProductsRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
@@ -34,7 +31,6 @@ class AffectedProductsRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @return int[]
      */
     public function getProductIdsWithBrand(Brand $brand): array
@@ -47,7 +43,6 @@ class AffectedProductsRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return int[]
      */
     public function getProductIdsWithCategory(Category $category): array
@@ -61,7 +56,6 @@ class AffectedProductsRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
      * @return int[]
      */
     public function getProductIdsWithFlag(Flag $flag): array
@@ -76,7 +70,6 @@ class AffectedProductsRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @return int[]
      */
     public function getProductIdsWithParameter(Parameter $parameter): array
@@ -90,7 +83,6 @@ class AffectedProductsRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup $parameterGroup
      * @return int[]
      */
     public function getProductIdsWithParameterGroup(ParameterGroup $parameterGroup): array
@@ -105,7 +97,6 @@ class AffectedProductsRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      * @return int[]
      */
     public function getProductIdsWithUnit(Unit $unit): array
@@ -117,10 +108,6 @@ class AffectedProductsRepository
         return $this->getSingleColumnResultFromQueryBuilder($queryBuilder);
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @return array
-     */
     protected function getSingleColumnResultFromQueryBuilder(QueryBuilder $queryBuilder): array
     {
         return $queryBuilder
@@ -128,9 +115,6 @@ class AffectedProductsRepository
             ->getSingleColumnResult();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createQueryBuilder(): QueryBuilder
     {
         return $this->getProductRepository()

@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class PaymentDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     */
     public function __construct(
         protected readonly VatFacade $vatFacade,
         protected readonly Domain $domain,
@@ -23,17 +18,11 @@ class PaymentDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     */
     protected function createInstance(): PaymentData
     {
         return new PaymentData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     */
     public function create(): PaymentData
     {
         $paymentData = $this->createInstance();
@@ -42,9 +31,6 @@ class PaymentDataFactory
         return $paymentData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
     protected function fillNew(PaymentData $paymentData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -67,10 +53,6 @@ class PaymentDataFactory
         $paymentData->image = $this->imageUploadDataFactory->create();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     */
     public function createFromPayment(Payment $payment): PaymentData
     {
         $paymentData = $this->createInstance();
@@ -79,10 +61,6 @@ class PaymentDataFactory
         return $paymentData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     */
     protected function fillFromPayment(PaymentData $paymentData, Payment $payment): void
     {
         $paymentData->hidden = $payment->isHidden();

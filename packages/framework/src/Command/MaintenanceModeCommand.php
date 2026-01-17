@@ -24,9 +24,6 @@ class MaintenanceModeCommand extends Command
      */
     private const string ACTION_ARGUMENT = 'action';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Maintenance\MaintenanceModeFacade $maintenanceModeFacade
-     */
     public function __construct(
         protected readonly MaintenanceModeFacade $maintenanceModeFacade,
     ) {
@@ -70,18 +67,12 @@ class MaintenanceModeCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
-     */
     public function enableMaintenanceMode(SymfonyStyle $symfonyStyleIo): void
     {
         $this->maintenanceModeFacade->enable();
         $symfonyStyleIo->note('Maintenance mode was enabled');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
-     */
     public function disableMaintenanceMode(SymfonyStyle $symfonyStyleIo): void
     {
         if ($this->maintenanceModeFacade->isEnabled()) {

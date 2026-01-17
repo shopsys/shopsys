@@ -207,10 +207,6 @@ class AutoCardGroupingRenderingTest extends FunctionalTestCase
         return $this->formFactory->createBuilder();
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @return string
-     */
     private function renderForm(FormInterface $form): string
     {
         $view = $form->createView();
@@ -222,10 +218,6 @@ class AutoCardGroupingRenderingTest extends FunctionalTestCase
         return $template->render(['form' => $view]);
     }
 
-    /**
-     * @param string $html
-     * @return \DOMXPath
-     */
     private function createXpath(string $html): DOMXPath
     {
         $dom = new DOMDocument();
@@ -234,19 +226,11 @@ class AutoCardGroupingRenderingTest extends FunctionalTestCase
         return new DOMXPath($dom);
     }
 
-    /**
-     * @param \DOMXPath $xpath
-     * @return \DOMNodeList
-     */
     private function queryCards(DOMXPath $xpath): DOMNodeList
     {
         return $xpath->query(self::XPATH_CARD);
     }
 
-    /**
-     * @param \DOMXPath $xpath
-     * @return \DOMNodeList
-     */
     private function queryHiddenFieldsExcludingToken(DOMXPath $xpath): DOMNodeList
     {
         return $xpath->query(self::XPATH_HIDDEN_FIELDS_NO_TOKEN);

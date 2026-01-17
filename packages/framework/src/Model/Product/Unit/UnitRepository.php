@@ -16,35 +16,21 @@ class UnitRepository
 {
     protected EntityManagerInterface $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getUnitRepository(): EntityRepository
     {
         return $this->em->getRepository(Unit::class);
     }
 
-    /**
-     * @param int $unitId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null
-     */
     public function findById(int $unitId): ?Unit
     {
         return $this->getUnitRepository()->find($unitId);
     }
 
-    /**
-     * @param int $unitId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
-     */
     public function getById(int $unitId): Unit
     {
         $unit = $this->findById($unitId);
@@ -56,9 +42,6 @@ class UnitRepository
         return $unit;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getAllQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -77,7 +60,6 @@ class UnitRepository
     }
 
     /**
-     * @param int $unitId
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit[]
      */
     public function getAllExceptId(int $unitId): array
@@ -87,10 +69,6 @@ class UnitRepository
             ->getQuery()->execute();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     * @return bool
-     */
     public function existsProductWithUnit(Unit $unit): bool
     {
         $qb = $this->em->createQueryBuilder()
@@ -101,10 +79,6 @@ class UnitRepository
         return $qb->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     * @return bool
-     */
     public function existsParameterWithUnit(Unit $unit): bool
     {
         $qb = $this->em->createQueryBuilder()
@@ -115,18 +89,11 @@ class UnitRepository
         return $qb->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 
-    /**
-     * @return bool
-     */
     public function isAtLeastOneUnitCreated(): bool
     {
         return $this->getUnitRepository()->count([]) > 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $oldUnit
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $newUnit
-     */
     public function replaceUnit(Unit $oldUnit, Unit $newUnit): void
     {
         $this->em->createQueryBuilder()
@@ -142,9 +109,6 @@ class UnitRepository
             ->getQuery()->execute();
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->getUnitRepository()->createQueryBuilder('u')

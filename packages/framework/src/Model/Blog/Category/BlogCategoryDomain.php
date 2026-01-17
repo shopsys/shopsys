@@ -59,10 +59,6 @@ class BlogCategoryDomain
      */
     protected $visible;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param int $domainId
-     */
     public function __construct(BlogCategory $blogCategory, int $domainId)
     {
         $this->blogCategory = $blogCategory;
@@ -135,9 +131,6 @@ class BlogCategoryDomain
         $this->seoH1 = $seoH1;
     }
 
-    /**
-     * @param bool $enabled
-     */
     public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;

@@ -11,9 +11,6 @@ use Twig\TwigFunction;
 
 class RequestExtension extends AbstractExtension
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(protected readonly RequestStack $requestStack)
     {
     }

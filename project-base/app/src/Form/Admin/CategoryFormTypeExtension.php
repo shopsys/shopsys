@@ -14,9 +14,6 @@ final class CategoryFormTypeExtension extends AbstractTypeExtension
 {
     public const array DISABLED_FIELDS = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
-     */
     public function __construct(
         private readonly FormBuilderHelper $formBuilderHelper,
     ) {

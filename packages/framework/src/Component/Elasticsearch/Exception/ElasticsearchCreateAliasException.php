@@ -8,10 +8,6 @@ use Exception;
 
 class ElasticsearchCreateAliasException extends Exception
 {
-    /**
-     * @param string $alias
-     * @param array $error
-     */
     public function __construct(string $alias, array $error)
     {
         parent::__construct(sprintf(

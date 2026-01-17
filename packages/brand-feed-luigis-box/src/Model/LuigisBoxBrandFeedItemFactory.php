@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 
 class LuigisBoxBrandFeedItemFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
-     */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ImageFacade $imageFacade,
@@ -25,11 +20,6 @@ class LuigisBoxBrandFeedItemFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\BrandFeed\LuigisBoxBundle\Model\LuigisBoxBrandFeedItem
-     */
     public function create(Brand $brand, DomainConfig $domainConfig): LuigisBoxBrandFeedItem
     {
         try {

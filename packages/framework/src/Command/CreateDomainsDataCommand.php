@@ -21,12 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CreateDomainsDataCommand extends Command
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator $domainDataCreator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\DbIndexesFacade $dbIndexesFacade
-     */
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly DomainDataCreator $domainDataCreator,
@@ -58,7 +52,6 @@ class CreateDomainsDataCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
     private function doExecute(OutputInterface $output)

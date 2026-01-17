@@ -16,7 +16,6 @@ class GetComplaintsTest extends GraphQlWithLoginTestCase
     use ComplaintTestTrait;
 
     /**
-     * @param array $queryVariables
      * @param int[] $expectedComplaintIds
      */
     #[DataProvider('getComplaintsDataProvider')]
@@ -50,9 +49,6 @@ class GetComplaintsTest extends GraphQlWithLoginTestCase
         }
     }
 
-    /**
-     * @return iterable
-     */
     public static function getComplaintsDataProvider(): iterable
     {
         // first 2 complaints

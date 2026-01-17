@@ -10,11 +10,6 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 
 class AdminProductAdvancedSearchCest
 {
-    /**
-     * @param \Tests\App\Test\Codeception\AcceptanceTester $me
-     * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage $loginPage
-     * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\ProductAdvancedSearchPage $productAdvancedSearchPage
-     */
     public function testSearchByCatnum(
         AcceptanceTester $me,
         LoginPage $loginPage,

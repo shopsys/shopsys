@@ -19,9 +19,6 @@ enum ActionType: string
     case EDIT = 'edit';
     case DELETE = 'delete';
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Permission
-     */
     public function toPermission(): Permission
     {
         return match ($this) {

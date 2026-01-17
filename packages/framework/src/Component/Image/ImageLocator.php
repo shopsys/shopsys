@@ -13,8 +13,6 @@ class ImageLocator
 
     /**
      * @param mixed $imageDir
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         $imageDir,
@@ -24,10 +22,6 @@ class ImageLocator
         $this->imageDir = $imageDir;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     * @return string
-     */
     public function getRelativeImageFilepath(Image $image): string
     {
         $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType());
@@ -35,13 +29,6 @@ class ImageLocator
         return $path . '/' . $image->getFilename();
     }
 
-    /**
-     * @param int $id
-     * @param string $extension
-     * @param string $entityName
-     * @param string|null $type
-     * @return string
-     */
     public function getRelativeImageFilepathFromAttributes(
         int $id,
         string $extension,
@@ -55,10 +42,6 @@ class ImageLocator
         return $path . '/' . $filename;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     * @return string
-     */
     public function getAbsoluteImageFilepath(Image $image): string
     {
         $relativePath = $this->getRelativeImageFilepath($image);
@@ -67,7 +50,6 @@ class ImageLocator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
      * @return bool
      */
     public function imageExists(Image $image)
@@ -77,11 +59,6 @@ class ImageLocator
         return $this->filesystem->has($imageFilepath);
     }
 
-    /**
-     * @param string $entityName
-     * @param string|null $type
-     * @return string
-     */
     public function getRelativeImagePath(string $entityName, ?string $type): string
     {
         $this->imageConfig->assertImageConfigByEntityNameExists($entityName, $type);
@@ -94,11 +71,6 @@ class ImageLocator
         return implode('/', $pathParts);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     * @param string|null $friendlyUrlSlug
-     * @return string
-     */
     public function getRelativeImageFilepathWithSlug(Image $image, ?string $friendlyUrlSlug): string
     {
         $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType());

@@ -27,16 +27,10 @@ class FlagEvent extends Event
      */
     public const DELETE = 'flag.delete';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     */
     public function __construct(protected readonly Flag $flag)
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public function getFlag(): Flag
     {
         return $this->flag;

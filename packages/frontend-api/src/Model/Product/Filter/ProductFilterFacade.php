@@ -21,15 +21,6 @@ class ProductFilterFacade
 {
     protected const string PRODUCT_FILTER_CACHE_NAMESPACE = 'productFilterConfig';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer $productFilterNormalizer
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ProductFilterDataMapper $productFilterDataMapper,
@@ -41,9 +32,6 @@ class ProductFilterFacade
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
-     */
     public function getProductFilterConfigForAll(): ProductFilterConfig
     {
         return $this->inMemoryCache->getOrSaveValue(
@@ -58,10 +46,6 @@ class ProductFilterFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
-     */
     public function getProductFilterConfigForBrand(Brand $brand): ProductFilterConfig
     {
         return $this->inMemoryCache->getOrSaveValue(
@@ -78,10 +62,6 @@ class ProductFilterFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
-     */
     public function getProductFilterConfigForCategory(Category $category): ProductFilterConfig
     {
         return $this->inMemoryCache->getOrSaveValue(
@@ -97,11 +77,6 @@ class ProductFilterFacade
         );
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
-     */
     protected function getValidatedProductFilterData(
         Argument $argument,
         ProductFilterConfig $productFilterConfig,
@@ -121,10 +96,6 @@ class ProductFilterFacade
         return $productFilterData;
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
-     */
     public function getValidatedProductFilterDataForAll(Argument $argument): ProductFilterData
     {
         if ($argument['filter'] === null) {
@@ -136,11 +107,6 @@ class ProductFilterFacade
         return $this->getValidatedProductFilterData($argument, $productFilterConfig);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
-     */
     public function getValidatedProductFilterDataForCategory(Argument $argument, Category $category): ProductFilterData
     {
         if ($argument['filter'] === null) {
@@ -152,11 +118,6 @@ class ProductFilterFacade
         return $this->getValidatedProductFilterData($argument, $productFilterConfig);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
-     */
     public function getValidatedProductFilterDataForBrand(Argument $argument, Brand $brand): ProductFilterData
     {
         if ($argument['filter'] === null) {
@@ -168,10 +129,6 @@ class ProductFilterFacade
         return $this->getValidatedProductFilterData($argument, $productFilterConfig);
     }
 
-    /**
-     * @param string $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
-     */
     public function getProductFilterConfigForSearch(string $searchText): ProductFilterConfig
     {
         return $this->inMemoryCache->getOrSaveValue(
@@ -188,11 +145,6 @@ class ProductFilterFacade
         );
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
-     */
     public function getValidatedProductFilterDataForFlag(Argument $argument, Flag $flag): ProductFilterData
     {
         if ($argument['filter'] === null) {
@@ -204,10 +156,6 @@ class ProductFilterFacade
         return $this->getValidatedProductFilterData($argument, $productFilterConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
-     */
     public function getProductFilterConfigForFlag(Flag $flag): ProductFilterConfig
     {
         $locale = $this->domain->getLocale();

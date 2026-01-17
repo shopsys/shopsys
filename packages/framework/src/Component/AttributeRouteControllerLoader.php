@@ -11,31 +11,17 @@ use Symfony\Bundle\FrameworkBundle\Routing\AttributeRouteControllerLoader as Bas
 
 class AttributeRouteControllerLoader extends BaseAttributeRouteControllerLoader
 {
-    /**
-     * @param \ReflectionClass $class
-     * @param \ReflectionMethod $method
-     * @return string
-     */
     #[Override]
     protected function getDefaultRouteName(ReflectionClass $class, ReflectionMethod $method): string
     {
         return static::replacePartOfTheRouteName(parent::getDefaultRouteName($class, $method));
     }
 
-    /**
-     * @param string $routeName
-     * @return string
-     */
     public static function replacePartOfTheRouteName(string $routeName): string
     {
         return preg_replace('/^(app_|shopsys_framework_|shopsys_frontendapi_)/', '', $routeName);
     }
 
-    /**
-     * @param \ReflectionClass $class
-     * @param \ReflectionMethod $method
-     * @return string
-     */
     public function getRouteName(ReflectionClass $class, ReflectionMethod $method): string
     {
         return $this->getDefaultRouteName($class, $method);

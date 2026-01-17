@@ -12,11 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculat
 
 class PromoCodeApplicableProductsTotalPriceCalculator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
@@ -26,7 +21,6 @@ class PromoCodeApplicableProductsTotalPriceCalculator
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     public function calculateTotalPrice(array $quantifiedProducts): PriceInterface
     {
@@ -44,7 +38,6 @@ class PromoCodeApplicableProductsTotalPriceCalculator
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface[] $quantifiedProductsPrices
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     protected function countTotalPrice(array $quantifiedProductsPrices): PriceInterface
     {

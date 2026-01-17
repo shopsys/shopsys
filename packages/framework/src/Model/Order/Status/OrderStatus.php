@@ -42,7 +42,6 @@ class OrderStatus extends AbstractTranslatableEntity
     protected $type;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      * @param string $type
      */
     public function __construct(OrderStatusData $orderStatusData, $type)
@@ -52,17 +51,11 @@ class OrderStatus extends AbstractTranslatableEntity
         $this->setData($orderStatusData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
-     */
     public function edit(OrderStatusData $orderStatusData): void
     {
         $this->setData($orderStatusData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
-     */
     protected function setData(OrderStatusData $orderStatusData): void
     {
         $this->setTranslations($orderStatusData);
@@ -86,9 +79,6 @@ class OrderStatus extends AbstractTranslatableEntity
         return $this->translation($locale)->getName();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
-     */
     protected function setTranslations(OrderStatusData $orderStatusData): void
     {
         foreach ($orderStatusData->name as $locale => $name) {

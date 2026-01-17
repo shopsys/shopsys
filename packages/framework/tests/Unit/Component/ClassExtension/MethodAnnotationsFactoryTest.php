@@ -50,9 +50,6 @@ class MethodAnnotationsFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @return array
-     */
     public static function getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider(): array
     {
         return [
@@ -74,10 +71,6 @@ class MethodAnnotationsFactoryTest extends TestCase
         ];
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkReflectionClass
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectReflectionClass
-     */
     #[DataProvider('getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider')]
     public function testGetProjectClassNecessaryMethodAnnotationsLinesEmptyResult(
         ReflectionClass $frameworkReflectionClass,

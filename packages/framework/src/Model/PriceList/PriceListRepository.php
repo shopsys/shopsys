@@ -12,28 +12,17 @@ use Shopsys\FrameworkBundle\Model\PriceList\Exception\PriceListNotFoundException
 
 class PriceListRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClockInterface $clock,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getPriceListRepository(): EntityRepository
     {
         return $this->em->getRepository(PriceList::class);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceList
-     */
     public function getById(int $id): PriceList
     {
         $priceList = $this->getPriceListRepository()->find($id);
@@ -45,9 +34,6 @@ class PriceListRepository
         return $priceList;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getPriceListGridQueryBuilder(): QueryBuilder
     {
         return $this->getPriceListRepository()
@@ -60,10 +46,6 @@ class PriceListRepository
             ->setParameter('now', $this->clock->now());
     }
 
-    /**
-     * @param int $priceListId
-     * @return iterable
-     */
     public function getPriceListDataToExport(int $priceListId): iterable
     {
         $queryBuilder = $this->em->createQueryBuilder()

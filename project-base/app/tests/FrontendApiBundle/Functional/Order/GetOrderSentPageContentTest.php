@@ -126,11 +126,6 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
         $this->assertSame($this->orderContentPageFacade->getPaymentSuccessfulPageContent($order), $responseData['content']);
     }
 
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param string $externalStatus
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction
-     */
     public function createPaymentTransaction(Order $order, string $externalStatus): PaymentTransaction
     {
         $paymentTransactionData = $this->paymentTransactionDataFactory->create();
@@ -192,12 +187,6 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
         $this->assertSame($this->orderContentPageFacade->getPaymentSuccessfulPageContent($order), $responseData['content']);
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param \App\Model\Transport\Transport $transport
-     * @param \App\Model\Payment\Payment $payment
-     * @return \App\Model\Order\Order
-     */
     private function createOrder(Product $product, Transport $transport, Payment $payment): Order
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [

@@ -15,9 +15,6 @@ class Version20240816221930 extends AbstractMigration implements ContainerAwareI
 {
     use MultidomainMigrationTrait;
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -64,10 +61,6 @@ class Version20240816221930 extends AbstractMigration implements ContainerAwareI
         $this->sql('ALTER TABLE complaints ALTER status_id SET NOT NULL');
     }
 
-    /**
-     * @param int $complaintStatusId
-     * @param string $complaintStatusType
-     */
     private function createComplaintStatus(int $complaintStatusId, string $complaintStatusType): void
     {
         $this->sql('INSERT INTO complaint_statuses (id, status_type) VALUES (:id, :statusType)', [
@@ -76,11 +69,6 @@ class Version20240816221930 extends AbstractMigration implements ContainerAwareI
         ]);
     }
 
-    /**
-     * @param int $complaintStatusId
-     * @param string $complaintStatusTranslatedName
-     * @param string $locale
-     */
     private function createComplaintStatusTranslations(
         int $complaintStatusId,
         string $complaintStatusTranslatedName,

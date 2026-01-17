@@ -8,18 +8,12 @@ use Override;
 
 abstract class AbstractChainedTestClass implements TestInterface, SecondInterface
 {
-    /**
-     * @return string
-     */
     #[Override]
     public function getName(): string
     {
         return 'name';
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return '';

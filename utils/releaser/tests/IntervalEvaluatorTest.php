@@ -20,19 +20,12 @@ final class IntervalEvaluatorTest extends TestCase
         $this->intervalEvaluator = new IntervalEvaluator();
     }
 
-    /**
-     * @param string $version
-     * @param bool $expected
-     */
     #[DataProvider('provideData')]
     public function test(string $version, bool $expected): void
     {
         $this->assertSame($expected, $this->intervalEvaluator->isClosedInterval($version));
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function provideData(): Iterator
     {
         yield ['v1.1.1', true];

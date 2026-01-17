@@ -12,20 +12,12 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class UploadedFileAdminListRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
-    /**
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getUploadedFileListQueryBuilder(string $locale): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -36,10 +28,6 @@ class UploadedFileAdminListRepository
             ->select('u, ut');
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     */
     public function extendQueryBuilderByQuickSearchData(
         QueryBuilder $queryBuilder,
         QuickSearchFormData $quickSearchData,

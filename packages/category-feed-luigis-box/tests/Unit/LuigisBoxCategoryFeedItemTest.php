@@ -62,12 +62,6 @@ class LuigisBoxCategoryFeedItemTest extends TestCase
         $this->mockCategoryUrl($this->defaultCategory, $this->defaultDomain, self::CATEGORY_URL);
     }
 
-    /**
-     * @param int $id
-     * @param string $url
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private function createDomainConfigMock(int $id, string $url, string $locale): DomainConfig
     {
         $domainConfigMock = $this->createMock(DomainConfig::class);
@@ -79,22 +73,12 @@ class LuigisBoxCategoryFeedItemTest extends TestCase
         return $domainConfigMock;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param string $url
-     */
     private function mockCategoryUrl(Category $category, DomainConfig $domain, string $url): void
     {
         $this->friendlyUrlFacadeMock->method('getAbsoluteUrlByRouteNameAndEntityId')
             ->with($domain->getId(), 'front_product_list', $category->getId())->willReturn($url);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param string $url
-     */
     private function mockCategoryImageUrl(Category $category, DomainConfig $domain, string $url): void
     {
         $this->imageFacadeMock->method('getImageUrl')

@@ -62,11 +62,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     public const string COMPANY_BILLING_ADDRESS_UUID = '13dde196-f607-4edb-8c01-d81d90adfd05';
 
     /**
-     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      */
     public function __construct(
@@ -79,9 +75,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -119,8 +112,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @param int $domainId
-     * @param array $data
      * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
     private function getCustomerUserUpdateData(int $domainId, array $data): CustomerUserUpdateData
@@ -148,9 +139,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         return $customerUserUpdateData;
     }
 
-    /**
-     * @return array
-     */
     private function getDefaultCustomerUsersDataProvider(): array
     {
         return [
@@ -333,9 +321,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getDistinctCustomerUsersDataProvider(): array
     {
         return [
@@ -468,10 +453,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         ];
     }
 
-    /**
-     * @param int $domainId
-     * @return array
-     */
     private function getOtherDomainsCustomerUserDataProvider(int $domainId): array
     {
         $customerUsersData = $this->getDistinctCustomerUsersDataProvider();
@@ -508,9 +489,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         ];
     }
 
-    /**
-     * @param \App\Model\Customer\User\CustomerUser $customer
-     */
     private function resetPassword(CustomerUser $customer): void
     {
         $resetPasswordHash = $this->hashGenerator->generateHash(
@@ -522,7 +500,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
     /**
      * @param \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @param array $billingAddressInputData
      */
     private function setBillingAddressData(
         CustomerUserUpdateData $customerUserUpdateData,
@@ -543,7 +520,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
     /**
      * @param \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @param array $deliveryAddressInputData
      */
     private function setDeliveryAddressData(
         CustomerUserUpdateData $customerUserUpdateData,

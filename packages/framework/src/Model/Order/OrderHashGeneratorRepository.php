@@ -12,10 +12,6 @@ class OrderHashGeneratorRepository
     protected const HASH_LENGTH = 50;
     protected const MAX_GENERATE_TRIES = 100;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     */
     public function __construct(
         protected readonly OrderRepository $orderRepository,
         protected readonly HashGenerator $hashGenerator,

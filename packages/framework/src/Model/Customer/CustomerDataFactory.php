@@ -6,26 +6,16 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 class CustomerDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
-     */
     protected function createInstance(): CustomerData
     {
         return new CustomerData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
-     */
     public function create(): CustomerData
     {
         return $this->createInstance();
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
-     */
     public function createForDomain(int $domainId): CustomerData
     {
         $customerData = $this->createInstance();
@@ -34,10 +24,6 @@ class CustomerDataFactory
         return $customerData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
-     */
     public function createFromCustomer(Customer $customer): CustomerData
     {
         $customerData = $this->createInstance();

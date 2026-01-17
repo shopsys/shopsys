@@ -12,10 +12,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class BlogCategoryVisibilityRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected EntityManagerInterface $em,
         protected Domain $domain,
@@ -41,9 +37,6 @@ class BlogCategoryVisibilityRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     protected function refreshBlogCategoriesVisibilityOnDomain(DomainConfig $domainConfig): void
     {
         $this->setRootBlogCategoryVisibleOnDomain($domainConfig);
@@ -55,9 +48,6 @@ class BlogCategoryVisibilityRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     protected function setRootBlogCategoryVisibleOnDomain(DomainConfig $domainConfig): void
     {
         $this->em->getConnection()->executeStatement(
@@ -78,10 +68,6 @@ class BlogCategoryVisibilityRepository
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return int
-     */
     protected function getMaxLevelOnDomain(DomainConfig $domainConfig): int
     {
         return (int)$this->em->getConnection()->fetchOne(
@@ -95,10 +81,6 @@ class BlogCategoryVisibilityRepository
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int $level
-     */
     protected function refreshBlogCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, int $level): void
     {
         $this->em->getConnection()->executeStatement(

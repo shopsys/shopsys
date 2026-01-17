@@ -42,10 +42,6 @@ class ReadyCategorySeoMixParameterParameterValue
      */
     protected $parameterValue;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
-     */
     public function __construct(
         Parameter $parameter,
         ParameterValue $parameterValue,

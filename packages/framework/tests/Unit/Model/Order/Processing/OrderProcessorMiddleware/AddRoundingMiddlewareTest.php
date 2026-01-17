@@ -23,10 +23,6 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
 {
     use SetTranslatorTrait;
 
-    /**
-     * @param bool $czkRounding
-     * @param string $currencyCode
-     */
     #[DataProvider('noRoundingAddedProvider')]
     public function testNoRoundingIsAdded(
         bool $czkRounding,
@@ -64,9 +60,6 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    /**
-     * @return iterable
-     */
     public static function noRoundingAddedProvider(): iterable
     {
         yield 'CZK currency without CZK rounding' => [false, Currency::CODE_CZK];
@@ -101,11 +94,6 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $inputPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $roundingPrice
-     * @param int $expectedRoundingItemsCount
-     */
     #[DataProvider('roundingProvider')]
     public function testProperRoundingIsAdded(
         Price $inputPrice,
@@ -148,9 +136,6 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    /**
-     * @return iterable
-     */
     public static function roundingProvider(): iterable
     {
         yield 'added rounding' => [
@@ -166,10 +151,6 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         ];
     }
 
-    /**
-     * @param string $currencyCode
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddRoundingMiddleware
-     */
     private function createAddRoundingMiddleware(
         string $currencyCode = Currency::CODE_EUR,
     ): AddRoundingMiddleware {

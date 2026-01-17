@@ -6,19 +6,11 @@ namespace Shopsys\FrontendApiBundle\Model\SocialNetwork;
 
 class SocialNetworkConfigFactory
 {
-    /**
-     * @param array $socialNetworkLoginConfig
-     */
     public function __construct(
         protected array $socialNetworkLoginConfig,
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @param string|null $redirectUrl
-     * @return array
-     */
     public function createConfigForDomain(int $domainId, ?string $redirectUrl = null): array
     {
         foreach ($this->socialNetworkLoginConfig['providers'] ?? [] as $providerName => $providerSetting) {

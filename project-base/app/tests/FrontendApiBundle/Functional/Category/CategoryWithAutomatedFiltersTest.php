@@ -31,7 +31,6 @@ class CategoryWithAutomatedFiltersTest extends GraphQlTestCase
     /**
      * @param string[] $automatedFilters
      * @param int[] $expectedProductIds
-     * @param string $categoryReferenceName
      */
     #[DataProvider('categoryWithAutomatedFiltersDataProvider')]
     public function testCategoryWithAutomatedFilters(
@@ -71,9 +70,6 @@ class CategoryWithAutomatedFiltersTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @return iterable
-     */
     public static function categoryWithAutomatedFiltersDataProvider(): iterable
     {
         yield 'new products and on stock automated filters' => [

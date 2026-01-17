@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\SelectedCategorySeoMixCo
 
 class SelectedCategorySeoMixCombinationFactory
 {
-    /**
-     * @param string $selectedCategorySeoMixCombinationJson
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination
-     */
     public function createFromJson(string $selectedCategorySeoMixCombinationJson): SelectedCategorySeoMixCombination
     {
         $selectedCategorySeoMixCombinationArray = json_decode($selectedCategorySeoMixCombinationJson, true, 512, JSON_THROW_ON_ERROR);
@@ -19,10 +15,6 @@ class SelectedCategorySeoMixCombinationFactory
         return $this->createFromArray($selectedCategorySeoMixCombinationArray);
     }
 
-    /**
-     * @param array $selectedCategorySeoMixCombinationArray
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination
-     */
     public function createFromArray(array $selectedCategorySeoMixCombinationArray): SelectedCategorySeoMixCombination
     {
         foreach (['domainId', 'categoryId', 'flagId', 'ordering', 'parameterValueIdsByParameterIds'] as $checkIndex) {
@@ -46,12 +38,7 @@ class SelectedCategorySeoMixCombinationFactory
     }
 
     /**
-     * @param int $domainId
-     * @param int $categoryId
-     * @param int|null $flagId
-     * @param string|null $ordering
      * @param int[] $parameterValueIdsByParameterIds
-     * @return array
      */
     public function createArray(
         int $domainId,
@@ -71,10 +58,6 @@ class SelectedCategorySeoMixCombinationFactory
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
-     * @return array
-     */
     public function createArrayFromSelectedCategorySeoMixCombination(
         SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): array {
@@ -87,10 +70,6 @@ class SelectedCategorySeoMixCombinationFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
-     * @return string
-     */
     public function createJsonFromSelectedCategorySeoMixCombination(
         SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): string {

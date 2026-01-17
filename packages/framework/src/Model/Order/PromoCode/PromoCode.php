@@ -92,25 +92,16 @@ class PromoCode
      */
     protected $enabled;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     */
     public function __construct(PromoCodeData $promoCodeData)
     {
         $this->setData($promoCodeData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     */
     public function edit(PromoCodeData $promoCodeData): void
     {
         $this->setData($promoCodeData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     */
     protected function setData(PromoCodeData $promoCodeData): void
     {
         $this->code = $promoCodeData->code;
@@ -213,9 +204,6 @@ class PromoCode
         return $this->prefix;
     }
 
-    /**
-     * @return bool
-     */
     public function isFreeTransportAndPaymentType(): bool
     {
         return $this->discountType === PromoCodeTypeEnum::DISCOUNT_TYPE_FREE_TRANSPORT_PAYMENT;

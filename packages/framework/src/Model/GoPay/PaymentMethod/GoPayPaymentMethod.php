@@ -77,9 +77,6 @@ class GoPayPaymentMethod
      */
     protected $available;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData $paymentMethodData
-     */
     public function __construct(GoPayPaymentMethodData $paymentMethodData)
     {
         $this->identifier = $paymentMethodData->identifier;
@@ -88,17 +85,11 @@ class GoPayPaymentMethod
         $this->fillCommonFields($paymentMethodData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData $goPayPaymentMethodData
-     */
     public function edit(GoPayPaymentMethodData $goPayPaymentMethodData): void
     {
         $this->fillCommonFields($goPayPaymentMethodData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData $goPayPaymentMethodData
-     */
     public function fillCommonFields(GoPayPaymentMethodData $goPayPaymentMethodData): void
     {
         $this->name = $goPayPaymentMethodData->name;

@@ -10,9 +10,6 @@ use Tests\CodingStandards\Unit\Sniffs\RequireOverrideAttributeSniff\Base\SecondI
 
 class ChainedInterfacesClass implements ExtendedInterface, SecondInterface
 {
-    /**
-     * @return string
-     */
     #[Override]
     public function getName(): string
     {

@@ -16,9 +16,6 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory as BaseDel
  */
 class DeliveryAddressDataFactory extends BaseDeliveryAddressDataFactory
 {
-    /**
-     * @return \App\Model\Customer\DeliveryAddressData
-     */
     #[Override]
     protected function createInstance(): DeliveryAddressData
     {

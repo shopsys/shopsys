@@ -24,12 +24,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class ParameterFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
-     */
     public function __construct(
         private readonly UnitFacade $unitFacade,
         private readonly ParameterFacade $parameterFacade,
@@ -38,10 +32,6 @@ final class ParameterFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -95,9 +85,6 @@ final class ParameterFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -113,10 +100,6 @@ final class ParameterFormType extends AbstractType
             ->setAllowedTypes('parameter', [Parameter::class, 'null']);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function validateUniqueParameterName(ParameterData $parameterData, ExecutionContextInterface $context): void
     {
         $form = $context->getRoot();

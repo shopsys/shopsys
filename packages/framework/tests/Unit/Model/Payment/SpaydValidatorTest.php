@@ -34,11 +34,6 @@ class SpaydValidatorTest extends TestCase
         $this->assertTrue($this->isValid($validator, $spayd));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\SpaydValidator $validator
-     * @param string $spayd
-     * @return bool
-     */
     private function isValid(SpaydValidator $validator, string $spayd): bool
     {
         try {

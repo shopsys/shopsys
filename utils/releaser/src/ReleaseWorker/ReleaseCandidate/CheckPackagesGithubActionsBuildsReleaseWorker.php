@@ -19,9 +19,6 @@ final class CheckPackagesGithubActionsBuildsReleaseWorker extends AbstractCheckP
         return [Stage::RELEASE_CANDIDATE];
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getBranchName(): string
     {

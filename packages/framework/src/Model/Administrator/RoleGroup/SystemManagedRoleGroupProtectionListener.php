@@ -19,9 +19,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\SystemManage
 #[AsEntityListener(event: Events::preRemove, entity: AdministratorRoleGroup::class)]
 class SystemManagedRoleGroupProtectionListener
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
-     */
     public function __invoke(AdministratorRoleGroup $administratorRoleGroup): void
     {
         if ($administratorRoleGroup->isSystemManaged()) {

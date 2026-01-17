@@ -13,7 +13,6 @@ class MissingLocaleException extends Exception
 
     /**
      * @param mixed $missingLocale
-     * @param \Throwable|null $previous
      */
     public function __construct($missingLocale, ?Throwable $previous = null)
     {

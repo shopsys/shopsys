@@ -31,7 +31,6 @@ class CollationOrderByWalker extends TreeWalkerAdapter
 
     /**
      * @param \Doctrine\ORM\Query\AST\PathExpression|mixed $expression
-     * @return bool
      */
     protected function shouldApplyCollation(mixed $expression): bool
     {
@@ -85,9 +84,6 @@ class CollationOrderByWalker extends TreeWalkerAdapter
         return false;
     }
 
-    /**
-     * @param \Doctrine\ORM\Query\AST\SelectStatement $ast
-     */
     #[Override]
     public function walkSelectStatement(SelectStatement $ast): void
     {
@@ -109,8 +105,6 @@ class CollationOrderByWalker extends TreeWalkerAdapter
 
     /**
      * @param array<string, array> $queryComponents
-     * @param \Doctrine\ORM\Query\AST\PathExpression $fieldPathExpression
-     * @return bool
      */
     protected function isPathExpressionFieldString(array $queryComponents, PathExpression $fieldPathExpression): bool
     {

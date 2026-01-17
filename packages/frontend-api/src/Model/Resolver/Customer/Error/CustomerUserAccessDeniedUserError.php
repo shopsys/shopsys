@@ -13,11 +13,6 @@ class CustomerUserAccessDeniedUserError extends UserError implements UserErrorWi
 {
     protected const CODE = 'access-denied';
 
-    /**
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
-     */
     public function __construct(
         string $message = 'Access denied to this field.',
         int $code = 403,
@@ -26,9 +21,6 @@ class CustomerUserAccessDeniedUserError extends UserError implements UserErrorWi
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

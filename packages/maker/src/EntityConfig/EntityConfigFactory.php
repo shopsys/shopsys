@@ -11,11 +11,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class EntityConfigFactory
 {
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @return \Shopsys\MakerBundle\EntityConfig\EntityConfig
-     */
     public function create(InputInterface $input, SymfonyStyle $io): EntityConfig
     {
         $entityConfig = $this->createWithEntityNameOnly($input);
@@ -28,10 +23,6 @@ class EntityConfigFactory
         return $entityConfig;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @return \Shopsys\MakerBundle\EntityConfig\EntityConfig
-     */
     public function createWithEntityNameOnly(InputInterface $input): EntityConfig
     {
         $entityConfig = new EntityConfig();

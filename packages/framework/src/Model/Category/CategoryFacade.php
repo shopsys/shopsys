@@ -24,22 +24,6 @@ class CategoryFacade
 {
     protected const int INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY = 1;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactory $categoryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CategoryRepository $categoryRepository,
@@ -76,20 +60,11 @@ class CategoryFacade
         return $this->categoryRepository->getCategoriesByIds($categoryIds);
     }
 
-    /**
-     * @param string $categoryUuid
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
     public function getByUuid(string $categoryUuid): Category
     {
         return $this->categoryRepository->getOneByUuid($categoryUuid);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $categoryUuid
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
     public function getVisibleOnDomainByUuid(int $domainId, string $categoryUuid): Category
     {
         $category = $this->getByUuid($categoryUuid);
@@ -104,7 +79,6 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
     public function create(CategoryData $categoryData)
@@ -129,7 +103,6 @@ class CategoryFacade
 
     /**
      * @param int $categoryId
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
     public function edit($categoryId, CategoryData $categoryData)
@@ -211,9 +184,6 @@ class CategoryFacade
         $this->productRecalculationDispatcher->dispatchAllProducts();
     }
 
-    /**
-     * @return bool
-     */
     public function recalculateNestedSet(): bool
     {
         $errors = $this->categoryRepository->verify();
@@ -225,7 +195,6 @@ class CategoryFacade
     }
 
     /**
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getAllTranslated(string $locale): array
@@ -279,7 +248,6 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
@@ -289,8 +257,6 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $parentCategory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren[]
      */
     public function getCategoriesWithLazyLoadedVisibleChildrenForParent(
@@ -307,7 +273,6 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
@@ -317,8 +282,6 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getAllTranslatedWithoutBranch(Category $category, string $locale): array
@@ -327,7 +290,6 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]|null[]
      */
     public function getProductMainCategoriesIndexedByDomainId(Product $product)
@@ -345,7 +307,6 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
@@ -355,7 +316,6 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
      */
@@ -365,9 +325,6 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string|null $locale
      * @return string[]
      */
     public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
@@ -410,7 +367,6 @@ class CategoryFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
      * @return int[]
      */
@@ -426,10 +382,6 @@ class CategoryFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param array $originalNames
-     */
     protected function createFriendlyUrlsWhenRenamed(Category $category, array $originalNames): void
     {
         $changedNames = $this->getChangedNamesByLocale($category, $originalNames);
@@ -445,11 +397,6 @@ class CategoryFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param array $originalNames
-     * @return array
-     */
     protected function getChangedNamesByLocale(Category $category, array $originalNames): array
     {
         $changedCategoryNames = [];
@@ -463,18 +410,12 @@ class CategoryFacade
         return $changedCategoryNames;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
     public function getProductMainCategoryOnCurrentDomain(Product $product): Category
     {
         return $this->getProductMainCategoryByDomainId($product, $this->domain->getId());
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param string $eventType
      * @see \Shopsys\FrameworkBundle\Model\Category\CategoryEvent class
      */
     protected function dispatchCategoryEvent(Category $category, string $eventType): void
@@ -483,7 +424,6 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getCategoriesOfProductByFilterData(ProductFilterData $productFilterData): array
@@ -510,7 +450,6 @@ class CategoryFacade
     }
 
     /**
-     * @param string $locale
      * @return string[]
      */
     public function getFullPathsIndexedByIds(string $locale): array
@@ -519,7 +458,6 @@ class CategoryFacade
     }
 
     /**
-     * @param int $domainsCount
      * @return array<int, string>
      */
     public function getVisibilityOfCategoriesIndexedById(int $domainsCount): array

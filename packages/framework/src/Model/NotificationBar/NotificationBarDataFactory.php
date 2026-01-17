@@ -8,25 +8,16 @@ use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
 class NotificationBarDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     */
     public function __construct(
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData
-     */
     protected function createInstance(): NotificationBarData
     {
         return new NotificationBarData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData
-     */
     public function create(): NotificationBarData
     {
         $notificationBarData = $this->createInstance();
@@ -35,10 +26,6 @@ class NotificationBarDataFactory
         return $notificationBarData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar $notificationBar
-     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData
-     */
     public function createFromNotificationBar(NotificationBar $notificationBar): NotificationBarData
     {
         $notificationBarData = $this->createInstance();
@@ -56,9 +43,6 @@ class NotificationBarDataFactory
         return $notificationBarData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
-     */
     protected function fillNew(NotificationBarData $notificationBarData): void
     {
         $notificationBarData->hidden = false;

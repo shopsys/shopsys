@@ -8,19 +8,12 @@ use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeExcepti
 
 class DelayedPricingSetting
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler $inputPriceRecalculationScheduler
-     */
     public function __construct(
         protected readonly PricingSetting $pricingSetting,
         protected readonly InputPriceRecalculationScheduler $inputPriceRecalculationScheduler,
     ) {
     }
 
-    /**
-     * @param int $inputPriceType
-     */
     public function scheduleSetInputPriceType(int $inputPriceType): void
     {
         if (!in_array($inputPriceType, $this->pricingSetting->getPriceTypes(), true)) {

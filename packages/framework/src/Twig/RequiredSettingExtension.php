@@ -30,19 +30,6 @@ class RequiredSettingExtension extends AbstractExtension
 
     protected const int DAYS_BEFORE_YEAR_END_TO_WARN_ABOUT_HOLIDAYS = 30;
 
-    /**
-     * @param \Twig\Environment $twig
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly Environment $twig,
         protected readonly RouterInterface $router,
@@ -69,9 +56,6 @@ class RequiredSettingExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string|null
-     */
     public function renderRequiredSettings(): ?string
     {
         $this->loadRequiredSettingMessages();
@@ -251,9 +235,6 @@ class RequiredSettingExtension extends AbstractExtension
         }
     }
 
-    /**
-     * @param int $year
-     */
     protected function checkPublicHolidaysForYearAreSet(int $year): void
     {
         $yearStart = new DateTimeImmutable($year . '-01-01');

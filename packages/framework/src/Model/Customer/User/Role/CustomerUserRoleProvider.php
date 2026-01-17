@@ -15,9 +15,6 @@ use Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection;
  */
 class CustomerUserRoleProvider implements CoreRoleProviderInterface
 {
-    /**
-     * @return int
-     */
     #[Override]
     public function getPriority(): int
     {
@@ -33,9 +30,6 @@ class CustomerUserRoleProvider implements CoreRoleProviderInterface
         return FrontendApiContext::class;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection $roleCollection
-     */
     #[Override]
     public function configureRoles(RoleCollection $roleCollection): void
     {

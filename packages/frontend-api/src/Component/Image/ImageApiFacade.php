@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 
 class ImageApiFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository
-     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageApiRepository $imageApiRepository
-     */
     public function __construct(
         protected readonly ImageRepository $imageRepository,
         protected readonly ImageApiRepository $imageApiRepository,
@@ -19,9 +15,6 @@ class ImageApiFacade
     }
 
     /**
-     * @param int $entityId
-     * @param string $entityName
-     * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     public function getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, ?string $type): array
@@ -35,8 +28,6 @@ class ImageApiFacade
 
     /**
      * @param int[] $entityIds
-     * @param string $entityName
-     * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]|null[]
      */
     public function getImagesByTypeAndPositionIndexedByEntityId(
@@ -53,8 +44,6 @@ class ImageApiFacade
 
     /**
      * @param int[] $entityIds
-     * @param string $entityName
-     * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[][]
      */
     public function getAllImagesIndexedByEntityId(array $entityIds, string $entityName, ?string $type): array

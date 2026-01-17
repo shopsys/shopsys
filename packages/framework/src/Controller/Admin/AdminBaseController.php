@@ -17,9 +17,6 @@ class AdminBaseController extends AbstractController
     #[Required]
     public AccessCheckerInterface $accessChecker;
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     protected function getCurrentAdministrator(): Administrator
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administrator */

@@ -8,9 +8,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class StoreNotFoundException extends NotFoundHttpException
 {
-    /**
-     * @param int $storeId
-     */
     public function __construct(int $storeId)
     {
         parent::__construct(sprintf(

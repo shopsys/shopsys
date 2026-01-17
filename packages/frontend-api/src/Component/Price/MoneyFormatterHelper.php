@@ -12,10 +12,6 @@ class MoneyFormatterHelper
     protected const string DECIMAL_POINT = '.';
     protected const string THOUSANDS_SEPARATOR = '';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @return string
-     */
     public function formatWithMaxFractionDigits(Money $money): string
     {
         return number_format(

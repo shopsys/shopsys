@@ -42,7 +42,6 @@ class ProductsSearchTest extends ProductsGraphQlTestCase
 
     /**
      * @dataProvider shortSearchTermDataProvider
-     * @param string $searchTerm
      */
     public function testSearchWorksForShortSearchTerms(string $searchTerm): void
     {

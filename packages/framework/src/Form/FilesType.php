@@ -16,11 +16,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class FilesType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer $filesIdsToFilesTransformer
-     * @param \Symfony\Component\PropertyAccess\PropertyAccessorInterface $propertyAccessor
-     */
     public function __construct(
         protected readonly RouterInterface $router,
         protected readonly FilesIdsToFilesTransformer $filesIdsToFilesTransformer,
@@ -52,9 +47,6 @@ final class FilesType extends AbstractType
         $view->vars['picker_url'] = $this->router->generate($route, ['jsInstanceId' => '__js_instance_id__']);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

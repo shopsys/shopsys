@@ -49,10 +49,6 @@ class ProductListItem
      */
     protected $productList;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     public function __construct(ProductList $productList, Product $product)
     {
         $this->uuid = Uuid::uuid4()->toString();

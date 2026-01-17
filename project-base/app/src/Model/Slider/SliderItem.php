@@ -31,7 +31,6 @@ class SliderItem extends BaseSliderItem
     protected $gtmCreative;
 
     /**
-     * @var string
      * @ORM\Column(type="guid", unique=true)
      */
     protected string $uuid;
@@ -60,25 +59,16 @@ class SliderItem extends BaseSliderItem
         $this->gtmCreative = $sliderItemData->gtmCreative;
     }
 
-    /**
-     * @return string
-     */
     public function getGtmId(): string
     {
         return $this->gtmId;
     }
 
-    /**
-     * @return  string|null
-     */
     public function getGtmCreative(): ?string
     {
         return $this->gtmCreative;
     }
 
-    /**
-     * @return string
-     */
     public function getUuid(): string
     {
         return $this->uuid;

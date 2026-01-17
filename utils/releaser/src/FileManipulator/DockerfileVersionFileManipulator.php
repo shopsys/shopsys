@@ -8,9 +8,6 @@ use Nette\Utils\FileSystem;
 
 final class DockerfileVersionFileManipulator
 {
-    /**
-     * @param $versionString
-     */
     public function updateDockerFileVersion(
         $versionString,
     ): void {

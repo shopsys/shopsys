@@ -11,15 +11,11 @@ use Nette\Utils\Json;
 
 final class ApiCaller
 {
-    /**
-     * @param \GuzzleHttp\ClientInterface $client
-     */
     public function __construct(private readonly ClientInterface $client)
     {
     }
 
     /**
-     * @param string $url
      * @return mixed[]
      */
     public function sendGetToJsonArray(string $url): array
@@ -34,7 +30,6 @@ final class ApiCaller
 
     /**
      * @param string[] $urls
-     * @param array $headers
      * @return string[]
      */
     public function sendGetsAsyncToStrings(array $urls, array $headers): array

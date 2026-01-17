@@ -51,20 +51,10 @@ class OrderDataFixture
     private array $performanceUserIds;
 
     /**
-     * @param int $orderTotalCount
-     * @param int $orderItemCountPerOrder
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      * @param \App\Model\Order\PlaceOrderFacade $placeOrderFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private int $orderTotalCount,
@@ -85,9 +75,6 @@ class OrderDataFixture
         $this->performanceProductIds = [];
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function load(OutputInterface $output)
     {
         // Sql logging during mass data import makes memory leak
@@ -143,7 +130,6 @@ class OrderDataFixture
     }
 
     /**
-     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @return \App\Model\Order\OrderData
      */
     private function createOrderData(?CustomerUser $customerUser = null)

@@ -11,24 +11,15 @@ use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\Administrato
 
 class AdministratorRoleGroupRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(protected EntityManagerInterface $entityManager)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getAdministratorRoleGroupRepository(): EntityRepository
     {
         return $this->entityManager->getRepository(AdministratorRoleGroup::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllNotSystemManagedQueryBuilder(): QueryBuilder
     {
         return $this->getAdministratorRoleGroupRepository()->createQueryBuilder('arg')
@@ -36,10 +27,6 @@ class AdministratorRoleGroupRepository
             ->setParameter('systemManaged', false);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
-     */
     public function getById(int $id): AdministratorRoleGroup
     {
         $administratorRoleGroup = $this->getAllNotSystemManagedQueryBuilder()
@@ -63,19 +50,11 @@ class AdministratorRoleGroupRepository
         return $this->getAdministratorRoleGroupRepository()->findAll();
     }
 
-    /**
-     * @param string $name
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup|null
-     */
     public function findByName(string $name): ?AdministratorRoleGroup
     {
         return $this->getAdministratorRoleGroupRepository()->findOneBy(['name' => $name]);
     }
 
-    /**
-     * @param string $name
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
-     */
     public function getSystemManagedRoleGroup(string $name): AdministratorRoleGroup
     {
         return $this->getAdministratorRoleGroupRepository()

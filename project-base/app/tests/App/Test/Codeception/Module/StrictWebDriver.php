@@ -19,7 +19,6 @@ class StrictWebDriver extends WebDriver
 
     /**
      * @param string[] $alternatives
-     * @return string
      */
     private function getDeprecatedMethodExceptionMessage(array $alternatives): string
     {
@@ -80,9 +79,6 @@ class StrictWebDriver extends WebDriver
         throw new DeprecatedMethodException($message);
     }
 
-    /**
-     * @param \Facebook\WebDriver\WebDriverElement $element
-     */
     private function clickAndWaitByElement(WebDriverElement $element): void
     {
         $this->clickByElement($element);
@@ -92,7 +88,6 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @param string $text
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
     public function clickByText(string $text, $contextSelector = null): void
@@ -105,10 +100,6 @@ class StrictWebDriver extends WebDriver
         usleep(self::WAIT_AFTER_CLICK_MICROSECONDS);
     }
 
-    /**
-     * @param string $text
-     * @return \Facebook\WebDriver\WebDriverBy
-     */
     private function getWebDriverByText(string $text): WebDriverBy
     {
         $locator = Crawler::xpathLiteral(trim($text));
@@ -123,7 +114,6 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @param \Facebook\WebDriver\WebDriverBy $locateBy
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      * @return \Facebook\WebDriver\Remote\RemoteWebElement|\Facebook\WebDriver\WebDriverElement
      */
@@ -141,7 +131,6 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @param string $name
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
     public function clickByName(string $name, $contextSelector = null): void
@@ -152,7 +141,6 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @param string $css
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
     public function clickByCss(string $css, $contextSelector = null): void
@@ -162,10 +150,6 @@ class StrictWebDriver extends WebDriver
         $this->clickAndWaitByElement($element);
     }
 
-    /**
-     * @param \Facebook\WebDriver\WebDriverElement $element
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
     public function clickByElement(WebDriverElement $element): WebDriverElement
     {
         return $element->click();
@@ -187,19 +171,12 @@ class StrictWebDriver extends WebDriver
         throw new DeprecatedMethodException($message);
     }
 
-    /**
-     * @param \Facebook\WebDriver\WebDriverElement $element
-     * @param string $value
-     */
     public function fillFieldByElement(WebDriverElement $element, string $value): void
     {
         $this->clearElement($element);
         $element->sendKeys($value);
     }
 
-    /**
-     * @param \Facebook\WebDriver\WebDriverElement $element
-     */
     private function clearElement(WebDriverElement $element): void
     {
         $element->clear();
@@ -210,57 +187,34 @@ class StrictWebDriver extends WebDriver
         }
     }
 
-    /**
-     * @param string $fieldName
-     * @param string $value
-     */
     public function fillFieldByName(string $fieldName, string $value): void
     {
         $element = $this->webDriver->findElement(WebDriverBy::name($fieldName));
         $this->fillFieldByElement($element, $value);
     }
 
-    /**
-     * @param string $css
-     * @param string $value
-     */
     public function fillFieldByCss(string $css, string $value): void
     {
         $element = $this->webDriver->findElement(WebDriverBy::cssSelector($css));
         $this->fillFieldByElement($element, $value);
     }
 
-    /**
-     * @param string $css
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
     public function findElementByCss(string $css): WebDriverElement
     {
         return $this->webDriver->findElement(WebDriverBy::cssSelector($css));
     }
 
-    /**
-     * @param \Facebook\WebDriver\WebDriverElement $webDriverElement
-     */
     public function scrollToElement(WebDriverElement $webDriverElement): void
     {
         $webDriverElement->getLocationOnScreenOnceScrolledIntoView();
     }
 
-    /**
-     * @param string $text
-     * @param string $css
-     */
     public function seeInCss(string $text, string $css): void
     {
         $element = $this->webDriver->findElement(WebDriverBy::cssSelector($css));
         $this->seeInElement($text, $element);
     }
 
-    /**
-     * @param string $text
-     * @param \Facebook\WebDriver\WebDriverElement $element
-     */
     public function seeInElement(string $text, WebDriverElement $element): void
     {
         $this->assertStringContainsString($text, $element->getText());
@@ -281,9 +235,6 @@ class StrictWebDriver extends WebDriver
         throw new DeprecatedMethodException($message);
     }
 
-    /**
-     * @param string $checkboxId
-     */
     public function seeCheckboxIsCheckedById(string $checkboxId): void
     {
         $xpath = $this->getCheckboxIdXpathSelector($checkboxId);
@@ -292,9 +243,6 @@ class StrictWebDriver extends WebDriver
         $this->assertTrue($element->isSelected());
     }
 
-    /**
-     * @param string $label
-     */
     public function seeCheckboxIsCheckedByLabel(string $label): void
     {
         /*
@@ -332,9 +280,6 @@ class StrictWebDriver extends WebDriver
         throw new DeprecatedMethodException($message);
     }
 
-    /**
-     * @param string $checkboxId
-     */
     public function dontSeeCheckboxIsCheckedById(string $checkboxId): void
     {
         $xpath = $this->getCheckboxIdXpathSelector($checkboxId);
@@ -343,9 +288,6 @@ class StrictWebDriver extends WebDriver
         $this->assertFalse($element->isSelected());
     }
 
-    /**
-     * @param string $label
-     */
     public function dontSeeCheckboxIsCheckedByLabel(string $label): void
     {
         /*
@@ -383,9 +325,6 @@ class StrictWebDriver extends WebDriver
         throw new DeprecatedMethodException($message);
     }
 
-    /**
-     * @param \Facebook\WebDriver\WebDriverElement $element
-     */
     public function checkElement(WebDriverElement $element): void
     {
         if ($element->isSelected()) {
@@ -394,9 +333,6 @@ class StrictWebDriver extends WebDriver
         $element->click();
     }
 
-    /**
-     * @param string $optionId
-     */
     public function checkOptionById(string $optionId): void
     {
         $locator = Crawler::xpathLiteral(trim($optionId));
@@ -407,9 +343,6 @@ class StrictWebDriver extends WebDriver
         $this->checkElement($element);
     }
 
-    /**
-     * @param string $label
-     */
     public function checkOptionByLabel(string $label): void
     {
         /*
@@ -432,10 +365,6 @@ class StrictWebDriver extends WebDriver
         $this->checkElement($element);
     }
 
-    /**
-     * @param string $selectCss
-     * @param string $optionValue
-     */
     public function selectOptionByCssAndValue(string $selectCss, string $optionValue): void
     {
         $select = $this->webDriver->findElement(WebDriverBy::cssSelector($selectCss));
@@ -443,19 +372,11 @@ class StrictWebDriver extends WebDriver
         parent::selectOption(['css' => $selectCss], $optionValue);
     }
 
-    /**
-     * @param string $selectCss
-     * @param string $optionValue
-     */
     public function selectOptionInSelect2ByCssAndValue(string $selectCss, string $optionValue): void
     {
         $this->executeJS("$('" . $selectCss . "').val('" . $optionValue . "');$('" . $selectCss . "').trigger('change');");
     }
 
-    /**
-     * @param string $css
-     * @return int
-     */
     public function countVisibleByCss(string $css): int
     {
         $elements = parent::matchVisible(['css' => $css]);
@@ -479,10 +400,6 @@ class StrictWebDriver extends WebDriver
         throw new DeprecatedMethodException($message);
     }
 
-    /**
-     * @param string $value
-     * @param string $fieldName
-     */
     public function seeInFieldByName(string $value, string $fieldName): void
     {
         $element = $this->webDriver->findElement(WebDriverBy::name($fieldName));
@@ -490,10 +407,6 @@ class StrictWebDriver extends WebDriver
         $this->seeInFieldByElement($value, $element);
     }
 
-    /**
-     * @param string $value
-     * @param \Facebook\WebDriver\WebDriverElement $element
-     */
     public function seeInFieldByElement(string $value, WebDriverElement $element): void
     {
         // @phpstan-ignore-next-line
@@ -525,7 +438,6 @@ class StrictWebDriver extends WebDriver
      * For available keys:
      *
      * @see \Facebook\WebDriver\WebDriverKeys
-     * @param \Facebook\WebDriver\WebDriverElement $element
      * @param string|string[] $keys
      */
     public function pressKeysByElement(WebDriverElement $element, $keys): void
@@ -559,10 +471,6 @@ class StrictWebDriver extends WebDriver
         parent::assertNodesNotContain($text, $nodes, $message);
     }
 
-    /**
-     * @param string $checkboxId
-     * @return string
-     */
     protected function getCheckboxIdXpathSelector(string $checkboxId): string
     {
         $locator = Crawler::xpathLiteral(trim($checkboxId));

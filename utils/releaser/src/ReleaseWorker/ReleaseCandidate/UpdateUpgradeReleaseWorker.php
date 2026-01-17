@@ -21,19 +21,11 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 
     private string $temporaryDirectoryPath;
 
-    /**
-     * @param \Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator $versionUpgradeFileManipulator
-     */
     public function __construct(
         private readonly VersionUpgradeFileManipulator $versionUpgradeFileManipulator,
     ) {
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -42,10 +34,6 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         return 'Prepare the upgrading file for the release.';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,
@@ -100,18 +88,11 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         return [Stage::RELEASE_CANDIDATE];
     }
 
-    /**
-     * @param string $initialBranchName
-     * @return string
-     */
     private function getPathToUpgradeFile(string $initialBranchName): string
     {
         return getcwd() . '/UPGRADE-' . $initialBranchName . '.md';
     }
 
-    /**
-     * @param string $initialBranchName
-     */
     private function cloneProjectBaseToTemporaryFolder(string $initialBranchName): void
     {
         $this->temporaryDirectoryPath = trim($this->processRunner->run('mktemp -d -t shopsys-upgrade-notes-XXXX'));
@@ -131,10 +112,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         $this->processRunner->run('rm -rf ' . $this->temporaryDirectoryPath);
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     private function updateUpgradeFileWithReleasedVersion(Version $version, string $initialBranchName): void
     {
         $upgradeFilePath = $this->getPathToUpgradeFile($initialBranchName);
@@ -151,10 +128,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         $this->processRunner->run('git add .');
     }
 
-    /**
-     * @param string $initialBranchName
-     * @param string $pathToUpgradeNotes
-     */
     private function updateUpgradeNotesWithProjectBaseDiffLinks(
         string $initialBranchName,
         string $pathToUpgradeNotes,
@@ -182,10 +155,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         $this->clearTemporaryFolder();
     }
 
-    /**
-     * @param $fileHandle
-     * @return array
-     */
     private function parseFileToLines($fileHandle): array
     {
         $lineNumber = 0;
@@ -206,12 +175,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         return [$fileLines, $headlineLines];
     }
 
-    /**
-     * @param array $lines
-     * @param int $firstHeadlineNumber
-     * @param int|null $secondHeadlineNumber
-     * @return array
-     */
     private function getLinesBetweenTwoHeadlines(
         array $lines,
         int $firstHeadlineNumber,
@@ -235,10 +198,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         return array_slice($lines, $startIndex, $length, true);
     }
 
-    /**
-     * @param string $line
-     * @return array
-     */
     private function parseCommitLinesByPrNumbers(string $line): array
     {
         $pattern = self::REGEX_PATTERN_PR_LINK;
@@ -266,10 +225,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         return $commitLinesByPrNumber;
     }
 
-    /**
-     * @param array $headlineLines
-     * @param array $fileLines
-     */
     private function findAndReplaceProjectBaseDiffHashWithLinks(array $headlineLines, array &$fileLines): void
     {
         foreach ($headlineLines as $headlineLineNumber => $headlineLine) {
@@ -290,10 +245,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         }
     }
 
-    /**
-     * @param array $headlineLines
-     * @param array $fileLines
-     */
     private function findMissingProjectBaseDiffHashAndFillLinks(array $headlineLines, array &$fileLines): void
     {
         $headlineLines = $this->addLastLineAsHeadlineToEnsureLastUpgradeNoteIsProcessed($fileLines, $headlineLines);
@@ -337,13 +288,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         }
     }
 
-    /**
-     * @param array $fileLines
-     * @param int $lineNumber
-     * @param string $line
-     * @param array $commitLinesByPrNumber
-     * @param string $headlineLine
-     */
     private function replaceProjectBaseDiffHashWithLinks(
         array &$fileLines,
         int $lineNumber,
@@ -386,10 +330,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         }
     }
 
-    /**
-     * @param array $fileLines
-     * @param int $fromLineNumber
-     */
     private function increaseLineNumberFrom(array &$fileLines, int $fromLineNumber): void
     {
         foreach ($fileLines as $lineNumber => $line) {
@@ -399,11 +339,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         }
     }
 
-    /**
-     * @param array $headlineLines
-     * @param int $headlineLineNumber
-     * @return int|null
-     */
     private function getNextHeadlineLineNumber(array $headlineLines, int $headlineLineNumber): int|null
     {
         $headlineLineNumbers = array_keys($headlineLines);
@@ -412,11 +347,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         return $headlineLineNumbers[$indexOfCurrentHeadlineLine + 1] ?? null;
     }
 
-    /**
-     * @param array $headlineLines
-     * @param int $headlineLineNumber
-     * @return int|null
-     */
     private function getPreviousHeadlineLineNumber(array $headlineLines, int $headlineLineNumber): int|null
     {
         $headlineLineNumbers = array_keys($headlineLines);
@@ -425,11 +355,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         return $headlineLineNumbers[$indexOfCurrentHeadlineLine - 1] ?? null;
     }
 
-    /**
-     * @param array $fileLines
-     * @param array $headlineLines
-     * @return array
-     */
     private function addLastLineAsHeadlineToEnsureLastUpgradeNoteIsProcessed(
         array $fileLines,
         array $headlineLines,

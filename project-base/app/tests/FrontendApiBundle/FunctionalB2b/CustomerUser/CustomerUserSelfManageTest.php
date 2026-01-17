@@ -168,10 +168,6 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
         $this->assertSame(self::COMPLAINT_EMAIL, $responseData['email']);
     }
 
-    /**
-     * @param \App\Model\Order\Order $order
-     * @return array
-     */
     private function getCreateComplaintResponse(Order $order): array
     {
         $orderItems = $order->getItems();

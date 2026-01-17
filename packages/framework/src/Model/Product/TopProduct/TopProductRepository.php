@@ -13,10 +13,6 @@ class TopProductRepository
 {
     protected EntityManagerInterface $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(
         EntityManagerInterface $entityManager,
         protected readonly ProductRepository $productRepository,
@@ -42,9 +38,6 @@ class TopProductRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getOfferedProductsForTopProductsOnDomain(

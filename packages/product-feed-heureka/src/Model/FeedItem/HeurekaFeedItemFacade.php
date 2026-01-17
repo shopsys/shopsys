@@ -10,12 +10,6 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductRepository;
 
 class HeurekaFeedItemFacade
 {
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductRepository $heurekaProductRepository
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory $feedItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader $productDataBatchLoader
-     */
     public function __construct(
         protected readonly HeurekaProductRepository $heurekaProductRepository,
         protected readonly HeurekaFeedItemFactory $feedItemFactory,
@@ -25,9 +19,6 @@ class HeurekaFeedItemFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int|null $lastSeekId
-     * @param int $maxResults
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItem[]|iterable
      */
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable

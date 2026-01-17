@@ -9,19 +9,10 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class ProductCategoryDomainFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain
-     */
     public function create(
         Product $product,
         Category $category,
@@ -33,7 +24,6 @@ class ProductCategoryDomainFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[][] $categoriesIndexedByDomainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[]
      */

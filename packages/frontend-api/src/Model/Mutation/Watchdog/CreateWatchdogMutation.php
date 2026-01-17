@@ -16,12 +16,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundU
 
 class CreateWatchdogMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogDataFactory $watchdogDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade $watchdogFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     */
     public function __construct(
         protected readonly WatchdogDataFactory $watchdogDataFactory,
         protected readonly WatchdogFacade $watchdogFacade,
@@ -30,10 +24,6 @@ class CreateWatchdogMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return bool
-     */
     public function createWatchdogMutation(Argument $argument): bool
     {
         try {
@@ -57,10 +47,6 @@ class CreateWatchdogMutation extends AbstractMutation
         }
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogData
-     */
     protected function createWatchdogDataFromArgument(Argument $argument): WatchdogData
     {
         $input = $argument['input'];

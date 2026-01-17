@@ -16,9 +16,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class SubRequestListenerTest extends TestCase
 {
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function getResponseMock(): Response
     {
         $responseMock = $this->getMockBuilder(Response::class)
@@ -30,10 +27,6 @@ class SubRequestListenerTest extends TestCase
         return $responseMock;
     }
 
-    /**
-     * @param bool $send
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function getRedirectResponseMock(bool $send = false): RedirectResponse
     {
         $responseMock = $this->getMockBuilder(RedirectResponse::class)

@@ -15,11 +15,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class ComplaintQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade $complaintApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     */
     public function __construct(
         protected readonly ComplaintApiFacade $complaintApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -27,10 +22,6 @@ class ComplaintQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
-     */
     public function complaintQuery(Argument $argument): Complaint
     {
         $customerUser = $this->currentCustomerUser->getCurrentCustomerUser();

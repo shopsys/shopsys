@@ -8,24 +8,15 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ComplaintStatusDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly Domain $domain)
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData
-     */
     protected function createInstance(): ComplaintStatusData
     {
         return new ComplaintStatusData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData
-     */
     public function create(): ComplaintStatusData
     {
         $complaintStatusData = $this->createInstance();
@@ -34,9 +25,6 @@ class ComplaintStatusDataFactory
         return $complaintStatusData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
-     */
     protected function fillNew(ComplaintStatusData $complaintStatusData): void
     {
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -44,10 +32,6 @@ class ComplaintStatusDataFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $complaintStatus
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData
-     */
     public function createFromComplaintStatus(ComplaintStatus $complaintStatus): ComplaintStatusData
     {
         $complaintStatusData = $this->createInstance();
@@ -56,10 +40,6 @@ class ComplaintStatusDataFactory
         return $complaintStatusData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $complaintStatus
-     */
     protected function fillFromComplaintStatus(
         ComplaintStatusData $complaintStatusData,
         ComplaintStatus $complaintStatus,

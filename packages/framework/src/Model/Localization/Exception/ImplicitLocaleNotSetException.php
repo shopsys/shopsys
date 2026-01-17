@@ -13,7 +13,6 @@ class ImplicitLocaleNotSetException extends Exception
     /**
      * @param object $entity
      * @param mixed $entityId
-     * @param \Exception|null $previous
      */
     public function __construct($entity, $entityId, ?Exception $previous = null)
     {

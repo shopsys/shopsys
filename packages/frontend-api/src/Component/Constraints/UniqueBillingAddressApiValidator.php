@@ -15,11 +15,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueBillingAddressApiValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UniqueBillingAddressChecker $uniqueBillingAddressChecker
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressRepository $billingAddressRepository
-     */
     public function __construct(
         protected readonly UniqueBillingAddressChecker $uniqueBillingAddressChecker,
         protected readonly Domain $domain,
@@ -27,10 +22,6 @@ class UniqueBillingAddressApiValidator extends ConstraintValidator
     ) {
     }
 
-    /**
-     * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
@@ -49,9 +40,6 @@ class UniqueBillingAddressApiValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param mixed $billingAddressApiData
-     */
     protected function checkUniqueBillingAddress(mixed $billingAddressApiData): void
     {
         $billingAddress = null;

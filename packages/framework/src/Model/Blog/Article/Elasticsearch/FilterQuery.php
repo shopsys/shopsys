@@ -9,9 +9,6 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 
 class FilterQuery extends AbstractFilterQuery
 {
-    /**
-     * @param string $indexName
-     */
     public function __construct(string $indexName)
     {
         parent::__construct($indexName);
@@ -23,10 +20,6 @@ class FilterQuery extends AbstractFilterQuery
         ];
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQuery
-     */
     public function filterByUuid(string $uuid): self
     {
         $clone = clone $this;
@@ -39,10 +32,6 @@ class FilterQuery extends AbstractFilterQuery
         return $clone;
     }
 
-    /**
-     * @param string $slug
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQuery
-     */
     public function filterBySlug(string $slug): self
     {
         $clone = clone $this;
@@ -55,10 +44,6 @@ class FilterQuery extends AbstractFilterQuery
         return $clone;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQuery
-     */
     public function filterByCategory(BlogCategory $blogCategory): self
     {
         $clone = clone $this;
@@ -71,10 +56,6 @@ class FilterQuery extends AbstractFilterQuery
         return $clone;
     }
 
-    /**
-     * @param bool $onlyVisibleOnHomepage
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQuery
-     */
     public function onlyVisibleOnHomepage(bool $onlyVisibleOnHomepage = true): self
     {
         $clone = clone $this;

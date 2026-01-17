@@ -15,11 +15,6 @@ class ParameterTransactionFunctionalTestCase extends TransactionFunctionalTestCa
      */
     protected ParameterFacade $parameterFacade;
 
-    /**
-     * @param string $parameterValueNameId
-     * @param bool $isNumeric
-     * @return int
-     */
     protected function getParameterValueIdForFirstDomain(string $parameterValueNameId, bool $isNumeric = false): int
     {
         $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();

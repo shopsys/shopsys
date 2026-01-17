@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 
 class ProductElasticsearchConverter
 {
-    /**
-     * @param array $product
-     * @return array
-     */
     public function fillEmptyFields(array $product): array
     {
         $result = $product;
@@ -83,10 +79,6 @@ class ProductElasticsearchConverter
         return $result;
     }
 
-    /**
-     * @param array $parameters
-     * @return array
-     */
     protected function fillEmptyParameters(array $parameters): array
     {
         $results = [];
@@ -105,10 +97,6 @@ class ProductElasticsearchConverter
         return $results;
     }
 
-    /**
-     * @param array $prices
-     * @return array
-     */
     protected function fillEmptyVariantPrices(array $prices): array
     {
         $results = [];
@@ -123,7 +111,6 @@ class ProductElasticsearchConverter
     }
 
     /**
-     * @param array|null $promotion
      * @return array{buy_quantity: int|null, free_quantity: int|null}
      */
     protected function fillEmptyPromotion(?array $promotion): array

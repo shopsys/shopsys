@@ -16,8 +16,6 @@ class FilemanagerAccess
 
     /**
      * @param mixed $filemanagerUploadDir
-     * @param \FM\ElfinderBundle\Configuration\ElFinderConfigurationReader $elFinderConfigurationReader
-     * @param \Shopsys\FrameworkBundle\Component\Filesystem\FilepathComparator $filepathComparator
      */
     public function __construct(
         $filemanagerUploadDir,
@@ -48,9 +46,6 @@ class FilemanagerAccess
         return $this->elFinderConfigurationReader->access($attr, $path, $data, $volume);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess $filemanagerAccess
-     */
     public static function injectSelf(self $filemanagerAccess)
     {
         self::$self = $filemanagerAccess;

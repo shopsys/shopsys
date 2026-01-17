@@ -13,9 +13,6 @@ class Version20190611114955 extends AbstractMigration
 {
     protected const MAX_LISTED_ORDERS = 10;
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {

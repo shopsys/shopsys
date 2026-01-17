@@ -8,17 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class EnabledModuleFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param string $name
-     * @return \Shopsys\FrameworkBundle\Model\Module\EnabledModule
-     */
     public function create(string $name): EnabledModule
     {
         $entityClassName = $this->entityNameResolver->resolve(EnabledModule::class);

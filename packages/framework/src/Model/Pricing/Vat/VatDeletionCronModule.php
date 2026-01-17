@@ -13,10 +13,6 @@ class VatDeletionCronModule implements IteratedCronModuleInterface
 {
     protected Logger $logger;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
-     */
     public function __construct(
         protected readonly VatFacade $vatFacade,
         protected readonly ProductInputPriceFacade $productInputPriceFacade,

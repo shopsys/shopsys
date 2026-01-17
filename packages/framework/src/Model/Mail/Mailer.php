@@ -14,12 +14,6 @@ class Mailer
 {
     public const DISABLED_MAILER_DSN = 'null://null';
 
-    /**
-     * @param \Symfony\Component\Mailer\MailerInterface $symfonyMailer
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailEmbedCollector $mailEmbedCollector
-     */
     public function __construct(
         protected readonly MailerInterface $symfonyMailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
@@ -28,10 +22,6 @@ class Mailer
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
-     * @param int $domainId
-     */
     public function sendForDomain(MessageData $messageData, int $domainId): void
     {
         $message = $this->getMessageWithReplacedVariables($messageData, $domainId);
@@ -45,11 +35,6 @@ class Mailer
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\Email
-     */
     protected function getMessageWithReplacedVariables(
         MessageData $messageData,
         int $domainId,
@@ -113,19 +98,13 @@ class Mailer
     }
 
     /**
-     * @param string $string
      * @param string[] $variablesKeysAndValues
-     * @return string
      */
     protected function replaceVariables(string $string, array $variablesKeysAndValues): string
     {
         return strtr($string, $variablesKeysAndValues);
     }
 
-    /**
-     * @param string $body
-     * @return string
-     */
     protected function replaceVariableImagesPaths(string $body): string
     {
         $pattern = '/<img\s+([^>]*?)src="([^"]*)"(\s+[^>]*?)path="([^"]*?)"(.*?)>/i';

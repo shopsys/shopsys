@@ -139,10 +139,6 @@ class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
         $this->assertSame('Ordering by price is not allowed for current user.', $errors[0]['message']);
     }
 
-    /**
-     * @param int $id
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     */
     private function editCustomerUser(int $id, CustomerUserData $customerUserData): void
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);

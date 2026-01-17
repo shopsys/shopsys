@@ -11,11 +11,6 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class DispatchProductIdsBatchMessageHandler implements MessageHandlerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcherExecutor $productRecalculationDispatcherExecutor
-     * @param \Psr\Log\LoggerInterface $logger
-     */
     public function __construct(
         protected readonly ProductRepository $productRepository,
         protected readonly ProductRecalculationDispatcherExecutor $productRecalculationDispatcherExecutor,
@@ -23,9 +18,6 @@ class DispatchProductIdsBatchMessageHandler implements MessageHandlerInterface
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchProductIdsBatchMessage $message
-     */
     public function __invoke(DispatchProductIdsBatchMessage $message): void
     {
         $dispatchedProductIds = $this->productRecalculationDispatcherExecutor->dispatchProductIds(

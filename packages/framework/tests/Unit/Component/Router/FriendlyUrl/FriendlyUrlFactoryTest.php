@@ -63,9 +63,6 @@ class FriendlyUrlFactoryTest extends TestCase
         $friendlyUrlFactory->createForAllDomains($routeName, $entityId, $namesByLocale);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory|\PHPUnit\Framework\MockObject\MockObject
-     */
     private function getFriendlyUrlFactory(): FriendlyUrlFactory|MockObject
     {
         $domainConfigs = [

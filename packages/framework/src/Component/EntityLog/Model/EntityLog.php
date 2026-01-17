@@ -95,9 +95,6 @@ class EntityLog
      */
     protected $createdAt;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogData $entityLogData
-     */
     public function __construct(
         EntityLogData $entityLogData,
     ) {
@@ -106,9 +103,6 @@ class EntityLog
         $this->logCollectionNumber = '';
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogData $entityLogData
-     */
     protected function setData(EntityLogData $entityLogData): void
     {
         $this->action = $entityLogData->action;
@@ -122,10 +116,6 @@ class EntityLog
         $this->parentEntityId = $entityLogData->parentEntityId;
     }
 
-    /**
-     * @param array $changeSet
-     * @return array
-     */
     protected function getSerializedChangeSet(array $changeSet): array
     {
         return json_decode(json_encode($changeSet), true);

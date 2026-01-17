@@ -21,11 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class OrderItemsType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         private readonly TransportFacade $transportFacade,
         private readonly PaymentFacade $paymentFacade,
@@ -97,9 +92,6 @@ final class OrderItemsType extends AbstractType
         );
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -11,9 +11,6 @@ use Override;
 
 class LocalFilesystemFactory implements FilesystemFactoryInterface
 {
-    /**
-     * @return \League\Flysystem\FilesystemOperator
-     */
     #[Override]
     public function create(): FilesystemOperator
     {

@@ -14,12 +14,6 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
 class LuigisBoxCategoryFeedItemFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
-     */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ImageFacade $imageFacade,
@@ -28,11 +22,6 @@ class LuigisBoxCategoryFeedItemFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedItem
-     */
     public function create(Category $category, DomainConfig $domainConfig): LuigisBoxCategoryFeedItem
     {
         $locale = $domainConfig->getLocale();

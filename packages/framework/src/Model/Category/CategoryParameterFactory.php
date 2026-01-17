@@ -9,21 +9,11 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class CategoryParameterFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @param bool $collapsed
-     * @param int $position
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryParameter
-     */
     public function create(Category $category, Parameter $parameter, bool $collapsed, int $position): CategoryParameter
     {
         $entityClassName = $this->entityNameResolver->resolve(CategoryParameter::class);

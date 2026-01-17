@@ -9,17 +9,11 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class AdvertPositionsQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
-     */
     public function __construct(
         protected readonly AdvertPositionRegistry $advertPositionRegistry,
     ) {
     }
 
-    /**
-     * @return array
-     */
     public function advertPositionsQuery(): array
     {
         $serialized = [];

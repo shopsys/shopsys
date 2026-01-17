@@ -33,18 +33,11 @@ class PersonalDataMutationTest extends GraphQlTestCase
         $this->assertArrayHasKey('errors', $response);
     }
 
-    /**
-     * @param string $routeName
-     * @return string
-     */
     private function getLink(string $routeName): string
     {
         return $this->getLocalizedPathOnFirstDomainByRouteName($routeName, pathType: UrlGeneratorInterface::ABSOLUTE_PATH);
     }
 
-    /**
-     * @return string
-     */
     private function getExpectedResponseJson(): string
     {
         return '{
@@ -59,10 +52,6 @@ class PersonalDataMutationTest extends GraphQlTestCase
         }';
     }
 
-    /**
-     * @param string $type
-     * @return string
-     */
     private function getQuery(string $type): string
     {
         return '

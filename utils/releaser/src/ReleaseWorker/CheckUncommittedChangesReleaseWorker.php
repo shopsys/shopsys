@@ -10,11 +10,6 @@ use Shopsys\Releaser\Stage;
 
 final class CheckUncommittedChangesReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -23,10 +18,6 @@ final class CheckUncommittedChangesReleaseWorker extends AbstractShopsysReleaseW
         return 'Check the repository for any uncommitted changes';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

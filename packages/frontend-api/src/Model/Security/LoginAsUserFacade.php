@@ -21,19 +21,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class LoginAsUserFacade
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator $tokenAuthenticator
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeTokenFacade $loginAsUserExchangeTokenFacade
-     */
     public function __construct(
         protected readonly RequestStack $requestStack,
         protected readonly TokenAuthenticator $tokenAuthenticator,
@@ -49,10 +36,6 @@ class LoginAsUserFacade
     ) {
     }
 
-    /**
-     * @param string $exchangeToken
-     * @return \Shopsys\FrontendApiBundle\Model\Security\TokensData
-     */
     public function loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken(string $exchangeToken): TokensData
     {
         $exchangeTokenEntity = $this->loginAsUserExchangeTokenFacade->findValidByToken($exchangeToken);
@@ -77,9 +60,6 @@ class LoginAsUserFacade
         );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
-     */
     public function getCurrentAdministratorLoggedAsCustomer(): ?Administrator
     {
         $request = $this->requestStack->getCurrentRequest();
@@ -103,10 +83,6 @@ class LoginAsUserFacade
         return $this->administratorFacade->findByUuid($administratorUuid);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrontendApiBundle\Model\Security\TokensData
-     */
     public function loginAndReturnAccessAndRefreshToken(CustomerUser $customerUser): TokensData
     {
         $deviceId = Uuid::uuid4()->toString();
@@ -117,16 +93,6 @@ class LoginAsUserFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $loginType
-     * @param bool $isRegistration
-     * @param array $productListsUuids
-     * @param bool $shouldOverwriteCustomerUserCart
-     * @param string|null $cartUuid
-     * @param string|null $externalId
-     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
-     */
     public function runLoginSteps(
         CustomerUser $customerUser,
         string $loginType,

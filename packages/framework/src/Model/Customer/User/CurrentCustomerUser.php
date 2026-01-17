@@ -14,12 +14,6 @@ class CurrentCustomerUser
 {
     protected const string CURRENT_CUSTOMER_USER_CACHE_NAMESPACE = 'currentCustomerUser';
 
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly TokenStorageInterface $tokenStorage,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -78,9 +72,6 @@ class CurrentCustomerUser
         return null;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function getCurrentCustomerUser(): CustomerUser
     {
         return $this->findCurrentCustomerUser() ?? throw new CustomerUserIsNotLoggedException();

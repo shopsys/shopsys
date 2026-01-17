@@ -8,25 +8,16 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class StockDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Stock\StockData
-     */
     protected function createInstance(): StockData
     {
         return new StockData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Stock\StockData
-     */
     public function create(): StockData
     {
         $stockData = $this->createInstance();
@@ -35,10 +26,6 @@ class StockDataFactory
         return $stockData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
-     * @return \Shopsys\FrameworkBundle\Model\Stock\StockData
-     */
     public function createFromStock(Stock $stock): StockData
     {
         $stockData = $this->createInstance();
@@ -47,10 +34,6 @@ class StockDataFactory
         return $stockData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
-     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
-     */
     protected function fillFromStock(StockData $stockData, Stock $stock): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -63,9 +46,6 @@ class StockDataFactory
         $stockData->note = $stock->getNote();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
-     */
     protected function fillNew(StockData $stockData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {

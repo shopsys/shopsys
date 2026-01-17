@@ -13,20 +13,12 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Payment\Exception\PaymentNotFoundUs
 
 class PaymentQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly PaymentFacade $paymentFacade,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
     public function paymentQuery(string $uuid): Payment
     {
         try {

@@ -32,10 +32,6 @@ class Transfer
      */
     protected $name;
 
-    /**
-     * @param string $identifier
-     * @param string $name
-     */
     public function __construct(string $identifier, string $name)
     {
         $this->identifier = $identifier;

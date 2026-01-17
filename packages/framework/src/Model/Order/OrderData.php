@@ -309,7 +309,6 @@ class OrderData
     }
 
     /**
-     * @param string $type
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
      */
     public function getItemsByType(string $type): array
@@ -320,35 +319,22 @@ class OrderData
         ));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $priceToAdd
-     * @param string $type
-     */
     public function addTotalPrice(PriceInterface $priceToAdd, string $type): void
     {
         $this->totalPricesByItemType[$type] = $this->totalPricesByItemType[$type]->add($priceToAdd);
         $this->totalPrice = $this->totalPrice->add($priceToAdd);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $priceToAdd
-     */
     public function addBasicTotalItemsPrice(PriceInterface $priceToAdd): void
     {
         $this->basicTotalItemsPrice = $this->basicTotalItemsPrice->add($priceToAdd);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $priceToAdd
-     */
     public function addTotalProductPriceAdjustmentsDiscount(PriceInterface $priceToAdd): void
     {
         $this->totalProductPriceAdjustmentsDiscount = $this->totalProductPriceAdjustmentsDiscount->add($priceToAdd);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $item
-     */
     public function addItem(OrderItemData $item): void
     {
         $count = 0;
@@ -364,7 +350,6 @@ class OrderData
 
     /**
      * @param string[] $itemTypes
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     public function getTotalPriceForItemTypes(array $itemTypes): PriceInterface
     {
@@ -377,9 +362,6 @@ class OrderData
         return $totalPrice;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getProductsTotalPriceAfterAppliedDiscounts(): PriceInterface
     {
         return $this->getTotalPriceForItemTypes([
@@ -411,17 +393,11 @@ class OrderData
         $this->items = $items;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getTotalDiscountPrice(): PriceInterface
     {
         return $this->totalProductPriceAdjustmentsDiscount->add($this->getPromoCodeDiscountPrice());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getPromoCodeDiscountPrice(): PriceInterface
     {
         return $this->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_DISCOUNT])->inverse();

@@ -16,10 +16,6 @@ class MigrationsGenerator
     protected const INDENT_CHARACTERS = '    ';
     protected const INDENT_TABULATOR_COUNT = 3;
 
-    /**
-     * @param \Twig\Environment $twigEnvironment
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     */
     public function __construct(
         protected readonly Environment $twigEnvironment,
         protected readonly Filesystem $filesystem,
@@ -27,8 +23,6 @@ class MigrationsGenerator
     }
 
     /**
-     * @param array $sqlCommands
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation $migrationsLocation
      * @return \Shopsys\MigrationBundle\Component\Generator\GeneratorResult
      */
     public function generate(array $sqlCommands, MigrationsLocation $migrationsLocation)
@@ -118,9 +112,6 @@ class MigrationsGenerator
         }, $sqlCommands);
     }
 
-    /**
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation $migrationLocation
-     */
     protected function createMigrationLocationDirectoryIfNotExists(MigrationsLocation $migrationLocation)
     {
         if (!$this->filesystem->exists($migrationLocation->getDirectory())) {

@@ -14,10 +14,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class MailAllowedRecipientController extends AbstractController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly MailerSettingProvider $mailerSettingProvider,
@@ -25,9 +21,6 @@ class MailAllowedRecipientController extends AbstractController
     }
 
     #[Route('/mail-allowed-recipient/list/')]
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[RequireRole([SystemRole::ADMIN])]
     public function listAction(): Response
     {

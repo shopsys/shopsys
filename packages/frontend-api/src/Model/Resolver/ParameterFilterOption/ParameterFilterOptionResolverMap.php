@@ -31,10 +31,6 @@ class ParameterFilterOptionResolverMap extends ResolverMap
         ];
     }
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption $parameterFilterOption
-     * @return string
-     */
     protected function getResolveType(ParameterFilterOption $parameterFilterOption): string
     {
         $parameterType = $parameterFilterOption->parameter->getParameterType();

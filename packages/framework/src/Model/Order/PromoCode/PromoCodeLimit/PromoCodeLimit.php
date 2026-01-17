@@ -32,10 +32,6 @@ class PromoCodeLimit
      */
     protected $discount;
 
-    /**
-     * @param string $from
-     * @param string $discount
-     */
     public function __construct(string $from, string $discount)
     {
         $this->fromPrice = $from;

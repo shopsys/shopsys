@@ -13,11 +13,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 {
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade $zboziProductDomainFacade
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactory $zboziProductDomainDataFactory
-     */
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly ZboziProductDomainFacade $zboziProductDomainFacade,
@@ -92,7 +87,6 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
      * @param string $propertyName
      * @param mixed $propertyValue
      */

@@ -10,25 +10,15 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\Exception\PaymentTransacti
 
 class PaymentTransactionRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getRepository(): EntityRepository
     {
         return $this->em->getRepository(PaymentTransaction::class);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction
-     */
     public function getById(int $id): PaymentTransaction
     {
         $paymentTransaction = $this->getRepository()->find($id);

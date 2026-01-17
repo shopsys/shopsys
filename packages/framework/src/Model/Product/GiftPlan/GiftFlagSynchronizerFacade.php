@@ -22,18 +22,6 @@ class GiftFlagSynchronizerFacade
 {
     public const string FLAG_GIFT_UUID = '3b709b97-604d-462d-b045-885f126e78d2';
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanRepository $giftPlanRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade $giftCartFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GiftPlanRepository $giftPlanRepository,
@@ -75,9 +63,6 @@ class GiftFlagSynchronizerFacade
         }
     }
 
-    /**
-     * @param int $giftProductId
-     */
     public function refreshForGiftProductId(int $giftProductId): void
     {
         $giftPlans = $this->giftPlanRepository->findByGiftProductId($giftProductId);
@@ -87,9 +72,6 @@ class GiftFlagSynchronizerFacade
         }
     }
 
-    /**
-     * @param int $mainProductId
-     */
     public function recalculateGiftFlagForMainProductId(int $mainProductId): void
     {
         try {
@@ -103,10 +85,6 @@ class GiftFlagSynchronizerFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainProduct
-     * @param int $domainId
-     */
     protected function recalculateGiftFlagForMainProductAndDomainId(Product $mainProduct, int $domainId): void
     {
         $shouldHaveFlag = $this->shouldHaveGiftFlag($mainProduct, $domainId);
@@ -151,11 +129,6 @@ class GiftFlagSynchronizerFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainProduct
-     * @param int $domainId
-     * @return bool
-     */
     protected function shouldHaveGiftFlag(Product $mainProduct, int $domainId): bool
     {
         $activeGiftPlans = $this->giftPlanRepository->findActiveGiftPlansByMainProductAndDomainId($mainProduct, $domainId);
@@ -172,9 +145,6 @@ class GiftFlagSynchronizerFacade
         return false;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     protected function getGiftFlag(): Flag
     {
         return $this->inMemoryCache->getOrSaveValue('giftFlag', fn () => $this->flagFacade->getByUuid(

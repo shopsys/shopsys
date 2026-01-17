@@ -21,20 +21,12 @@ final class HreflangSettingFormType extends AbstractType
 {
     public const string FIELD_HREFLANG_COLLECTION = 'hreflang_collection';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Form\Admin\Seo\DomainConfigCollectionToDomainIdsTransformer $domainConfigCollectionToDomainIdsTransformer
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DomainConfigCollectionToDomainIdsTransformer $domainConfigCollectionToDomainIdsTransformer,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -83,7 +75,6 @@ final class HreflangSettingFormType extends AbstractType
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function validateLanguageUniquenessInCollectionItems(
         array $domainConfigs,
@@ -105,7 +96,6 @@ final class HreflangSettingFormType extends AbstractType
 
     /**
      * @param int[][] $domainIdCollection
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function validateDomainUniqueness(array $domainIdCollection, ExecutionContextInterface $context): void
     {

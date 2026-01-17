@@ -18,14 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class GoogleFeedItemFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     */
     public function __construct(
         protected readonly ProductPriceCalculation $productPriceCalculation,
         protected readonly CurrencyFacade $currencyFacade,
@@ -36,11 +28,6 @@ class GoogleFeedItemFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItem
-     */
     public function create(Product $product, DomainConfig $domainConfig): GoogleFeedItem
     {
         $basicPrice = $this->getBasicPrice($product, $domainConfig);
@@ -61,20 +48,11 @@ class GoogleFeedItemFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string|null
-     */
     protected function getBrandName(Product $product): ?string
     {
         return $product->getBrand()?->getName();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     protected function getBasicPrice(Product $product, DomainConfig $domainConfig): PriceInterface
     {
         $defaultPricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId());
@@ -86,12 +64,6 @@ class GoogleFeedItemFactory
         )->getPrice();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $basicPrice
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null
-     */
     protected function getSpecialPrice(
         PriceInterface $basicPrice,
         Product $product,
@@ -106,10 +78,6 @@ class GoogleFeedItemFactory
         return $specialPrice;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     protected function getCurrency(DomainConfig $domainConfig): Currency
     {
         return $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainConfig->getId());

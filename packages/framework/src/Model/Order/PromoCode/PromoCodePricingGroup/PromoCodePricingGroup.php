@@ -30,10 +30,6 @@ class PromoCodePricingGroup
      */
     protected $pricingGroup;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     */
     public function __construct(PromoCode $promoCode, PricingGroup $pricingGroup)
     {
         $this->promoCode = $promoCode;

@@ -15,11 +15,6 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserUpdateDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
-     */
     public function __construct(
         protected readonly BillingAddressDataFactory $billingAddressDataFactory,
         protected readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
@@ -27,12 +22,6 @@ class CustomerUserUpdateDataFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
-     */
     protected function createInstance(
         BillingAddressData $billingAddressData,
         DeliveryAddressData $deliveryAddressData,
@@ -41,9 +30,6 @@ class CustomerUserUpdateDataFactory
         return new CustomerUserUpdateData($billingAddressData, $customerUserData, $deliveryAddressData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
-     */
     public function create(): CustomerUserUpdateData
     {
         return $this->createInstance(
@@ -53,11 +39,6 @@ class CustomerUserUpdateDataFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $password
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
-     */
     public function createFromOrder(Order $order, string $password): CustomerUserUpdateData
     {
         $customerUserUpdateData = $this->create();
@@ -77,10 +58,6 @@ class CustomerUserUpdateDataFactory
         return $customerUserUpdateData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
-     */
     public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserUpdateData
     {
         return $this->createInstance(
@@ -92,10 +69,6 @@ class CustomerUserUpdateDataFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
-     */
     protected function getDeliveryAddressDataFromCustomerUser(CustomerUser $customerUser): DeliveryAddressData
     {
         if ($customerUser->getDefaultDeliveryAddress() !== null) {
@@ -107,12 +80,6 @@ class CustomerUserUpdateDataFactory
         return $this->deliveryAddressDataFactory->create();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
-     */
     public function createAmendedByOrder(
         CustomerUser $customerUser,
         Order $order,
@@ -155,8 +122,6 @@ class CustomerUserUpdateDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
      */
     protected function getAmendedBillingAddressDataByOrder(Order $order, BillingAddress $billingAddress)
@@ -171,8 +136,6 @@ class CustomerUserUpdateDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      */
     protected function getAmendedDeliveryAddressDataByOrder(Order $order, ?DeliveryAddress $deliveryAddress = null)
@@ -199,10 +162,6 @@ class CustomerUserUpdateDataFactory
         return $deliveryAddressData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     */
     protected function fillBillingAddressDataFromOrder(
         Order $order,
         BillingAddressData $billingAddressData,
@@ -217,11 +176,6 @@ class CustomerUserUpdateDataFactory
         $billingAddressData->country = $order->getCountry();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $password
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     protected function getCustomerUserDataByOrder(Order $order, string $password): CustomerUserData
     {
         $customerUserData = $this->customerUserDataFactory->createForDomainId($order->getDomainId());

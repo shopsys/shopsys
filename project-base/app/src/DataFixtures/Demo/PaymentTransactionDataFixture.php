@@ -15,19 +15,12 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 
 class PaymentTransactionDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
-     */
     public function __construct(
         private readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
         private readonly PaymentTransactionFacade $paymentTransactionFacade,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -51,11 +44,6 @@ class PaymentTransactionDataFixture extends AbstractReferenceFixture implements 
         ];
     }
 
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param string $externalPaymentIdentifier
-     * @param string $paymentStatus
-     */
     public function createPaymentTransaction(
         Order $order,
         string $externalPaymentIdentifier,
