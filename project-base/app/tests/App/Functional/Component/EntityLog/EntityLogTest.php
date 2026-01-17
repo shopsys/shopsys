@@ -292,7 +292,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
         $orderData->firstName = 'firstName';
         $orderData->lastName = 'lastName';
-        $orderData->email = 'email';
+        $orderData->email = 'email@example.com';
         $orderData->telephone = 'telephone';
         $orderData->companyName = null;
         $orderData->companyNumber = null;
