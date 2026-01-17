@@ -11,11 +11,6 @@ use Psr\Clock\ClockInterface;
 
 class CronModuleRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFactory $cronModuleFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CronModuleFactory $cronModuleFactory,
@@ -98,7 +93,6 @@ class CronModuleRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronModuleRun[]
      */
     public function getAllRunsByCronModule(CronModule $cronModule): array
@@ -110,10 +104,6 @@ class CronModuleRepository
             ->getQuery()->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getRunsByCronModuleQueryBuilder(CronModule $cronModule): QueryBuilder
     {
         return $this->getCronModuleRunRepository()->createQueryBuilder('cmr')
@@ -123,9 +113,6 @@ class CronModuleRepository
             ->orderBy('cmr.startedAt', 'DESC');
     }
 
-    /**
-     * @param int $numberOfDays
-     */
     public function deleteOldCronModuleRuns(int $numberOfDays): void
     {
         $this->em->getConnection()->executeStatement(

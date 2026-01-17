@@ -8,17 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class BrandFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $data
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
     public function create(BrandData $data): Brand
     {
         $entityClassName = $this->entityNameResolver->resolve(Brand::class);

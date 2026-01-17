@@ -8,10 +8,6 @@ use Exception;
 
 class SystemManagedRoleGroupException extends Exception
 {
-    /**
-     * @param string $name
-     * @param \Exception|null $previous
-     */
     public function __construct(string $name, ?Exception $previous = null)
     {
         $message = sprintf('Administrator role group "%s" is system-managed and cannot be modified.', $name);

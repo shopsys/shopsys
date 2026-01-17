@@ -9,9 +9,6 @@ use Override;
 
 class NotBlogArticleResolverMap extends ResolverMap
 {
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

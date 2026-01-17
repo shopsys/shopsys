@@ -15,10 +15,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class FlagFilterChoiceRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
-     */
     public function __construct(
         protected readonly ProductRepository $productRepository,
         protected readonly OrderByCollationHelper $orderByCollationHelper,
@@ -26,10 +22,6 @@ class FlagFilterChoiceRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getFlagFilterChoicesInCategory(
@@ -48,10 +40,6 @@ class FlagFilterChoiceRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getFlagFilterChoicesForBrand(
@@ -70,9 +58,6 @@ class FlagFilterChoiceRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getFlagFilterChoicesForAll(int $domainId, PricingGroup $pricingGroup, string $locale): array
@@ -86,10 +71,6 @@ class FlagFilterChoiceRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
-     * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getFlagFilterChoicesForSearch(
@@ -105,8 +86,6 @@ class FlagFilterChoiceRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     protected function getVisibleFlagsByProductsQueryBuilder(QueryBuilder $productsQueryBuilder, string $locale): array

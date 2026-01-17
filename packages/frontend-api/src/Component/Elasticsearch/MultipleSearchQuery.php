@@ -15,7 +15,6 @@ class MultipleSearchQuery
     protected array $body;
 
     /**
-     * @param string $indexName
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery[] $filterQueries
      */
     public function __construct(protected readonly string $indexName, array $filterQueries)
@@ -23,9 +22,6 @@ class MultipleSearchQuery
         $this->body = $this->getBody($filterQueries);
     }
 
-    /**
-     * @return array
-     */
     public function getQuery(): array
     {
         return [
@@ -36,7 +32,6 @@ class MultipleSearchQuery
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery[] $filterQueries
-     * @return array
      */
     protected function getBody(array $filterQueries): array
     {

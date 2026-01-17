@@ -11,30 +11,18 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 
 class ManyToOneRelatedEntityDataTypeResolver extends AbstractDataTypeResolver
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFactory $loggableEntityConfigFactory
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
-     */
     public function __construct(
         protected readonly LoggableEntityConfigFactory $loggableEntityConfigFactory,
         protected readonly EntityLogFacade $entityLogFacade,
     ) {
     }
 
-    /**
-     * @param mixed $value
-     * @return bool
-     */
     #[Override]
     protected function isResolvedDataType(mixed $value): bool
     {
         return is_object($value) && method_exists($value, 'getId');
     }
 
-    /**
-     * @param array $changes
-     * @return \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges
-     */
     #[Override]
     public function getResolvedChanges(array $changes): ResolvedChanges
     {
@@ -76,9 +64,6 @@ class ManyToOneRelatedEntityDataTypeResolver extends AbstractDataTypeResolver
         );
     }
 
-    /**
-     * @return int
-     */
     #[Override]
     public function getPriority(): int
     {

@@ -15,7 +15,6 @@ class ImageTypeNotFoundException extends Exception
     /**
      * @param string $entityClass
      * @param string $imageType
-     * @param \Exception|null $previous
      */
     public function __construct($entityClass, $imageType, ?Exception $previous = null)
     {

@@ -281,9 +281,6 @@ class RetrieveCartTest extends GraphQlTestCase
         self::assertEquals($desiredQuantity, $data['items'][0]['quantity']);
     }
 
-    /**
-     * @return array
-     */
     private function getExpectedProductDetailWithAllAttributes(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -606,9 +603,6 @@ class RetrieveCartTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @return string
-     */
     private function getAllProductAttributes(): string
     {
         return '

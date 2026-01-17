@@ -8,7 +8,6 @@ class CollectionChangesFormatter
 {
     /**
      * @param array{insertedItems: array<\Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges>, deletedItems: array<\Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges>} $changes
-     * @return string
      */
     public function formatChanges(array $changes): string
     {
@@ -20,7 +19,6 @@ class CollectionChangesFormatter
     }
 
     /**
-     * @param array $insertedChanges
      * @param string[] $formattedCollectionChanges
      */
     protected function formatInsertedItems(array $insertedChanges, array &$formattedCollectionChanges): void
@@ -31,7 +29,6 @@ class CollectionChangesFormatter
     }
 
     /**
-     * @param array $deletedChanges
      * @param string[] $formattedCollectionChanges
      */
     protected function formatDeletedItems(array $deletedChanges, array &$formattedCollectionChanges): void

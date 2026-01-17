@@ -11,11 +11,6 @@ use Shopsys\Releaser\Stage;
 
 final class GenerateApiaryBlueprintReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -24,10 +19,6 @@ final class GenerateApiaryBlueprintReleaseWorker extends AbstractShopsysReleaseW
         return 'Generate Apiary.io blueprint "php phing frontend-api-generate-apiary-blueprint" and commit it';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,
@@ -46,9 +37,6 @@ final class GenerateApiaryBlueprintReleaseWorker extends AbstractShopsysReleaseW
         }
     }
 
-    /**
-     * @return bool
-     */
     private function hasGeneratedBlueprint(): bool
     {
         return !$this->isGitWorkingTreeEmpty();

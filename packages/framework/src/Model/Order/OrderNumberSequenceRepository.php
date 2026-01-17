@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Model\NumberSequence\AbstractNumberSequenceRepositor
 
 class OrderNumberSequenceRepository extends AbstractNumberSequenceRepository
 {
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     #[Override]
     protected function getNumberSequenceRepository(): EntityRepository
     {

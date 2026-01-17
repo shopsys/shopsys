@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository;
 
 class LuigisBoxBrandFeedItemFacade
 {
-    /**
-     * @param \Shopsys\BrandFeed\LuigisBoxBundle\Model\LuigisBoxBrandFeedItemFactory $luigisBoxBrandFeedItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository $brandRepository
-     */
     public function __construct(
         protected readonly LuigisBoxBrandFeedItemFactory $luigisBoxBrandFeedItemFactory,
         protected readonly BrandRepository $brandRepository,
@@ -20,9 +16,6 @@ class LuigisBoxBrandFeedItemFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int|null $lastSeekId
-     * @param int $maxResults
      * @return iterable<int, \Shopsys\BrandFeed\LuigisBoxBundle\Model\LuigisBoxBrandFeedItem>
      */
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable

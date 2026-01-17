@@ -85,7 +85,6 @@ class TranslationReplaceSourceCommand extends Command
     }
 
     /**
-     * @param \DirectoryIterator $translationsDirectory
      * @param string $targetLocale
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
@@ -104,7 +103,6 @@ class TranslationReplaceSourceCommand extends Command
     }
 
     /**
-     * @param \DirectoryIterator $directoryIterator
      * @param string $targetLocale
      * @return bool
      */
@@ -117,7 +115,6 @@ class TranslationReplaceSourceCommand extends Command
 
     /**
      * @see \Symfony\Component\Translation\Loader\PoFileLoader::parse
-     * @param \SplFileInfo $file
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
     private function extractReplacementsFromPoFile(SplFileInfo $file)
@@ -187,7 +184,6 @@ class TranslationReplaceSourceCommand extends Command
     /**
      * @see \Symfony\Component\Translation\Loader\PoFileLoader::addMessage
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $translationSourceReplacements
-     * @param array $item
      */
     private function parsePoFileItem(array &$translationSourceReplacements, array $item)
     {
@@ -237,7 +233,6 @@ class TranslationReplaceSourceCommand extends Command
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
     private function filterReplacementsWithUniqueOldSource(array $replacements, OutputInterface $output)
@@ -277,7 +272,6 @@ class TranslationReplaceSourceCommand extends Command
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
     private function filterFilledReplacements(array $replacements, OutputInterface $output)
@@ -298,7 +292,6 @@ class TranslationReplaceSourceCommand extends Command
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
     private function filterReplacementsWithUniqueNewSource(array $replacements, OutputInterface $output)
@@ -406,7 +399,6 @@ class TranslationReplaceSourceCommand extends Command
     /**
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
      * @param string[] $searchedPathNames
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     private function replaceAllInFiles(array $replacements, array $searchedPathNames, OutputInterface $output)
     {
@@ -461,7 +453,6 @@ class TranslationReplaceSourceCommand extends Command
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement $replacement
      * @param string[] $searchedPathNames
      * @param string $sourceFilePath
      * @return int|null
@@ -512,7 +503,6 @@ class TranslationReplaceSourceCommand extends Command
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
-     * @param \DirectoryIterator $directory
      */
     private function replaceSourcesInPoFiles(array $replacements, DirectoryIterator $directory)
     {
@@ -567,11 +557,9 @@ class TranslationReplaceSourceCommand extends Command
 
     /**
      * @param string $filePath
-     * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement $replacement
      * @param int|null $realCount
      * @param int $expectedCount
      * @param bool $isExpectedCountExact
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     private function logReplacementError(
         $filePath,

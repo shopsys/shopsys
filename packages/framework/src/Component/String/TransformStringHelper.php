@@ -8,10 +8,6 @@ use Transliterator;
 
 class TransformStringHelper
 {
-    /**
-     * @param string $string
-     * @return string
-     */
     public function safeFilename(string $string): string
     {
         $string = preg_replace('~[^-\\.\\pL0-9_]+~u', '_', $string);
@@ -24,19 +20,11 @@ class TransformStringHelper
         return $string;
     }
 
-    /**
-     * @param string|null $value
-     * @return string|null
-     */
     public static function emptyToNull(?string $value): ?string
     {
         return $value === '' ? null : $value;
     }
 
-    /**
-     * @param string|null $value
-     * @return string|null
-     */
     public static function getTrimmedStringOrNullOnEmpty(?string $value): ?string
     {
         if ($value === null) {
@@ -47,8 +35,6 @@ class TransformStringHelper
     }
 
     /**
-     * @param string $string
-     * @return string
      * @see http://php.vrana.cz/vytvoreni-pratelskeho-url.php
      */
     public function stringToFriendlyUrlSlug(string $string): string
@@ -63,10 +49,6 @@ class TransformStringHelper
         return $slug;
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
     public function addOrRemoveTrailingSlashFromString(string $string): string
     {
         if (str_ends_with($string, '/')) {
@@ -80,8 +62,6 @@ class TransformStringHelper
      * Transforms arbitrary string (natural sentence, under_score, PascalCase, ...) into one ascii camelCase string
      *
      * @see \Tests\FrameworkBundle\Unit\Component\String\TransformStringTest::stringToCamelCaseProvider() for example usages
-     * @param string $string
-     * @return string
      */
     public function stringToCamelCase(string $string): string
     {
@@ -103,10 +83,6 @@ class TransformStringHelper
         return $string;
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
     protected function toAscii(string $string): string
     {
         $transliteratorToLatin = Transliterator::create('Any-Latin');
@@ -118,22 +94,12 @@ class TransformStringHelper
     /**
      * For some cases there is need to have clean absolute paths
      * Operating systems that use drive letter assignments https://en.wikipedia.org/wiki/Drive_letter_assignment
-     *
-     * @param string $path
-     * @return string
      */
     public function removeDriveLetterFromPath(string $path): string
     {
         return preg_replace('#^[A-Z]:#', '', $path);
     }
 
-    /**
-     * @param string $search
-     * @param string $replace
-     * @param string $subject
-     * @param int $limit
-     * @return string
-     */
     public function replaceOccurrences(string $search, string $replace, string $subject, int $limit = 1): string
     {
         $search = '/' . preg_quote($search, '/') . '/';
@@ -141,10 +107,6 @@ class TransformStringHelper
         return preg_replace($search, $replace, $subject, $limit);
     }
 
-    /**
-     * @param string|null $htmlText
-     * @return string|null
-     */
     public static function convertHtmlToPlainText(?string $htmlText): ?string
     {
         if ($htmlText === null) {
@@ -154,11 +116,6 @@ class TransformStringHelper
         return trim(preg_replace('/\s\s+/', ' ', strip_tags(str_replace('<', ' <', html_entity_decode($htmlText)))));
     }
 
-    /**
-     * @param string $string
-     * @param string $stringToRemove
-     * @return string
-     */
     public function removeStringFromStart(string $string, string $stringToRemove): string
     {
         if (str_starts_with($string, $stringToRemove)) {
@@ -168,11 +125,6 @@ class TransformStringHelper
         return $string;
     }
 
-    /**
-     * @param string $string
-     * @param string $stringToRemove
-     * @return string
-     */
     public function removeStringFromEnd(string $string, string $stringToRemove): string
     {
         if (str_ends_with($string, $stringToRemove)) {

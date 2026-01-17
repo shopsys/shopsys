@@ -31,11 +31,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class BlogArticleFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly SeoSettingFacade $seoSettingFacade,
@@ -43,10 +38,6 @@ final class BlogArticleFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -71,9 +62,6 @@ final class BlogArticleFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -86,11 +74,6 @@ final class BlogArticleFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle|null $blogArticle
-     * @return string|null
-     */
     private function getArticleNameForPlaceholder(
         DomainConfig $domainConfig,
         ?BlogArticle $blogArticle = null,
@@ -100,11 +83,6 @@ final class BlogArticleFormType extends AbstractType
         return $blogArticle === null ? '' : $blogArticle->getName($domainLocale);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle|null $blogArticle
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createSeoGroup(FormBuilderInterface $builder, ?BlogArticle $blogArticle): FormBuilderInterface
     {
         [$seoTitlesOptionsByDomainId, $seoMetaDescriptionsOptionsByDomainId, $seoH1OptionsByDomainId] = $this->prepareSeoData($blogArticle);
@@ -149,11 +127,6 @@ final class BlogArticleFormType extends AbstractType
         return $builderSeoGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle|null $blogArticle
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createSettingsGroup(
         FormBuilderInterface $builder,
         ?BlogArticle $blogArticle,
@@ -205,10 +178,6 @@ final class BlogArticleFormType extends AbstractType
         return $builderSettingsGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createDescriptionGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderDescriptionGroup = $builder->create('description', GroupType::class, [
@@ -229,10 +198,6 @@ final class BlogArticleFormType extends AbstractType
         return $builderDescriptionGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createPerexGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderDescriptionGroup = $builder->create('perex', GroupType::class, [
@@ -251,11 +216,6 @@ final class BlogArticleFormType extends AbstractType
         return $builderDescriptionGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createImageGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $builderImageGroup = $builder->create('image', GroupType::class, [
@@ -284,10 +244,6 @@ final class BlogArticleFormType extends AbstractType
         return $builderImageGroup;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle|null $blogArticle
-     * @return array
-     */
     private function prepareSeoData(?BlogArticle $blogArticle): array
     {
         $seoTitlesOptionsByDomainId = [];

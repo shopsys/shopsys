@@ -9,11 +9,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class NavigationItemCategoryFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryRepository $navigationItemCategoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryFactory $navigationItemCategoryFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly NavigationItemCategoryRepository $navigationItemCategoryRepository,
@@ -21,10 +16,6 @@ class NavigationItemCategoryFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
-     */
     public function refreshCategoriesForNavigationItem(
         NavigationItem $navigationItem,
         NavigationItemData $navigationItemData,
@@ -43,8 +34,6 @@ class NavigationItemCategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
-     * @param int $columnNumber
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      */
     protected function saveCategoriesInColumn(
@@ -69,7 +58,6 @@ class NavigationItemCategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[][]
      */
     public function getSortedCategoriesIndexedByColumnNumberForNavigationItem(NavigationItem $navigationItem): array
@@ -89,7 +77,6 @@ class NavigationItemCategoryFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem[] $navigationItems
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[][][]
      */
     public function getSortedVisibleCategoriesIndexedByNavigationItemIdAndColumnNumber(

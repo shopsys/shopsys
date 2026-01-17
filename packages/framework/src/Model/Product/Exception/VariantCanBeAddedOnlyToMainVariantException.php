@@ -11,7 +11,6 @@ class VariantCanBeAddedOnlyToMainVariantException extends VariantException
     /**
      * @param int $productId
      * @param int $variantId
-     * @param \Exception|null $previous
      */
     public function __construct($productId, $variantId, ?Exception $previous = null)
     {

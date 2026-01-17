@@ -11,9 +11,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class BrandsIdsToBrandsTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository $brandRepository
-     */
     public function __construct(protected readonly BrandRepository $brandRepository)
     {
     }

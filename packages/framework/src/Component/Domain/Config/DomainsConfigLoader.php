@@ -15,10 +15,6 @@ use Symfony\Component\Yaml\Parser;
 
 class DomainsConfigLoader
 {
-    /**
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly Filesystem $filesystem,
         protected readonly TransformStringHelper $transformStringHelper,
@@ -26,8 +22,6 @@ class DomainsConfigLoader
     }
 
     /**
-     * @param string $domainsConfigFilepath
-     * @param string $domainsUrlsConfigFilepath
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
     public function loadDomainConfigsFromYaml(string $domainsConfigFilepath, string $domainsUrlsConfigFilepath): array
@@ -54,24 +48,17 @@ class DomainsConfigLoader
         return $this->loadDomainConfigsFromArray($processedConfigsWithUrlsByDomainId);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigDefinition
-     */
     protected function getDomainsConfigDefinition(): DomainsConfigDefinition
     {
         return new DomainsConfigDefinition();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsUrlsConfigDefinition
-     */
     protected function getDomainsUrlsConfigDefinition(): DomainsUrlsConfigDefinition
     {
         return new DomainsUrlsConfigDefinition();
     }
 
     /**
-     * @param array $processedConfigsByDomainId
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
     protected function loadDomainConfigsFromArray(array $processedConfigsByDomainId): array
@@ -85,10 +72,6 @@ class DomainsConfigLoader
         return $domainConfigs;
     }
 
-    /**
-     * @param array $domainConfig
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     protected function processDomainConfigArray(array $domainConfig): DomainConfig
     {
         $url = $domainConfig[DomainsUrlsConfigDefinition::CONFIG_URL];
@@ -112,11 +95,6 @@ class DomainsConfigLoader
         );
     }
 
-    /**
-     * @param array $domainConfigsByDomainId
-     * @param array $domainUrlsConfigsByDomainId
-     * @return array
-     */
     protected function addUrlsToProcessedConfig(
         array $domainConfigsByDomainId,
         array $domainUrlsConfigsByDomainId,
@@ -130,11 +108,6 @@ class DomainsConfigLoader
         return $domainConfigsByDomainId;
     }
 
-    /**
-     * @param string $filepath
-     * @param \Symfony\Component\Config\Definition\ConfigurationInterface $configDefinition
-     * @return array
-     */
     protected function getProcessedConfig(string $filepath, ConfigurationInterface $configDefinition): array
     {
         $yamlParser = new Parser();
@@ -151,11 +124,6 @@ class DomainsConfigLoader
         return $processor->processConfiguration($configDefinition, [$parsedConfig]);
     }
 
-    /**
-     * @param array $domainConfigsByDomainId
-     * @param array $domainUrlsConfigsByDomainId
-     * @return bool
-     */
     protected function isConfigMatchingUrlsConfig(
         array $domainConfigsByDomainId,
         array $domainUrlsConfigsByDomainId,

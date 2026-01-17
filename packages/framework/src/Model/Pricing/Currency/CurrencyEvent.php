@@ -27,16 +27,10 @@ class CurrencyEvent extends Event
      */
     public const DELETE = 'currency.delete';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     */
     public function __construct(protected readonly Currency $currency)
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     public function getCurrency(): Currency
     {
         return $this->currency;

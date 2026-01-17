@@ -20,16 +20,10 @@ class EnvironmentFileSetting
         EnvironmentType::PRODUCTION,
     ];
 
-    /**
-     * @param string $environmentFileDirectory
-     */
     public function __construct(protected readonly string $environmentFileDirectory)
     {
     }
 
-    /**
-     * @return string
-     */
     public function getEnvironment(): string
     {
         $environments = static::ENVIRONMENTS_DEFAULT;
@@ -43,9 +37,6 @@ class EnvironmentFileSetting
         return EnvironmentType::PRODUCTION;
     }
 
-    /**
-     * @return bool
-     */
     public function isAnyEnvironmentSet(): bool
     {
         foreach (EnvironmentType::ALL as $environment) {
@@ -57,9 +48,6 @@ class EnvironmentFileSetting
         return false;
     }
 
-    /**
-     * @param string $environment
-     */
     public function createFileForEnvironment(string $environment): void
     {
         touch($this->getEnvironmentFilePath($environment));
@@ -76,10 +64,6 @@ class EnvironmentFileSetting
         }
     }
 
-    /**
-     * @param string $environment
-     * @return string
-     */
     public function getEnvironmentFilePath(string $environment): string
     {
         return $this->environmentFileDirectory . '/' . static::FILE_NAMES_BY_ENVIRONMENT[$environment];

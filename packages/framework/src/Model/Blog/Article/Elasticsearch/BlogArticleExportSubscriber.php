@@ -14,14 +14,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class BlogArticleExportSubscriber extends AbstractExportSubscriber
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler $blogArticleExportScheduler
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex $index
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         BlogArticleExportScheduler $blogArticleExportScheduler,
         EntityManagerInterface $entityManager,
@@ -40,9 +32,6 @@ class BlogArticleExportSubscriber extends AbstractExportSubscriber
         );
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {

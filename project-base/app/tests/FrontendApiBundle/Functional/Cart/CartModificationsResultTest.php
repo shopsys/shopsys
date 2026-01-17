@@ -66,9 +66,6 @@ class CartModificationsResultTest extends GraphQlTestCase
      */
     private PaymentDataFactory $paymentDataFactory;
 
-    /**
-     * @return iterable
-     */
     public static function getTransportWithExceededWeightLimitDataProvider(): iterable
     {
         yield 'without promo code' => [
@@ -245,9 +242,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         self::assertTrue($transportModifications['transportUnavailable']);
     }
 
-    /**
-     * @param string|null $promoCodeReference
-     */
     #[DataProvider('getTransportWithExceededWeightLimitDataProvider')]
     public function testTransportWithExceededWeightLimitIsReported(?string $promoCodeReference): void
     {
@@ -294,10 +288,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         self::assertTrue($paymentModifications['paymentUnavailable']);
     }
 
-    /**
-     * @param int $productQuantity
-     * @return array
-     */
     private function addTestingProductToNewCart(int $productQuantity): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
@@ -334,11 +324,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->handleDispatchedRecalculationMessages();
     }
 
-    /**
-     * @param int $productQuantity
-     * @param string $cartUuid
-     * @return array
-     */
     private function addTestingProductToExistingCartAndGetTransportModifications(
         int $productQuantity,
         string $cartUuid,
@@ -354,10 +339,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         return $data['cart']['modifications']['transportModifications'];
     }
 
-    /**
-     * @param string $cartUuid
-     * @return array
-     */
     private function getTransportModificationsForCartQuery(string $cartUuid): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql', [
@@ -368,10 +349,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         return $data['modifications']['transportModifications'];
     }
 
-    /**
-     * @param string $cartUuid
-     * @return array
-     */
     private function getPaymentModifications(string $cartUuid): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql', [
@@ -382,11 +359,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         return $modifications['paymentModifications'];
     }
 
-    /**
-     * @param string $cartUuid
-     * @param \App\Model\Transport\Transport $transport
-     * @param string|null $pickupPlaceIdentifier
-     */
     private function addTransportToCart(
         string $cartUuid,
         Transport $transport,
@@ -401,9 +373,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->getResponseDataForGraphQlType($response, 'ChangeTransportInCart');
     }
 
-    /**
-     * @param string $transportReferenceName
-     */
     private function changeTransportPrice(string $transportReferenceName): void
     {
         // refresh transport, so we're able to work with it as with an entity
@@ -413,9 +382,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->transportFacade->edit($transport, $transportData);
     }
 
-    /**
-     * @param string $transportReferenceName
-     */
     private function hideTransport(string $transportReferenceName): void
     {
         // refresh transport, so we're able to work with it as with an entity
@@ -425,10 +391,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->transportFacade->edit($transport, $transportData);
     }
 
-    /**
-     * @param string $cartUuid
-     * @param \App\Model\Payment\Payment $payment
-     */
     private function addPaymentToCart(string $cartUuid, Payment $payment): void
     {
         $changeTransportInCartMutation = '
@@ -444,9 +406,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->getResponseContentForQuery($changeTransportInCartMutation);
     }
 
-    /**
-     * @param string $paymentReferenceName
-     */
     private function changePaymentPrice(string $paymentReferenceName): void
     {
         // refresh transport, so we're able to work with it as with an entity
@@ -456,9 +415,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->paymentFacade->edit($payment, $paymentData);
     }
 
-    /**
-     * @param \App\Model\Transport\Transport $transport
-     */
     private function setTransportAsExcludedForTestingProduct(Transport $transport): void
     {
         // refresh testing product
@@ -471,10 +427,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->productFacade->edit($this->testingProduct->getId(), $productData);
     }
 
-    /**
-     * @param string $cartUuid
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     */
     private function applyPromoCodeToCart(string $cartUuid, PromoCode $promoCode): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ApplyPromoCodeToCart.graphql', [

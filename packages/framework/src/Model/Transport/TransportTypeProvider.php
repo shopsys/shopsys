@@ -14,9 +14,6 @@ class TransportTypeProvider
     ) {
     }
 
-    /**
-     * @return array
-     */
     public function getAllIndexedByTranslations(): array
     {
         $allIndexedByTranslations = [];

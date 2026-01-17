@@ -25,7 +25,6 @@ class SliderItemFacade extends BaseSliderItemFacade
 
     /**
      * @param \App\Model\Slider\SliderItemData $sliderItemData
-     * @return \App\Model\Slider\SliderItem
      */
     #[Override]
     public function create(SliderItemData $sliderItemData): SliderItem

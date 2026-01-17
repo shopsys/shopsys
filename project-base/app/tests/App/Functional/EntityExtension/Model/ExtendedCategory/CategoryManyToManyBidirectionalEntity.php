@@ -25,18 +25,12 @@ class CategoryManyToManyBidirectionalEntity
     #[ORM\Column(type: 'string')]
     protected string $name;
 
-    /**
-     * @param string $name
-     */
     public function __construct(string $name)
     {
         $this->name = $name;
         $this->categories = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
@@ -50,9 +44,6 @@ class CategoryManyToManyBidirectionalEntity
         return $this->categories->getValues();
     }
 
-    /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory $category
-     */
     public function addCategory(ExtendedCategory $category): void
     {
         $this->categories->add($category);

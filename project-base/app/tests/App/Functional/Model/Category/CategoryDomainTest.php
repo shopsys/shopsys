@@ -121,7 +121,6 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \App\Model\Category\Category $category
      * @return \App\Model\Category\Category
      */
     private function getRefreshedCategoryFromDatabase(Category $category)

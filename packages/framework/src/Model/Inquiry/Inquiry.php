@@ -102,9 +102,6 @@ class Inquiry
     #[ORM\ManyToOne(targetEntity: CustomerUser::class)]
     protected $customerUser;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryData $inquiryData
-     */
     public function __construct(InquiryData $inquiryData)
     {
         $this->createdAt = $inquiryData->createdAt ?? new DatePoint();
@@ -113,9 +110,6 @@ class Inquiry
         $this->setData($inquiryData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryData $inquiryData
-     */
     protected function setData(InquiryData $inquiryData): void
     {
         if ($inquiryData->product === null && $inquiryData->productCatnum === null) {
@@ -163,9 +157,6 @@ class Inquiry
         return $this->lastName;
     }
 
-    /**
-     * @return string
-     */
     public function getFullName(): string
     {
         return $this->firstName . ' ' . $this->lastName;

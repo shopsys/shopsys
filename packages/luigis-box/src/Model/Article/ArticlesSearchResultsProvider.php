@@ -16,11 +16,6 @@ use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class ArticlesSearchResultsProvider extends SearchResultsProvider implements ArticlesSearchResultsProviderInterface
 {
-    /**
-     * @param string $enabledDomainIds
-     * @param \Overblog\DataLoader\DataLoaderInterface $luigisBoxBatchLoader
-     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory
-     */
     public function __construct(
         string $enabledDomainIds,
         protected readonly DataLoaderInterface $luigisBoxBatchLoader,
@@ -29,10 +24,6 @@ class ArticlesSearchResultsProvider extends SearchResultsProvider implements Art
         parent::__construct($enabledDomainIds);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|array
-     */
     #[Override]
     public function getArticlesSearchResults(
         Argument $argument,

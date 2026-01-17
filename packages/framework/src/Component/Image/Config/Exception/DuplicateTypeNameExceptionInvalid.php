@@ -12,7 +12,6 @@ class DuplicateTypeNameExceptionInvalid extends InvalidImageConfigException
 
     /**
      * @param string|null $typeName
-     * @param \Exception|null $previous
      */
     public function __construct($typeName = null, ?Exception $previous = null)
     {

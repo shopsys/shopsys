@@ -15,21 +15,12 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
  */
 class FilterQueryFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
     ) {
     }
 
-    /**
-     * @param int|null $offset
-     * @param int|null $limit
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQuery
-     */
     public function create(?int $offset = null, ?int $limit = null): FilterQuery
     {
         $filterQuery = new FilterQuery($this->getIndexName());
@@ -40,21 +31,11 @@ class FilterQueryFactory
         return $filterQueryIncludingOffsetAndLimit;
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQuery
-     */
     public function createFilteredByUuid(string $uuid): FilterQuery
     {
         return $this->create()->filterByUuid($uuid);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param int|null $offset
-     * @param int|null $limit
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQuery
-     */
     public function createFilteredByBlogCategory(
         BlogCategory $blogCategory,
         ?int $offset = null,
@@ -63,18 +44,11 @@ class FilterQueryFactory
         return $this->create($offset, $limit)->filterByCategory($blogCategory);
     }
 
-    /**
-     * @param string $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQuery
-     */
     public function createFilteredBySlug(string $urlSlug): FilterQuery
     {
         return $this->create()->filterBySlug($urlSlug);
     }
 
-    /**
-     * @return string
-     */
     protected function getIndexName(): string
     {
         return $this->indexDefinitionLoader->getIndexDefinition(BlogArticleIndex::getName(), $this->domain->getId())->getIndexAlias();

@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables;
 
 class InquiryMailTemplateVariablesProvider
 {
-    /**
-     * @param string $mailTemplateType
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     public function create(string $mailTemplateType): MailTemplateVariables
     {
         $mailTemplateName = $mailTemplateType === InquiryMail::CUSTOMER_MAIL_TEMPLATE_NAME

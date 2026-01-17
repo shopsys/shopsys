@@ -11,8 +11,6 @@ abstract class FunctionalTestCase extends WebTestCase
 {
     /**
      * Method is declared as final, so it's not unintentionally overridden by using SymfonyTestContainer trait
-     *
-     * @return \Psr\Container\ContainerInterface
      */
     #[Override]
     final public function createContainer(): ContainerInterface

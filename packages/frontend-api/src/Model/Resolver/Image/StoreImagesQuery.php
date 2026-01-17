@@ -11,11 +11,6 @@ class StoreImagesQuery extends ImagesQuery
 {
     protected const STORE_ENTITY_NAME = 'store';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store|array $data
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function imagesByStorePromiseQuery(Store|array $data, ?string $type): Promise
     {
         $storeId = $data instanceof Store ? $data->getId() : $data['id'];

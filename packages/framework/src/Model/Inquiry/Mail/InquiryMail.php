@@ -36,14 +36,6 @@ class InquiryMail
 
     public const string VARIABLE_ADMIN_INQUIRY_DETAIL_URL = '{adminInquiryDetailUrl}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Image\ProductImageFacade $productImageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Mailer\MailerHelper $mailerHelper
-     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly DomainRouterFactory $domainRouterFactory,
@@ -54,11 +46,6 @@ class InquiryMail
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry $inquiry
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
-     */
     public function createMessageForAdmin(MailTemplate $template, Inquiry $inquiry): MessageData
     {
         return new MessageData(
@@ -73,11 +60,6 @@ class InquiryMail
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry $inquiry
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
-     */
     public function createMessageForCustomer(MailTemplate $template, Inquiry $inquiry): MessageData
     {
         return new MessageData(
@@ -93,7 +75,6 @@ class InquiryMail
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry $inquiry
      * @return array<string, string>
      */
     protected function getSubjectVariablesReplacements(Inquiry $inquiry): array
@@ -111,7 +92,6 @@ class InquiryMail
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry $inquiry
      * @return array<string, string>
      */
     protected function getBodyVariablesReplacements(Inquiry $inquiry): array
@@ -125,7 +105,6 @@ class InquiryMail
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry $inquiry
      * @return array<string, string>
      */
     protected function getBodyVariablesReplacementsForAdmin(Inquiry $inquiry): array
@@ -140,10 +119,6 @@ class InquiryMail
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry $inquiry
-     * @return string
-     */
     protected function getProductUrl(Inquiry $inquiry): string
     {
         if ($inquiry->getProduct() === null) {

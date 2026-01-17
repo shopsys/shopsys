@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransfo
 class ProductFilterDataToQueryTransformer extends BaseProductFilterDataToQueryTransformer
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \App\Model\Product\Search\FilterQuery $filterQuery
      * @return \App\Model\Product\Search\FilterQuery
      */

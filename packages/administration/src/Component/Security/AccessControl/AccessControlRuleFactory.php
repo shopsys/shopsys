@@ -14,9 +14,6 @@ use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
  */
 final class AccessControlRuleFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
-     */
     public function __construct(
         private readonly RoleRegistryInterface $roleRegistry,
     ) {
@@ -28,7 +25,6 @@ final class AccessControlRuleFactory
      * @param string $roleIdentifier Role identifier (e.g., 'ROLE_ADMIN', 'ROLE_PRODUCT_VIEW')
      * @param array<string|\Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod> $methods HTTP methods this rule applies to
      * @throws \InvalidArgumentException
-     * @return \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRule
      */
     public function create(string $roleIdentifier, array $methods = []): AccessControlRule
     {

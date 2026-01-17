@@ -159,10 +159,6 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
         self::assertNull($result);
     }
 
-    /**
-     * @param array $promoCodeFlags
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     */
     private function createPromoCodeWithFlags(array $promoCodeFlags): PromoCode
     {
         $promoCodeLimit = $this->promoCodeLimitFactory->create('1', '10');
@@ -177,34 +173,21 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
         return $this->promoCodeFacade->create($promoCodeData);
     }
 
-    /**
-     * @return \App\Model\Product\Product
-     */
     private function getProductWithActionFlag(): Product
     {
         return $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
     }
 
-    /**
-     * @return \App\Model\Product\Product
-     */
     private function getProductWithoutFlag(): Product
     {
         return $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 3, Product::class);
     }
 
-    /**
-     * @return \App\Model\Product\Product
-     */
     private function getProductWithNewAndMadeInCzFlags(): Product
     {
         return $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 19, Product::class);
     }
 
-    /**
-     * @param string $referenceName
-     * @return \App\Model\Product\Flag\Flag
-     */
     private function getFlag(string $referenceName): Flag
     {
         return $this->getReference($referenceName, Flag::class);

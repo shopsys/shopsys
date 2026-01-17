@@ -26,12 +26,6 @@ class FrontendApiTypeMaker extends AbstractMaker
 
     protected ?string $selectedEntityClass = null;
 
-    /**
-     * @param \Shopsys\MakerBundle\Utils\EntityChoiceHelper $entityChoiceHelper
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param string $projectDir
-     */
     public function __construct(
         protected readonly EntityChoiceHelper $entityChoiceHelper,
         protected readonly EntityManagerInterface $entityManager,
@@ -57,11 +51,6 @@ class FrontendApiTypeMaker extends AbstractMaker
         return 'Create a new frontend API types yaml definition for the selected entity';
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
-     * @param \Symfony\Component\Console\Command\Command $command
-     */
     #[Override]
     public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
     {
@@ -70,11 +59,6 @@ class FrontendApiTypeMaker extends AbstractMaker
         parent::interact($input, $io, $command);
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
-     * @param \Symfony\Bundle\MakerBundle\Generator $generator
-     */
     #[Override]
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
@@ -103,11 +87,6 @@ class FrontendApiTypeMaker extends AbstractMaker
         $this->writeSuccessMessage($io);
     }
 
-    /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $metadata
-     * @param string $fieldName
-     * @return string
-     */
     protected function guessApiType(ClassMetadata $metadata, string $fieldName): string
     {
         if ($metadata->isSingleValuedAssociation($fieldName)) {
@@ -135,8 +114,6 @@ class FrontendApiTypeMaker extends AbstractMaker
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $metadata
-     * @param string $fieldName
      * @return array{type: string, description: string}
      */
     protected function getFieldDefinition(ClassMetadata $metadata, string $fieldName): array
@@ -148,7 +125,6 @@ class FrontendApiTypeMaker extends AbstractMaker
     }
 
     /**
-     * @param string $entityClass
      * @return array<string, array{type: string, description: string}>
      */
     protected function getFieldsConfig(string $entityClass): array
@@ -174,10 +150,6 @@ class FrontendApiTypeMaker extends AbstractMaker
         return $fieldsConfig;
     }
 
-    /**
-     * @param string $suffix
-     * @return string|null
-     */
     protected function findRelatedClass(string $suffix): ?string
     {
         if (class_exists($this->selectedEntityClass . $suffix)) {
@@ -191,18 +163,11 @@ class FrontendApiTypeMaker extends AbstractMaker
         return null;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Command\Command $command
-     * @param \Symfony\Bundle\MakerBundle\InputConfiguration $inputConfig
-     */
     #[Override]
     public function configureCommand(Command $command, InputConfiguration $inputConfig)
     {
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\DependencyBuilder $dependencies
-     */
     #[Override]
     public function configureDependencies(DependencyBuilder $dependencies)
     {

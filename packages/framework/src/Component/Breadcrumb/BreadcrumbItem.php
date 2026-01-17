@@ -13,7 +13,6 @@ class BreadcrumbItem
     /**
      * @param string $name
      * @param string|null $routeName
-     * @param array $routeParameters
      */
     public function __construct($name, $routeName = null, protected readonly array $routeParameters = [])
     {

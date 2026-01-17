@@ -13,19 +13,12 @@ class ProductFilterToLuigisBoxFilterMapper
     protected const string FILTER_OR = 'f';
     protected const string FILTER_AND = 'f_must';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @return array
-     */
     public function createEmpty(): array
     {
         return [
@@ -34,12 +27,6 @@ class ProductFilterToLuigisBoxFilterMapper
         ];
     }
 
-    /**
-     * @param string $luigisBoxType
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @return array
-     */
     public function map(string $luigisBoxType, ProductFilterData $productFilterData, Domain $domain): array
     {
         $luigisBoxFilter = $this->createEmpty();
@@ -53,10 +40,6 @@ class ProductFilterToLuigisBoxFilterMapper
         return $luigisBoxFilter;
     }
 
-    /**
-     * @param string $luigisBoxType
-     * @return array
-     */
     public function mapOnlyType(string $luigisBoxType): array
     {
         $luigisBoxFilter = $this->createEmpty();
@@ -65,11 +48,6 @@ class ProductFilterToLuigisBoxFilterMapper
         return $luigisBoxFilter;
     }
 
-    /**
-     * @param string $luigisBoxType
-     * @param array $luigisBoxFilter
-     * @return array
-     */
     protected function mapType(string $luigisBoxType, array $luigisBoxFilter): array
     {
         $luigisBoxFilter[self::FILTER_OR][] = 'type:' . $luigisBoxType;
@@ -77,11 +55,6 @@ class ProductFilterToLuigisBoxFilterMapper
         return $luigisBoxFilter;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param array $luigisBoxFilter
-     * @return array
-     */
     protected function mapPrice(ProductFilterData $productFilterData, array $luigisBoxFilter): array
     {
         if ($productFilterData->minimalPrice !== null || $productFilterData->maximalPrice !== null) {
@@ -94,11 +67,6 @@ class ProductFilterToLuigisBoxFilterMapper
         return $luigisBoxFilter;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param array $luigisBoxFilter
-     * @return array
-     */
     protected function mapAvailability(
         ProductFilterData $productFilterData,
         array $luigisBoxFilter,
@@ -110,12 +78,6 @@ class ProductFilterToLuigisBoxFilterMapper
         return $luigisBoxFilter;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param array $luigisBoxFilter
-     * @param string $locale
-     * @return array
-     */
     protected function mapFlags(ProductFilterData $productFilterData, array $luigisBoxFilter, string $locale): array
     {
         foreach ($productFilterData->flags as $flag) {
@@ -125,11 +87,6 @@ class ProductFilterToLuigisBoxFilterMapper
         return $luigisBoxFilter;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param array $luigisBoxFilter
-     * @return array
-     */
     protected function mapBrands(ProductFilterData $productFilterData, array $luigisBoxFilter): array
     {
         foreach ($productFilterData->brands as $brand) {
@@ -139,11 +96,6 @@ class ProductFilterToLuigisBoxFilterMapper
         return $luigisBoxFilter;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param array $luigisBoxFilter
-     * @return array
-     */
     protected function mapParameters(ProductFilterData $productFilterData, array $luigisBoxFilter): array
     {
         foreach ($productFilterData->parameters as $parameterFilterData) {

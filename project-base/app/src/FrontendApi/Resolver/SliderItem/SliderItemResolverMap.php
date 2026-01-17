@@ -11,9 +11,6 @@ use Override;
 
 final class SliderItemResolverMap extends ResolverMap
 {
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

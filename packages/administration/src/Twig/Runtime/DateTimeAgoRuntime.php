@@ -15,11 +15,6 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 class DateTimeAgoRuntime implements RuntimeExtensionInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface $dateTimeFormatter
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly DateTimeFormatterInterface $dateTimeFormatter,
         protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
@@ -27,10 +22,6 @@ class DateTimeAgoRuntime implements RuntimeExtensionInterface
     ) {
     }
 
-    /**
-     * @param \DateTimeInterface|null $dateTime
-     * @return string
-     */
     public function dateTimeAgo(?DateTimeInterface $dateTime): string
     {
         if ($dateTime === null) {

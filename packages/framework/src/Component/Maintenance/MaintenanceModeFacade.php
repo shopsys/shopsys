@@ -12,9 +12,6 @@ class MaintenanceModeFacade
 
     protected ?bool $isMaintenanceModeEnabled = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Redis\RedisClientFacade $redisClientFacade
-     */
     public function __construct(
         protected readonly RedisClientFacade $redisClientFacade,
     ) {
@@ -32,9 +29,6 @@ class MaintenanceModeFacade
         $this->isMaintenanceModeEnabled = true;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         if ($this->isMaintenanceModeEnabled === null) {

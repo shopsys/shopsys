@@ -59,12 +59,6 @@ class GetArticlesTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @param array $keys
-     * @param array $actual
-     * @param array $expected
-     * @param string $message
-     */
     private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected, string $message): void
     {
         foreach ($keys as $key) {
@@ -73,9 +67,6 @@ class GetArticlesTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @return array
-     */
     private function getArticlesDataProvider(): array
     {
         return [
@@ -122,9 +113,7 @@ class GetArticlesTest extends GraphQlTestCase
     }
 
     /**
-     * @param int $articlesCount
      * @param string[] $placements
-     * @return array
      */
     private function getFirstArticlesCountResponse(
         int $articlesCount = self::ARTICLES_TOTAL_COUNT,
@@ -137,9 +126,7 @@ class GetArticlesTest extends GraphQlTestCase
     }
 
     /**
-     * @param int $articlesCount
      * @param string[] $placements
-     * @return array
      */
     private function getLastCountOfArticlesResponse(int $articlesCount, array $placements = []): array
     {
@@ -149,9 +136,6 @@ class GetArticlesTest extends GraphQlTestCase
         ]);
     }
 
-    /**
-     * @return array
-     */
     private function getExpectedArticles(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -475,10 +459,6 @@ class GetArticlesTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
     private function generateUrlForHomepageOnDomain(int $domainId): string
     {
         $router = $this->domainRouterFactory->getRouter($domainId);
@@ -486,11 +466,6 @@ class GetArticlesTest extends GraphQlTestCase
         return $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    /**
-     * @param string $categoryReferenceName
-     * @param int $domainId
-     * @return string
-     */
     private function generateUrlForCategoryOnDomain(string $categoryReferenceName, int $domainId): string
     {
         $router = $this->domainRouterFactory->getRouter($domainId);

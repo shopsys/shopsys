@@ -91,9 +91,6 @@ class MessageIdNormalizerTest extends TestCase
         $normalizedCatalogue->get($message->getId(), $message->getDomain());
     }
 
-    /**
-     * @param string $messageId
-     */
     #[DataProvider('emptyMessageIdProvider')]
     public function testEmptyMessageIsNotAddedToCatalogue(string $messageId): void
     {
@@ -108,9 +105,6 @@ class MessageIdNormalizerTest extends TestCase
         $this->assertFalse($normalizedCatalogue->has($messageWithOnlyWhitespace));
     }
 
-    /**
-     * @return iterable
-     */
     public static function emptyMessageIdProvider(): iterable
     {
         yield 'empty string' => [''];

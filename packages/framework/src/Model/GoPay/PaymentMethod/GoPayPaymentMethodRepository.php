@@ -11,16 +11,10 @@ use Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwift;
 
 class GoPayPaymentMethodRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getPaymentMethodRepository(): EntityRepository
     {
         return $this->em->getRepository(GoPayPaymentMethod::class);
@@ -35,7 +29,6 @@ class GoPayPaymentMethodRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod[]
      */
     public function getAllIndexedByIdentifierByDomainId(int $domainId): array
@@ -65,7 +58,6 @@ class GoPayPaymentMethodRepository
     }
 
     /**
-     * @param int $currencyId
      * @return \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwift[]
      */
     public function getBankSwiftsByCurrencyId(int $currencyId): array

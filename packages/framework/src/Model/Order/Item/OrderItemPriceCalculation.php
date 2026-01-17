@@ -19,14 +19,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory;
 
 class OrderItemPriceCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory $vatFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     */
     public function __construct(
         protected readonly PriceCalculation $priceCalculation,
         protected readonly VatFactory $vatFactory,
@@ -37,11 +29,6 @@ class OrderItemPriceCalculation
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function calculatePriceWithoutVatForInputPriceWithVat(OrderItemData $orderItemData, int $domainId): Money
     {
         $vatData = $this->vatDataFactory->create();
@@ -53,12 +40,6 @@ class OrderItemPriceCalculation
         return $orderItemData->unitPriceWithVat->subtract($vatAmount);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function calculatePriceWithVatForInputPriceWithoutVat(
         OrderItemData $orderItemData,
         int $domainId,
@@ -72,10 +53,6 @@ class OrderItemPriceCalculation
         return $this->rounding->roundPriceWithVatByCurrency($this->priceCalculation->applyVatPercent($orderItemData->unitPriceWithoutVat, $vat), $currency);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function calculateTotalPrice(OrderItem $orderItem): PriceInterface
     {
         if ($orderItem->hasForcedTotalPrice()) {

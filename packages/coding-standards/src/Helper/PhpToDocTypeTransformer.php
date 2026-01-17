@@ -10,18 +10,12 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpToDocTypeTransformer
 {
-    /**
-     * @param \Shopsys\CodingStandards\Helper\FqnNameResolver $fqnNameResolver
-     */
     public function __construct(private readonly FqnNameResolver $fqnNameResolver)
     {
     }
 
     /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\TypeAnalysis|null $typeAnalysis
      * @param mixed $default
-     * @return string
      */
     public function transform(Tokens $tokens, ?TypeAnalysis $typeAnalysis, $default = null): string
     {
@@ -49,10 +43,6 @@ final class PhpToDocTypeTransformer
         return $this->preSlashType($type);
     }
 
-    /**
-     * @param string $type
-     * @return string
-     */
     private function preSlashType(string $type): string
     {
         if (Strings::startsWith($type, '\\')) {
@@ -66,11 +56,6 @@ final class PhpToDocTypeTransformer
         return $type;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param string $type
-     * @return string
-     */
     private function createFromNullable(Tokens $tokens, string $type): string
     {
         // cleanup from "?"

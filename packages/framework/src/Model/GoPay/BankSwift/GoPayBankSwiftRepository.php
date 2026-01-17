@@ -12,23 +12,16 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class GoPayBankSwiftRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getBankSwiftRepository(): EntityRepository
     {
         return $this->em->getRepository(GoPayBankSwift::class);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $paymentMethod
      * @return \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwift[]
      */
     public function getAllIndexedBySwiftByPaymentMethod(GoPayPaymentMethod $paymentMethod): array
@@ -42,12 +35,6 @@ class GoPayBankSwiftRepository
             ->execute();
     }
 
-    /**
-     * @param string $goPayBankSwift
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwift|null
-     */
     public function findBySwiftAndPaymentMethodAndCurrency(
         string $goPayBankSwift,
         GoPayPaymentMethod $goPayPaymentMethod,

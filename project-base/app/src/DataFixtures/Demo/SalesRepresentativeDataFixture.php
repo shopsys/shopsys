@@ -18,19 +18,12 @@ class SalesRepresentativeDataFixture extends AbstractReferenceFixture
     public const string SALES_REPRESENTATIVE_1 = 'sales_representative_1';
     public const string SALES_REPRESENTATIVE_2 = 'sales_representative_2';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade $salesRepresentativeFacade
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactory $salesRepresentativeDataFactory
-     */
     public function __construct(
         private readonly SalesRepresentativeFacade $salesRepresentativeFacade,
         private readonly SalesRepresentativeDataFactory $salesRepresentativeDataFactory,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

@@ -10,18 +10,11 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 
 class OrderPaymentsConfigFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     */
     public function __construct(
         protected readonly PaymentFacade $paymentFacade,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrontendApiBundle\Model\Order\OrderPaymentsConfig
-     */
     public function createForOrder(Order $order): OrderPaymentsConfig
     {
         $payments = $this->paymentFacade->getVisibleForOrder($order);

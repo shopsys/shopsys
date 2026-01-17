@@ -11,10 +11,6 @@ class AbstractProductPaginatorArgumentsBuilder extends AbstractPaginatorArgument
 {
     protected const CONFIG_ORDER_TYPE_KEY = 'orderingModeType';
 
-    /**
-     * @param array $config
-     * @return array
-     */
     #[Override]
     public function toMappingDefinition(array $config): array
     {
@@ -34,7 +30,6 @@ class AbstractProductPaginatorArgumentsBuilder extends AbstractPaginatorArgument
     }
 
     /**
-     * @param array $config
      * @throws \Shopsys\FrontendApiBundle\Component\Arguments\Exception\MandatoryArgumentMissingException
      */
     protected function checkMandatoryFields(array $config): void

@@ -30,9 +30,6 @@ class DomainInfoCommand extends Command
     protected const OPTION_DEDUPLICATE = 'deduplicate';
     protected const OPTION_ONELINE = 'oneline';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly Domain $domain)
     {
         parent::__construct();
@@ -101,7 +98,6 @@ class DomainInfoCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
     protected function getDomainConfigs(InputInterface $input): array
@@ -123,11 +119,6 @@ class DomainInfoCommand extends Command
         return $domainConfigs;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string $propertyName
-     */
     protected function outputPropertyNotAccessible(
         SymfonyStyle $io,
         DomainConfig $domainConfig,
@@ -141,8 +132,6 @@ class DomainInfoCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @param mixed[] $propertyValues
      */
     protected function outputPropertyValues(InputInterface $input, SymfonyStyle $io, array $propertyValues): void

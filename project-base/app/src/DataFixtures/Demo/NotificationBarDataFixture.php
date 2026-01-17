@@ -17,12 +17,6 @@ class NotificationBarDataFixture extends AbstractReferenceFixture
 {
     public const string NOTIFICATION_BAR_PREFIX = 'notification_bar_domain_';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFacade $notificationBarFacade
-     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarDataFactory $notificationBarDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
-     */
     public function __construct(
         private readonly NotificationBarFacade $notificationBarFacade,
         private readonly NotificationBarDataFactory $notificationBarDataFactory,
@@ -31,9 +25,6 @@ class NotificationBarDataFixture extends AbstractReferenceFixture
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

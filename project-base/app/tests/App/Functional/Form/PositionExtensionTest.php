@@ -18,9 +18,6 @@ class PositionExtensionTest extends FunctionalTestCase
         $this->assertPositions($form->createView(), ['a', 'b', 'c', 'd', 'e', 'f', 'g']);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     private function getForm(): FormInterface
     {
         /** @var \Symfony\Component\Form\FormFactoryInterface $formFactory */
@@ -41,7 +38,6 @@ class PositionExtensionTest extends FunctionalTestCase
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $view
      * @param string[] $expected
      */
     private function assertPositions(FormView $view, array $expected): void

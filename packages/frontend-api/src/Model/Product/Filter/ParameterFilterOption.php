@@ -14,11 +14,7 @@ class ParameterFilterOption
     public ?float $maximalValue = null;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption[] $values
-     * @param bool $isCollapsed
-     * @param bool $isSelectable
-     * @param float|null $selectedValue
      */
     public function __construct(
         public readonly Parameter $parameter,
@@ -34,25 +30,16 @@ class ParameterFilterOption
         }
     }
 
-    /**
-     * @return string
-     */
     public function getUuid(): string
     {
         return $this->parameter->getUuid();
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->parameter->getName();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null
-     */
     public function getUnit(): ?Unit
     {
         return $this->parameter->getUnit();

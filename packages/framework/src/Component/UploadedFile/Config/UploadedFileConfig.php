@@ -16,20 +16,12 @@ class UploadedFileConfig implements UploadedFileConfigInterface
     {
     }
 
-    /**
-     * @param object $entity
-     * @return string
-     */
     #[Override]
     public function getEntityName(object $entity): string
     {
         return $this->getUploadedFileEntityConfig($entity)->getEntityName();
     }
 
-    /**
-     * @param object $entity
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
-     */
     #[Override]
     public function getUploadedFileEntityConfig(object $entity): UploadedFileEntityConfig
     {
@@ -42,10 +34,6 @@ class UploadedFileConfig implements UploadedFileConfigInterface
         throw new UploadedFileEntityConfigNotFoundException(get_class($entity));
     }
 
-    /**
-     * @param object $entity
-     * @return bool
-     */
     #[Override]
     public function hasUploadedFileEntityConfig(object $entity): bool
     {
@@ -67,10 +55,6 @@ class UploadedFileConfig implements UploadedFileConfigInterface
         return $this->uploadedFileEntityConfigsByClass;
     }
 
-    /**
-     * @param string $entityClass
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
-     */
     #[Override]
     public function getUploadedFileEntityConfigByClass(string $entityClass): UploadedFileEntityConfig
     {
@@ -83,10 +67,6 @@ class UploadedFileConfig implements UploadedFileConfigInterface
         throw new UploadedFileEntityConfigNotFoundException($entityClass);
     }
 
-    /**
-     * @param string $entityName
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
-     */
     protected function getUploadedFileEntityConfigByName(string $entityName): UploadedFileEntityConfig
     {
         foreach ($this->uploadedFileEntityConfigsByClass as $entityConfig) {
@@ -98,11 +78,6 @@ class UploadedFileConfig implements UploadedFileConfigInterface
         throw new UploadedFileEntityConfigNotFoundException($entityName);
     }
 
-    /**
-     * @param string $entityName
-     * @param string $typeName
-     * @return bool
-     */
     #[Override]
     public function isRequiredFriendlyName(
         string $entityName,

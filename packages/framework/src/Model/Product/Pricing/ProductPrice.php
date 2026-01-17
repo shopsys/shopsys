@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 final class ProductPrice implements ProductPriceInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param bool $priceFrom
-     */
     public function __construct(
         private readonly PriceInterface $price,
         private readonly PricingGroup $pricingGroup,

@@ -32,10 +32,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method \App\Model\Product\ProductTranslation translation(?string $locale = null)
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\ProductTranslation> $translations
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\ProductDomain> $domains
- * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
+ * @method \App\Model\Product\ProductDomain getProductDomain( $domainId)
  * @property \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
  * @method \Shopsys\FrameworkBundle\Model\Product\Unit\Unit getUnit()
- * @method \App\Model\Product\Flag\Flag[] getFlags(int $domainId)
+ * @method \App\Model\Product\Flag\Flag[] getFlags( $domainId)
  * @method setDomains(\App\Model\Product\ProductData $productData)
  * @method \App\Model\Product\ProductDomain[] getProductDomains()
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Transport\Transport> $excludedTransports
@@ -43,6 +43,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method \App\Model\Transport\Transport[] getExcludedTransports()
  * @method setTranslations(\App\Model\Product\ProductData $productData)
  * @method setFlags(array<int,\App\Model\Product\Flag\Flag[]> $flagsByDomainId)
+ * @method static \App\Model\Product\Product create( $productData)
+ * @method static \App\Model\Product\Product createMainVariant( $productData, \App\Model\Product\Product[] $variants)
  */
 #[ORM\Table(name: 'products')]
 #[ORM\Entity]
@@ -155,7 +157,6 @@ class Product extends BaseProduct
     }
 
     /**
-     * @param int $domainId
      * @return string[]
      */
     public function getAllNonEmptyShortDescriptionUsp(int $domainId): array
@@ -203,9 +204,6 @@ class Product extends BaseProduct
         }
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getCatnum(): string
     {

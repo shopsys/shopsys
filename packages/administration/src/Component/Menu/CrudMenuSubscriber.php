@@ -14,10 +14,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class CrudMenuSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry $crudControllerRegistry
-     * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
-     */
     public function __construct(
         public readonly CrudControllerRegistry $crudControllerRegistry,
         public readonly CrudRouteProvider $crudRouteProvider,
@@ -35,9 +31,6 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
-     */
     public function onConfigureMenu(ConfigureMenuEvent $event): void
     {
         $rootMenu = $event->getMenu();
@@ -86,11 +79,6 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param \Knp\Menu\ItemInterface $rootMenu
-     * @param string $menuSectionName
-     * @return \Knp\Menu\ItemInterface|null
-     */
     private function findMenuItem(ItemInterface $rootMenu, string $menuSectionName): ?ItemInterface
     {
         if ($rootMenu->getName() === $menuSectionName) {

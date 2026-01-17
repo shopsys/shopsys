@@ -15,9 +15,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class OpeningHoursRangeFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\OpeningHourTimeToStringTransformer $openingHourTimeToStringTransformer
-     */
     public function __construct(
         protected readonly OpeningHourTimeToStringTransformer $openingHourTimeToStringTransformer,
     ) {

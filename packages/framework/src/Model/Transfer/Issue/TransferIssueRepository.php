@@ -17,27 +17,17 @@ class TransferIssueRepository
 {
     public const int TRANSFER_ISSUES_KEEP_DAYS_LIMIT = 7;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected EntityManagerInterface $em,
         protected readonly ClockInterface $clock,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getRepository(): EntityRepository
     {
         return $this->em->getRepository(TransferIssue::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -45,10 +35,6 @@ class TransferIssueRepository
             ->from(TransferIssue::class, 'ti');
     }
 
-    /**
-     * @param \DateTimeImmutable $fromDateTime
-     * @return int
-     */
     public function getTransferIssuesCountFrom(DateTimeImmutable $fromDateTime): int
     {
         return $this->getQueryBuilder()
@@ -60,10 +46,6 @@ class TransferIssueRepository
             ->getSingleScalarResult();
     }
 
-    /**
-     * @param \DateTimeImmutable $fromDateTime
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getTransferIssuesQueryBuilderForDataGrid(DateTimeImmutable $fromDateTime): QueryBuilder
     {
         return $this->getQueryBuilder()
@@ -76,10 +58,6 @@ class TransferIssueRepository
             ->addOrderBy('ti.id', 'DESC');
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssue|null
-     */
     public function findById(int $id): ?TransferIssue
     {
         return $this->getRepository()->find($id);

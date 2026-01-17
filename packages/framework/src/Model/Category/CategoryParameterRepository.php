@@ -12,25 +12,16 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class CategoryParameterRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getRepository(): EntityRepository
     {
         return $this->em->getRepository(CategoryParameter::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -39,7 +30,6 @@ class CategoryParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryParameter[]
      */
     public function getAllByCategory(Category $category): array
@@ -48,7 +38,6 @@ class CategoryParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryParameter[]
      */
     public function getCategoryParametersByCategorySortedByPosition(Category $category): array
@@ -63,7 +52,6 @@ class CategoryParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getParametersCollapsedByCategory(Category $category): array

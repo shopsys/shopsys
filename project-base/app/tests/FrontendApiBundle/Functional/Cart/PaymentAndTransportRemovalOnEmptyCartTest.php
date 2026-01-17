@@ -82,9 +82,6 @@ class PaymentAndTransportRemovalOnEmptyCartTest extends GraphQlTestCase
         )['cart'];
     }
 
-    /**
-     * @param string $cartUuid
-     */
     private function addPaymentToCart(string $cartUuid): void
     {
         $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
@@ -103,9 +100,6 @@ class PaymentAndTransportRemovalOnEmptyCartTest extends GraphQlTestCase
         $this->getResponseContentForQuery($changePaymentInCartMutation);
     }
 
-    /**
-     * @param string $cartUuid
-     */
     private function addTransportToCart(string $cartUuid): void
     {
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
@@ -125,7 +119,6 @@ class PaymentAndTransportRemovalOnEmptyCartTest extends GraphQlTestCase
     }
 
     /**
-     * @param string $cartUuid
      * @return array{
      *     transport: array{uuid: string}|null,
      *     payment: array{uuid: string}|null
@@ -151,8 +144,6 @@ class PaymentAndTransportRemovalOnEmptyCartTest extends GraphQlTestCase
     }
 
     /**
-     * @param string $cartUuid
-     * @param string $cartItemUuid
      * @return array{
      *     items: array<int, array{uuid: string}>,
      *     transport: array{uuid: string}|null,

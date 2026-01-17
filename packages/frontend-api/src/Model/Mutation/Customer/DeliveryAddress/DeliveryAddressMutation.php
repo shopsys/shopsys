@@ -18,13 +18,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class DeliveryAddressMutation extends BaseTokenMutation
 {
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Mutation\Customer\DeliveryAddress\DeliveryAddressDataApiFactory $deliveryAddressDataApiFactory
-     */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         protected readonly DeliveryAddressFacade $deliveryAddressFacade,
@@ -36,7 +29,6 @@ class DeliveryAddressMutation extends BaseTokenMutation
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[]
      */
     public function deleteDeliveryAddressMutation(Argument $argument): array
@@ -51,7 +43,6 @@ class DeliveryAddressMutation extends BaseTokenMutation
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[]
      */
     public function editDeliveryAddressMutation(Argument $argument): array
@@ -71,10 +62,6 @@ class DeliveryAddressMutation extends BaseTokenMutation
         return $customerUser->getCustomer()->getDeliveryAddresses();
     }
 
-    /**
-     * @param string $deliveryAddressUuid
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function setDefaultDeliveryAddressMutation(string $deliveryAddressUuid): CustomerUser
     {
         $user = $this->runCheckUserIsLogged();
@@ -95,7 +82,6 @@ class DeliveryAddressMutation extends BaseTokenMutation
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[]
      */
     public function createDeliveryAddressMutation(Argument $argument): array

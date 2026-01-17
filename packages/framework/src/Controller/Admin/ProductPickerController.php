@@ -23,15 +23,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProductPickerController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade $productListAdminFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade $advancedSearchProductFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductGridFactory $productGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Twig\ImageExtension $imageExtension
-     */
     public function __construct(
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly ProductListAdminFacade $productListAdminFacade,
@@ -43,15 +34,6 @@ class ProductPickerController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $jsInstanceId
-     * @param bool $allowMainVariants
-     * @param bool $allowVariants
-     * @param bool $withPrice
-     * @param int $domainId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product-picker/pick-multiple/{jsInstanceId}/{allowMainVariants}/{allowVariants}/{withPrice}/{domainId}')]
     #[RequireRole(SystemRole::ADMIN)]
     public function pickMultipleAction(
@@ -78,11 +60,6 @@ class ProductPickerController extends AdminBaseController
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $parentInstanceId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product-picker/pick-single/{parentInstanceId}/', defaults: ['parentInstanceId' => '__instance_id__'])]
     #[RequireRole(SystemRole::ADMIN)]
     public function pickSingleAction(Request $request, string $parentInstanceId): Response
@@ -101,12 +78,6 @@ class ProductPickerController extends AdminBaseController
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $viewParameters
-     * @param array $gridViewParameters
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     protected function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters): Response
     {
         $advancedSearchForm = $this->advancedSearchProductFacade->createAdvancedSearchForm($request);
@@ -139,10 +110,6 @@ class ProductPickerController extends AdminBaseController
         return $this->render('@ShopsysAdministration/content/productPicker/list.html.twig', $viewParameters);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product-picker/basic-price/', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
     #[RequireRole(SystemRole::ADMIN)]
     public function basicProductPriceAction(Request $request): Response
@@ -164,10 +131,6 @@ class ProductPickerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product-picker/product-image/', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
     #[RequireRole(SystemRole::ADMIN)]
     public function productImageAction(Request $request): Response

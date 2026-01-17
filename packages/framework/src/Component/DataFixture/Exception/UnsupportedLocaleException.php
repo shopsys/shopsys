@@ -10,7 +10,6 @@ class UnsupportedLocaleException extends Exception
 {
     /**
      * @param string $locale
-     * @param \Exception|null $previous
      */
     public function __construct($locale, ?Exception $previous = null)
     {

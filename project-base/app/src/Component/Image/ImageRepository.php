@@ -45,12 +45,6 @@ class ImageRepository extends BaseImageRepository
         return $images;
     }
 
-    /**
-     * @param $entityName
-     * @param $entityId
-     * @param $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
-     */
     #[Override]
     public function getImageByEntity($entityName, $entityId, $type): Image
     {
@@ -66,10 +60,6 @@ class ImageRepository extends BaseImageRepository
         return $image;
     }
 
-    /**
-     * @param int $imageId
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image|null
-     */
     public function findById(int $imageId): ?Image
     {
         return $this->getImageRepository()->find($imageId);

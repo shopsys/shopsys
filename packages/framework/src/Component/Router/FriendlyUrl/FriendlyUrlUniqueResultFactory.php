@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class FriendlyUrlUniqueResultFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory $friendlyUrlFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly FriendlyUrlFactory $friendlyUrlFactory,
         protected readonly Domain $domain,
@@ -19,10 +15,6 @@ class FriendlyUrlUniqueResultFactory
     }
 
     /**
-     * @param int $attempt
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param string $entityName
-     * @param array|null $matchedRouteData
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult
      */
     public function create(
@@ -53,10 +45,6 @@ class FriendlyUrlUniqueResultFactory
         return new FriendlyUrlUniqueResult(false, $newIndexedFriendlyUrl);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @return bool
-     */
     protected function isSlugConflictingWithAnotherDomainPostfix(FriendlyUrl $friendlyUrl): bool
     {
         $inputDomainConfig = $this->domain->getDomainConfigById($friendlyUrl->getDomainId());

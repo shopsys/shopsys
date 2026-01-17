@@ -25,18 +25,11 @@ class EntityConfig
      */
     protected array $properties = [];
 
-    /**
-     * @return string
-     */
     public function getEntityNamespace(): string
     {
         return sprintf(self::ENTITY_NAMESPACE_PATTERN, ucfirst($this->entityName));
     }
 
-    /**
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityTypeEnum $entityType
-     * @return string
-     */
     public function getEntityFullyQualifiedName(EntityTypeEnum $entityType = EntityTypeEnum::ENTITY): string
     {
         $entityName = $this->getEntityNamespace() . $this->entityName;
@@ -50,9 +43,6 @@ class EntityConfig
         return $entityName;
     }
 
-    /**
-     * @param \Shopsys\MakerBundle\EntityConfig\Property $entityProperty
-     */
     public function addProperty(Property $entityProperty): void
     {
         $this->properties[] = $entityProperty;
@@ -90,9 +80,6 @@ class EntityConfig
         return $this->filterPropertiesByEntityType(EntityTypeEnum::DOMAIN);
     }
 
-    /**
-     * @return \Shopsys\MakerBundle\EntityConfig\Property|null
-     */
     public function findFirstDomainProperty(): ?Property
     {
         $domainPropertiesOnly = $this->getDomainPropertiesOnly();
@@ -105,7 +92,6 @@ class EntityConfig
     }
 
     /**
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityTypeEnum $entityTypeEnum
      * @return \Shopsys\MakerBundle\EntityConfig\Property[]
      */
     protected function filterPropertiesByEntityType(EntityTypeEnum $entityTypeEnum): array
@@ -113,10 +99,6 @@ class EntityConfig
         return array_filter($this->properties, static fn (Property $property) => $property->entityType === $entityTypeEnum);
     }
 
-    /**
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityTypeEnum $fieldTargetEnum
-     * @return bool
-     */
     public function hasAnyRelationOfCollectionType(EntityTypeEnum $fieldTargetEnum = EntityTypeEnum::ENTITY): bool
     {
         foreach ($this->filterPropertiesByEntityType($fieldTargetEnum) as $property) {

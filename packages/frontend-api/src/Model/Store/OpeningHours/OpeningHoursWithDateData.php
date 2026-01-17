@@ -9,8 +9,5 @@ use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData;
 
 class OpeningHoursWithDateData extends OpeningHoursData
 {
-    /**
-     * @var \DateTimeImmutable
-     */
     public DateTimeImmutable $date;
 }

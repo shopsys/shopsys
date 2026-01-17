@@ -8,10 +8,6 @@ use DOMDocument;
 
 class XmlNormalizerHelper
 {
-    /**
-     * @param string $content
-     * @return string
-     */
     public function normalizeXml(string $content): string
     {
         $document = new DOMDocument('1.0');

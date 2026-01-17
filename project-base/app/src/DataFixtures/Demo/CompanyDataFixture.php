@@ -55,10 +55,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
     private const string KEY_CUSTOMER_ROLE_GROUP = 'roleGroup';
 
     /**
-     * @param \Faker\Generator $faker
-     * @param \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      */
@@ -72,9 +69,6 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -103,9 +97,6 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     */
     private function createCustomerUsers(Customer $customer): void
     {
         $customersDataProvider = $this->getDefaultCustomerUsersDataProvider();
@@ -120,10 +111,6 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
         }
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
-     */
     private function createCustomerWithBillingAddress(int $domainId): Customer
     {
         $billingAddressData = $this->billingAddressDataFactory->create();
@@ -140,8 +127,6 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param array $deliveryAddressArrayData
      * @return \App\Model\Customer\DeliveryAddress
      */
     private function createDeliveryAddress(Customer $customer, array $deliveryAddressArrayData): DeliveryAddress
@@ -165,8 +150,6 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param array $customerDataProvider
-     * @param int $domainId
      * @param \App\Model\Customer\DeliveryAddress $defaultDeliveryAddress
      * @return \App\Model\Customer\User\CustomerUserData
      */
@@ -194,9 +177,6 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
         return $customerUserData;
     }
 
-    /**
-     * @return array
-     */
     private function getDefaultCustomerUsersDataProvider(): array
     {
         return [

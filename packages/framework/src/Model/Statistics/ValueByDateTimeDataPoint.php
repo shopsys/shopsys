@@ -12,7 +12,6 @@ class ValueByDateTimeDataPoint
 
     /**
      * @param mixed $count
-     * @param \DateTimeInterface $dateTime
      */
     public function __construct($count, protected readonly DateTimeInterface $dateTime)
     {

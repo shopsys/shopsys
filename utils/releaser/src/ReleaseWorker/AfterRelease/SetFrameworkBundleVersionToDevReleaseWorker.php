@@ -13,19 +13,11 @@ use Shopsys\Releaser\Stage;
 
 final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \Shopsys\Releaser\FileManipulator\FrameworkBundleVersionFileManipulator $frameworkBundleVersionFileManipulator
-     */
     public function __construct(
         private readonly FrameworkBundleVersionFileManipulator $frameworkBundleVersionFileManipulator,
     ) {
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -34,10 +26,6 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
         return 'Set ShopsysFrameworkBundle version to next dev version and commit it.';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,
@@ -64,9 +52,6 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
         return [Stage::AFTER_RELEASE];
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     */
     private function updateFrameworkBundleVersion(Version $version): void
     {
         $upgradeFilePath = getcwd() . FrameworkBundleVersionFileManipulator::FRAMEWORK_BUNDLE_VERSION_FILE_PATH;

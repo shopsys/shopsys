@@ -28,12 +28,6 @@ class GenerateMigrationCommand extends Command
 
     protected Configuration $configuration;
 
-    /**
-     * @param string $vendorDirectoryPath
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
-     * @param \Shopsys\MigrationBundle\Component\Generator\MigrationsGenerator $migrationsGenerator
-     * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
-     */
     public function __construct(
         protected readonly string $vendorDirectoryPath,
         protected readonly DatabaseSchemaFacade $databaseSchemaFacade,
@@ -102,10 +96,6 @@ class GenerateMigrationCommand extends Command
         return static::RETURN_CODE_OK;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
-     */
     protected function chooseMigrationLocation(SymfonyStyle $io): MigrationsLocation
     {
         $migrationDirectoriesIndexedByNamespace = $this->configuration->getMigrationDirectories();

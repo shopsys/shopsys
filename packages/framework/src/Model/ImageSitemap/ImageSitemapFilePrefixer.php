@@ -8,7 +8,6 @@ class ImageSitemapFilePrefixer
 {
     /**
      * @param int $domainId
-     * @return string
      */
     public function getSitemapFilePrefixForDomain($domainId): string
     {

@@ -9,12 +9,7 @@ use DateTimeImmutable;
 class OrderItemsFilter
 {
     /**
-     * @param string|null $orderUuid
-     * @param \DateTimeImmutable|null $orderCreatedAfter
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]|null $orderStatuses
-     * @param string|null $catnum
-     * @param string|null $productUuid
-     * @param string|null $type
      */
     public function __construct(
         protected ?string $orderUuid = null,
@@ -26,17 +21,11 @@ class OrderItemsFilter
     ) {
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrderUuid(): ?string
     {
         return $this->orderUuid;
     }
 
-    /**
-     * @return \DateTimeImmutable|null
-     */
     public function getOrderCreatedAfter(): ?DateTimeImmutable
     {
         return $this->orderCreatedAfter;
@@ -50,25 +39,16 @@ class OrderItemsFilter
         return $this->orderStatuses;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCatnum(): ?string
     {
         return $this->catnum;
     }
 
-    /**
-     * @return string|null
-     */
     public function getProductUuid(): ?string
     {
         return $this->productUuid;
     }
 
-    /**
-     * @return string|null
-     */
     public function getType(): ?string
     {
         return $this->type;

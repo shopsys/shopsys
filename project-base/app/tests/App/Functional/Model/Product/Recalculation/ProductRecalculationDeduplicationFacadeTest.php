@@ -53,9 +53,6 @@ class ProductRecalculationDeduplicationFacadeTest extends TransactionFunctionalT
         $this->assertSame($expectedOutput, $result);
     }
 
-    /**
-     * @return array
-     */
     public static function getScopesIndexedByProductIdProvider(): array
     {
         return [
@@ -132,9 +129,6 @@ class ProductRecalculationDeduplicationFacadeTest extends TransactionFunctionalT
         $this->assertEquals($expectedStoredData, $storedData, 'Stored data is not as expected');
     }
 
-    /**
-     * @return array
-     */
     public static function updateScopesAndReturnProductIdsToDispatchProvider(): array
     {
         return [

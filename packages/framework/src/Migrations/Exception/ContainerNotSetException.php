@@ -8,9 +8,6 @@ use Exception;
 
 class ContainerNotSetException extends Exception
 {
-    /**
-     * @param string $className
-     */
     public function __construct(string $className)
     {
         parent::__construct(

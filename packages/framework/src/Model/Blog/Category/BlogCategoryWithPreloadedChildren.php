@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 class BlogCategoryWithPreloadedChildren
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryWithPreloadedChildren[] $children
      */
     public function __construct(
@@ -16,9 +15,6 @@ class BlogCategoryWithPreloadedChildren
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
-     */
     public function getBlogCategory(): BlogCategory
     {
         return $this->blogCategory;

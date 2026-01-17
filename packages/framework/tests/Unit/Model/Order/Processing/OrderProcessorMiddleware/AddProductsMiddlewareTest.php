@@ -22,7 +22,6 @@ class AddProductsMiddlewareTest extends MiddlewareTestCase
 {
     /**
      * @param array<int, array{name: string, quantity: int, unitPrice: \Shopsys\FrameworkBundle\Model\Pricing\Price}> $productsProviderInput
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $expectedTotalPrice
      */
     #[DataProvider('productsProvider')]
     public function testProductsAreAdded(
@@ -75,9 +74,6 @@ class AddProductsMiddlewareTest extends MiddlewareTestCase
         }
     }
 
-    /**
-     * @return iterable
-     */
     public static function productsProvider(): iterable
     {
         yield 'single product' => [
@@ -151,7 +147,6 @@ class AddProductsMiddlewareTest extends MiddlewareTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemPrices
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddProductsMiddleware
      */
     private function createAddProductsMiddleware(array $quantifiedItemPrices): AddProductsMiddleware
     {

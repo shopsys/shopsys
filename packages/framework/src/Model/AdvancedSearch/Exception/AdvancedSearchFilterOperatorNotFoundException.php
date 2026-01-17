@@ -10,7 +10,6 @@ class AdvancedSearchFilterOperatorNotFoundException extends Exception
 {
     /**
      * @param string $operator
-     * @param \Exception|null $previous
      */
     public function __construct($operator = '', ?Exception $previous = null)
     {

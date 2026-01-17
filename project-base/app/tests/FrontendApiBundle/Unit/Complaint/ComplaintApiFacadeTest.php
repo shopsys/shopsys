@@ -164,9 +164,6 @@ class ComplaintApiFacadeTest extends TestCase
         $this->assertSame($complaint, $result);
     }
 
-    /**
-     * @return \Overblog\GraphQLBundle\Definition\Argument
-     */
     private static function getCreateFromComplaintInputArgument(): Argument
     {
         return new Argument([

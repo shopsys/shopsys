@@ -88,10 +88,6 @@ class PaginatedProductsTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param string $orderingMode
-     * @return string
-     */
     private function getQueryWithOrderingMode(string $orderingMode): string
     {
         return '

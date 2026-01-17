@@ -33,10 +33,6 @@ class ProductStock
     #[ORM\Column(type: 'integer')]
     protected $productQuantity;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     public function __construct(Stock $stock, Product $product)
     {
         $this->stock = $stock;
@@ -44,9 +40,6 @@ class ProductStock
         $this->productQuantity = 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockData $productStockData
-     */
     public function edit(ProductStockData $productStockData): void
     {
         $this->productQuantity = $productStockData->productQuantity;

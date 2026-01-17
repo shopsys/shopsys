@@ -11,15 +11,11 @@ use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategory;
 
 class PromotedCategoryRepository
 {
-    /**
-     * @param \App\Model\Category\CategoryRepository $categoryRepository
-     */
     public function __construct(private CategoryRepository $categoryRepository)
     {
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[]
      */
     public function getVisiblePromotedCategoriesOnDomain(DomainConfig $domainConfig): array

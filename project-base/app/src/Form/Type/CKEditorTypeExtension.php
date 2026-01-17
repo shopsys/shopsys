@@ -12,9 +12,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class CKEditorTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @param \FOS\CKEditorBundle\Config\CKEditorConfigurationInterface $configuration
-     */
     public function __construct(
         private readonly CKEditorConfigurationInterface $configuration,
     ) {
@@ -30,10 +27,6 @@ final class CKEditorTypeExtension extends AbstractTypeExtension
         $builder->setAttribute('config', $this->resolveConfig($options));
     }
 
-    /**
-     * @param array $options
-     * @return array
-     */
     private function resolveConfig(array $options): array
     {
         $config = $options['config'];

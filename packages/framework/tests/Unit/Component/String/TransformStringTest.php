@@ -165,9 +165,6 @@ class TransformStringTest extends TestCase
         $this->assertSame($expected, $this->transformStringHelper->stringToCamelCase($actual));
     }
 
-    /**
-     * @return array
-     */
     public static function stringTrailingSlashesProvider(): array
     {
         return [
@@ -198,29 +195,18 @@ class TransformStringTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $string
-     * @param string $expected
-     */
     #[DataProvider('stringTrailingSlashesProvider')]
     public function testAddOrRemoveTrailingSlashFromString(string $string, string $expected): void
     {
         static::assertSame($expected, $this->transformStringHelper->addOrRemoveTrailingSlashFromString($string));
     }
 
-    /**
-     * @param string|null $original
-     * @param string|null $expected
-     */
     #[DataProvider('trimmedStringOrNullProvider')]
     public function testGetTrimmedStringOrNullOnEmpty(?string $original, ?string $expected): void
     {
         static::assertSame($expected, $this->transformStringHelper->getTrimmedStringOrNullOnEmpty($original));
     }
 
-    /**
-     * @return array
-     */
     public static function trimmedStringOrNullProvider(): array
     {
         return [
@@ -251,19 +237,12 @@ class TransformStringTest extends TestCase
         ];
     }
 
-    /**
-     * @param string|null $htmlString
-     * @param string|null $expected
-     */
     #[DataProvider('convertHtmlToPlainTextDataProvider')]
     public function testConvertHtmlToPlainText(?string $htmlString, ?string $expected): void
     {
         $this->assertSame($expected, TransformStringHelper::convertHtmlToPlainText($htmlString));
     }
 
-    /**
-     *  @return iterable
-     */
     public static function convertHtmlToPlainTextDataProvider(): iterable
     {
         yield 'null' => [

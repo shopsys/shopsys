@@ -15,12 +15,6 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class ComplaintDataApiFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory $complaintDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly ComplaintDataFactory $complaintDataFactory,
         protected readonly CountryFacade $countryFacade,
@@ -30,14 +24,7 @@ class ComplaintDataApiFactory
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param string $number
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order|null $order
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[] $complaintItems
-     * @param string $resolution
-     * @param string|null $bankAccountNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData
      */
     public function createFromComplaintInputArgument(
         Argument $argument,

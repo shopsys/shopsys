@@ -8,9 +8,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WatchdogNotFoundException extends NotFoundHttpException
 {
-    /**
-     * @param int $watchdogId
-     */
     public function __construct(int $watchdogId)
     {
         parent::__construct(sprintf(

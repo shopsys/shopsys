@@ -35,12 +35,6 @@ class QueryBuilderExtenderTest extends TestCase
         $this->assertCount(1, reset($joinDqlPart));
     }
 
-    /**
-     * @param string $firstJoinedEntity
-     * @param string $secondJoinedEntity
-     * @param string $expectedJoinedEntity
-     * @param array $extensionMap
-     */
     #[DataProvider('extendJoinWithExtendedEntityProvider')]
     public function testExtendJoinWithExtendedEntity(
         string $firstJoinedEntity,
@@ -72,9 +66,6 @@ class QueryBuilderExtenderTest extends TestCase
         );
     }
 
-    /**
-     * @return array
-     */
     public static function extendJoinWithExtendedEntityProvider(): array
     {
         $extensionMap = [BaseProduct::class => Product::class];

@@ -25,11 +25,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class GiftPlanFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\EndOfDayTransformer $endOfDayTransformer
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         private readonly EndOfDayTransformer $endOfDayTransformer,
@@ -37,10 +32,6 @@ final class GiftPlanFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -106,9 +97,6 @@ final class GiftPlanFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

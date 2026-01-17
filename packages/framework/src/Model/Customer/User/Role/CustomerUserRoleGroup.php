@@ -41,9 +41,6 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData $customerUserRoleGroupData
-     */
     public function __construct(CustomerUserRoleGroupData $customerUserRoleGroupData)
     {
         $this->translations = new ArrayCollection();
@@ -51,17 +48,11 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
         $this->setData($customerUserRoleGroupData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData $customerUserRoleGroupData
-     */
     public function edit(CustomerUserRoleGroupData $customerUserRoleGroupData): void
     {
         $this->setData($customerUserRoleGroupData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData $customerUserRoleGroupData
-     */
     protected function setData(CustomerUserRoleGroupData $customerUserRoleGroupData): void
     {
         $this->roles = $customerUserRoleGroupData->roles;
@@ -102,9 +93,6 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
         return new CustomerUserRoleGroupTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData $customerUserRoleGroupData
-     */
     protected function setTranslations(CustomerUserRoleGroupData $customerUserRoleGroupData)
     {
         foreach ($customerUserRoleGroupData->names as $locale => $name) {

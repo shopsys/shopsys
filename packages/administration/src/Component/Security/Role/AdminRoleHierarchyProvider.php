@@ -18,9 +18,6 @@ use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
  */
 final class AdminRoleHierarchyProvider extends AbstractRoleHierarchyProvider
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
-     */
     public function __construct(
         private readonly RoleRegistryInterface $roleRegistry,
     ) {

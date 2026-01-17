@@ -103,7 +103,6 @@ class ProductPriceCalculationTest extends TestCase
     }
 
     /**
-     * @param array $prices
      * @param mixed $minimumPrice
      */
     #[DataProvider('getMinimumPriceProvider')]
@@ -145,7 +144,6 @@ class ProductPriceCalculationTest extends TestCase
     }
 
     /**
-     * @param array $prices
      * @param mixed $arePricesDifferent
      */
     #[DataProvider('getArePricesDifferentProvider')]

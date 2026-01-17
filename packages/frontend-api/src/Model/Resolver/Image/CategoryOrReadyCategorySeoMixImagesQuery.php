@@ -13,11 +13,6 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery
 {
     protected const string CATEGORY_ENTITY_NAME = 'category';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|\Shopsys\FrameworkBundle\Model\Category\Category $categoryOrReadyCategorySeoMix
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function imagesByCategoryOrReadyCategorySeoMixPromiseQuery(
         ReadyCategorySeoMix|Category $categoryOrReadyCategorySeoMix,
         ?string $type,
@@ -31,11 +26,6 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery
         return $this->resolveByEntityIdPromise($categoryId, self::CATEGORY_ENTITY_NAME, $type);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|\Shopsys\FrameworkBundle\Model\Category\Category $categoryOrReadyCategorySeoMix
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function mainImageByCategoryOrReadyCategorySeoMixPromiseQuery(
         ReadyCategorySeoMix|Category $categoryOrReadyCategorySeoMix,
         ?string $type,

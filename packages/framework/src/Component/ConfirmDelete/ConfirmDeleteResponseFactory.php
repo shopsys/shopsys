@@ -11,22 +11,12 @@ use Twig\Environment;
 
 class ConfirmDeleteResponseFactory
 {
-    /**
-     * @param \Twig\Environment $twigEnvironment
-     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     */
     public function __construct(
         protected readonly Environment $twigEnvironment,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
     ) {
     }
 
-    /**
-     * @param string $message
-     * @param string $route
-     * @param int|string $entityId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function createDeleteResponse(string $message, string $route, int|string $entityId): Response
     {
         $renderedTemplate = $this->twigEnvironment->render(
@@ -47,11 +37,7 @@ class ConfirmDeleteResponseFactory
     }
 
     /**
-     * @param string $message
-     * @param string $route
-     * @param int|string $entityId
      * @param object[] $possibleReplacements
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createSetNewAndDeleteResponse(
         string $message,

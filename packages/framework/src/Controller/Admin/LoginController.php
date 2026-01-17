@@ -16,18 +16,11 @@ use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 class LoginController extends AdminBaseController
 {
-    /**
-     * @param \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authenticationUtils
-     */
     public function __construct(
         protected readonly AuthenticationUtils $authenticationUtils,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/', name: 'admin_login')]
     #[Route(path: '/login-check/', name: 'admin_login_check')]
     #[Route(path: '/logout/', name: 'admin_logout')]

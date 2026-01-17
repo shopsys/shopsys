@@ -7,10 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\CategorySeo;
 class SelectedCategorySeoMixCombination
 {
     /**
-     * @param int $domainId
-     * @param int $categoryId
-     * @param string|null $ordering
-     * @param int|null $flagId
      * @param int[] $parameterValueIdsByParameterIds
      */
     public function __construct(
@@ -22,33 +18,21 @@ class SelectedCategorySeoMixCombination
     ) {
     }
 
-    /**
-     * @return int
-     */
     public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return int
-     */
     public function getCategoryId(): int
     {
         return $this->categoryId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getFlagId(): ?int
     {
         return $this->flagId;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrdering(): ?string
     {
         return $this->ordering;

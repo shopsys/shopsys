@@ -36,10 +36,6 @@ class Setting
 
     protected bool $allValuesLoaded = false;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository $settingValueRepository
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly SettingValueRepository $settingValueRepository,
@@ -171,9 +167,6 @@ class Setting
         }
     }
 
-    /**
-     * @param string $name
-     */
     public function deleteByName(string $name): void
     {
         $this->clearCache();

@@ -19,20 +19,6 @@ class FeedExport
 
     protected bool $finished = false;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInterface $feed
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRenderer $feedRenderer
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     * @param string $feedFilepath
-     * @param string $feedLocalFilepath
-     * @param \Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter $servicesResetter
-     * @param int|null $lastSeekId
-     */
     public function __construct(
         protected readonly FeedInterface $feed,
         protected readonly DomainConfig $domainConfig,
@@ -100,33 +86,21 @@ class FeedExport
         gc_collect_cycles();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface
-     */
     public function getFeedInfo(): FeedInfoInterface
     {
         return $this->feed->getInfo();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function getDomainConfig(): DomainConfig
     {
         return $this->domainConfig;
     }
 
-    /**
-     * @return int|null
-     */
     public function getLastSeekId(): ?int
     {
         return $this->lastSeekId;
     }
 
-    /**
-     * @return bool
-     */
     public function isFinished(): bool
     {
         return $this->finished;
@@ -146,25 +120,16 @@ class FeedExport
         $this->finished = true;
     }
 
-    /**
-     * @param string $content
-     */
     protected function writeToFeed(string $content): void
     {
         $this->localFilesystem->appendToFile($this->getTemporaryLocalFilepath(), $content);
     }
 
-    /**
-     * @return string
-     */
     protected function getTemporaryFilepath(): string
     {
         return $this->feedFilepath . static::TEMPORARY_FILENAME_SUFFIX;
     }
 
-    /**
-     * @return string
-     */
     protected function getTemporaryLocalFilepath(): string
     {
         return $this->feedLocalFilepath . '_local' . static::TEMPORARY_FILENAME_SUFFIX;

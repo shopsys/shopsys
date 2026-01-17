@@ -13,12 +13,6 @@ class BestsellingProductFacade
     protected const ORDERS_CREATED_AT_LIMIT = '-1 month';
     public const MAX_RESULTS_ADMIN = 10;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\AutomaticBestsellingProductRepository $automaticBestsellingProductRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductRepository $manualBestsellingProductRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator $bestsellingProductCombinator
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly AutomaticBestsellingProductRepository $automaticBestsellingProductRepository,
         protected readonly ManualBestsellingProductRepository $manualBestsellingProductRepository,
@@ -28,10 +22,6 @@ class BestsellingProductFacade
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getOfferedBestsellingProducts(

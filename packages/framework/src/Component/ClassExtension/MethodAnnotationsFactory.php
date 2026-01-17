@@ -16,11 +16,6 @@ class MethodAnnotationsFactory
      */
     protected array $warningBag = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
-     */
     public function __construct(
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
         protected readonly AnnotationsReplacer $annotationsReplacer,
@@ -36,11 +31,6 @@ class MethodAnnotationsFactory
         return $this->warningBag;
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkClassBetterReflection
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectClassBetterReflection
-     * @return string
-     */
     public function getProjectClassNecessaryMethodAnnotationsLines(
         ReflectionClass $frameworkClassBetterReflection,
         ReflectionClass $projectClassBetterReflection,
@@ -59,11 +49,6 @@ class MethodAnnotationsFactory
         return $methodAnnotationsLines;
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethodFromFrameworkClass
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectClassBetterReflection
-     * @return string
-     */
     public function getMethodAnnotationLine(
         ReflectionMethod $reflectionMethodFromFrameworkClass,
         ReflectionClass $projectClassBetterReflection,
@@ -119,11 +104,6 @@ class MethodAnnotationsFactory
         return '';
     }
 
-    /**
-     * @param string $methodName
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionClass
-     * @return bool
-     */
     protected function isMethodImplementedInClass(string $methodName, ReflectionClass $reflectionClass): bool
     {
         try {
@@ -135,10 +115,6 @@ class MethodAnnotationsFactory
         }
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
-     * @return string
-     */
     protected function getMethodParameterNamesWithTypes(ReflectionMethod $reflectionMethod): string
     {
         $methodParameterNamesWithTypes = [];
@@ -164,9 +140,7 @@ class MethodAnnotationsFactory
     }
 
     /**
-     * @param string $frameworkClassPattern
      * @param \phpDocumentor\Reflection\Type[] $docBlockReturnTypes
-     * @return bool
      */
     protected function methodReturningTypeIsExtendedInProject(
         string $frameworkClassPattern,
@@ -182,9 +156,7 @@ class MethodAnnotationsFactory
     }
 
     /**
-     * @param string $frameworkClassPattern
      * @param \Roave\BetterReflection\Reflection\ReflectionParameter[] $methodParameters
-     * @return bool
      */
     protected function methodParameterTypeIsExtendedInProject(
         string $frameworkClassPattern,

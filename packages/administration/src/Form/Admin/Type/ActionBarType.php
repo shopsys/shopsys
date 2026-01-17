@@ -18,11 +18,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class ActionBarType extends AbstractTypeExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface $routeAccessChecker
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     */
     public function __construct(
         private readonly RouteAccessCheckerInterface $routeAccessChecker,
         private readonly RequestStack $requestStack,

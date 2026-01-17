@@ -19,11 +19,6 @@ use Throwable;
 
 class PaymentMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     */
     public function __construct(
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly PaymentServiceFacade $paymentServiceFacade,
@@ -31,10 +26,6 @@ class PaymentMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationData
-     */
     public function payOrderMutation(Argument $argument): PaymentSetupCreationData
     {
         $uuid = $argument['orderUuid'];
@@ -61,10 +52,6 @@ class PaymentMutation extends AbstractMutation
         }
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function updatePaymentStatusMutation(Argument $argument): Order
     {
         try {

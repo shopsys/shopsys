@@ -35,9 +35,6 @@ final class CrudConfig
 
     private ?string $customRoleSection = null;
 
-    /**
-     * @param string $entityName
-     */
     public function __construct(string $entityName)
     {
         $this->customPageTitles = [
@@ -57,8 +54,6 @@ final class CrudConfig
     /**
      * Sets a custom title for a given action type.
      *
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     * @param string $title
      * @return $this
      */
     public function setTitle(ActionType $actionType, string $title): self
@@ -71,7 +66,6 @@ final class CrudConfig
     /**
      * Sets the title of the menu item that will be used.
      *
-     * @param string $menuTitle
      * @return $this
      */
     public function setMenuTitle(string $menuTitle): self
@@ -145,7 +139,6 @@ final class CrudConfig
     /**
      * Show or hide the crud controller in the side menu.
      *
-     * @param bool $visible
      * @return $this
      */
     public function visibleInMenu(bool $visible): self
@@ -158,7 +151,6 @@ final class CrudConfig
     /**
      * Disable the CRUD controller with all its actions and pages.
      *
-     * @param bool $disabled
      * @return $this
      */
     public function disable(bool $disabled): self
@@ -173,7 +165,6 @@ final class CrudConfig
      *
      * Example: You have `RoleGroupsController` and you set route prefix to `/administrators` then the route will be `/admin/administrators/role-groups/`
      *
-     * @param string|null $routePrefix
      * @return $this
      */
     public function setRoutePrefix(?string $routePrefix): self
@@ -187,7 +178,6 @@ final class CrudConfig
      * Set custom role constant for the CRUD controller. This will be used for access control checks.
      * If not set, role constant will be generated from the controller name automatically.
      *
-     * @param string|null $roleConstant
      * @return $this
      */
     public function setCustomRoleConstant(?string $roleConstant): self
@@ -201,7 +191,6 @@ final class CrudConfig
      * Set role section for role constant. If not set, role section will be got from menu section automatically.
      *
      * @see \Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider
-     * @param string $roleSection
      * @return $this
      */
     public function setCustomRoleSection(string $roleSection): self
@@ -211,9 +200,6 @@ final class CrudConfig
         return $this;
     }
 
-    /**
-     * @return \Shopsys\AdministrationBundle\Component\Config\CrudConfigData
-     */
     public function getConfig(): CrudConfigData
     {
         return new CrudConfigData(

@@ -12,19 +12,12 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class AddConstraintValidatorsPass implements CompilerPassInterface
 {
-    /**
-     * @param string $validatorFactoryServiceId
-     * @param string $constraintValidatorTag
-     */
     public function __construct(
         private readonly string $validatorFactoryServiceId = 'validator.validator_factory',
         private readonly string $constraintValidatorTag = 'validator.constraint_validator',
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function process(ContainerBuilder $container): void
     {

@@ -13,10 +13,6 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
 {
     protected const int DISPATCH_BATCH_SIZE = 2000;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig $productExportScopeConfig
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcherExecutor $productRecalculationDispatcherExecutor
-     */
     public function __construct(
         protected readonly ProductExportScopeConfig $productExportScopeConfig,
         protected readonly ProductRecalculationDispatcherExecutor $productRecalculationDispatcherExecutor,
@@ -25,7 +21,6 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param string $productRecalculationPriorityEnum
      * @param string[] $exportScopes
      */
     public function dispatchProducts(
@@ -42,7 +37,6 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
 
     /**
      * @param int[] $productIds
-     * @param string $productRecalculationPriorityEnum
      * @param string[] $exportScopes
      */
     public function dispatchProductIds(
@@ -79,8 +73,6 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
     }
 
     /**
-     * @param int $productId
-     * @param string $productRecalculationPriorityEnum
      * @param string[] $exportScopes
      */
     public function dispatchSingleProductId(

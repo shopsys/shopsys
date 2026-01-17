@@ -11,10 +11,6 @@ class CreateOrderResult
 {
     protected bool $orderCreated;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order|null $order
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult|null $cartWithModificationsResult
-     */
     public function __construct(
         protected readonly ?Order $order = null,
         protected readonly ?CartWithModificationsResult $cartWithModificationsResult = null,
@@ -26,25 +22,16 @@ class CreateOrderResult
         }
     }
 
-    /**
-     * @return bool
-     */
     public function isOrderCreated(): bool
     {
         return $this->orderCreated;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
-     */
     public function getOrder(): ?Order
     {
         return $this->order;
     }
 
-    /**
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult|null
-     */
     public function getCart(): ?CartWithModificationsResult
     {
         return $this->cartWithModificationsResult;

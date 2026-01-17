@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
 class AdministratorActivityRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
@@ -26,7 +23,6 @@ class AdministratorActivityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param int $maxResults
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -43,7 +39,6 @@ class AdministratorActivityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity
      */
     public function getCurrent(Administrator $administrator)
@@ -61,7 +56,6 @@ class AdministratorActivityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity[]
      */

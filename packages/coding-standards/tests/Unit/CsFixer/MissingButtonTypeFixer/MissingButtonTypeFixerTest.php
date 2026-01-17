@@ -10,9 +10,6 @@ use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
 final class MissingButtonTypeFixerTest extends AbstractFixerTestCase
 {
-    /**
-     * @return \Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer
-     */
     #[Override]
     protected function createFixerService(): MissingButtonTypeFixer
     {

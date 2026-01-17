@@ -64,9 +64,6 @@ class ImageFactoryTest extends TestCase
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
-     */
     private function getFileUpload(): FileUpload
     {
         $fileNamingConvention = new FileNamingConvention();

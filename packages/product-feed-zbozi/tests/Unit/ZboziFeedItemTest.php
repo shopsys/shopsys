@@ -82,12 +82,6 @@ class ZboziFeedItemTest extends TestCase
             );
     }
 
-    /**
-     * @param int $id
-     * @param string $url
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private function createDomainConfigMock(int $id, string $url, string $locale): DomainConfig
     {
         $domainConfigMock = $this->createMock(DomainConfig::class);

@@ -48,7 +48,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method array extractSpecialPrices(int $domainId, \App\Model\Product\Product $product)
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
- * @method \App\Model\Product\Product[] getVariantsForDefaultPricingGroup(\App\Model\Product\Product $mainVariant, int $domainId)
+ * @method \App\Model\Product\Product[] getVariantsForDefaultPricingGroup( $mainVariant,  $domainId)
  * @method array extractStoreAvailabilitiesInformation(\App\Model\Product\Product $product, int $domainId)
  * @method array getVariantPrices(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
  * @method string extractVat(\App\Model\Product\Product $product, int $domainId)
@@ -56,24 +56,9 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 class ProductExportRepository extends BaseProductExportRepository
 {
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
-     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -117,11 +102,7 @@ class ProductExportRepository extends BaseProductExportRepository
     }
 
     /**
-     * @param int $domainId
      * @param \App\Model\Product\Product $product
-     * @param string $locale
-     * @param string $field
-     * @return mixed
      */
     #[Override]
     protected function getExportedFieldValue(int $domainId, BaseProduct $product, string $locale, string $field): mixed
@@ -143,11 +124,6 @@ class ProductExportRepository extends BaseProductExportRepository
         };
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     private function extractSearchingCatnums(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
@@ -165,11 +141,6 @@ class ProductExportRepository extends BaseProductExportRepository
         return $product->getCatnum();
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     private function extractSearchingEans(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
@@ -187,11 +158,6 @@ class ProductExportRepository extends BaseProductExportRepository
         return $product->getEan() ?? '';
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     private function extractSearchingPartnos(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
@@ -209,12 +175,6 @@ class ProductExportRepository extends BaseProductExportRepository
         return $product->getPartno() ?? '';
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @param string $locale
-     * @return string
-     */
     private function extractSearchingNames(Product $product, int $domainId, string $locale): string
     {
         if ($product->isMainVariant()) {
@@ -235,11 +195,6 @@ class ProductExportRepository extends BaseProductExportRepository
         return $product->getFullName($locale);
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     private function extractSearchingDescriptions(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
@@ -260,11 +215,6 @@ class ProductExportRepository extends BaseProductExportRepository
         return $product->getDescription($domainId) ?? '';
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     private function extractSearchingShortDescriptions(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
@@ -286,8 +236,6 @@ class ProductExportRepository extends BaseProductExportRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \App\Model\Product\Product $product
      * @return int[]
      */
     protected function extractFlagsForDomain(int $domainId, Product $product): array
@@ -310,12 +258,6 @@ class ProductExportRepository extends BaseProductExportRepository
         return array_values($resultArray);
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param string $locale
-     * @param int $domainId
-     * @return array
-     */
     private function extractParametersIncludedVariants(Product $product, string $locale, int $domainId): array
     {
         $products = [];
@@ -339,7 +281,6 @@ class ProductExportRepository extends BaseProductExportRepository
     }
 
     /**
-     * @param \App\Model\Product\Product $product
      * @return int[]
      */
     private function extractRelatedProductsId(Product $product): array
@@ -354,9 +295,6 @@ class ProductExportRepository extends BaseProductExportRepository
     }
 
     /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @param string $locale
      * @return array<int, array{name: string, slug: string}>
      */
     private function extractBreadcrumb(Product $product, int $domainId, string $locale): array
@@ -364,12 +302,6 @@ class ProductExportRepository extends BaseProductExportRepository
         return $this->breadcrumbFacade->getBreadcrumbOnDomain($product->getId(), 'front_product_detail', $domainId, $locale);
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @param string $locale
-     * @return string
-     */
     private function extractMainCategoryPath(Product $product, int $domainId, string $locale): string
     {
         $mainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);

@@ -22,10 +22,6 @@ class RouteCsrfProtector implements EventSubscriberInterface
     public const string CSRF_TOKEN_ID_PREFIX = 'route_';
     protected const string CSRF_ROUTES_CACHE_NAMESPACE = 'csrfCheckedRoutes';
 
-    /**
-     * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $tokenManager
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly CsrfTokenManagerInterface $tokenManager,
         protected readonly InMemoryCache $inMemoryCache,
@@ -43,9 +39,6 @@ class RouteCsrfProtector implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
-     */
     public function onKernelController(ControllerEvent $event): void
     {
         if ($this->isProtected($event)) {
@@ -59,29 +52,16 @@ class RouteCsrfProtector implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param string $routeName
-     * @return string
-     */
     public function getCsrfTokenId(string $routeName): string
     {
         return static::CSRF_TOKEN_ID_PREFIX . $routeName;
     }
 
-    /**
-     * @param string $routeName
-     * @return string
-     */
     public function getCsrfTokenByRoute(string $routeName): string
     {
         return $this->tokenManager->getToken($this->getCsrfTokenId($routeName))->getValue();
     }
 
-    /**
-     * @param string $routeName
-     * @param string $csrfToken
-     * @return bool
-     */
     protected function isCsrfTokenValid(string $routeName, string $csrfToken): bool
     {
         $token = new CsrfToken($this->getCsrfTokenId($routeName), $csrfToken);
@@ -89,10 +69,6 @@ class RouteCsrfProtector implements EventSubscriberInterface
         return $this->tokenManager->isTokenValid($token);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
-     * @return bool
-     */
     protected function isProtected(ControllerEvent $event): bool
     {
         if (!$event->isMainRequest()) {
@@ -113,8 +89,6 @@ class RouteCsrfProtector implements EventSubscriberInterface
 
     /**
      * @param object|class-string $controller
-     * @param string $actionMethod
-     * @return bool
      */
     public function isActionProtected(object|string $controller, string $actionMethod): bool
     {

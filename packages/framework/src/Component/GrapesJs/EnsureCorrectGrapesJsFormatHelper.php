@@ -6,11 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\GrapesJs;
 
 class EnsureCorrectGrapesJsFormatHelper
 {
-    /**
-     * @param string|null $string
-     * @param string $locale
-     * @return string
-     */
     public function ensureStringIsInCorrectGrapesJsFormat(
         ?string $string,
         string $locale,
@@ -26,10 +21,6 @@ class EnsureCorrectGrapesJsFormatHelper
         return '<div class="gjs-text-ckeditor">' . $string . '</div>';
     }
 
-    /**
-     * @param string $string
-     * @return bool
-     */
     protected function containsGrapesJsComponents(string $string): bool
     {
         // Check for any GrapesJS component class (gjs-*) or typed component (data-gjs-type)

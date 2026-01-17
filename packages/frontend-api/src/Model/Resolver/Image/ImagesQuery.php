@@ -15,14 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class ImagesQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageApiFacade $imageApiFacade
-     * @param \Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader
-     * @param \Overblog\DataLoader\DataLoaderInterface $firstImageBatchLoader
-     */
     public function __construct(
         protected readonly ImageFacade $imageFacade,
         protected readonly ImageConfig $imageConfig,
@@ -33,11 +25,6 @@ class ImagesQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param object $entity
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function mainImageByEntityPromiseQuery(object $entity, ?string $type): Promise
     {
         $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
@@ -45,12 +32,6 @@ class ImagesQuery extends AbstractQuery
         return $this->mainImageByEntityIdPromiseQuery($entity->getId(), $imageEntityConfig->getEntityName(), $type);
     }
 
-    /**
-     * @param int $entityId
-     * @param string $entityName
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function mainImageByEntityIdPromiseQuery(
         int $entityId,
         string $entityName,
@@ -65,11 +46,6 @@ class ImagesQuery extends AbstractQuery
         );
     }
 
-    /**
-     * @param object $entity
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function imagesByEntityPromiseQuery(object $entity, ?string $type): Promise
     {
         $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
@@ -77,12 +53,6 @@ class ImagesQuery extends AbstractQuery
         return $this->resolveByEntityIdPromise($entity->getId(), $imageEntityConfig->getEntityName(), $type);
     }
 
-    /**
-     * @param int $entityId
-     * @param string $entityName
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     protected function resolveByEntityIdPromise(
         int $entityId,
         string $entityName,

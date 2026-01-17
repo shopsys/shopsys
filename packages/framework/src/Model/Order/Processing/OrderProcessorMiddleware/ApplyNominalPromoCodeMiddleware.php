@@ -26,14 +26,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\DiscountCalculation $discountCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     */
     public function __construct(
         CurrentPromoCodeFacade $currentPromoCodeFacade,
         PromoCodeFacade $promoCodeFacade,
@@ -88,13 +80,6 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit $promoCodeLimit
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalApplicableProductsPrice
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null
-     */
     protected function createDiscountOrderItemData(
         PromoCode $promoCode,
         PromoCodeLimit $promoCodeLimit,
@@ -129,11 +114,6 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         return $discountOrderItemData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param array $validProductIds
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     protected function calculateTotalApplicableProductsPrice(
         OrderData $orderData,
         array $validProductIds,
@@ -153,10 +133,6 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         return $totalPrice;
     }
 
-    /**
-     * @param string $locale
-     * @return string
-     */
     protected function getOrderItemName(string $locale): string
     {
         return sprintf(

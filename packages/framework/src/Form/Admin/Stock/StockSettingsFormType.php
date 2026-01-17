@@ -20,10 +20,6 @@ use Twig\Environment;
 
 final class StockSettingsFormType extends AbstractType
 {
-    /**
-     * @param \Twig\Environment $environment
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     */
     public function __construct(
         protected readonly Environment $environment,
         protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,

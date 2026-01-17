@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileF
 
 class CustomerUploadedFileApiFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
-     * @param \Shopsys\FrontendApiBundle\Component\CustomerUploadedFile\CustomerUploadedFileApiRepository $customerUploadedFileApiRepository
-     */
     public function __construct(
         protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
         protected readonly CustomerUploadedFileApiRepository $customerUploadedFileApiRepository,
@@ -20,8 +16,6 @@ class CustomerUploadedFileApiFacade
 
     /**
      * @param int[] $entityIds
-     * @param string $entityName
-     * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[][]
      */
     public function getAllCustomerUploadedFilesIndexedByEntityId(

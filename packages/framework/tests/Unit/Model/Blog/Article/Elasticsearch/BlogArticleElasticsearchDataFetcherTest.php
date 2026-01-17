@@ -63,10 +63,6 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
         $this->assertEquals([$expectedBlogArticleData1, $expectedBlogArticleData2], $actualResults);
     }
 
-    /**
-     * @param array $mockedResultArray
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher
-     */
     private function getBlogArticleElasticsearchDataFetcherWithMockedClient(
         array $mockedResultArray,
     ): BlogArticleElasticsearchDataFetcher {
@@ -76,9 +72,6 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
         return new BlogArticleElasticsearchDataFetcher($clientMock);
     }
 
-    /**
-     * @return array
-     */
     private function getBlogArticleDataDefaultValues(): array
     {
         return [
@@ -100,11 +93,6 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
         ];
     }
 
-    /**
-     * @param int $totalCount
-     * @param array $hits
-     * @return array
-     */
     private function getMockedResultArray(int $totalCount, array $hits): array
     {
         return [

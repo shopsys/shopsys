@@ -12,15 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PricingGroupFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactory $pricingGroupFactory
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PricingGroupRepository $pricingGroupRepository,
@@ -42,7 +33,6 @@ class PricingGroupFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
@@ -65,7 +55,6 @@ class PricingGroupFacade
 
     /**
      * @param int $pricingGroupId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
     public function edit($pricingGroupId, PricingGroupData $pricingGroupData)
@@ -80,11 +69,6 @@ class PricingGroupFacade
         return $pricingGroup;
     }
 
-    /**
-     * @param int $oldPricingGroupId
-     * @param int|null $newPricingGroupId
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig|null $selectedDomain
-     */
     public function delete(
         int $oldPricingGroupId,
         ?int $newPricingGroupId = null,
@@ -142,8 +126,6 @@ class PricingGroupFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $eventType
      * @see \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupEvent class
      */
     protected function dispatchPricingGroupEvent(PricingGroup $pricingGroup, string $eventType): void

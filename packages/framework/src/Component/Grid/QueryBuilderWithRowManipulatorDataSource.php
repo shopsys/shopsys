@@ -12,9 +12,6 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
 {
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string $rowIdSourceColumnName
-     * @param \Closure $manipulateRowCallback
      * @param array<string, mixed> $hints
      */
     public function __construct(
@@ -26,10 +23,6 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
         parent::__construct($queryBuilder, $rowIdSourceColumnName, $hints);
     }
 
-    /**
-     * @param int|string $rowId
-     * @return array
-     */
     #[Override]
     public function getOneRow(int|string $rowId): array
     {
@@ -38,13 +31,6 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
         return call_user_func($this->manipulateRowCallback, $row);
     }
 
-    /**
-     * @param int|null $limit
-     * @param int $page
-     * @param string|null $orderSourceColumnName
-     * @param string $orderDirection
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
     #[Override]
     public function getPaginatedRows(
         ?int $limit = null,

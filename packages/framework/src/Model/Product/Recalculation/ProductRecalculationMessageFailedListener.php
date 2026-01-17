@@ -11,19 +11,12 @@ use Symfony\Component\Messenger\Event\WorkerMessageFailedEvent;
 
 class ProductRecalculationMessageFailedListener implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade
-     * @param \Psr\Log\LoggerInterface $monologQueueLogger
-     */
     public function __construct(
         protected readonly ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade,
         protected readonly LoggerInterface $monologQueueLogger,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {
@@ -32,9 +25,6 @@ class ProductRecalculationMessageFailedListener implements EventSubscriberInterf
         ];
     }
 
-    /**
-     * @param \Symfony\Component\Messenger\Event\WorkerMessageFailedEvent $event
-     */
     public function onMessageFailed(WorkerMessageFailedEvent $event): void
     {
         $envelope = $event->getEnvelope();
@@ -60,10 +50,6 @@ class ProductRecalculationMessageFailedListener implements EventSubscriberInterf
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage $message
-     * @return string
-     */
     protected function getPriority(AbstractProductRecalculationMessage $message): string
     {
         return match (true) {

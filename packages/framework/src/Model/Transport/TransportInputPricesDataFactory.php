@@ -9,17 +9,10 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class TransportInputPricesDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     */
     public function __construct(protected readonly VatFacade $vatFacade)
     {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData
-     */
     public function create(int $domainId): TransportInputPricesData
     {
         $transportInputPriceData = $this->createInstance();
@@ -31,19 +24,11 @@ class TransportInputPricesDataFactory
         return $transportInputPriceData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData
-     */
     protected function createInstance(): TransportInputPricesData
     {
         return new TransportInputPricesData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData
-     */
     public function createFromTransport(Transport $transport, int $domainId): TransportInputPricesData
     {
         $transportInputPriceData = $this->createInstance();
@@ -63,9 +48,6 @@ class TransportInputPricesDataFactory
         return $transportInputPriceData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\PriceWithLimitData
-     */
     public function createPriceWithLimitDataInstance(): PriceWithLimitData
     {
         return new PriceWithLimitData();

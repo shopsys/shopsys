@@ -19,12 +19,6 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     public const string PRICING_GROUP_ORDINARY = 'pricing_group_ordinary';
     public const string PRICING_GROUP_VIP = 'pricing_group_vip';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory $pricingGroupDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly PricingGroupDataFactory $pricingGroupDataFactory,
@@ -33,9 +27,6 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -55,7 +46,6 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
      *
      * The default pricing groups for the other domains are created during build (in "domains-data-create" phing target).
      * @see \Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
     private function editDefaultPricingGroupOnDomain(DomainConfig $domainConfig): void
     {
@@ -68,9 +58,6 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
         $this->addReferenceForDomain(self::PRICING_GROUP_ORDINARY, $defaultPricingGroupOnDomain, $domainConfig->getId());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     private function createVipPricingGroup(DomainConfig $domainConfig): void
     {
         $pricingGroupData = $this->pricingGroupDataFactory->create();

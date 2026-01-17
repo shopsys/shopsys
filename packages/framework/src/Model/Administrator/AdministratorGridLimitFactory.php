@@ -8,19 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class AdministratorGridLimitFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param string $gridId
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit
-     */
     public function create(Administrator $administrator, string $gridId, int $limit): AdministratorGridLimit
     {
         $entityClassName = $this->entityNameResolver->resolve(AdministratorGridLimit::class);

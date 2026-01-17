@@ -9,9 +9,6 @@ use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceN
 
 class PersistentReferenceRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }

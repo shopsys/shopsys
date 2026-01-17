@@ -32,19 +32,12 @@ class IndexRegistryTest extends TestCase
         ]);
     }
 
-    /**
-     * @param string $indexName
-     * @param bool $isRegistered
-     */
     #[DataProvider('registeredIndexProvider')]
     public function testIsIndexRegistered(string $indexName, bool $isRegistered): void
     {
         $this->assertSame($isRegistered, $this->indexRegistry->isIndexRegistered($indexName));
     }
 
-    /**
-     * @return array
-     */
     public static function registeredIndexProvider(): array
     {
         return [

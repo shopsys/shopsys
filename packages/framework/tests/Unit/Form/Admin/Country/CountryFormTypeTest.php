@@ -40,9 +40,6 @@ class CountryFormTypeTest extends TypeTestCase
 
     private FormTypeLayout $formTypeLayout;
 
-    /**
-     * @return array
-     */
     private function getFullCountryFormData(): array
     {
         return [
@@ -173,9 +170,6 @@ class CountryFormTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function getExtensions(): array
     {
@@ -194,10 +188,6 @@ class CountryFormTypeTest extends TypeTestCase
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country|null $country
-     * @return \Symfony\Component\Form\FormInterface
-     */
     private function createCountryForm(?Country $country = null): FormInterface
     {
         return $this->factory->create(CountryFormType::class, null, ['country' => $country]);

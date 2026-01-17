@@ -22,19 +22,11 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
 {
     protected RouterInterface $router;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $router
-     */
     public function __construct(CurrentDomainRouter $router)
     {
         $this->router = $router;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @return \Symfony\Component\HttpFoundation\Response|null
-     */
     #[Override]
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): ?Response
     {
@@ -52,11 +44,6 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
         return new RedirectResponse($referer);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Override]
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {

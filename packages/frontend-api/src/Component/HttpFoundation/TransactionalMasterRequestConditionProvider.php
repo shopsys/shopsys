@@ -18,28 +18,17 @@ class TransactionalMasterRequestConditionProvider implements TransactionalMaster
 {
     protected const QUERY_TYPE = 'query';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     */
     public function __construct(
         protected readonly ContextResolverInterface $contextResolver,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
-     * @return bool
-     */
     #[Override]
     public function shouldBeginTransaction(RequestEvent $event): bool
     {
         return !$this->isRequestGraphQlQuery($event);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $requestEvent
-     * @return bool
-     */
     protected function isRequestGraphQlQuery(RequestEvent $requestEvent): bool
     {
         if (!$this->contextResolver->isCurrentContext(FrontendApiContext::class)) {

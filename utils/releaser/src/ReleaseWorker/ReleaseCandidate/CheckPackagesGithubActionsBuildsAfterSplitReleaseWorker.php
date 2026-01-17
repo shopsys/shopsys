@@ -21,19 +21,12 @@ final class CheckPackagesGithubActionsBuildsAfterSplitReleaseWorker extends Abst
         return [Stage::RELEASE_CANDIDATE];
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getBranchName(): string
     {
         return $this->currentBranchName;
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

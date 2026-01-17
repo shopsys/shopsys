@@ -37,10 +37,6 @@ class PersonalDataPageTest extends GraphQlTestCase
         $this->assertQueryWithExpectedJson($query, $jsonExpected);
     }
 
-    /**
-     * @param string $routeName
-     * @return string
-     */
     private function getLink(string $routeName): string
     {
         return $this->getLocalizedPathOnFirstDomainByRouteName($routeName, pathType: UrlGeneratorInterface::ABSOLUTE_PATH);

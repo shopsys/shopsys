@@ -11,19 +11,12 @@ use Shopsys\FrontendApiBundle\Model\Store\OpeningHours\StoreOpeningHoursApiProvi
 
 class OpeningHoursResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
-     * @param \Shopsys\FrontendApiBundle\Model\Store\OpeningHours\StoreOpeningHoursApiProvider $storeOpeningHoursApiProvider
-     */
     public function __construct(
         protected readonly DateTimeHelper $dateTimeHelper,
         protected readonly StoreOpeningHoursApiProvider $storeOpeningHoursApiProvider,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

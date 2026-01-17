@@ -19,9 +19,6 @@ class UserFactoryTest extends TestCase
         $customerUser = $customerUserFactory->create(TestCustomerProvider::getTestCustomerUserData());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory
-     */
     private function getUserFactory(): CustomerUserFactory
     {
         $customerUserPasswordFacade = $this->createMock(CustomerUserPasswordFacade::class);

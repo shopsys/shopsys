@@ -41,10 +41,6 @@ class ConstraintViolationExtractorTest extends TestCase
         $this->assertEquals($expectedCatalogue, $actualCatalogue);
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @return \JMS\TranslationBundle\Model\MessageCatalogue
-     */
     private function extract(SplFileInfo $file): MessageCatalogue
     {
         $extractor = new ConstraintViolationExtractor();

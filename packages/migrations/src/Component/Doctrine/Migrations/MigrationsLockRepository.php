@@ -41,10 +41,6 @@ class MigrationsLockRepository implements MigrationsRepository
 
     protected MigrationFactory $migrationFactory;
 
-    /**
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock $migrationsLock
-     * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
-     */
     public function __construct(
         protected readonly MigrationsLock $migrationsLock,
         DependencyFactory $dependencyFactory,
@@ -67,9 +63,6 @@ class MigrationsLockRepository implements MigrationsRepository
         }
     }
 
-    /**
-     * @param string $migrationClassName
-     */
     protected function registerMigration(string $migrationClassName): void
     {
         $this->ensureMigrationClassExists($migrationClassName);
@@ -80,9 +73,6 @@ class MigrationsLockRepository implements MigrationsRepository
         $this->registerMigrationInstance($version, $migration);
     }
 
-    /**
-     * @param string $class
-     */
     protected function ensureMigrationClassExists(string $class): void
     {
         if (!class_exists($class)) {
@@ -90,10 +80,6 @@ class MigrationsLockRepository implements MigrationsRepository
         }
     }
 
-    /**
-     * @param \Doctrine\Migrations\Version\Version $version
-     * @param \Doctrine\Migrations\AbstractMigration $migration
-     */
     protected function registerMigrationInstance(Version $version, AbstractMigration $migration): void
     {
         if (array_key_exists((string)$version, $this->availableMigrations)) {
@@ -106,10 +92,6 @@ class MigrationsLockRepository implements MigrationsRepository
         $this->availableMigrations[(string)$version] = new AvailableMigration($version, $migration);
     }
 
-    /**
-     * @param string $version
-     * @return bool
-     */
     #[Override]
     public function hasMigration(string $version): bool
     {
@@ -118,10 +100,6 @@ class MigrationsLockRepository implements MigrationsRepository
         return array_key_exists($version, $this->filteredAvailableMigrations);
     }
 
-    /**
-     * @param \Doctrine\Migrations\Version\Version $version
-     * @return \Doctrine\Migrations\Metadata\AvailableMigration
-     */
     #[Override]
     public function getMigration(Version $version): AvailableMigration
     {
@@ -134,9 +112,6 @@ class MigrationsLockRepository implements MigrationsRepository
         return $this->filteredAvailableMigrations[(string)$version];
     }
 
-    /**
-     * @return \Doctrine\Migrations\Metadata\AvailableMigrationsSet
-     */
     #[Override]
     public function getMigrations(): AvailableMigrationsSet
     {

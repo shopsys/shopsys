@@ -10,10 +10,6 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 
 class ProductIndex extends AbstractIndex
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository $productExportRepository
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ProductExportRepository $productExportRepository,

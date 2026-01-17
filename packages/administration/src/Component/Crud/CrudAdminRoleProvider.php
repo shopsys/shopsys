@@ -13,17 +13,11 @@ use Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection;
 
 final class CrudAdminRoleProvider implements CoreRoleProviderInterface
 {
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry $crudControllerRegistry
-     */
     public function __construct(
         private readonly CrudControllerRegistry $crudControllerRegistry,
     ) {
     }
 
-    /**
-     * @return int
-     */
     #[Override]
     public function getPriority(): int
     {
@@ -39,9 +33,6 @@ final class CrudAdminRoleProvider implements CoreRoleProviderInterface
         return AdminContext::class;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection $roleCollection
-     */
     #[Override]
     public function configureRoles(RoleCollection $roleCollection): void
     {

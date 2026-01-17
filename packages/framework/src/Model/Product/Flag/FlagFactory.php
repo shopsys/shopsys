@@ -8,17 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class FlagFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $data
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public function create(FlagData $data): Flag
     {
         $entityClassName = $this->entityNameResolver->resolve(Flag::class);

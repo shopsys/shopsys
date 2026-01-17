@@ -10,11 +10,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BreadcrumbFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver $breadcrumbResolver
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(
         protected readonly BreadcrumbResolver $breadcrumbResolver,
         protected readonly DomainRouterFactory $domainRouterFactory,
@@ -23,10 +18,6 @@ class BreadcrumbFacade
     }
 
     /**
-     * @param int $id
-     * @param string $routeName
-     * @param int $domainId
-     * @param string|null $locale
      * @return array<int, array{name: string, slug: string}>
      */
     public function getBreadcrumbOnDomain(int $id, string $routeName, int $domainId, ?string $locale = null): array
@@ -56,8 +47,6 @@ class BreadcrumbFacade
     }
 
     /**
-     * @param int $id
-     * @param string $routeName
      * @return array<int, array{name: string, slug: string}>
      */
     public function getBreadcrumbOnCurrentDomain(int $id, string $routeName): array

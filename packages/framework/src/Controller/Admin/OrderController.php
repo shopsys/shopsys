@@ -43,23 +43,6 @@ class OrderController extends AdminBaseController
 {
     protected const string ORDERS_LIST_FOR_GRID_CACHE_KEY = 'ORDERS_LIST_FOR_GRID_CACHE_KEY';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade $advancedSearchOrderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade $orderItemFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid\EntityLogGridFactory $entityLogGridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
-     */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly AdvancedSearchOrderFacade $advancedSearchOrderFacade,
@@ -79,11 +62,6 @@ class OrderController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/order/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -136,11 +114,6 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $orderId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/order/add-product/{orderId}', requirements: ['orderId' => '\d+'], condition: 'request.isXmlHttpRequest()')]
     #[CanEdit]
     public function addProductAction(Request $request, int $orderId): Response
@@ -167,10 +140,6 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/order/list/')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -221,9 +190,7 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     protected function getOrdersGrid(QueryBuilder $queryBuilder): Grid
     {
@@ -265,9 +232,7 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * @param array $row
      * @param int[] $ids
-     * @return array
      */
     protected function addOrderEntityToDataSource(array $row, array $ids): array
     {
@@ -283,10 +248,6 @@ class OrderController extends AdminBaseController
         return $row;
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/order/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -310,10 +271,6 @@ class OrderController extends AdminBaseController
         return $this->redirectToRoute('admin_order_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/order/get-advanced-search-rule-form/', methods: ['post'])]
     #[CanView]
     public function getRuleFormAction(Request $request): Response
@@ -328,10 +285,6 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/order/preview/{id}', requirements: ['id' => '\d+'])]
     #[CanView]
     public function previewAction(int $id): Response

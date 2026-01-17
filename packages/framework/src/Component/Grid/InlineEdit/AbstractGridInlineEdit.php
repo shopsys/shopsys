@@ -14,21 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractGridInlineEdit implements GridInlineEditInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
-     */
     public function __construct(
         protected readonly GridFactoryInterface $gridFactory,
         protected readonly AccessCheckerInterface $accessChecker,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int|string|null $rowId
-     * @return int|string
-     */
     #[Override]
     public function saveForm(Request $request, int|string|null $rowId): int|string
     {
@@ -63,9 +54,6 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
         return $rowId;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     #[Override]
     public function getGrid(): Grid
     {
@@ -75,9 +63,6 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
         return $grid;
     }
 
-    /**
-     * @return bool
-     */
     #[Override]
     public function canAddNewRow(): bool
     {
@@ -87,8 +72,6 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     /**
      * Since Symfony 3.4, the best practice for service names is using FQCN
      * if you don't follow this best practice you should override this method
-     *
-     * @return string
      */
     #[Override]
     public function getServiceName(): string
@@ -96,27 +79,12 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
         return static::class;
     }
 
-    /**
-     * @param int|string|null $rowId
-     * @return \Symfony\Component\Form\FormInterface
-     */
     #[Override]
     abstract public function getForm(int|string|null $rowId): FormInterface;
 
-    /**
-     * @param int|string $rowId
-     * @param mixed $formData
-     */
     abstract protected function editEntity(int|string $rowId, mixed $formData): void;
 
-    /**
-     * @param mixed $formData
-     * @return int|string
-     */
     abstract protected function createEntityAndGetId(mixed $formData): int|string;
 
-    /**
-     * @return string
-     */
     abstract protected function getRoleConstant(): string;
 }

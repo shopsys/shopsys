@@ -20,19 +20,10 @@ use Symfony\Component\Validator\Constraints;
 
 final class PriceAndVatTableByDomainsType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     */
     public function __construct(private readonly Domain $domain, private readonly VatFacade $vatFacade)
     {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -42,9 +33,6 @@ final class PriceAndVatTableByDomainsType extends AbstractType
         $view->vars['enabledDomainIds'] = $this->domain->getAdminEnabledDomainIds();
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -53,10 +41,6 @@ final class PriceAndVatTableByDomainsType extends AbstractType
             ->setAllowedTypes('pricesIndexedByDomainId', ['array']);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

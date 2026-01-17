@@ -10,9 +10,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 class ReachMaxUrlUniqueResolveAttemptException extends Exception
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param int $attempt
-     * @param \Exception|null $previous
      */
     public function __construct(FriendlyUrl $friendlyUrl, $attempt, ?Exception $previous = null)
     {

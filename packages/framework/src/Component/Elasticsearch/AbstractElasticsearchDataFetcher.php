@@ -9,23 +9,12 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoRes
 
 abstract class AbstractElasticsearchDataFetcher
 {
-    /**
-     * @param \Elasticsearch\Client $client
-     */
     public function __construct(protected Client $client)
     {
     }
 
-    /**
-     * @param array $data
-     * @return array
-     */
     abstract protected function fillEmptyFields(array $data): array;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractFilterQuery $filterQuery
-     * @return array
-     */
     public function getSingleResult(AbstractFilterQuery $filterQuery): array
     {
         $singleItemQuery = $filterQuery->setLimit(1);
@@ -38,10 +27,6 @@ abstract class AbstractElasticsearchDataFetcher
         return array_shift($results);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractFilterQuery $filterQuery
-     * @return array
-     */
     public function getAllResults(AbstractFilterQuery $filterQuery): array
     {
         $result = $this->client->search($filterQuery->getQuery());
@@ -54,10 +39,6 @@ abstract class AbstractElasticsearchDataFetcher
         }, $result['hits']['hits']);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractFilterQuery $filterQuery
-     * @return int
-     */
     public function getTotalCount(AbstractFilterQuery $filterQuery): int
     {
         $result = $this->client->search($filterQuery->getQuery());

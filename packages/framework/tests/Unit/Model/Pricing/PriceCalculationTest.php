@@ -44,11 +44,6 @@ class PriceCalculationTest extends TestCase
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
-     * @param string $vatPercent
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedPriceWithVat
-     */
     #[DataProvider('applyVatPercentProvider')]
     public function testApplyVatPercent(
         Money $priceWithoutVat,
@@ -88,11 +83,6 @@ class PriceCalculationTest extends TestCase
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     * @param string $vatPercent
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedVatAmount
-     */
     #[DataProvider('getVatAmountByPriceWithVatProvider')]
     public function testGetVatAmountByPriceWithVat(
         Money $priceWithVat,

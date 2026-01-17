@@ -8,9 +8,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData;
 
 class OrderProcessor
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     */
     public function __construct(
         protected readonly OrderProcessingStack $orderProcessingStack,
     ) {
@@ -18,7 +15,6 @@ class OrderProcessor
 
     /**
      * @template T of \Shopsys\FrameworkBundle\Model\Order\OrderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput $orderInput
      * @param T $orderData
      * @return T
      */

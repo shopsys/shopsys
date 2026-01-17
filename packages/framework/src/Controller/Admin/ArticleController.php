@@ -33,17 +33,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_ARTICLE)]
 class ArticleController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory $articleDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
-     * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
-     * @param \Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade $userConsentPolicyFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly ArticleFacade $articleFacade,
         protected readonly ArticleDataFactory $articleDataFactory,
@@ -57,11 +46,6 @@ class ArticleController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/article/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -103,9 +87,6 @@ class ArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/article/list/')]
     #[CanView]
     public function listAction(): Response
@@ -127,10 +108,6 @@ class ArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/article/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -168,10 +145,6 @@ class ArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/article/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -195,10 +168,6 @@ class ArticleController extends AdminBaseController
         return $this->redirectToRoute('admin_article_list');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/article/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -223,10 +192,6 @@ class ArticleController extends AdminBaseController
         return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_article_delete', $id);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     #[Route(path: '/article/save-ordering/', condition: 'request.isXmlHttpRequest()')]
     #[CanEdit]
     public function saveOrderingAction(Request $request): JsonResponse
@@ -238,11 +203,6 @@ class ArticleController extends AdminBaseController
         return new JsonResponse($responseData);
     }
 
-    /**
-     * @param string $articlePlacement
-     * @param string $articlePlacementTitle
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     protected function getGrid(string $articlePlacement, string $articlePlacementTitle): Grid
     {
         $queryBuilder = $this->articleFacade->getOrderedArticlesByDomainIdAndPlacementQueryBuilder(

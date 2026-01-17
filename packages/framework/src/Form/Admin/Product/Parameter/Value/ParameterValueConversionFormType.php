@@ -16,11 +16,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class ParameterValueConversionFormType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -29,10 +24,6 @@ final class ParameterValueConversionFormType extends AbstractType
         $view->vars['locale'] = $view->vars['data']->locale;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -61,9 +52,6 @@ final class ParameterValueConversionFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

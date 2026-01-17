@@ -22,10 +22,6 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
     public const string PARAM_GROUP_FUNCTIONS = 'param_group_function';
     public const string PARAM_GROUP_SIZE_WEIGHT = 'param_group_size_weight';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
-     */
     public function __construct(
         private readonly ParameterGroupFacade $parameterGroupFacade,
         private readonly ParameterGroupDataFactory $parameterGroupDataFactory,
@@ -33,7 +29,6 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param string $locale
      * @return array<string, string>
      */
     private static function getParameterGroupNames(string $locale): array
@@ -48,11 +43,6 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
         ];
     }
 
-    /**
-     * @param string $referenceName
-     * @param string $locale
-     * @return string
-     */
     public static function getParameterGroupNameByReferenceName(string $referenceName, string $locale): string
     {
         $parameterNames = self::getParameterGroupNames($locale);
@@ -60,9 +50,6 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
         return $parameterNames[$referenceName] ?? throw new InvalidArgumentException('Parameter group name reference "' . $referenceName . '" not found');
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -82,7 +69,6 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
 
     /**
      * @param array<string, string> $parameterGroupNameByLocale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
      */
     private function createParameterGroup(array $parameterGroupNameByLocale): ParameterGroup
     {

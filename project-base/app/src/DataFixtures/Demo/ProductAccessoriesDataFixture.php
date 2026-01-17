@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
@@ -24,9 +23,6 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

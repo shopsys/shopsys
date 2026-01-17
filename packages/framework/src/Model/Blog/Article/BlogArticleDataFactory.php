@@ -11,12 +11,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogArticleDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper
-     */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
@@ -25,10 +19,6 @@ class BlogArticleDataFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle $blogArticle
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData
-     */
     public function createFromBlogArticle(BlogArticle $blogArticle): BlogArticleData
     {
         $blogArticleData = $this->createInstance();
@@ -37,9 +27,6 @@ class BlogArticleDataFactory
         return $blogArticleData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData
-     */
     public function create(): BlogArticleData
     {
         $blogArticleData = $this->createInstance();
@@ -48,9 +35,6 @@ class BlogArticleDataFactory
         return $blogArticleData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData $blogArticleData
-     */
     protected function fillNew(BlogArticleData $blogArticleData): void
     {
         $blogArticleData->image = $this->imageUploadDataFactory->create();
@@ -69,10 +53,6 @@ class BlogArticleDataFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData $blogArticleData
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle $blogArticle
-     */
     protected function fillFromBlogArticle(BlogArticleData $blogArticleData, BlogArticle $blogArticle): void
     {
         $blogArticleData->names = $blogArticle->getNames();
@@ -101,9 +81,6 @@ class BlogArticleDataFactory
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData
-     */
     protected function createInstance(): BlogArticleData
     {
         return new BlogArticleData();

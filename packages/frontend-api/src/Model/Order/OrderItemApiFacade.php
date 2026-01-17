@@ -14,10 +14,6 @@ use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 
 class OrderItemApiFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
@@ -37,9 +33,6 @@ class OrderItemApiFacade
             ->getResult();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createOrderItemExcludingOrdersWithWithdrawalQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -53,10 +46,6 @@ class OrderItemApiFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param int $limit
-     * @param int $offset
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
     public function getCustomerUserOrderItemsLimitedList(
@@ -74,11 +63,6 @@ class OrderItemApiFacade
             ->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @return int
-     */
     public function getCustomerUserOrderItemsLimitedListCount(
         CustomerUser $customerUser,
         OrderItemsFilter $filter,
@@ -90,10 +74,6 @@ class OrderItemApiFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param int $limit
-     * @param int $offset
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
     public function getCustomerOrderItemsLimitedList(
@@ -113,11 +93,6 @@ class OrderItemApiFacade
             ->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @return int
-     */
     public function getCustomerOrderItemsLimitedListCount(
         Customer $customer,
         OrderItemsFilter $filter,
@@ -129,11 +104,6 @@ class OrderItemApiFacade
     }
 
     /**
-     * @param string $search
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param int $limit
-     * @param int $offset
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
     public function getCustomerUserOrderItemsLimitedSearchList(
@@ -152,12 +122,6 @@ class OrderItemApiFacade
             ->getResult();
     }
 
-    /**
-     * @param string $search
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @return int
-     */
     public function getCustomerUserOrderItemsLimitedSearchListCount(
         string $search,
         CustomerUser $customerUser,
@@ -170,11 +134,6 @@ class OrderItemApiFacade
     }
 
     /**
-     * @param string $search
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param int $limit
-     * @param int $offset
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
     public function getCustomerOrderItemsLimitedSearchList(
@@ -193,12 +152,6 @@ class OrderItemApiFacade
             ->getResult();
     }
 
-    /**
-     * @param string $search
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @return int
-     */
     public function getCustomerOrderItemsLimitedSearchListCount(
         string $search,
         Customer $customer,
@@ -210,12 +163,6 @@ class OrderItemApiFacade
             ->getSingleScalarResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $search
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createCustomerUserOrderItemsLimitedSearchListQueryBuilder(
         CustomerUser $customerUser,
         string $search,
@@ -226,12 +173,6 @@ class OrderItemApiFacade
         return $this->applySearchToQueryBuilder($queryBuilder, $search);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param string $search
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createCustomerOrderItemsLimitedSearchListQueryBuilder(
         Customer $customer,
         string $search,
@@ -244,11 +185,6 @@ class OrderItemApiFacade
         return $queryBuilder;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createCustomerUserOrderItemsLimitedListQueryBuilder(
         CustomerUser $customerUser,
         OrderItemsFilter $filter,
@@ -262,10 +198,6 @@ class OrderItemApiFacade
         return $queryBuilder;
     }
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     */
     protected function applyOrderItemsFilterToQueryBuilder(OrderItemsFilter $filter, QueryBuilder $queryBuilder): void
     {
         if ($filter->getOrderUuid() !== null) {
@@ -308,11 +240,6 @@ class OrderItemApiFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createCustomerOrderItemsLimitedListQueryBuilder(
         Customer $customer,
         OrderItemsFilter $filter,
@@ -326,11 +253,6 @@ class OrderItemApiFacade
         return $queryBuilder;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string $search
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function applySearchToQueryBuilder(QueryBuilder $queryBuilder, string $search): QueryBuilder
     {
         $queryBuilder->andWhere(

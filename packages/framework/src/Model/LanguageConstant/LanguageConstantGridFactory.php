@@ -11,12 +11,6 @@ use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 
 class LanguageConstantGridFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantRepository $languageConstantRepository
-     * @param \Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSourceFactory $arrayWithPaginationDataSourceFactory
-     */
     public function __construct(
         protected readonly LanguageConstantFacade $languageConstantFacade,
         protected readonly GridFactory $gridFactory,
@@ -25,11 +19,6 @@ class LanguageConstantGridFactory
     ) {
     }
 
-    /**
-     * @param string $locale
-     * @param string|null $search
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     public function create(string $locale, ?string $search = null): Grid
     {
         $allOriginalTranslations = $this->languageConstantFacade->getAllOriginalTranslationsByLocaleIndexedByNamespace($locale);
@@ -76,7 +65,6 @@ class LanguageConstantGridFactory
     /**
      * @param array<string, string[]> $allOriginalTranslations
      * @param string[] $allUserTranslations
-     * @param string $locale
      * @return array<int, array{key: string, locale: string, namespace: string, originalTranslation: string, userTranslation: string}>
      */
     protected function getTranslations(
@@ -106,8 +94,6 @@ class LanguageConstantGridFactory
     /**
      * @param array<string, string[]> $allOriginalTranslations
      * @param string[] $allUserTranslations
-     * @param string $locale
-     * @param string $search
      * @return array<int, array{key: string, locale: string, namespace: string, originalTranslation: string, userTranslation: string}>
      */
     protected function getTranslationsWithSearch(

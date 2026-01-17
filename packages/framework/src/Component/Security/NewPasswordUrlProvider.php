@@ -13,11 +13,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class NewPasswordUrlProvider
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly AdministrationRouter $administrationRouter,
@@ -25,12 +20,6 @@ class NewPasswordUrlProvider
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $user
-     * @param int $domainId
-     * @param string $routeName
-     * @return string
-     */
     public function getNewPasswordUrl(ResetPasswordInterface $user, int $domainId, string $routeName): string
     {
         if ($user instanceof Administrator) {

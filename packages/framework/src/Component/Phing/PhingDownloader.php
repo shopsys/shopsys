@@ -17,18 +17,10 @@ class PhingDownloader
     protected const string VERSION_URL = 'https://github.com/phingofficial/phing/releases/download/%s/phing-%s.phar';
     protected const string SEMVER_REGEX = '/\b\d+\.\d+\.\d+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?\b/';
 
-    /**
-     * @param string $vendorDir
-     */
     public function __construct(protected readonly string $vendorDir)
     {
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -78,9 +70,6 @@ class PhingDownloader
         return Command::SUCCESS;
     }
 
-    /**
-     * @return \PharIo\Version\Version|null
-     */
     protected function getCurrentPhingVersion(): ?Version
     {
         $phingVersionString = shell_exec('php phing -v');
@@ -88,9 +77,6 @@ class PhingDownloader
         return $this->getVersionFromString($phingVersionString);
     }
 
-    /**
-     * @return \PharIo\Version\Version|null
-     */
     protected function getLatestPhingVersion(): ?Version
     {
         $phingLatestVersionString = shell_exec('composer show phing/phing -l -a | grep latest');
@@ -98,10 +84,6 @@ class PhingDownloader
         return $this->getVersionFromString($phingLatestVersionString);
     }
 
-    /**
-     * @param string $string
-     * @return \PharIo\Version\Version|null
-     */
     protected function getVersionFromString(string $string): ?Version
     {
         if (preg_match(self::SEMVER_REGEX, $string, $matches) === 1) {

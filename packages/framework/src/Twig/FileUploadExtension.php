@@ -11,9 +11,6 @@ use Twig\TwigFunction;
 
 class FileUploadExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     */
     public function __construct(protected readonly FileUpload $fileUpload)
     {
     }

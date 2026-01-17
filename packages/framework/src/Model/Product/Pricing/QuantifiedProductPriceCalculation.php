@@ -22,13 +22,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class QuantifiedProductPriceCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
-     */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly PriceCalculation $priceCalculation,
@@ -38,12 +31,6 @@ class QuantifiedProductPriceCalculation
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface
-     */
     protected function calculatePrice(
         QuantifiedProduct $quantifiedProduct,
         int $domainId,
@@ -58,11 +45,6 @@ class QuantifiedProductPriceCalculation
         return $quantifiedPricesResult->sellingQuantifiedItemPrice;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface
-     */
     public function calculateGiftPrice(
         QuantifiedProduct $quantifiedProduct,
         int $domainId,
@@ -80,11 +62,6 @@ class QuantifiedProductPriceCalculation
         return new QuantifiedItemPrice($basePrice, $totalPrice, $vat);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalPriceWithVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalPriceVatAmount
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     protected function getTotalPriceWithoutVatForInputPriceWithVat(
         Money $totalPriceWithVat,
         Money $totalPriceVatAmount,
@@ -92,11 +69,6 @@ class QuantifiedProductPriceCalculation
         return $totalPriceWithVat->subtract($totalPriceVatAmount);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $unitPrice
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     protected function getTotalPriceWithoutVatForInputPriceWithoutVat(
         QuantifiedProduct $quantifiedProduct,
         PriceInterface $unitPrice,
@@ -104,11 +76,6 @@ class QuantifiedProductPriceCalculation
         return $unitPrice->getPriceWithoutVat()->multiply($quantifiedProduct->getQuantity());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $unitPrice
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     protected function getTotalPriceWithVat(
         QuantifiedProduct $quantifiedProduct,
         PriceInterface $unitPrice,
@@ -116,12 +83,6 @@ class QuantifiedProductPriceCalculation
         return $unitPrice->getPriceWithVat()->multiply($quantifiedProduct->getQuantity());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalPriceWithVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     protected function getTotalPriceVatAmountForInputPriceWithVat(
         Money $totalPriceWithVat,
         Vat $vat,
@@ -132,8 +93,6 @@ class QuantifiedProductPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface[]
      */
     public function calculatePrices(
@@ -154,12 +113,6 @@ class QuantifiedProductPriceCalculation
         return $quantifiedItemsPrices;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPricesResult
-     */
     public function calculateQuantifiedBasicAndSellingPrice(
         QuantifiedProduct $quantifiedProduct,
         int $domainId,
@@ -194,13 +147,6 @@ class QuantifiedProductPriceCalculation
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface $productPrice
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
     protected function calculateTotalPrice(
         QuantifiedProduct $quantifiedProduct,
         ProductPriceInterface $productPrice,

@@ -11,10 +11,6 @@ use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 
 final class ArrayAdapter implements AdapterInterface
 {
-    /**
-     * @param array $data
-     * @param \Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSourceFactory $arrayWithPaginationDataSourceFactory
-     */
     public function __construct(
         private readonly array $data,
         private readonly ArrayWithPaginationDataSourceFactory $arrayWithPaginationDataSourceFactory,
@@ -22,9 +18,7 @@ final class ArrayAdapter implements AdapterInterface
     }
 
     /**
-     * @param string $identificationName
      * @param array<\Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor> $fields
-     * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
      */
     #[Override]
     public function getDatasource(string $identificationName, array $fields): DataSourceInterface

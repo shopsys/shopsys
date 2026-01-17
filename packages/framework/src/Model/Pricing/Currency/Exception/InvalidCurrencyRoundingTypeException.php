@@ -8,10 +8,6 @@ use Exception;
 
 class InvalidCurrencyRoundingTypeException extends Exception
 {
-    /**
-     * @param string $roundingType
-     * @param \Exception|null $previous
-     */
     public function __construct(string $roundingType, ?Exception $previous = null)
     {
         $message = sprintf('Currency rounding type `%s` is not valid', $roundingType);

@@ -14,8 +14,6 @@ class ProductImagesQuery extends ImagesQuery
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function imagesByProductPromiseQuery($data, ?string $type): Promise
     {
@@ -26,8 +24,6 @@ class ProductImagesQuery extends ImagesQuery
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
-     * @param string|null $type
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function mainImageByProductPromiseQuery($data, ?string $type): Promise
     {

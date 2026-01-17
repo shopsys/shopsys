@@ -30,15 +30,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_BLOG_ARTICLE)]
 class BlogArticleController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory $blogArticleDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleGridFactory $blogArticleGridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly BlogArticleFacade $blogArticleFacade,
         protected readonly BlogArticleDataFactory $blogArticleDataFactory,
@@ -50,10 +41,6 @@ class BlogArticleController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/blog/article/list/', name: 'admin_blogarticle_list')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -80,11 +67,6 @@ class BlogArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/blog/article/edit/{id}', name: 'admin_blogarticle_edit', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -125,10 +107,6 @@ class BlogArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/blog/article/new/', name: 'admin_blogarticle_new')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -164,10 +142,6 @@ class BlogArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/blog/article/delete/{id}', name: 'admin_blogarticle_delete', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -191,10 +165,6 @@ class BlogArticleController extends AdminBaseController
         return $this->redirectToRoute('admin_blogarticle_list');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/blog/article/delete-confirm/{id}', name: 'admin_blogarticle_deleteconfirm', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]

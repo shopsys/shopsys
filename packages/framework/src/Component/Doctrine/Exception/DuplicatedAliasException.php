@@ -9,12 +9,6 @@ use Throwable;
 
 class DuplicatedAliasException extends LogicException
 {
-    /**
-     * @param string $alias
-     * @param string $aliasingClass
-     * @param string $aliasedClass
-     * @param \Throwable|null $previous
-     */
     public function __construct(
         string $alias,
         string $aliasingClass,

@@ -45,11 +45,6 @@ class CartPaymentTest extends GraphQlTestCase
         $this->assertSame($swift, $responseData['paymentGoPayBankSwift']);
     }
 
-    /**
-     * @param \App\Model\Payment\Payment $payment
-     * @param string $goPayBankSwift
-     * @return array
-     */
     private function addPaymentToDemoCart(Payment $payment, string $goPayBankSwift): array
     {
         $changePaymentInCartMutation = '

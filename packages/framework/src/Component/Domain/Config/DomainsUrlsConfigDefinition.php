@@ -14,9 +14,6 @@ class DomainsUrlsConfigDefinition implements ConfigurationInterface
     public const CONFIG_ID = 'id';
     public const CONFIG_URL = 'url';
 
-    /**
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
-     */
     #[Override]
     public function getConfigTreeBuilder(): TreeBuilder
     {

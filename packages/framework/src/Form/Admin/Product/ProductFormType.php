@@ -56,22 +56,6 @@ final class ProductFormType extends AbstractType
 {
     public const string CSRF_TOKEN_ID = 'product_edit_type';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum $productTypeEnum
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         private readonly BrandFacade $brandFacade,
         private readonly FlagFacade $flagFacade,
@@ -90,10 +74,6 @@ final class ProductFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -175,9 +155,6 @@ final class ProductFormType extends AbstractType
         $this->pluginDataFormExtensionFacade->extendForm($builder, 'product', 'pluginData');
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -191,12 +168,6 @@ final class ProductFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @param array $disabledItemInMainVariantHelp
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createBasicInformationGroup(
         FormBuilderInterface $builder,
         ?Product $product,
@@ -311,11 +282,6 @@ final class ProductFormType extends AbstractType
         return $builderBasicInformationGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createShortDescriptionsGroup(
         FormBuilderInterface $builder,
         ?Product $product,
@@ -341,11 +307,6 @@ final class ProductFormType extends AbstractType
         return $builderShortDescriptionGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createDescriptionsGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $builderDescriptionGroup = $builder->create('descriptionsGroup', GroupType::class, [
@@ -369,11 +330,6 @@ final class ProductFormType extends AbstractType
         return $builderDescriptionGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createDisplayAvailabilityGroup(
         FormBuilderInterface $builder,
         ?Product $product,
@@ -479,11 +435,6 @@ final class ProductFormType extends AbstractType
         return $builderDisplayAvailabilityGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createStocksGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $stockGroupBuilder = $builder->create('stocksGroup', GroupType::class, [
@@ -512,11 +463,6 @@ final class ProductFormType extends AbstractType
         return $stockGroupBuilder;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createPricesGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $builderPricesGroup = $builder->create('pricesGroup', GroupType::class, [
@@ -591,11 +537,6 @@ final class ProductFormType extends AbstractType
         return $builderPricesGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createPromotionGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $promotionGroup = $builder->create('promotionGroup', GroupType::class, [
@@ -623,11 +564,6 @@ final class ProductFormType extends AbstractType
         return $promotionGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createSeoGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $seoTitlesOptionsByDomainId = [];
@@ -687,11 +623,6 @@ final class ProductFormType extends AbstractType
         return $builderSeoGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createVariantGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $variantGroup = $builder->create('variantGroup', FormType::class, [
@@ -738,38 +669,21 @@ final class ProductFormType extends AbstractType
         return $variantGroup;
     }
 
-    /**
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return string
-     */
     private function getTitlePlaceholder(string $locale, ?Product $product = null): string
     {
         return $product?->getName($locale) ?? '';
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return bool
-     */
     private function isProductMainVariant(?Product $product): bool
     {
         return $product !== null && $product->isMainVariant();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return bool
-     */
     private function isProductVariant(?Product $product): bool
     {
         return $product !== null && $product->isVariant();
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createParametersGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderParametersGroup = $builder->create('parametersGroup', GroupType::class, [
@@ -795,11 +709,6 @@ final class ProductFormType extends AbstractType
         return $builderParametersGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createImagesGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $builderImageGroup = $builder->create('imageGroup', GroupType::class, [
@@ -826,11 +735,6 @@ final class ProductFormType extends AbstractType
         return $builderImageGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createAccessoriesGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         return $builder
@@ -843,10 +747,6 @@ final class ProductFormType extends AbstractType
             ->addViewTransformer($this->removeDuplicatesTransformer);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createShortDescriptionsUspGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderShortDescriptionsUspGroup = $builder->create('shortDescriptionsUspGroups', GroupType::class, [
@@ -891,11 +791,6 @@ final class ProductFormType extends AbstractType
         return $builderShortDescriptionsUspGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createFilesGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $builderFileGroup = $builder->create('fileGroup', GroupType::class, [
@@ -920,10 +815,6 @@ final class ProductFormType extends AbstractType
         return $builderFileGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createVideosGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $videosGroup = $builder->create('videosGroup', GroupType::class, [

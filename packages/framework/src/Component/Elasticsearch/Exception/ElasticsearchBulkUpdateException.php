@@ -8,10 +8,6 @@ use Exception;
 
 class ElasticsearchBulkUpdateException extends Exception
 {
-    /**
-     * @param string $indexName
-     * @param array $errors
-     */
     public function __construct(string $indexName, array $errors)
     {
         parent::__construct(sprintf(

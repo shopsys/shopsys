@@ -23,8 +23,6 @@ class VatDataFixture extends AbstractReferenceFixture
     public const string VAT_HIGH = 'vat_high';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
      * @param \App\Component\Setting\Setting $setting
      */
     public function __construct(
@@ -34,9 +32,6 @@ class VatDataFixture extends AbstractReferenceFixture
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -73,11 +68,6 @@ class VatDataFixture extends AbstractReferenceFixture
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
-     * @param int $domainId
-     * @param string $referenceName
-     */
     private function createVat(VatData $vatData, int $domainId, string $referenceName): void
     {
         $vat = $this->vatFacade->create($vatData, $domainId);
@@ -85,9 +75,6 @@ class VatDataFixture extends AbstractReferenceFixture
         $this->addReferenceForDomain($referenceName, $vat, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     */
     private function setHighVatAsDefault(int $domainId): void
     {
         $defaultVat = $this->getReferenceForDomain(self::VAT_HIGH, $domainId, Vat::class);

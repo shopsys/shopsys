@@ -16,12 +16,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 
 class TwoFactorAuthenticationMailFacade implements AuthCodeMailerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail $twoFactorAuthenticationMail
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly Mailer $mailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
@@ -47,10 +41,6 @@ class TwoFactorAuthenticationMailFacade implements AuthCodeMailerInterface
         $this->sendMail($mailTemplate, $administrator);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param \Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface $twoFactorUser
-     */
     public function sendMail(MailTemplate $mailTemplate, TwoFactorInterface $twoFactorUser): void
     {
         $messageData = $this->twoFactorAuthenticationMail->createMessage($mailTemplate, $twoFactorUser);

@@ -12,17 +12,11 @@ class TransferIssueLogCleanerCronModule implements SimpleCronModuleInterface
 {
     protected Logger $logger;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueRepository $transferIssueRepository
-     */
     public function __construct(
         protected readonly TransferIssueRepository $transferIssueRepository,
     ) {
     }
 
-    /**
-     * @param \Monolog\Logger $logger
-     */
     #[Override]
     public function setLogger(Logger $logger): void
     {

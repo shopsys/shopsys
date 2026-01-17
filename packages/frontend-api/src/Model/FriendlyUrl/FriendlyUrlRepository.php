@@ -11,30 +11,17 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository a
 
 class FriendlyUrlRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly FrameworkFriendlyUrlRepository $friendlyUrlRepository,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getFriendlyUrlRepository(): EntityRepository
     {
         return $this->em->getRepository(FriendlyUrl::class);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $routeName
-     * @param string $slug
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
-     */
     public function findFriendlyUrlBySlugAndRouteName(int $domainId, string $routeName, string $slug): ?FriendlyUrl
     {
         $criteria = [

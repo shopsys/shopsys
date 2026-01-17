@@ -15,11 +15,6 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
 {
     protected RepositoryFactory $repositoryFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Doctrine\ORM\Configuration $config
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         EntityManagerInterface $em,
         Configuration $config,
@@ -83,9 +78,6 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
         return parent::find($resolvedEntityName, $id, $lockMode, $lockVersion);
     }
 
-    /**
-     * @param string $className
-     */
     public function refreshLoadedEntitiesByClassName(string $className): void
     {
         $className = $this->entityNameResolver->resolve($className);

@@ -18,14 +18,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitR
 
 class PromoCodeGridFactory implements GridFactoryInterface
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository $promoCodeLimitRepository
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
@@ -37,12 +29,8 @@ class PromoCodeGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $roleConstant
-     * @param bool $withEditButton
-     * @param string|null $search
      *@throws \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException
      * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
     public function create(?string $roleConstant, bool $withEditButton = true, ?string $search = null): Grid
@@ -98,7 +86,6 @@ class PromoCodeGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param int $id
      * @return string[]|null[]
      */
     protected function getLimitsByPromoCodeId(int $id): array

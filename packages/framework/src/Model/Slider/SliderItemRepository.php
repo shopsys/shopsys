@@ -11,10 +11,6 @@ use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
 
 class SliderItemRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClockInterface $clock,
@@ -68,7 +64,6 @@ class SliderItemRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
     public function getAllVisibleByDomainId(int $domainId): array
@@ -92,9 +87,6 @@ class SliderItemRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getSliderItemQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()

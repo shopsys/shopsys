@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\Context\AbstractContext;
 final class TestContextB extends AbstractContext
 {
     /**
-     * @param bool $shouldMatch
      * @param array<class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>> $requiredContexts
      */
     public function __construct(

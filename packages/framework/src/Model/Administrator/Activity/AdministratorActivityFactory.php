@@ -9,18 +9,10 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
 class AdministratorActivityFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param string $ipAddress
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity
-     */
     public function create(Administrator $administrator, string $ipAddress): AdministratorActivity
     {
         $entityClassName = $this->entityNameResolver->resolve(AdministratorActivity::class);

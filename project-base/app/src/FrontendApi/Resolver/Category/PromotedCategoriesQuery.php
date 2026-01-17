@@ -10,10 +10,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class PromotedCategoriesQuery extends AbstractQuery
 {
-    /**
-     * @param \App\FrontendApi\Resolver\Category\PromotedCategory\PromotedCategoryFacade $promotedCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly PromotedCategoryFacade $promotedCategoryFacade,
         private readonly Domain $domain,

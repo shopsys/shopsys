@@ -14,20 +14,12 @@ use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
 
 class CategoriesSearchResultsProvider implements CategoriesSearchResultsProviderInterface
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
-     */
     #[Override]
     public function getCategoriesSearchResults(
         Argument $argument,
@@ -54,10 +46,6 @@ class CategoriesSearchResultsProvider implements CategoriesSearchResultsProvider
         );
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
     #[Override]
     public function isEnabledOnDomain(int $domainId): bool
     {

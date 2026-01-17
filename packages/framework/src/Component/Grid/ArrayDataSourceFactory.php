@@ -8,8 +8,6 @@ class ArrayDataSourceFactory
 {
     /**
      * @param array<int|string, mixed> $data
-     * @param string|null $rowIdSourceColumnName
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource
      */
     public function create(array $data, ?string $rowIdSourceColumnName = null): ArrayDataSource
     {

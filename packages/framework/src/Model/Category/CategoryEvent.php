@@ -27,17 +27,11 @@ class CategoryEvent extends Event
      */
     public const DELETE = 'category.delete';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
     public function __construct(
         protected readonly Category $category,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
     public function getCategory(): Category
     {
         return $this->category;

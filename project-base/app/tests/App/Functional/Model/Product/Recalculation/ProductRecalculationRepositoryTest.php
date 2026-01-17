@@ -27,9 +27,6 @@ class ProductRecalculationRepositoryTest extends TransactionFunctionalTestCase
         $this->assertEqualsCanonicalizing($expectedIds, $calculatedIds);
     }
 
-    /**
-     * @return iterable
-     */
     public static function getProductsForRecalculationProvider(): iterable
     {
         yield 'regular products only' => [
@@ -65,9 +62,6 @@ class ProductRecalculationRepositoryTest extends TransactionFunctionalTestCase
         $this->assertEqualsCanonicalizing($expectedIds, $calculatedIds);
     }
 
-    /**
-     * @return iterable
-     */
     public static function getIdsForVariantReplacementProvider(): iterable
     {
         yield 'regular products only' => [

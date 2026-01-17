@@ -15,11 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Article\Exception\ArticleNotFoundUs
 
 class ArticleQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchFacade $articleElasticsearchFacade
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ArticleElasticsearchFacade $articleElasticsearchFacade,
@@ -27,11 +22,6 @@ class ArticleQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param string|null $uuid
-     * @param string|null $urlSlug
-     * @return array
-     */
     public function articleByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): array
     {
         try {
@@ -49,35 +39,21 @@ class ArticleQuery extends AbstractQuery
         return $articleData;
     }
 
-    /**
-     * @return string
-     */
     public function termsAndConditionsArticleUrlQuery(): string
     {
         return '/' . $this->getSpecialArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, 'terms-and-conditions')['mainSlug'];
     }
 
-    /**
-     * @return string
-     */
     public function privacyPolicyArticleUrlQuery(): string
     {
         return '/' . $this->getSpecialArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, 'privacy-policy')['mainSlug'];
     }
 
-    /**
-     * @return string
-     */
     public function userConsentPolicyArticleUrlQuery(): string
     {
         return '/' . $this->getSpecialArticle(Setting::USER_CONSENT_POLICY_ARTICLE_ID, 'user-consent-policy')['mainSlug'];
     }
 
-    /**
-     * @param string $settingName
-     * @param string $articleIdentifier
-     * @return array
-     */
     protected function getSpecialArticle(string $settingName, string $articleIdentifier): array
     {
         try {

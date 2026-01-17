@@ -38,16 +38,6 @@ final class CustomerUserFormType extends AbstractType
 {
     private ?CustomerUser $customerUser = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLoginInformationProvider $customerUserLoginInformationProvider
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade $salesRepresentativeFacade
-     */
     public function __construct(
         private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
@@ -60,10 +50,6 @@ final class CustomerUserFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -238,10 +224,6 @@ final class CustomerUserFormType extends AbstractType
         }
     }
 
-    /**
-     * @param string|null $email
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function validateUniqueEmail(?string $email, ExecutionContextInterface $context): void
     {
         if ($email === null) {
@@ -266,9 +248,6 @@ final class CustomerUserFormType extends AbstractType
         }
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

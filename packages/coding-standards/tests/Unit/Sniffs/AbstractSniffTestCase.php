@@ -12,14 +12,8 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractSniffTestCase extends TestCase
 {
-    /**
-     * @return string
-     */
     abstract protected function getSniffClassName(): string;
 
-    /**
-     * @param string $fileToTest
-     */
     public function runWrongFilesTest(string $fileToTest): void
     {
         $file = $this->doRunSniff($fileToTest);
@@ -27,10 +21,6 @@ abstract class AbstractSniffTestCase extends TestCase
         self::assertGreaterThan(0, $file->getErrorCount(), $fileToTest . ' should raise error');
     }
 
-    /**
-     * @param string $expectedInputFileName
-     * @param string|null $inputFileName
-     */
     public function runFixableFilesTest(string $expectedInputFileName, ?string $inputFileName = null): void
     {
         if ($inputFileName === null) {
@@ -43,9 +33,6 @@ abstract class AbstractSniffTestCase extends TestCase
         self::assertStringEqualsFile($expectedInputFileName, $file->fixer->getContents());
     }
 
-    /**
-     * @param string $fileToTest
-     */
     public function runCorrectFilesTest(string $fileToTest): void
     {
         $file = $this->doRunSniff($fileToTest);
@@ -53,10 +40,6 @@ abstract class AbstractSniffTestCase extends TestCase
         self::assertEquals(0, $file->getErrorCount(), $fileToTest . ' should not raise error');
     }
 
-    /**
-     * @param string $fileToTest
-     * @return \PHP_CodeSniffer\Files\File
-     */
     protected function doRunSniff(string $fileToTest): File
     {
         if (defined('PHP_CODESNIFFER_CBF') === false) {

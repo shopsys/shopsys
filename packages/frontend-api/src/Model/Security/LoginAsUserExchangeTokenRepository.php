@@ -11,11 +11,6 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 class LoginAsUserExchangeTokenRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
         protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
@@ -23,10 +18,6 @@ class LoginAsUserExchangeTokenRepository
     ) {
     }
 
-    /**
-     * @param string $unencryptedToken
-     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeToken|null
-     */
     public function findValidByToken(string $unencryptedToken): ?LoginAsUserExchangeToken
     {
         $validTokens = $this->entityManager->createQueryBuilder()
@@ -48,9 +39,6 @@ class LoginAsUserExchangeTokenRepository
         return null;
     }
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeToken $exchangeToken
-     */
     public function remove(LoginAsUserExchangeToken $exchangeToken): void
     {
         $this->entityManager->remove($exchangeToken);

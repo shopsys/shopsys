@@ -25,7 +25,6 @@ final class ContextAwareRoleHierarchy implements RoleHierarchyInterface
 
     /**
      * @param iterable<string, \Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\AbstractRoleHierarchyProvider> $hierarchyProviders
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
      */
     public function __construct(
         #[TaggedIterator('shopsys.role_hierarchy_provider')]
@@ -58,8 +57,6 @@ final class ContextAwareRoleHierarchy implements RoleHierarchyInterface
 
     /**
      * Get hierarchy for current request context
-     *
-     * @return \Symfony\Component\Security\Core\Role\RoleHierarchy
      */
     private function getHierarchyForCurrentContext(): RoleHierarchy
     {

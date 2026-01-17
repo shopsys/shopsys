@@ -35,13 +35,6 @@ final class ComplaintFormType extends AbstractType
 {
     protected const string VALIDATION_GROUP_TYPE_MONEY_RETURN = 'typeMoneyReturn';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
@@ -103,11 +96,6 @@ final class ComplaintFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createBasicInformationGroup(
         FormBuilderInterface $builder,
         Complaint $complaint,
@@ -203,10 +191,6 @@ final class ComplaintFormType extends AbstractType
         return $builderBasicInformationGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createDeliveryAddressGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderDeliveryAddressGroup = $builder->create('deliveryAddressGroup', GroupType::class, [
@@ -312,10 +296,6 @@ final class ComplaintFormType extends AbstractType
         return $builderDeliveryAddressGroup;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function validateQuantityIsLessOrEqualThanOrdered(
         ComplaintData $complaintData,
         ExecutionContextInterface $context,

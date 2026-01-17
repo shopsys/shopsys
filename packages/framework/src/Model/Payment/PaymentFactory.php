@@ -8,17 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class PaymentFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $data
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
     public function create(PaymentData $data): Payment
     {
         $entityClassName = $this->entityNameResolver->resolve(Payment::class);

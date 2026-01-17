@@ -13,9 +13,6 @@ use Tests\FrameworkBundle\Test\MiddlewareTestCase;
 
 class SetOrderDataAsAdministratorMiddlewareTest extends MiddlewareTestCase
 {
-    /**
-     * @param \App\Model\Administrator\Administrator|null $expectedAdministrator
-     */
     #[DataProvider('getAdministratorData')]
     public function testAdministratorDataIsAdded(?Administrator $expectedAdministrator): void
     {
@@ -33,9 +30,6 @@ class SetOrderDataAsAdministratorMiddlewareTest extends MiddlewareTestCase
         $this->assertSame($expectedAdministrator?->getRealName(), $actualOrderData->createdAsAdministratorName);
     }
 
-    /**
-     * @return iterable
-     */
     public static function getAdministratorData(): iterable
     {
         $administratorData = new AdministratorData();

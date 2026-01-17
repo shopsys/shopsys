@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class PriceConverter
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly Rounding $rounding,
@@ -23,12 +18,6 @@ class PriceConverter
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $priceCurrency
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function convertPriceWithoutVatToDomainDefaultCurrencyPrice(
         Money $price,
         Currency $priceCurrency,
@@ -40,12 +29,6 @@ class PriceConverter
         return $this->rounding->roundPriceWithoutVat($price, $domainDefaultCurrency);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $priceCurrency
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function convertPriceWithVatToDomainDefaultCurrencyPrice(
         Money $price,
         Currency $priceCurrency,
@@ -57,12 +40,6 @@ class PriceConverter
         return $this->rounding->roundPriceWithVatByCurrency($price, $domainDefaultCurrency);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $priceCurrency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $domainDefaultCurrency
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     protected function convertPriceToPriceInDomainDefaultCurrency(
         Money $price,
         Currency $priceCurrency,
@@ -73,13 +50,6 @@ class PriceConverter
         return $price->multiply((string)$coefficient);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param string $vatPercent
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function convertPriceToInputPriceInDomainDefaultCurrency(
         Money $price,
         Currency $currency,

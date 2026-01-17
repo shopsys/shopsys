@@ -16,19 +16,12 @@ class ParameterColorValueDataFixture extends AbstractReferenceFixture implements
 {
     public const string PARAMETER_VALUE_RED_REFERENCE_PREFIX = 'parameter_value_red_';
 
-    /**
-     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
-     */
     public function __construct(
         private readonly ParameterRepository $parameterRepository,
         private readonly ParameterValueDataFactory $parameterValueDataFactory,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

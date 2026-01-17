@@ -108,9 +108,6 @@ class UploadedFileConfigTest extends TestCase
         $this->assertTrue($uploadedFileTypeConfig2->isRequiredFriendlyName());
     }
 
-    /**
-     * @return array
-     */
     private function getFileEntityConfigsByClass(): array
     {
         $uploadedFileType1 = new UploadedFileTypeConfig('default', false, false);
@@ -125,9 +122,6 @@ class UploadedFileConfigTest extends TestCase
         ];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig
-     */
     private function getUploadedFileConfig(): UploadedFileConfig
     {
         $fileEntityConfigsByClass = $this->getFileEntityConfigsByClass();

@@ -13,7 +13,6 @@ class UploadedFileConfigurationParseException extends Exception
 
     /**
      * @param string $entityClass
-     * @param \Throwable|null $previous
      */
     public function __construct($entityClass, ?Throwable $previous = null)
     {

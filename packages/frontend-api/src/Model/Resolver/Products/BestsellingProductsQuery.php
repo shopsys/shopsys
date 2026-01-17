@@ -17,14 +17,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class BestsellingProductsQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableInCategoryByIdsBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
-     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductSellableInCategoryBatchLoadDataFactory $productSellableInCategoryBatchLoadDataFactory
-     */
     public function __construct(
         protected readonly CachedBestsellingProductFacade $cachedBestsellingProductFacade,
         protected readonly Domain $domain,
@@ -35,10 +27,6 @@ class BestsellingProductsQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function bestSellingProductsByCategoryQuery(
         Category|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix,
     ): Promise {

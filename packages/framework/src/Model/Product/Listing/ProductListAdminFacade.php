@@ -10,10 +10,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class ProductListAdminFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminRepository $productListAdminRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     */
     public function __construct(
         protected readonly ProductListAdminRepository $productListAdminRepository,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -37,7 +33,6 @@ class ProductListAdminFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData)

@@ -6,10 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage;
 
 class PaymentContentPageFactory
 {
-    /**
-     * @param string $content
-     * @return \Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPage
-     */
     public function createSuccessful(string $content): PaymentContentPage
     {
         return new PaymentContentPage(
@@ -18,10 +14,6 @@ class PaymentContentPageFactory
         );
     }
 
-    /**
-     * @param string $content
-     * @return \Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPage
-     */
     public function createFailed(string $content): PaymentContentPage
     {
         return new PaymentContentPage(
@@ -30,10 +22,6 @@ class PaymentContentPageFactory
         );
     }
 
-    /**
-     * @param string $content
-     * @return \Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPage
-     */
     public function createInProcess(string $content): PaymentContentPage
     {
         return new PaymentContentPage(

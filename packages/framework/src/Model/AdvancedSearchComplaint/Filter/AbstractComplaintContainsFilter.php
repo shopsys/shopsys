@@ -13,9 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 abstract class AbstractComplaintContainsFilter implements AdvancedSearchFilterInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
@@ -27,9 +24,6 @@ abstract class AbstractComplaintContainsFilter implements AdvancedSearchFilterIn
     #[Override]
     abstract public function getName(): string;
 
-    /**
-     * @return string
-     */
     abstract protected function getFieldName(): string;
 
     /**
@@ -83,10 +77,6 @@ abstract class AbstractComplaintContainsFilter implements AdvancedSearchFilterIn
         }
     }
 
-    /**
-     * @param string $operator
-     * @return string
-     */
     protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {

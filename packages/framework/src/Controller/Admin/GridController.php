@@ -15,20 +15,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class GridController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Ordering\GridOrderingFacade $gridOrderingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\InlineEditFacade $inlineEditFacade
-     */
     public function __construct(
         protected readonly GridOrderingFacade $gridOrderingFacade,
         protected readonly InlineEditFacade $inlineEditFacade,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     #[Route(path: '/_grid/get-form/')]
     #[RequireRole(SystemRole::ADMIN)]
     public function getFormAction(Request $request): JsonResponse
@@ -43,10 +35,6 @@ class GridController extends AdminBaseController
         return new JsonResponse($renderedFormRow);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     #[Route(path: '/_grid/save-form/')]
     #[RequireRole(SystemRole::ADMIN)]
     public function saveFormAction(Request $request): JsonResponse
@@ -71,10 +59,6 @@ class GridController extends AdminBaseController
         return new JsonResponse($responseData);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     #[Route(path: '/_grid/save-ordering/')]
     #[RequireRole(SystemRole::ADMIN)]
     public function saveOrderingAction(Request $request): JsonResponse

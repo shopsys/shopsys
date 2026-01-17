@@ -14,9 +14,6 @@ class Version20180603135341 extends AbstractMigration implements ContainerAwareI
 {
     use MultidomainMigrationTrait;
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -42,10 +39,6 @@ class Version20180603135341 extends AbstractMigration implements ContainerAwareI
         $this->sql('ALTER SEQUENCE order_statuses_id_seq RESTART WITH 5');
     }
 
-    /**
-     * @param int $orderStatusId
-     * @param int $orderStatusType
-     */
     private function createOrderStatus(int $orderStatusId, int $orderStatusType): void
     {
         $this->sql('INSERT INTO order_statuses (id, type) VALUES (:id, :type)', [
@@ -54,11 +47,6 @@ class Version20180603135341 extends AbstractMigration implements ContainerAwareI
         ]);
     }
 
-    /**
-     * @param int $orderStatusId
-     * @param string $orderStatusTranslatedName
-     * @param string $locale
-     */
     private function createOrderStatusTranslations(
         int $orderStatusId,
         string $orderStatusTranslatedName,

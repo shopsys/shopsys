@@ -21,13 +21,6 @@ class GoPayFacade implements PaymentServiceInterface
 {
     protected const string GOPAY_RESULT_FAILED = 'FAILED';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory $goPayClientFactory
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\GoPayOrderMapper $goPayOrderMapper
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\GoPayRepository $goPayRepository
-     * @param \Psr\Log\LoggerInterface $logger
-     */
     public function __construct(
         protected readonly GoPayClientFactory $goPayClientFactory,
         protected readonly GoPayOrderMapper $goPayOrderMapper,
@@ -37,11 +30,6 @@ class GoPayFacade implements PaymentServiceInterface
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string|null $goPayBankSwift
-     * @return array
-     */
     public function sendPaymentToGoPay(Order $order, ?string $goPayBankSwift): array
     {
         $goPayPaymentData = $this->goPayOrderMapper->createGoPayPaymentData($order, $goPayBankSwift);
@@ -67,10 +55,6 @@ class GoPayFacade implements PaymentServiceInterface
         throw new GoPaySendPaymentException();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationData $paymentSetupCreationData
-     */
     #[Override]
     public function createTransaction(
         PaymentTransactionData $paymentTransactionData,
@@ -90,10 +74,6 @@ class GoPayFacade implements PaymentServiceInterface
         $paymentSetupCreationData->setGoPayCreatePaymentSetup($goPayCreatePaymentSetup);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
-     * @return bool
-     */
     #[Override]
     public function updateTransaction(PaymentTransactionData $paymentTransactionData): bool
     {
@@ -117,11 +97,6 @@ class GoPayFacade implements PaymentServiceInterface
         return false;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $refundAmount
-     * @return bool
-     */
     #[Override]
     public function refundTransaction(PaymentTransactionData $paymentTransactionData, Money $refundAmount): bool
     {
@@ -142,7 +117,6 @@ class GoPayFacade implements PaymentServiceInterface
     }
 
     /**
-     * @param \DateTimeImmutable $fromDate
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getAllUnpaidGoPayOrders(DateTimeImmutable $fromDate): array

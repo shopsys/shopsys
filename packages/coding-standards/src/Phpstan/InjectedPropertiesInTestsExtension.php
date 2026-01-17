@@ -12,22 +12,12 @@ use function str_contains;
 
 class InjectedPropertiesInTestsExtension implements ReadWritePropertiesExtension
 {
-    /**
-     * @param \PHPStan\Reflection\PropertyReflection $property
-     * @param string $propertyName
-     * @return bool
-     */
     #[Override]
     public function isAlwaysRead(PropertyReflection $property, string $propertyName): bool
     {
         return false;
     }
 
-    /**
-     * @param \PHPStan\Reflection\PropertyReflection $property
-     * @param string $propertyName
-     * @return bool
-     */
     #[Override]
     public function isAlwaysWritten(PropertyReflection $property, string $propertyName): bool
     {
@@ -40,11 +30,6 @@ class InjectedPropertiesInTestsExtension implements ReadWritePropertiesExtension
         return $this->isInitialized($property, $propertyName);
     }
 
-    /**
-     * @param \PHPStan\Reflection\PropertyReflection $property
-     * @param string $propertyName
-     * @return bool
-     */
     #[Override]
     public function isInitialized(PropertyReflection $property, string $propertyName): bool
     {

@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class PriceRange
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $minimalPrice
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $maximalPrice
-     */
     public function __construct(protected readonly Money $minimalPrice, protected readonly Money $maximalPrice)
     {
     }

@@ -16,9 +16,6 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class DeliveryAddressIsNotStoredForPacketeryOrPersonalPickupTest extends GraphQlWithLoginTestCase
 {
-    /**
-     * @param string $transportDataFixtureReference
-     */
     #[DataProvider('getTransportDataFixtureReferences')]
     public function testDeliveryAddressIsNotDuplicatedForLoggedInClient(
         string $transportDataFixtureReference,
@@ -67,10 +64,6 @@ class DeliveryAddressIsNotStoredForPacketeryOrPersonalPickupTest extends GraphQl
         $this->assertSame($deliveryAddressesBeforeOrder, $deliveryAddressesAfterOrder);
     }
 
-    /**
-     * @param string $transportDataFixtureReference
-     * @return string
-     */
     private function getPickupPlaceIdentifierForTransportReference(string $transportDataFixtureReference): string
     {
         return match ($transportDataFixtureReference) {
@@ -80,9 +73,6 @@ class DeliveryAddressIsNotStoredForPacketeryOrPersonalPickupTest extends GraphQl
         };
     }
 
-    /**
-     * @return iterable
-     */
     public static function getTransportDataFixtureReferences(): iterable
     {
         yield [TransportDataFixture::TRANSPORT_PACKETERY];
@@ -90,10 +80,6 @@ class DeliveryAddressIsNotStoredForPacketeryOrPersonalPickupTest extends GraphQl
         yield [TransportDataFixture::TRANSPORT_PERSONAL];
     }
 
-    /**
-     * @param string $transportDataFixtureReference
-     * @param string $pickupPlaceIdentifier
-     */
     private function initializeCart(string $transportDataFixtureReference, string $pickupPlaceIdentifier): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);

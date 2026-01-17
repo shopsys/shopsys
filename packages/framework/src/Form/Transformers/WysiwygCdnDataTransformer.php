@@ -10,9 +10,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class WysiwygCdnDataTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
-     */
     public function __construct(protected readonly CdnFacade $cdnFacade)
     {
     }
@@ -28,7 +25,6 @@ class WysiwygCdnDataTransformer implements DataTransformerInterface
 
     /**
      * @param mixed $value
-     * @return string|null
      */
     #[Override]
     public function reverseTransform($value): ?string

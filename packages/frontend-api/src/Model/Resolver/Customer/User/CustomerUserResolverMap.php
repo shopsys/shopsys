@@ -15,12 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\Exception\MissingCus
 
 class CustomerUserResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginInfoFactory $loginInfoFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     */
     public function __construct(
         protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
         protected readonly LoginInfoFactory $loginInfoFactory,
@@ -29,9 +23,6 @@ class CustomerUserResolverMap extends ResolverMap
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

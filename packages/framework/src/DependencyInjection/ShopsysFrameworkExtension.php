@@ -93,9 +93,6 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
         $this->setAdminContextPathPrefixes($config['admin_context_additional_path_prefixes'], $container);
     }
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     protected function configureVarDumperTwigExtension(ContainerBuilder $container): void
     {
         $isDev = $container->getParameter('kernel.environment') === EnvironmentType::DEVELOPMENT;
@@ -121,7 +118,6 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
     /**
      * @param string[] $orderProcessingMiddlewareClassNames
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
     public function setMiddlewareServicesToStack(
         array $orderProcessingMiddlewareClassNames,
@@ -138,7 +134,6 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
     /**
      * @param string[] $additionalAdminPathPrefixes
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
     protected function setAdminContextPathPrefixes(
         array $additionalAdminPathPrefixes,

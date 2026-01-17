@@ -17,13 +17,6 @@ class InputPriceRecalculator
 {
     protected const BATCH_SIZE = 500;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceCalculation $inputPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly InputPriceCalculation $inputPriceCalculation,
@@ -108,10 +101,6 @@ class InputPriceRecalculator
         });
     }
 
-    /**
-     * @param \Doctrine\ORM\Query $query
-     * @param \Closure $callback
-     */
     protected function batchProcessQuery(Query $query, Closure $callback)
     {
         $iteration = 0;

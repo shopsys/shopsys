@@ -8,10 +8,6 @@ use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTyp
 
 class LoginInfoFactory
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginType $customerUserLoginType
-     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\LoginInfo
-     */
     public function createFromCustomerUserLoginType(CustomerUserLoginType $customerUserLoginType): LoginInfo
     {
         return new LoginInfo(

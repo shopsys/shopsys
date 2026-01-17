@@ -14,13 +14,6 @@ use Symfony\Component\Finder\Finder;
 
 abstract class AbstractFileFixture extends AbstractReferenceFixture
 {
-    /**
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly FilesystemOperator $filesystem,
         protected readonly Filesystem $localFilesystem,
@@ -67,10 +60,6 @@ abstract class AbstractFileFixture extends AbstractReferenceFixture
         );
     }
 
-    /**
-     * @param string $origin
-     * @param string $target
-     */
     protected function moveFilesFromLocalFilesystemToFilesystem(string $origin, string $target): void
     {
         $finder = new Finder();

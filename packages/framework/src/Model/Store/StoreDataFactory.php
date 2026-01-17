@@ -11,12 +11,6 @@ use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
 
 class StoreDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHourDataFactory
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
@@ -25,10 +19,6 @@ class StoreDataFactory
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Store\StoreData
-     */
     public function createForDomain(int $domainId): StoreData
     {
         $storeData = $this->createInstance();
@@ -39,10 +29,6 @@ class StoreDataFactory
         return $storeData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @return \Shopsys\FrameworkBundle\Model\Store\StoreData
-     */
     public function createFromStore(Store $store): StoreData
     {
         $storeData = $this->createInstance();
@@ -75,9 +61,6 @@ class StoreDataFactory
         return $storeData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Store\StoreData
-     */
     protected function createInstance(): StoreData
     {
         return new StoreData();

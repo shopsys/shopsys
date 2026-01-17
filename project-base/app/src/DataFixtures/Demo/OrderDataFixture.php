@@ -44,14 +44,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     public const string ORDER_CREATED_BY_VITEK = 'order_created_by_vitek';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \App\Model\Order\PlaceOrderFacade $placeOrderFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory $currencyDataFactory
      */
     public function __construct(
         private readonly CustomerUserRepository $customerUserRepository,
@@ -65,9 +59,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -80,9 +71,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
-    /**
-     * @param int $domainId
-     */
     private function loadDefault(int $domainId): void
     {
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -650,9 +638,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
     }
 
-    /**
-     * @param int $domainId
-     */
     private function loadDistinct(int $domainId): void
     {
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -811,11 +796,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \App\Model\Order\OrderData $orderData
      * @param array<string, int> $products
-     * @param string $transportReferenceName
-     * @param string $paymentReferenceName
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null $promoCode
-     * @return \App\Model\Order\Order
      */
     private function createOrder(
         OrderData $orderData,
@@ -879,10 +860,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $domainDefaultCurrency
-     * @param int $domainId
-     */
     private function createOrderWithPromoCodeAndRounding(Currency $domainDefaultCurrency, int $domainId): void
     {
         $currencyData = $this->currencyDataFactory->createFromCurrency($domainDefaultCurrency);

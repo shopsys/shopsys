@@ -9,19 +9,10 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class TopProductFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param int $position
-     * @return \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProduct
-     */
     public function create(
         Product $product,
         int $domainId,

@@ -18,7 +18,6 @@ class SliderItemDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
-     * @param \App\Model\Slider\SliderItemDataFactory $sliderItemDataFactory
      */
     public function __construct(
         private readonly SliderItemFacade $sliderItemFacade,
@@ -26,9 +25,6 @@ class SliderItemDataFixture extends AbstractReferenceFixture
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

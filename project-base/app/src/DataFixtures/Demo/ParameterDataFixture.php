@@ -97,12 +97,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
      */
     private static array $parameterNameCacheByLocale = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
-     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFactory $categoryParameterFactory
-     */
     public function __construct(
         private readonly ParameterDataFactory $parameterDataFactory,
         private readonly ParameterFacade $parameterFacade,
@@ -111,11 +105,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     ) {
     }
 
-    /**
-     * @param string $referenceName
-     * @param string $locale
-     * @return string
-     */
     private function getParameterNameByReferenceName(string $referenceName, string $locale): string
     {
         $parameterNames = $this->getParameterData($locale);
@@ -128,7 +117,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     }
 
     /**
-     * @param string $locale
      * @return array<string, string|\App\DataFixtures\Demo\DataObject\ParameterDataFixtureData>
      */
     private function getParameterData(string $locale): array
@@ -339,9 +327,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         return self::$parameterNameCacheByLocale[$locale];
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -377,14 +362,8 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     }
 
     /**
-     * @param string $referenceName
      * @param string[] $namesByLocale
      * @param \App\Model\Category\Category[] $asFilterInCategories
-     * @param string|null $parameterType
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup|null $parameterGroup
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null $unit
-     * @param int $orderingPriority
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
     private function createParameter(
         string $referenceName,

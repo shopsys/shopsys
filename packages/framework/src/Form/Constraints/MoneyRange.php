@@ -22,9 +22,6 @@ class MoneyRange extends Constraint
 
     public Money|null $max = null;
 
-    /**
-     * @param array $options
-     */
     public function __construct(array $options)
     {
         $this->validateMoneyOrNullOption('min', $options);
@@ -39,10 +36,6 @@ class MoneyRange extends Constraint
         }
     }
 
-    /**
-     * @param string $optionName
-     * @param array $options
-     */
     protected function validateMoneyOrNullOption(string $optionName, array $options): void
     {
         if (!isset($options[$optionName])) {

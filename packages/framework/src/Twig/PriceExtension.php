@@ -20,14 +20,6 @@ use Twig\TwigFunction;
 
 class PriceExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
-     * @param \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory $currencyFormatterFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     */
     public function __construct(
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly Domain $domain,
@@ -38,9 +30,6 @@ class PriceExtension extends AbstractExtension
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getFilters(): array
     {
@@ -86,9 +75,6 @@ class PriceExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getFunctions(): array
     {
@@ -115,10 +101,6 @@ class PriceExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @return string
-     */
     public function priceFilter(Money $price): string
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
@@ -126,10 +108,6 @@ class PriceExtension extends AbstractExtension
         return $this->formatCurrency($price, $currency);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @return string
-     */
     public function priceTextFilter(Money $price): string
     {
         if ($price->isZero()) {
@@ -139,12 +117,6 @@ class PriceExtension extends AbstractExtension
         return $this->priceFilter($price);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param int $currencyId
-     * @param string $locale
-     * @return string
-     */
     public function priceTextWithCurrencyByCurrencyIdAndLocaleFilter(
         Money $price,
         int $currencyId,
@@ -158,20 +130,11 @@ class PriceExtension extends AbstractExtension
         return $this->formatCurrency($price, $currency, $locale);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return string
-     */
     public function priceWithCurrencyFilter(Money $price, Currency $currency): string
     {
         return $this->formatCurrency($price, $currency);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @return string
-     */
     public function priceWithCurrencyAdminFilter(Money $price): string
     {
         $currency = $this->currencyFacade->getDefaultCurrency();
@@ -179,11 +142,6 @@ class PriceExtension extends AbstractExtension
         return $this->formatCurrency($price, $currency);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param int $domainId
-     * @return string
-     */
     public function priceWithCurrencyByDomainIdFilter(Money $price, int $domainId): string
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -191,11 +149,6 @@ class PriceExtension extends AbstractExtension
         return $this->formatCurrency($price, $currency);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param int $currencyId
-     * @return string
-     */
     public function priceWithCurrencyByCurrencyIdFilter(Money $price, int $currencyId): string
     {
         $currency = $this->currencyFacade->getById($currencyId);
@@ -203,12 +156,6 @@ class PriceExtension extends AbstractExtension
         return $this->formatCurrency($price, $currency);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param string|null $locale
-     * @return string
-     */
     protected function formatCurrency(Money $price, Currency $currency, ?string $locale = null): string
     {
         if ($locale === null) {
@@ -224,10 +171,6 @@ class PriceExtension extends AbstractExtension
         return $currencyFormatter->format($price->getAmount(), $intlCurrency->getCurrencyCode());
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
     public function getCurrencySymbolByDomainId(int $domainId): string
     {
         $locale = $this->localization->getRequestLocale();
@@ -235,10 +178,6 @@ class PriceExtension extends AbstractExtension
         return $this->getCurrencySymbolByDomainIdAndLocale($domainId, $locale);
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
     public function getCurrencyCodeByDomainId(int $domainId): string
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -246,11 +185,6 @@ class PriceExtension extends AbstractExtension
         return $currency->getCode();
     }
 
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @return string
-     */
     protected function getCurrencySymbolByDomainIdAndLocale(int $domainId, string $locale): string
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -259,9 +193,6 @@ class PriceExtension extends AbstractExtension
         return $intlCurrency->getSymbol();
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultCurrencySymbol(): string
     {
         $locale = $this->localization->getRequestLocale();
@@ -269,10 +200,6 @@ class PriceExtension extends AbstractExtension
         return $this->getDefaultCurrencySymbolByLocale($locale);
     }
 
-    /**
-     * @param string $locale
-     * @return string
-     */
     protected function getDefaultCurrencySymbolByLocale(string $locale): string
     {
         $currency = $this->currencyFacade->getDefaultCurrency();
@@ -281,10 +208,6 @@ class PriceExtension extends AbstractExtension
         return $intlCurrency->getSymbol();
     }
 
-    /**
-     * @param int $currencyId
-     * @return string
-     */
     public function getCurrencySymbolByCurrencyId(int $currencyId): string
     {
         $locale = $this->localization->getRequestLocale();
@@ -292,10 +215,6 @@ class PriceExtension extends AbstractExtension
         return $this->getCurrencySymbolByCurrencyIdAndLocale($currencyId, $locale);
     }
 
-    /**
-     * @param string $priceDecimal
-     * @return string
-     */
     public function priceFromDecimalStringWithCurrencyAdmin(string $priceDecimal): string
     {
         $money = Money::create($priceDecimal);
@@ -304,11 +223,6 @@ class PriceExtension extends AbstractExtension
         return $this->priceWithCurrencyByDomainIdFilter($money, $domainId);
     }
 
-    /**
-     * @param int $currencyId
-     * @param string $locale
-     * @return string
-     */
     protected function getCurrencySymbolByCurrencyIdAndLocale(int $currencyId, string $locale): string
     {
         $currency = $this->currencyFacade->getById($currencyId);
@@ -317,9 +231,6 @@ class PriceExtension extends AbstractExtension
         return $intlCurrency->getSymbol();
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'price_extension';

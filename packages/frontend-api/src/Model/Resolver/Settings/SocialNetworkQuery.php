@@ -11,10 +11,6 @@ use Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory;
 
 class SocialNetworkQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory $socialNetworkConfigFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly SocialNetworkConfigFactory $socialNetworkConfigFactory,
         protected readonly Domain $domain,

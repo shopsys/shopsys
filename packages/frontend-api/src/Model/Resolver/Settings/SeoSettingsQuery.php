@@ -10,10 +10,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class SeoSettingsQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly SeoSettingFacade $seoSettingFacade,

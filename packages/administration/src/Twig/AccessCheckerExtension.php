@@ -11,9 +11,6 @@ use Twig\TwigFunction;
 
 class AccessCheckerExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
-     */
     public function __construct(
         private readonly AccessCheckerInterface $accessChecker,
     ) {

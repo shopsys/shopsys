@@ -10,7 +10,6 @@ class PersistentReferenceNotFoundException extends Exception
 {
     /**
      * @param string $referenceName
-     * @param \Exception|null $previous
      */
     public function __construct($referenceName, ?Exception $previous = null)
     {

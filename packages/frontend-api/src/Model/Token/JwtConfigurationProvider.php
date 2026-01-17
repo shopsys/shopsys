@@ -16,19 +16,12 @@ class JwtConfigurationProvider
 
     protected ?Configuration $configuration = null;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly ParameterBagInterface $parameterBag,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @return \Lcobucci\JWT\Configuration
-     */
     public function getConfiguration(): Configuration
     {
         if ($this->configuration !== null) {
@@ -44,9 +37,6 @@ class JwtConfigurationProvider
         return $this->configuration;
     }
 
-    /**
-     * @return \Lcobucci\JWT\Signer\Key
-     */
     public function getPrivateKey(): Key
     {
         $apiKeyFilepath = $this->parameterBag->get(static::FRONTEND_API_KEYS_FILEPATH_PARAMETER);
@@ -54,9 +44,6 @@ class JwtConfigurationProvider
         return Key\InMemory::file($apiKeyFilepath . '/private.key');
     }
 
-    /**
-     * @return \Lcobucci\JWT\Signer\Key
-     */
     public function getPublicKey(): Key
     {
         $apiKeyFilepath = $this->parameterBag->get(static::FRONTEND_API_KEYS_FILEPATH_PARAMETER);
@@ -64,9 +51,6 @@ class JwtConfigurationProvider
         return Key\InMemory::file($apiKeyFilepath . '/public.key');
     }
 
-    /**
-     * @return \Lcobucci\JWT\Signer
-     */
     public function getSigner(): Signer
     {
         return new Signer\Rsa\Sha256();

@@ -9,12 +9,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class GiftPlanFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanRepository $giftPlanRepository
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFactory $giftPlanFactory
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         protected readonly GiftPlanRepository $giftPlanRepository,
         protected readonly EntityManagerInterface $em,
@@ -23,19 +17,11 @@ class GiftPlanFacade
     ) {
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan
-     */
     public function getById(int $id): GiftPlan
     {
         return $this->giftPlanRepository->getById($id);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanData $giftPlanData
-     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan
-     */
     public function create(GiftPlanData $giftPlanData): GiftPlan
     {
         $giftPlan = $this->giftPlanFactory->create($giftPlanData);
@@ -47,11 +33,6 @@ class GiftPlanFacade
         return $giftPlan;
     }
 
-    /**
-     * @param int $id
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanData $giftPlanData
-     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan
-     */
     public function edit(int $id, GiftPlanData $giftPlanData): GiftPlan
     {
         $giftPlan = $this->getById($id);
@@ -63,9 +44,6 @@ class GiftPlanFacade
         return $giftPlan;
     }
 
-    /**
-     * @param int $id
-     */
     public function delete(int $id): void
     {
         $giftPlan = $this->getById($id);
@@ -78,7 +56,6 @@ class GiftPlanFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $mainProducts
-     * @param int $domainId
      * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Product[]>
      */
     public function findActiveGiftProductsByMainProducts(array $mainProducts, int $domainId): array
@@ -88,7 +65,6 @@ class GiftPlanFacade
 
     /**
      * @param int[] $mainProductIds
-     * @param int $domainId
      * @return int[][]
      */
     public function findActiveGiftProductIdsByMainProductIds(array $mainProductIds, int $domainId): array

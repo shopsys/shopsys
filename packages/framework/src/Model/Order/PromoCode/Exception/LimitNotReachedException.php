@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 
 class LimitNotReachedException extends PromoCodeException
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Exception|null $previous
-     */
     public function __construct(PromoCode $promoCode, ?Exception $previous = null)
     {
         parent::__construct(t('Promo code "%promoCode%" is not applicable with current cart total price.', [

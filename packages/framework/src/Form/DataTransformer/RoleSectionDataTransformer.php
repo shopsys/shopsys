@@ -13,7 +13,6 @@ final class RoleSectionDataTransformer implements DataTransformerInterface
 {
     /**
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $sectionRoles
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $context
      */
     public function __construct(

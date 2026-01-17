@@ -15,9 +15,6 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class MissingReturnAnnotationFixer extends AbstractMissingAnnotationsFixer
 {
-    /**
-     * @return \PhpCsFixer\FixerDefinition\FixerDefinitionInterface
-     */
     #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -27,11 +24,6 @@ final class MissingReturnAnnotationFixer extends AbstractMissingAnnotationsFixer
         );
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * @param \PhpCsFixer\Tokenizer\Token|null $docToken
-     */
     #[Override]
     protected function processFunctionToken(Tokens $tokens, int $index, ?Token $docToken): void
     {
@@ -59,11 +51,6 @@ final class MissingReturnAnnotationFixer extends AbstractMissingAnnotationsFixer
         $this->addDocWithLines($tokens, $index, [$newLine], $indent);
     }
 
-    /**
-     * @param string $type
-     * @param \PhpCsFixer\Tokenizer\Token|null $docToken
-     * @return bool
-     */
     private function shouldSkip(string $type, ?Token $docToken): bool
     {
         if (in_array($type, ['', 'void', 'mixed', 'never'], true)) {

@@ -16,19 +16,12 @@ use Symfony\Component\Clock\DatePoint;
 
 class InquiryDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade $inquiryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryDataFactory $inquiryDataFactory
-     */
     public function __construct(
         protected readonly InquiryFacade $inquiryFacade,
         protected readonly InquiryDataFactory $inquiryDataFactory,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -43,9 +36,6 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         }
     }
 
-    /**
-     * @param \App\Model\Product\Product $inquiryProduct
-     */
     private function loadDataForFirstDomain(Product $inquiryProduct)
     {
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -430,10 +420,6 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->inquiryFacade->create($inquiryData);
     }
 
-    /**
-     * @param int $domainId
-     * @param \App\Model\Product\Product $inquiryProduct
-     */
     private function loadDataForOtherDomains(int $domainId, Product $inquiryProduct): void
     {
         $inquiryData = $this->inquiryDataFactory->create($domainId);

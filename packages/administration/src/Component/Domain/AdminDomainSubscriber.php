@@ -17,11 +17,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class AdminDomainSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administration\AdminUrlProvider $adminUrlProvider
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     */
     public function __construct(
         protected readonly AdminUrlProvider $adminUrlProvider,
         protected readonly Domain $domain,
@@ -29,9 +24,6 @@ class AdminDomainSubscriber implements EventSubscriberInterface
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
-     */
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
@@ -68,10 +60,6 @@ class AdminDomainSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return string
-     */
     protected function getRedirectUrl(Request $request): string
     {
         $firstDomainBaseUrl = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getBaseUrl();
@@ -80,10 +68,6 @@ class AdminDomainSubscriber implements EventSubscriberInterface
         return rtrim($firstDomainBaseUrl, '/') . $adminPath;
     }
 
-    /**
-     * @param string $path
-     * @return string
-     */
     protected function extractAdminPath(string $path): string
     {
         if (preg_match('~(/' . $this->adminUrlProvider->getAdminUrl() . '.*)~', $path, $matches)) {

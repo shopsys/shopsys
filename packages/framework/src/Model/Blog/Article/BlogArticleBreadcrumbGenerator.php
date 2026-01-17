@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 
 class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly BlogArticleRepository $blogArticleRepository,
         protected readonly BlogCategoryFacade $blogCategoryFacade,
@@ -66,9 +61,6 @@ class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterfa
     }
 
     /**
-     * @param int $domainId
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     protected function getBlogCategoryBreadcrumbItemsOnDomain(

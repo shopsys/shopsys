@@ -13,11 +13,6 @@ use Symfony\Component\Clock\DatePoint;
 
 class SpecialPriceApiFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFactory $specialPriceFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory $priceFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly SpecialPriceFactory $specialPriceFactory,
         protected readonly PriceFactory $priceFactory,
@@ -25,11 +20,6 @@ class SpecialPriceApiFactory
     ) {
     }
 
-    /**
-     * @param array $data
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $basicPrice
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null
-     */
     public function createSpecialPriceFromArray(array $data, PriceInterface $basicPrice): ?SpecialPrice
     {
         $specialPricesArray = $data['special_prices'];
@@ -47,10 +37,6 @@ class SpecialPriceApiFactory
         return $specialPrice;
     }
 
-    /**
-     * @param array $specialPricesArray
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null
-     */
     protected function findRelevantSpecialPrice(array $specialPricesArray): ?SpecialPrice
     {
         $currentDateTime = $this->clock->now();
@@ -85,7 +71,6 @@ class SpecialPriceApiFactory
     /**
      * @param array{valid_from: string, valid_to: string, price_list_id: int, price_list_name: string} $specialPriceArray
      * @param array{price_without_vat: string, price_with_vat: string, product_id: int} $priceArray
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice
      */
     protected function createSpecialPrice(array $specialPriceArray, array $priceArray): SpecialPrice
     {

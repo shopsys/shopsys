@@ -86,9 +86,6 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
         return null;
     }
 
-    /**
-     * @param \PhpParser\Node\Stmt\ClassMethod $node
-     */
     protected function setCurrentExecutionContextVariableNamesFromNode(ClassMethod $node)
     {
         $this->currentExecutionContextVariableNames = [];
@@ -118,7 +115,6 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
 
     /**
      * @param \PhpParser\Node\Expr\MethodCall $node
-     * @return bool
      */
     protected function isAddViolationMethodCall(Node $node): bool
     {
@@ -127,9 +123,6 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
             && $node->name->name === 'addViolation';
     }
 
-    /**
-     * @param \PhpParser\Node\Expr\MethodCall $methodCall
-     */
     protected function extractMessage(MethodCall $methodCall)
     {
         $firstArgumentWithMessage = reset($methodCall->args);

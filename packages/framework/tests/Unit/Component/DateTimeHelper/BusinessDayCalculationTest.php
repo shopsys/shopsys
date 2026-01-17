@@ -14,9 +14,7 @@ use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 class BusinessDayCalculationTest extends TestCase
 {
     /**
-     * @param string $inputDate
      * @param string[] $publicHolidayDates
-     * @param string $expectedDate
      */
     #[DataProvider('closestBusinessDayDataProvider')]
     public function testGetClosestBusinessDay(
@@ -85,7 +83,6 @@ class BusinessDayCalculationTest extends TestCase
 
     /**
      * @param \DateTimeImmutable[] $publicHolidays
-     * @return \Shopsys\FrameworkBundle\Component\DateTimeHelper\BusinessDayCalculation
      */
     private function createCalculation(array $publicHolidays): BusinessDayCalculation
     {

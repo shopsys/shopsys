@@ -15,9 +15,6 @@ class Version20250121135309 extends AbstractMigration implements ContainerAwareI
 {
     use MultidomainMigrationTrait;
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -28,10 +25,6 @@ class Version20250121135309 extends AbstractMigration implements ContainerAwareI
         }
     }
 
-    /**
-     * @param string|null $dateTimeString
-     * @return \DateTime|null
-     */
     private function convertDateTime(?string $dateTimeString): ?DateTime
     {
         if ($dateTimeString === null) {

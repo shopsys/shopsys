@@ -12,11 +12,6 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\Setting\HeurekaFeedSettingEnum;
 
 class HeurekaFeedSettingCrudExtension implements PluginCrudExtensionInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Setting\HeurekaFeedSettingEnum $heurekaFeedSettingEnum
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly HeurekaFeedSettingEnum $heurekaFeedSettingEnum,

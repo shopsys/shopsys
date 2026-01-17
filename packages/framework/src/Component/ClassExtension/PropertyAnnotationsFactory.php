@@ -9,11 +9,6 @@ use Roave\BetterReflection\Reflection\ReflectionProperty;
 
 class PropertyAnnotationsFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\TypehintHelper $typehintHelper
-     */
     public function __construct(
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
         protected readonly AnnotationsReplacer $annotationsReplacer,
@@ -21,11 +16,6 @@ class PropertyAnnotationsFactory
     ) {
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkClassBetterReflection
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectClassBetterReflection
-     * @return string
-     */
     public function getProjectClassNecessaryPropertyAnnotationsLines(
         ReflectionClass $frameworkClassBetterReflection,
         ReflectionClass $projectClassBetterReflection,
@@ -44,11 +34,6 @@ class PropertyAnnotationsFactory
         return $propertyAnnotationsLines;
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionPropertyFromFrameworkClass
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectClassBetterReflection
-     * @return string
-     */
     protected function getPropertyAnnotationLine(
         ReflectionProperty $reflectionPropertyFromFrameworkClass,
         ReflectionClass $projectClassBetterReflection,
@@ -79,11 +64,6 @@ class PropertyAnnotationsFactory
         return '';
     }
 
-    /**
-     * @param string $propertyName
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionClass
-     * @return bool
-     */
     protected function isPropertyDeclaredInClass(string $propertyName, ReflectionClass $reflectionClass): bool
     {
         $reflectionProperty = $reflectionClass->getProperty($propertyName);
@@ -95,11 +75,6 @@ class PropertyAnnotationsFactory
         return $reflectionProperty->getDeclaringClass()->getName() === $reflectionClass->getName();
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
-     * @param string $frameworkClassPattern
-     * @return bool
-     */
     protected function isPropertyOfTypeThatIsExtendedInProject(
         ReflectionProperty $reflectionProperty,
         string $frameworkClassPattern,

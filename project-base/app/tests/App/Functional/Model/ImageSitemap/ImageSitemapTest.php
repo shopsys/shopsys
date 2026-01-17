@@ -61,10 +61,6 @@ class ImageSitemapTest extends ApplicationTestCase
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     private function getExpectedXmlRegex(DomainConfig $domainConfig): string
     {
         $urlPattern = preg_quote($domainConfig->getUrl(), '~');
@@ -75,10 +71,6 @@ class ImageSitemapTest extends ApplicationTestCase
         return '~<url><loc>' . $urlPattern . '/' . $television . '-22-sencor-sle-22f46dm4-hello-kitty-' . $plasma . '</loc><image\:image><image\:loc>' . $basUrlPattern . '/content-test/images/product/22-sencor-sle-22f46dm4-hello-kitty_1\.jpg</image\:loc></image\:image></url>~';
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     private function getUnexpectedNotMainXml(DomainConfig $domainConfig): string
     {
         $url = $domainConfig->getUrl();
@@ -86,10 +78,6 @@ class ImageSitemapTest extends ApplicationTestCase
         return '<url><loc>' . $url . '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova</loc><image:image><image:loc>' . $url . '/content/images/product/22-sencor-sle-22f46dm4-hello-kitty_64.jpg</image:loc></image:image></url>';
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     private function getUnexpectedNotVisibleXml(DomainConfig $domainConfig): string
     {
         $url = $domainConfig->getUrl();

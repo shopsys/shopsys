@@ -13,11 +13,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class CartQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade $cartWatcherFacade
-     */
     public function __construct(
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -25,10 +20,6 @@ class CartQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult|null
-     */
     public function cartQuery(Argument $argument): ?CartWithModificationsResult
     {
         $input = $argument['cartInput'] ?? ['cartUuid' => null];

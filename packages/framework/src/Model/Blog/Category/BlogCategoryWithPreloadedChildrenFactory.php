@@ -25,7 +25,6 @@ class BlogCategoryWithPreloadedChildrenFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[][] $blogCategoriesByParentId
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryWithPreloadedChildren[]
      */
@@ -89,9 +88,7 @@ class BlogCategoryWithPreloadedChildrenFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogChildCategory
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[][] $blogCategoriesByParentId
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryWithPreloadedChildren
      */
     protected function createInstance(
         BlogCategory $blogChildCategory,

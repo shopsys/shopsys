@@ -22,27 +22,17 @@ class ConfigureMenuEvent extends Event
     public const SIDE_MENU_SETTINGS = 'shopsys.admin_side_menu.configure_settings';
     public const SIDE_MENU_INTEGRATIONS = 'shopsys.admin_side_menu.configure_integrations';
 
-    /**
-     * @param \Knp\Menu\FactoryInterface $menuFactory
-     * @param \Knp\Menu\ItemInterface $menu
-     */
     public function __construct(
         protected readonly FactoryInterface $menuFactory,
         protected readonly ItemInterface $menu,
     ) {
     }
 
-    /**
-     * @return \Knp\Menu\FactoryInterface
-     */
     public function getMenuFactory(): FactoryInterface
     {
         return $this->menuFactory;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     public function getMenu(): ItemInterface
     {
         return $this->menu;

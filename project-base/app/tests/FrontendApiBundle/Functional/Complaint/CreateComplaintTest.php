@@ -156,13 +156,6 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param int $complaintItemQuantity1
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItemProduct1
-     * @param int $complaintItemQuantity2
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItemProduct2
-     * @param string $resolution
-     * @param string|null $bankAccountNumber
      * @return array<string, mixed>
      */
     private function createComplaint(
@@ -383,12 +376,6 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         $this->assertUserError($response, 'invalid-access');
     }
 
-    /**
-     * @param array $expectedComplaintItem
-     * @param int $quantity
-     * @param int $filesCount
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     */
     private function assertComplaintItem(
         array $expectedComplaintItem,
         int $quantity,

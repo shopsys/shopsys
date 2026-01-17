@@ -26,9 +26,6 @@ class LocalizationHelper extends Module
 
     private UnitFacade $unitFacade;
 
-    /**
-     * @param \Codeception\TestInterface $test
-     */
     #[Override]
     public function _before(TestInterface $test): void
     {
@@ -42,11 +39,6 @@ class LocalizationHelper extends Module
         $this->unitFacade = $symfonyHelper->grabServiceFromContainer(UnitFacade::class);
     }
 
-    /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     */
     public function seeTranslationAdmin(
         string $id,
         string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
@@ -56,12 +48,6 @@ class LocalizationHelper extends Module
         $this->webDriver->see(strip_tags($translatedMessage));
     }
 
-    /**
-     * @param string $id
-     * @param string $css
-     * @param string $translationDomain
-     * @param array $parameters
-     */
     public function seeTranslationAdminInCss(
         string $id,
         string $css,
@@ -72,12 +58,6 @@ class LocalizationHelper extends Module
         $this->webDriver->seeInCss(strip_tags($translatedMessage), $css);
     }
 
-    /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
-     */
     public function clickByTranslationAdmin(
         string $id,
         string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
@@ -88,19 +68,11 @@ class LocalizationHelper extends Module
         $this->webDriver->clickByText(strip_tags($translatedMessage), $contextSelector);
     }
 
-    /**
-     * @return string
-     */
     public function getAdminLocale(): string
     {
         return $this->administratorLocalizationFacade->getCurrentAdminLocaleOrDefault();
     }
 
-    /**
-     * @param string $routeName
-     * @param array $parameters
-     * @return string
-     */
     private function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = []): string
     {
         $router = $this->domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
@@ -108,18 +80,11 @@ class LocalizationHelper extends Module
         return $router->generate($routeName, $parameters);
     }
 
-    /**
-     * @param string $routeName
-     * @param array $parameters
-     */
     public function amOnLocalizedRoute(string $routeName, array $parameters = []): void
     {
         $this->webDriver->amOnPage($this->getLocalizedPathOnFirstDomainByRouteName($routeName, $parameters));
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultUnitName(): string
     {
         return $this->unitFacade->getDefaultUnit()->getName($this->getAdminLocale());

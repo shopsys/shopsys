@@ -8,12 +8,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductsGraphQlTestCase extends GraphQlTestCase
 {
-    /**
-     * @param string $query
-     * @param string $graphQlType
-     * @param array $products
-     * @param bool $found
-     */
     protected function assertProducts(string $query, string $graphQlType, array $products, bool $found = true): void
     {
         $response = $this->getResponseContentForQuery($query);

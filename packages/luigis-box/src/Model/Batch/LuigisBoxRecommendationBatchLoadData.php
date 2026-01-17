@@ -7,11 +7,6 @@ namespace Shopsys\LuigisBoxBundle\Model\Batch;
 class LuigisBoxRecommendationBatchLoadData extends LuigisBoxBatchLoadData
 {
     /**
-     * @param string $type
-     * @param string $endpoint
-     * @param string $userIdentifier
-     * @param int $limit
-     * @param string $recommenderClientIdentifier
      * @param string[] $itemIds
      */
     public function __construct(
@@ -33,9 +28,6 @@ class LuigisBoxRecommendationBatchLoadData extends LuigisBoxBatchLoadData
         return $this->itemIds;
     }
 
-    /**
-     * @return string
-     */
     public function getRecommenderClientIdentifier(): string
     {
         return $this->recommenderClientIdentifier;

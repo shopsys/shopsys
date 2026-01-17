@@ -26,9 +26,6 @@ class GqlContextInitializer implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Event\ExecutorArgumentsEvent $event
-     */
     public function initializeContext(ExecutorArgumentsEvent $event): void
     {
         $flattened = new RecursiveIteratorIterator(new RecursiveArrayIterator($event->getVariableValue() ?? []));

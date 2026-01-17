@@ -15,20 +15,10 @@ use function is_string;
 
 abstract class AbstractFixerTestCase extends TestCase
 {
-    /**
-     * @return \PhpCsFixer\Fixer\FixerInterface
-     */
     abstract protected function createFixerService(): FixerInterface;
 
-    /**
-     * @return iterable
-     */
     abstract public static function getTestingFiles(): iterable;
 
-    /**
-     * @param string $expectedFilePath
-     * @param string|null $inputFilePath
-     */
     #[DataProvider('getTestingFiles')]
     public function testRegisteredFiles(string $expectedFilePath, ?string $inputFilePath = null): void
     {
@@ -85,10 +75,6 @@ abstract class AbstractFixerTestCase extends TestCase
         );
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $expectedTokens
-     * @param \PhpCsFixer\Tokenizer\Tokens $inputTokens
-     */
     private static function assertTokens(Tokens $expectedTokens, Tokens $inputTokens): void
     {
         foreach ($expectedTokens as $index => $expectedToken) {

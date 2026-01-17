@@ -19,11 +19,6 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
 {
     protected Logger $logger;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $paymentMethodFacade
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly GoPayPaymentMethodFacade $paymentMethodFacade,
         protected readonly EntityManagerInterface $em,
@@ -31,9 +26,6 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
     ) {
     }
 
-    /**
-     * @param \Monolog\Logger $logger
-     */
     #[Override]
     public function setLogger(Logger $logger): void
     {

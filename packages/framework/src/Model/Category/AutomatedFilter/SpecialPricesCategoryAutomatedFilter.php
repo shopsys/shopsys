@@ -12,9 +12,6 @@ class SpecialPricesCategoryAutomatedFilter implements CategoryAutomatedFilterInt
 {
     public const string DATABASE_VALUE = 'specialPrices';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {

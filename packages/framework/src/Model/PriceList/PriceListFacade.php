@@ -20,19 +20,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PriceListFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListFactory $priceListFactory
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListRepository $priceListRepository
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceFactory $priceListProductPriceFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum $priceListExportColumnsEnum
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceDataFactory $priceListProductPriceDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\ImportPriceListResultFactory $importPriceListResultFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PriceListFactory $priceListFactory,
@@ -48,27 +35,16 @@ class PriceListFacade
     ) {
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceList
-     */
     public function getById(int $id): PriceList
     {
         return $this->priceListRepository->getById($id);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getPriceListGridQueryBuilder(): QueryBuilder
     {
         return $this->priceListRepository->getPriceListGridQueryBuilder();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
-     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceList
-     */
     public function create(PriceListData $priceListData): PriceList
     {
         $priceList = $this->priceListFactory->create($priceListData);
@@ -80,11 +56,6 @@ class PriceListFacade
         return $priceList;
     }
 
-    /**
-     * @param int $priceListId
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
-     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceList
-     */
     public function edit(int $priceListId, PriceListData $priceListData): PriceList
     {
         $priceList = $this->getById($priceListId);
@@ -100,8 +71,6 @@ class PriceListFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceList $priceList
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
      * @param int[] $originalProductIds
      */
     protected function refreshPriceListProductPrices(
@@ -136,9 +105,6 @@ class PriceListFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $priceListId
-     */
     public function delete(int $priceListId): void
     {
         $priceList = $this->getById($priceListId);
@@ -154,7 +120,6 @@ class PriceListFacade
     }
 
     /**
-     * @param int $priceListId
      * @return array<int, array<string, string>>
      */
     public function getPriceListDataToExport(int $priceListId): array
@@ -169,10 +134,6 @@ class PriceListFacade
         return $data;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $priceAmount
-     * @return string
-     */
     protected function normalizePriceColumn(?Money $priceAmount): string
     {
         if ($priceAmount === null) {
@@ -182,11 +143,6 @@ class PriceListFacade
         return (string)(float)$priceAmount->getAmount();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
-     * @return \Shopsys\FrameworkBundle\Model\PriceList\ImportPriceListResult
-     */
     public function importPriceList(
         PriceListData $priceListData,
         UploadedFileData $uploadedFileData,
@@ -276,7 +232,6 @@ class PriceListFacade
 
     /**
      * @param array<string, string> $row
-     * @return bool
      */
     protected function areColumnsValid(array $row): bool
     {
@@ -332,10 +287,6 @@ class PriceListFacade
         return $this->priceListRepository->getAll();
     }
 
-    /**
-     * @param string $fileContent
-     * @return string
-     */
     protected function guessDelimiter(string $fileContent): string
     {
         $firstLine = strtok($fileContent, "\n");
@@ -347,10 +298,6 @@ class PriceListFacade
         return ',';
     }
 
-    /**
-     * @param array $row
-     * @return array
-     */
     protected function preProcessCsvRow(array $row): array
     {
         if (!array_key_exists(PriceListCsvColumnsEnum::PRICE, $row)) {

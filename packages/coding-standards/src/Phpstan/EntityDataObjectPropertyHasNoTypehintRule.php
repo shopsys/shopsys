@@ -17,20 +17,12 @@ class EntityDataObjectPropertyHasNoTypehintRule implements Rule
 {
     private const CHECKED_NAMESPACE = 'Shopsys\\';
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     * @param \PHPStan\Analyser\Scope $scope
-     * @return array
-     */
     #[Override]
     public function processNode(Node $node, Scope $scope): array
     {
@@ -59,10 +51,6 @@ class EntityDataObjectPropertyHasNoTypehintRule implements Rule
         ];
     }
 
-    /**
-     * @param \PHPStan\Analyser\Scope $scope
-     * @return bool
-     */
     private function isDataObjectWithAssociatedEntity(Scope $scope): bool
     {
         $className = $scope->getClassReflection()?->getName();

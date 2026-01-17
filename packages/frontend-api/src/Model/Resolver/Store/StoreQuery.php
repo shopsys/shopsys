@@ -17,11 +17,6 @@ use Shopsys\FrontendApiBundle\Model\Store\Exception\StoreNotFoundUserError;
 
 class StoreQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
@@ -29,11 +24,6 @@ class StoreQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param string|null $uuid
-     * @param string|null $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store
-     */
     public function storeQuery(?string $uuid = null, ?string $urlSlug = null): Store
     {
         if ($uuid !== null) {
@@ -53,10 +43,6 @@ class StoreQuery extends AbstractQuery
         throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
-    /**
-     * @param string $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store
-     */
     protected function getVisibleByDomainIdAndSlug(string $urlSlug): Store
     {
         try {

@@ -11,12 +11,6 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class InquiryFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryRepository $inquiryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryFactory $inquiryFactory
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly InquiryRepository $inquiryRepository,
@@ -25,19 +19,11 @@ class InquiryFacade
     ) {
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry
-     */
     public function getById(int $id): Inquiry
     {
         return $this->inquiryRepository->getById($id);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryData $inquiryData
-     * @return \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry
-     */
     public function create(InquiryData $inquiryData): Inquiry
     {
         $inquiry = $this->inquiryFactory->create($inquiryData);
@@ -48,11 +34,6 @@ class InquiryFacade
         return $inquiry;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getInquiryListQueryBuilderByQuickSearchData(
         QuickSearchFormData $quickSearchData,
         string $locale,

@@ -14,8 +14,6 @@ class Db extends BaseDb
 {
     /**
      * Revert database to the original state
-     *
-     * @param \Codeception\TestInterface $test
      */
     #[Override]
     public function _after(TestInterface $test): void

@@ -14,17 +14,11 @@ class ExtendedOrder extends Order
     #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $stringField = null;
 
-    /**
-     * @return string|null
-     */
     public function getStringField(): ?string
     {
         return $this->stringField;
     }
 
-    /**
-     * @param string|null $stringField
-     */
     public function setStringField(?string $stringField): void
     {
         $this->stringField = $stringField;

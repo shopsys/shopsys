@@ -21,13 +21,6 @@ class FeedCronModule implements IteratedCronModuleInterface
 
     protected bool $areFeedsScheduled = false;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedFacade $feedFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository $feedModuleRepository
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleFacade $feedModuleFacade
-     */
     public function __construct(
         protected readonly FeedFacade $feedFacade,
         protected readonly Domain $domain,
@@ -197,10 +190,6 @@ class FeedCronModule implements IteratedCronModuleInterface
         ));
     }
 
-    /**
-     * @param int|null $lastSeekId
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedExport|null
-     */
     protected function createCurrentFeedExport(?int $lastSeekId = null): ?FeedExport
     {
         try {
@@ -226,9 +215,6 @@ class FeedCronModule implements IteratedCronModuleInterface
         return $feedExport;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedExportCreationDataQueue
-     */
     protected function getFeedExportCreationDataQueue(): FeedExportCreationDataQueue
     {
         if ($this->feedExportCreationDataQueue === null) {

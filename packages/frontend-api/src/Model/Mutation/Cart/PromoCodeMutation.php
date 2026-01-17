@@ -17,14 +17,6 @@ use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
 class PromoCodeMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade $cartWatcherFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartPromoCodeFacade $cartPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -35,11 +27,6 @@ class PromoCodeMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult
-     */
     public function applyPromoCodeToCartMutation(
         Argument $argument,
         InputValidator $validator,
@@ -60,11 +47,6 @@ class PromoCodeMutation extends AbstractMutation
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult
-     */
     public function removePromoCodeFromCartMutation(
         Argument $argument,
         InputValidator $validator,

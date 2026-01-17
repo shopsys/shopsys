@@ -13,16 +13,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class YesNoType extends AbstractType
 {
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     */
     public function __construct(private readonly TranslatorInterface $translator)
     {
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -47,9 +41,6 @@ final class YesNoType extends AbstractType
         ]);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getParent(): string
     {

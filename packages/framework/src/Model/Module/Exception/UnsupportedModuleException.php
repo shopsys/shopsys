@@ -10,7 +10,6 @@ class UnsupportedModuleException extends Exception
 {
     /**
      * @param string $moduleName
-     * @param \Exception|null $previous
      */
     public function __construct($moduleName, ?Exception $previous = null)
     {

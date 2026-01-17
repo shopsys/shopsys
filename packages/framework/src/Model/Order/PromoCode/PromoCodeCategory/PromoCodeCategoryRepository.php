@@ -12,23 +12,16 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 class PromoCodeCategoryRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder();
     }
 
     /**
-     * @param int $promoCodeId
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategory[]
      */
     public function getAllByPromoCodeId(int $promoCodeId): array
@@ -43,7 +36,6 @@ class PromoCodeCategoryRepository
     }
 
     /**
-     * @param int $promoCodeId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getCategoriesByPromoCodeId(int $promoCodeId): array
@@ -59,8 +51,6 @@ class PromoCodeCategoryRepository
     }
 
     /**
-     * @param int $promoCodeId
-     * @param int $domainId
      * @return int[]
      */
     public function getProductIdsFromCategoriesByPromoCodeIdAndDomainId(int $promoCodeId, int $domainId): array

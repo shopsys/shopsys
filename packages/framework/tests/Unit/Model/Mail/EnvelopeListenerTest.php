@@ -19,14 +19,7 @@ use Symfony\Component\Mime\Header\MailboxListHeader;
 class EnvelopeListenerTest extends TestCase
 {
     /**
-     * @param string|null $deliveryWhitelist
-     * @param bool $isWhitelistEnabled
-     * @param bool $isWhitelistForced
      * @param \Symfony\Component\Mime\Address[] $mailsTo
-     * @param \Symfony\Component\Mime\Address|null $mailCc
-     * @param \Symfony\Component\Mime\Address|null $mailBcc
-     * @param array $expectedRecipients
-     * @param bool $expectedIsRejected
      */
     #[DataProvider('onMessageDataProvider')]
     public function testOnMessage(
@@ -61,9 +54,6 @@ class EnvelopeListenerTest extends TestCase
 
     /**
      * @param \Symfony\Component\Mime\Address[] $mailsTo
-     * @param \Symfony\Component\Mime\Address|null $mailCc
-     * @param \Symfony\Component\Mime\Address|null $mailBcc
-     * @return \Symfony\Component\Mailer\Event\MessageEvent
      */
     protected function getMessageEvent(
         array $mailsTo,
@@ -88,9 +78,6 @@ class EnvelopeListenerTest extends TestCase
         return new MessageEvent(new Email(1, $headers), $envelope, 'transport');
     }
 
-    /**
-     * @return iterable
-     */
     public static function onMessageDataProvider(): iterable
     {
         $netdeveloNoReplyMail = new Address('no-reply@netdevelo.cz');

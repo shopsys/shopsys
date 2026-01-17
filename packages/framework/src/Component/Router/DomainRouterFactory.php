@@ -22,16 +22,6 @@ class DomainRouterFactory extends AbstractRouterFactory
      */
     protected array $routersByDomainId = [];
 
-    /**
-     * @param string $routerConfiguration
-     * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory $friendlyUrlRouterFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param string $cacheDir
-     */
     public function __construct(
         protected readonly string $routerConfiguration,
         protected readonly LocalizedRouterFactory $localizedRouterFactory,
@@ -45,10 +35,6 @@ class DomainRouterFactory extends AbstractRouterFactory
         parent::__construct($requestStack, $container, $cacheDir);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Router\DomainRouter
-     */
     public function getRouter(int $domainId): DomainRouter
     {
         if (!array_key_exists($domainId, $this->routersByDomainId)) {
@@ -75,10 +61,6 @@ class DomainRouterFactory extends AbstractRouterFactory
         return $this->routersByDomainId[$domainId];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Symfony\Component\Routing\RouterInterface
-     */
     protected function getBasicRouter(DomainConfig $domainConfig): RouterInterface
     {
         return new Router(
@@ -90,7 +72,6 @@ class DomainRouterFactory extends AbstractRouterFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
      */
     public function getFriendlyUrlRouter(DomainConfig $domainConfig)

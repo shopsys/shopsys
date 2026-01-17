@@ -153,10 +153,6 @@ class BlogArticleTest extends GraphQlTestCase
         $this->assertSame($expectedErrorMessage, $errors[0]['message']);
     }
 
-    /**
-     * @param string $referenceName
-     * @param string $expectedImage
-     */
     #[DataProvider('getImagesDataProvider')]
     public function testGetBlogArticleImages(string $referenceName, string $expectedImage): void
     {
@@ -182,9 +178,6 @@ class BlogArticleTest extends GraphQlTestCase
         $this->assertStringEndsWith($expectedImage, $responseData['images'][0]['url']);
     }
 
-    /**
-     * @return iterable
-     */
     public static function getImagesDataProvider(): iterable
     {
         yield [
@@ -203,9 +196,6 @@ class BlogArticleTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getExpectedBlogArticleArray(): array
     {
         $locale = $this->getFirstDomainLocale();

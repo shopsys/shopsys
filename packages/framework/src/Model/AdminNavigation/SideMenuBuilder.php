@@ -191,11 +191,6 @@ class SideMenuBuilder
     public const string HEUREKA_SETTINGS = 'settings';
     public const string MAIL_ALLOWED_RECIPIENTS = 'mail_whitelist_overview';
 
-    /**
-     * @param \Knp\Menu\FactoryInterface $menuFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         protected readonly FactoryInterface $menuFactory,
         protected readonly Domain $domain,
@@ -203,9 +198,6 @@ class SideMenuBuilder
     ) {
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     public function createMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(static::ROOT);
@@ -228,9 +220,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createDashboardMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(
@@ -258,9 +247,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     public function createMailAllowedRecipientsMenu(): ItemInterface
     {
         return $this->menuFactory->createItem(
@@ -273,9 +259,6 @@ class SideMenuBuilder
         );
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createOrdersMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(static::LIST_ORDER, [
@@ -295,9 +278,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createInquiriesMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(static::LIST_INQUIRY, [
@@ -317,9 +297,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createCustomersMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(
@@ -466,9 +443,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createProductsMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(static::ROOT_PRODUCT, ['label' => t('Products')]);
@@ -509,9 +483,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createPricingMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(static::ROOT_PRICING, ['label' => t('Pricing')]);
@@ -560,9 +531,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createMarketingMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(static::ROOT_CMS, ['label' => t('CMS')]);
@@ -654,9 +622,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createFilesMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(
@@ -679,9 +644,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createAdministratorsMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(
@@ -729,9 +691,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createSettingsMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(static::ROOT_SETTING, ['label' => t('Settings')]);
@@ -890,9 +849,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createIntegrationsMenu(): ItemInterface
     {
         $integrationsMenu = $this->menuFactory->createItem(static::ROOT_INTEGRATIONS, ['label' => t('Integrations')]);
@@ -908,11 +864,6 @@ class SideMenuBuilder
         return $integrationsMenu;
     }
 
-    /**
-     * @param string $eventName
-     * @param \Knp\Menu\ItemInterface $menu
-     * @return \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent
-     */
     protected function dispatchConfigureMenuEvent(string $eventName, ItemInterface $menu): ConfigureMenuEvent
     {
         $event = new ConfigureMenuEvent($this->menuFactory, $menu);

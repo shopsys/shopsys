@@ -26,10 +26,6 @@ final class DatagridHydrator extends AbstractHydrator
         return $result;
     }
 
-    /**
-     * @param array $row
-     * @param array $result
-     */
     #[Override]
     protected function hydrateRowData(array $row, array &$result): void
     {
@@ -67,11 +63,6 @@ final class DatagridHydrator extends AbstractHydrator
         $result[] = $rowData;
     }
 
-    /**
-     * @param array $associations
-     * @param array $nullableAssociations
-     * @param array $rowData
-     */
     private function finalizeRowData(array $associations, array $nullableAssociations, array &$rowData): void
     {
         foreach ($associations as $dqlAlias => $data) {
@@ -87,20 +78,12 @@ final class DatagridHydrator extends AbstractHydrator
 
     /**
      * Replace __ with . in $fieldname to allow dot notation access for datagrid
-     *
-     * @param string $fieldName
-     * @return string
      */
     private function transformFieldNameToDotNotation(string $fieldName): string
     {
         return str_replace('__', '.', $fieldName);
     }
 
-    /**
-     * @param mixed $value
-     * @param array $cacheKeyInfo
-     * @return mixed
-     */
     private function transformValue(mixed $value, array $cacheKeyInfo): mixed
     {
         $type = $cacheKeyInfo['type'] ?? null;
@@ -108,12 +91,6 @@ final class DatagridHydrator extends AbstractHydrator
         return $type ? $type->convertToPHPValue($value, $this->_platform) : $value;
     }
 
-    /**
-     * @param array $cacheKeyInfo
-     * @param mixed $value
-     * @param array $associations
-     * @param array $nullableAssociations
-     */
     private function processAssociation(
         array $cacheKeyInfo,
         mixed $value,

@@ -17,9 +17,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class TransportInputPricesType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     */
     public function __construct(
         protected readonly VatFacade $vatFacade,
     ) {
@@ -61,9 +58,6 @@ final class TransportInputPricesType extends AbstractType
             );
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

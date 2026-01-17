@@ -8,17 +8,12 @@ use LogicException;
 
 class ReleaseWorkerProvider
 {
-    /**
-     * @param iterable $releaseWorkers
-     */
     public function __construct(
         private readonly iterable $releaseWorkers,
     ) {
     }
 
     /**
-     * @param string|null $stage
-     * @param int $step
      * @return \Shopsys\Releaser\ReleaseWorker\StageWorkerInterface[]
      */
     public function provideByStage(?string $stage, int $step): array

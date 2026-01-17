@@ -14,19 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class BlogCategoryCheckboxType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -47,9 +39,6 @@ final class BlogCategoryCheckboxType extends AbstractType
         }
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -58,9 +47,6 @@ final class BlogCategoryCheckboxType extends AbstractType
             ->setAllowedTypes('domain_id', 'int');
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getParent(): string
     {

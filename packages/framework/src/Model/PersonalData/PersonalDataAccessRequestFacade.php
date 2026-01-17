@@ -10,13 +10,6 @@ use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 
 class PersonalDataAccessRequestFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestRepository $personalDataAccessRequestRepository
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactory $personalDataAccessRequestFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly HashGenerator $hashGenerator,
@@ -27,7 +20,6 @@ class PersonalDataAccessRequestFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestData $personalDataAccessRequestData
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest
      */

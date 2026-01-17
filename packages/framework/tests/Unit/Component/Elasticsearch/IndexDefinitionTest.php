@@ -14,13 +14,6 @@ use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 
 class IndexDefinitionTest extends TestCase
 {
-    /**
-     * @param string $indexName
-     * @param string $definitionsDirectory
-     * @param string $indexPrefix
-     * @param int $domainId
-     * @param string $expectedResult
-     */
     #[DataProvider('indexDefinitionParametersForIndexAlias')]
     public function testGetIndexAlias(
         string $indexName,
@@ -33,9 +26,6 @@ class IndexDefinitionTest extends TestCase
         $this->assertSame($expectedResult, $indexDefinition->getIndexAlias());
     }
 
-    /**
-     * @return array
-     */
     public static function indexDefinitionParametersForIndexAlias(): array
     {
         return [

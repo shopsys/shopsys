@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
 class UploadedFileFormDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     */
     public function __construct(
         protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
         protected readonly UploadedFileFacade $uploadedFileFacade,
@@ -25,10 +20,6 @@ class UploadedFileFormDataFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData
-     */
     public function create(UploadedFile $uploadedFile): UploadedFileFormData
     {
         $uploadedFileData = $this->uploadedFileDataFactory->create();
@@ -45,9 +36,6 @@ class UploadedFileFormDataFactory
         return $uploadedFileFormData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData
-     */
     public function createInstance(): UploadedFileFormData
     {
         return new UploadedFileFormData();

@@ -41,8 +41,6 @@ class InitializeControllersCompilerPass implements CompilerPassInterface
     /**
      * Processes a service definition for a controller to see if it's tagged with \@CrudController and if so, returns an array with class name and entity class.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param string $serviceId
      * @return array{class: string, entityClass: string}|null
      */
     private function processService(ContainerBuilder $container, string $serviceId): ?array
@@ -73,9 +71,6 @@ class InitializeControllersCompilerPass implements CompilerPassInterface
 
     /**
      * Retrieves the CrudController attribute from a reflection class.
-     *
-     * @param \ReflectionClass $reflectionClass
-     * @return \Shopsys\AdministrationBundle\Component\Attributes\CrudController|null
      */
     private function getCrudControllerAttribute(ReflectionClass $reflectionClass): ?CrudController
     {

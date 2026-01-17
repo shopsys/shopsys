@@ -8,9 +8,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables;
 
 class WatchdogMailTemplateVariablesProvider
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
     public function create(): MailTemplateVariables
     {
         $mailTemplateName = t('Watchdog');

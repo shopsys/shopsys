@@ -33,10 +33,6 @@ class ClassExtensionRegistry
         $this->otherClassesExtensionMap = $this->getOtherClassesExtensionMap();
     }
 
-    /**
-     * @param string $parentClassName
-     * @param string $childClassName
-     */
     public function addExtendedService(string $parentClassName, string $childClassName): void
     {
         if (!array_key_exists($parentClassName, $this->serviceExtensionMap)) {
@@ -84,10 +80,6 @@ class ClassExtensionRegistry
         return $otherClassesMap;
     }
 
-    /**
-     * @param string $pathname
-     * @return string
-     */
     protected function getFqcn(string $pathname): string
     {
         $astLocator = (new BetterReflection())->astLocator();

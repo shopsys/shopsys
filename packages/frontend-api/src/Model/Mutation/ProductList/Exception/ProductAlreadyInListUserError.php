@@ -12,10 +12,6 @@ class ProductAlreadyInListUserError extends UserError implements UserErrorWithCo
 {
     protected const CODE = 'product-already-in-list';
 
-    /**
-     * @param string $message
-     * @param string $productListType
-     */
     public function __construct(
         string $message,
         protected readonly string $productListType,

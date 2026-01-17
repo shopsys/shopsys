@@ -35,7 +35,6 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
 
     /**
      * @param \App\Model\Product\Product[] $expectedVariants
-     * @param \App\Model\Product\Product $mainVariant
      */
     private function assertContainsAllVariants(array $expectedVariants, Product $mainVariant): void
     {

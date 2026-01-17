@@ -12,9 +12,6 @@ class CustomerUserNotLoggedUserError extends UserError implements UserErrorWithC
 {
     protected const CODE = 'customer-user-not-logged';
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

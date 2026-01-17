@@ -34,7 +34,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
      */
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
@@ -42,9 +41,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -247,8 +243,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \App\Model\Category\CategoryData $categoryData
-     * @param string $referenceName
-     * @return \App\Model\Category\Category
      */
     private function createCategory(CategoryData $categoryData, string $referenceName): Category
     {

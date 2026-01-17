@@ -16,21 +16,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class LocalizationController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
         protected readonly Localization $localization,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $locale
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/administrator/select-locale/{locale}')]
     #[RequireRole(SystemRole::ADMIN)]
     public function selectLocaleAction(Request $request, string $locale): Response

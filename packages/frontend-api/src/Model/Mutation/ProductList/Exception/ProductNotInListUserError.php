@@ -12,10 +12,6 @@ class ProductNotInListUserError extends UserError implements UserErrorWithCodeIn
 {
     protected const CODE = 'product-not-in-list';
 
-    /**
-     * @param string $message
-     * @param string $productListType
-     */
     public function __construct(
         string $message,
         protected readonly string $productListType,

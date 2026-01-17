@@ -37,26 +37,17 @@ class Customer
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
-     */
     public function __construct(CustomerData $customerData)
     {
         $this->domainId = $customerData->domainId;
         $this->setData($customerData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
-     */
     public function edit(CustomerData $customerData): void
     {
         $this->setData($customerData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
-     */
     protected function setData(CustomerData $customerData): void
     {
         $this->billingAddresses = new ArrayCollection();
@@ -71,18 +62,12 @@ class Customer
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
-     */
     protected function addBillingAddress(BillingAddress $billingAddress): void
     {
         $this->billingAddresses = new ArrayCollection();
         $this->billingAddresses->add($billingAddress);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
-     */
     protected function addDeliveryAddress(DeliveryAddress $deliveryAddress): void
     {
         $this->deliveryAddresses->add($deliveryAddress);
@@ -96,17 +81,11 @@ class Customer
         return $this->id;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
-     */
     public function getBillingAddress(): BillingAddress
     {
         return $this->billingAddresses->first();
     }
 
-    /**
-     * @return bool
-     */
     public function isCompanyCustomer(): bool
     {
         return $this->getBillingAddress()->isCompanyCustomer();

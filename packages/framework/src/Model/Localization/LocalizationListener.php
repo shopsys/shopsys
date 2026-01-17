@@ -16,12 +16,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class LocalizationListener implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
@@ -30,9 +24,6 @@ class LocalizationListener implements EventSubscriberInterface
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
-     */
     public function onKernelRequest(RequestEvent $event): void
     {
         if ($event->isMainRequest()) {

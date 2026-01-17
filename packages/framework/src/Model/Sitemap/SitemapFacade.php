@@ -10,14 +10,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class SitemapFacade
 {
-    /**
-     * @param string $sitemapsDir
-     * @param string $sitemapsUrlPrefix
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory $domainSitemapDumperFactory
-     * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository $sitemapRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     */
     public function __construct(
         protected readonly string $sitemapsDir,
         protected readonly string $sitemapsUrlPrefix,
@@ -47,7 +39,6 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForListableProducts(DomainConfig $domainConfig): array
@@ -58,7 +49,6 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForVisibleCategories(DomainConfig $domainConfig): array
@@ -67,7 +57,6 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForArticlesOnDomain(DomainConfig $domainConfig): array
@@ -76,7 +65,6 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForSoldOutProducts(DomainConfig $domainConfig): array
@@ -87,7 +75,6 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForBlogArticlesOnDomain(DomainConfig $domainConfig): array
@@ -96,7 +83,6 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForVisibleFlags(DomainConfig $domainConfig): array
@@ -105,7 +91,6 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForVisibleCategorySeoMix(DomainConfig $domainConfig): array
@@ -113,11 +98,6 @@ class SitemapFacade
         return $this->sitemapRepository->getSitemapItemsForVisibleCategorySeoMix($domainConfig);
     }
 
-    /**
-     * @param string $sectionName
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getSectionNameForDomainConfig(string $sectionName, DomainConfig $domainConfig): string
     {
         if ($domainConfig->getPostfix() !== null) {

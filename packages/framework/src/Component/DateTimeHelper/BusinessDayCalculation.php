@@ -11,19 +11,11 @@ class BusinessDayCalculation
 {
     protected const int INCLUDE_HOLIDAYS_WITHIN_NEXT_DAYS_COUNT = 21;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
-     */
     public function __construct(
         protected readonly ClosedDayFacade $closedDayFacade,
     ) {
     }
 
-    /**
-     * @param \DateTimeImmutable $date
-     * @param int $domainId
-     * @return \DateTimeImmutable
-     */
     public function getClosestBusinessDay(DateTimeImmutable $date, int $domainId): DateTimeImmutable
     {
         $endDate = $date->modify(sprintf('+%d days', self::INCLUDE_HOLIDAYS_WITHIN_NEXT_DAYS_COUNT));
@@ -41,9 +33,7 @@ class BusinessDayCalculation
     }
 
     /**
-     * @param \DateTimeImmutable $date
      * @param \DateTimeInterface[] $publicHolidays
-     * @return bool
      */
     protected function isBusinessDay(DateTimeImmutable $date, array $publicHolidays): bool
     {
@@ -62,10 +52,6 @@ class BusinessDayCalculation
         return true;
     }
 
-    /**
-     * @param \DateTimeImmutable $date
-     * @return bool
-     */
     protected function isWeekend(DateTimeImmutable $date): bool
     {
         return (int)$date->format('N') >= 6;

@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierExc
 
 abstract class AbstractUploadedFileFacade
 {
-    /**
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly FilesystemOperator $filesystem,
         protected readonly EntityManagerInterface $em,
@@ -25,27 +20,16 @@ abstract class AbstractUploadedFileFacade
     ) {
     }
 
-    /**
-     * @param int $uploadedFileId
-     * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface
-     */
     public function getById(int $uploadedFileId): UploadedFileInterface
     {
         return $this->getRepository()->getById($uploadedFileId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface $uploadedFile
-     * @return string
-     */
     public function getAbsoluteUploadedFileFilepath(UploadedFileInterface $uploadedFile): string
     {
         return $this->getFileLocator()->getAbsoluteUploadedFileFilepath($uploadedFile);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface $uploadedFile
-     */
     public function deleteFileFromFilesystem(UploadedFileInterface $uploadedFile): void
     {
         $filepath = $this->getFileLocator()->getAbsoluteUploadedFileFilepath($uploadedFile);
@@ -56,8 +40,6 @@ abstract class AbstractUploadedFileFacade
     }
 
     /**
-     * @param object $entity
-     * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface[]
      */
     public function getUploadedFilesByEntity(
@@ -71,10 +53,6 @@ abstract class AbstractUploadedFileFacade
         );
     }
 
-    /**
-     * @param object $entity
-     * @return int
-     */
     protected function getEntityId(object $entity): int
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
@@ -89,9 +67,6 @@ abstract class AbstractUploadedFileFacade
         throw new EntityIdentifierException($message);
     }
 
-    /**
-     * @param array $fileNamesIndexedByFileId
-     */
     protected function updateFilenamesAndSlugs(array $fileNamesIndexedByFileId): void
     {
         foreach ($fileNamesIndexedByFileId as $fileId => $fileName) {
@@ -105,18 +80,9 @@ abstract class AbstractUploadedFileFacade
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface
-     */
     abstract protected function getRepository(): UploadedFileRepositoryInterface;
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileLocatorInterface
-     */
     abstract protected function getFileLocator(): UploadedFileLocatorInterface;
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface
-     */
     abstract protected function getUploadedFileConfig(): UploadedFileConfigInterface;
 }

@@ -19,13 +19,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[SuperAdminOnly]
 class CustomerUserRoleGroupController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupGridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly CustomerUserRoleGroupGridFactory $gridFactory,
         protected readonly CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory,
@@ -35,9 +28,6 @@ class CustomerUserRoleGroupController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/superadmin/customer/role-group/list/', name: 'admin_superadmin_customer_user_role_group_list')]
     public function listAction(): Response
     {
@@ -48,10 +38,6 @@ class CustomerUserRoleGroupController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/superadmin/customer/role-group/new/', name: 'admin_superadmin_customer_user_role_group_new')]
     public function newAction(Request $request): Response
     {
@@ -88,11 +74,6 @@ class CustomerUserRoleGroupController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/superadmin/customer/role-group/edit/{id}', name: 'admin_superadmin_customer_user_role_group_edit', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
@@ -132,10 +113,6 @@ class CustomerUserRoleGroupController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/superadmin/customer/role-group/delete/{id}', name: 'admin_superadmin_customer_user_role_group_delete', requirements: ['id' => '\d+'])]
     #[CsrfProtection]
     public function deleteAction(int $id): Response

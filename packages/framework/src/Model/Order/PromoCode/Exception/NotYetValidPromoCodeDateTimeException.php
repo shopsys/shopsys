@@ -8,10 +8,6 @@ use Exception;
 
 class NotYetValidPromoCodeDateTimeException extends PromoCodeException
 {
-    /**
-     * @param string $invalidPromoCode
-     * @param \Exception|null $previous
-     */
     public function __construct(string $invalidPromoCode, ?Exception $previous = null)
     {
         parent::__construct(t('Promo code "%promoCode%" is not yet valid.', [

@@ -21,11 +21,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\AffectedProductsFacade $affectedProductsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
-     */
     public function __construct(
         protected readonly AffectedProductsFacade $affectedProductsFacade,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
@@ -33,9 +28,6 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandEvent $brandEvent
-     */
     public function dispatchAffectedByBrand(BrandEvent $brandEvent): void
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithBrand($brandEvent->getBrand());
@@ -47,9 +39,6 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryEvent $categoryEvent
-     */
     public function dispatchAffectedByCategory(CategoryEvent $categoryEvent): void
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithCategory($categoryEvent->getCategory());
@@ -61,9 +50,6 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagEvent $flagEvent
-     */
     public function dispatchAffectedByFlag(FlagEvent $flagEvent): void
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithFlag($flagEvent->getFlag());
@@ -75,9 +61,6 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterEvent $parameterEvent
-     */
     public function dispatchAffectedByParameter(ParameterEvent $parameterEvent): void
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithParameter($parameterEvent->getParameter());
@@ -89,9 +72,6 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupEvent $parameterGroupEvent
-     */
     public function dispatchAffectedByParameterGroup(ParameterGroupEvent $parameterGroupEvent): void
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithParameterGroup($parameterGroupEvent->getParameterGroup());
@@ -103,9 +83,6 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockEvent $stockEvent
-     */
     public function dispatchAllProductsIfStockDomainsChanged(StockEvent $stockEvent): void
     {
         if ($stockEvent->hasChangedDomains()) {
@@ -113,9 +90,6 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitEvent $unitEvent
-     */
     public function dispatchAffectedByUnit(UnitEvent $unitEvent): void
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithUnit($unitEvent->getUnit());

@@ -8,9 +8,6 @@ use Exception;
 
 class ElasticsearchIndexNotFoundException extends Exception
 {
-    /**
-     * @param string $indexName
-     */
     public function __construct(string $indexName)
     {
         parent::__construct(sprintf(

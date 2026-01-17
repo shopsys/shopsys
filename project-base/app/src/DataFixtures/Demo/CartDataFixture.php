@@ -19,12 +19,6 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
 {
     public const string CART_UUID = '1007c9a3-f570-484a-b84e-4a4f49bb35c0';
 
-    /**
-     * @param \App\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly CartFacade $cartFacade,
         private readonly CustomerUserIdentifierFactory $customerUserIdentifierFactory,
@@ -33,9 +27,6 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -58,10 +49,6 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
         ];
     }
 
-    /**
-     * @param int $id
-     * @param string $uuid
-     */
     private function updateCartItemUuid(int $id, string $uuid): void
     {
         $this->em

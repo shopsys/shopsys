@@ -8,10 +8,6 @@ use Redis;
 
 class RedisVersionsFacade
 {
-    /**
-     * @param \Redis $globalClient
-     * @param string $currentVersion
-     */
     public function __construct(protected readonly Redis $globalClient, protected readonly string $currentVersion)
     {
     }

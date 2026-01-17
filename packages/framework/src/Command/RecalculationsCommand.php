@@ -21,13 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class RecalculationsCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository $categoryVisibilityRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade $promotionFlagFacade
-     */
     public function __construct(
         private readonly CategoryVisibilityRepository $categoryVisibilityRepository,
         private readonly ProductVisibilityFacade $productVisibilityFacade,

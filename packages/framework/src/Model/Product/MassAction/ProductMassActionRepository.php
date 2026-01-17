@@ -11,9 +11,6 @@ class ProductMassActionRepository
 {
     protected EntityManagerInterface $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(
         EntityManagerInterface $entityManager,
     ) {

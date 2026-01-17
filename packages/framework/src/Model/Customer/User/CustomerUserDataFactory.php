@@ -13,13 +13,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class CustomerUserDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository $customerRepository
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
@@ -29,17 +22,11 @@ class CustomerUserDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     protected function createInstance(): CustomerUserData
     {
         return new CustomerUserData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     public function create(): CustomerUserData
     {
         $customerUserData = $this->createInstance();
@@ -49,10 +36,6 @@ class CustomerUserDataFactory
         return $customerUserData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     public function createForCustomer(Customer $customer): CustomerUserData
     {
         $customerUserData = $this->createInstance();
@@ -63,10 +46,6 @@ class CustomerUserDataFactory
         return $customerUserData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     public function createForCustomerWithPresetPricingGroup(Customer $customer): CustomerUserData
     {
         $customerUserData = $this->createForCustomer($customer);
@@ -78,10 +57,6 @@ class CustomerUserDataFactory
         return $customerUserData;
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     public function createForDomainId(int $domainId): CustomerUserData
     {
         $customerUserData = $this->createInstance();
@@ -92,10 +67,6 @@ class CustomerUserDataFactory
         return $customerUserData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @param int $domainId
-     */
     protected function fillForDomainId(CustomerUserData $customerUserData, int $domainId)
     {
         $customerUserData->pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(
@@ -104,10 +75,6 @@ class CustomerUserDataFactory
         $customerUserData->domainId = $domainId;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
     public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserData
     {
         $customerUserData = $this->createInstance();
@@ -116,10 +83,6 @@ class CustomerUserDataFactory
         return $customerUserData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     */
     protected function fillFromUser(CustomerUserData $customerUserData, CustomerUser $customerUser)
     {
         $customerUserData->domainId = $customerUser->getDomainId();

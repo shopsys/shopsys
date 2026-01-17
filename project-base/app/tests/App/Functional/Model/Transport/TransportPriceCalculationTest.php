@@ -39,10 +39,6 @@ class TransportPriceCalculationTest extends TransactionFunctionalTestCase
         $this->transportPriceCalculation->calculatePrice($transportCzechPost, Price::zero(), Domain::FIRST_DOMAIN_ID, self::CART_TOTAL_WEIGHT_ABOVE_ALL_LIMITS, false);
     }
 
-    /**
-     * @param int $cartTotalWeight
-     * @param int $expectedMoneyAmountWithoutVat
-     */
     #[DataProvider('calculatePriceDataProvider')]
     public function testCalculatePrice(int $cartTotalWeight, int $expectedMoneyAmountWithoutVat): void
     {
@@ -59,9 +55,6 @@ class TransportPriceCalculationTest extends TransactionFunctionalTestCase
         $this->assertThat($calculatedPrice->getPriceWithoutVat(), new IsMoneyEqual($expectedTransportPriceWithoutVat));
     }
 
-    /**
-     * @return array
-     */
     public static function calculatePriceDataProvider(): array
     {
         return [
@@ -76,10 +69,6 @@ class TransportPriceCalculationTest extends TransactionFunctionalTestCase
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
-     * @param bool $forceFreeTransport
-     */
     #[DataProvider('calculateFreePriceDataProvider')]
     public function testCalculateFreePrice(Price $productsPrice, bool $forceFreeTransport): void
     {
@@ -90,9 +79,6 @@ class TransportPriceCalculationTest extends TransactionFunctionalTestCase
         $this->assertTrue($calculatedPrice->getPriceWithoutVat()->isZero());
     }
 
-    /**
-     * @return iterable
-     */
     public static function calculateFreePriceDataProvider(): iterable
     {
         yield 'products price reached the free price limit' => [

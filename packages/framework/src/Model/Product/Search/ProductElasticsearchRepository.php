@@ -15,13 +15,6 @@ class ProductElasticsearchRepository
 {
     protected const string FOUND_PRODUCT_IDS_CACHE_NAMESPACE = 'foundProductIds';
 
-    /**
-     * @param \Elasticsearch\Client $client
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter $productElasticsearchConverter
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly Client $client,
         protected readonly ProductElasticsearchConverter $productElasticsearchConverter,
@@ -32,7 +25,6 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      */
     public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText)
@@ -47,7 +39,6 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      */
     public function addRelevance(QueryBuilder $productQueryBuilder, $searchText)
@@ -62,7 +53,6 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      * @return int[]
      */
@@ -79,8 +69,6 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @param int $domainId
-     * @param string|null $searchText
      * @return int[]
      */
     public function getProductIdsBySearchText(int $domainId, ?string $searchText): array
@@ -96,10 +84,6 @@ class ProductElasticsearchRepository
         return $this->extractIds($result);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\ProductIdsResult
-     */
     public function getSortedProductIdsByFilterQuery(FilterQuery $filterQuery): ProductIdsResult
     {
         $result = $this->client->search($filterQuery->getQuery());
@@ -107,10 +91,6 @@ class ProductElasticsearchRepository
         return new ProductIdsResult($this->extractTotalCount($result), $this->extractIds($result));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\ProductsResult
-     */
     public function getSortedProductsResultByFilterQuery(FilterQuery $filterQuery): ProductsResult
     {
         $result = $this->client->search($filterQuery->getQuery());
@@ -120,9 +100,6 @@ class ProductElasticsearchRepository
 
     /**
      * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html
-     * @param string $indexName
-     * @param string $searchText
-     * @return array
      */
     protected function createQuery(string $indexName, string $searchText): array
     {
@@ -133,7 +110,6 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @param array $result
      * @return int[]
      */
     protected function extractIds(array $result): array
@@ -143,10 +119,6 @@ class ProductElasticsearchRepository
         return array_column($hits, '_id');
     }
 
-    /**
-     * @param array $result
-     * @return array
-     */
     public function extractHits(array $result): array
     {
         return array_map(function ($value) {
@@ -160,19 +132,11 @@ class ProductElasticsearchRepository
         }, $result['hits']['hits']);
     }
 
-    /**
-     * @param array $result
-     * @return int
-     */
     public function extractTotalCount(array $result): int
     {
         return (int)$result['hits']['total']['value'];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @return int
-     */
     public function getProductsCountByFilterQuery(FilterQuery $filterQuery): int
     {
         $result = $this->client->search($filterQuery->getQuery());
@@ -180,10 +144,6 @@ class ProductElasticsearchRepository
         return $this->extractTotalCount($result);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @return array
-     */
     public function getProductsByFilterQuery(FilterQuery $filterQuery): array
     {
         $result = $this->client->search($filterQuery->getQuery());
@@ -193,7 +153,6 @@ class ProductElasticsearchRepository
 
     /**
      * @param int[] $productIds
-     * @param int $domainId
      * @return int[]
      */
     public function getOnlyExistingProductIds(array $productIds, int $domainId): array
@@ -217,7 +176,6 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @param array $result
      * @return int[]
      */
     protected function extractIdsFromFields(array $result): array
@@ -234,7 +192,6 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return int[]
      */
     public function getCategoryIdsForFilterData(ProductFilterData $productFilterData): array
@@ -247,7 +204,6 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @param array $productCountAggregation
      * @return int[]
      */
     protected function extractCategoryIdsAggregation(array $productCountAggregation): array

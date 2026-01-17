@@ -27,11 +27,6 @@ class TokenAuthenticator extends AbstractAuthenticator
     protected const HEADER_AUTHORIZATION = 'X-Auth-Token';
     protected const BEARER = 'Bearer ';
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
-     * @param \Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider $frontendApiUserProvider
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     */
     public function __construct(
         protected readonly TokenFacade $tokenFacade,
         protected readonly FrontendApiUserProvider $frontendApiUserProvider,
@@ -77,10 +72,6 @@ class TokenAuthenticator extends AbstractAuthenticator
         );
     }
 
-    /**
-     * @param string|null $credentials
-     * @return bool
-     */
     public function checkCredentials(?string $credentials): bool
     {
         $this->tokenFacade->getTokenByString($credentials);
@@ -88,10 +79,6 @@ class TokenAuthenticator extends AbstractAuthenticator
         return true;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
-     */
     #[Override]
     public function supports(Request $request): bool
     {
@@ -102,23 +89,12 @@ class TokenAuthenticator extends AbstractAuthenticator
             );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @param string $firewallName
-     * @return \Symfony\Component\HttpFoundation\Response|null
-     */
     #[Override]
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         return null;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Override]
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
@@ -132,10 +108,6 @@ class TokenAuthenticator extends AbstractAuthenticator
         return new JsonResponse($responseData, Response::HTTP_UNAUTHORIZED);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return string|null
-     */
     public function getCredentials(Request $request): ?string
     {
         $authorizationHeader = $request->headers->get(static::HEADER_AUTHORIZATION);

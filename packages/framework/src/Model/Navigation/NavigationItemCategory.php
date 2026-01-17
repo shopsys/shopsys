@@ -44,12 +44,6 @@ class NavigationItemCategory implements OrderableEntityInterface
     #[ORM\ManyToOne(targetEntity: Category::class)]
     protected $category;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
-     * @param int $columnNumber
-     * @param int $position
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
     public function __construct(
         NavigationItem $navigationItem,
         int $columnNumber,

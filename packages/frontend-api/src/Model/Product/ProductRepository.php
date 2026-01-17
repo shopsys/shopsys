@@ -11,19 +11,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as FrameworkProductR
 
 class ProductRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(protected readonly FrameworkProductRepository $productRepository)
     {
     }
 
-    /**
-     * @param string $uuid
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
     public function getSellableByUuid(string $uuid, int $domainId, PricingGroup $pricingGroup): Product
     {
         $queryBuilder = $this->productRepository->getAllSellableQueryBuilder($domainId, $pricingGroup);

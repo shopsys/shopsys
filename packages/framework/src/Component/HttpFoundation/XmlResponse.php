@@ -10,12 +10,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class XmlResponse extends Response
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Xml\XmlNormalizerHelper $xmlNormalizerHelper
-     * @param string|null $content
-     * @param int $status
-     * @param array $headers
-     */
     public function __construct(
         protected readonly XmlNormalizerHelper $xmlNormalizerHelper,
         ?string $content = '',
@@ -25,11 +19,6 @@ class XmlResponse extends Response
         parent::__construct($content, $status, $headers);
     }
 
-    /**
-     * @param string $fileName
-     * @param string $content
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function getXmlResponse(string $fileName, string $content): Response
     {
         $xmlContent = $this->xmlNormalizerHelper->normalizeXml($content);

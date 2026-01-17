@@ -9,11 +9,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException;
 
 class DeliveryAddressFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressRepository $deliveryAddressRepository
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly DeliveryAddressFactory $deliveryAddressFactory,
         protected readonly DeliveryAddressRepository $deliveryAddressRepository,
@@ -21,10 +16,6 @@ class DeliveryAddressFacade
     ) {
     }
 
-    /**
-     * @param int $deliveryAddressId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     */
     public function edit(int $deliveryAddressId, DeliveryAddressData $deliveryAddressData): void
     {
         $deliveryAddress = $this->getById($deliveryAddressId);
@@ -33,10 +24,6 @@ class DeliveryAddressFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
-     */
     public function createIfAddressFilled(DeliveryAddressData $deliveryAddressData): ?DeliveryAddress
     {
         $deliveryAddress = $this->deliveryAddressFactory->create($deliveryAddressData);
@@ -51,10 +38,6 @@ class DeliveryAddressFacade
         return $deliveryAddress;
     }
 
-    /**
-     * @param int $deliveryAddressId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
-     */
     public function delete(int $deliveryAddressId): DeliveryAddress
     {
         $deliveryAddress = $this->deliveryAddressRepository->getById($deliveryAddressId);
@@ -65,29 +48,16 @@ class DeliveryAddressFacade
         return $deliveryAddress;
     }
 
-    /**
-     * @param int $deliveryAddressId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
-     */
     public function getById(int $deliveryAddressId): DeliveryAddress
     {
         return $this->deliveryAddressRepository->getById($deliveryAddressId);
     }
 
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
-     */
     public function findByUuidAndCustomer(string $uuid, Customer $customer): ?DeliveryAddress
     {
         return $this->deliveryAddressRepository->findByUuidAndCustomer($uuid, $customer);
     }
 
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     */
     public function deleteByUuidAndCustomer(string $uuid, Customer $customer): void
     {
         $deliveryAddress = $this->deliveryAddressRepository->findByUuidAndCustomer($uuid, $customer);
@@ -100,10 +70,6 @@ class DeliveryAddressFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     */
     public function editByCustomer(Customer $customer, DeliveryAddressData $deliveryAddressData): void
     {
         if ($deliveryAddressData->uuid === null) {
@@ -115,11 +81,6 @@ class DeliveryAddressFacade
         $this->edit($deliveryAddress->getId(), $deliveryAddressData);
     }
 
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
-     */
     public function getByUuidAndCustomer(string $uuid, Customer $customer): DeliveryAddress
     {
         return $this->deliveryAddressRepository->getByUuidAndCustomer($uuid, $customer);

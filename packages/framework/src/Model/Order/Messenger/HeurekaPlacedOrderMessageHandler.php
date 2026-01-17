@@ -12,19 +12,12 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class HeurekaPlacedOrderMessageHandler
 {
-    /**
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     */
     public function __construct(
         protected readonly LoggerInterface $logger,
         protected readonly OrderFacade $orderFacade,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessage $placedOrderMessage
-     */
     public function __invoke(PlacedOrderMessage $placedOrderMessage): void
     {
         try {

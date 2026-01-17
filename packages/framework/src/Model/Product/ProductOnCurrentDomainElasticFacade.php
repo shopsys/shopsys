@@ -16,15 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
 
 class ProductOnCurrentDomainElasticFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
-     */
     public function __construct(
         protected readonly ProductRepository $productRepository,
         protected readonly Domain $domain,
@@ -36,11 +27,6 @@ class ProductOnCurrentDomainElasticFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
     public function getProductFilterCountDataInCategory(
         Category $category,
         ProductFilterData $productFilterData,
@@ -56,11 +42,6 @@ class ProductOnCurrentDomainElasticFacade
         );
     }
 
-    /**
-     * @param int $brandId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
     public function getProductFilterCountDataForBrand(
         int $brandId,
         ProductFilterData $productFilterData,
@@ -74,11 +55,6 @@ class ProductOnCurrentDomainElasticFacade
         );
     }
 
-    /**
-     * @param string|null $searchText
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
     public function getProductFilterCountDataForSearch(
         ?string $searchText,
         ProductFilterData $productFilterData,
@@ -94,10 +70,6 @@ class ProductOnCurrentDomainElasticFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
     public function getProductFilterCountDataForAll(
         ProductFilterData $productFilterData,
     ): ProductFilterCountData {
@@ -107,11 +79,6 @@ class ProductOnCurrentDomainElasticFacade
         );
     }
 
-    /**
-     * @param int $flagId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
     public function getProductFilterCountDataForFlag(
         int $flagId,
         ProductFilterData $productFilterData,
@@ -128,7 +95,6 @@ class ProductOnCurrentDomainElasticFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return int[]
      */
     public function getCategoryIdsForFilterData(ProductFilterData $productFilterData): array

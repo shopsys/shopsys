@@ -72,25 +72,16 @@ class ComplaintItem
     #[ORM\Column(type: 'text')]
     protected $description;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData $complaintItemData
-     */
     public function __construct(ComplaintItemData $complaintItemData)
     {
         $this->setData($complaintItemData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData $complaintItemData
-     */
     public function edit(ComplaintItemData $complaintItemData): void
     {
         $this->setData($complaintItemData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData $complaintItemData
-     */
     protected function setData(ComplaintItemData $complaintItemData)
     {
         $this->uuid = $complaintItemData->uuid ?? Uuid::uuid4()->toString();

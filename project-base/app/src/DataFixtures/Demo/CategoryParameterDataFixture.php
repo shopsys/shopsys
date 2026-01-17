@@ -16,19 +16,12 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class CategoryParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade
-     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     */
     public function __construct(
         private readonly CategoryParameterFacade $categoryParameterFacade,
         private readonly ParameterRepository $parameterRepository,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

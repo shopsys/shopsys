@@ -14,11 +14,7 @@ class ProductConnection extends Connection
 {
     /**
      * @param \Overblog\GraphQLBundle\Relay\Connection\EdgeInterface[] $edges
-     * @param \Overblog\GraphQLBundle\Relay\Connection\PageInfoInterface|null $pageInfo
-     * @param \Closure $productFilterOptionsClosure
-     * @param string|null $orderingMode
      * @param int|null $totalCount
-     * @param string $defaultOrderingMode
      */
     public function __construct(
         array $edges,
@@ -31,25 +27,16 @@ class ProductConnection extends Connection
         parent::__construct($edges, $pageInfo);
     }
 
-    /**
-     * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
-     */
     public function getProductFilterOptions(): ProductFilterOptions
     {
         return ($this->productFilterOptionsClosure)();
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrderingMode(): ?string
     {
         return $this->orderingMode;
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultOrderingMode(): string
     {
         return $this->defaultOrderingMode;

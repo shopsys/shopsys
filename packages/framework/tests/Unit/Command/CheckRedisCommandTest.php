@@ -15,9 +15,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 final class CheckRedisCommandTest extends TestCase
 {
-    /**
-     * @return iterable
-     */
     public static function pingAllRedisClientsProvider(): iterable
     {
         yield [true, []];
@@ -31,10 +28,6 @@ final class CheckRedisCommandTest extends TestCase
         yield [false, ['createRedisMockExpectingPing', 'createRedisMockThrowingException']];
     }
 
-    /**
-     * @param bool $expectSuccess
-     * @param array $mockMethodNames
-     */
     #[DataProvider('pingAllRedisClientsProvider')]
     public function testPingAllRedisClients(bool $expectSuccess, array $mockMethodNames): void
     {
@@ -57,9 +50,6 @@ final class CheckRedisCommandTest extends TestCase
         );
     }
 
-    /**
-     * @return \Redis
-     */
     private function createRedisMockExpectingPing(): Redis
     {
         /** @var \Redis|\PHPUnit\Framework\MockObject\MockObject $redisMock */
@@ -69,9 +59,6 @@ final class CheckRedisCommandTest extends TestCase
         return $redisMock;
     }
 
-    /**
-     * @return \Redis
-     */
     private function createRedisMockThrowingException(): Redis
     {
         /** @var \Redis|\PHPUnit\Framework\MockObject\MockObject $redisMock */

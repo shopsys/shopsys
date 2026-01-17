@@ -9,12 +9,6 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
 class HeurekaCategoryFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryRepository $heurekaCategoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFactory $heurekaCategoryFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly HeurekaCategoryRepository $heurekaCategoryRepository,
@@ -71,7 +65,6 @@ class HeurekaCategoryFacade
 
     /**
      * @param int $categoryId
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory $heurekaCategory
      */
     public function changeHeurekaCategoryForCategoryId($categoryId, HeurekaCategory $heurekaCategory)
     {

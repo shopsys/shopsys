@@ -15,24 +15,8 @@ class MergadoFeedItem implements FeedItemInterface
     protected const string SHORT_DESCRIPTION_SEPARATOR = '. ';
 
     /**
-     * @param int $id
-     * @param string $productNo
-     * @param string $name
-     * @param string $url
-     * @param array $categoryPath
-     * @param array $shortDescriptionUsp
-     * @param int $deliveryDays
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
      * @param string[] $galleryImageUrls
-     * @param array $parameters
-     * @param string $currencyCode
-     * @param string|null $description
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $highProductPrice
      * @param string[] $flags
-     * @param string $availability
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null $brand
-     * @param string|null $imageUrl
-     * @param int|null $mainVariantId
      */
     public function __construct(
         protected readonly int $id,
@@ -56,98 +40,62 @@ class MergadoFeedItem implements FeedItemInterface
     ) {
     }
 
-    /**
-     * @return int
-     */
     #[Override]
     public function getSeekId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @return string
-     */
     public function getCategoryPath(): string
     {
         return implode(static::CATEGORY_PATH_SEPARATOR, $this->categoryPath);
     }
 
-    /**
-     * @return string
-     */
     public function getShortDescription(): string
     {
         return implode(static::SHORT_DESCRIPTION_SEPARATOR, $this->shortDescriptionUsp);
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return int
-     */
     public function getDeliveryDays(): int
     {
         return $this->deliveryDays;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getPrice(): PriceInterface
     {
         return $this->price;
     }
 
-    /**
-     * @return iterable
-     */
     public function getParameters(): iterable
     {
         return $this->parameters;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
-     */
     public function getBrand(): ?Brand
     {
         return $this->brand;
     }
 
-    /**
-     * @return string
-     */
     public function getImageUrl(): ?string
     {
         return $this->imageUrl;
@@ -161,33 +109,21 @@ class MergadoFeedItem implements FeedItemInterface
         return $this->galleryImageUrls;
     }
 
-    /**
-     * @return string
-     */
     public function getProductNo(): string
     {
         return $this->productNo;
     }
 
-    /**
-     * @return string
-     */
     public function getCurrencyCode(): string
     {
         return $this->currencyCode;
     }
 
-    /**
-     * @return int|null
-     */
     public function getMainVariantId(): ?int
     {
         return $this->mainVariantId;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getHighProductPrice(): PriceInterface
     {
         return $this->highProductPrice;
@@ -201,9 +137,6 @@ class MergadoFeedItem implements FeedItemInterface
         return $this->flags;
     }
 
-    /**
-     * @return string
-     */
     public function getAvailability(): string
     {
         return $this->availability;

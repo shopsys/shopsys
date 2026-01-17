@@ -15,7 +15,6 @@ class NotInArrayValidator extends ConstraintValidator
 {
     /**
      * @param string $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
      */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void

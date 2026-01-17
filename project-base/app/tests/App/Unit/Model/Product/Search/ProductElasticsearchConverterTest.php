@@ -11,9 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 class ProductElasticsearchConverterTest extends TestCase
 {
-    /**
-     * @param string $mappingFile
-     */
     #[DataProvider('getProductMappingFiles')]
     public function testAllFieldsAreMentionedInConverter(string $mappingFile): void
     {
@@ -40,12 +37,6 @@ class ProductElasticsearchConverterTest extends TestCase
         $this->checkMapping($parameterFieldsInMapping, $parameterFieldsFromConverter, 'fillEmptyParameters()', $mappingFile);
     }
 
-    /**
-     * @param array $mappingFields
-     * @param array $converterFields
-     * @param string $methodName
-     * @param string $mappingFile
-     */
     private function checkMapping(
         array $mappingFields,
         array $converterFields,
@@ -65,9 +56,6 @@ class ProductElasticsearchConverterTest extends TestCase
         $this->assertCount(0, $missingFieldsInMapping, $message);
     }
 
-    /**
-     * @return iterable
-     */
     public static function getProductMappingFiles(): iterable
     {
         yield [realpath(__DIR__ . '/../../../../../../src/Resources/definition/product/1.json')];

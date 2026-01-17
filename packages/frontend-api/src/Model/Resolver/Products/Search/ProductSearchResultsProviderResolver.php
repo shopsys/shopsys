@@ -21,9 +21,6 @@ class ProductSearchResultsProviderResolver extends SearchResultsProviderResolver
         parent::__construct($productSearchResultsProviders);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getSearchResultsProviderInterface(): string
     {

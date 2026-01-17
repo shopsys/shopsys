@@ -10,12 +10,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PersonalDataExportFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DomainRouterFactory $domainRouterFactory,
@@ -24,10 +18,6 @@ class PersonalDataExportFacade
     ) {
     }
 
-    /**
-     * @param string $email
-     * @return string
-     */
     public function generateExportRequestAndGetLink(string $email): string
     {
         $personalDataAccessRequestData = $this->personalDataAccessRequestDataFactory->createForExport();
@@ -40,10 +30,6 @@ class PersonalDataExportFacade
         return $this->getPersonalDataExportLink($exportHash);
     }
 
-    /**
-     * @param string $exportHash
-     * @return string
-     */
     public function getPersonalDataExportLink(string $exportHash): string
     {
         $router = $this->domainRouterFactory->getRouter($this->domain->getId());

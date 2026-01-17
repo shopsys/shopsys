@@ -9,8 +9,6 @@ use Symfony\Component\Form\FormInterface;
 class ErrorExtractor
 {
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $errorFlashMessages
      * @return string[]
      */
     public function getAllErrorsAsArray(FormInterface $form, array $errorFlashMessages): array

@@ -56,26 +56,17 @@ class PriceList
     #[ORM\OneToMany(targetEntity: PriceListProductPrice::class, mappedBy: 'priceList', cascade: ['persist', 'remove'], orphanRemoval: true)]
     protected $priceListProductPrices;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
-     */
     public function __construct(PriceListData $priceListData)
     {
         $this->priceListProductPrices = new ArrayCollection();
         $this->setData($priceListData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
-     */
     public function edit(PriceListData $priceListData): void
     {
         $this->setData($priceListData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
-     */
     protected function setData(PriceListData $priceListData): void
     {
         $this->name = $priceListData->name;
@@ -144,9 +135,6 @@ class PriceList
         return $this->lastUpdate;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPrice $priceListProductPrice
-     */
     public function addPriceListProductPrice(PriceListProductPrice $priceListProductPrice): void
     {
         $this->priceListProductPrices->add($priceListProductPrice);

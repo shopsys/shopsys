@@ -16,11 +16,6 @@ class PaymentImageUploadCest
 
     private const TEST_IMAGE_NAME = 'paymentTestImage.png';
 
-    /**
-     * @param \Tests\App\Test\Codeception\AcceptanceTester $me
-     * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\EntityEditPage $entityEditPage
-     * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage $loginPage
-     */
     public function testSuccessfulImageUpload(
         AcceptanceTester $me,
         EntityEditPage $entityEditPage,

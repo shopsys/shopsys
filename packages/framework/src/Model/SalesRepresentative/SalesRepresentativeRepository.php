@@ -11,33 +11,20 @@ use Shopsys\FrameworkBundle\Model\SalesRepresentative\Exception\SalesRepresentat
 
 class SalesRepresentativeRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(protected EntityManagerInterface $entityManager)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getSalesRepresentativeRepository(): EntityRepository
     {
         return $this->entityManager->getRepository(SalesRepresentative::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllQueryBuilder(): QueryBuilder
     {
         return $this->getSalesRepresentativeRepository()->createQueryBuilder('sr');
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative
-     */
     public function getById(int $id): SalesRepresentative
     {
         $salesRepresentative = $this->getSalesRepresentativeRepository()->find($id);

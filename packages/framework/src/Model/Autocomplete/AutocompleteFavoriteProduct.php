@@ -34,11 +34,6 @@ class AutocompleteFavoriteProduct implements OrderableEntityInterface
     #[ORM\Column(type: 'integer')]
     protected $position;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param int $position
-     */
     public function __construct(Product $product, int $domainId, int $position)
     {
         $this->product = $product;

@@ -11,7 +11,6 @@ class CannotParseDateTimeException extends Exception
     /**
      * @param string $format
      * @param string $time
-     * @param \Exception|null $previous
      */
     public function __construct($format, $time, ?Exception $previous = null)
     {

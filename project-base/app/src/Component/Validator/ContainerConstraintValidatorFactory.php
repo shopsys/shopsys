@@ -13,8 +13,6 @@ use Symfony\Component\Validator\ContainerConstraintValidatorFactory as SymfonyCo
 class ContainerConstraintValidatorFactory extends SymfonyContainerConstraintValidatorFactory
 {
     /**
-     * @param \Psr\Container\ContainerInterface $validatorContainer
-     * @param \Psr\Container\ContainerInterface $appContainer
      * @param string[] $validatorClassByServiceId
      */
     public function __construct(

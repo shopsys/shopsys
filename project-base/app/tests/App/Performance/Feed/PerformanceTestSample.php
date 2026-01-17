@@ -23,8 +23,6 @@ class PerformanceTestSample
     private array $failMessages = [];
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $generationUri
      * @param float $duration
      * @param int $statusCode

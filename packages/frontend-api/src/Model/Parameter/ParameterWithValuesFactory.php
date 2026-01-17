@@ -10,18 +10,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 
 class ParameterWithValuesFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
-     */
     public function __construct(
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
     ) {
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
-     * @return \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues
      */
     public function create(Parameter $parameter, array $parameterValues): ParameterWithValues
     {
@@ -29,7 +24,6 @@ class ParameterWithValuesFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues[]
      */
     public function createMultipleForProduct(Product $product): array
@@ -58,10 +52,6 @@ class ParameterWithValuesFactory
         return $parametersWithValues;
     }
 
-    /**
-     * @param array $productData
-     * @return array
-     */
     public function createParametersArrayFromProductArray(array $productData): array
     {
         $parametersWithValues = [];
@@ -73,10 +63,6 @@ class ParameterWithValuesFactory
         return $parametersWithValues;
     }
 
-    /**
-     * @param array $product
-     * @return array
-     */
     protected function mapParameterArray(array $product): array
     {
         return [

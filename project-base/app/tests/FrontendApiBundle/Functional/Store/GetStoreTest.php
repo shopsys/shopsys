@@ -186,13 +186,6 @@ class GetStoreTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @param array $openingRangesModifiers
-     * @param \DateTimeImmutable|null $publicHolidayDate
-     * @param array $publicHolidayExcludedStoresIds
-     * @param string $expectedStatus
-     * @param array $expectedOpeningRangesModifiers
-     */
     #[DataProvider('openingHoursDataProvider')]
     public function testGetStoreOpeningHours(
         array $openingRangesModifiers,
@@ -226,9 +219,6 @@ class GetStoreTest extends GraphQlTestCase
         );
     }
 
-    /**
-     * @return iterable
-     */
     public static function openingHoursDataProvider(): iterable
     {
         yield 'store with one opening range' => [
@@ -342,11 +332,6 @@ class GetStoreTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param array $keys
-     * @param array $actual
-     * @param array $expected
-     */
     private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
     {
         foreach ($keys as $key) {
@@ -355,9 +340,6 @@ class GetStoreTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @return array
-     */
     private function getStoreDataProvider(): array
     {
         $data = [];
@@ -374,9 +356,6 @@ class GetStoreTest extends GraphQlTestCase
         return $data;
     }
 
-    /**
-     * @return array
-     */
     private function getStoreDataProviderByUrlSlug(): array
     {
         $data = [];
@@ -398,10 +377,6 @@ class GetStoreTest extends GraphQlTestCase
         return $data;
     }
 
-    /**
-     * @param int $storeId
-     * @return array
-     */
     private function getExpectedStore(int $storeId): array
     {
         $storesSlug = $this->urlGenerator->generate('front_stores');
@@ -469,18 +444,11 @@ class GetStoreTest extends GraphQlTestCase
         return $data[$storeId];
     }
 
-    /**
-     * @return int
-     */
     private function getCurrentDayOfWeek(): int
     {
         return (int)$this->getNow()->format('N');
     }
 
-    /**
-     * @param string $modifier
-     * @return \DateTimeImmutable
-     */
     private function createOpeningOrClosingHour(string $modifier): DateTimeImmutable
     {
         $now = $this->getNow()->setDate(1970, 1, 2);
@@ -489,10 +457,6 @@ class GetStoreTest extends GraphQlTestCase
         return $this->restrictDateTimeToCurrentDay($hour, $now);
     }
 
-    /**
-     * @param array $openingRangesModifiers
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store
-     */
     private function updateStoreOpeningHours(
         array $openingRangesModifiers,
     ): Store {
@@ -516,11 +480,6 @@ class GetStoreTest extends GraphQlTestCase
         return $this->storeFacade->edit($store->getId(), $storeData);
     }
 
-    /**
-     * @param \DateTimeImmutable $hour
-     * @param \DateTimeImmutable $now
-     * @return \DateTimeImmutable
-     */
     private function restrictDateTimeToCurrentDay(DateTimeImmutable $hour, DateTimeImmutable $now): DateTimeImmutable
     {
         $result = $hour;
@@ -536,10 +495,6 @@ class GetStoreTest extends GraphQlTestCase
         return $result;
     }
 
-    /**
-     * @param array $openingHoursModifiers
-     * @return array
-     */
     private function createExpectedOpeningRanges(
         array $openingHoursModifiers,
     ): array {
@@ -556,9 +511,7 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @param \DateTimeImmutable $date
      * @param string[] $storesIds
-     * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay
      */
     private function createClosedDay(DateTimeImmutable $date, array $storesIds = []): ClosedDay
     {
@@ -576,9 +529,6 @@ class GetStoreTest extends GraphQlTestCase
         return $this->closedDayFacade->create($closedDayData);
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
     private function getNow(): DateTimeImmutable
     {
         if (!isset($this->now)) {
@@ -588,18 +538,11 @@ class GetStoreTest extends GraphQlTestCase
         return $this->now;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
     protected static function getToday(): DateTimeImmutable
     {
         return (new DatePoint())->setTimezone(new DateTimeZone('Europe/Prague'))->modify('today');
     }
 
-    /**
-     * @param string|null $modifier
-     * @return string|null
-     */
     private function getFormattedTime(?string $modifier): ?string
     {
         if ($modifier === null) {

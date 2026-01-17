@@ -13,16 +13,12 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class AffectedProductsFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\AffectedProductsRepository $affectedProductsRepository
-     */
     public function __construct(
         protected readonly AffectedProductsRepository $affectedProductsRepository,
     ) {
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @return int[]
      */
     public function getProductIdsWithBrand(Brand $brand): array
@@ -31,7 +27,6 @@ class AffectedProductsFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return int[]
      */
     public function getProductIdsWithCategory(Category $category): array
@@ -40,7 +35,6 @@ class AffectedProductsFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
      * @return int[]
      */
     public function getProductIdsWithFlag(Flag $flag): array
@@ -49,7 +43,6 @@ class AffectedProductsFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @return int[]
      */
     public function getProductIdsWithParameter(Parameter $parameter): array
@@ -58,7 +51,6 @@ class AffectedProductsFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup $parameterGroup
      * @return int[]
      */
     public function getProductIdsWithParameterGroup(ParameterGroup $parameterGroup): array
@@ -67,7 +59,6 @@ class AffectedProductsFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      * @return int[]
      */
     public function getProductIdsWithUnit(Unit $unit): iterable

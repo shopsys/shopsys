@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class OrderListAdminFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository $orderListAdminRepository
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly OrderListAdminRepository $orderListAdminRepository,
         protected readonly Localization $localization,

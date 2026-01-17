@@ -21,9 +21,6 @@ class ProductTranslation extends AbstractTranslation
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $name = null;
 
-    /**
-     * @param string|null $name
-     */
     public function setName(?string $name): void
     {
         $this->name = $name;

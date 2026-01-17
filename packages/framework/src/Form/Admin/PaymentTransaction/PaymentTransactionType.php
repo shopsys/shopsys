@@ -19,20 +19,12 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class PaymentTransactionType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
-     * @param \Shopsys\FrameworkBundle\Twig\PriceExtension $priceExtension
-     */
     public function __construct(
         private readonly PaymentTransactionFacade $paymentTransactionFacade,
         private readonly PriceExtension $priceExtension,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -49,9 +41,6 @@ final class PaymentTransactionType extends AbstractType
             ->add('sendRefund', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -68,10 +57,6 @@ final class PaymentTransactionType extends AbstractType
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundData $paymentTransactionRefundData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function maximalRefundAmountValidation(
         PaymentTransactionRefundData $paymentTransactionRefundData,
         ExecutionContextInterface $context,

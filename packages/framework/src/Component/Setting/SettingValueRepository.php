@@ -9,9 +9,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SettingValueRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
@@ -76,9 +73,6 @@ class SettingValueRepository
         );
     }
 
-    /**
-     * @param string $name
-     */
     public function deleteByName(string $name): void
     {
         $this->getSettingValueRepository()->createQueryBuilder('sv')

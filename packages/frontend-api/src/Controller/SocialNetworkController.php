@@ -26,11 +26,6 @@ class SocialNetworkController extends AbstractController
     protected const string PARAMETER_PRODUCT_LIST_UUIDS = 'productListUuids';
     protected const string PARAMETER_SHOULD_OVERWRITE_CUSTOMER_USER_CART = 'shouldOverwriteCustomerUserCart';
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade $socialNetworkFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     */
     public function __construct(
         protected readonly SocialNetworkFacade $socialNetworkFacade,
         protected readonly Domain $domain,
@@ -38,11 +33,6 @@ class SocialNetworkController extends AbstractController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $type
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function loginAction(Request $request, string $type): Response
     {
         $this->saveNecessaryDataBeforeRedirectToSocialNetwork($request);
@@ -71,8 +61,6 @@ class SocialNetworkController extends AbstractController
 
     /**
      * We need to save some data because login to social networks does redirect, and after that, we would lose them
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     protected function saveNecessaryDataBeforeRedirectToSocialNetwork(Request $request): void
     {
@@ -111,14 +99,6 @@ class SocialNetworkController extends AbstractController
         $session->set(self::SESSION_SHOULD_OVERWRITE_CART, $shouldOverwriteCustomerUserCart);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $type
-     * @param bool $addExceptionMessage
-     * @param bool $showCartMergeInfo
-     * @param bool $isRegistration
-     * @return string
-     */
     protected function getRefererUrl(
         Request $request,
         string $type,
@@ -141,11 +121,6 @@ class SocialNetworkController extends AbstractController
         return $domainRouter->generate('front_social_network_login_page', $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouter $domainRouter
-     * @return string
-     */
     protected function getRedirectPathParameter(Request $request, DomainRouter $domainRouter): string
     {
         $refererUrl = $request->getSession()->get(self::SESSION_REFERER_URL);

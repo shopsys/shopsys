@@ -12,9 +12,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole;
 
 class AdministratorRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
@@ -62,10 +59,6 @@ class AdministratorRepository
         return $this->getAdministratorRepository()->findOneBy(['username' => $administratorUserName]);
     }
 
-    /**
-     * @param string $administratorUserName
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
-     */
     public function findByUserNameWithPasswordFilled(string $administratorUserName): ?Administrator
     {
         return $this->getAdministratorRepository()->createQueryBuilder('a')
@@ -93,10 +86,6 @@ class AdministratorRepository
         return $administrator;
     }
 
-    /**
-     * @param string $administratorEmail
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     public function getByEmail(string $administratorEmail): Administrator
     {
         $administrator = $this->getAdministratorRepository()->findOneBy(['email' => $administratorEmail]);
@@ -110,9 +99,6 @@ class AdministratorRepository
         return $administrator;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllListableExcludingSuperadminQueryBuilder(): QueryBuilder
     {
         return $this->getAdministratorRepository()->createQueryBuilder('a')
@@ -123,9 +109,6 @@ class AdministratorRepository
             ->setParameter('superadminRole', SystemRole::SUPER_ADMIN);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllQueryBuilder(): QueryBuilder
     {
         $subquery = $this->em->createQueryBuilder()
@@ -140,9 +123,6 @@ class AdministratorRepository
             ->setParameter('superadminRole', SystemRole::SUPER_ADMIN);
     }
 
-    /**
-     * @return int
-     */
     public function getCountExcludingSuperadmin(): int
     {
         return (int)($this->getAllListableExcludingSuperadminQueryBuilder()
@@ -151,7 +131,6 @@ class AdministratorRepository
     }
 
     /**
-     * @param int $roleGroupId
      * @return string[]
      */
     public function findAdministratorNamesWithRoleGroup(int $roleGroupId): array
@@ -169,10 +148,6 @@ class AdministratorRepository
         }, $administrators);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
-     */
     public function findByUuid(string $uuid): ?Administrator
     {
         return $this->getAdministratorRepository()->findOneBy(['uuid' => $uuid]);

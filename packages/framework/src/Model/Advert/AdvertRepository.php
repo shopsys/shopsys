@@ -14,28 +14,17 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class AdvertRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClockInterface $clock,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getAdvertRepository(): EntityRepository
     {
         return $this->em->getRepository(Advert::class);
     }
 
-    /**
-     * @param int $advertId
-     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert|null
-     */
     public function findById(int $advertId): ?Advert
     {
         return $this->getAdvertRepository()->find($advertId);
@@ -43,9 +32,6 @@ class AdvertRepository
 
     /**
      * @param string[] $positionNames
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
-     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getVisibleAdvertByPositionsQueryBuilder(
         array $positionNames,
@@ -74,10 +60,6 @@ class AdvertRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getVisibleAdvertsQueryBuilder(int $domainId): QueryBuilder
     {
         $dateToday = $this->clock->now()->format('Y-m-d 00:00:00');
@@ -93,12 +75,6 @@ class AdvertRepository
             ->setParameter('now', $dateToday);
     }
 
-    /**
-     * @param string $positionName
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
-     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert|null
-     */
     public function findRandomAdvertByPosition(
         string $positionName,
         int $domainId,
@@ -119,10 +95,6 @@ class AdvertRepository
             ->getQuery()->getSingleResult();
     }
 
-    /**
-     * @param int $advertId
-     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert
-     */
     public function getById(int $advertId): Advert
     {
         $advert = $this->getAdvertRepository()->find($advertId);

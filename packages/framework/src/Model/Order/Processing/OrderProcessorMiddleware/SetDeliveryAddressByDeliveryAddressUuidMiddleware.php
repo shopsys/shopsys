@@ -15,19 +15,11 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddleware implements OrderProcesso
 {
     public const string DELIVERY_ADDRESS_UUID = 'deliveryAddressUuid';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
-     */
     public function __construct(
         protected readonly DeliveryAddressFacade $deliveryAddressFacade,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
-     */
     #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,
@@ -53,10 +45,6 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddleware implements OrderProcesso
         return $orderProcessingStack->processNext($orderProcessingData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function setOrderDataDeliveryFieldsByDeliveryAddress(
         DeliveryAddress $deliveryAddress,
         OrderData $orderData,

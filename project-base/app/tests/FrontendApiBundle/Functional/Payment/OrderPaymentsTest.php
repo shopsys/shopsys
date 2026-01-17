@@ -35,11 +35,6 @@ class OrderPaymentsTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @param string $orderReferenceName
-     * @param string $expectedCurrentPaymentReferenceName
-     * @param array $expectedAvailablePaymentReferenceNames
-     */
     #[DataProvider('getOrderPaymentsMultidomainDataProvider')]
     #[Group('multidomain')]
     public function testGetOrderPaymentsMultidomain(
@@ -50,11 +45,6 @@ class OrderPaymentsTest extends GraphQlTestCase
         $this->assertOrderPayments($orderReferenceName, $expectedCurrentPaymentReferenceName, $expectedAvailablePaymentReferenceNames);
     }
 
-    /**
-     * @param string $orderReferenceName
-     * @param string $expectedCurrentPaymentReferenceName
-     * @param array $expectedAvailablePaymentReferenceNames
-     */
     #[DataProvider('getOrderPaymentsSingledomainDataProvider')]
     #[Group('singledomain')]
     public function testGetOrderPaymentsSingledomain(
@@ -65,9 +55,6 @@ class OrderPaymentsTest extends GraphQlTestCase
         $this->assertOrderPayments($orderReferenceName, $expectedCurrentPaymentReferenceName, $expectedAvailablePaymentReferenceNames);
     }
 
-    /**
-     * @return iterable
-     */
     public static function getOrderPaymentsMultidomainDataProvider(): iterable
     {
         yield from static::getOrderPaymentsSingledomainDataProvider();
@@ -82,9 +69,6 @@ class OrderPaymentsTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @return iterable
-     */
     public static function getOrderPaymentsSingledomainDataProvider(): iterable
     {
         yield 'order with personal collection transport' => [
@@ -131,11 +115,6 @@ class OrderPaymentsTest extends GraphQlTestCase
         );
     }
 
-    /**
-     * @param string $orderReferenceName
-     * @param string $expectedCurrentPaymentReferenceName
-     * @param array $expectedAvailablePaymentReferenceNames
-     */
     private function assertOrderPayments(
         string $orderReferenceName,
         string $expectedCurrentPaymentReferenceName,
@@ -159,7 +138,6 @@ class OrderPaymentsTest extends GraphQlTestCase
     }
 
     /**
-     * @param string $paymentReferenceName
      * @return array{uuid: string, name: string}
      */
     private function getExpectedPaymentResponse(string $paymentReferenceName): array

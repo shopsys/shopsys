@@ -25,17 +25,12 @@ use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
  */
 final class AttributeProcessor
 {
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory $accessControlRuleFactory
-     */
     public function __construct(
         private readonly AccessControlRuleFactory $accessControlRuleFactory,
     ) {
     }
 
     /**
-     * @param \ReflectionClass $class
-     * @param \ReflectionMethod $method
      * @return \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRule[]
      */
     public function processMethod(ReflectionClass $class, ReflectionMethod $method): array
@@ -107,10 +102,8 @@ final class AttributeProcessor
     }
 
     /**
-     * @param \ReflectionMethod $method
      * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRule[] $rules
      * @param class-string<\Shopsys\FrameworkBundle\Component\Security\Attribute\PermissionAttributeInterface> $attributeClass
-     * @param string|null $classRole
      */
     private function processPermissionAttributes(
         ReflectionMethod $method,
@@ -138,7 +131,6 @@ final class AttributeProcessor
 
     /**
      * @template T of object
-     * @param \ReflectionClass $class
      * @param class-string<T> $attributeClass
      * @return T|null
      */

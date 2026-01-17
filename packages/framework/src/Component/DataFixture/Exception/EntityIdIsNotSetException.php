@@ -11,7 +11,6 @@ class EntityIdIsNotSetException extends Exception
     /**
      * @param string $referenceName
      * @param object $object
-     * @param \Exception|null $previous
      */
     public function __construct($referenceName, $object, ?Exception $previous = null)
     {

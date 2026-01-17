@@ -24,11 +24,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class FileUploadType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer $filesIdsToFilesTransformer
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
-     */
     public function __construct(
         private readonly UploadedFileFacade $uploadedFileFacade,
         private readonly FilesIdsToFilesTransformer $filesIdsToFilesTransformer,
@@ -36,9 +31,6 @@ final class FileUploadType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -51,11 +43,6 @@ final class FileUploadType extends AbstractType
             ->setAllowedTypes('file_type', 'string');
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -66,10 +53,6 @@ final class FileUploadType extends AbstractType
         $view->vars['multiple'] = $this->isMultiple($options);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -130,7 +113,6 @@ final class FileUploadType extends AbstractType
     }
 
     /**
-     * @param array $options
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     private function getFilesIndexedById(array $options): array
@@ -153,10 +135,6 @@ final class FileUploadType extends AbstractType
         return $uploadedFilesIndexedById;
     }
 
-    /**
-     * @param array $options
-     * @return bool
-     */
     private function isMultiple(array $options): bool
     {
         if ($options['file_entity_class'] === null) {

@@ -29,21 +29,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidAccessUserEr
 
 class ComplaintApiFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintFactory $complaintFactory
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemFactory $complaintItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository $complaintNumberSequenceRepository
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade $orderItemApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintDataApiFactory $complaintDataApiFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintItemDataApiFactory $complaintItemDataApiFactory
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade $complaintMailFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintRepository $complaintRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ComplaintFactory $complaintFactory,
@@ -61,10 +46,6 @@ class ComplaintApiFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
-     */
     public function create(ComplaintData $complaintData): Complaint
     {
         if ($complaintData->order !== null) {
@@ -98,10 +79,6 @@ class ComplaintApiFacade
         return $complaint;
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
-     */
     public function createFromComplaintInputArgument(Argument $argument): Complaint
     {
         $input = $argument['input'];
@@ -133,8 +110,6 @@ class ComplaintApiFacade
     }
 
     /**
-     * @param array $complaintItemsInputData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order|null $order
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[]
      */
     protected function createComplaintItems(array $complaintItemsInputData, ?Order $order): array
@@ -150,11 +125,6 @@ class ComplaintApiFacade
         return $this->createComplaintItemsWithOrder($complaintItemsInputData, $order);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param array $complaintItemInputData
-     */
     protected function validateComplaintItem(OrderItem $orderItem, Order $order, array $complaintItemInputData): void
     {
         if ($orderItem->getOrder() !== $order) {
@@ -167,10 +137,6 @@ class ComplaintApiFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param int $limit
-     * @param int $offset
-     * @param string|null $search
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
      */
     public function getCustomerUserComplaintsLimitedList(
@@ -183,10 +149,6 @@ class ComplaintApiFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param int $limit
-     * @param int $offset
-     * @param string|null $search
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
      */
     public function getCustomerComplaintsLimitedList(
@@ -198,11 +160,6 @@ class ComplaintApiFacade
         return $this->complaintRepository->getCustomerComplaintsLimitedList($customer, $limit, $offset, $search);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string|null $search
-     * @return int
-     */
     public function getCustomerUserComplaintsLimitedListCount(
         CustomerUser $customerUser,
         ?string $search = null,
@@ -210,11 +167,6 @@ class ComplaintApiFacade
         return $this->complaintRepository->getCustomerUserComplaintsListCount($customerUser, $search);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param string|null $search
-     * @return int
-     */
     public function getCustomerComplaintsLimitedListCount(
         Customer $customer,
         ?string $search = null,
@@ -222,11 +174,6 @@ class ComplaintApiFacade
         return $this->complaintRepository->getCustomerComplaintsListCount($customer, $search);
     }
 
-    /**
-     * @param string $complaintNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
-     */
     public function findByComplaintNumberAndCustomerUser(
         string $complaintNumber,
         CustomerUser $customerUser,
@@ -234,11 +181,6 @@ class ComplaintApiFacade
         return $this->complaintRepository->findByComplaintNumberAndCustomerUser($complaintNumber, $customerUser);
     }
 
-    /**
-     * @param string $complaintNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
-     */
     public function findByComplaintNumberAndCustomer(
         string $complaintNumber,
         Customer $customer,
@@ -247,8 +189,6 @@ class ComplaintApiFacade
     }
 
     /**
-     * @param array $complaintItemsInputData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[]
      */
     protected function createComplaintItemsWithOrder(array $complaintItemsInputData, Order $order): array
@@ -276,7 +216,6 @@ class ComplaintApiFacade
     }
 
     /**
-     * @param array $complaintItemsInputData
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[]
      */
     protected function createComplaintItemsWithoutOrder(array $complaintItemsInputData): array
@@ -290,9 +229,6 @@ class ComplaintApiFacade
         return $complaintItemsData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     protected function checkOrderHasNoWithdrawalRequest(Order $order): void
     {
         if ($this->withdrawalRequestFacade->findByOrder($order) !== null) {

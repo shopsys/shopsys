@@ -17,17 +17,10 @@ final class UserConsentPolicySettingFormType extends AbstractType
 {
     public const string USER_CONSENT_POLICY_ARTICLE_FIELD_NAME = 'userConsentPolicyArticle';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
-     */
     public function __construct(private readonly ArticleFacade $articleFacade)
     {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -57,9 +50,6 @@ final class UserConsentPolicySettingFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

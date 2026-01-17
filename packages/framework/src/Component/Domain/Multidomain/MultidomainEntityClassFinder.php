@@ -39,7 +39,6 @@ class MultidomainEntityClassFinder
     }
 
     /**
-     * @param \Doctrine\Persistence\Mapping\ClassMetadata $classMetadata
      * @return bool
      */
     protected function isMultidomainEntity(ClassMetadata $classMetadata)

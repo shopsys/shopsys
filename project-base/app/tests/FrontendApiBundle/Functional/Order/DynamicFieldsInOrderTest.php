@@ -45,10 +45,6 @@ class DynamicFieldsInOrderTest extends GraphQlTestCase
         $this->assertIsString($orderData['creationDate']);
     }
 
-    /**
-     * @param string $cartUuid
-     * @return string
-     */
     private function getMutation(string $cartUuid): string
     {
         return 'mutation {

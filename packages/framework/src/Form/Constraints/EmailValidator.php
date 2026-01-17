@@ -39,7 +39,6 @@ class EmailValidator extends ConstraintValidator
     /**
      * @see https://doc.nette.org/cs/2.4/validators
      * @param string $value
-     * @return bool
      */
     protected function isEmail($value): bool
     {

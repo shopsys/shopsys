@@ -13,12 +13,6 @@ use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class LuigisBoxBatchLoadDataFactory
 {
-    /**
-     * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper
-     * @param \Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum $typeInLuigisBoxEnum
-     * @param \Shopsys\LuigisBoxBundle\Model\Type\RecommendationTypeEnum $recommendationTypeEnum
-     * @param \Shopsys\LuigisBoxBundle\Model\Facet\FacetFactory $facetFactory
-     */
     public function __construct(
         protected readonly ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper,
         protected readonly TypeInLuigisBoxEnum $typeInLuigisBoxEnum,
@@ -28,13 +22,7 @@ class LuigisBoxBatchLoadDataFactory
     }
 
     /**
-     * @param string $type
-     * @param int $limit
-     * @param int $page
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param array $luigisBoxFilter
      * @param string[] $facetNames
-     * @return \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData
      */
     public function createForSearch(
         string $type,
@@ -68,14 +56,6 @@ class LuigisBoxBatchLoadDataFactory
         );
     }
 
-    /**
-     * @param string $type
-     * @param int $limit
-     * @param array $itemIds
-     * @param string $userIdentifier
-     * @param string $recommenderClientIdentifier
-     * @return \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData
-     */
     public function createForRecommendation(
         string $type,
         int $limit,

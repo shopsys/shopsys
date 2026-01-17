@@ -12,11 +12,6 @@ use Shopsys\Releaser\Stage;
 
 final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstallReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -34,9 +29,6 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
         return [Stage::RELEASE_CANDIDATE];
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     */
     #[Override]
     protected function writeInstructionsForProjectBasePreparation(Version $version): void
     {

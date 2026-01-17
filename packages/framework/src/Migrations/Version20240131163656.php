@@ -10,9 +10,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20240131163656 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -51,11 +48,6 @@ class Version20240131163656 extends AbstractMigration
         $this->sql('ALTER TABLE store_opening_hours DROP COLUMN first_opening_time, DROP COLUMN first_closing_time, DROP COLUMN second_opening_time, DROP COLUMN second_closing_time');
     }
 
-    /**
-     * @param string $openingTime
-     * @param string $closingTime
-     * @param int $openingHoursId
-     */
     private function insertIntoOpeningHoursRanges(
         string $openingTime,
         string $closingTime,

@@ -14,20 +14,12 @@ final class CrudTransformationHelper
      * Example:
      *    PriceListController => price_list
      *    OrdersController => orders
-     *
-     * @param string $controllerName
-     * @return string
      */
     public static function transformToRouteName(string $controllerName): string
     {
         return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', self::getCleanControllerName($controllerName)));
     }
 
-    /**
-     * @param string $controllerClass
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
-     * @return string
-     */
     public static function generateController(string $controllerClass, ActionType $pageType): string
     {
         return sprintf('%s::%sAction', $controllerClass, $pageType->value);
@@ -39,9 +31,6 @@ final class CrudTransformationHelper
      * Example:
      *     PriceListController -> price-list
      *     OrdersController -> orders
-     *
-     * @param string $controllerName
-     * @return string
      */
     public static function transformToRouteUrl(string $controllerName): string
     {
@@ -50,9 +39,6 @@ final class CrudTransformationHelper
 
     /**
      * Remove "CrudController" or "Controller" from controller name to be able to use it with routes
-     *
-     * @param string $controllerName
-     * @return string
      */
     public static function getCleanControllerName(string $controllerName): string
     {

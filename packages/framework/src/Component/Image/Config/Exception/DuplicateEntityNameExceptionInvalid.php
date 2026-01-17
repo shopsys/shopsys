@@ -12,7 +12,6 @@ class DuplicateEntityNameExceptionInvalid extends InvalidImageConfigException
 
     /**
      * @param string $entityName
-     * @param \Exception|null $previous
      */
     public function __construct($entityName, ?Exception $previous = null)
     {

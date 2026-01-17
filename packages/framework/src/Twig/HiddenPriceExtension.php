@@ -13,17 +13,11 @@ use Twig\TwigFilter;
 
 class HiddenPriceExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
-     */
     public function __construct(
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getFilters(): array
     {
@@ -35,11 +29,6 @@ class HiddenPriceExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $price
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @return string
-     */
     public function hidePriceFilter(string $price, ?CustomerUser $customerUser): string
     {
         if (!$this->customerUserRoleResolver->canCustomerUserSeePrices($customerUser)) {

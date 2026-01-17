@@ -10,7 +10,6 @@ class OrderNumberSequenceNotFoundException extends Exception
 {
     /**
      * @param string $message
-     * @param \Exception|null $previous
      */
     public function __construct($message = '', ?Exception $previous = null)
     {

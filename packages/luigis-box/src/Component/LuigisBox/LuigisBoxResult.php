@@ -9,8 +9,6 @@ class LuigisBoxResult
     /**
      * @param int[] $ids
      * @param string[] $idsWithPrefix
-     * @param int $itemsCount
-     * @param array $facets
      */
     public function __construct(
         protected readonly array $ids,
@@ -36,17 +34,11 @@ class LuigisBoxResult
         return $this->idsWithPrefix;
     }
 
-    /**
-     * @return int
-     */
     public function getItemsCount(): int
     {
         return $this->itemsCount;
     }
 
-    /**
-     * @return array
-     */
     public function getFacets(): array
     {
         return $this->facets;

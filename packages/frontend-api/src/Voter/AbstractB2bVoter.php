@@ -13,33 +13,20 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 abstract class AbstractB2bVoter extends Voter
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly Domain $domain)
     {
     }
 
     /**
-     * @param string $attribute
      * @param array $subject
-     * @return bool
      */
     #[Override]
     abstract protected function supports(string $attribute, $subject): bool;
 
-    /**
-     * @param string $attribute
-     * @param \Overblog\GraphQLBundle\Definition\Argument|null $argument
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     */
     abstract protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token);
 
     /**
-     * @param string $attribute
      * @param mixed $subject
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @return bool
      */
     #[Override]
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool

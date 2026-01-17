@@ -32,7 +32,6 @@ class ServicesResetter
 
     /**
      * @param class-string $className
-     * @return bool
      */
     protected function isShopsysService(string $className): bool
     {

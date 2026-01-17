@@ -12,19 +12,12 @@ use Symfony\Component\Form\FormEvents;
 
 class TimedSpamValidationListener implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider $formTimeProvider
-     * @param array $options
-     */
     public function __construct(
         protected readonly FormTimeProvider $formTimeProvider,
         protected readonly array $options,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     */
     public function preSubmit(FormEvent $event)
     {
         $form = $event->getForm();

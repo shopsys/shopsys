@@ -10,10 +10,6 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class ImageDeleteDoctrineListener
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     */
     public function __construct(
         protected readonly ImageConfig $imageConfig,
         protected readonly ImageFacade $imageFacade,
@@ -30,9 +26,6 @@ class ImageDeleteDoctrineListener
         return $this->imageFacade;
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     */
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -46,7 +39,6 @@ class ImageDeleteDoctrineListener
 
     /**
      * @param object $entity
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     protected function deleteEntityImages($entity, EntityManagerInterface $em)
     {

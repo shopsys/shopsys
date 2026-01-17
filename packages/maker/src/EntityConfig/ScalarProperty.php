@@ -15,18 +15,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
  */
 class ScalarProperty extends Property
 {
-    /**
-     * @param string $propertyName
-     * @param string $type
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityTypeEnum $entityType
-     * @param int|null $length
-     * @param bool|null $nullable
-     * @param array $options
-     * @param int|null $precision
-     * @param int|null $scale
-     * @param bool $unique
-     * @param string|null $enumType
-     */
     public function __construct(
         public string $propertyName,
         public string $type,
@@ -91,10 +79,6 @@ class ScalarProperty extends Property
         return [sprintf('#[ORM\Column(%s)]', implode(', ', $options))];
     }
 
-    /**
-     * @param \Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum $collectionTypeHintType
-     * @return string
-     */
     #[Override]
     public function getTypeHint(
         CollectionTypeHintTypeEnum $collectionTypeHintType = CollectionTypeHintTypeEnum::COLLECTION,
@@ -121,9 +105,6 @@ class ScalarProperty extends Property
         return 'mixed';
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getGetterName(): string
     {
@@ -132,9 +113,6 @@ class ScalarProperty extends Property
         return $prefix . ucfirst($this->propertyName);
     }
 
-    /**
-     * @return bool
-     */
     #[Override]
     public function isCollection(): bool
     {

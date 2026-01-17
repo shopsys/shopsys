@@ -41,23 +41,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_CUSTOMER)]
 class CustomerController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade $customerUserListAdminFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade $watchdogFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecoratorFactory $moneyConvertingDataSourceDecoratorFactory
-     */
     public function __construct(
         protected readonly CustomerUserDataFactory $customerUserDataFactory,
         protected readonly CustomerUserListAdminFacade $customerUserListAdminFacade,
@@ -77,11 +60,6 @@ class CustomerController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/customer/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -132,11 +110,6 @@ class CustomerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/customer/edit-customer-user/{id}', name: 'admin_customer_user_edit', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -187,10 +160,6 @@ class CustomerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/customer/list/')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -243,10 +212,6 @@ class CustomerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/customer/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -285,11 +250,6 @@ class CustomerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $customerId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/customer/new-customer-user/{customerId}/', name: 'admin_customer_new_customer_user', requirements: ['customerId' => '\d+'])]
     #[CanCreate]
     public function newCustomerUserAction(Request $request, int $customerId): Response
@@ -337,10 +297,6 @@ class CustomerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/customer/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -375,10 +331,6 @@ class CustomerController extends AdminBaseController
         return $this->redirectToRoute('admin_customer_list');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/customer/delete-all/{id}', name: 'admin_customer_delete_all', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -404,10 +356,6 @@ class CustomerController extends AdminBaseController
         return $this->redirectToRoute('admin_customer_list');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/customer/send-reset-password/{id}', name: 'admin_customer_send_reset_password', requirements: ['id' => '\d+'])]
     #[CanEdit]
     #[CsrfProtection]
@@ -435,10 +383,6 @@ class CustomerController extends AdminBaseController
         return $this->redirectToRoute('admin_customer_list');
     }
 
-    /**
-     * @param array $row
-     * @return array
-     */
     protected function manipulateRow(array $row): array
     {
         $domain = $this->domain->getDomainConfigById($row['domainId']);
@@ -448,10 +392,6 @@ class CustomerController extends AdminBaseController
         return $row;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return string
-     */
     protected function resolveBackUrl(Customer $customer): string
     {
         if ($this->customerFacade->isB2bFeaturesEnabledByCustomer($customer)) {
@@ -466,10 +406,6 @@ class CustomerController extends AdminBaseController
         return $this->generateUrl('admin_customer_edit', ['id' => $firstCustomerUser->getId()]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return string
-     */
     protected function resolveBackUrlText(Customer $customer): string
     {
         if ($this->customerFacade->isB2bFeaturesEnabledByCustomer($customer)) {

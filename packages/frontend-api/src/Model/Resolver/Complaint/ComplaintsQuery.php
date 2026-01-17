@@ -19,12 +19,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class ComplaintsQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade $complaintApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
-     */
     public function __construct(
         protected readonly ComplaintApiFacade $complaintApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -33,10 +27,6 @@ class ComplaintsQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|\GraphQL\Executor\Promise\Promise
-     */
     public function complaintsQuery(Argument $argument): ConnectionInterface|Promise
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
@@ -50,19 +40,11 @@ class ComplaintsQuery extends AbstractQuery
         return $this->getPaginatedCustomerUserComplaints($customerUser, $argument);
     }
 
-    /**
-     * @return array
-     */
     public function complaintResolutionQuery(): array
     {
         return $this->complaintResolutionEnum->serialize();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|\GraphQL\Executor\Promise\Promise
-     */
     protected function getPaginatedCustomerUserComplaints(
         CustomerUser $customerUser,
         Argument $argument,
@@ -76,11 +58,6 @@ class ComplaintsQuery extends AbstractQuery
         return $paginator->auto($argument, $this->complaintApiFacade->getCustomerUserComplaintsLimitedListCount($customerUser, $search));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|\GraphQL\Executor\Promise\Promise
-     */
     protected function getPaginatedCustomerComplaints(
         Customer $customer,
         Argument $argument,

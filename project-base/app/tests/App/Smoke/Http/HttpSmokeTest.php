@@ -12,9 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HttpSmokeTest extends HttpSmokeTestCase
 {
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     #[Override]
     protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
     {
@@ -23,7 +20,6 @@ class HttpSmokeTest extends HttpSmokeTestCase
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Override]

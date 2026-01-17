@@ -19,12 +19,6 @@ use Throwable;
 
 class ShopsysFrameworkDataCollector extends DataCollector
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
@@ -69,9 +63,6 @@ class ShopsysFrameworkDataCollector extends DataCollector
         $this->data = [];
     }
 
-    /**
-     * @return string
-     */
     public function getVersion(): string
     {
         return $this->data['version'];
@@ -85,41 +76,26 @@ class ShopsysFrameworkDataCollector extends DataCollector
         return $this->data['domains'];
     }
 
-    /**
-     * @return int
-     */
     public function getCurrentDomainId(): int
     {
         return $this->data['currentDomainId'];
     }
 
-    /**
-     * @return string
-     */
     public function getCurrentDomainName(): string
     {
         return $this->data['currentDomainName'];
     }
 
-    /**
-     * @return string
-     */
     public function getCurrentDomainLocale(): string
     {
         return $this->data['currentDomainLocale'];
     }
 
-    /**
-     * @return bool
-     */
     public function isInAdmin(): bool
     {
         return $this->data['inAdmin'];
     }
 
-    /**
-     * @return string
-     */
     public function getAdminLocale(): string
     {
         return $this->data['adminLocale'];
@@ -134,34 +110,21 @@ class ShopsysFrameworkDataCollector extends DataCollector
         return 'shopsys_framework_core';
     }
 
-    /**
-     * @return string
-     */
     public function getDocsVersion(): string
     {
         return $this->data['docsVersion'];
     }
 
-    /**
-     * @return string
-     */
     public function getSystemTimeZone(): string
     {
         return $this->data['systemTimeZone'];
     }
 
-    /**
-     * @return string
-     */
     public function getDisplayTimeZone(): string
     {
         return $this->data['displayTimeZone'];
     }
 
-    /**
-     * @param string $versionString
-     * @return string
-     */
     protected function resolveDocsVersion(string $versionString): string
     {
         $version = new Version($versionString);

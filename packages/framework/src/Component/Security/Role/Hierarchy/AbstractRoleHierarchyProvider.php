@@ -44,8 +44,6 @@ abstract class AbstractRoleHierarchyProvider
 
     /**
      * @param array<string, string[]> $hierarchy
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Role $role
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission $permission
      */
     protected function appendPermissionHierarchy(array &$hierarchy, Role $role, Permission $permission): void
     {

@@ -12,10 +12,6 @@ use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
  */
 trait SetterInjectionTrait
 {
-    /**
-     * @param object $argument
-     * @param string $propertyName
-     */
     public function setDependency(object $argument, string $propertyName): void
     {
         $caller = debug_backtrace()[1];

@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class CategoryChildrenBatchLoader
 {
-    /**
-     * @param \App\FrontendApi\Model\Category\CategoryFacade $categoryFacade
-     * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private CategoryFacade $categoryFacade,
         private PromiseAdapter $promiseAdapter,
@@ -24,7 +19,6 @@ class CategoryChildrenBatchLoader
 
     /**
      * @param \App\Model\Category\Category[] $categories
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadByCategories(array $categories): Promise
     {

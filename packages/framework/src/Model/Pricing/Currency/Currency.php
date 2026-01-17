@@ -69,26 +69,17 @@ class Currency
     #[ORM\Column(type: 'integer')]
     protected $roundingPlacesPriceWithoutVat;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     */
     public function __construct(CurrencyData $currencyData)
     {
         $this->exchangeRate = $currencyData->exchangeRate;
         $this->setData($currencyData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     */
     public function edit(CurrencyData $currencyData)
     {
         $this->setData($currencyData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     */
     protected function setData(CurrencyData $currencyData): void
     {
         $this->name = $currencyData->name;

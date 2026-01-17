@@ -14,9 +14,6 @@ class PoFileLoader extends BasePoFileLoader
 {
     /**
      * @param \Symfony\Component\Finder\SplFileInfo|string $resource
-     * @param string $locale
-     * @param string $domain
-     * @return \Symfony\Component\Translation\MessageCatalogue
      */
     #[Override]
     public function load(
@@ -47,12 +44,6 @@ class PoFileLoader extends BasePoFileLoader
         return $filteredCatalogue;
     }
 
-    /**
-     * @param string $resource
-     * @param string $locale
-     * @param string $domain
-     * @return \Symfony\Component\Translation\MessageCatalogue
-     */
     public function loadIncludingEmpty(
         string $resource,
         string $locale,

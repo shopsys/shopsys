@@ -19,27 +19,16 @@ class GoPayClientFactory
      */
     protected array $clientsByDomainId = [];
 
-    /**
-     * @param array $clientConfigs
-     */
     public function __construct(
         protected array $clientConfigs,
     ) {
     }
 
-    /**
-     * @param array $gopayConfig
-     * @return \Shopsys\FrameworkBundle\Model\GoPay\GoPayClient
-     */
     protected function createInstance(array $gopayConfig): GoPayClient
     {
         return new GoPayClient($gopayConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\GoPay\GoPayClient
-     */
     public function createByDomain(DomainConfig $domainConfig): GoPayClient
     {
         if (!array_key_exists($domainConfig->getId(), $this->clientsByDomainId)) {
@@ -50,10 +39,6 @@ class GoPayClientFactory
         return $this->clientsByDomainId[$domainConfig->getId()];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return array
-     */
     protected function mapConfigByDomain(DomainConfig $domainConfig): array
     {
         foreach ($this->clientConfigs as $clientConfig) {
@@ -73,14 +58,6 @@ class GoPayClientFactory
         throw new GoPayNotEnabledOnDomainException('GoPay is not enabled on domain with ID "' . $domainConfig->getId() . '"');
     }
 
-    /**
-     * @param string $goid
-     * @param string $clientId
-     * @param string $clientSecret
-     * @param string $gatewayUrl
-     * @param string $locale
-     * @return array
-     */
     protected function createConfig(
         string $goid,
         string $clientId,

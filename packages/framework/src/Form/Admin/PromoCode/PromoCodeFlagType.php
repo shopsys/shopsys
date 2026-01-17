@@ -15,20 +15,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class PromoCodeFlagType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Form\Admin\PromoCode\Transformer\PromoCodeFlagTransformer $promoCodeFlagTransformer
-     */
     public function __construct(
         private readonly FlagFacade $flagFacade,
         private readonly PromoCodeFlagTransformer $promoCodeFlagTransformer,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -15,11 +15,6 @@ class InputPriceRecalculationScheduler
 
     protected bool $recalculateInputPricesWithVat = false;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator $inputPriceRecalculator
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     */
     public function __construct(
         protected readonly InputPriceRecalculator $inputPriceRecalculator,
         protected readonly Setting $setting,
@@ -37,9 +32,6 @@ class InputPriceRecalculationScheduler
         $this->recalculateInputPricesWithVat = true;
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
-     */
     public function onKernelResponse(ResponseEvent $event): void
     {
         if (!$event->isMainRequest()) {

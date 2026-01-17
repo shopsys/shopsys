@@ -21,19 +21,12 @@ class ProductListDataFixture extends AbstractReferenceFixture implements Depende
     public const string PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID = '85817487-6c9b-4528-93cb-22fa0de9274d';
     public const string PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID = 'dcc229ee-f93d-45bc-998b-63fb8e0ec3ec';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory $productListDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     */
     public function __construct(
         private readonly ProductListDataFactory $productListDataFactory,
         private readonly ProductListFacade $productListFacade,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -52,9 +45,6 @@ class ProductListDataFixture extends AbstractReferenceFixture implements Depende
     }
 
     /**
-     * @param string $productListType
-     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
-     * @param string $uuid
      * @param \App\Model\Product\Product[] $products
      * @throws \Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductAlreadyInListException
      */

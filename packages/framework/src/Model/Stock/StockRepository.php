@@ -12,26 +12,16 @@ use Shopsys\FrameworkBundle\Model\Stock\Exception\StockNotFoundException;
 
 class StockRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getStockRepository(): EntityRepository
     {
         return $this->em->getRepository(Stock::class);
     }
 
-    /**
-     * @param int $stockId
-     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock
-     */
     public function getById(int $stockId): Stock
     {
         $stock = $this->getStockRepository()->find($stockId);
@@ -57,9 +47,6 @@ class StockRepository
             ->getResult();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -68,7 +55,6 @@ class StockRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Stock\Stock[]
      */
     public function getStocksEnabledOnDomain(int $domainId): array
@@ -88,27 +74,17 @@ class StockRepository
         return $this->getStockRepository()->findBy([], ['position' => 'ASC']);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllStocksQueryBuilder(): QueryBuilder
     {
         return $this->getQueryBuilder()
             ->orderBy('s.position', 'ASC');
     }
 
-    /**
-     * @param string $externalId
-     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock|null
-     */
     public function findStockByExternalId(string $externalId): ?Stock
     {
         return $this->getStockRepository()->findOneBy(['externalId' => $externalId]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
-     */
     public function changeDefaultStock(Stock $stock): void
     {
         $this->em->createQueryBuilder()
@@ -121,9 +97,6 @@ class StockRepository
         $this->em->flush();
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->getQueryBuilder()

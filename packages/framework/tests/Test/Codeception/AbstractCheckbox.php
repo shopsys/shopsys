@@ -8,18 +8,12 @@ use PHPUnit\Framework\Assert;
 
 abstract class AbstractCheckbox
 {
-    /**
-     * @param \Tests\FrameworkBundle\Test\Codeception\ActorInterface $tester
-     * @param string $cssSelector
-     */
     protected function __construct(protected readonly ActorInterface $tester, protected readonly string $cssSelector)
     {
     }
 
     /**
      * Method will mark the particular image element with a generated class via JS so it can be targeted by Selenium easily.
-     *
-     * @return string
      */
     abstract protected function getImageElementClass(): string;
 
@@ -35,9 +29,6 @@ abstract class AbstractCheckbox
         $this->tester->canSeeElement(['css' => '.' . $imageElementClass]);
     }
 
-    /**
-     * @return bool
-     */
     protected function isChecked(): bool
     {
         $script = sprintf('return $("%s").is(":checked")', $this->cssSelector);

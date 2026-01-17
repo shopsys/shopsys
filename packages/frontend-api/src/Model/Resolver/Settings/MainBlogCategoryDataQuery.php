@@ -12,11 +12,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery;
 
 class MainBlogCategoryDataQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery $imagesQuery
-     */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
@@ -24,9 +19,6 @@ class MainBlogCategoryDataQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrontendApiBundle\Model\Resolver\Settings\MainBlogCategoryData
-     */
     public function mainBlogCategoryDataQuery(): MainBlogCategoryData
     {
         $mainBlogCategoryData = new MainBlogCategoryData();

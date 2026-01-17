@@ -34,18 +34,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_GIFT_PLAN)]
 class GiftPlanController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade $giftPlanFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanDataFactory $giftPlanDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly GiftPlanFacade $giftPlanFacade,
         protected readonly GiftPlanDataFactory $giftPlanDataFactory,
@@ -60,11 +48,6 @@ class GiftPlanController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/gift-plan/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -107,9 +90,6 @@ class GiftPlanController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/gift-plan/list/')]
     #[CanView]
     public function listAction(): Response
@@ -125,10 +105,6 @@ class GiftPlanController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $selectedDomainId
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     protected function getGiftPlanGrid(int $selectedDomainId): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder()
@@ -152,10 +128,6 @@ class GiftPlanController extends AdminBaseController
         return $grid;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/gift-plan/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -193,10 +165,6 @@ class GiftPlanController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/gift-plan/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -220,10 +188,6 @@ class GiftPlanController extends AdminBaseController
         return $this->redirectToRoute('admin_giftplan_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
     public function setGiftPriceAction(Request $request): Response

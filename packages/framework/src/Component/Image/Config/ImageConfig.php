@@ -17,7 +17,6 @@ class ImageConfig
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[] $imageEntityConfigsByClass
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(
         array $imageEntityConfigsByClass,
@@ -41,19 +40,11 @@ class ImageConfig
         $this->imageEntityConfigsByClass = $imageEntityConfigsByNormalizedClass;
     }
 
-    /**
-     * @param object $entity
-     * @return string
-     */
     public function getEntityName(object $entity): string
     {
         return $this->getImageEntityConfig($entity)->getEntityName();
     }
 
-    /**
-     * @param string $entityName
-     * @param string|null $type
-     */
     public function assertImageConfigByEntityNameExists(string $entityName, ?string $type): void
     {
         $entityConfig = $this->getEntityConfigByEntityName($entityName);
@@ -63,10 +54,6 @@ class ImageConfig
         }
     }
 
-    /**
-     * @param object $entity
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig
-     */
     public function getImageEntityConfig(object $entity): ImageEntityConfig
     {
         foreach ($this->imageEntityConfigsByClass as $className => $entityConfig) {
@@ -78,10 +65,6 @@ class ImageConfig
         throw new ImageEntityConfigNotFoundException(get_class($entity));
     }
 
-    /**
-     * @param object $entity
-     * @return bool
-     */
     public function hasImageConfig(object $entity): bool
     {
         foreach (array_keys($this->imageEntityConfigsByClass) as $className) {
@@ -93,10 +76,6 @@ class ImageConfig
         return false;
     }
 
-    /**
-     * @param string $entityName
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig
-     */
     protected function getEntityConfigByEntityName(string $entityName): ImageEntityConfig
     {
         foreach ($this->imageEntityConfigsByClass as $entityConfig) {
@@ -116,10 +95,6 @@ class ImageConfig
         return $this->imageEntityConfigsByClass;
     }
 
-    /**
-     * @param string $class
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig
-     */
     public function getImageEntityConfigByClass(string $class): ImageEntityConfig
     {
         $normalizedClass = $this->entityNameResolver->resolve($class);

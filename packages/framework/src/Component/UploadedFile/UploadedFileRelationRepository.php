@@ -10,26 +10,17 @@ use Doctrine\ORM\QueryBuilder;
 
 class UploadedFileRelationRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getUploadedFileRelationRepository(): EntityRepository
     {
         return $this->em->getRepository(UploadedFileRelation::class);
     }
 
     /**
-     * @param string $entityName
-     * @param int $entityId
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
-     * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelation[]
      */
     public function getByEntityNameAndIdAndUploadedFiles(
@@ -49,9 +40,6 @@ class UploadedFileRelationRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @param string $entityName
-     * @param string $type
      * @return int[]
      */
     public function getEntityIdsForUploadedFile(UploadedFile $uploadedFile, string $entityName, string $type): array
@@ -67,10 +55,8 @@ class UploadedFileRelationRepository
     }
 
     /**
-     * @param string $entityName
      * @param int[] $entityIds
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
-     * @param string $type
      */
     public function deleteRelationsByEntityNameAndIdsAndUploadedFiles(
         string $entityName,
@@ -85,9 +71,7 @@ class UploadedFileRelationRepository
     }
 
     /**
-     * @param string $entityName
      * @param int[] $entityIds
-     * @param string $type
      * @return array<int, int>
      */
     public function maxPositionsByEntityNameAndIds(string $entityName, array $entityIds, string $type): array
@@ -110,11 +94,7 @@ class UploadedFileRelationRepository
     }
 
     /**
-     * @param string $entityName
      * @param int[] $entityIds
-     * @param array $uploadedFiles
-     * @param string $type
-     * @return \Doctrine\ORM\QueryBuilder
      */
     protected function createQueryBuilderByEntityNameIdAndNameAndUploadedFiles(
         string $entityName,
@@ -132,7 +112,6 @@ class UploadedFileRelationRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
-     * @return \Doctrine\ORM\QueryBuilder
      */
     protected function createQueryBuilderByUploadedFiles(array $uploadedFiles): QueryBuilder
     {
@@ -142,13 +121,6 @@ class UploadedFileRelationRepository
             ->setParameter('uploadedFiles', $uploadedFiles);
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $qb
-     * @param string $entityName
-     * @param array $entityIds
-     * @param string $type
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function extendQueryBuilderByEntityNameAndIds(
         QueryBuilder $qb,
         string $entityName,

@@ -20,19 +20,12 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
 {
     private const string UUID_NAMESPACE = '17cf51a8-a14b-4caa-b4ba-a8523ed15bb4';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade $advertFacade
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory $advertDataFactory
-     */
     public function __construct(
         private readonly AdvertFacade $advertFacade,
         private readonly AdvertDataFactory $advertDataFactory,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

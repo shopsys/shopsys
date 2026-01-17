@@ -13,13 +13,6 @@ use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest;
 
 class PersonalDataAccessMailFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail $personalDataAccessMail
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail $personalDataExportMail
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     */
     public function __construct(
         protected readonly Mailer $mailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
@@ -29,9 +22,6 @@ class PersonalDataAccessMailFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
-     */
     public function sendMail(PersonalDataAccessRequest $personalDataAccessRequest): void
     {
         if ($personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_DISPLAY) {
@@ -49,11 +39,6 @@ class PersonalDataAccessMailFacade
         $this->sendMailTemplate($mailTemplate, $personalDataAccessRequest);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
-     * @param string|null $forceSendTo
-     */
     public function sendMailTemplate(
         MailTemplate $mailTemplate,
         PersonalDataAccessRequest $personalDataAccessRequest,

@@ -45,10 +45,6 @@ class Vat
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
-     * @param int $domainId
-     */
     public function __construct(VatData $vatData, int $domainId)
     {
         $this->percent = $vatData->percent;
@@ -56,17 +52,11 @@ class Vat
         $this->setData($vatData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
-     */
     public function edit(VatData $vatData)
     {
         $this->setData($vatData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
-     */
     protected function setData(VatData $vatData): void
     {
         $this->name = $vatData->name;
@@ -104,9 +94,6 @@ class Vat
         return $this->replaceWith;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $newVat
-     */
     public function markForDeletion(self $newVat)
     {
         $this->replaceWith = $newVat;

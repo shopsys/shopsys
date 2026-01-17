@@ -10,7 +10,6 @@ use Attribute;
 class DataSet
 {
     /**
-     * @param int $statusCode
      * @param \Shopsys\HttpSmokeTesting\Attribute\Parameter[] $parameters
      */
     public function __construct(

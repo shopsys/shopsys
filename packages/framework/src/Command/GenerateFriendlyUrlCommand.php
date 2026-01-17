@@ -17,9 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class GenerateFriendlyUrlCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGeneratorFacade $friendlyUrlGeneratorFacade
-     */
     public function __construct(private readonly FriendlyUrlGeneratorFacade $friendlyUrlGeneratorFacade)
     {
         parent::__construct();

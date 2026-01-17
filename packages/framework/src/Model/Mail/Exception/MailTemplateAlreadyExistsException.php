@@ -10,10 +10,6 @@ use Throwable;
 
 class MailTemplateAlreadyExistsException extends Exception
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param \Throwable|null $previous
-     */
     public function __construct(protected MailTemplate $mailTemplate, ?Throwable $previous = null)
     {
         $message = sprintf(
@@ -26,9 +22,6 @@ class MailTemplateAlreadyExistsException extends Exception
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
     public function getMailTemplate(): MailTemplate
     {
         return $this->mailTemplate;

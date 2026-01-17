@@ -15,13 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvide
 
 class ProductSearchResultsProvider implements ProductSearchResultsProviderInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
-     */
     public function __construct(
         protected readonly ProductFilterDataFactory $productFilterDataFactory,
         protected readonly ProductConnectionFactory $productConnectionFactory,
@@ -31,10 +24,6 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection
-     */
     #[Override]
     public function getProductsSearchResults(
         Argument $argument,
@@ -62,10 +51,6 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
         );
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
     #[Override]
     public function isEnabledOnDomain(int $domainId): bool
     {

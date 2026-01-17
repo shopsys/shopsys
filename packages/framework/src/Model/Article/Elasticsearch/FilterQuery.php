@@ -8,9 +8,6 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractFilterQuery;
 
 class FilterQuery extends AbstractFilterQuery
 {
-    /**
-     * @param string $indexName
-     */
     public function __construct(string $indexName)
     {
         parent::__construct($indexName);
@@ -21,10 +18,6 @@ class FilterQuery extends AbstractFilterQuery
         ];
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
-     */
     public function filterByUuid(string $uuid): self
     {
         $clone = clone $this;
@@ -37,10 +30,6 @@ class FilterQuery extends AbstractFilterQuery
         return $clone;
     }
 
-    /**
-     * @param string $slug
-     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
-     */
     public function filterBySlug(string $slug): self
     {
         $clone = clone $this;
@@ -55,7 +44,6 @@ class FilterQuery extends AbstractFilterQuery
 
     /**
      * @param string[] $placements
-     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
      */
     public function filterByPlacements(array $placements): self
     {
@@ -69,10 +57,6 @@ class FilterQuery extends AbstractFilterQuery
         return $clone;
     }
 
-    /**
-     * @param int $articleId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
-     */
     public function filterById(int $articleId): self
     {
         $clone = clone $this;

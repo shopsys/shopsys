@@ -11,9 +11,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class MoneyDataTypeResolver extends AbstractDataTypeResolver
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
-     */
     public function __construct(
         protected readonly EntityLogFacade $entityLogFacade,
     ) {
@@ -30,7 +27,6 @@ class MoneyDataTypeResolver extends AbstractDataTypeResolver
 
     /**
      * @param array{0: \Shopsys\FrameworkBundle\Component\Money\Money|null, 1: \Shopsys\FrameworkBundle\Component\Money\Money|null} $changes
-     * @return \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges
      */
     #[Override]
     public function getResolvedChanges(array $changes): ResolvedChanges
@@ -46,9 +42,6 @@ class MoneyDataTypeResolver extends AbstractDataTypeResolver
         );
     }
 
-    /**
-     * @return int
-     */
     #[Override]
     public function getPriority(): int
     {

@@ -51,11 +51,6 @@ class FriendlyUrlTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @param string $graphQlType
-     * @param string $urlSlug
-     * @return string
-     */
     private function getQuery(string $graphQlType, string $urlSlug): string
     {
         return '
@@ -67,9 +62,6 @@ class FriendlyUrlTest extends GraphQlTestCase
         ';
     }
 
-    /**
-     * @return array
-     */
     private function getEntityNameByFriendlyUrlProvider(): array
     {
         $canonName = t('Canon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
@@ -113,9 +105,6 @@ class FriendlyUrlTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getFriendlyUrlNotFoundForRouteBySlug(): array
     {
         return [

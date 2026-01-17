@@ -12,7 +12,6 @@ class ImageEntityConfigNotFoundException extends Exception
 
     /**
      * @param string $entityClassOrName
-     * @param \Exception|null $previous
      */
     public function __construct($entityClassOrName, ?Exception $previous = null)
     {

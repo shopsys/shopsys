@@ -35,15 +35,6 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
      */
     private ?array $routeAccessControlDataIndexedByRouteName = null;
 
-    /**
-     * @param \Symfony\Contracts\Cache\CacheInterface $cache
-     * @param string $environment
-     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory $administrationRouterFactory
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param string $adminUrl
-     * @param \Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor $attributeProcessor
-     * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory $accessControlRuleFactory
-     */
     public function __construct(
         private readonly CacheInterface $cache,
         private readonly string $environment,
@@ -172,7 +163,6 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
     }
 
     /**
-     * @param \Symfony\Component\Routing\RouteCollection $routes
      * @return array<string, \Symfony\Component\Routing\Route>
      */
     private function filterAdminRoutes(RouteCollection $routes): array
@@ -201,7 +191,6 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
     }
 
     /**
-     * @param string $controller
      * @return array{0: class-string, 1: string}
      */
     private function parseController(string $controller): array
@@ -222,9 +211,7 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
     }
 
     /**
-     * @param \Symfony\Component\Routing\Route $route
      * @param class-string $controllerClass
-     * @param string $method
      * @return \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRule[]
      */
     private function processRouteRules(

@@ -12,9 +12,6 @@ use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 #[CoversClass(InheritDocFormatFixer::class)]
 final class InheritDocFormatFixerTest extends AbstractFixerTestCase
 {
-    /**
-     * @return \Shopsys\CodingStandards\CsFixer\Phpdoc\InheritDocFormatFixer
-     */
     #[Override]
     protected function createFixerService(): InheritDocFormatFixer
     {

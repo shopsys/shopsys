@@ -11,11 +11,6 @@ use Shopsys\Releaser\Stage;
 
 final class EnsureRoadmapIsUpdatedReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -24,10 +19,6 @@ final class EnsureRoadmapIsUpdatedReleaseWorker extends AbstractShopsysReleaseWo
         return '[Manually] Ensure "Roadmap" is updated';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

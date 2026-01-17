@@ -23,19 +23,12 @@ final class CheckPackagesGithubActionsBuildsReleaseWorker extends AbstractCheckP
         return [Stage::AFTER_RELEASE];
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getBranchName(): string
     {
         return $this->releasingBranchName;
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

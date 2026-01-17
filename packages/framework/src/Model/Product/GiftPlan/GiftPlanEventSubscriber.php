@@ -9,17 +9,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GiftPlanEventSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade
-     */
     public function __construct(
         protected readonly GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {
@@ -30,9 +24,6 @@ class GiftPlanEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanEvent $event
-     */
     public function onChanged(GiftPlanEvent $event): void
     {
         $this->giftFlagSynchronizerFacade->dispatchMainProductForGriftFlagRecalculation($event->getMainProducts());

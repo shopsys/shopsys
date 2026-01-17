@@ -19,14 +19,6 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
 {
     private const string LOCAL_TEMPORARY_DIRECTORY = 'localeFileUploads';
 
-    /**
-     * @param \Symfony\Component\Validator\Constraints\FileValidator $fileValidator
-     * @param string $localTemporaryDir
-     * @param \Symfony\Component\Filesystem\Filesystem $symfonyFilesystem
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         private readonly FileValidator $fileValidator,
         private readonly string $localTemporaryDir,
@@ -69,17 +61,11 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
         }
     }
 
-    /**
-     * @return string
-     */
     private function getLocalTemporaryDirectory(): string
     {
         return $this->localTemporaryDir . '/' . self::LOCAL_TEMPORARY_DIRECTORY;
     }
 
-    /**
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     #[Override]
     public function initialize(ExecutionContextInterface $context): void
     {

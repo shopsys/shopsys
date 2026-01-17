@@ -18,9 +18,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class PriceListProductPickerType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductIdToProductTransformer $productsIdToProductsTransformer
-     */
     public function __construct(
         private readonly ProductIdToProductTransformer $productsIdToProductsTransformer,
     ) {

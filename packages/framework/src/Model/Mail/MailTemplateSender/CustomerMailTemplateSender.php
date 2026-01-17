@@ -28,14 +28,6 @@ class CustomerMailTemplateSender implements MailTemplateSenderInterface
 
     protected const string PERSONAL_DATA_ACCESS_REQUEST_DUMMY_HASH = 'dummy-hash';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade $personalDataAccessMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactory $personalDataAccessRequestFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade $resetPasswordMailFacade
-     */
     public function __construct(
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly CustomerMailFacade $customerMailFacade,
@@ -46,30 +38,18 @@ class CustomerMailTemplateSender implements MailTemplateSenderInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getFormLabelForEntityIdentifier(): string
     {
         return t('Customer ID');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @return bool
-     */
     #[Override]
     public function supports(MailTemplate $mailTemplate): bool
     {
         return in_array($mailTemplate->getName(), static::SUPPORTED_MAIL_TEMPLATES, true);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param string $mailTo
-     * @param int|null $entityId
-     */
     #[Override]
     public function sendTemplate(MailTemplate $mailTemplate, string $mailTo, ?int $entityId): void
     {
@@ -85,11 +65,6 @@ class CustomerMailTemplateSender implements MailTemplateSenderInterface
         };
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param string $toEmail
-     */
     protected function sendPersonalDataAccessMail(
         CustomerUser $customerUser,
         MailTemplate $mailTemplate,
@@ -107,11 +82,6 @@ class CustomerMailTemplateSender implements MailTemplateSenderInterface
         $this->personalDataAccessMailFacade->sendMailTemplate($mailTemplate, $personalAccessRequest, $toEmail);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param string $toEmail
-     */
     protected function sendPersonalDataExportMail(
         CustomerUser $customerUser,
         MailTemplate $mailTemplate,
@@ -129,11 +99,6 @@ class CustomerMailTemplateSender implements MailTemplateSenderInterface
         $this->personalDataAccessMailFacade->sendMailTemplate($mailTemplate, $personalAccessRequest, $toEmail);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $toEmail
-     */
     protected function sendCustomerActivationMail(
         MailTemplate $mailTemplate,
         CustomerUser $customerUser,
@@ -143,11 +108,6 @@ class CustomerMailTemplateSender implements MailTemplateSenderInterface
         $this->customerMailFacade->sendActivationMailTemplate($mailTemplate, $resetPasswordUser, $toEmail);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $toEmail
-     */
     protected function sendResetPasswordMail(
         MailTemplate $mailTemplate,
         CustomerUser $customerUser,

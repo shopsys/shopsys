@@ -12,11 +12,6 @@ use Symfony\Component\String\ByteString;
 
 class CustomerUploadedFileFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly FileUpload $fileUpload,
         protected readonly EntityNameResolver $entityNameResolver,
@@ -24,16 +19,6 @@ class CustomerUploadedFileFactory
     ) {
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string $type
-     * @param string $temporaryFilename
-     * @param string $uploadedFilename
-     * @param int $position
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile
-     */
     public function create(
         string $entityName,
         int $entityId,
@@ -65,13 +50,6 @@ class CustomerUploadedFileFactory
     }
 
     /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string $type
-     * @param array $temporaryFilenames
-     * @param array $uploadedFilenames
-     * @param int $existingFilesCount
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[]
      */
     public function createMultiple(

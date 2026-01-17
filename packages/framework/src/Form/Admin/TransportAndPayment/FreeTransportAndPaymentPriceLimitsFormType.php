@@ -24,17 +24,10 @@ final class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
     public const string FIELD_PRICE_LIMIT = 'priceLimit';
     public const string VALIDATION_GROUP_PRICE_LIMIT_ENABLED = 'priceLimitEnabled';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(private readonly Domain $domain)
     {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -45,10 +38,6 @@ final class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function getPriceLimitsBuilder(FormBuilderInterface $builder): FormBuilderInterface
     {
         $formBuilderForDomains = $builder->create(self::DOMAINS_SUBFORM_NAME, null, ['compound' => true]);
@@ -91,9 +80,6 @@ final class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
         return $formBuilderForDomains;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

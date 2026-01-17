@@ -14,10 +14,6 @@ use Shopsys\FrontendApiBundle\Model\Store\StoresFilterOptions;
 
 class StoresQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Store\StoreFacade $storeFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
         protected readonly Domain $domain,
@@ -25,7 +21,6 @@ class StoresQuery extends AbstractQuery
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
     public function storesQuery(Argument $argument)
@@ -53,8 +48,6 @@ class StoresQuery extends AbstractQuery
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object|null
      */
     public function storesByTransportQuery(Transport $transport, Argument $argument)

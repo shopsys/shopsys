@@ -20,20 +20,12 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class FriendlyUrlFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGridFactory $friendlyUrlGridFactory
-     */
     public function __construct(
         private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         private readonly FriendlyUrlGridFactory $friendlyUrlGridFactory,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -97,9 +89,6 @@ final class FriendlyUrlFormType extends AbstractType
             );
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -112,10 +101,6 @@ final class FriendlyUrlFormType extends AbstractType
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData $friendlyUrlData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function checkRedirectValidity(FriendlyUrlData $friendlyUrlData, ExecutionContextInterface $context): void
     {
         if ($friendlyUrlData->redirectTo !== null

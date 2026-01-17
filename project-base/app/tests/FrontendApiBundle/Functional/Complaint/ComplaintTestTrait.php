@@ -10,10 +10,6 @@ use Shopsys\FrontendApiBundle\Model\ScalarType\DateTimeType;
 
 trait ComplaintTestTrait
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem $expectedComplaintItem
-     * @param array $actualComplaintItemData
-     */
     protected function assertComplaintItem(ComplaintItem $expectedComplaintItem, array $actualComplaintItemData): void
     {
         $complaintItemMessage = sprintf(
@@ -44,10 +40,6 @@ trait ComplaintTestTrait
         $this->assertSame($expectedOrderItem->getUuid(), $orderItem['uuid'], $complaintItemMessage);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $expectedComplaint
-     * @param array $actualComplaintData
-     */
     protected function assertComplaint(Complaint $expectedComplaint, array $actualComplaintData): void
     {
         $complaintMessage = sprintf(

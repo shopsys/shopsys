@@ -10,9 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FlashMessageController extends AdminBaseController
 {
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[RequireRole(SystemRole::ADMIN)]
     public function indexAction(): Response
     {

@@ -11,17 +11,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DomainChoiceHandler
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly Domain $domain)
     {
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function chooseDomainConfig(SymfonyStyle $io): DomainConfig
     {
         $domainConfigs = $this->domain->getAll();
@@ -56,9 +49,6 @@ class DomainChoiceHandler
         throw new NoDomainSetException();
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     */
     public function chooseDomainAndSwitch(SymfonyStyle $io): void
     {
         $domainConfig = $this->chooseDomainConfig($io);

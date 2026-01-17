@@ -13,9 +13,6 @@ use Override;
 
 class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscriber
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
@@ -29,9 +26,6 @@ class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscr
         return [Events::loadClassMetadata];
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs
-     */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs): void
     {
         $meta = $eventArgs->getClassMetadata();
@@ -56,28 +50,16 @@ class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscr
         $meta->discriminatorValue = null;
     }
 
-    /**
-     * @param string $entityName
-     * @return bool
-     */
     protected function mustClean(string $entityName): bool
     {
         return $this->isExtended($entityName) && !$this->isTranslation($entityName);
     }
 
-    /**
-     * @param string $entityName
-     * @return bool
-     */
     protected function isExtended(string $entityName): bool
     {
         return $this->entityNameResolver->resolve($entityName) !== $entityName;
     }
 
-    /**
-     * @param string $entityName
-     * @return bool
-     */
     protected function isTranslation(string $entityName): bool
     {
         return (bool)preg_match('~Translation$~', $entityName);

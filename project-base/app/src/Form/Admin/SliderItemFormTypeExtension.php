@@ -28,10 +28,6 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
         $this->buildGtmForm($builder);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     private function buildImagesGroup(FormBuilderInterface $builder, array $options): void
     {
         $builderImageGroup = $builder->get('image');
@@ -87,9 +83,6 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     private function buildGtmForm(FormBuilderInterface $builder): void
     {
         $builder->add('gtmId', TextType::class, [

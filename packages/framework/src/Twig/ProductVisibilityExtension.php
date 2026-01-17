@@ -15,12 +15,6 @@ use Twig\TwigFunction;
 
 class ProductVisibilityExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     */
     public function __construct(
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -61,7 +55,6 @@ class ProductVisibilityExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return bool
      */
@@ -77,10 +70,6 @@ class ProductVisibilityExtension extends AbstractExtension
         return $productVisibility->isVisible();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return bool
-     */
     public function isVisibleForDefaultPricingGroupOnEachDomain(Product $product): bool
     {
         $defaultPricingGroupIdsIndexedByDomainId = $this->pricingGroupSettingFacade->getAllDefaultPricingGroupsIdsIndexedByDomainId();
@@ -91,10 +80,6 @@ class ProductVisibilityExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return bool
-     */
     public function isVisibleForDefaultPricingGroupOnSomeDomain(Product $product): bool
     {
         $defaultPricingGroupIdsIndexedByDomainId = $this->pricingGroupSettingFacade->getAllDefaultPricingGroupsIdsIndexedByDomainId();
@@ -105,11 +90,6 @@ class ProductVisibilityExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return bool
-     */
     public function isSellableOnDomain(Product $product, int $domainId): bool
     {
         $calculatedSellingDeniedPerDomainIds = $this->productFacade->getCalculatedSellingDeniedPerDomainIds($product);

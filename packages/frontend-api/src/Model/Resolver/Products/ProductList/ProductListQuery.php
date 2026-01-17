@@ -14,11 +14,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\Cust
 
 class ProductListQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListApiFacade $productListApiFacade
-     */
     public function __construct(
         protected readonly ProductListFacade $productListFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -26,10 +21,6 @@ class ProductListQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
-     */
     public function productListQuery(Argument $argument): ?ProductList
     {
         $input = $argument['input'];
@@ -38,7 +29,6 @@ class ProductListQuery extends AbstractQuery
     }
 
     /**
-     * @param string $productListType
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList[]
      */
     public function productListsByTypeQuery(string $productListType): array

@@ -13,13 +13,6 @@ use Twig\Environment;
 
 class ContactFormFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
-     * @param \Twig\Environment $twig
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateBuilder $mailTemplateBuilder
-     */
     public function __construct(
         protected readonly MailSettingFacade $mailSettingFacade,
         protected readonly Domain $domain,
@@ -29,9 +22,6 @@ class ContactFormFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData $contactFormData
-     */
     public function sendMail(ContactFormData $contactFormData): void
     {
         $mainAdminMail = $this->mailSettingFacade->getMainAdminMail($this->domain->getId());
@@ -46,10 +36,6 @@ class ContactFormFacade
         $this->mailer->sendForDomain($messageData, $this->domain->getId());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData $contactFormData
-     * @return string
-     */
     protected function getMailBody(ContactFormData $contactFormData): string
     {
         $content = $this->twig->render('@ShopsysFramework/Mail/ContactForm/mail.html.twig', [

@@ -31,17 +31,6 @@ use Throwable;
 #[ForRole(AdminRoleConstant::ROLE_MAIL_TEMPLATE)]
 class MailController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory $mailTemplateGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration $mailTemplateConfiguration
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderFacade $mailTemplateSenderFacade
-     * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
-     */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly MailTemplateFacade $mailTemplateFacade,
@@ -55,9 +44,6 @@ class MailController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/mail/template/')]
     #[CanView]
     public function templateAction(): Response
@@ -69,11 +55,6 @@ class MailController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/mail/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -161,10 +142,6 @@ class MailController extends AdminBaseController
         return $transformedVariables;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/mail/setting/')]
     #[CanEdit(AdminRoleConstant::ROLE_MAIL_SETTING, methods: [HttpMethod::POST])]
     #[CanView(AdminRoleConstant::ROLE_MAIL_SETTING, methods: [HttpMethod::GET])]
@@ -206,11 +183,6 @@ class MailController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $mailTemplateId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/mail/send/{mailTemplateId}', requirements: ['mailTemplateId' => '\d+'], condition: 'request.isXmlHttpRequest()')]
     #[CanView]
     public function sendAction(Request $request, int $mailTemplateId): Response
@@ -247,10 +219,6 @@ class MailController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     protected function createInvalidResponse(FormInterface $form): JsonResponse
     {
         return new JsonResponse([

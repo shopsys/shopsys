@@ -43,15 +43,8 @@ class ProductDataFixture
 
     /**
      * @param int $productTotalCount
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \App\Model\Category\CategoryRepository $categoryRepository
-     * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     * @param \App\Model\Product\ProductDataFactory $productDataFactory
      */
     public function __construct(
         $productTotalCount,
@@ -70,9 +63,6 @@ class ProductDataFixture
         $this->demoDataIterationCounter = 0;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function load(OutputInterface $output)
     {
         // Sql logging during mass data import makes memory leak
@@ -275,7 +265,6 @@ class ProductDataFixture
     }
 
     /**
-     * @param \App\Model\Category\Category $category
      * @return bool
      */
     private function isPerformanceCategory(Category $category)

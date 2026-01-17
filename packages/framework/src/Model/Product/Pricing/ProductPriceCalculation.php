@@ -18,13 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 
 class ProductPriceCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     */
     public function __construct(
         protected readonly BasePriceCalculation $basePriceCalculation,
         protected readonly PricingSetting $pricingSetting,
@@ -34,12 +27,6 @@ class ProductPriceCalculation
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
-     */
     public function calculatePrice(Product $product, int $domainId, PricingGroup $pricingGroup): ProductPriceInterface
     {
         if ($product->isMainVariant()) {
@@ -49,12 +36,6 @@ class ProductPriceCalculation
         return $this->calculateProductPriceForPricingGroup($product, $pricingGroup);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
-     */
     protected function calculateMainVariantPrice(
         Product $mainVariant,
         int $domainId,
@@ -89,11 +70,6 @@ class ProductPriceCalculation
         return new ProductPrice($minVariantPrice, $pricingGroup, $from);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
-     */
     protected function calculateProductPriceForPricingGroup(
         Product $product,
         PricingGroup $pricingGroup,
@@ -124,7 +100,6 @@ class ProductPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] $prices
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     public function getMinimumPriceByPriceWithoutVat(array $prices): PriceInterface
     {
@@ -153,7 +128,6 @@ class ProductPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] $prices
-     * @return bool
      */
     public function arePricesDifferent(array $prices): bool
     {

@@ -30,11 +30,6 @@ class ListContextsCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -68,7 +63,6 @@ class ListContextsCommand extends Command
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Context\AbstractContext $context
      * @return array<string>
      */
     private function getRequiredContexts(AbstractContext $context): array

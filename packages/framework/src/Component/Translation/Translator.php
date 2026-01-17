@@ -23,17 +23,8 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     public const string CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN = 'customerValidators';
     public const string SOURCE_LOCALE = 'en';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Translation\Translator|null
-     */
     protected static ?self $self;
 
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface|\Symfony\Contracts\Translation\LocaleAwareInterface|\Symfony\Component\Translation\DataCollectorTranslator $originalTranslator
-     * @param \Symfony\Component\Translation\TranslatorBagInterface|\Symfony\Component\Translation\DataCollectorTranslator $originalTranslatorBag
-     * @param \Symfony\Contracts\Translation\TranslatorInterface|\Symfony\Contracts\Translation\LocaleAwareInterface|\Symfony\Component\Translation\IdentityTranslator $identityTranslator
-     * @param \Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer $messageIdNormalizer
-     */
     public function __construct(
         protected readonly TranslatorInterface|LocaleAwareInterface|DataCollectorTranslator $originalTranslator,
         protected readonly TranslatorBagInterface|DataCollectorTranslator $originalTranslatorBag,
@@ -78,19 +69,11 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
         return $message;
     }
 
-    /**
-     * @param string|null $locale
-     * @return string|null
-     */
     protected function resolveLocale(?string $locale): ?string
     {
         return $locale ?? $this->getLocale();
     }
 
-    /**
-     * @param string|null $domain
-     * @return string
-     */
     protected function resolveDomain(?string $domain): string
     {
         return $domain ?? static::DEFAULT_TRANSLATION_DOMAIN;
@@ -124,21 +107,11 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
         return $this->originalTranslatorBag->getCatalogue($locale);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Translation\Translator $translator
-     */
     public static function injectSelf(self $translator): void
     {
         self::$self = $translator;
     }
 
-    /**
-     * @param string $id
-     * @param array $parameters
-     * @param string|null $domain
-     * @param string|null $locale
-     * @return string
-     */
     public static function staticTrans(
         string $id,
         array $parameters = [],

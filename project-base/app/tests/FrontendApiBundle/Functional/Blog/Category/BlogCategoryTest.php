@@ -233,10 +233,6 @@ class BlogCategoryTest extends GraphQlTestCase
         $this->assertSame($expectedErrorMessage, $errors[0]['message']);
     }
 
-    /**
-     * @param string $referenceName
-     * @param string|null $expectedImage
-     */
     #[DataProvider('getBlogCategoryImageDataProvider')]
     public function testGetBlogCategoryImage(string $referenceName, ?string $expectedImage): void
     {
@@ -263,9 +259,6 @@ class BlogCategoryTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @return iterable
-     */
     public static function getBlogCategoryImageDataProvider(): iterable
     {
         yield [
@@ -279,9 +272,6 @@ class BlogCategoryTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getExpectedBlogCategoryArray(): array
     {
         $locale = $this->getFirstDomainLocale();

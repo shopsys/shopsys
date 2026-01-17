@@ -52,13 +52,6 @@ class UploadedFileRelation
     #[ORM\Column(type: 'string', length: 100)]
     protected $type;
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @param int $position
-     * @param string $type
-     */
     public function __construct(
         string $entityName,
         int $entityId,

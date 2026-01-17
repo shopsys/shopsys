@@ -12,17 +12,11 @@ class RemoveOldCustomerUserRefreshTokenChainsCronModule implements SimpleCronMod
 {
     protected Logger $logger;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
-     */
     public function __construct(
         protected readonly CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository,
     ) {
     }
 
-    /**
-     * @param \Monolog\Logger $logger
-     */
     #[Override]
     public function setLogger(Logger $logger): void
     {

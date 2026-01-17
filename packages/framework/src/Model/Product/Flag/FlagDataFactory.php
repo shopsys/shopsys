@@ -9,27 +9,17 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class FlagDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData
-     */
     protected function createInstance(): FlagData
     {
         return new FlagData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData
-     */
     public function create(): FlagData
     {
         $flagData = $this->createInstance();
@@ -38,9 +28,6 @@ class FlagDataFactory
         return $flagData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
     protected function fillNew(FlagData $flagData): void
     {
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -48,10 +35,6 @@ class FlagDataFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData
-     */
     public function createFromFlag(Flag $flag): FlagData
     {
         $flagData = $this->createInstance();
@@ -60,10 +43,6 @@ class FlagDataFactory
         return $flagData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     */
     protected function fillFromFlag(FlagData $flagData, Flag $flag)
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation[] $translations */

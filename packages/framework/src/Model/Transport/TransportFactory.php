@@ -8,17 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class TransportFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $data
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
     public function create(TransportData $data): Transport
     {
         $entityClassName = $this->entityNameResolver->resolve(Transport::class);

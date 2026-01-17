@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder;
 
 class DomainUrlReplacer
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder $stringColumnsFinder
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter $sqlQuoter
-     */
     public function __construct(
         protected readonly StringColumnsFinder $stringColumnsFinder,
         protected readonly EntityManagerInterface $em,

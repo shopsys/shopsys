@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class HeurekaProductDomainFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainRepository $heurekaProductDomainRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly HeurekaProductDomainRepository $heurekaProductDomainRepository,
@@ -33,7 +28,6 @@ class HeurekaProductDomainFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]
      */
     public function getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(
@@ -84,7 +78,6 @@ class HeurekaProductDomainFacade
 
     /**
      * @param int $productId
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData $heurekaProductDomainData
      */
     protected function saveHeurekaProductDomain($productId, HeurekaProductDomainData $heurekaProductDomainData)
     {

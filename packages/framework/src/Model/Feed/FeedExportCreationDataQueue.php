@@ -25,33 +25,21 @@ class FeedExportCreationDataQueue
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getCurrentFeedName(): string
     {
         return current($this->feedModules)->getName();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function getCurrentDomain(): DomainConfig
     {
         return $this->domains[current($this->feedModules)->getDomainId()];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedModule
-     */
     public function getCurrentFeedModule(): FeedModule
     {
         return current($this->feedModules);
     }
 
-    /**
-     * @return bool
-     */
     public function next(): bool
     {
         array_shift($this->feedModules);
@@ -59,9 +47,6 @@ class FeedExportCreationDataQueue
         return !$this->isEmpty();
     }
 
-    /**
-     * @return bool
-     */
     public function isEmpty(): bool
     {
         return count($this->feedModules) === 0;

@@ -21,14 +21,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class BlogArticleRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
@@ -39,18 +31,11 @@ class BlogArticleRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getBlogArticleRepository(): EntityRepository
     {
         return $this->em->getRepository(BlogArticle::class);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getBlogArticlesByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -61,11 +46,6 @@ class BlogArticleRepository
             ->setParameter('domainId', $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory(
         int $domainId,
         string $locale,
@@ -81,11 +61,6 @@ class BlogArticleRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getBlogArticlesByDomainIdAndLocaleQueryBuilder(int $domainId, string $locale): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -96,10 +71,6 @@ class BlogArticleRepository
             ->orderBy('ba.createdAt', 'DESC');
     }
 
-    /**
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllBlogArticlesByLocaleQueryBuilder(string $locale): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -110,12 +81,6 @@ class BlogArticleRepository
             ->orderBy('ba.createdAt', 'DESC');
     }
 
-    /**
-     * @param int|null $domainId
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getQueryBuilderForQuickSearch(
         ?int $domainId,
         QuickSearchFormData $searchData,
@@ -146,11 +111,6 @@ class BlogArticleRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder(int $domainId, string $locale): QueryBuilder
     {
         return $this->getBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
@@ -162,10 +122,6 @@ class BlogArticleRepository
             ->setParameter('domainId', $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     public function getAllBlogArticlesCountByDomainId(int $domainId): int
     {
         return (int)($this->getBlogArticlesByDomainIdQueryBuilder($domainId)
@@ -173,10 +129,6 @@ class BlogArticleRepository
             ->getQuery()->getSingleScalarResult());
     }
 
-    /**
-     * @param int $blogArticleId
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle
-     */
     public function getById(int $blogArticleId): BlogArticle
     {
         $blogArticle = $this->getBlogArticleRepository()->find($blogArticleId);
@@ -191,7 +143,6 @@ class BlogArticleRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle[]
      */
     public function getAllByDomainId(int $domainId): array
@@ -203,7 +154,6 @@ class BlogArticleRepository
     }
 
     /**
-     * @param int $domainId
      * @return int[]
      */
     public function getAllIdsByDomainId(int $domainId): array
@@ -217,9 +167,6 @@ class BlogArticleRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param int $domainId
-     * @param string $locale
      * @return int[]
      */
     public function getBlogArticleIdsByCategory(BlogCategory $blogCategory, int $domainId, string $locale): array
@@ -239,7 +186,6 @@ class BlogArticleRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle[]
      */
     public function getAllVisibleOnDomain(DomainConfig $domainConfig): array

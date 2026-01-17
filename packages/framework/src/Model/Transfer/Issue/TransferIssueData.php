@@ -16,10 +16,6 @@ class TransferIssueData
      */
     public $severity;
 
-    /**
-     * @param string $message
-     * @param string $severity
-     */
     public function __construct(string $message, string $severity)
     {
         $this->message = $message;

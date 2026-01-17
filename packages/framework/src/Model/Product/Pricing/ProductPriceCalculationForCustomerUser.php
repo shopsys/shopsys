@@ -14,13 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductPriceCalculationForCustomerUser
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
-     */
     public function __construct(
         protected readonly ProductPriceCalculation $productPriceCalculation,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -30,12 +23,6 @@ class ProductPriceCalculationForCustomerUser
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPricesResult
-     */
     public function calculatePricesForCustomerUserAndDomainId(
         Product $product,
         int $domainId,
@@ -54,10 +41,6 @@ class ProductPriceCalculationForCustomerUser
         return new ProductPricesResult($basicPrice, $sellingPrice);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPricesResult
-     */
     public function calculatePricesForCurrentUser(Product $product): ProductPricesResult
     {
         return $this->calculatePricesForCustomerUserAndDomainId(
@@ -67,11 +50,6 @@ class ProductPriceCalculationForCustomerUser
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
     protected function getPricingGroupForCustomerUser(?CustomerUser $customerUser, int $domainId): PricingGroup
     {
         if ($customerUser === null) {
@@ -81,13 +59,6 @@ class ProductPriceCalculationForCustomerUser
         return $customerUser->getPricingGroup();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface $basicPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
-     */
     protected function calculateSellingPrice(
         Product $product,
         int $domainId,

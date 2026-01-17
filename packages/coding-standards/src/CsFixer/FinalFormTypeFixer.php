@@ -18,9 +18,6 @@ use SplFileInfo;
 
 class FinalFormTypeFixer implements FixerInterface
 {
-    /**
-     * @return \PhpCsFixer\FixerDefinition\FixerDefinitionInterface
-     */
     #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -30,29 +27,18 @@ class FinalFormTypeFixer implements FixerInterface
         );
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @return bool
-     */
     #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_EXTENDS);
     }
 
-    /**
-     * @return bool
-     */
     #[Override]
     public function isRisky(): bool
     {
         return false;
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     */
     #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
@@ -65,10 +51,6 @@ class FinalFormTypeFixer implements FixerInterface
         }
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceAnalysis $namespace
-     */
     private function fixNamespace(Tokens $tokens, NamespaceAnalysis $namespace): void
     {
         $usesAnalyzer = new NamespaceUsesAnalyzer();
@@ -120,18 +102,12 @@ class FinalFormTypeFixer implements FixerInterface
         }
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getName(): string
     {
         return 'Shopsys/final_form_type';
     }
 
-    /**
-     * @return int
-     */
     #[Override]
     public function getPriority(): int
     {
@@ -139,21 +115,12 @@ class FinalFormTypeFixer implements FixerInterface
         return (new FinalClassFixer())->getPriority() + 1;
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @return bool
-     */
     #[Override]
     public function supports(SplFileInfo $file): bool
     {
         return true;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $startIndex
-     * @return string
-     */
     private function getClassNameFromTokens(Tokens $tokens, int $startIndex): string
     {
         $className = '';
@@ -171,9 +138,7 @@ class FinalFormTypeFixer implements FixerInterface
     /**
      * Resolve class name using use statements
      *
-     * @param string $className
      * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis[] $uses
-     * @return string
      */
     private function resolveClassNameWithUses(string $className, array $uses): string
     {
@@ -193,10 +158,6 @@ class FinalFormTypeFixer implements FixerInterface
         return $className;
     }
 
-    /**
-     * @param string $className
-     * @return bool
-     */
     private function isFormTypeClass(string $className): bool
     {
         return in_array($className, [

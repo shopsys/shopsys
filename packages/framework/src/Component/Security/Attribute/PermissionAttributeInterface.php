@@ -13,15 +13,11 @@ interface PermissionAttributeInterface
 {
     /**
      * Get the permission required by this attribute
-     *
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Permission
      */
     public function getPermission(): Permission;
 
     /**
      * Get the role name (if specified directly on attribute)
-     *
-     * @return string|null
      */
     public function getRole(): ?string;
 

@@ -12,10 +12,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class TestController
 {
-    /**
-     * @param string $name
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/hello/{name}')]
     #[DataSet(parameters: [new Parameter(name: 'name', value: 'Batman')])]
     #[DataSet(statusCode: 404, parameters: [new Parameter(name: 'name', value: 'World')])]
@@ -28,10 +24,6 @@ class TestController
         return new Response('Nothing found.', 404);
     }
 
-    /**
-     * @param string $name
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/test')]
     #[DataSet(parameters: [new Parameter(name: 'myName', value: 'Batman')])]
     public function testAction(string $name): Response
@@ -43,9 +35,6 @@ class TestController
         return new Response('Nothing found.', 404);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/untested')]
     #[Skipped]
     public function untestedAction(): Response

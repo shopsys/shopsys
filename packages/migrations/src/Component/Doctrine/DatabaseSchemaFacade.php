@@ -10,12 +10,6 @@ use Doctrine\ORM\Tools\SchemaTool;
 
 class DatabaseSchemaFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\SchemaDiffFilter $schemaDiffFilter
-     * @param \Doctrine\DBAL\Schema\Comparator $comparator
-     * @param \Doctrine\ORM\Tools\SchemaTool $schemaTool
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly SchemaDiffFilter $schemaDiffFilter,

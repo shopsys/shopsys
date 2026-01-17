@@ -6,9 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Listing;
 
 abstract class ProductListOrderingModeForListFacade
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig
-     */
     public function getProductListOrderingConfig(): ProductListOrderingConfig
     {
         return new ProductListOrderingConfig(
@@ -22,9 +19,6 @@ abstract class ProductListOrderingModeForListFacade
      */
     abstract protected function getSupportedOrderingModesNamesById(): array;
 
-    /**
-     * @return string
-     */
     protected function getDefaultOrderingModeId(): string
     {
         return ProductListOrderingConfig::ORDER_BY_PRIORITY;

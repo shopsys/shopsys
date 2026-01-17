@@ -20,20 +20,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class CustomerUserUpdateFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         private readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -65,9 +57,6 @@ final class CustomerUserUpdateFormType extends AbstractType
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -87,8 +76,6 @@ final class CustomerUserUpdateFormType extends AbstractType
     }
 
     /**
-     * @param array $options
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @throws \Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException
      */
     private function addCustomerUserList(array $options, FormBuilderInterface $builder): void

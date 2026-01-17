@@ -8,10 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DomainDbFunctionsFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly EntityManagerInterface $em, protected readonly Domain $domain)
     {
     }

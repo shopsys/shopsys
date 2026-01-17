@@ -11,12 +11,6 @@ class FilePickerGridFactory extends AbstractUploadedFileGridFactory
 {
     protected const string UPLOADED_FILE_TRANSLATIONS_CACHE = 'UPLOADED_FILE_TRANSLATIONS_CACHE';
 
-    /**
-     * @param string $jsInstanceId
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchFormData
-     * @param bool $isMultiple
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     public function createWithSearch(
         string $jsInstanceId,
         QuickSearchFormData $quickSearchFormData,
@@ -47,7 +41,6 @@ class FilePickerGridFactory extends AbstractUploadedFileGridFactory
 
     /**
      * @param int[] $allFileIds
-     * @param int $uploadedFileId
      * @return array<string, string>
      */
     protected function getTranslationsForUploadedFile(array $allFileIds, int $uploadedFileId): array

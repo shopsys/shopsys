@@ -34,7 +34,6 @@ class NotNullableColumnsFinder
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadataInfo
      * @return string[]
      */
     protected function getNotNullableFieldColumnNames(ClassMetadataInfo $classMetadataInfo)
@@ -51,7 +50,6 @@ class NotNullableColumnsFinder
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadataInfo
      * @return string[]
      */
     protected function getNotNullableAssociationColumnNames(ClassMetadataInfo $classMetadataInfo)

@@ -6,8 +6,5 @@ namespace Tests\CodingStandards\Unit\Sniffs\RequireOverrideAttributeSniff\Base;
 
 interface TestInterface
 {
-    /**
-     * @return string
-     */
     public function getName(): string;
 }

@@ -51,10 +51,6 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
      */
     private StockFacade $stockFacade;
 
-    /**
-     * @param int $stockQuantity
-     * @param bool $expectedIsProductAvailableOnDomain
-     */
     #[DataProvider('getTestIsProductAvailableOnDomainProvider')]
     public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain)
     {
@@ -79,9 +75,6 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($expectedIsProductAvailableOnDomain, $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @return array
-     */
     public static function getTestIsProductAvailableOnDomainProvider(): array
     {
         return [
@@ -122,9 +115,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param int $stockQuantity
      * @param int<-1,0> $expectedWeekCount
-     * @param int $transfer
      */
     #[DataProvider('getTestProductAvailabilityInformationByDomainIdProvider')]
     public function testProductAvailabilityInformationByDomainId(
@@ -164,9 +155,6 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($expected, $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @return array
-     */
     public static function getTestProductAvailabilityInformationByDomainIdProvider(): array
     {
         return [
@@ -220,9 +208,6 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->assertFalse($this->productAvailabilityFacade->isProductAvailableOnDomainCached($mainVariant, self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @param \App\Model\Product\Product $onlyAvailableVariant
-     */
     private function setProductOutOfStock(Product $onlyAvailableVariant): void
     {
         $productData = $this->productDataFactory->createFromProduct($onlyAvailableVariant);

@@ -11,12 +11,6 @@ class InputPriceCalculation
 {
     protected const INPUT_PRICE_SCALE = 6;
 
-    /**
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceWithVat
-     * @param string $vatPercent
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function getInputPrice(int $inputPriceType, Money $basePriceWithVat, string $vatPercent): Money
     {
         if ($inputPriceType === PricingSetting::PRICE_TYPE_WITHOUT_VAT) {
@@ -32,11 +26,6 @@ class InputPriceCalculation
         return $inputPrice;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceWithVat
-     * @param string $vatPercent
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     protected function getInputPriceWithoutVat(Money $basePriceWithVat, string $vatPercent): Money
     {
         $divisor = (string)(1 + (float)$vatPercent / 100);

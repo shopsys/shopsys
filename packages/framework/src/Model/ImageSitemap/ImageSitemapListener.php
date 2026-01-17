@@ -15,10 +15,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ImageSitemapListener implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFacade $imageSitemapFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ImageSitemapFacade $imageSitemapFacade,
@@ -36,9 +32,6 @@ class ImageSitemapListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapPopulateEvent $event
-     */
     public function populateImageSitemap(ImageSitemapPopulateEvent $event): void
     {
         $domainId = (int)$event->getSection();
@@ -57,10 +50,6 @@ class ImageSitemapListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Presta\SitemapBundle\Service\UrlContainerInterface $generator
-     */
     protected function populateForDomainConfig(DomainConfig $domainConfig, UrlContainerInterface $generator): void
     {
         $productSitemapItems = $this->imageSitemapFacade->getImageSitemapItemsForVisibleProducts($domainConfig);
@@ -69,8 +58,6 @@ class ImageSitemapListener implements EventSubscriberInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapItem[] $imageSitemapItems
-     * @param \Presta\SitemapBundle\Service\UrlContainerInterface $generator
-     * @param string $section
      */
     protected function addUrlsBySitemapItems(
         array $imageSitemapItems,

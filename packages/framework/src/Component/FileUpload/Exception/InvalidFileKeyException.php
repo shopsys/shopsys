@@ -11,7 +11,6 @@ class InvalidFileKeyException extends Exception
 {
     /**
      * @param mixed $key
-     * @param \Exception|null $previous
      */
     public function __construct($key, ?Exception $previous = null)
     {

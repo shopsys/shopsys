@@ -18,9 +18,6 @@ class DirectoryStructureCreator
     /**
      * @param string $imageDir
      * @param string $domainImageDir
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         $imageDir,
@@ -63,11 +60,6 @@ class DirectoryStructureCreator
         }
     }
 
-    /**
-     * @param string $entityName
-     * @param string|null $type
-     * @return string
-     */
     protected function getTargetDirectoryByType(string $entityName, ?string $type): string
     {
         return $this->imageDir . $this->imageLocator->getRelativeImagePath($entityName, $type);

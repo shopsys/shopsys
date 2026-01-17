@@ -12,12 +12,6 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 
 class MailTemplateDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper
-     */
     public function __construct(
         protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
         protected readonly Domain $domain,
@@ -26,17 +20,11 @@ class MailTemplateDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData
-     */
     protected function createInstance(): MailTemplateData
     {
         return new MailTemplateData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData
-     */
     public function create(): MailTemplateData
     {
         $mailTemplateData = $this->createInstance();
@@ -45,10 +33,6 @@ class MailTemplateDataFactory
         return $mailTemplateData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData
-     */
     public function createFromMailTemplate(MailTemplate $mailTemplate): MailTemplateData
     {
         $mailTemplateData = $this->createInstance();
@@ -58,10 +42,6 @@ class MailTemplateDataFactory
         return $mailTemplateData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     */
     protected function fillFromMailTemplate(MailTemplateData $mailTemplateData, MailTemplate $mailTemplate)
     {
         $mailTemplateData->name = $mailTemplate->getName();

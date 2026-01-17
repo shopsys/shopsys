@@ -22,13 +22,7 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
     private const int PARAMETER_VALUE_HEART_RED_FILE_ID = 2;
 
     /**
-     * @param string $dataFixturesFilesDirectory
-     * @param \League\Flysystem\MountManager $mountManager
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly string $dataFixturesFilesDirectory,
@@ -41,9 +35,6 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -71,10 +62,8 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @param object $entity
      * @param string[] $filenames
      * @param array<int, array<string, string>> $translatedNames
-     * @param string $type
      */
     private function addUploadedFiles(
         object $entity,
@@ -109,10 +98,7 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @param object $entity
-     * @param string $filename
      * @param array<string, string> $translatedNames
-     * @param string $type
      */
     private function addUploadedFile(
         object $entity,
@@ -124,9 +110,7 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @param object $entity
      * @param int[] $uploadedFileIds
-     * @param string $type
      */
     private function addReferencedUploadedFiles(
         object $entity,
@@ -139,7 +123,6 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @param string $name
      * @return array<string, string>
      */
     private function createUploadedFileTranslatedNames(string $name): array

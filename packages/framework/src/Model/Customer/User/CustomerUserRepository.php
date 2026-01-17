@@ -22,29 +22,17 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class CustomerUserRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getCustomerUserRepository(): EntityRepository
     {
         return $this->em->getRepository(CustomerUser::class);
     }
 
-    /**
-     * @param string $email
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     */
     public function findCustomerUserByEmailAndDomain(string $email, int $domainId): ?CustomerUser
     {
         return $this->getCustomerUserRepository()->findOneBy([
@@ -53,11 +41,6 @@ class CustomerUserRepository
         ]);
     }
 
-    /**
-     * @param string $email
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     */
     public function getCustomerUserByEmailAndDomain(string $email, int $domainId): ?CustomerUser
     {
         $customerUser = $this->findCustomerUserByEmailAndDomain($email, $domainId);
@@ -72,10 +55,6 @@ class CustomerUserRepository
         return $customerUser;
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function getCustomerUserById(int $id): CustomerUser
     {
         $customerUser = $this->findById($id);
@@ -87,20 +66,11 @@ class CustomerUserRepository
         return $customerUser;
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     */
     public function findById(int $id): ?CustomerUser
     {
         return $this->getCustomerUserRepository()->find($id);
     }
 
-    /**
-     * @param int $id
-     * @param string $loginToken
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     */
     public function findByIdAndLoginToken(int $id, string $loginToken): ?CustomerUser
     {
         return $this->getCustomerUserRepository()->findOneBy([
@@ -109,11 +79,6 @@ class CustomerUserRepository
         ]);
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getCustomerUserListQueryBuilderByQuickSearchData(
         int $domainId,
         QuickSearchFormData $quickSearchData,
@@ -189,10 +154,6 @@ class CustomerUserRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $oldPricingGroup
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $newPricingGroup
-     */
     public function replaceCustomerUsersPricingGroup(
         PricingGroup $oldPricingGroup,
         PricingGroup $newPricingGroup,
@@ -204,10 +165,6 @@ class CustomerUserRepository
             ->getQuery()->execute();
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function getOneByUuid(string $uuid): CustomerUser
     {
         /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser */
@@ -228,11 +185,6 @@ class CustomerUserRepository
         return $this->getCustomerUserRepository()->findAll();
     }
 
-    /**
-     * @param string $customerUserUuid
-     * @param \DateTimeInterface $referenceDateTime
-     * @return bool
-     */
     public function isLastSecurityChangeOlderThan(string $customerUserUuid, DateTimeInterface $referenceDateTime): bool
     {
         $lastSecurityChange = $this->em->createQueryBuilder()
@@ -257,7 +209,6 @@ class CustomerUserRepository
     }
 
     /**
-     * @param int $salesRepresentativeId
      * @return string[]
      */
     public function findEmailsOfCustomerUsersUsingSalesRepresentative(int $salesRepresentativeId): array

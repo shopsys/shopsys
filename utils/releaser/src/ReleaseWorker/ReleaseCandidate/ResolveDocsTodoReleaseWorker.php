@@ -18,11 +18,6 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
      */
     private const string TODO_PLACEHOLDER = '<!--- TODO';
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -31,10 +26,6 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
         return '[Manually] Resolve TODO comments in *.md files';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

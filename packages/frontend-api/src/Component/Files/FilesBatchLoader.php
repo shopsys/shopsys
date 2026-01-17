@@ -16,12 +16,6 @@ use Shopsys\FrameworkBundle\Component\Utils\Utils;
 
 class FilesBatchLoader
 {
-    /**
-     * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
-     */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly UploadedFileFacade $uploadedFileFacade,
@@ -32,7 +26,6 @@ class FilesBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadByBatchData(array $filesBatchLoadData): Promise
     {
@@ -51,7 +44,6 @@ class FilesBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadFirstByBatchData(array $filesBatchLoadData): Promise
     {
@@ -70,8 +62,6 @@ class FilesBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
-     * @param string $entityName
-     * @param string $type
      * @return array<string, array<int, array{url: string, anchorText: string}>>
      */
     protected function getFilesByEntityNameAndTypeIndexedByDataId(
@@ -93,8 +83,6 @@ class FilesBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
-     * @param string $entityName
-     * @param string $type
      * @return array<string, array{url: string, anchorText: string}|null>
      */
     protected function getFirstFileByEntityNameAndTypeIndexedByDataId(
@@ -117,8 +105,6 @@ class FilesBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
-     * @param string $entityName
-     * @param string $type
      * @return array<int, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]>
      */
     protected function getFilesIndexedByEntityId(
@@ -158,7 +144,6 @@ class FilesBatchLoader
     /**
      * @param array<string, array|null> $allFilesIndexedByFileBatchLoadDataId
      * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
-     * @param array|null $defaultValue
      * @return array<int, array|null>
      */
     protected function sortAllFilesByOriginalInputData(
@@ -195,7 +180,6 @@ class FilesBatchLoader
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $file
      * @return array{url: string, anchorText: string}
      */
     protected function getResolvedFile(UploadedFile $file): array

@@ -12,10 +12,6 @@ use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class PacketeryCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Packetery\PacketeryClient $packeteryClient
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     */
     public function __construct(
         protected readonly PacketeryClient $packeteryClient,
         protected readonly OrderFacade $orderFacade,

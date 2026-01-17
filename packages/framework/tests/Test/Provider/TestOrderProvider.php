@@ -24,9 +24,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 
 class TestOrderProvider
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     public static function getTestOrderData(): OrderData
     {
         $orderData = static::createOrderDataInstance();
@@ -71,10 +68,6 @@ class TestOrderProvider
         return $orderData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public static function createOrderTransport(Order $order): OrderItem
     {
         $orderTransport = self::createOrderTransportInstance($order);
@@ -87,85 +80,51 @@ class TestOrderProvider
         return $orderTransport;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     protected static function createOrderDataInstance(): OrderData
     {
         return new OrderData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\CountryData
-     */
     public static function createCountryDataInstance(): CountryData
     {
         return new CountryData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
-     */
     public static function createCountryInstance(CountryData $countryData): Country
     {
         return new Country($countryData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData
-     */
     public static function createOrderStatusDataInstance(): OrderStatusData
     {
         return new OrderStatusData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     */
     public static function createOrderStatusInstance(OrderStatusData $orderStatusData): OrderStatus
     {
         return new OrderStatus($orderStatusData, OrderStatusTypeEnum::TYPE_NEW);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportData
-     */
     public static function createTransportDataInstance(): TransportData
     {
         return new TransportData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
     public static function createTransportInstance(TransportData $transportData): Transport
     {
         return new Transport($transportData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     */
     public static function createPaymentDataInstance(): PaymentData
     {
         return new PaymentData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
     public static function createPaymentInstance(PaymentData $paymentData): Payment
     {
         return new Payment($paymentData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
-     */
     public static function getCountry(): Country
     {
         $countryData = static::createCountryDataInstance();
@@ -174,10 +133,6 @@ class TestOrderProvider
         return static::createCountryInstance($countryData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public static function createOrderTransportInstance(Order $order): OrderItem
     {
         return new OrderItem(

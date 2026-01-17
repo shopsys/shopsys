@@ -17,11 +17,6 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class NormalizeAdminUrlTrailingSlashSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     */
     public function __construct(
         protected readonly AdministrationRouter $administrationRouter,
         protected readonly TransformStringHelper $transformStringHelper,
@@ -40,9 +35,6 @@ class NormalizeAdminUrlTrailingSlashSubscriber implements EventSubscriberInterfa
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
-     */
     public function onKernelException(ExceptionEvent $event): void
     {
         if (!$this->contextResolver->isCurrentContext(AdminContext::class) || !$event->getThrowable() instanceof NotFoundHttpException) {
@@ -58,10 +50,6 @@ class NormalizeAdminUrlTrailingSlashSubscriber implements EventSubscriberInterfa
         }
     }
 
-    /**
-     * @param string $newPath
-     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
-     */
     protected function redirectToExistingPath(string $newPath, ExceptionEvent $event): void
     {
         try {

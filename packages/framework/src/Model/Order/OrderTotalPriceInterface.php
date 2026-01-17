@@ -8,13 +8,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 interface OrderTotalPriceInterface
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getPrice(): PriceInterface;
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getProductPrice(): PriceInterface;
 }

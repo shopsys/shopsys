@@ -18,9 +18,6 @@ use Monolog\Logger;
  */
 interface SimpleCronModuleInterface
 {
-    /**
-     * @param \Monolog\Logger $logger
-     */
     public function setLogger(Logger $logger);
 
     /**

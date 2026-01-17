@@ -11,19 +11,12 @@ use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ForceLateStaticBindingForProtectedConstantsSniffTest extends AbstractSniffTestCase
 {
-    /**
-     * @param string $fixedFileName
-     * @param string $inputFileName
-     */
     #[DataProvider('getFixableFiles')]
     public function testFixableFiles(string $fixedFileName, string $inputFileName): void
     {
         $this->runFixableFilesTest($fixedFileName, $inputFileName);
     }
 
-    /**
-     * @return iterable
-     */
     public static function getFixableFiles(): iterable
     {
         yield [__DIR__ . '/fixed/SingleValue.php', __DIR__ . '/wrong/SingleValue.php'];

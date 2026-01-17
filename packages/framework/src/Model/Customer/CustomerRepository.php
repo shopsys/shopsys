@@ -16,26 +16,16 @@ class CustomerRepository
 {
     protected EntityManagerInterface $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getCustomerRepository(): EntityRepository
     {
         return $this->em->getRepository(Customer::class);
     }
 
-    /**
-     * @param int $customerId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
-     */
     public function getById(int $customerId): Customer
     {
         $customer = $this->getCustomerRepository()->find($customerId);
@@ -47,19 +37,11 @@ class CustomerRepository
         return $customer;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return bool
-     */
     public function isWithoutCustomerUsers(Customer $customer): bool
     {
         return $this->getCustomerUsersCount($customer) === 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return int
-     */
     protected function getCustomerUsersCount(Customer $customer): int
     {
         return $this->getCustomerUsersQueryBuilder($customer)
@@ -69,7 +51,6 @@ class CustomerRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser[]
      */
     public function getCustomerUsers(Customer $customer): array
@@ -82,10 +63,6 @@ class CustomerRepository
             ->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getCustomerUsersQueryBuilder(Customer $customer): QueryBuilder
     {
         return $this->em
@@ -96,11 +73,6 @@ class CustomerRepository
             ->setParameter('customer', $customer);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup $customerUserRoleGroup
-     * @return int
-     */
     public function getCountOfCustomerUsersByCustomerUserRoleGroup(
         Customer $customer,
         CustomerUserRoleGroup $customerUserRoleGroup,

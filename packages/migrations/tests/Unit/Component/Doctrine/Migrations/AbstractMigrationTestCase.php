@@ -10,10 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractMigrationTestCase extends TestCase
 {
-    /**
-     * @param string $className
-     * @return \Doctrine\Migrations\Metadata\AvailableMigration
-     */
     protected function createMockedAvailableMigration(string $className): AvailableMigration
     {
         /** @var \Doctrine\Migrations\AbstractMigration|\PHPUnit\Framework\MockObject\MockObject $migrationMock */

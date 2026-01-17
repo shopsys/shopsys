@@ -124,10 +124,6 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
         self::assertEquals($desiredProductQuantity, $cartItems[0]->getQuantity());
     }
 
-    /**
-     * @param int $productQuantity
-     * @return array
-     */
     private function addTestingProductToCustomerCart(int $productQuantity): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
@@ -138,9 +134,6 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
         return $response['data']['AddToCart']['cart'];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
     private function findCartOfCurrentCustomer(): ?Cart
     {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */

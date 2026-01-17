@@ -115,8 +115,6 @@ SAMPLE,
     }
 
     /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $propertyIndex
      * @return array{hasRelation: bool, hasNullable: bool, joinColumnIndex: int|null, lastAttributeEnd: int|null}|null
      */
     private function analyzeProperty(Tokens $tokens, int $propertyIndex): ?array
@@ -162,11 +160,6 @@ SAMPLE,
         return $result;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $propertyIndex
-     * @return int|null
-     */
     private function findAttributesStart(Tokens $tokens, int $propertyIndex): ?int
     {
         $index = $tokens->getPrevMeaningfulToken($propertyIndex);
@@ -184,11 +177,6 @@ SAMPLE,
         return $tokens[$index]->isGivenKind(CT::T_ATTRIBUTE_CLOSE) ? $index : null;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $closeIndex
-     * @return int|null
-     */
     private function findMatchingAttributeOpen(Tokens $tokens, int $closeIndex): ?int
     {
         $depth = 1;
@@ -208,12 +196,6 @@ SAMPLE,
         return null;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $start
-     * @param int $end
-     * @return string
-     */
     private function getTokensContent(Tokens $tokens, int $start, int $end): string
     {
         $content = '';
@@ -225,37 +207,21 @@ SAMPLE,
         return $content;
     }
 
-    /**
-     * @param string $content
-     * @return bool
-     */
     private function isRelationAttribute(string $content): bool
     {
         return preg_match('~ORM\\\\(ManyToOne|OneToOne)\b~', $content) === 1;
     }
 
-    /**
-     * @param string $content
-     * @return bool
-     */
     private function isJoinColumnAttribute(string $content): bool
     {
         return preg_match('~ORM\\\\JoinColumn\b~', $content) === 1;
     }
 
-    /**
-     * @param string $content
-     * @return bool
-     */
     private function hasNullableParam(string $content): bool
     {
         return preg_match('~\bnullable\s*:~', $content) === 1;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $attrStart
-     */
     private function addNullableToExistingJoinColumn(Tokens $tokens, int $attrStart): void
     {
         $openParen = $tokens->getNextTokenOfKind($attrStart, ['(']);
@@ -291,10 +257,6 @@ SAMPLE,
         $tokens->insertAt($openParen + 1, $insertTokens);
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $lastAttrEnd
-     */
     private function addNewJoinColumnAttribute(Tokens $tokens, int $lastAttrEnd): void
     {
         $indent = $this->detectIndentAfterAttribute($tokens, $lastAttrEnd);
@@ -317,12 +279,6 @@ SAMPLE,
         $tokens->insertAt($lastAttrEnd + 1, $insertTokens);
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $start
-     * @param int $end
-     * @return bool
-     */
     private function isMultiline(Tokens $tokens, int $start, int $end): bool
     {
         for ($i = $start; $i <= $end; $i++) {
@@ -334,12 +290,6 @@ SAMPLE,
         return false;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $openParen
-     * @param int $closeParen
-     * @return bool
-     */
     private function hasExistingParams(Tokens $tokens, int $openParen, int $closeParen): bool
     {
         for ($i = $openParen + 1; $i < $closeParen; $i++) {
@@ -351,12 +301,6 @@ SAMPLE,
         return false;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $openParen
-     * @param int $closeParen
-     * @return string
-     */
     private function detectIndent(Tokens $tokens, int $openParen, int $closeParen): string
     {
         for ($i = $openParen + 1; $i < $closeParen; $i++) {
@@ -368,11 +312,6 @@ SAMPLE,
         return '        ';
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $attrEnd
-     * @return string
-     */
     private function detectIndentAfterAttribute(Tokens $tokens, int $attrEnd): string
     {
         $next = $attrEnd + 1;

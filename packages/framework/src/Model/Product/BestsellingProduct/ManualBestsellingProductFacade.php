@@ -9,12 +9,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class ManualBestsellingProductFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductRepository $manualBestsellingProductRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactory $manualBestsellingProductFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ManualBestsellingProductRepository $manualBestsellingProductRepository,
@@ -24,7 +18,6 @@ class ManualBestsellingProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $productsIndexedByPosition
      */

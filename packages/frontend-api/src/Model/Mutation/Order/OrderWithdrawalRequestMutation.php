@@ -21,12 +21,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\WithdrawalDeadlineP
 
 class OrderWithdrawalRequestMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Order\WithdrawalRequestApiFacade $withdrawalRequestApiFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory $withdrawalRequestDataFactory
-     */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly WithdrawalRequestApiFacade $withdrawalRequestApiFacade,
@@ -35,10 +29,6 @@ class OrderWithdrawalRequestMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return bool
-     */
     public function orderWithdrawalRequestMutation(Argument $argument): bool
     {
         $input = $argument['input'];

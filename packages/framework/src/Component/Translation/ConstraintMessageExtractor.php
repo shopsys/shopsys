@@ -45,9 +45,6 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
 
     protected SplFileInfo $file;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper $phpParserNodeHelper
-     */
     public function __construct(
         protected readonly PhpParserNodeHelper $phpParserNodeHelper,
     ) {
@@ -86,18 +83,11 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
         return null;
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     * @return bool
-     */
     protected function isConstraintClass(Node $node): bool
     {
         return $node instanceof FullyQualified && is_subclass_of((string)$node, Constraint::class);
     }
 
-    /**
-     * @param \PhpParser\Node $optionsNode
-     */
     protected function extractMessagesFromOptions(Node $optionsNode): void
     {
         if ($optionsNode instanceof Array_) {
@@ -114,10 +104,6 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
         }
     }
 
-    /**
-     * @param \PhpParser\Node\ArrayItem $node
-     * @return bool
-     */
     protected function isMessageOptionItem(ArrayItem $node): bool
     {
         return $node->key instanceof String_ && strtolower(substr($node->key->value, -7)) === 'message';

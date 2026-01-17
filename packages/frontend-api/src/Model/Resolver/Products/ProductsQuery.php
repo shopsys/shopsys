@@ -30,20 +30,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Flag\FlagQuery;
 
 class ProductsQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery $categoryQuery
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Flag\FlagQuery $flagQuery
-     */
     public function __construct(
         protected readonly ProductFacade $productFacade,
         protected readonly ProductFilterFacade $productFilterFacade,
@@ -60,11 +46,6 @@ class ProductsQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function productsByBrandQuery(Argument $argument, Brand $brand): Promise
     {
         $this->pageSizeValidator->checkMaxPageSize($argument);
@@ -99,10 +80,6 @@ class ProductsQuery extends AbstractQuery
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function productsByProductListQuery(ProductList $productList): Promise
     {
         $productIds = $this->productListFacade->getProductIdsByProductList($productList);
@@ -112,7 +89,6 @@ class ProductsQuery extends AbstractQuery
 
     /**
      * @param string[] $catnums
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function productsByCatnumsQuery(array $catnums): Promise
     {
@@ -121,11 +97,6 @@ class ProductsQuery extends AbstractQuery
         return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function productsByCategoryOrReadyCategorySeoMixQuery(
         Argument $argument,
         Category|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix,
@@ -159,15 +130,6 @@ class ProductsQuery extends AbstractQuery
         return $this->getPromiseByCategory($argument, $category, $productFilterData, $orderingMode, $defaultOrderingMode, $readyCategorySeoMix);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingMode
-     * @param string $defaultOrderingMode
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     protected function getPromiseByCategory(
         Argument $argument,
         Category $category,
@@ -203,11 +165,6 @@ class ProductsQuery extends AbstractQuery
         );
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function productsByFlagQuery(Argument $argument, Flag $flag): Promise
     {
         $this->pageSizeValidator->checkMaxPageSize($argument);
@@ -244,11 +201,6 @@ class ProductsQuery extends AbstractQuery
         );
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \GraphQL\Type\Definition\ResolveInfo $info
-     * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection|\GraphQL\Executor\Promise\Promise
-     */
     public function productsWithOverlyingEntityQuery(Argument $argument, ResolveInfo $info): ProductConnection|Promise
     {
         $this->pageSizeValidator->checkMaxPageSize($argument);

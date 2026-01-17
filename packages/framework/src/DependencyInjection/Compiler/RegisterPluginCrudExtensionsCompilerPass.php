@@ -13,9 +13,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterPluginCrudExtensionsCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function process(ContainerBuilder $container): void
     {
@@ -32,11 +29,6 @@ class RegisterPluginCrudExtensionsCompilerPass implements CompilerPassInterface
         }
     }
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\Definition $pluginCrudExtensionRegistryDefinition
-     * @param string $serviceId
-     * @param string $type
-     */
     private function registerPluginCrudExtension(
         Definition $pluginCrudExtensionRegistryDefinition,
         string $serviceId,

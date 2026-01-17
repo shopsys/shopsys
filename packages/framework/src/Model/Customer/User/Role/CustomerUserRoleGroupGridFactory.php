@@ -14,12 +14,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class CustomerUserRoleGroupGridFactory implements GridFactoryInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupRepository $customerUserRoleGroupRepository
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly CustomerUserRoleGroupRepository $customerUserRoleGroupRepository,
         protected readonly GridFactory $gridFactory,
@@ -28,10 +22,6 @@ class CustomerUserRoleGroupGridFactory implements GridFactoryInterface
     ) {
     }
 
-    /**
-     * @param string|null $roleConstant
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     #[Override]
     public function create(?string $roleConstant): Grid
     {
@@ -51,9 +41,6 @@ class CustomerUserRoleGroupGridFactory implements GridFactoryInterface
         return $grid;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getGridQueryBuilder(): QueryBuilder
     {
         return $this->customerUserRoleGroupRepository->getAllQueryBuilderByLocale(

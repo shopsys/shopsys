@@ -14,15 +14,11 @@ class QueryBuilderExtender
 {
     protected const REQUIRED_ALIASES_COUNT = 1;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $class
      * @param string $alias
      * @param string $condition
@@ -64,7 +60,6 @@ class QueryBuilderExtender
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return string
      */
     protected function getRootAlias(QueryBuilder $queryBuilder)
@@ -79,7 +74,6 @@ class QueryBuilderExtender
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return \Doctrine\ORM\Query\Expr\Join[]
      */
     protected function getJoinsFromQueryBuilder(QueryBuilder $queryBuilder): array

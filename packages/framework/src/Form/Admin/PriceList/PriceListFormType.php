@@ -24,20 +24,12 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class PriceListFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
-     */
     public function __construct(
         private readonly Domain $domain,
         private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -93,9 +85,6 @@ final class PriceListFormType extends AbstractType
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -111,10 +100,6 @@ final class PriceListFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function checkDateValidity(PriceListData $priceListData, ExecutionContextInterface $context): void
     {
         if ($priceListData->validTo < $priceListData->validFrom) {
@@ -124,10 +109,6 @@ final class PriceListFormType extends AbstractType
         }
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceList|null $priceList
-     */
     private function addDomainIconField(FormBuilderInterface $builder, ?PriceList $priceList): void
     {
         if (!$this->domain->isMultidomain()) {

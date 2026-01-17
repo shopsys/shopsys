@@ -8,9 +8,6 @@ use RuntimeException;
 
 class TypeNotImplementedException extends RuntimeException
 {
-    /**
-     * @param string $type
-     */
     public function __construct(string $type)
     {
         parent::__construct(sprintf(

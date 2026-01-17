@@ -11,23 +11,12 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class BasePriceCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
-     */
     public function __construct(
         protected readonly PriceCalculation $priceCalculation,
         protected readonly Rounding $rounding,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function calculateRoundedBasePrice(
         Money $inputPrice,
         int $inputPriceType,

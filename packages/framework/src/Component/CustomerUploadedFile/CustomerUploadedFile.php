@@ -56,17 +56,6 @@ class CustomerUploadedFile extends AbstractUploadedFile
     #[ORM\Column(type: 'string', length: 32)]
     protected $hash;
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string $type
-     * @param string $temporaryFilename
-     * @param string $uploadedFilename
-     * @param string $slug
-     * @param int $position
-     * @param string $hash
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     */
     public function __construct(
         string $entityName,
         int $entityId,
@@ -122,10 +111,6 @@ class CustomerUploadedFile extends AbstractUploadedFile
         return $this->type;
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     */
     public function checkForDelete(string $entityName, int $entityId): void
     {
         if ($this->entityName !== $entityName || $this->entityId !== $entityId) {
@@ -156,18 +141,12 @@ class CustomerUploadedFile extends AbstractUploadedFile
         return $this->position;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getUploadKey(): string
     {
         return self::UPLOAD_KEY;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getFileForUploadCategory(): string
     {

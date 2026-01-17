@@ -47,21 +47,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_PRODUCT)]
 class ProductController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade $productMassActionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactory $productDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade $productListAdminFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade $advancedSearchProductFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
-     * @param \Shopsys\FrameworkBundle\Twig\ProductExtension $productExtension
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductGridFactory $productGridFactory
-     */
     public function __construct(
         protected readonly ProductMassActionFacade $productMassActionFacade,
         protected readonly ProductFacade $productFacade,
@@ -79,11 +64,6 @@ class ProductController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -128,10 +108,6 @@ class ProductController extends AdminBaseController
         return $this->render('@ShopsysAdministration/content/product/edit.html.twig', $viewParameters);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -172,10 +148,6 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/list/')]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -237,10 +209,6 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -264,10 +232,6 @@ class ProductController extends AdminBaseController
         return $this->redirectToRoute('admin_product_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/get-advanced-search-rule-form/', methods: ['post'])]
     #[CanView]
     public function getRuleFormAction(Request $request): Response
@@ -282,10 +246,6 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/create-variant/')]
     #[CanCreate]
     public function createVariantAction(Request $request): Response
@@ -324,20 +284,11 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     protected function getGrid(QueryBuilder $queryBuilder): Grid
     {
         return $this->productGridFactory->getProductControllerGrid($queryBuilder);
     }
 
-    /**
-     * @param int $productId
-     * @param bool $withHeadline
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/visibility/{productId}')]
     #[RequireRole(SystemRole::ADMIN)]
     public function visibilityAction(int $productId, bool $withHeadline = true): Response
@@ -351,10 +302,6 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/edit/catnum-exists')]
     #[RequireRole(SystemRole::ADMIN)]
     public function catnumExistsAction(Request $request): Response
@@ -373,9 +320,6 @@ class ProductController extends AdminBaseController
 
     /**
      * This route is used by GrapesJS to load Names of products
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/product/names-by-catnums', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
     #[RequireRole(SystemRole::ADMIN)]
@@ -393,18 +337,12 @@ class ProductController extends AdminBaseController
         return new JsonResponse($response);
     }
 
-    /**
-     * @return bool
-     */
     protected function productCanBeCreated(): bool
     {
         return $this->unitFacade->isAtLeastOneUnitCreated()
             && $this->setting->get(Setting::DEFAULT_UNIT) !== 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData|null $productData
-     */
     protected function setSellingToUntilEndOfDay(?ProductData $productData): void
     {
         if ($productData?->sellingTo !== null) {

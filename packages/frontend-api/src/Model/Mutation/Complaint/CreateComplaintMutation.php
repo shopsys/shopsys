@@ -16,10 +16,6 @@ class CreateComplaintMutation extends BaseTokenMutation
     protected const string VALIDATION_GROUP_WITH_ORDER = 'withOrder';
     protected const string VALIDATION_GROUP_WITHOUT_ORDER = 'withoutOrder';
 
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade $complaintApiFacade
-     */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         protected readonly ComplaintApiFacade $complaintApiFacade,
@@ -27,11 +23,6 @@ class CreateComplaintMutation extends BaseTokenMutation
         parent::__construct($tokenStorage);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
-     */
     public function createComplaintMutation(Argument $argument, InputValidator $validator): Complaint
     {
         $this->runCheckUserIsLogged();
@@ -43,7 +34,6 @@ class CreateComplaintMutation extends BaseTokenMutation
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return string[]
      */
     protected function computeValidationGroups(Argument $argument): array

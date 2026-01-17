@@ -18,11 +18,6 @@ use Symfony\Component\Clock\Clock;
 
 class OrderDeliveryDateFacadeTest extends TestCase
 {
-    /**
-     * @param string $statusType
-     * @param \DateTime|null $initialDeliveredAt
-     * @param bool $expectSetDeliveredAtCall
-     */
     #[DataProvider('setDeliveredNowIfNecessaryDataProvider')]
     public function testSetDeliveredNowIfNecessary(
         string $statusType,
@@ -63,9 +58,6 @@ class OrderDeliveryDateFacadeTest extends TestCase
         ];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderDeliveryDateFacade
-     */
     private function createOrderDeliveryDateFacade(): OrderDeliveryDateFacade
     {
         $emMock = $this->createMock(EntityManagerInterface::class);
@@ -73,10 +65,6 @@ class OrderDeliveryDateFacadeTest extends TestCase
         return new OrderDeliveryDateFacade($emMock, Clock::get());
     }
 
-    /**
-     * @param string $type
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     */
     private function createOrderStatus(string $type): OrderStatus
     {
         $statusData = new OrderStatusData();
@@ -84,12 +72,6 @@ class OrderDeliveryDateFacadeTest extends TestCase
         return new OrderStatus($statusData, $type);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
-     * @param \DateTime|null $deliveredAt
-     * @param bool $expectSetDeliveredAtCall
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|\PHPUnit\Framework\MockObject\MockObject
-     */
     private function createOrderMock(
         OrderStatus $orderStatus,
         ?DateTime $deliveredAt,

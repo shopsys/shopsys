@@ -10,10 +10,6 @@ interface RouteAccessCheckerInterface
 {
     /**
      * Check if current user has access to a specific route with given HTTP method
-     *
-     * @param string $routeName
-     * @param \Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod|string $httpMethod
-     * @return bool
      */
     public function hasAccess(string $routeName, HttpMethod|string $httpMethod): bool;
 }

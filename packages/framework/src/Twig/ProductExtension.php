@@ -14,10 +14,6 @@ use Twig\TwigFunction;
 
 class ProductExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
-     */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
@@ -66,7 +62,6 @@ class ProductExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return string
      */
     public function getProductDisplayName(Product $product)
@@ -81,7 +76,6 @@ class ProductExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
@@ -91,7 +85,6 @@ class ProductExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
      */
@@ -101,7 +94,6 @@ class ProductExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
     public function getProductParameterValues(Product $product)

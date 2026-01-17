@@ -11,12 +11,6 @@ use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository;
 
 class GoogleFeedItemFacade
 {
-    /**
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository $googleProductRepository
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory $feedItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
-     */
     public function __construct(
         protected readonly GoogleProductRepository $googleProductRepository,
         protected readonly GoogleFeedItemFactory $feedItemFactory,
@@ -26,9 +20,6 @@ class GoogleFeedItemFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int|null $lastSeekId
-     * @param int $maxResults
      * @return \Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItem[]|iterable
      */
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable

@@ -9,18 +9,9 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class CartTransportData
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
     public Transport $transport;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public Money $watchedPrice;
 
-    /**
-     * @var string|null
-     */
     public ?string $pickupPlaceIdentifier;
 }

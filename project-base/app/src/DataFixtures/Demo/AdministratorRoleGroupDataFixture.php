@@ -12,17 +12,11 @@ use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
 
 class AdministratorRoleGroupDataFixture extends AbstractReferenceFixture
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
-     */
     public function __construct(
         private readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

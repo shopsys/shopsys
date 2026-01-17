@@ -8,10 +8,6 @@ use Exception;
 
 class ElasticsearchInvalidJsonInDefinitionFileException extends Exception
 {
-    /**
-     * @param string $indexName
-     * @param string $definitionFilepath
-     */
     public function __construct(string $indexName, string $definitionFilepath)
     {
         parent::__construct(sprintf(

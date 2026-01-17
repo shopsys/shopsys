@@ -12,16 +12,12 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ComplaintResolutionValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
-     */
     public function __construct(
         protected readonly ComplaintResolutionEnum $complaintResolutionEnum,
     ) {
     }
 
     /**
-     * @param mixed $value
      * @param \Shopsys\FrontendApiBundle\Component\Constraints\ComplaintResolution $constraint
      */
     #[Override]

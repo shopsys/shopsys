@@ -78,7 +78,6 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param string $categoryReferenceName
      * @return \App\Model\Product\Brand\Brand[]
      */
     protected function getChoicesForCategoryReference(string $categoryReferenceName): array
@@ -101,7 +100,6 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param string $searchText
      * @return \App\Model\Product\Brand\Brand[]
      */
     protected function getChoicesForSearchText(string $searchText): array

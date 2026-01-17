@@ -86,10 +86,6 @@ class AddTransportMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $transportPrice
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
     private function createTransportPriceCalculationMock(Price $transportPrice): TransportPriceCalculation
     {
         $transportPriceCalculation = $this->createMock(TransportPriceCalculation::class);
@@ -98,10 +94,6 @@ class AddTransportMiddlewareTest extends MiddlewareTestCase
         return $transportPriceCalculation;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $transportPrice
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddTransportMiddleware
-     */
     private function createAddTransportMiddleware(Price $transportPrice): AddTransportMiddleware
     {
         return new AddTransportMiddleware(

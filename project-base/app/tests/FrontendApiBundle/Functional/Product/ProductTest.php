@@ -80,9 +80,6 @@ class ProductTest extends GraphQlTestCase
         $this->assertEmpty($unexpectedFields, sprintf('Unexpected fields in response: %s', implode(', ', $unexpectedFields)));
     }
 
-    /**
-     * @return array
-     */
     private function getExpectedProductDetailWithAllAttributes(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -451,7 +448,6 @@ class ProductTest extends GraphQlTestCase
     }
 
     /**
-     * @param string $firstDomainLocale
      * @return array[]
      */
     private function getExpectedRelatedProducts(string $firstDomainLocale): array

@@ -13,9 +13,6 @@ use Twig\TwigFunction;
 
 class IconExtension extends AbstractExtension
 {
-    /**
-     * @param \Twig\Environment $twigEnvironment
-     */
     public function __construct(
         protected readonly Environment $twigEnvironment,
     ) {
@@ -45,11 +42,6 @@ class IconExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $message
-     * @param string $additionalClasses
-     * @return string
-     */
     protected function getInfoIcon(
         string $message,
         string $additionalClasses = '',

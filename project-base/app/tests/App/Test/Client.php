@@ -16,14 +16,9 @@ class Client extends KernelBrowser
     ];
 
     /**
-     * @param string $method
-     * @param string $uri
      * @param mixed[] $parameters
      * @param mixed[] $files
      * @param mixed[] $server
-     * @param string|null $content
-     * @param bool $changeHistory
-     * @return \Symfony\Component\DomCrawler\Crawler
      */
     #[Override]
     public function request(
@@ -47,9 +42,7 @@ class Client extends KernelBrowser
     }
 
     /**
-     * @param string $uri
      * @param mixed[] $headers
-     * @return \Symfony\Component\DomCrawler\Crawler
      */
     public function get(string $uri, array $headers = []): Crawler
     {
@@ -57,10 +50,8 @@ class Client extends KernelBrowser
     }
 
     /**
-     * @param string $uri
      * @param mixed[] $body
      * @param mixed[] $headers
-     * @return \Symfony\Component\DomCrawler\Crawler
      */
     public function post(string $uri, array $body, array $headers = []): Crawler
     {
@@ -68,10 +59,8 @@ class Client extends KernelBrowser
     }
 
     /**
-     * @param string $uri
      * @param mixed[] $body
      * @param mixed[] $headers
-     * @return \Symfony\Component\DomCrawler\Crawler
      */
     public function put(string $uri, array $body, array $headers = []): Crawler
     {
@@ -79,9 +68,7 @@ class Client extends KernelBrowser
     }
 
     /**
-     * @param string $uri
      * @param mixed[] $headers
-     * @return \Symfony\Component\DomCrawler\Crawler
      */
     public function delete(string $uri, array $headers = []): Crawler
     {
@@ -96,9 +83,6 @@ class Client extends KernelBrowser
         return Json::decode((string)$this->getResponse()->getContent(), true);
     }
 
-    /**
-     * @return int
-     */
     public function getStatusCode(): int
     {
         return $this->getResponse()->getStatusCode();

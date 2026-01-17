@@ -29,20 +29,6 @@ use Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter;
 
 class LoginMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
-     * @param \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $userPasswordHasher
-     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
-     * @param \Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter $loginRateLimiter
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
-     */
     public function __construct(
         protected readonly FrontendCustomerUserProvider $frontendCustomerUserProvider,
         protected readonly UserPasswordHasherInterface $userPasswordHasher,
@@ -59,10 +45,6 @@ class LoginMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
-     */
     public function loginMutation(Argument $argument): LoginResultData
     {
         $input = $argument['input'];
@@ -92,10 +74,6 @@ class LoginMutation extends AbstractMutation
         );
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrontendApiBundle\Model\Security\TokensData
-     */
     public function loginViaExchangeTokenMutation(Argument $argument): TokensData
     {
         $exchangeToken = $argument['exchangeToken'];
@@ -112,9 +90,6 @@ class LoginMutation extends AbstractMutation
         }
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
     protected function checkLoginRateLimitAndGetCurrentRequest(): Request
     {
         $request = $this->requestStack->getCurrentRequest();

@@ -15,12 +15,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class FlagGridFactory implements GridFactoryInterface
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
@@ -29,10 +23,6 @@ class FlagGridFactory implements GridFactoryInterface
     ) {
     }
 
-    /**
-     * @param string|null $roleConstant
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     #[Override]
     public function create(?string $roleConstant): Grid
     {
@@ -64,10 +54,6 @@ class FlagGridFactory implements GridFactoryInterface
         return $grid;
     }
 
-    /**
-     * @param array $row
-     * @return array
-     */
     protected function addTextColorToEnsureReadability(array $row): array
     {
         $color = strtr($row['f']['rgbColor'], ['#' => '']);

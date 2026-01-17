@@ -6,25 +6,16 @@ namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 class AdministratorDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
-     */
     public function __construct(
         protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData
-     */
     protected function createInstance(): AdministratorData
     {
         return new AdministratorData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData
-     */
     public function create(): AdministratorData
     {
         $administratorData = $this->createInstance();
@@ -34,10 +25,6 @@ class AdministratorDataFactory
         return $administratorData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData
-     */
     public function createFromAdministrator(Administrator $administrator): AdministratorData
     {
         $administratorData = $this->createInstance();
@@ -46,10 +33,6 @@ class AdministratorDataFactory
         return $administratorData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     */
     protected function fillFromAdministrator(AdministratorData $administratorData, Administrator $administrator): void
     {
         $administratorData->email = $administrator->getEmail();

@@ -20,9 +20,6 @@ class CheckDatabaseSchemaCommand extends Command
     protected const RETURN_CODE_OK = 0;
     protected const RETURN_CODE_ERROR = 1;
 
-    /**
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
-     */
     public function __construct(protected readonly DatabaseSchemaFacade $databaseSchemaFacade)
     {
         parent::__construct();

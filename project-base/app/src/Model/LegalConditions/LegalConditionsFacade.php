@@ -20,9 +20,6 @@ use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade as BaseL
  */
 class LegalConditionsFacade extends BaseLegalConditionsFacade
 {
-    /**
-     * @return string
-     */
     #[Override]
     public function getTermsAndConditionsDownloadFilename(): string
     {

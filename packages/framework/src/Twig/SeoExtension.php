@@ -12,10 +12,6 @@ use Twig\TwigFunction;
 
 class SeoExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly SeoSettingFacade $seoSettingFacade,
         protected readonly Domain $domain,

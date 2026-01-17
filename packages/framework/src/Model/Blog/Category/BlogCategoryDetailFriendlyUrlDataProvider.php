@@ -16,10 +16,6 @@ class BlogCategoryDetailFriendlyUrlDataProvider implements FriendlyUrlDataProvid
 {
     protected const ROUTE_NAME = 'front_blogcategory_detail';
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory $friendlyUrlDataFactory
-     */
     public function __construct(
         protected EntityManagerInterface $em,
         protected FriendlyUrlDataFactory $friendlyUrlDataFactory,
@@ -27,7 +23,6 @@ class BlogCategoryDetailFriendlyUrlDataProvider implements FriendlyUrlDataProvid
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
     #[Override]
@@ -56,9 +51,6 @@ class BlogCategoryDetailFriendlyUrlDataProvider implements FriendlyUrlDataProvid
         return $friendlyUrlsData;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getRouteName(): string
     {

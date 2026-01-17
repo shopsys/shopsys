@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogCategoryDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
@@ -22,10 +17,6 @@ class BlogCategoryDataFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData
-     */
     public function createFromBlogCategory(BlogCategory $blogCategory): BlogCategoryData
     {
         $blogCategoryData = $this->createInstance();
@@ -34,9 +25,6 @@ class BlogCategoryDataFactory
         return $blogCategoryData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData
-     */
     public function create(): BlogCategoryData
     {
         $blogCategoryData = $this->createInstance();
@@ -45,9 +33,6 @@ class BlogCategoryDataFactory
         return $blogCategoryData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData $blogCategoryData
-     */
     protected function fillNew(BlogCategoryData $blogCategoryData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -65,10 +50,6 @@ class BlogCategoryDataFactory
         $blogCategoryData->image = $this->imageUploadDataFactory->create();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData $blogCategoryData
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     */
     protected function fillFromBlogCategory(BlogCategoryData $blogCategoryData, BlogCategory $blogCategory): void
     {
         $blogCategoryData->names = $blogCategory->getNames();
@@ -89,9 +70,6 @@ class BlogCategoryDataFactory
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData
-     */
     protected function createInstance(): BlogCategoryData
     {
         return new BlogCategoryData();

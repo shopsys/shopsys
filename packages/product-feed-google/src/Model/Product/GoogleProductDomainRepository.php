@@ -8,9 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class GoogleProductDomainRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {

@@ -10,20 +10,12 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 
 class ProductElasticsearchProvider
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
-     */
     public function __construct(
         protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
         protected readonly FilterQueryFactory $filterQueryFactory,
     ) {
     }
 
-    /**
-     * @param int $productId
-     * @return array
-     */
     public function getVisibleProductArrayById(int $productId): array
     {
         $products = $this->productElasticsearchRepository->getProductsByFilterQuery(
@@ -39,8 +31,6 @@ class ProductElasticsearchProvider
 
     /**
      * @param int[] $productIds
-     * @param int|null $limit
-     * @return array
      */
     public function getSellableProductArrayByIds(array $productIds, ?int $limit = null): array
     {
@@ -51,8 +41,6 @@ class ProductElasticsearchProvider
 
     /**
      * @param int[] $productIds
-     * @param int|null $limit
-     * @return array
      */
     public function getListableProductArrayByIds(array $productIds, ?int $limit = null): array
     {
@@ -61,10 +49,6 @@ class ProductElasticsearchProvider
         );
     }
 
-    /**
-     * @param string $productUuid
-     * @return array
-     */
     public function getVisibleProductArrayByUuid(string $productUuid): array
     {
         $products = $this->productElasticsearchRepository->getProductsByFilterQuery(
@@ -80,7 +64,6 @@ class ProductElasticsearchProvider
 
     /**
      * @param string[] $productUuids
-     * @return array
      */
     public function getSellableProductArrayByUuids(array $productUuids): array
     {
@@ -91,7 +74,6 @@ class ProductElasticsearchProvider
 
     /**
      * @param int[] $productIds
-     * @param int $domainId
      * @return int[]
      */
     public function getOnlyExistingProductsIds(array $productIds, int $domainId): array
@@ -101,7 +83,6 @@ class ProductElasticsearchProvider
 
     /**
      * @param string[] $productUuids
-     * @return array
      */
     public function getSellableProductIdsByUuids(array $productUuids): array
     {

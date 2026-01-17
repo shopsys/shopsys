@@ -12,19 +12,12 @@ use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageExcep
 
 class CurrentCustomerUserQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CustomerFacade $customerFacade,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     */
     public function currentCustomerUserQuery(): ?CustomerUser
     {
         return $this->currentCustomerUser->findCurrentCustomerUser();

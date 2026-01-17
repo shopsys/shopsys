@@ -9,10 +9,6 @@ use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 
 class TokenCustomerUserTransformer
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $user
-     * @return array
-     */
     public function transform(CustomerUser $user): array
     {
         return [

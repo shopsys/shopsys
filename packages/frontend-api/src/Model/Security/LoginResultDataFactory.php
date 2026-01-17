@@ -6,12 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Security;
 
 class LoginResultDataFactory
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Security\TokensData $tokensData
-     * @param bool $showCartMergeInfo
-     * @param bool $isRegistration
-     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
-     */
     public function create(
         TokensData $tokensData,
         bool $showCartMergeInfo,

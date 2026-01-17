@@ -14,9 +14,6 @@ abstract class AbstractMutation implements MutationInterface, AliasedInterface
 {
     protected const MUTATION_SUFFIX = 'Mutation';
 
-    /**
-     * @return array
-     */
     #[Override]
     public static function getAliases(): array
     {

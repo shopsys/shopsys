@@ -15,14 +15,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum $orderItemTypeEnum
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory $withdrawalRequestDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
@@ -33,17 +25,11 @@ class OrderDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     protected function createInstance(): OrderData
     {
         return new OrderData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     public function create(): OrderData
     {
         $orderData = $this->createInstance();
@@ -52,10 +38,6 @@ class OrderDataFactory
         return $this->fillZeroPrices($orderData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     public function createFromOrder(Order $order): OrderData
     {
         $orderData = $this->create();
@@ -65,10 +47,6 @@ class OrderDataFactory
         return $orderData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     protected function fillFromOrder(OrderData $orderData, Order $order): void
     {
         $orderData->orderNumber = $order->getNumber();
@@ -143,10 +121,6 @@ class OrderDataFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     protected function fillZeroPrices(OrderData $orderData): OrderData
     {
         foreach ($this->orderItemTypeEnum->getAllCases() as $type) {

@@ -13,9 +13,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RolesCommandDetailSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlDataProviderInterface $routeAccessControlDataProvider
-     */
     public function __construct(
         private readonly AccessControlDataProviderInterface $routeAccessControlDataProvider,
     ) {
@@ -32,9 +29,6 @@ class RolesCommandDetailSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Event\RolesCommandDetailEvent $event
-     */
     public function onRoleDetail(RolesCommandDetailEvent $event): void
     {
         if ($event->getContext() !== AdminContext::class) {
@@ -69,7 +63,6 @@ class RolesCommandDetailSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param string $roleConstant
      * @return array<array{name: string, controller: string, permissions: string}>
      */
     private function getRoutesUsingRole(string $roleConstant): array

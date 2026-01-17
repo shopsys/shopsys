@@ -15,16 +15,10 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchMoreT
 
 class IndexRepository
 {
-    /**
-     * @param \Elasticsearch\Client $elasticsearchClient
-     */
     public function __construct(protected readonly Client $elasticsearchClient)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     */
     public function createIndex(IndexDefinition $indexDefinition): void
     {
         $indexName = $indexDefinition->getVersionedIndexName();
@@ -44,9 +38,6 @@ class IndexRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     */
     public function createAlias(IndexDefinition $indexDefinition): void
     {
         $indexName = $indexDefinition->getVersionedIndexName();
@@ -62,9 +53,6 @@ class IndexRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     */
     public function deleteIndexByIndexDefinition(IndexDefinition $indexDefinition): void
     {
         $indexes = $this->elasticsearchClient->indices();
@@ -76,9 +64,6 @@ class IndexRepository
         }
     }
 
-    /**
-     * @param string $indexName
-     */
     public function deleteIndex(string $indexName): void
     {
         $indexes = $this->elasticsearchClient->indices();
@@ -93,7 +78,6 @@ class IndexRepository
     }
 
     /**
-     * @param string $indexAlias
      * @param int[] $ids
      */
     public function deleteIds(string $indexAlias, array $ids): void
@@ -115,7 +99,6 @@ class IndexRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param int[] $keepIds
      */
     public function deleteNotPresent(IndexDefinition $indexDefinition, array $keepIds): void
@@ -136,11 +119,6 @@ class IndexRepository
         ]);
     }
 
-    /**
-     * @param string $indexAlias
-     * @param array $data
-     * @param bool $createIfNotExists
-     */
     public function bulkUpdate(string $indexAlias, array $data, bool $createIfNotExists = true): void
     {
         $params = ['body' => []];
@@ -166,10 +144,6 @@ class IndexRepository
         }
     }
 
-    /**
-     * @param string $aliasName
-     * @return array
-     */
     protected function findIndexNamesForAlias(string $aliasName): array
     {
         if (!$this->isAliasCreated($aliasName)) {
@@ -187,10 +161,6 @@ class IndexRepository
         return $indexesWithAlias;
     }
 
-    /**
-     * @param string $aliasName
-     * @return bool
-     */
     protected function isAliasCreated(string $aliasName): bool
     {
         $indexes = $this->elasticsearchClient->indices();
@@ -198,10 +168,6 @@ class IndexRepository
         return $indexes->existsAlias(['name' => $aliasName]);
     }
 
-    /**
-     * @param string $aliasName
-     * @return string
-     */
     public function findCurrentIndexNameForAlias(string $aliasName): string
     {
         $indexesWithAlias = $this->findIndexNamesForAlias($aliasName);
@@ -213,10 +179,6 @@ class IndexRepository
         return $indexesWithAlias[0];
     }
 
-    /**
-     * @param string $sourceIndexName
-     * @param string $destinationIndexName
-     */
     public function reindex(string $sourceIndexName, string $destinationIndexName): void
     {
         $this->elasticsearchClient->reindex([

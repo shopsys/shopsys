@@ -19,9 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class CheckRedisCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Redis\RedisFacade $redisFacade
-     */
     public function __construct(protected readonly RedisFacade $redisFacade)
     {
         parent::__construct();

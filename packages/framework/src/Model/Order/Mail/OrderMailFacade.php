@@ -13,12 +13,6 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
 class OrderMailFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail $orderMail
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     */
     public function __construct(
         protected readonly Mailer $mailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
@@ -27,10 +21,6 @@ class OrderMailFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
-     */
     public function sendEmail(Order $order, OrderStatus $orderStatus): void
     {
         $mailTemplate = $this->getMailTemplateByStatusAndDomainId($orderStatus, $order->getDomainId());
@@ -43,7 +33,6 @@ class OrderMailFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */
@@ -54,11 +43,6 @@ class OrderMailFacade
         return $this->mailTemplateFacade->getWrappedWithGrapesJsBody($templateName, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string|null $forceSendTo
-     */
     public function sendMailTemplate(MailTemplate $mailTemplate, Order $order, ?string $forceSendTo = null): void
     {
         $messageData = $this->orderMail->createMessage($mailTemplate, $order);

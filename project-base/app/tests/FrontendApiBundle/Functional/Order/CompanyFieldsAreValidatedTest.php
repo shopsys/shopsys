@@ -38,9 +38,6 @@ class CompanyFieldsAreValidatedTest extends GraphQlTestCase
         $this->assertEquals($expectedValidations, $this->getErrorsExtensionValidationFromResponse($response));
     }
 
-    /**
-     * @return string
-     */
     private function getMutation(): string
     {
         return '

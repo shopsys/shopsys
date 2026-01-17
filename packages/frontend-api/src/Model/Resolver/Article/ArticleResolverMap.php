@@ -10,9 +10,6 @@ use Symfony\Component\Clock\DatePoint;
 
 class ArticleResolverMap extends ResolverMap
 {
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

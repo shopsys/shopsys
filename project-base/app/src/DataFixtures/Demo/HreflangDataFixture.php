@@ -11,17 +11,11 @@ use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
 class HreflangDataFixture extends AbstractReferenceFixture
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     */
     public function __construct(
         protected readonly SeoSettingFacade $seoSettingFacade,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

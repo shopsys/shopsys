@@ -13,11 +13,6 @@ class WithdrawalSettingFacade
     public const string VARIABLE_ORDER_DETAIL_URL = '{order_detail_url}';
     public const string VARIABLE_ORDER_NUMBER = '{order_number}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSetting $withdrawalSetting
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation
-     */
     public function __construct(
         protected readonly WithdrawalSetting $withdrawalSetting,
         protected readonly OrderUrlGenerator $orderUrlGenerator,
@@ -25,10 +20,6 @@ class WithdrawalSettingFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
     public function getWithdrawalInstructions(Order $order): string
     {
         $withdrawalInstructions = $this->withdrawalSetting->getInstructions($order->getDomainId());
@@ -36,20 +27,11 @@ class WithdrawalSettingFacade
         return $this->replaceVariables($order, $withdrawalInstructions);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \DateTimeInterface|null
-     */
     public function getWithdrawalDeadline(Order $order): ?DateTimeInterface
     {
         return $this->withdrawalDeadlineCalculation->getWithdrawalDeadline($order);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $withdrawalInstructions
-     * @return string
-     */
     protected function replaceVariables(Order $order, string $withdrawalInstructions): string
     {
         $orderDetailUrl = $this->orderUrlGenerator->getOrderDetailUrl($order);

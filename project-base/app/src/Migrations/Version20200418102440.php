@@ -13,9 +13,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
  */
 final class Version20200418102440 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {

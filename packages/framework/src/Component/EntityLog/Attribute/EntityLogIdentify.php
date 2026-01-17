@@ -11,9 +11,6 @@ class EntityLogIdentify
 {
     public const IS_LOCALIZED = true;
 
-    /**
-     * @param bool $isLocalized
-     */
     public function __construct(
         public bool $isLocalized = false,
     ) {

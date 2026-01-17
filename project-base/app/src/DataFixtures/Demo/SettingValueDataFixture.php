@@ -27,13 +27,6 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
 {
     public const int FREE_TRANSPORT_AND_PAYMENT_LIMIT = 50000;
 
-    /**
-     * @param \App\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly Setting $setting,
         private readonly PricingSetting $pricingSetting,
@@ -43,9 +36,6 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -155,9 +145,6 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
         $this->setting->set(BaseSetting::FILE_STRUCTURE_MIGRATED_FOR_RELATIONS, true);
     }
 
-    /**
-     * @param int $domainId
-     */
     private function setDomainDefaultCurrency(int $domainId): void
     {
         if ($domainId === Domain::SECOND_DOMAIN_ID) {

@@ -18,7 +18,6 @@ class QuantifiedProduct
     protected array $additionalData;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
      */
     public function __construct(protected readonly Product $product, $quantity)
@@ -43,19 +42,11 @@ class QuantifiedProduct
         return $this->quantity;
     }
 
-    /**
-     * @param string $key
-     * @return mixed
-     */
     public function getAdditionalData(string $key): mixed
     {
         return $this->additionalData[$key] ?? null;
     }
 
-    /**
-     * @param string $key
-     * @param mixed $additionalData
-     */
     public function setAdditionalData(string $key, mixed $additionalData): void
     {
         $this->additionalData[$key] = $additionalData;

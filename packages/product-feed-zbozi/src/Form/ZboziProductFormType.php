@@ -18,17 +18,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ZboziProductFormType extends AbstractType
 {
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     */
     public function __construct(private readonly TranslatorInterface $translator)
     {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

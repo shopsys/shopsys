@@ -21,18 +21,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Price\Exception\ProductPriceMissing
 
 class ProductPriceQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Price\SpecialPriceApiFactory $specialPriceApiFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\Price\PriceFacade $priceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Price\PriceInfoFactory $priceInfoFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory $vatFactory
-     */
     public function __construct(
         protected readonly SpecialPriceFacade $specialPriceFacade,
         protected readonly SpecialPriceApiFactory $specialPriceApiFactory,
@@ -47,10 +35,6 @@ class ProductPriceQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param array|\Shopsys\FrameworkBundle\Model\Product\Product $data
-     * @return \Shopsys\FrontendApiBundle\Model\Price\PriceInfo
-     */
     public function priceByProductQuery(Product|array $data): PriceInfo
     {
         if ($this->isProductUponInquiry($data)) {
@@ -76,10 +60,6 @@ class ProductPriceQuery extends AbstractQuery
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
-     * @return \Shopsys\FrontendApiBundle\Model\Price\PriceInfo
-     */
     public function giftPriceByProductQuery(Product|array $data): PriceInfo
     {
         $domainId = $this->domain->getId();
@@ -105,10 +85,6 @@ class ProductPriceQuery extends AbstractQuery
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
-     * @return bool
-     */
     protected function isProductUponInquiry(Product|array $data): bool
     {
         $productType = $data instanceof Product ? $data->getProductType() : $data['product_type'];

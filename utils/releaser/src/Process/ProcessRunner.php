@@ -12,18 +12,11 @@ class ProcessRunner
 {
     private const int PROCESS_TIMEOUT = 20 * 60;
 
-    /**
-     * @param \Shopsys\Releaser\Command\SymfonyStyleFactory $symfonyStyleFactory
-     */
     public function __construct(
         private readonly SymfonyStyleFactory $symfonyStyleFactory,
     ) {
     }
 
-    /**
-     * @param string $command
-     * @return string
-     */
     public function run(string $command): string
     {
         $symfonyStyle = $this->symfonyStyleFactory->getPreviouslyCreatedSymfonyStyle();

@@ -168,10 +168,6 @@ class NavigationTest extends GraphQlTestCase
         $this->assertSame($expectedData, $responseData);
     }
 
-    /**
-     * @param string $categoryReferenceName
-     * @return string
-     */
     private function getLink(string $categoryReferenceName): string
     {
         return $this->getLocalizedPathOnFirstDomainByRouteName(

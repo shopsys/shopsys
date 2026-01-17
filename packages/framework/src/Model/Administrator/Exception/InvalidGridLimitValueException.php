@@ -13,7 +13,6 @@ class InvalidGridLimitValueException extends Exception
 
     /**
      * @param mixed $limit
-     * @param \Exception|null $previous
      */
     public function __construct($limit, ?Exception $previous = null)
     {

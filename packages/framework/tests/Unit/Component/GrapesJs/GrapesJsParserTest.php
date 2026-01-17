@@ -10,10 +10,6 @@ use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 
 class GrapesJsParserTest extends TestCase
 {
-    /**
-     * @param string $inputText
-     * @param string $expectedOutput
-     */
     #[DataProvider('parseDataProvider')]
     public function testParse(string $inputText, string $expectedOutput): void
     {
@@ -21,9 +17,6 @@ class GrapesJsParserTest extends TestCase
         $this->assertSame($expectedOutput, $grapesJsParser->parse($inputText));
     }
 
-    /**
-     * @return iterable
-     */
     public static function parseDataProvider(): iterable
     {
         yield 'drop products' => [

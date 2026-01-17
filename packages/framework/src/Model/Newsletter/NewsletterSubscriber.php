@@ -38,11 +38,6 @@ class NewsletterSubscriber
     #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 
-    /**
-     * @param string $email
-     * @param \DateTimeImmutable $createdAt
-     * @param int $domainId
-     */
     public function __construct(string $email, DateTimeImmutable $createdAt, int $domainId)
     {
         $this->email = $email;
