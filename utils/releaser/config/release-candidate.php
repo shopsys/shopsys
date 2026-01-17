@@ -24,6 +24,7 @@ use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\UpdateLicenseAcknowledgement
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\UpdateUpgradeReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ValidateConflictsInComposerJsonReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ValidateRequireFormatInComposerJsonReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\VerifyCliIsRunningReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\VerifyMinorUpgradeReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\VerifyInitialBranchReleaseWorker;
 
@@ -49,6 +50,7 @@ return [
     TestYourBranchLocallyReleaseWorker::class,
     ForceYourBranchSplitReleaseWorker::class,
     CheckShopsysInstallReleaseWorker::class,
+    VerifyCliIsRunningReleaseWorker::class,
     CheckPackagesGithubActionsBuildsAfterSplitReleaseWorker::class,
     VerifyMinorUpgradeReleaseWorker::class,
     SendBranchForReviewAndTestsReleaseWorker::class,
