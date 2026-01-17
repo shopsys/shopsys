@@ -19,9 +19,9 @@ class CloseIdleConnectionSubscriber implements EventSubscriberInterface
     }
 
     #[Override]
-    public static function getSubscribedEvents(): iterable
+    public static function getSubscribedEvents(): array
     {
-        yield WorkerRunningEvent::class => 'onWorkerRunning';
+        return [WorkerRunningEvent::class => 'onWorkerRunning'];
     }
 
     public function onWorkerRunning(WorkerRunningEvent $event): void

@@ -19,9 +19,6 @@ abstract class AbstractNumberSequenceRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Model\NumberSequence\AbstractNumberSequence>
-     */
     abstract protected function getNumberSequenceRepository(): EntityRepository;
 
     public function getNextNumber(): string
