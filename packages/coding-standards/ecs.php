@@ -95,8 +95,6 @@ use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
 use Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer;
 use Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\InheritDocFormatFixer;
-use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
-use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineDefaultValueSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
@@ -154,6 +152,10 @@ return ECSConfig::configure()
             'GraphQL\Error\UserError' => null,
         ],
     ])
+    ->withConfiguredRule(NoSuperfluousPhpdocTagsFixer::class, [
+        'allow_mixed' => true,
+        'remove_inheritdoc' => false,
+    ])
     ->withRules([
         InlineDocCommentDeclarationSniff::class,
         NullableTypeForNullDefaultValueSniff::class,
@@ -170,9 +172,6 @@ return ECSConfig::configure()
         ForbiddenDoctrineDefaultValueSniff::class,
         // method arguments and variables should be $camelCase
         ValidVariableNameSniff::class,
-        // add all @param, @return and @var annotations, in FQN
-        MissingParamAnnotationsFixer::class,
-        MissingReturnAnnotationFixer::class,
         PhpdocParamOrderFixer::class,
         FullyQualifiedClassNameInAnnotationSniff::class,
         EmptyStatementSniff::class,
@@ -352,9 +351,6 @@ return ECSConfig::configure()
         // rule is applied via `docblock` set, but we do not want to use it for now
         // remove variable name from @var and @type annotations
         PhpdocVarWithoutNameFixer::class => null,
-        // rule is applied via `docblock` set, but we do not want to use it for now
-        // remove inheritdoc
-        NoSuperfluousPhpdocTagsFixer::class => null,
         // rule breaks jms/translation-bundle as it fails on this usage: `[, $b] = $var`
         // won't do any changes after upgrade
         ListSyntaxFixer::class => null,
