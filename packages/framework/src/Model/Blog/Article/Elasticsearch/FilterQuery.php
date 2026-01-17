@@ -20,7 +20,7 @@ class FilterQuery extends AbstractFilterQuery
         ];
     }
 
-    public function filterByUuid(string $uuid): self
+    public function filterByUuid(string $uuid): static
     {
         $clone = clone $this;
         $clone->filters[] = [
@@ -32,7 +32,7 @@ class FilterQuery extends AbstractFilterQuery
         return $clone;
     }
 
-    public function filterBySlug(string $slug): self
+    public function filterBySlug(string $slug): static
     {
         $clone = clone $this;
         $clone->filters[] = [
@@ -44,7 +44,7 @@ class FilterQuery extends AbstractFilterQuery
         return $clone;
     }
 
-    public function filterByCategory(BlogCategory $blogCategory): self
+    public function filterByCategory(BlogCategory $blogCategory): static
     {
         $clone = clone $this;
         $clone->filters[] = [
@@ -56,7 +56,7 @@ class FilterQuery extends AbstractFilterQuery
         return $clone;
     }
 
-    public function onlyVisibleOnHomepage(bool $onlyVisibleOnHomepage = true): self
+    public function onlyVisibleOnHomepage(bool $onlyVisibleOnHomepage = true): static
     {
         $clone = clone $this;
 

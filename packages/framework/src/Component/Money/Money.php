@@ -22,28 +22,28 @@ class Money implements JsonSerializable
     /**
      * @param int|string $value
      */
-    public static function create($value): self
+    public static function create($value): static
     {
-        $decimal = self::createDecimal($value);
+        $decimal = static::createDecimal($value);
 
-        return new self($decimal);
+        return new static($decimal);
     }
 
     /**
      * @param int $scale must be specified when creating from floats to avoid issues with precision
      */
-    public static function createFromFloat(float $float, int $scale): self
+    public static function createFromFloat(float $float, int $scale): static
     {
         // Using Decimal::fromString as the Decimal::fromFloat has issues with specified scale
         // See https://github.com/Litipk/php-bignumbers/pull/67 for details
-        $decimal = self::createDecimal((string)$float, $scale);
+        $decimal = static::createDecimal((string)$float, $scale);
 
-        return new self($decimal);
+        return new static($decimal);
     }
 
-    public static function zero(): self
+    public static function zero(): static
     {
-        return self::create(0);
+        return static::create(0);
     }
 
     public function getAmount(): string
@@ -66,35 +66,35 @@ class Money implements JsonSerializable
         ];
     }
 
-    public function add(self $money): self
+    public function add(self $money): static
     {
         $resultDecimal = $this->decimal->add($money->decimal);
 
-        return new self($resultDecimal);
+        return new static($resultDecimal);
     }
 
-    public function subtract(self $money): self
+    public function subtract(self $money): static
     {
         $resultDecimal = $this->decimal->sub($money->decimal);
 
-        return new self($resultDecimal);
+        return new static($resultDecimal);
     }
 
     /**
      * @param int|string $multiplier
      */
-    public function multiply($multiplier): self
+    public function multiply($multiplier): static
     {
         $decimalMultiplier = self::createDecimal($multiplier);
         $resultDecimal = $this->decimal->mul($decimalMultiplier);
 
-        return new self($resultDecimal);
+        return new static($resultDecimal);
     }
 
     /**
      * @param int|string $divisor
      */
-    public function divide($divisor, int $scale): self
+    public function divide($divisor, int $scale): static
     {
         $decimalDivisor = self::createDecimal($divisor);
 
@@ -105,14 +105,14 @@ class Money implements JsonSerializable
 
         $resultDecimal = $this->decimal->div($decimalDivisor, $scale);
 
-        return new self($resultDecimal);
+        return new static($resultDecimal);
     }
 
-    public function round(int $scale): self
+    public function round(int $scale): static
     {
         $decimal = $this->decimal->round($scale);
 
-        return new self($decimal);
+        return new static($decimal);
     }
 
     public function equals(self $money): bool

@@ -18,7 +18,7 @@ class FilterQuery extends AbstractFilterQuery
         ];
     }
 
-    public function filterByUuid(string $uuid): self
+    public function filterByUuid(string $uuid): static
     {
         $clone = clone $this;
         $clone->filters[] = [
@@ -30,7 +30,7 @@ class FilterQuery extends AbstractFilterQuery
         return $clone;
     }
 
-    public function filterBySlug(string $slug): self
+    public function filterBySlug(string $slug): static
     {
         $clone = clone $this;
         $clone->filters[] = [
@@ -45,7 +45,7 @@ class FilterQuery extends AbstractFilterQuery
     /**
      * @param string[] $placements
      */
-    public function filterByPlacements(array $placements): self
+    public function filterByPlacements(array $placements): static
     {
         $clone = clone $this;
         $clone->filters[] = [
@@ -57,7 +57,7 @@ class FilterQuery extends AbstractFilterQuery
         return $clone;
     }
 
-    public function filterById(int $articleId): self
+    public function filterById(int $articleId): static
     {
         $clone = clone $this;
         $clone->filters[] = [

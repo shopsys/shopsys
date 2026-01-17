@@ -15,7 +15,7 @@ class ProductQueryParams
     {
     }
 
-    public function withUuids(array $uuids): self
+    public function withUuids(array $uuids): static
     {
         $query = clone $this;
         $query->uuids = $uuids;

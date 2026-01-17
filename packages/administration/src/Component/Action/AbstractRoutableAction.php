@@ -26,9 +26,8 @@ abstract class AbstractRoutableAction extends AbstractAction
      *
      * @param string $route #Route
      * @param array|\Closure(mixed): array $parameters
-     * @return $this
      */
-    public function linkToRoute(string $route, array|Closure $parameters = []): self
+    public function linkToRoute(string $route, array|Closure $parameters = []): static
     {
         $this->actionRoute = new RouteActionRouteData($route, $parameters);
 
@@ -40,9 +39,8 @@ abstract class AbstractRoutableAction extends AbstractAction
      * Url is provided by string or Closure function that will return string.
      *
      * @param string|\Closure(mixed): string $url
-     * @return $this
      */
-    public function linkToUrl(Closure|string $url): self
+    public function linkToUrl(Closure|string $url): static
     {
         $this->actionRoute = new UrlActionRouteData($url);
 
@@ -55,9 +53,8 @@ abstract class AbstractRoutableAction extends AbstractAction
      *
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $crudController
      * @param null|\Closure(mixed): int $id
-     * @return $this
      */
-    public function linkToCrud(string $crudController, ActionType $actionType, ?Closure $id = null): self
+    public function linkToCrud(string $crudController, ActionType $actionType, ?Closure $id = null): static
     {
         Assert::subclassOf($crudController, AbstractCrudController::class);
 
@@ -68,10 +65,8 @@ abstract class AbstractRoutableAction extends AbstractAction
 
     /**
      * Determines if new tab should be opened when action is clicked
-     *
-     * @return $this
      */
-    public function setOpenInNewTab(bool $openInNewTab = true): self
+    public function setOpenInNewTab(bool $openInNewTab = true): static
     {
         $this->openInNewTab = $openInNewTab;
 
