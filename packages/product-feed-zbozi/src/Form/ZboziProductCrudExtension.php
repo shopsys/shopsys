@@ -59,7 +59,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
      * @param array $data
      */
     #[Override]
-    public function saveData($productId, $data)
+    public function saveData($productId, $data): void
     {
         $zboziProductDomainsDataIndexedByDomainId = [];
 
@@ -94,7 +94,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
         ZboziProductDomainData $zboziProductDomainData,
         $propertyName,
         $propertyValue,
-    ) {
+    ): void {
         switch ($propertyName) {
             case 'show':
                 $zboziProductDomainData->show = $propertyValue;
@@ -136,7 +136,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      */
     #[Override]
-    public function removeData($productId)
+    public function removeData($productId): void
     {
         $this->zboziProductDomainFacade->delete($productId);
     }

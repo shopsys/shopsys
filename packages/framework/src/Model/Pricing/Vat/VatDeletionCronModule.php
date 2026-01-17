@@ -29,14 +29,14 @@ class VatDeletionCronModule implements IteratedCronModuleInterface
     }
 
     #[Override]
-    public function sleep()
+    public function sleep(): void
     {
         $deletedVatsCount = $this->vatFacade->deleteAllReplacedVats();
         $this->logger->info('Deleted ' . $deletedVatsCount . ' vats');
     }
 
     #[Override]
-    public function wakeUp()
+    public function wakeUp(): void
     {
     }
 

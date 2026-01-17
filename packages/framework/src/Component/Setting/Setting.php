@@ -86,7 +86,7 @@ class Setting
      * @param string $key
      * @param \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
      */
-    public function set($key, $value)
+    public function set($key, $value): void
     {
         $this->clearCache();
 
@@ -109,7 +109,7 @@ class Setting
      * @param \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
      * @param int $domainId
      */
-    public function setForDomain($key, $value, $domainId)
+    public function setForDomain($key, $value, $domainId): void
     {
         $this->clearCache();
 
@@ -148,7 +148,7 @@ class Setting
     /**
      * @param int|null $domainId
      */
-    protected function loadDomainValues($domainId)
+    protected function loadDomainValues($domainId): void
     {
         if ($domainId === null) {
             $message = 'Cannot load setting value for null domain ID';

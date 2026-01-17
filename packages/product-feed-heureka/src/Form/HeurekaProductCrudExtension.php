@@ -62,7 +62,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
      * @param array $data
      */
     #[Override]
-    public function saveData($productId, $data)
+    public function saveData($productId, $data): void
     {
         $heurekaProductDomainsData = [];
 
@@ -85,7 +85,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      */
     #[Override]
-    public function removeData($productId)
+    public function removeData($productId): void
     {
         $this->heurekaProductDomainFacade->delete($productId);
     }

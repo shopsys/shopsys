@@ -645,7 +645,7 @@ class Order
     /**
      * @param int $domainId
      */
-    public function setDomainId($domainId)
+    public function setDomainId($domainId): void
     {
         $this->domainId = $domainId;
     }
@@ -739,7 +739,7 @@ class Order
         return $this->deleted;
     }
 
-    public function markAsDeleted()
+    public function markAsDeleted(): void
     {
         $this->deleted = true;
     }
@@ -809,7 +809,7 @@ class Order
     /**
      * @param \DateTimeImmutable $deliveredAt
      */
-    public function setDeliveredAt($deliveredAt)
+    public function setDeliveredAt($deliveredAt): void
     {
         $this->deliveredAt = $deliveredAt;
     }

@@ -93,7 +93,7 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
         return new CustomerUserRoleGroupTranslation();
     }
 
-    protected function setTranslations(CustomerUserRoleGroupData $customerUserRoleGroupData)
+    protected function setTranslations(CustomerUserRoleGroupData $customerUserRoleGroupData): void
     {
         foreach ($customerUserRoleGroupData->names as $locale => $name) {
             $this->translation($locale)->setName($name);

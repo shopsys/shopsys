@@ -16,7 +16,7 @@ class DateTimeFormatPatternRepository
         $this->dateTimeFormatPatterns = [];
     }
 
-    public function add(DateTimeFormatPattern $dateTimePattern)
+    public function add(DateTimeFormatPattern $dateTimePattern): void
     {
         $this->dateTimeFormatPatterns[] = $dateTimePattern;
     }

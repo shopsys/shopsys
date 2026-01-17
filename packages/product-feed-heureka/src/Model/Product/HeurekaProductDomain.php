@@ -43,7 +43,7 @@ class HeurekaProductDomain
         $this->setData($heurekaProductDomainData);
     }
 
-    public function edit(HeurekaProductDomainData $heurekaProductDomainData)
+    public function edit(HeurekaProductDomainData $heurekaProductDomainData): void
     {
         $this->setData($heurekaProductDomainData);
     }

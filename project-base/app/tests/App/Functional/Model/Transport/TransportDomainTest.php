@@ -24,7 +24,7 @@ class TransportDomainTest extends TransactionFunctionalTestCase
      */
     private TransportFactory $transportFactory;
 
-    public function testCreateTransportEnabledOnDomain()
+    public function testCreateTransportEnabledOnDomain(): void
     {
         $transportData = $this->transportDataFactory->create();
 
@@ -38,7 +38,7 @@ class TransportDomainTest extends TransactionFunctionalTestCase
         $this->assertTrue($refreshedTransport->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
-    public function testCreateTransportDisabledOnDomain()
+    public function testCreateTransportDisabledOnDomain(): void
     {
         $transportData = $this->transportDataFactory->create();
 
@@ -52,7 +52,7 @@ class TransportDomainTest extends TransactionFunctionalTestCase
         $this->assertFalse($refreshedTransport->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
-    public function testCreateTransportWithDifferentVisibilityOnDomains()
+    public function testCreateTransportWithDifferentVisibilityOnDomains(): void
     {
         if (count($this->domain->getAllIds()) === 1) {
             $this->markTestSkipped('Test is skipped for single domain');

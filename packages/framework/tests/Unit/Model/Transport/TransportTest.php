@@ -36,7 +36,7 @@ class TransportTest extends TestCase
         return new Payment($paymentData);
     }
 
-    public function testSetPayments()
+    public function testSetPayments(): void
     {
         $transport = $this->createTransport();
         $payment = $this->createPayment();
@@ -46,7 +46,7 @@ class TransportTest extends TestCase
         $this->assertContains($transport, $payment->getTransports());
     }
 
-    public function testRemovePayment()
+    public function testRemovePayment(): void
     {
         $transport = $this->createTransport();
         $payment = $this->createPayment();

@@ -12,7 +12,7 @@ use Symfony\Component\Clock\DatePoint;
 
 class ArticleTest extends TestCase
 {
-    public function testValidationOfArticleAttributeExtension()
+    public function testValidationOfArticleAttributeExtension(): void
     {
         $articleData = new ArticleData();
         $articleData->createdAt = new DatePoint('2000-01-01');

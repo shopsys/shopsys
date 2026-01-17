@@ -67,7 +67,7 @@ class CustomerUserDataFactory
         return $customerUserData;
     }
 
-    protected function fillForDomainId(CustomerUserData $customerUserData, int $domainId)
+    protected function fillForDomainId(CustomerUserData $customerUserData, int $domainId): void
     {
         $customerUserData->pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(
             $domainId,
@@ -83,7 +83,7 @@ class CustomerUserDataFactory
         return $customerUserData;
     }
 
-    protected function fillFromUser(CustomerUserData $customerUserData, CustomerUser $customerUser)
+    protected function fillFromUser(CustomerUserData $customerUserData, CustomerUser $customerUser): void
     {
         $customerUserData->domainId = $customerUser->getDomainId();
         $customerUserData->firstName = $customerUser->getFirstName();

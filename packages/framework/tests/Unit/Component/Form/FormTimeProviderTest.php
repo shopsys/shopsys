@@ -29,7 +29,7 @@ class FormTimeProviderTest extends TestCase
      * @param bool $isValid
      */
     #[DataProvider('isFormTimeValidProvider')]
-    public function testIsFormTimeValid($minimumSeconds, $formCreatedAt, $isValid)
+    public function testIsFormTimeValid($minimumSeconds, $formCreatedAt, $isValid): void
     {
         $sessionMock = $this->getMockBuilder(Session::class)
             ->disableOriginalConstructor()

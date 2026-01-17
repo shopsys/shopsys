@@ -27,7 +27,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
     }
 
     #[Override]
-    public function load()
+    public function load(): void
     {
         $firstProductZboziDomainData = [];
         $zboziProductDomainData = $this->zboziProductDomainDataFactory->create();

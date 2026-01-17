@@ -23,7 +23,7 @@ use Tests\FrameworkBundle\Test\Provider\TestOrderProvider;
 
 class CustomerUserUpdateDataFactoryTest extends TestCase
 {
-    public function testGetAmendedCustomerUserUpdateDataByOrderWithoutChanges()
+    public function testGetAmendedCustomerUserUpdateDataByOrderWithoutChanges(): void
     {
         $customerUserUpdateUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
 
@@ -60,7 +60,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $this->assertEquals(TestCustomerProvider::getDeliveryAddressData($customer), $customerUserUpdateData->deliveryAddressData);
     }
 
-    public function testGetAmendedCustomerUserUpdateDataByOrder()
+    public function testGetAmendedCustomerUserUpdateDataByOrder(): void
     {
         $customerUserUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
 
@@ -116,7 +116,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $this->assertSame($order->getCountry(), $customerUserUpdateData->deliveryAddressData->country);
     }
 
-    public function testGetAmendedCustomerUserUpdateDataByOrderForSocialNetworkLogin()
+    public function testGetAmendedCustomerUserUpdateDataByOrderForSocialNetworkLogin(): void
     {
         $customerUserUpdateUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
 

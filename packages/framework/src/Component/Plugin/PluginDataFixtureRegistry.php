@@ -13,7 +13,7 @@ class PluginDataFixtureRegistry
      */
     protected array $pluginDataFixtures = [];
 
-    public function registerDataFixture(PluginDataFixtureInterface $pluginDataFixture)
+    public function registerDataFixture(PluginDataFixtureInterface $pluginDataFixture): void
     {
         $this->pluginDataFixtures[] = $pluginDataFixture;
     }

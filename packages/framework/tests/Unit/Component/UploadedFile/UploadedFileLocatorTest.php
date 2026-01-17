@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator;
 
 class UploadedFileLocatorTest extends TestCase
 {
-    public function testFileExists()
+    public function testFileExists(): void
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
             ->onlyMethods(['getFilename'])
@@ -24,7 +24,7 @@ class UploadedFileLocatorTest extends TestCase
         $this->assertTrue($uploadedFileLocator->fileExists($uploadedFileMock));
     }
 
-    public function testFileNotExists()
+    public function testFileNotExists(): void
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
             ->onlyMethods(['getFilename'])
@@ -36,7 +36,7 @@ class UploadedFileLocatorTest extends TestCase
         $this->assertFalse($uploadedFileLocator->fileExists($uploadedFileMock));
     }
 
-    public function testGetAbsoluteFilePath()
+    public function testGetAbsoluteFilePath(): void
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
 
@@ -47,7 +47,7 @@ class UploadedFileLocatorTest extends TestCase
         );
     }
 
-    public function testGetAbsoluteUploadedFileFilepath()
+    public function testGetAbsoluteUploadedFileFilepath(): void
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
@@ -63,7 +63,7 @@ class UploadedFileLocatorTest extends TestCase
         );
     }
 
-    public function testGetRelativeUploadedFileFilepath()
+    public function testGetRelativeUploadedFileFilepath(): void
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
             ->onlyMethods(['getFilename'])

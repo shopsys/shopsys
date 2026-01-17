@@ -49,7 +49,7 @@ class CreateDatabaseCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function createDatabaseIfNotExists(SymfonyStyle $symfonyStyleIo)
+    private function createDatabaseIfNotExists(SymfonyStyle $symfonyStyleIo): void
     {
         $defaultConnection = $this->getDefaultConnection();
 
@@ -77,7 +77,7 @@ class CreateDatabaseCommand extends Command
         }
     }
 
-    private function createExtensionsIfNotExist(SymfonyStyle $symfonyStyleIo)
+    private function createExtensionsIfNotExist(SymfonyStyle $symfonyStyleIo): void
     {
         // Extensions are created in schema "pg_catalog" in order to be able to DROP
         // schema "public" without dropping the extension.
@@ -93,7 +93,7 @@ class CreateDatabaseCommand extends Command
         $symfonyStyleIo->success('Extension pg_trgm is created');
     }
 
-    private function switchConnectionToSuperuser(SymfonyStyle $symfonyStyleIo)
+    private function switchConnectionToSuperuser(SymfonyStyle $symfonyStyleIo): void
     {
         if (!$this->isConnectedAsSuperuser()) {
             $symfonyStyleIo->note('Current database user does not have a superuser permission');

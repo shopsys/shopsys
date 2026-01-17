@@ -27,7 +27,7 @@ class DeleteExpiredExchangeTokensCronModule implements SimpleCronModuleInterface
     }
 
     #[Override]
-    public function run()
+    public function run(): void
     {
         $this->logger->info('Removing expired login as user exchange tokens');
         $this->loginAsUserExchangeTokenFacade->deleteAllExpired();

@@ -42,7 +42,7 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
      */
     private BillingAddressDataFactory $billingAddressDataFactory;
 
-    public function testDeleteAndReplace()
+    public function testDeleteAndReplace(): void
     {
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';

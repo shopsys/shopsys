@@ -43,7 +43,7 @@ class GoogleProductDomain
         $this->setData($googleProductDomainData);
     }
 
-    public function edit(GoogleProductDomainData $googleProductDomainData)
+    public function edit(GoogleProductDomainData $googleProductDomainData): void
     {
         $this->setData($googleProductDomainData);
     }

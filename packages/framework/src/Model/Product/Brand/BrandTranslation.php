@@ -37,7 +37,7 @@ class BrandTranslation extends AbstractTranslation
     /**
      * @param string|null $description
      */
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
     }

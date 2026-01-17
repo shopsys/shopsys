@@ -19,7 +19,7 @@ class AdvancedSearchConfig
         $this->filters = [];
     }
 
-    public function registerFilter(AdvancedSearchFilterInterface $filter)
+    public function registerFilter(AdvancedSearchFilterInterface $filter): void
     {
         if (array_key_exists($filter->getName(), $this->filters)) {
             $message = 'Filter "' . $filter->getName() . '" already exists.';

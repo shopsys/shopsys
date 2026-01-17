@@ -30,7 +30,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
      */
     private Localization $localization;
 
-    public function testIsIndependentlyVisible()
+    public function testIsIndependentlyVisible(): void
     {
         $enabledForDomains = [
             self::FIRST_DOMAIN_ID => true,
@@ -46,7 +46,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         );
     }
 
-    public function testIsIndependentlyVisibleEmptyName()
+    public function testIsIndependentlyVisibleEmptyName(): void
     {
         $paymentData = $this->paymentDataFactory->create();
         $names = [];
@@ -71,7 +71,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         );
     }
 
-    public function testIsIndependentlyVisibleNotOnDomain()
+    public function testIsIndependentlyVisibleNotOnDomain(): void
     {
         $enabledForDomains = [
             self::FIRST_DOMAIN_ID => false,
@@ -87,7 +87,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         );
     }
 
-    public function testIsIndependentlyVisibleHidden()
+    public function testIsIndependentlyVisibleHidden(): void
     {
         $enabledForDomains = [
             self::FIRST_DOMAIN_ID => false,

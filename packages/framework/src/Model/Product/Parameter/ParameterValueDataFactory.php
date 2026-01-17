@@ -35,8 +35,10 @@ class ParameterValueDataFactory
         return $parameterValueData;
     }
 
-    protected function fillFromParameterValue(ParameterValueData $parameterValueData, ParameterValue $parameterValue)
-    {
+    protected function fillFromParameterValue(
+        ParameterValueData $parameterValueData,
+        ParameterValue $parameterValue,
+    ): void {
         $parameterValueData->text = $parameterValue->getText();
         $parameterValueData->numericValue = $parameterValue->getNumericValue();
         $parameterValueData->locale = $parameterValue->getLocale();

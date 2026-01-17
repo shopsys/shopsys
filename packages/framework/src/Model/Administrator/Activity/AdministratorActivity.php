@@ -58,7 +58,7 @@ class AdministratorActivity
         $this->lastActionTime = new DatePoint();
     }
 
-    public function updateLastActionTime()
+    public function updateLastActionTime(): void
     {
         $this->lastActionTime = new DatePoint();
     }

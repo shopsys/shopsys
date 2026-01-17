@@ -115,7 +115,7 @@ class ParameterFacade
     /**
      * @param int $parameterId
      */
-    public function deleteById($parameterId)
+    public function deleteById($parameterId): void
     {
         $parameter = $this->parameterRepository->getById($parameterId);
 

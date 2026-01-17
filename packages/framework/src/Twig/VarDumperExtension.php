@@ -27,7 +27,7 @@ class VarDumperExtension extends AbstractExtension
     /**
      * @param mixed $var
      */
-    public function d($var)
+    public function d($var): void
     {
         d($var);
     }

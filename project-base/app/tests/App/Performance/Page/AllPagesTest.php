@@ -41,7 +41,7 @@ class AllPagesTest extends KernelTestCase
     }
 
     #[Group('warmup')]
-    public function testAdminPagesWarmup()
+    public function testAdminPagesWarmup(): void
     {
         $this->doWarmupPagesWithProgress(
             $this->getRequestDataSets('~^admin_~'),
@@ -49,14 +49,14 @@ class AllPagesTest extends KernelTestCase
     }
 
     #[Group('warmup')]
-    public function testFrontPagesWarmup()
+    public function testFrontPagesWarmup(): void
     {
         $this->doWarmupPagesWithProgress(
             $this->getRequestDataSets('~^front~'),
         );
     }
 
-    public function testAdminPages()
+    public function testAdminPages(): void
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^admin_~'),
@@ -64,7 +64,7 @@ class AllPagesTest extends KernelTestCase
         );
     }
 
-    public function testFrontPages()
+    public function testFrontPages(): void
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^front~'),
@@ -114,7 +114,7 @@ class AllPagesTest extends KernelTestCase
     /**
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet[] $requestDataSets
      */
-    private function doWarmupPagesWithProgress(array $requestDataSets)
+    private function doWarmupPagesWithProgress(array $requestDataSets): void
     {
         $consoleOutput = new ConsoleOutput();
         $consoleOutput->writeln('');
@@ -140,7 +140,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet[] $requestDataSets
      * @param string $jmeterOutputFilename
      */
-    private function doTestPagesWithProgress(array $requestDataSets, $jmeterOutputFilename)
+    private function doTestPagesWithProgress(array $requestDataSets, $jmeterOutputFilename): void
     {
         $consoleOutput = new ConsoleOutput();
         $consoleOutput->writeln('');
@@ -216,7 +216,7 @@ class AllPagesTest extends KernelTestCase
      */
     private function doAssert(
         array $performanceTestSamples,
-    ) {
+    ): void {
         $performanceTestSampleQualifier = $this->createPerformanceTestSampleQualifier();
 
         $overallStatus = $performanceTestSampleQualifier->getOverallStatus($performanceTestSamples);
@@ -235,7 +235,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
      * @param string $jmeterOutputFilename
      */
-    private function exportJmeterCsvReport(array $performanceTestSamples, $jmeterOutputFilename)
+    private function exportJmeterCsvReport(array $performanceTestSamples, $jmeterOutputFilename): void
     {
         $jmeterCsvReporter = new JmeterCsvReporter();
         $performanceResultsCsvExporter = new PerformanceResultsCsvExporter($jmeterCsvReporter);
@@ -257,7 +257,7 @@ class AllPagesTest extends KernelTestCase
     /**
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
      */
-    private function printPerformanceTestsSummary(array $performanceTestSamples, ConsoleOutput $consoleOutput)
+    private function printPerformanceTestsSummary(array $performanceTestSamples, ConsoleOutput $consoleOutput): void
     {
         $performanceTestSampleQualifier = $this->createPerformanceTestSampleQualifier();
         $performanceTestSummaryPrinter = new PerformanceTestSummaryPrinter($performanceTestSampleQualifier);

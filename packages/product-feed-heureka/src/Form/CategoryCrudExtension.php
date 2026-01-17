@@ -59,7 +59,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
      * @param array $data
      */
     #[Override]
-    public function saveData($categoryId, $data)
+    public function saveData($categoryId, $data): void
     {
         if (isset($data['heureka_category']) && $data['heureka_category'] instanceof HeurekaCategory) {
             $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId($categoryId, $data['heureka_category']);
@@ -72,7 +72,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
      * @param int $categoryId
      */
     #[Override]
-    public function removeData($categoryId)
+    public function removeData($categoryId): void
     {
         $this->heurekaCategoryFacade->removeHeurekaCategoryForCategoryId($categoryId);
     }

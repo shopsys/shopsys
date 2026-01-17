@@ -20,7 +20,7 @@ class Version20171005091354 extends AbstractMigration
         $this->sql('DROP TABLE feed_categories');
     }
 
-    private function transferDroppedHeurekaCategoryDataToPluginDataValues()
+    private function transferDroppedHeurekaCategoryDataToPluginDataValues(): void
     {
         $heurekaCategoryDataValues = [];
         $heurekaCategoryRows = $this->sql(
@@ -38,7 +38,7 @@ class Version20171005091354 extends AbstractMigration
         $this->insertHeurekaDataValues($heurekaCategoryDataValues, 'heureka_category');
     }
 
-    private function transferDroppedCategoryDataToPluginDataValues()
+    private function transferDroppedCategoryDataToPluginDataValues(): void
     {
         $categoryDataValues = [];
         $categoryRows = $this->sql(
@@ -59,7 +59,7 @@ class Version20171005091354 extends AbstractMigration
     /**
      * @param string $context
      */
-    private function insertHeurekaDataValues(array $valuesByKey, $context)
+    private function insertHeurekaDataValues(array $valuesByKey, $context): void
     {
         foreach ($valuesByKey as $key => $value) {
             $this->sql(

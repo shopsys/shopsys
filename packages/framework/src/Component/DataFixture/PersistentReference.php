@@ -48,7 +48,7 @@ class PersistentReference
      * @param string $entityName
      * @param int $entityId
      */
-    public function replace($entityName, $entityId)
+    public function replace($entityName, $entityId): void
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;

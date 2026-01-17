@@ -56,7 +56,7 @@ class TransportPriceCalculationTest extends TestCase
         string $vatPercent,
         Money $priceWithoutVat,
         Money $priceWithVat,
-    ) {
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->onlyMethods(['getInputPriceType'])
             ->disableOriginalConstructor()

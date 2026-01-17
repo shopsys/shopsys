@@ -26,7 +26,7 @@ class ProgressBarFactory
         return $bar;
     }
 
-    protected function initializeCustomPlaceholderFormatters()
+    protected function initializeCustomPlaceholderFormatters(): void
     {
         ProgressBar::setPlaceholderFormatterDefinition('remaining_hms', function (ProgressBar $bar) {
             if ($bar->getProgress() !== 0) {

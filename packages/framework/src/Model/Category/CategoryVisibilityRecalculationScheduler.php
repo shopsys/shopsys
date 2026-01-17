@@ -14,7 +14,7 @@ class CategoryVisibilityRecalculationScheduler
     {
     }
 
-    public function scheduleRecalculation()
+    public function scheduleRecalculation(): void
     {
         $this->recalculate = true;
     }

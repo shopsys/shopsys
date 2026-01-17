@@ -22,12 +22,12 @@ class InputPriceRecalculationScheduler
     ) {
     }
 
-    public function scheduleSetInputPricesWithoutVat()
+    public function scheduleSetInputPricesWithoutVat(): void
     {
         $this->recalculateInputPricesWithoutVat = true;
     }
 
-    public function scheduleSetInputPricesWithVat()
+    public function scheduleSetInputPricesWithVat(): void
     {
         $this->recalculateInputPricesWithVat = true;
     }

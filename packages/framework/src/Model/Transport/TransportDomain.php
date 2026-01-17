@@ -62,7 +62,7 @@ class TransportDomain
         return $this->domainId;
     }
 
-    public function setEnabled(bool $enabled)
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }

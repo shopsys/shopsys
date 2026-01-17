@@ -22,7 +22,7 @@ class AdvancedSearchFilterTranslation
      * @param string $filterName
      * @param string $filterTranslation
      */
-    public function addFilterTranslation($filterName, $filterTranslation)
+    public function addFilterTranslation($filterName, $filterTranslation): void
     {
         $this->filtersTranslationsByFilterName[$filterName] = $filterTranslation;
     }

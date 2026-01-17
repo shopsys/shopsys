@@ -292,7 +292,7 @@ class OrderItem
         return $this->catnum;
     }
 
-    public function edit(OrderItemData $orderItemData)
+    public function edit(OrderItemData $orderItemData): void
     {
         $this->name = $orderItemData->name;
         $this->unitPriceWithoutVat = $orderItemData->unitPriceWithoutVat;

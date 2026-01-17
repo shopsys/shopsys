@@ -78,7 +78,7 @@ class BrandDomain
     /**
      * @param string|null $seoTitle
      */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle($seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
@@ -94,7 +94,7 @@ class BrandDomain
     /**
      * @param string|null $seoMetaDescription
      */
-    public function setSeoMetaDescription($seoMetaDescription)
+    public function setSeoMetaDescription($seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
@@ -110,7 +110,7 @@ class BrandDomain
     /**
      * @param string|null $seoH1
      */
-    public function setSeoH1($seoH1)
+    public function setSeoH1($seoH1): void
     {
         $this->seoH1 = $seoH1;
     }

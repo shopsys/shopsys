@@ -64,7 +64,7 @@ class Brand extends AbstractTranslatableEntity
         $this->setData($brandData);
     }
 
-    public function edit(BrandData $brandData)
+    public function edit(BrandData $brandData): void
     {
         $this->setDomains($brandData);
         $this->setData($brandData);
@@ -100,7 +100,7 @@ class Brand extends AbstractTranslatableEntity
         return $this->name;
     }
 
-    protected function setTranslations(BrandData $brandData)
+    protected function setTranslations(BrandData $brandData): void
     {
         foreach ($brandData->descriptions as $locale => $description) {
             $this->translation($locale)->setDescription($description);
@@ -116,7 +116,7 @@ class Brand extends AbstractTranslatableEntity
         return new BrandTranslation();
     }
 
-    protected function setDomains(BrandData $brandData)
+    protected function setDomains(BrandData $brandData): void
     {
         foreach ($this->domains as $brandDomain) {
             $domainId = $brandDomain->getDomainId();
@@ -126,7 +126,7 @@ class Brand extends AbstractTranslatableEntity
         }
     }
 
-    protected function createDomains(BrandData $brandData)
+    protected function createDomains(BrandData $brandData): void
     {
         $domainIds = array_keys($brandData->seoTitles);
 

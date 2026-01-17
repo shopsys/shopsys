@@ -113,7 +113,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->setData($paymentData);
     }
 
-    public function edit(PaymentData $paymentData)
+    public function edit(PaymentData $paymentData): void
     {
         $this->setDomains($paymentData);
         $this->setData($paymentData);
@@ -136,7 +136,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->setTranslations($paymentData);
     }
 
-    public function addTransport(Transport $transport)
+    public function addTransport(Transport $transport): void
     {
         if (!$this->transports->contains($transport)) {
             $this->transports->add($transport);
@@ -147,7 +147,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
      */
-    public function setTransports($transports)
+    public function setTransports($transports): void
     {
         foreach ($this->transports as $currentTransport) {
             if (!in_array($currentTransport, $transports, true)) {
@@ -160,7 +160,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
     }
 
-    public function removeTransport(Transport $transport)
+    public function removeTransport(Transport $transport): void
     {
         if ($this->transports->contains($transport)) {
             $this->transports->removeElement($transport);
@@ -176,7 +176,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         return $this->transports->getValues();
     }
 
-    protected function setTranslations(PaymentData $paymentData)
+    protected function setTranslations(PaymentData $paymentData): void
     {
         foreach ($paymentData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -288,7 +288,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         return $this->deleted;
     }
 
-    public function markAsDeleted()
+    public function markAsDeleted(): void
     {
         $this->deleted = true;
         $this->transports->clear();
@@ -306,7 +306,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      * @param int $position
      */
     #[Override]
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
@@ -364,7 +364,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         return new PaymentTranslation();
     }
 
-    protected function setDomains(PaymentData $paymentData)
+    protected function setDomains(PaymentData $paymentData): void
     {
         foreach ($this->domains as $paymentDomain) {
             $domainId = $paymentDomain->getDomainId();
@@ -378,7 +378,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
     }
 
-    protected function createDomains(PaymentData $paymentData)
+    protected function createDomains(PaymentData $paymentData): void
     {
         $domainIds = array_keys($paymentData->enabled);
 

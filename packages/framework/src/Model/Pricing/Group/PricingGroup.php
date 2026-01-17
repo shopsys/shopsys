@@ -39,7 +39,7 @@ class PricingGroup
         $this->setData($pricingGroupData);
     }
 
-    public function edit(PricingGroupData $pricingGroupData)
+    public function edit(PricingGroupData $pricingGroupData): void
     {
         $this->setData($pricingGroupData);
     }

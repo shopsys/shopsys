@@ -43,7 +43,7 @@ class FlagDataFactory
         return $flagData;
     }
 
-    protected function fillFromFlag(FlagData $flagData, Flag $flag)
+    protected function fillFromFlag(FlagData $flagData, Flag $flag): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation[] $translations */
         $translations = $flag->getTranslations();

@@ -64,7 +64,7 @@ class TransformStringTest extends TestCase
      * @param mixed $expected
      */
     #[DataProvider('safeFilenameProvider')]
-    public function testSafeFilename($actual, $expected)
+    public function testSafeFilename($actual, $expected): void
     {
         $this->assertSame($expected, $this->transformStringHelper->safeFilename($actual));
     }
@@ -108,7 +108,7 @@ class TransformStringTest extends TestCase
      * @param mixed $expected
      */
     #[DataProvider('stringToFriendlyUrlSlugProvider')]
-    public function testStringToFriendlyUrlSlug($actual, $expected)
+    public function testStringToFriendlyUrlSlug($actual, $expected): void
     {
         $this->assertSame($expected, $this->transformStringHelper->stringToFriendlyUrlSlug($actual));
     }
@@ -160,7 +160,7 @@ class TransformStringTest extends TestCase
      * @param mixed $expected
      */
     #[DataProvider('stringToCamelCaseProvider')]
-    public function testStringToCamelCase($actual, $expected)
+    public function testStringToCamelCase($actual, $expected): void
     {
         $this->assertSame($expected, $this->transformStringHelper->stringToCamelCase($actual));
     }

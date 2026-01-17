@@ -9,7 +9,7 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class MergeCartsInfoTest extends GraphQlTestCase
 {
-    public function testDoNotShowInfoWhenMergingAnonymousCartWithEmptyCartAfterLogin()
+    public function testDoNotShowInfoWhenMergingAnonymousCartWithEmptyCartAfterLogin(): void
     {
         $loginMutationWithCartUuid = 'mutation {
                 Login(input: {

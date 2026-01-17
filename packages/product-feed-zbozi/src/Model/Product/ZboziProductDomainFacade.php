@@ -48,7 +48,7 @@ class ZboziProductDomainFacade
      * @param int $productId
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData[] $zboziProductDomainsData
      */
-    public function saveZboziProductDomainsForProductId($productId, array $zboziProductDomainsData)
+    public function saveZboziProductDomainsForProductId($productId, array $zboziProductDomainsData): void
     {
         $existingZboziProductDomains = $this->zboziProductDomainRepository->findByProductId($productId);
 
@@ -68,7 +68,7 @@ class ZboziProductDomainFacade
     protected function removeOldZboziProductDomainsForProductId(
         array $existingZboziProductDomains,
         array $newZboziProductDomainsData,
-    ) {
+    ): void {
         $domainsIdsWithNewZboziProductDomains = [];
 
         foreach ($newZboziProductDomainsData as $newZboziProductDomainData) {
@@ -85,7 +85,7 @@ class ZboziProductDomainFacade
     /**
      * @param int $productId
      */
-    protected function saveZboziProductDomain($productId, ZboziProductDomainData $zboziProductDomainData)
+    protected function saveZboziProductDomain($productId, ZboziProductDomainData $zboziProductDomainData): void
     {
         $product = $this->productRepository->getById($productId);
         $zboziProductDomainData->product = $product;
@@ -106,7 +106,7 @@ class ZboziProductDomainFacade
     /**
      * @param int $productId
      */
-    public function delete($productId)
+    public function delete($productId): void
     {
         $zboziProductDomains = $this->zboziProductDomainRepository->findByProductId($productId);
 

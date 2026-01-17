@@ -63,7 +63,7 @@ class ProductDataFixture
         $this->demoDataIterationCounter = 0;
     }
 
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -113,7 +113,7 @@ class ProductDataFixture
     /**
      * @param string[][] $variantCatnumsByMainVariantCatnum
      */
-    private function createVariants(array $variantCatnumsByMainVariantCatnum)
+    private function createVariants(array $variantCatnumsByMainVariantCatnum): void
     {
         $uniqueIndex = $this->getUniqueIndex();
 
@@ -150,7 +150,7 @@ class ProductDataFixture
     /**
      * @param \App\Model\Product\ProductData $productData
      */
-    private function makeProductDataUnique(ProductData $productData)
+    private function makeProductDataUnique(ProductData $productData): void
     {
         $matches = [];
         $uniqueIndex = $this->getUniqueIndex();
@@ -180,13 +180,13 @@ class ProductDataFixture
         return ' #' . $this->demoDataIterationCounter;
     }
 
-    private function clearResources()
+    private function clearResources(): void
     {
         $this->em->clear();
         gc_collect_cycles();
     }
 
-    private function cleanAndLoadReferences()
+    private function cleanAndLoadReferences(): void
     {
         $this->clearResources();
         $this->productsByCatnum = [];
@@ -208,7 +208,7 @@ class ProductDataFixture
     /**
      * @param \App\Model\Product\ProductData $productData
      */
-    private function setRandomPerformanceCategoriesToProductData(ProductData $productData)
+    private function setRandomPerformanceCategoriesToProductData(ProductData $productData): void
     {
         $this->cleanPerformanceCategoriesFromProductDataByDomainId($productData, 1);
         $this->cleanPerformanceCategoriesFromProductDataByDomainId($productData, 2);
@@ -220,7 +220,7 @@ class ProductDataFixture
      * @param \App\Model\Product\ProductData $productData
      * @param int $domainId
      */
-    private function cleanPerformanceCategoriesFromProductDataByDomainId(ProductData $productData, $domainId)
+    private function cleanPerformanceCategoriesFromProductDataByDomainId(ProductData $productData, $domainId): void
     {
         foreach ($productData->categoriesByDomainId[$domainId] as $key => $category) {
             if ($this->isPerformanceCategory($category)) {
@@ -233,7 +233,7 @@ class ProductDataFixture
      * @param \App\Model\Product\ProductData $productData
      * @param int $domainId
      */
-    private function addRandomPerformanceCategoriesToProductDataByDomainId(ProductData $productData, $domainId)
+    private function addRandomPerformanceCategoriesToProductDataByDomainId(ProductData $productData, $domainId): void
     {
         $performanceCategoryIds = $this->getPerformanceCategoryIds();
         $randomPerformanceCategoryIds = $this->faker->randomElements(

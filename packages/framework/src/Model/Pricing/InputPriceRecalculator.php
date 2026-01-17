@@ -26,12 +26,12 @@ class InputPriceRecalculator
     ) {
     }
 
-    public function recalculateToInputPricesWithoutVat()
+    public function recalculateToInputPricesWithoutVat(): void
     {
         $this->recalculateInputPriceForNewType(PricingSetting::PRICE_TYPE_WITHOUT_VAT);
     }
 
-    public function recalculateToInputPricesWithVat()
+    public function recalculateToInputPricesWithVat(): void
     {
         $this->recalculateInputPriceForNewType(PricingSetting::PRICE_TYPE_WITH_VAT);
     }
@@ -39,7 +39,7 @@ class InputPriceRecalculator
     /**
      * @param int $newInputPriceType
      */
-    protected function recalculateInputPriceForNewType($newInputPriceType)
+    protected function recalculateInputPriceForNewType($newInputPriceType): void
     {
         $this->recalculateTransportsInputPriceForNewType($newInputPriceType);
         $this->recalculatePaymentsInputPriceForNewType($newInputPriceType);
@@ -48,7 +48,7 @@ class InputPriceRecalculator
     /**
      * @param int $toInputPriceType
      */
-    protected function recalculatePaymentsInputPriceForNewType($toInputPriceType)
+    protected function recalculatePaymentsInputPriceForNewType($toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()
             ->select('p')
@@ -77,7 +77,7 @@ class InputPriceRecalculator
     /**
      * @param int $toInputPriceType
      */
-    protected function recalculateTransportsInputPriceForNewType($toInputPriceType)
+    protected function recalculateTransportsInputPriceForNewType($toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()
             ->select('t')
@@ -101,7 +101,7 @@ class InputPriceRecalculator
         });
     }
 
-    protected function batchProcessQuery(Query $query, Closure $callback)
+    protected function batchProcessQuery(Query $query, Closure $callback): void
     {
         $iteration = 0;
 

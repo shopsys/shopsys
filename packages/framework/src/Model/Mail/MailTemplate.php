@@ -87,7 +87,7 @@ class MailTemplate
         $this->edit($mailTemplateData);
     }
 
-    public function edit(MailTemplateData $mailTemplateData)
+    public function edit(MailTemplateData $mailTemplateData): void
     {
         $this->bccEmail = $mailTemplateData->bccEmail;
         $this->subject = $mailTemplateData->subject;

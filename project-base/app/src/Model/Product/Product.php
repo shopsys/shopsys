@@ -84,7 +84,7 @@ class Product extends BaseProduct
     public function edit(
         array $productCategoryDomains,
         BaseProductData $productData,
-    ) {
+    ): void {
         $this->editRelatedProducts($productData->relatedProducts);
 
         parent::edit($productCategoryDomains, $productData);
@@ -181,7 +181,7 @@ class Product extends BaseProduct
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      */
     #[Override]
-    public function setProductCategoryDomains($productCategoryDomains)
+    public function setProductCategoryDomains($productCategoryDomains): void
     {
         foreach ($this->productCategoryDomains as $productCategoryDomain) {
             if ($this->isProductCategoryDomainInArray($productCategoryDomain, $productCategoryDomains) === false) {
@@ -221,7 +221,7 @@ class Product extends BaseProduct
     /**
      * @param \App\Model\Product\Product[] $relatedProducts
      */
-    protected function editRelatedProducts(array $relatedProducts)
+    protected function editRelatedProducts(array $relatedProducts): void
     {
         $this->relatedProducts->clear();
 

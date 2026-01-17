@@ -43,7 +43,7 @@ class ParameterDataFactory
         return $parameterData;
     }
 
-    protected function fillFromParameter(ParameterData $parameterData, Parameter $parameter)
+    protected function fillFromParameter(ParameterData $parameterData, Parameter $parameter): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation[] $translations */
         $translations = $parameter->getTranslations();

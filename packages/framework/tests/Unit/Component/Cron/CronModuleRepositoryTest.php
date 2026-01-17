@@ -15,7 +15,7 @@ use Symfony\Component\Clock\Clock;
 
 class CronModuleRepositoryTest extends TestCase
 {
-    public function testGetCronModuleReturnsCorrectInstance()
+    public function testGetCronModuleReturnsCorrectInstance(): void
     {
         $doctrineRepositoryMock = $this->createNullDoctrineRepositoryMock();
         $em = $this->createEntityManagerMockWithRepository($doctrineRepositoryMock);

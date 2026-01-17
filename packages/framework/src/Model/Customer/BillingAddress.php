@@ -96,7 +96,7 @@ class BillingAddress
         $this->setData($billingAddressData);
     }
 
-    public function edit(BillingAddressData $billingAddressData)
+    public function edit(BillingAddressData $billingAddressData): void
     {
         $this->setData($billingAddressData);
     }

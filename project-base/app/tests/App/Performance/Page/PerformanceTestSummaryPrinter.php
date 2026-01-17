@@ -18,7 +18,7 @@ class PerformanceTestSummaryPrinter
     public function printSummary(
         array $performanceTestSamples,
         ConsoleOutput $consoleOutput,
-    ) {
+    ): void {
         foreach ($performanceTestSamples as $performanceTestSample) {
             $sampleStatus = $this->performanceTestSampleQualifier->getSampleStatus($performanceTestSample);
 
@@ -54,7 +54,7 @@ class PerformanceTestSummaryPrinter
     private function printSample(
         PerformanceTestSample $performanceTestSample,
         ConsoleOutput $consoleOutput,
-    ) {
+    ): void {
         $consoleOutput->writeln('');
         $consoleOutput->writeln(
             'Route name: ' . $performanceTestSample->getRouteName() . ' (' . $performanceTestSample->getUrl() . ')',

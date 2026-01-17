@@ -13,7 +13,7 @@ class BaseClass5
     /**
      * This method accepts parameter with type that is registered in the class extension map and hence the "@method" annotation must be added to the child class
      */
-    public function setCategory(?Category $category = null)
+    public function setCategory(?Category $category = null): void
     {
     }
 
@@ -30,6 +30,6 @@ class BaseClass5
         bool $false = false,
         ?string $null = null,
         array $emptyArray = [],
-    ) {
+    ): void {
     }
 }

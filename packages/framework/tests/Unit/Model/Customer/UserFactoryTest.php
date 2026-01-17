@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 class UserFactoryTest extends TestCase
 {
     #[DoesNotPerformAssertions]
-    public function testCreate()
+    public function testCreate(): void
     {
         $customerUserFactory = $this->getUserFactory();
         $customerUser = $customerUserFactory->create(TestCustomerProvider::getTestCustomerUserData());

@@ -157,7 +157,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->setData($customerUserData);
     }
 
-    public function edit(CustomerUserData $customerUserData)
+    public function edit(CustomerUserData $customerUserData): void
     {
         $this->setData($customerUserData);
     }
@@ -218,7 +218,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      * @param \DateTimeImmutable $lastActivity
      */
     #[Override]
-    public function setLastActivity($lastActivity)
+    public function setLastActivity($lastActivity): void
     {
         $this->lastActivity = $lastActivity;
     }
@@ -242,7 +242,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @param int $domainId
      */
-    public function setDomainId($domainId)
+    public function setDomainId($domainId): void
     {
         $this->domainId = $domainId;
     }

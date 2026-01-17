@@ -44,7 +44,7 @@ class CartRepository
     /**
      * @param int $daysLimit
      */
-    public function deleteOldCartsForUnregisteredCustomerUsers($daysLimit)
+    public function deleteOldCartsForUnregisteredCustomerUsers($daysLimit): void
     {
         $this->em->getConnection()->executeStatement(
             'DELETE FROM cart_items WHERE cart_id IN (
@@ -73,7 +73,7 @@ class CartRepository
     /**
      * @param int $daysLimit
      */
-    public function deleteOldCartsForRegisteredCustomerUsers($daysLimit)
+    public function deleteOldCartsForRegisteredCustomerUsers($daysLimit): void
     {
         $this->em->getConnection()->executeStatement(
             'DELETE FROM cart_items WHERE cart_id IN (

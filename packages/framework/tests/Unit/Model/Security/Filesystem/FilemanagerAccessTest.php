@@ -68,7 +68,7 @@ class FilemanagerAccessTest extends TestCase
      * @param mixed $isAccessible
      */
     #[DataProvider('isPathAccessibleProvider')]
-    public function testIsPathAccessible($fileuploadDir, $testPath, $attr, $isAccessible)
+    public function testIsPathAccessible($fileuploadDir, $testPath, $attr, $isAccessible): void
     {
         $elFinderConfigurationReaderMock = $this->getMockBuilder(ElFinderConfigurationReader::class)
             ->onlyMethods([])
@@ -90,7 +90,7 @@ class FilemanagerAccessTest extends TestCase
      * @param mixed $isAccessible
      */
     #[DataProvider('isPathAccessibleProvider')]
-    public function testIsPathAccessibleStatic($fileuploadDir, $testPath, $attr, $isAccessible)
+    public function testIsPathAccessibleStatic($fileuploadDir, $testPath, $attr, $isAccessible): void
     {
         $elFinderConfigurationReaderMock = $this->getMockBuilder(ElFinderConfigurationReader::class)
             ->onlyMethods([])
@@ -106,7 +106,7 @@ class FilemanagerAccessTest extends TestCase
         $this->assertSame(FilemanagerAccess::isPathAccessibleStatic($attr, $testPath, null, null), $isAccessible);
     }
 
-    public function testIsPathAccessibleStaticException()
+    public function testIsPathAccessibleStaticException(): void
     {
         FilemanagerAccess::detachSelf();
         $this->expectException(InstanceNotInjectedException::class);

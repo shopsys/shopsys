@@ -37,7 +37,7 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
      */
     private Localization $localization;
 
-    public function testDeleteByIdAndReplace()
+    public function testDeleteByIdAndReplace(): void
     {
         $orderStatusData = new OrderStatusData();
         $namesByLocale = [];

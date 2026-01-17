@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransform
 
 class RemoveDuplicatesFromArrayTransformerTest extends TestCase
 {
-    public function testReverseTransform()
+    public function testReverseTransform(): void
     {
         $array = ['a', 'b', 'a'];
 
@@ -17,7 +17,7 @@ class RemoveDuplicatesFromArrayTransformerTest extends TestCase
         $this->assertSame(['a', 'b'], $transformer->reverseTransform($array));
     }
 
-    public function testReverseTransformPresevesKeys()
+    public function testReverseTransformPresevesKeys(): void
     {
         $array = [0 => 'a', 10 => 'b', 20 => 'a'];
 
@@ -25,7 +25,7 @@ class RemoveDuplicatesFromArrayTransformerTest extends TestCase
         $this->assertSame([0 => 'a', 10 => 'b'], $transformer->reverseTransform($array));
     }
 
-    public function testReverseTransformComparesStrictly()
+    public function testReverseTransformComparesStrictly(): void
     {
         $array = ['0', 0, null, false];
 

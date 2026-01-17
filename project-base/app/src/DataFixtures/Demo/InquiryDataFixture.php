@@ -36,7 +36,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         }
     }
 
-    private function loadDataForFirstDomain(Product $inquiryProduct)
+    private function loadDataForFirstDomain(Product $inquiryProduct): void
     {
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Mark';

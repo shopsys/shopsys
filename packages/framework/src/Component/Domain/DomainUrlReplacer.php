@@ -21,7 +21,7 @@ class DomainUrlReplacer
      * @param string $domainConfigUrl
      * @param string $domainSettingUrl
      */
-    public function replaceUrlInStringColumns($domainConfigUrl, $domainSettingUrl)
+    public function replaceUrlInStringColumns($domainConfigUrl, $domainSettingUrl): void
     {
         $stringColumnNames = $this->getAllStringColumnNamesIndexedByTableName();
 

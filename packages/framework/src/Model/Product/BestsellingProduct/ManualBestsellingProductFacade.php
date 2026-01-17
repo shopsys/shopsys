@@ -21,7 +21,7 @@ class ManualBestsellingProductFacade
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $productsIndexedByPosition
      */
-    public function edit(Category $category, $domainId, array $productsIndexedByPosition)
+    public function edit(Category $category, $domainId, array $productsIndexedByPosition): void
     {
         $toDelete = $this->manualBestsellingProductRepository->getByCategory($domainId, $category);
 

@@ -28,7 +28,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     private BrandFactory $brandFactory;
 
     #[Group('multidomain')]
-    public function testCreateBrandDomain()
+    public function testCreateBrandDomain(): void
     {
         $brandData = $this->brandDataFactory->create();
 
@@ -47,7 +47,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     }
 
     #[Group('singledomain')]
-    public function testCreateBrandDomainForSingleDomain()
+    public function testCreateBrandDomainForSingleDomain(): void
     {
         $brandData = $this->brandDataFactory->create();
 

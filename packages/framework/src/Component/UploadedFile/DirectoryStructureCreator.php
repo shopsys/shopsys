@@ -21,7 +21,7 @@ class DirectoryStructureCreator
         $this->filesysytem = $filesystem;
     }
 
-    public function makeUploadedFileDirectories()
+    public function makeUploadedFileDirectories(): void
     {
         $uploadedFileEntityConfigs = $this->uploadedFileConfig->getAllUploadedFileEntityConfigs();
         $directories = [];

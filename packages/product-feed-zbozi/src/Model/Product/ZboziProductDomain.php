@@ -55,7 +55,7 @@ class ZboziProductDomain
         $this->setData($zboziProductDomainData);
     }
 
-    public function edit(ZboziProductDomainData $zboziProductDomainData)
+    public function edit(ZboziProductDomainData $zboziProductDomainData): void
     {
         $this->setData($zboziProductDomainData);
     }

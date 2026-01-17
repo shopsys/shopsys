@@ -40,7 +40,7 @@ class ProductVisibilityRepository
     /**
      * @param int $domainId
      */
-    public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, $domainId)
+    public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, $domainId): void
     {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO product_visibilities (product_id, pricing_group_id, domain_id, visible)
@@ -121,7 +121,7 @@ class ProductVisibilityRepository
     /**
      * @param int[]|null $productIds
      */
-    protected function calculateIndependentVisibility(?array $productIds)
+    protected function calculateIndependentVisibility(?array $productIds): void
     {
         $variables = [
             'now' => $this->clock->now(),
@@ -219,7 +219,7 @@ class ProductVisibilityRepository
     /**
      * @param int[]|null $productIds
      */
-    protected function hideVariantsWithInvisibleMainVariant(?array $productIds)
+    protected function hideVariantsWithInvisibleMainVariant(?array $productIds): void
     {
         $variables = [
             'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
@@ -261,7 +261,7 @@ class ProductVisibilityRepository
     /**
      * @param int[]|null $productIds
      */
-    protected function hideMainVariantsWithoutVisibleVariants(?array $productIds)
+    protected function hideMainVariantsWithoutVisibleVariants(?array $productIds): void
     {
         $variables = [
             'variantTypeMain' => Product::VARIANT_TYPE_MAIN,

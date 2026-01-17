@@ -12,7 +12,7 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 
 class GroupedScalarHydratorTest extends TransactionFunctionalTestCase
 {
-    public function testHydrateAllData()
+    public function testHydrateAllData(): void
     {
         $qb = $this->em->createQueryBuilder()
             ->select('o, oi')

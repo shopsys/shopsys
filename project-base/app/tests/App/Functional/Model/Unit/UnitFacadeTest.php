@@ -31,7 +31,7 @@ class UnitFacadeTest extends TransactionFunctionalTestCase
      */
     private ProductFacade $productFacade;
 
-    public function testDeleteByIdAndReplace()
+    public function testDeleteByIdAndReplace(): void
     {
         $unitData = new UnitData();
         $unitData->name = ['cs' => 'name'];

@@ -130,7 +130,7 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
         }
     }
 
-    public function onPreSubmit(FormEvent $event)
+    public function onPreSubmit(FormEvent $event): void
     {
         $data = $event->getData();
 

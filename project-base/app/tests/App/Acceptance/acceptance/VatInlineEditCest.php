@@ -11,7 +11,7 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 
 class VatInlineEditCest
 {
-    public function testVatEdit(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage)
+    public function testVatEdit(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage): void
     {
         $me->wantTo('vat can be edited via inline edit');
         $loginPage->loginAsAdmin();
@@ -24,8 +24,11 @@ class VatInlineEditCest
         $inlineEditPage->assertSeeInColumn(1, 'name', 'test edited');
     }
 
-    public function testVatDeleteAndCreate(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage)
-    {
+    public function testVatDeleteAndCreate(
+        AcceptanceTester $me,
+        LoginPage $loginPage,
+        InlineEditPage $inlineEditPage,
+    ): void {
         $me->wantTo('vat can be created and deleted via inline edit');
         $loginPage->loginAsAdmin();
         $me->amOnPage('/admin/vat/list');

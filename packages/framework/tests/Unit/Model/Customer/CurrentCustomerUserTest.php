@@ -17,7 +17,7 @@ use Tests\FrameworkBundle\Unit\Model\Customer\Mock\TokenMock;
 
 class CurrentCustomerUserTest extends TestCase
 {
-    public function testGetPricingGroupForUnregisteredCustomerReturnsDefaultPricingGroup()
+    public function testGetPricingGroupForUnregisteredCustomerReturnsDefaultPricingGroup(): void
     {
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
@@ -41,7 +41,7 @@ class CurrentCustomerUserTest extends TestCase
         $this->assertSame($expectedPricingGroup, $pricingGroup);
     }
 
-    public function testGetPricingGroupForRegisteredCustomerReturnsHisPricingGroup()
+    public function testGetPricingGroupForRegisteredCustomerReturnsHisPricingGroup(): void
     {
         $customerUser = TestCustomerProvider::getTestCustomerUser();
         $expectedPricingGroup = $customerUser->getPricingGroup();

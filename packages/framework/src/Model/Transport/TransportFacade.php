@@ -46,7 +46,7 @@ class TransportFacade
         return $transport;
     }
 
-    public function edit(Transport $transport, TransportData $transportData)
+    public function edit(Transport $transport, TransportData $transportData): void
     {
         $transport->edit($transportData);
         $this->updateTransportPrices($transport, $transportData->inputPricesByDomain);
@@ -67,7 +67,7 @@ class TransportFacade
     /**
      * @param int $id
      */
-    public function deleteById($id)
+    public function deleteById($id): void
     {
         $transport = $this->getById($id);
         $transport->markAsDeleted();
