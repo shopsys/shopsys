@@ -77,7 +77,7 @@ class CurrencyFacade
     /**
      * @param int $currencyId
      */
-    public function deleteById($currencyId)
+    public function deleteById($currencyId): void
     {
         $currency = $this->currencyRepository->getById($currencyId);
 
@@ -116,7 +116,7 @@ class CurrencyFacade
         return $this->getById($this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId));
     }
 
-    public function setDefaultCurrency(Currency $currency)
+    public function setDefaultCurrency(Currency $currency): void
     {
         $originalDefaultCurrency = $this->getDefaultCurrency();
         $this->pricingSetting->setDefaultCurrency($currency);
@@ -127,7 +127,7 @@ class CurrencyFacade
     /**
      * @param int $domainId
      */
-    public function setDomainDefaultCurrency(Currency $currency, $domainId)
+    public function setDomainDefaultCurrency(Currency $currency, $domainId): void
     {
         $this->pricingSetting->setDomainDefaultCurrency($currency, $domainId);
         $this->dispatchCurrencyEvent($currency, CurrencyEvent::UPDATE);

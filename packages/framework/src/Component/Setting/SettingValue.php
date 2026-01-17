@@ -76,7 +76,7 @@ class SettingValue
     /**
      * @param \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
      */
-    public function edit($value)
+    public function edit($value): void
     {
         $this->setValue($value);
     }
@@ -127,7 +127,7 @@ class SettingValue
     /**
      * @param \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
      */
-    protected function setValue($value)
+    protected function setValue($value): void
     {
         $this->type = $this->getValueType($value);
 

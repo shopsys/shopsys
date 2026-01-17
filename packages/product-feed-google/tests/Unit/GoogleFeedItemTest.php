@@ -187,7 +187,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals('out_of_stock', $googleFeedItem->getAvailability());
     }
 
-    public function testGoogleFeedItemWithEan()
+    public function testGoogleFeedItemWithEan(): void
     {
         $this->defaultProduct->method('getEan')->willReturn('1234567890123');
 
@@ -196,7 +196,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals(['gtin' => '1234567890123'], $googleFeedItem->getIdentifiers());
     }
 
-    public function testGoogleFeedItemWithPartno()
+    public function testGoogleFeedItemWithPartno(): void
     {
         $this->defaultProduct->method('getPartno')->willReturn('HSC0424PP');
 
@@ -205,7 +205,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals(['mpn' => 'HSC0424PP'], $googleFeedItem->getIdentifiers());
     }
 
-    public function testGoogleFeedItemWithEanAndPartno()
+    public function testGoogleFeedItemWithEanAndPartno(): void
     {
         $this->defaultProduct->method('getEan')->willReturn('1234567890123');
         $this->defaultProduct->method('getPartno')->willReturn('HSC0424PP');

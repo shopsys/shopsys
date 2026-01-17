@@ -20,7 +20,7 @@ use Tests\FrameworkBundle\Test\MiddlewareTestCase;
 
 class AddProductGiftsMiddlewareTest extends MiddlewareTestCase
 {
-    public function testAddProductWithGifts()
+    public function testAddProductWithGifts(): void
     {
         $orderProcessingData = $this->createOrderProcessingData();
         $productData = new ProductData();

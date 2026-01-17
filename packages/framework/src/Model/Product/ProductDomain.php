@@ -432,7 +432,7 @@ class ProductDomain
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null $promotionXy
      */
-    public function setPromotionXy($promotionXy)
+    public function setPromotionXy($promotionXy): void
     {
         $this->promotionXy = $promotionXy;
     }

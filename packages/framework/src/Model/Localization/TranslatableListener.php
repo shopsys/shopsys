@@ -58,7 +58,7 @@ class TranslatableListener extends PrezentTranslatableListener
         ];
     }
 
-    public function postPersist(LifecycleEventArgs $args)
+    public function postPersist(LifecycleEventArgs $args): void
     {
         $this->postLoad($args);
     }

@@ -62,7 +62,7 @@ class AutocompleteFavoriteBrand implements OrderableEntityInterface
      * @param int $position
      */
     #[Override]
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }

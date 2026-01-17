@@ -109,7 +109,7 @@ class OrderStatusRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function replaceOrderStatus(OrderStatus $oldOrderStatus, OrderStatus $newOrderStatus)
+    public function replaceOrderStatus(OrderStatus $oldOrderStatus, OrderStatus $newOrderStatus): void
     {
         $this->em->createQueryBuilder()
             ->update(Order::class, 'o')

@@ -56,7 +56,7 @@ class TopCategoryFacade
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      */
-    public function saveTopCategoriesForDomain($domainId, array $categories)
+    public function saveTopCategoriesForDomain($domainId, array $categories): void
     {
         $oldTopCategories = $this->topCategoryRepository->getAllByDomainId($domainId);
 

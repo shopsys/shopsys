@@ -39,7 +39,7 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
     }
 
     #[Override]
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 

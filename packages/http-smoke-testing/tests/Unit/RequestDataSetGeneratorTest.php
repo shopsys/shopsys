@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Route;
 
 class RequestDataSetGeneratorTest extends TestCase
 {
-    public function testGeneratorGeneratesExactlyOneRequestDataSet()
+    public function testGeneratorGeneratesExactlyOneRequestDataSet(): void
     {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator('test_route_path', 'test_route_name');
 
@@ -23,7 +23,7 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertCount(1, $requestDataSets);
     }
 
-    public function testGeneratorCanAddExtraRequestDataSet()
+    public function testGeneratorCanAddExtraRequestDataSet(): void
     {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator('test_route_path', 'test_route_name');
 
@@ -34,7 +34,7 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertCount(3, $requestDataSets);
     }
 
-    public function testGeneratorGeneratesUniqueInstancesOfEqualRequestDataSet()
+    public function testGeneratorGeneratesUniqueInstancesOfEqualRequestDataSet(): void
     {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator('test_route_path', 'test_route_name');
 
@@ -64,7 +64,7 @@ class RequestDataSetGeneratorTest extends TestCase
         DataSet $dataSet,
         int $statusCode,
         array $parameters,
-    ) {
+    ): void {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator(
             'test_route_path',
             'test_route_name',
@@ -77,7 +77,7 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertEquals($parameters, $requestDataSets[0]->getParameters());
     }
 
-    public function testGeneratorGeneratesRequestDataSetsFromDataSetAnnotations()
+    public function testGeneratorGeneratesRequestDataSetsFromDataSetAnnotations(): void
     {
         $parameter1 = new Parameter();
         $parameter1->name = 'name';

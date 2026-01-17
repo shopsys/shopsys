@@ -21,7 +21,7 @@ class IndexDefinitionTest extends TestCase
         string $indexPrefix,
         int $domainId,
         string $expectedResult,
-    ) {
+    ): void {
         $indexDefinition = new IndexDefinition($indexName, $definitionsDirectory, $indexPrefix, $domainId, new IndexDefinitionModifier(EnvironmentType::TEST, false));
         $this->assertSame($expectedResult, $indexDefinition->getIndexAlias());
     }

@@ -53,7 +53,7 @@ class ReadyCategorySeoMixParameterParameterValue
     /**
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
      */
-    public function setReadyCategorySeoMix($readyCategorySeoMix)
+    public function setReadyCategorySeoMix($readyCategorySeoMix): void
     {
         $this->readyCategorySeoMix = $readyCategorySeoMix;
     }

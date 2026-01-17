@@ -15,7 +15,7 @@ class Controller extends AbstractController
     ) {
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->translator->trans('trans test');
         $this->translator->trans('trans test with domain', [], 'testDomain');

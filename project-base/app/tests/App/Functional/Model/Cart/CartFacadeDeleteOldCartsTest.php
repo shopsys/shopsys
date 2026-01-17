@@ -80,7 +80,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      */
     private GiftCartFacade $giftCartFacade;
 
-    public function testOldUnregisteredCustomerCartGetsDeleted()
+    public function testOldUnregisteredCustomerCartGetsDeleted(): void
     {
         $customerUserIdentifier = $this->getCustomerUserIdentifierForUnregisteredCustomer();
         $cartFacade = $this->getCartFacadeForUnregisteredCustomer();
@@ -95,7 +95,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $this->assertCartIsDeleted($cartFacade, $customerUserIdentifier, 'Cart should be deleted');
     }
 
-    public function testUnregisteredCustomerCartDoesNotGetDeleted()
+    public function testUnregisteredCustomerCartDoesNotGetDeleted(): void
     {
         $customerUserIdentifier = $this->getCustomerUserIdentifierForUnregisteredCustomer();
         $cartFacade = $this->getCartFacadeForUnregisteredCustomer();
@@ -110,7 +110,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $this->assertCartIsNotDeleted($cartFacade, $customerUserIdentifier, 'Cart should not be deleted');
     }
 
-    public function testOldRegisteredCustomerCartGetsDeleted()
+    public function testOldRegisteredCustomerCartGetsDeleted(): void
     {
         $customerUserIdentifier = $this->getCustomerUserIdentifierForRegisteredCustomer();
         $cartFacade = $this->getCartFacadeForRegisteredCustomer();
@@ -125,7 +125,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $this->assertCartIsDeleted($cartFacade, $customerUserIdentifier, 'Cart should be deleted');
     }
 
-    public function testRegisteredCustomerCartDoesNotGetDeletedIfItContainsRecentlyAddedItem()
+    public function testRegisteredCustomerCartDoesNotGetDeletedIfItContainsRecentlyAddedItem(): void
     {
         $customerUserIdentifier = $this->getCustomerUserIdentifierForRegisteredCustomer();
         $cartFacade = $this->getCartFacadeForRegisteredCustomer();
@@ -210,7 +210,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         CartFacade $cartFacade,
         CustomerUserIdentifier $customerUserIdentifier,
         $message,
-    ) {
+    ): void {
         $cart = $cartFacade->findCartByCustomerUserIdentifier($customerUserIdentifier);
         $this->assertNull($cart, $message);
     }
@@ -222,7 +222,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         CartFacade $cartFacade,
         CustomerUserIdentifier $customerUserIdentifier,
         $message,
-    ) {
+    ): void {
         $cart = $cartFacade->findCartByCustomerUserIdentifier($customerUserIdentifier);
         $this->assertNotNull($cart, $message);
     }

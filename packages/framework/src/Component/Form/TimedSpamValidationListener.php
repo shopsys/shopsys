@@ -18,7 +18,7 @@ class TimedSpamValidationListener implements EventSubscriberInterface
     ) {
     }
 
-    public function preSubmit(FormEvent $event)
+    public function preSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
 

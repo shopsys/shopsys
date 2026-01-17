@@ -37,7 +37,7 @@ class SettingValueTest extends TestCase
      * @param mixed $value
      */
     #[DataProvider('editProvider')]
-    public function testEdit($value)
+    public function testEdit($value): void
     {
         $settingValue = new SettingValue('name', $value, 1);
         $this->assertSame($value, $settingValue->getValue());
@@ -47,13 +47,13 @@ class SettingValueTest extends TestCase
      * @param mixed $value
      */
     #[DataProvider('editExceptionProvider')]
-    public function testEditException($value)
+    public function testEditException($value): void
     {
         $this->expectException(InvalidArgumentException::class);
         new SettingValue('name', $value, 1);
     }
 
-    public function testStoreDatetime()
+    public function testStoreDatetime(): void
     {
         $value = new DatePoint('2017-01-01 12:34:56');
         $settingValue = new SettingValue('name', $value, 1);

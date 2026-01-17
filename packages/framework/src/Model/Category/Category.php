@@ -109,7 +109,7 @@ class Category extends AbstractTranslatableEntity
         $this->setData($categoryData);
     }
 
-    public function edit(CategoryData $categoryData)
+    public function edit(CategoryData $categoryData): void
     {
         $this->setDomains($categoryData);
         $this->setData($categoryData);
@@ -125,7 +125,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $parent
      */
-    public function setParent($parent = null)
+    public function setParent($parent = null): void
     {
         $this->parent = $parent;
     }
@@ -226,7 +226,7 @@ class Category extends AbstractTranslatableEntity
         throw new CategoryDomainNotFoundException($domainId, $this->id);
     }
 
-    protected function setTranslations(CategoryData $categoryData)
+    protected function setTranslations(CategoryData $categoryData): void
     {
         foreach ($categoryData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -311,7 +311,7 @@ class Category extends AbstractTranslatableEntity
         return new CategoryTranslation();
     }
 
-    protected function setDomains(CategoryData $categoryData)
+    protected function setDomains(CategoryData $categoryData): void
     {
         foreach ($this->domains as $categoryDomain) {
             $domainId = $categoryDomain->getDomainId();
@@ -323,7 +323,7 @@ class Category extends AbstractTranslatableEntity
         }
     }
 
-    protected function createDomains(CategoryData $categoryData)
+    protected function createDomains(CategoryData $categoryData): void
     {
         $domainIds = array_keys($categoryData->seoTitles);
 

@@ -52,7 +52,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     private StockFacade $stockFacade;
 
     #[DataProvider('getTestIsProductAvailableOnDomainProvider')]
-    public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain)
+    public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
@@ -89,7 +89,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         ];
     }
 
-    public function testGroupedStockQuantity()
+    public function testGroupedStockQuantity(): void
     {
         $stockQuantity = 5;
         $expected = count($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID)) * $stockQuantity;

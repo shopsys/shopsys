@@ -75,7 +75,7 @@ class FlagFacade
     /**
      * @param int $flagId
      */
-    public function deleteById($flagId)
+    public function deleteById($flagId): void
     {
         $flag = $this->flagRepository->getById($flagId);
 

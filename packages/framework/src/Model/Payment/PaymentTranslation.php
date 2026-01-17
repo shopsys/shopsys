@@ -67,7 +67,7 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
     }
@@ -75,7 +75,7 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @param string|null $description
      */
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
     }
@@ -83,7 +83,7 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @param string|null $instructions
      */
-    public function setInstructions($instructions)
+    public function setInstructions($instructions): void
     {
         $this->instructions = TransformStringHelper::getTrimmedStringOrNullOnEmpty($instructions);
     }

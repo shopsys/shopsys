@@ -172,7 +172,7 @@ class GoPayPaymentMethod
         return $this->available;
     }
 
-    public function setUnavailable()
+    public function setUnavailable(): void
     {
         $this->available = false;
     }

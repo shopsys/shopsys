@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder;
 
 class NotNullableColumnsFinderTest extends TestCase
 {
-    public function testGetAllNotNullableColumnNamesIndexedByTableName()
+    public function testGetAllNotNullableColumnNamesIndexedByTableName(): void
     {
         $classMetadataInfoMock = $this->createMock(ClassMetadataInfo::class);
         $classMetadataInfoMock
@@ -74,7 +74,7 @@ class NotNullableColumnsFinderTest extends TestCase
         return [$associationMapping1, $associationMapping2, $associationMapping3];
     }
 
-    public function testGetAllNotNullableColumnNamesIndexedByTableNameException()
+    public function testGetAllNotNullableColumnNamesIndexedByTableNameException(): void
     {
         $classMetadataMock = $this->createMock(ClassMetadata::class);
         $this->expectException(UnexpectedTypeException::class);

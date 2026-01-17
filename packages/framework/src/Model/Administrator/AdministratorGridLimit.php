@@ -63,7 +63,7 @@ class AdministratorGridLimit
     /**
      * @param int $limit
      */
-    public function setLimit($limit)
+    public function setLimit($limit): void
     {
         $this->limit = $limit;
     }

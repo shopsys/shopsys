@@ -85,7 +85,7 @@ class GiftPlan
         $this->setData($giftPlanData);
     }
 
-    protected function setData(GiftPlanData $giftPlanData)
+    protected function setData(GiftPlanData $giftPlanData): void
     {
         $this->name = $giftPlanData->name;
         $this->validFrom = $giftPlanData->validFrom;
@@ -97,7 +97,7 @@ class GiftPlan
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $mainProducts
      */
-    protected function setMainProducts($mainProducts)
+    protected function setMainProducts($mainProducts): void
     {
         $this->mainProducts->clear();
 

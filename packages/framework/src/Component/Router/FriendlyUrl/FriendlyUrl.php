@@ -130,7 +130,7 @@ class FriendlyUrl
     /**
      * @param bool $main
      */
-    public function setMain($main)
+    public function setMain($main): void
     {
         $this->main = $main;
     }

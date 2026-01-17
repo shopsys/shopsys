@@ -4117,7 +4117,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         }
     }
 
-    public function addProductReference(Product $product)
+    public function addProductReference(Product $product): void
     {
         $this->addReference(self::PRODUCT_PREFIX . $this->productNo, $product);
         $this->productNo++;

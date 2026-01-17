@@ -292,7 +292,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param string $username
      */
-    public function setUsername($username)
+    public function setUsername($username): void
     {
         $this->username = $username;
     }
@@ -300,12 +300,12 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param string $realName
      */
-    public function setRealname($realName)
+    public function setRealname($realName): void
     {
         $this->realName = $realName;
     }
 
-    public function setPasswordHash(string $passwordHash)
+    public function setPasswordHash(string $passwordHash): void
     {
         $this->password = $passwordHash;
         $this->resetPasswordHash = null;
@@ -315,7 +315,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param string $email
      */
-    public function setEmail($email)
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
@@ -345,7 +345,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @param string $loginToken
      */
     #[Override]
-    public function setLoginToken($loginToken)
+    public function setLoginToken($loginToken): void
     {
         $this->loginToken = $loginToken;
     }
@@ -354,7 +354,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @param \DateTimeImmutable $lastActivity
      */
     #[Override]
-    public function setLastActivity($lastActivity)
+    public function setLastActivity($lastActivity): void
     {
         $this->lastActivity = $lastActivity;
     }
@@ -429,7 +429,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         return null; // bcrypt include salt in password hash
     }
 
-    public function restoreGridLimit(Grid $grid)
+    public function restoreGridLimit(Grid $grid): void
     {
         $gridLimit = $this->getGridLimit($grid->getId());
 
@@ -580,7 +580,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param string $selectedLocale
      */
-    public function setSelectedLocale($selectedLocale)
+    public function setSelectedLocale($selectedLocale): void
     {
         $this->selectedLocale = $selectedLocale;
     }

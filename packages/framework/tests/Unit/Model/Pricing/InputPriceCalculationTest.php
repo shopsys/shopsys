@@ -19,7 +19,7 @@ class InputPriceCalculationTest extends TestCase
         Money $priceWithVat,
         string $vatPercent,
         Money $expectedResult,
-    ) {
+    ): void {
         $inputPriceCalculation = new InputPriceCalculation();
         $actualInputPrice = $inputPriceCalculation->getInputPrice($inputPriceType, $priceWithVat, $vatPercent);
 

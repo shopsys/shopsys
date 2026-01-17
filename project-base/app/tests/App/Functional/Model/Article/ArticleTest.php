@@ -23,7 +23,7 @@ class ArticleTest extends TransactionFunctionalTestCase
      */
     private ArticleFactory $articleFactory;
 
-    public function testArticleIsCorrectlyRestoredFromDatabase()
+    public function testArticleIsCorrectlyRestoredFromDatabase(): void
     {
         $articleData = $this->articleDataFactory->create(Domain::FIRST_DOMAIN_ID);
 

@@ -24,7 +24,7 @@ class VatDataFactory
         return $vatData;
     }
 
-    protected function fillFromVat(VatData $vatData, Vat $vat)
+    protected function fillFromVat(VatData $vatData, Vat $vat): void
     {
         $vatData->name = $vat->getName();
         $vatData->percent = $vat->getPercent();

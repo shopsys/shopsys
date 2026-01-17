@@ -97,7 +97,7 @@ class CartFacade
         return $result;
     }
 
-    public function deleteCart(Cart $cart)
+    public function deleteCart(Cart $cart): void
     {
         foreach ($cart->getItems() as $item) {
             $this->em->remove($item);
@@ -163,7 +163,7 @@ class CartFacade
         return $cart;
     }
 
-    public function deleteOldCarts()
+    public function deleteOldCarts(): void
     {
         $this->cartRepository->deleteOldCartsForUnregisteredCustomerUsers(static::DAYS_LIMIT);
         $this->cartRepository->deleteOldCartsForRegisteredCustomerUsers(static::DAYS_LIMIT);

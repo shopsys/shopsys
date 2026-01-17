@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class HttpSmokeTest extends HttpSmokeTestCase
 {
     #[Override]
-    protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
+    protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomization = new RouteConfigCustomization(KernelTestCase::getContainer());
         $routeConfigCustomization->customizeRouteConfigs($routeConfigCustomizer);

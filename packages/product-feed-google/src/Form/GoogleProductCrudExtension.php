@@ -63,7 +63,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
      * @param array $data
      */
     #[Override]
-    public function saveData($productId, $data)
+    public function saveData($productId, $data): void
     {
         $googleProductDomainsDataIndexedByDomainId = [];
 
@@ -98,7 +98,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         GoogleProductDomainData $googleProductDomainData,
         $propertyName,
         $propertyValue,
-    ) {
+    ): void {
         switch ($propertyName) {
             case 'show':
                 $googleProductDomainData->show = $propertyValue;
@@ -111,7 +111,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      */
     #[Override]
-    public function removeData($productId)
+    public function removeData($productId): void
     {
         $this->googleProductDomainFacade->delete($productId);
     }

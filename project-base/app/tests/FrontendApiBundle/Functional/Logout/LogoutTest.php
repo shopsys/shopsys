@@ -8,7 +8,7 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class LogoutTest extends GraphQlWithLoginTestCase
 {
-    public function testLogoutMutation()
+    public function testLogoutMutation(): void
     {
         $response = $this->getResponseContentForQuery($this->getLogoutQuery());
         $this->assertArrayHasKey('data', $response);

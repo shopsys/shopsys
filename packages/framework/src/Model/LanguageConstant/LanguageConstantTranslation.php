@@ -36,7 +36,7 @@ class LanguageConstantTranslation extends AbstractTranslation
     /**
      * @param string $translation
      */
-    public function setTranslation($translation)
+    public function setTranslation($translation): void
     {
         $this->translation = $translation;
     }

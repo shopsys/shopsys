@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class ProductDataFactoryTest extends TestCase
 {
-    public function testTodo()
+    public function testTodo(): void
     {
     }
 }

@@ -23,7 +23,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
      * @param int $classPosition
      */
     #[Override]
-    public function process(File $file, $classPosition)
+    public function process(File $file, $classPosition): void
     {
         $phpDocStartPosition = $file->findPrevious(T_DOC_COMMENT_OPEN_TAG, $classPosition);
 

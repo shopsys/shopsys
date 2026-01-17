@@ -73,7 +73,7 @@ class TransportTranslation extends AbstractTranslation
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
     }
@@ -81,7 +81,7 @@ class TransportTranslation extends AbstractTranslation
     /**
      * @param string|null $description
      */
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
     }
@@ -89,7 +89,7 @@ class TransportTranslation extends AbstractTranslation
     /**
      * @param string|null $instructions
      */
-    public function setInstructions($instructions)
+    public function setInstructions($instructions): void
     {
         $this->instructions = TransformStringHelper::getTrimmedStringOrNullOnEmpty($instructions);
     }
@@ -105,7 +105,7 @@ class TransportTranslation extends AbstractTranslation
     /**
      * @param string|null $trackingInstruction
      */
-    public function setTrackingInstruction($trackingInstruction)
+    public function setTrackingInstruction($trackingInstruction): void
     {
         $this->trackingInstruction = $trackingInstruction;
     }

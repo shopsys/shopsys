@@ -27,7 +27,7 @@ class ProductFactoryTest extends TestCase
         parent::setUp();
     }
 
-    public function testCreateVariant()
+    public function testCreateVariant(): void
     {
         $mainProduct = Product::create(TestProductProvider::getTestProductData());
         $variants = [];

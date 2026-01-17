@@ -71,7 +71,7 @@ class ProductManualInputPrice
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $inputPrice
      */
-    public function setInputPrice($inputPrice)
+    public function setInputPrice($inputPrice): void
     {
         $this->inputPrice = $inputPrice;
     }

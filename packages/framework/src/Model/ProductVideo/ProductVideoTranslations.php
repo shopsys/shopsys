@@ -59,7 +59,7 @@ class ProductVideoTranslations
     /**
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo $productVideo
      */
-    public function setProductVideo($productVideo)
+    public function setProductVideo($productVideo): void
     {
         $this->productVideo = $productVideo;
     }
@@ -75,7 +75,7 @@ class ProductVideoTranslations
     /**
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
     }
@@ -91,7 +91,7 @@ class ProductVideoTranslations
     /**
      * @param string $locale
      */
-    public function setLocale($locale)
+    public function setLocale($locale): void
     {
         $this->locale = $locale;
     }

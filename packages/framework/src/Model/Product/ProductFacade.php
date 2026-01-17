@@ -90,7 +90,7 @@ class ProductFacade
         return $product;
     }
 
-    public function setAdditionalDataAfterCreate(Product $product, ProductData $productData)
+    public function setAdditionalDataAfterCreate(Product $product, ProductData $productData): void
     {
         // Persist of ProductCategoryDomain requires known primary key of Product
         // @see https://github.com/doctrine/doctrine2/issues/4869
@@ -235,7 +235,7 @@ class ProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
      */
-    protected function saveParameters(Product $product, array $productParameterValuesData)
+    protected function saveParameters(Product $product, array $productParameterValuesData): void
     {
         // Doctrine runs INSERTs before DELETEs in UnitOfWork. In case of UNIQUE constraint
         // in database, this leads in trying to insert duplicate entry.
@@ -332,7 +332,7 @@ class ProductFacade
         return $sellingPrice;
     }
 
-    protected function createProductVisibilities(Product $product)
+    protected function createProductVisibilities(Product $product): void
     {
         $toFlush = [];
 
@@ -354,7 +354,7 @@ class ProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $accessories
      */
-    protected function refreshProductAccessories(Product $product, array $accessories)
+    protected function refreshProductAccessories(Product $product, array $accessories): void
     {
         $oldProductAccessories = $this->productAccessoryRepository->getAllByProduct($product);
 

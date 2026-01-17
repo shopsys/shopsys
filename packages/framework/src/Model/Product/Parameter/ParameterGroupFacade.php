@@ -76,7 +76,7 @@ class ParameterGroupFacade
     /**
      * @param int $parameterGroupId
      */
-    public function deleteById($parameterGroupId)
+    public function deleteById($parameterGroupId): void
     {
         $parameterGroup = $this->parameterRepository->getParameterGroupById($parameterGroupId);
 

@@ -24,7 +24,7 @@ class ImageSitemapCronModule implements SimpleCronModuleInterface
     }
 
     #[Override]
-    public function run()
+    public function run(): void
     {
         $this->imageSitemapFacade->generateForAllDomains();
     }

@@ -32,7 +32,7 @@ class CronTimeResolverTest extends TestCase
      * @param mixed $divisibleBy
      */
     #[DataProvider('validTimeStringProvider')]
-    public function testValidateTimeString($timeString, $maxValue, $divisibleBy)
+    public function testValidateTimeString($timeString, $maxValue, $divisibleBy): void
     {
         $cronTimeResolver = new CronTimeResolver();
         $cronTimeResolver->validateTimeString($timeString, $maxValue, $divisibleBy);
@@ -57,7 +57,7 @@ class CronTimeResolverTest extends TestCase
      * @param mixed $divisibleBy
      */
     #[DataProvider('invalidTimeStringProvider')]
-    public function testValidateTimeStringInvalidTimeFormatException($invalidTimeString, $maxValue, $divisibleBy)
+    public function testValidateTimeStringInvalidTimeFormatException($invalidTimeString, $maxValue, $divisibleBy): void
     {
         $cronTimeResolver = new CronTimeResolver();
         $this->expectException(InvalidTimeFormatException::class);
@@ -93,7 +93,7 @@ class CronTimeResolverTest extends TestCase
      * @param mixed $isValid
      */
     #[DataProvider('isValidAtTimeProvider')]
-    public function testIsValidAtTime($timeHours, $timeMinutes, $dateTimeString, $isValid)
+    public function testIsValidAtTime($timeHours, $timeMinutes, $dateTimeString, $isValid): void
     {
         $cronTimeMock = $this->getMockBuilder(CronTimeInterface::class)
             ->onlyMethods(['getTimeHours', 'getTimeMinutes'])

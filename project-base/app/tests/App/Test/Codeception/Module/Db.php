@@ -21,7 +21,7 @@ class Db extends BaseDb
         $this->_loadDump();
     }
 
-    public function cleanup()
+    public function cleanup(): void
     {
         /** @var \Tests\App\Test\Codeception\Helper\SymfonyHelper $symfonyHelper */
         $symfonyHelper = $this->getModule(SymfonyHelper::class);

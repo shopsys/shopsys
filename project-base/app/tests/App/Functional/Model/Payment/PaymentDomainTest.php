@@ -25,7 +25,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
      */
     private PaymentFactory $paymentFactory;
 
-    public function testCreatePaymentEnabledOnDomain()
+    public function testCreatePaymentEnabledOnDomain(): void
     {
         $paymentData = $this->createPaymentData();
 
@@ -41,7 +41,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
         $this->assertTrue($refreshedPayment->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
-    public function testCreatePaymentDisabledOnDomain()
+    public function testCreatePaymentDisabledOnDomain(): void
     {
         $paymentData = $this->createPaymentData();
 
@@ -55,7 +55,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
         $this->assertFalse($refreshedPayment->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
-    public function testCreatePaymentWithDifferentVisibilityOnDomains()
+    public function testCreatePaymentWithDifferentVisibilityOnDomains(): void
     {
         if (count($this->domain->getAllIds()) === 1) {
             $this->markTestSkipped('Test is skipped for single domain');

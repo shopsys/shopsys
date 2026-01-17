@@ -117,7 +117,7 @@ class ProductRepository
     /**
      * @param string $locale
      */
-    public function addTranslation(QueryBuilder $queryBuilder, $locale)
+    public function addTranslation(QueryBuilder $queryBuilder, $locale): void
     {
         $queryBuilder->addSelect('pt')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale');
@@ -128,7 +128,7 @@ class ProductRepository
     /**
      * @param int $domainId
      */
-    public function addDomain(QueryBuilder $queryBuilder, $domainId)
+    public function addDomain(QueryBuilder $queryBuilder, $domainId): void
     {
         $queryBuilder->addSelect('pd');
 
@@ -223,7 +223,7 @@ class ProductRepository
     /**
      * @param int $domainId
      */
-    protected function filterByCategory(QueryBuilder $queryBuilder, Category $category, $domainId)
+    protected function filterByCategory(QueryBuilder $queryBuilder, Category $category, $domainId): void
     {
         $queryBuilder->join(
             'p.productCategoryDomains',
@@ -235,7 +235,7 @@ class ProductRepository
         $queryBuilder->setParameter('domainId', $domainId);
     }
 
-    protected function filterByBrand(QueryBuilder $queryBuilder, Brand $brand)
+    protected function filterByBrand(QueryBuilder $queryBuilder, Brand $brand): void
     {
         $queryBuilder->andWhere('p.brand = :brand');
         $queryBuilder->setParameter('brand', $brand);

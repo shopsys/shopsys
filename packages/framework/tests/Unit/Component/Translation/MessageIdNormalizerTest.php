@@ -30,7 +30,7 @@ class MessageIdNormalizerTest extends TestCase
      * @param mixed $expectedMesssageId
      */
     #[DataProvider('normalizeMessageIdProvider')]
-    public function testNormalizeMessageId($messageId, $expectedMesssageId)
+    public function testNormalizeMessageId($messageId, $expectedMesssageId): void
     {
         $messageIdNormalizer = new MessageIdNormalizer();
         $normalizedMessageId = $messageIdNormalizer->normalizeMessageId($messageId);
@@ -38,7 +38,7 @@ class MessageIdNormalizerTest extends TestCase
         $this->assertSame($expectedMesssageId, $normalizedMessageId);
     }
 
-    public function testGetNormalizedCatalogue()
+    public function testGetNormalizedCatalogue(): void
     {
         $messageIdNormalizer = new MessageIdNormalizer();
 
@@ -68,7 +68,7 @@ class MessageIdNormalizerTest extends TestCase
         $this->assertEquals($message->getSourceString(), $normalizedMessage->getSourceString());
     }
 
-    public function testGetNormalizedCatalogueInvalidMessageIdArgumentException()
+    public function testGetNormalizedCatalogueInvalidMessageIdArgumentException(): void
     {
         $messageIdNormalizer = new MessageIdNormalizer();
 

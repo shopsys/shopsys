@@ -17,14 +17,14 @@ class AdministratorGridFacade
     ) {
     }
 
-    public function restoreAndRememberGridLimit(Administrator $administrator, Grid $grid)
+    public function restoreAndRememberGridLimit(Administrator $administrator, Grid $grid): void
     {
         $administrator->restoreGridLimit($grid);
         $this->rememberGridLimit($administrator, $grid);
         $this->em->flush();
     }
 
-    protected function rememberGridLimit(Administrator $administrator, Grid $grid)
+    protected function rememberGridLimit(Administrator $administrator, Grid $grid): void
     {
         if (!$grid->isEnabledPaging()) {
             throw new RememberGridLimitException($grid->getId());

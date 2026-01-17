@@ -77,7 +77,7 @@ class Currency
         $this->setData($currencyData);
     }
 
-    public function edit(CurrencyData $currencyData)
+    public function edit(CurrencyData $currencyData): void
     {
         $this->setData($currencyData);
     }
@@ -126,7 +126,7 @@ class Currency
     /**
      * @param string $exchangeRate
      */
-    public function setExchangeRate($exchangeRate)
+    public function setExchangeRate($exchangeRate): void
     {
         $this->exchangeRate = $exchangeRate;
     }

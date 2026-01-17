@@ -95,7 +95,7 @@ class DomainDataCreator
         return $this->domain->getDomainConfigById(self::TEMPLATE_DOMAIN_ID)->getLocale();
     }
 
-    protected function processDefaultPricingGroupForNewDomain(int $domainId)
+    protected function processDefaultPricingGroupForNewDomain(int $domainId): void
     {
         $pricingGroup = $this->createDefaultPricingGroupForNewDomain($domainId);
         $this->setting->setForDomain(Setting::DEFAULT_PRICING_GROUP, $pricingGroup->getId(), $domainId);

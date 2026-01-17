@@ -63,7 +63,7 @@ class ParameterValue
         $this->rgbHex = $parameterData->rgbHex;
     }
 
-    public function edit(ParameterValueData $parameterData)
+    public function edit(ParameterValueData $parameterData): void
     {
         $this->text = $parameterData->text;
         $this->numericValue = $parameterData->numericValue;
@@ -121,7 +121,7 @@ class ParameterValue
     /**
      * @param string $numericValue
      */
-    public function setNumericValue($numericValue)
+    public function setNumericValue($numericValue): void
     {
         Assert::numeric($numericValue);
 

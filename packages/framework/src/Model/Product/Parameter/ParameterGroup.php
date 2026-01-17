@@ -104,7 +104,7 @@ class ParameterGroup extends AbstractTranslatableEntity implements OrderableEnti
      * @param int $position
      */
     #[Override]
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }

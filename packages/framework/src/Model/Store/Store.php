@@ -158,7 +158,7 @@ class Store implements OrderableEntityInterface
         $this->setData($storeData);
     }
 
-    public function edit(StoreData $storeData)
+    public function edit(StoreData $storeData): void
     {
         $this->setData($storeData);
     }

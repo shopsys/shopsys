@@ -211,7 +211,7 @@ class CustomerUserFacade
     /**
      * @param int $customerUserId
      */
-    public function delete($customerUserId)
+    public function delete($customerUserId): void
     {
         $customerUser = $this->getCustomerUserById($customerUserId);
 
@@ -225,7 +225,7 @@ class CustomerUserFacade
         CustomerUser $customerUser,
         Order $order,
         ?DeliveryAddress $deliveryAddress,
-    ) {
+    ): void {
         $this->edit(
             $customerUser->getId(),
             $this->customerUserUpdateDataFactory->createAmendedByOrder($customerUser, $order, $deliveryAddress),

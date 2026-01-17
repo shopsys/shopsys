@@ -42,7 +42,7 @@ class SettingValueRepository
      * @param int $fromDomainId
      * @param int $toDomainId
      */
-    public function copyAllMultidomainSettings($fromDomainId, $toDomainId)
+    public function copyAllMultidomainSettings($fromDomainId, $toDomainId): void
     {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO setting_values (name, value, type, domain_id)

@@ -36,7 +36,7 @@ class DeliveryAddressDataFactory
     protected function fillFromDeliveryAddress(
         DeliveryAddressData $deliveryAddressData,
         DeliveryAddress $deliveryAddress,
-    ) {
+    ): void {
         $deliveryAddressData->companyName = $deliveryAddress->getCompanyName();
         $deliveryAddressData->firstName = $deliveryAddress->getFirstName();
         $deliveryAddressData->lastName = $deliveryAddress->getLastName();

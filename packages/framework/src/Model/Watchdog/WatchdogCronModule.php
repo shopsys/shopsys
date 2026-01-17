@@ -20,13 +20,13 @@ class WatchdogCronModule implements IteratedCronModuleInterface
     }
 
     #[Override]
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
 
     #[Override]
-    public function wakeUp()
+    public function wakeUp(): void
     {
     }
 
@@ -52,7 +52,7 @@ class WatchdogCronModule implements IteratedCronModuleInterface
     }
 
     #[Override]
-    public function sleep()
+    public function sleep(): void
     {
     }
 }

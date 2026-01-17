@@ -54,7 +54,7 @@ class Vat
         $this->setData($vatData);
     }
 
-    public function edit(VatData $vatData)
+    public function edit(VatData $vatData): void
     {
         $this->setData($vatData);
     }
@@ -96,7 +96,7 @@ class Vat
         return $this->replaceWith;
     }
 
-    public function markForDeletion(self $newVat)
+    public function markForDeletion(self $newVat): void
     {
         $this->replaceWith = $newVat;
     }

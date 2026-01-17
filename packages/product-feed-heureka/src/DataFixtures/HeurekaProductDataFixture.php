@@ -27,7 +27,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
     }
 
     #[Override]
-    public function load()
+    public function load(): void
     {
         $firstProductHeurekaDomainData = [];
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();

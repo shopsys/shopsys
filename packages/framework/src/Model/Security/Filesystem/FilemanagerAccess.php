@@ -46,12 +46,12 @@ class FilemanagerAccess
         return $this->elFinderConfigurationReader->access($attr, $path, $data, $volume);
     }
 
-    public static function injectSelf(self $filemanagerAccess)
+    public static function injectSelf(self $filemanagerAccess): void
     {
         self::$self = $filemanagerAccess;
     }
 
-    public static function detachSelf()
+    public static function detachSelf(): void
     {
         self::$self = null;
     }

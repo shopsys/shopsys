@@ -11,7 +11,7 @@ use Override;
 class VolumeDriver extends Driver
 {
     #[Override]
-    protected function configure()
+    protected function configure(): void
     {
         @parent::configure();
 
@@ -142,7 +142,7 @@ class VolumeDriver extends Driver
      * @param mixed[] $stat
      */
     #[Override]
-    protected function rmTmb($stat)
+    protected function rmTmb($stat): void
     {
         $path = $this->tmbPath . DIRECTORY_SEPARATOR . $this->tmbname($stat);
 

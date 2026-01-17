@@ -28,7 +28,7 @@ class HeurekaCategoryDataFixture implements PluginDataFixtureInterface
     }
 
     #[Override]
-    public function load()
+    public function load(): void
     {
         $heurekaCategoriesData = [];
 

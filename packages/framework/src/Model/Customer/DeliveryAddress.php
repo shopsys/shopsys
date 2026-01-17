@@ -90,7 +90,7 @@ class DeliveryAddress
         $this->setData($deliveryAddressData);
     }
 
-    public function edit(DeliveryAddressData $deliveryAddressData)
+    public function edit(DeliveryAddressData $deliveryAddressData): void
     {
         $this->setData($deliveryAddressData);
     }

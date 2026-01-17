@@ -83,6 +83,6 @@ class DummyClassForAnnotationsReplacer
         $array,
         $frontendApiproductRepository,
         $integer,
-    ) {
+    ): void {
     }
 }

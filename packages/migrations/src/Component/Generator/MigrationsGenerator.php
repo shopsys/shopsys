@@ -112,7 +112,7 @@ class MigrationsGenerator
         }, $sqlCommands);
     }
 
-    protected function createMigrationLocationDirectoryIfNotExists(MigrationsLocation $migrationLocation)
+    protected function createMigrationLocationDirectoryIfNotExists(MigrationsLocation $migrationLocation): void
     {
         if (!$this->filesystem->exists($migrationLocation->getDirectory())) {
             $this->filesystem->mkdir($migrationLocation->getDirectory());

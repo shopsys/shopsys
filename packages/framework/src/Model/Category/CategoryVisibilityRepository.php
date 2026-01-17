@@ -19,7 +19,7 @@ class CategoryVisibilityRepository
     ) {
     }
 
-    public function refreshCategoriesVisibility()
+    public function refreshCategoriesVisibility(): void
     {
         $domains = $this->domain->getAll();
 
@@ -28,7 +28,7 @@ class CategoryVisibilityRepository
         }
     }
 
-    protected function refreshCategoriesVisibilityOnDomain(DomainConfig $domainConfig)
+    protected function refreshCategoriesVisibilityOnDomain(DomainConfig $domainConfig): void
     {
         $this->setRootCategoryVisibleOnDomain($domainConfig);
 
@@ -39,7 +39,7 @@ class CategoryVisibilityRepository
         }
     }
 
-    protected function setRootCategoryVisibleOnDomain(DomainConfig $domainConfig)
+    protected function setRootCategoryVisibleOnDomain(DomainConfig $domainConfig): void
     {
         $this->em->getConnection()->executeStatement(
             'UPDATE category_domains AS cd
@@ -75,7 +75,7 @@ class CategoryVisibilityRepository
     /**
      * @param int $level
      */
-    protected function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, $level)
+    protected function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, $level): void
     {
         $this->em->getConnection()->executeStatement(
             'UPDATE category_domains AS cd

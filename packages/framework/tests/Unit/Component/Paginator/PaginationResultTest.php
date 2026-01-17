@@ -33,7 +33,7 @@ class PaginationResultTest extends TestCase
      * @param mixed $expectedPageCount
      */
     #[DataProvider('getTestPageCountData')]
-    public function testGetPageCount($page, $pageSize, $totalCount, $results, $expectedPageCount)
+    public function testGetPageCount($page, $pageSize, $totalCount, $results, $expectedPageCount): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, $results);
 
@@ -50,7 +50,7 @@ class PaginationResultTest extends TestCase
     }
 
     #[DataProvider('getTestIsFirstPageData')]
-    public function testIsFirstPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsFirst)
+    public function testIsFirstPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsFirst): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 
@@ -73,7 +73,7 @@ class PaginationResultTest extends TestCase
     }
 
     #[DataProvider('getTestIsLastPageData')]
-    public function testIsLastPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsLast)
+    public function testIsLastPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsLast): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 
@@ -92,7 +92,7 @@ class PaginationResultTest extends TestCase
     }
 
     #[DataProvider('getTestGetPreviousPageData')]
-    public function testGetPreviousPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedPrevious)
+    public function testGetPreviousPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedPrevious): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 
@@ -113,7 +113,7 @@ class PaginationResultTest extends TestCase
     }
 
     #[DataProvider('getTestGetNextPageData')]
-    public function testGetNextPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedNext)
+    public function testGetNextPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedNext): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 
