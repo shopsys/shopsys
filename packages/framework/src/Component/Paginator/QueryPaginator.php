@@ -74,10 +74,8 @@ class QueryPaginator implements PaginatorInterface
 
     /**
      * Enables inclusion of meta columns in query results
-     *
-     * @return $this
      */
-    public function includeMetaColumns(): self
+    public function includeMetaColumns(): static
     {
         $this->includeMetaColumns = true;
 

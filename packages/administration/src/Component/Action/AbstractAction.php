@@ -24,10 +24,8 @@ abstract class AbstractAction
 
     /**
      * Set name of action that will be shown to the users
-     *
-     * @return $this
      */
-    public function setLabel(string $label): self
+    public function setLabel(string $label): static
     {
         $this->label = $label;
 
@@ -36,10 +34,8 @@ abstract class AbstractAction
 
     /**
      * Set icon of action that will be shown next to label
-     *
-     * @return $this
      */
-    public function setIcon(string $icon): self
+    public function setIcon(string $icon): static
     {
         $this->icon = $icon;
 
@@ -50,9 +46,8 @@ abstract class AbstractAction
      * Set function that will determine if action should be displayed
      *
      * @param \Closure(): bool $function Function must return boolean value. If function returns false, action will not be displayed
-     * @return $this
      */
-    public function displayIf(Closure $function): self
+    public function displayIf(Closure $function): static
     {
         $this->displayIf = $function;
 
@@ -64,9 +59,8 @@ abstract class AbstractAction
      * If value is null, attribute will be removed.
      *
      * @param bool $append If true, value will be appended to existing value. If false, existing value will be replaced.
-     * @return $this
      */
-    public function setAttribute(string $name, mixed $value, bool $append = false): self
+    public function setAttribute(string $name, mixed $value, bool $append = false): static
     {
         if (array_key_exists($name, $this->getForbiddenAttributes())) {
             throw new InvalidArgumentException(sprintf('Attribute "%s" is forbidden to set. %s', $name, $this->getForbiddenAttributes()[$name]));
@@ -87,10 +81,7 @@ abstract class AbstractAction
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    abstract public static function create(string $name, string $label, ?string $icon): self;
+    abstract public static function create(string $name, string $label, ?string $icon): static;
 
     protected function __construct(protected string $name, protected string $label, protected ?string $icon = null)
     {

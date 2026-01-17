@@ -52,21 +52,21 @@ class ActionColumn
         return $this->confirmMessage;
     }
 
-    public function setClassAttribute(string $classAttribute): self
+    public function setClassAttribute(string $classAttribute): static
     {
         $this->classAttribute = $classAttribute;
 
         return $this;
     }
 
-    public function setConfirmMessage(string $confirmMessage): self
+    public function setConfirmMessage(string $confirmMessage): static
     {
         $this->confirmMessage = $confirmMessage;
 
         return $this;
     }
 
-    public function setAjaxConfirm(): self
+    public function setAjaxConfirm(): static
     {
         $this->isAjaxConfirm = true;
 

@@ -52,7 +52,7 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
     }
 
     #[Override]
-    public static function create(string $name, string $label, ?string $icon = null): self
+    public static function create(string $name, string $label, ?string $icon = null): static
     {
         if ($icon === null) {
             throw new InvalidArgumentException('Icon is required for row action. ');

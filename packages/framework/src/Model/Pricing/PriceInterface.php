@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 interface PriceInterface
 {
-    public static function zero(): self;
+    public static function zero(): static;
 
     public function getPriceWithoutVat(): Money;
 
@@ -16,17 +16,17 @@ interface PriceInterface
 
     public function getVatAmount(): Money;
 
-    public function add(self $priceToAdd): self;
+    public function add(self $priceToAdd): static;
 
-    public function subtract(self $priceToSubtract): self;
+    public function subtract(self $priceToSubtract): static;
 
-    public function multiply(int|string $multiplier): self;
+    public function multiply(int|string $multiplier): static;
 
-    public function inverse(): self;
+    public function inverse(): static;
 
     public function equals(self $price): bool;
 
     public function isZero(): bool;
 
-    public static function createHiddenPrice(): self;
+    public static function createHiddenPrice(): static;
 }

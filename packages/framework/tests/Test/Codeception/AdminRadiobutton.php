@@ -22,7 +22,7 @@ class AdminRadiobutton
      * You need to use the name or CSS class of the group (and not an ID of a particular radio input) as the $cssSelector
      * Example: AdminRadiobutton::createByCss($actor, '[name="product_form[displayAvailabilityGroup][hidden]"]')
      */
-    public static function createByCss(ActorInterface $tester, string $cssSelector): self
+    public static function createByCss(ActorInterface $tester, string $cssSelector): static
     {
         return new static($tester, $cssSelector);
     }

@@ -31,7 +31,7 @@ final class ProductPrice implements ProductPriceInterface
      * {@inheritdoc}
      */
     #[Override]
-    public static function createHiddenProductPrice(PricingGroup $pricingGroup): self
+    public static function createHiddenProductPrice(PricingGroup $pricingGroup): static
     {
         return new self(
             Price::createHiddenPrice(),
