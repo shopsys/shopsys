@@ -9,10 +9,10 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFac
 /**
  * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
  * @method __construct(\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactory $customerUserRefreshTokenChainDataFactory, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactory $customerUserRefreshTokenChainFactory, \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory, \App\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
- * @method removeAllCustomerUserRefreshTokenChains(\App\Model\Customer\User\CustomerUser $customerUser, string|null $excludedDeviceId = null)
+ * @method void removeAllCustomerUserRefreshTokenChains(\App\Model\Customer\User\CustomerUser $customerUser, string|null $excludedDeviceId = null)
  * @method \App\Model\Customer\User\CustomerUserRefreshTokenChain createCustomerUserRefreshTokenChain(\App\Model\Customer\User\CustomerUser $customerUser, string $tokenChain, string $deviceId, \DateTimeImmutable $tokenExpiration, \App\Model\Administrator\Administrator|null $administrator)
  * @method \App\Model\Customer\User\CustomerUserRefreshTokenChain|null findCustomersTokenChainByCustomerUserAndSecretChainAndDeviceId(\App\Model\Customer\User\CustomerUser $customerUser, string $secretChain, string $deviceId)
- * @method removeCustomerRefreshTokenChain(\App\Model\Customer\User\CustomerUserRefreshTokenChain $refreshTokenChain)
+ * @method void removeCustomerRefreshTokenChain(\App\Model\Customer\User\CustomerUserRefreshTokenChain $refreshTokenChain)
  */
 class CustomerUserRefreshTokenChainFacade extends BaseCustomerUserRefreshTokenChainFacade
 {

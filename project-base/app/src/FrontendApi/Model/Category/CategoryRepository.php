@@ -9,9 +9,9 @@ use Shopsys\FrontendApiBundle\Model\Category\CategoryRepository as BaseCategoryR
 
 /**
  * @property \App\Model\Category\CategoryRepository $categoryRepository
- * @method \App\Model\Category\Category[][] getVisibleCategoriesByIds(int[][] $categoriesIds,  $domainConfig)
+ * @method \App\Model\Category\Category[][] getVisibleCategoriesByIds(int[][] $categoriesIds, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Category\CategoryRepository $categoryRepository, \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper)
- * @method \App\Model\Category\Category[] getVisibleCategoriesBySearchText( $searchText,  $locale,  $domainId,  $offset,  $limit)
+ * @method \App\Model\Category\Category[] getVisibleCategoriesBySearchText(string $searchText, string $locale, int $domainId, int $offset, int $limit)
  */
 class CategoryRepository extends BaseCategoryRepository
 {

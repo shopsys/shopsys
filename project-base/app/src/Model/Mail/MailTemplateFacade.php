@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade as BaseMailTemplateFac
  * @property \App\Model\Mail\MailTemplateBuilder $mailTemplateBuilder
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Mail\MailTemplateRepository $mailTemplateRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory $mailTemplateFactory, \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider, \App\Model\Mail\MailTemplateBuilder $mailTemplateBuilder)
  * @method \App\Model\Mail\MailTemplate getWrappedWithGrapesJsBody(string $templateName, int $domainId)
- * @method createMailTemplateForAllDomains(string $name, \App\Model\Order\Status\OrderStatus|null $orderStatus = null, \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null $complaintStatus = null)
+ * @method void createMailTemplateForAllDomains(string $name, \App\Model\Order\Status\OrderStatus|null $orderStatus = null, \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null $complaintStatus = null)
  * @method \App\Model\Mail\MailTemplate getTemplateWrappedWithGrapesBody(\App\Model\Mail\MailTemplate $mailTemplate)
  */
 class MailTemplateFacade extends BaseMailTemplateFacade

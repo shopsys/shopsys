@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method __construct(\App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper)
- * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByProductsQueryBuilder( $productsQueryBuilder,  $locale)
+ * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByProductsQueryBuilder(\Doctrine\ORM\QueryBuilder $productsQueryBuilder, string $locale)
  */
 class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
 {

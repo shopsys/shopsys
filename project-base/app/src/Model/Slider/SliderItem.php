@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItem as BaseSliderItem;
 /**
  * SliderItem
  *
- * @method setData(\App\Model\Slider\SliderItemData $sliderItemData)
+ * @method void setData(\App\Model\Slider\SliderItemData $sliderItemData)
  */
 #[ORM\Table(name: 'slider_items')]
 #[ORM\Entity]

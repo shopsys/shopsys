@@ -11,8 +11,8 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory as BaseBrandDat
 /**
  * @method \App\Model\Product\Brand\BrandData create()
  * @method \App\Model\Product\Brand\BrandData createFromBrand(\App\Model\Product\Brand\Brand $brand)
- * @method fillNew(\App\Model\Product\Brand\BrandData $brandData)
- * @method fillFromBrand(\App\Model\Product\Brand\BrandData $brandData, \App\Model\Product\Brand\Brand $brand)
+ * @method void fillNew(\App\Model\Product\Brand\BrandData $brandData)
+ * @method void fillFromBrand(\App\Model\Product\Brand\BrandData $brandData, \App\Model\Product\Brand\Brand $brand)
  */
 class BrandDataFactory extends BaseBrandDataFactory
 {

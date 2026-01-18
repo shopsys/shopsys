@@ -9,8 +9,8 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentData as BasePaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory as BasePaymentDataFactory;
 
 /**
- * @method fillNew(\App\Model\Payment\PaymentData $paymentData)
- * @method fillFromPayment(\App\Model\Payment\PaymentData $paymentData, \App\Model\Payment\Payment $payment)
+ * @method void fillNew(\App\Model\Payment\PaymentData $paymentData)
+ * @method void fillFromPayment(\App\Model\Payment\PaymentData $paymentData, \App\Model\Payment\Payment $payment)
  * @method \App\Model\Payment\PaymentData create()
  * @method \App\Model\Payment\PaymentData createFromPayment(\App\Model\Payment\Payment $payment)
  */

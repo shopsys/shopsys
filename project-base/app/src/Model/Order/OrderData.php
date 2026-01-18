@@ -15,11 +15,11 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method \App\Model\Order\Item\OrderItemData[] getNewItemsWithoutTransportAndPayment()
  * @property \App\Model\Order\Status\OrderStatus|null $status
  * @property \App\Model\Order\Item\OrderItemData[] $items
- * @method \App\Model\Order\Item\OrderItemData[] getItemsByType( $type)
- * @method addItem(\App\Model\Order\Item\OrderItemData $item)
+ * @method \App\Model\Order\Item\OrderItemData[] getItemsByType(string $type)
+ * @method void addItem(\App\Model\Order\Item\OrderItemData $item)
  * @property \App\Model\Customer\User\CustomerUser $customerUser
  * @method \App\Model\Order\Item\OrderItemData[] getItemsWithoutTransportAndPayment()
- * @method setItemsWithoutTransportAndPayment(\App\Model\Order\Item\OrderItemData[] $items)
+ * @method void setItemsWithoutTransportAndPayment(\App\Model\Order\Item\OrderItemData[] $items)
  */
 class OrderData extends BaseOrderData
 {

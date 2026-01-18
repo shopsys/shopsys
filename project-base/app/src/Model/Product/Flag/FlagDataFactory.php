@@ -9,11 +9,11 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData as BaseFlagData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory as BaseFlagDataFactory;
 
 /**
- * @method fillNew(\App\Model\Product\Flag\FlagData $flagData)
+ * @method void fillNew(\App\Model\Product\Flag\FlagData $flagData)
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @method \App\Model\Product\Flag\FlagData create()
  * @method \App\Model\Product\Flag\FlagData createFromFlag(\App\Model\Product\Flag\Flag $flag)
- * @method fillFromFlag(\App\Model\Product\Flag\FlagData $flagData, \App\Model\Product\Flag\Flag $flag)
+ * @method void fillFromFlag(\App\Model\Product\Flag\FlagData $flagData, \App\Model\Product\Flag\Flag $flag)
  */
 class FlagDataFactory extends BaseFlagDataFactory
 {

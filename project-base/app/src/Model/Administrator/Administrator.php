@@ -9,8 +9,8 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator as BaseAdministrat
 
 /**
  * @method __construct(\App\Model\Administrator\AdministratorData $administratorData)
- * @method edit(\App\Model\Administrator\AdministratorData $administratorData)
- * @method setData(\App\Model\Administrator\AdministratorData $administratorData)
+ * @method void edit(\App\Model\Administrator\AdministratorData $administratorData)
+ * @method void setData(\App\Model\Administrator\AdministratorData $administratorData)
  */
 #[ORM\Table(name: 'administrators')]
 #[ORM\Index(columns: ['username'])]
