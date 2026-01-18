@@ -13,6 +13,7 @@ class PropertyAnnotationsFactory
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
         protected readonly AnnotationsReplacer $annotationsReplacer,
         protected readonly TypehintHelper $typehintHelper,
+        protected readonly DocBlockParser $docBlockParser,
     ) {
     }
 
@@ -79,14 +80,16 @@ class PropertyAnnotationsFactory
         ReflectionProperty $reflectionProperty,
         string $frameworkClassPattern,
     ): bool {
-        $docComment = $reflectionProperty->getDocComment() ?? '';
+        $type = $this->docBlockParser->getPropertyType($reflectionProperty);
 
-        $propertyTypeString = $docComment !== '' ? $docComment : $this->typehintHelper->getPropertyTypeFromTypehint($reflectionProperty);
+        if ($type === null) {
+            $type = $this->typehintHelper->getPropertyTypeFromTypehint($reflectionProperty);
+        }
 
+        if ($type === null) {
+            return false;
+        }
 
-        return (bool)preg_match(
-            $frameworkClassPattern,
-            $propertyTypeString ?? '',
-        );
+        return (bool)preg_match($frameworkClassPattern, (string)$type);
     }
 }
