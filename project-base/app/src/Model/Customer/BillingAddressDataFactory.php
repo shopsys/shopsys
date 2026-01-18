@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory as BaseBill
 /**
  * @method \App\Model\Customer\BillingAddressData createFromBillingAddress(\App\Model\Customer\BillingAddress $billingAddress)
  * @method \App\Model\Customer\BillingAddressData create()
- * @method fillFromBillingAddress(\App\Model\Customer\BillingAddressData $billingAddressData, \App\Model\Customer\BillingAddress $billingAddress)
+ * @method void fillFromBillingAddress(\App\Model\Customer\BillingAddressData $billingAddressData, \App\Model\Customer\BillingAddress $billingAddress)
  */
 class BillingAddressDataFactory extends BaseBillingAddressDataFactory
 {

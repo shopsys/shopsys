@@ -24,10 +24,10 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Category\Category> $children
  * @method \App\Model\Category\Category|null getParent()
  * @method \App\Model\Category\Category[] getChildren()
- * @method setParent(\App\Model\Category\Category|null $parent = null)
- * @method setTranslations(\App\Model\Category\CategoryData $categoryData)
- * @method setDomains(\App\Model\Category\CategoryData $categoryData)
- * @method createDomains(\App\Model\Category\CategoryData $categoryData)
+ * @method void setParent(\App\Model\Category\Category|null $parent = null)
+ * @method void setTranslations(\App\Model\Category\CategoryData $categoryData)
+ * @method void setDomains(\App\Model\Category\CategoryData $categoryData)
+ * @method void createDomains(\App\Model\Category\CategoryData $categoryData)
  * @method __construct(\App\Model\Category\CategoryData $categoryData)
  */
 class Category extends BaseCategory

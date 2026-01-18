@@ -20,15 +20,15 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
  * @method \App\Model\Transport\Transport getTransport()
  * @method \App\Model\Payment\Payment getPayment()
  * @method \App\Model\Product\Product|null getProduct()
- * @method edit(\App\Model\Order\Item\OrderItemData $orderItemData)
- * @method setTransport(\App\Model\Transport\Transport $transport)
- * @method setPayment(\App\Model\Payment\Payment $payment)
- * @method setProduct(\App\Model\Product\Product|null $product)
+ * @method void edit(\App\Model\Order\Item\OrderItemData $orderItemData)
+ * @method void setTransport(\App\Model\Transport\Transport $transport)
+ * @method void setPayment(\App\Model\Payment\Payment $payment)
+ * @method void setProduct(\App\Model\Product\Product|null $product)
  * @method __construct(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price, string $vatPercent, int $quantity, string $type, string|null $unitName, string|null $catnum)
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Order\Item\OrderItem> $relatedItems
  * @method addRelatedItem(\App\Model\Order\Item\OrderItem $relatedItem)
  * @method \App\Model\Order\Item\OrderItem[] getRelatedItems()
- * @method setProductGift(\App\Model\Product\Product|null $productGift)
+ * @method void setProductGift(\App\Model\Product\Product|null $productGift)
  * @method \App\Model\Product\Product|null getProductGift()
  */
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]

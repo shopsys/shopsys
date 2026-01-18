@@ -48,7 +48,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method array extractSpecialPrices(int $domainId, \App\Model\Product\Product $product)
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
- * @method \App\Model\Product\Product[] getVariantsForDefaultPricingGroup( $mainVariant,  $domainId)
+ * @method \App\Model\Product\Product[] getVariantsForDefaultPricingGroup(\App\Model\Product\Product $mainVariant, int $domainId)
  * @method array extractStoreAvailabilitiesInformation(\App\Model\Product\Product $product, int $domainId)
  * @method array getVariantPrices(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
  * @method string extractVat(\App\Model\Product\Product $product, int $domainId)

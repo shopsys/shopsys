@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
  * @ORM\Entity
  * @property \App\Model\Customer\User\CustomerUser|null $customerUser
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Cart\Item\CartItem> $items
- * @method addItem(\App\Model\Cart\Item\CartItem $item)
+ * @method void addItem(\App\Model\Cart\Item\CartItem $item)
  * @method \App\Model\Cart\Item\CartItem[] getItems()
  * @method \App\Model\Cart\Item\CartItem getItemById(int $itemId)
  * @method \App\Model\Cart\Item\CartItem|null findSimilarItemByItem(\App\Model\Cart\Item\CartItem $item)
@@ -23,7 +23,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
  * @method \App\Model\Transport\Transport|null getTransport()
  * @method \App\Model\Payment\Payment|null getPayment()
  * @method \App\Model\Cart\Item\CartItem getItemByUuid(string $itemUuid)
- * @method assignCartToCustomerUser(\App\Model\Customer\User\CustomerUser|null $customerUser)
+ * @method void assignCartToCustomerUser(\App\Model\Customer\User\CustomerUser|null $customerUser)
  * @method \App\Model\Product\Product[] getProducts()
  * @method \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct createQuantifiedProduct(\App\Model\Cart\Item\CartItem $cartItem)
  * @method \App\Model\Cart\Item\CartItem[] getProductGiftCartItems()

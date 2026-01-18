@@ -21,8 +21,8 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFie
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @property \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
  * @property \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
- * @method \App\Model\Category\Category[] getCategories( $data)
- * @method \App\Model\Product\Flag\Flag[] getFlags( $data)
+ * @method \App\Model\Category\Category[] getCategories(array $data)
+ * @method \App\Model\Product\Flag\Flag[] getFlags(array $data)
  * @method \App\Model\Product\Brand\Brand|null getBrand(array $data)
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */

@@ -7,12 +7,12 @@ namespace App\Model\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
 
 /**
- * @method \App\Model\Order\Order[] getOrdersByCustomerUserId( $customerUserId)
+ * @method \App\Model\Order\Order[] getOrdersByCustomerUserId(int $customerUserId)
  * @method \App\Model\Order\Order|null findLastByCustomerUserId(int $customerUserId)
  * @method \App\Model\Order\Order|null findById(int $id)
  * @method \App\Model\Order\Order getById(int $id)
- * @method \App\Model\Order\Order[] getCustomerUserOrderList( $customerUser)
- * @method \App\Model\Order\Order[] getOrderListForEmailByDomainId( $email,  $domainId)
+ * @method \App\Model\Order\Order[] getCustomerUserOrderList(\App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Order\Order[] getOrderListForEmailByDomainId(string $email, int $domainId)
  * @method \App\Model\Order\Order getByUrlHashAndDomain(string $urlHash, int $domainId)
  * @method \App\Model\Order\Order getByOrderNumberAndCustomerUser(string $orderNumber, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order|null findByUrlHashIncludingDeletedOrders(string $urlHash)
@@ -24,9 +24,9 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
  * @method int getCustomerUserOrderCount(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method bool isOrderStatusUsed(\App\Model\Order\Status\OrderStatus $orderStatus)
  * @method \App\Model\Order\Order getByUuid(string $uuid)
- * @method \App\Model\Order\Order[] getAllWithoutTrackingNumberByTransportType( $transportType)
+ * @method \App\Model\Order\Order[] getAllWithoutTrackingNumberByTransportType(string $transportType)
  * @method \App\Model\Order\Order[] getLastTenCustomerOrders(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer)
- * @method \App\Model\Order\Order[] getLastCustomerOrdersByLimit( $customer,  $limit,  $locale)
+ * @method \App\Model\Order\Order[] getLastCustomerOrdersByLimit(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer, int $limit, string $locale)
  * @method array<int,\App\Model\Order\Order> findByIds(int[] $ids)
  */
 class OrderRepository extends BaseOrderRepository

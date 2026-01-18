@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory as Base
 
 /**
  * @method \App\Model\Administrator\AdministratorData create()
- * @method fillFromAdministrator(\App\Model\Administrator\AdministratorData $administratorData, \App\Model\Administrator\Administrator $administrator)
+ * @method void fillFromAdministrator(\App\Model\Administrator\AdministratorData $administratorData, \App\Model\Administrator\Administrator $administrator)
  * @method \App\Model\Administrator\AdministratorData createFromAdministrator(\App\Model\Administrator\Administrator $administrator)
  */
 class AdministratorDataFactory extends BaseAdministratorDataFactory

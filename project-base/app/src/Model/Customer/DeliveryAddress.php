@@ -10,8 +10,8 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress as BaseDeliveryAddres
 /**
  * @ORM\Table(name="delivery_addresses")
  * @ORM\Entity
- * @method edit(\App\Model\Customer\DeliveryAddressData $deliveryAddressData)
- * @method setData(\App\Model\Customer\DeliveryAddressData $deliveryAddressData)
+ * @method void edit(\App\Model\Customer\DeliveryAddressData $deliveryAddressData)
+ * @method void setData(\App\Model\Customer\DeliveryAddressData $deliveryAddressData)
  * @method __construct(\App\Model\Customer\DeliveryAddressData $deliveryAddressData)
  */
 class DeliveryAddress extends BaseDeliveryAddress

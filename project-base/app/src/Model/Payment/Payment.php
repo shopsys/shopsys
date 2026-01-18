@@ -12,15 +12,15 @@ use Shopsys\FrameworkBundle\Model\Payment\Payment as BasePayment;
  * @ORM\Entity
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Transport\Transport> $transports
  * @method \App\Model\Transport\Transport[] getTransports()
- * @method addTransport(\App\Model\Transport\Transport $transport)
- * @method setTransports(\App\Model\Transport\Transport[] $transports)
- * @method removeTransport(\App\Model\Transport\Transport $transport)
- * @method setTranslations(\App\Model\Payment\PaymentData $paymentData)
- * @method setDomains(\App\Model\Payment\PaymentData $paymentData)
- * @method createDomains(\App\Model\Payment\PaymentData $paymentData)
+ * @method void addTransport(\App\Model\Transport\Transport $transport)
+ * @method void setTransports(\App\Model\Transport\Transport[] $transports)
+ * @method void removeTransport(\App\Model\Transport\Transport $transport)
+ * @method void setTranslations(\App\Model\Payment\PaymentData $paymentData)
+ * @method void setDomains(\App\Model\Payment\PaymentData $paymentData)
+ * @method void createDomains(\App\Model\Payment\PaymentData $paymentData)
  * @method __construct(\App\Model\Payment\PaymentData $paymentData)
- * @method edit(\App\Model\Payment\PaymentData $paymentData)
- * @method setData(\App\Model\Payment\PaymentData $paymentData)
+ * @method void edit(\App\Model\Payment\PaymentData $paymentData)
+ * @method void setData(\App\Model\Payment\PaymentData $paymentData)
  */
 class Payment extends BasePayment
 {

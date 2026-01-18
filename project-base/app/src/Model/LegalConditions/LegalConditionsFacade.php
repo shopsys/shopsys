@@ -9,12 +9,12 @@ use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade as BaseL
 
 /**
  * @method \App\Model\Article\Article|null findTermsAndConditions(int $domainId)
- * @method setTermsAndConditions(int $domainId, \App\Model\Article\Article|null $termsAndConditions = null)
+ * @method void setTermsAndConditions(int $domainId, \App\Model\Article\Article|null $termsAndConditions = null)
  * @method \App\Model\Article\Article|null findPrivacyPolicy(int $domainId)
- * @method setPrivacyPolicy(int $domainId, \App\Model\Article\Article|null $privacyPolicy = null)
+ * @method void setPrivacyPolicy(int $domainId, \App\Model\Article\Article|null $privacyPolicy = null)
  * @method bool isArticleUsedAsLegalConditions(\App\Model\Article\Article $article)
  * @method \App\Model\Article\Article|null findArticle(string $settingKey, int $domainId)
- * @method setArticle(string $settingKey, int $domainId, \App\Model\Article\Article|null $article = null)
+ * @method void setArticle(string $settingKey, int $domainId, \App\Model\Article\Article|null $article = null)
  * @property \App\Component\Setting\Setting $setting
  * @method __construct(\Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade, \App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
  */

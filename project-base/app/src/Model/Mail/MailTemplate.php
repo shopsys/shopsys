@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplate as BaseMailTemplate;
  * @ORM\Entity
  * @method __construct(string $name, int $domainId, \App\Model\Mail\MailTemplateData $mailTemplateData)
  * @property \App\Model\Order\Status\OrderStatus|null $orderStatus
- * @method edit(\App\Model\Mail\MailTemplateData $mailTemplateData)
+ * @method void edit(\App\Model\Mail\MailTemplateData $mailTemplateData)
  * @method \App\Model\Order\Status\OrderStatus|null getOrderStatus()
  */
 class MailTemplate extends BaseMailTemplate
