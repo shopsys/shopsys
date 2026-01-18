@@ -52,8 +52,8 @@ class CategoryFacade
     }
 
     /**
-     * @param int[] $categoryIds
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     * @param array<int, int> $categoryIds
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Category\Category>
      */
     public function getByIds(array $categoryIds): array
     {
@@ -203,8 +203,8 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $selectedCategories
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     * @param array<int, \Shopsys\FrameworkBundle\Model\Category\Category> $selectedCategories
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Category\Category>
      */
     public function getAllCategoriesOfCollapsedTree(array $selectedCategories)
     {

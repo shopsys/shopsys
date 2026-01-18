@@ -43,7 +43,7 @@ class FilterQuery extends AbstractFilterQuery
     }
 
     /**
-     * @param string[] $placements
+     * @param array<int, string> $placements
      */
     public function filterByPlacements(array $placements): static
     {

@@ -9,6 +9,10 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractElasticsearchDataFet
 
 class ArticleElasticsearchDataFetcher extends AbstractElasticsearchDataFetcher
 {
+    /**
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
     #[Override]
     protected function fillEmptyFields(array $data): array
     {

@@ -68,6 +68,9 @@ class ChangeSetResolver
         return $resolvedChangeSet;
     }
 
+    /**
+     * @param array{0: mixed, 1: mixed} $changes
+     */
     protected function getResolvedChanges(array $changes): ?ResolvedChanges
     {
         foreach ($this->dataTypeResolvers as $dataTypeResolver) {

@@ -315,6 +315,9 @@ class ArticleDataFixture extends AbstractReferenceFixture
         ];
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $articles
+     */
     private function createArticlesFromArray(array $articles, int $domainId): void
     {
         foreach ($articles as $article) {
@@ -326,6 +329,9 @@ class ArticleDataFixture extends AbstractReferenceFixture
         }
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     private function createArticleFromArray(array $data, int $domainId): void
     {
         $articleData = $this->articleDataFactory->create($domainId);
@@ -368,6 +374,9 @@ class ArticleDataFixture extends AbstractReferenceFixture
         );
     }
 
+    /**
+     * @param array<string, mixed> $articleInputData
+     */
     private function isMandatoryArticle(array $articleInputData): bool
     {
         return array_key_exists(self::REFERENCE_NAME_KEY, $articleInputData) && in_array($articleInputData[self::REFERENCE_NAME_KEY], self::ARTICLES_MANDATORY_ON_ALL_DOMAINS, true);

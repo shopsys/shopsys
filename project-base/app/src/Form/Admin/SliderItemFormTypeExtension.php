@@ -28,6 +28,9 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
         $this->buildGtmForm($builder);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     private function buildImagesGroup(FormBuilderInterface $builder, array $options): void
     {
         $builderImageGroup = $builder->get('image');

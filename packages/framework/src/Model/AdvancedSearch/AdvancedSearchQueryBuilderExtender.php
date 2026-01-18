@@ -13,7 +13,7 @@ class AdvancedSearchQueryBuilderExtender
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $advancedSearchData
+     * @param array<int|string, \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData> $advancedSearchData
      */
     public function extendByAdvancedSearchData(QueryBuilder $queryBuilder, array $advancedSearchData): void
     {

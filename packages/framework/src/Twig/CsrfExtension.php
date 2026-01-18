@@ -32,6 +32,9 @@ class CsrfExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @param array<string, mixed> $parameters
+     */
     public function protectedUrl(string $name, array $parameters = [], bool $schemeRelative = false): string
     {
         $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->routeCsrfProtector->getCsrfTokenByRoute(

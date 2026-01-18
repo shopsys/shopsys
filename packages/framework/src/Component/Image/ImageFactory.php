@@ -19,6 +19,9 @@ class ImageFactory
     ) {
     }
 
+    /**
+     * @param array<string, string> $namesIndexedByLocale
+     */
     protected function create(
         string $entityName,
         int $entityId,
@@ -35,6 +38,8 @@ class ImageFactory
     }
 
     /**
+     * @param array<int, array<string, string>> $names
+     * @param array<int, string> $temporaryFilenames
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     public function createMultiple(

@@ -102,6 +102,9 @@ class WatchdogDataFixture extends AbstractReferenceFixture implements DependentF
         ];
     }
 
+    /**
+     * @param array<string, string> $data
+     */
     private function createWatchdogFromArray(array $data, int $domainId): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $data[self::ATTRIBUTE_PRODUCT_KEY]);

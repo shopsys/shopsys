@@ -41,6 +41,9 @@ class EntityLogFacade
         );
     }
 
+    /**
+     * @param array<string, mixed> $changes
+     */
     public function createEntityLog(
         object $entity,
         LoggableEntityConfig $loggableEntityConfig,

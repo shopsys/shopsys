@@ -20,6 +20,9 @@ class IndexDefinition
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getDefinition(): array
     {
         $decodedDefinition = json_decode($this->getDefinitionFileContent(), true);

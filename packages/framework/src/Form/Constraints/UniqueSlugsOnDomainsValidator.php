@@ -22,7 +22,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
+     * @param array<int, array<string, mixed>> $values
      */
     #[Override]
     public function validate(mixed $values, Constraint $constraint): void
@@ -35,6 +35,9 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
         $this->validateExists($values, $constraint);
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $values
+     */
     protected function validateDuplication(array $values, UniqueSlugsOnDomains $constraint): void
     {
         $slugsCountByDomainId = $this->getSlugsCountIndexedByDomainId($values);
@@ -56,7 +59,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
+     * @param array<int, array<string, mixed>> $values
      */
     protected function validateExists($values, UniqueSlugsOnDomains $constraint): void
     {
@@ -83,7 +86,8 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @return int[][]
+     * @param array<int, array<string, mixed>> $values
+     * @return array<int, array<string, int>>
      */
     protected function getSlugsCountIndexedByDomainId(array $values)
     {

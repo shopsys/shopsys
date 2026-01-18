@@ -60,7 +60,7 @@ class FriendlyUrlRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param array<string, mixed> $parameters
      */
     #[Override]
     public function generate(
@@ -77,6 +77,9 @@ class FriendlyUrlRouter implements RouterInterface
         );
     }
 
+    /**
+     * @param array<string, mixed> $parameters
+     */
     public function generateByFriendlyUrl(
         FriendlyUrl $friendlyUrl,
         array $parameters = [],
@@ -102,7 +105,7 @@ class FriendlyUrlRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<string, mixed>
      */
     #[Override]
     public function match(string $pathinfo): array

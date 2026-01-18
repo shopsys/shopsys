@@ -11,6 +11,10 @@ class ImageEntityConfig
 {
     public const WITHOUT_NAME_KEY = '__NULL__';
 
+    /**
+     * @param string[] $types
+     * @param array<string, bool> $multipleByType
+     */
     public function __construct(
         protected readonly string $entityName,
         protected readonly string $entityClass,

@@ -100,6 +100,7 @@ class ProductElasticsearchRepository
 
     /**
      * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html
+     * @return array<string, mixed>
      */
     protected function createQuery(string $indexName, string $searchText): array
     {
@@ -110,6 +111,7 @@ class ProductElasticsearchRepository
     }
 
     /**
+     * @param array<string, mixed> $result
      * @return int[]
      */
     protected function extractIds(array $result): array
@@ -119,6 +121,10 @@ class ProductElasticsearchRepository
         return array_column($hits, '_id');
     }
 
+    /**
+     * @param array<string, mixed> $result
+     * @return array<int, array<string, mixed>>
+     */
     public function extractHits(array $result): array
     {
         return array_map(function ($value) {
@@ -132,6 +138,9 @@ class ProductElasticsearchRepository
         }, $result['hits']['hits']);
     }
 
+    /**
+     * @param array<string, mixed> $result
+     */
     public function extractTotalCount(array $result): int
     {
         return (int)$result['hits']['total']['value'];
@@ -144,6 +153,9 @@ class ProductElasticsearchRepository
         return $this->extractTotalCount($result);
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getProductsByFilterQuery(FilterQuery $filterQuery): array
     {
         $result = $this->client->search($filterQuery->getQuery());
@@ -176,6 +188,7 @@ class ProductElasticsearchRepository
     }
 
     /**
+     * @param array<string, mixed> $result
      * @return int[]
      */
     protected function extractIdsFromFields(array $result): array
@@ -204,6 +217,7 @@ class ProductElasticsearchRepository
     }
 
     /**
+     * @param array<string, mixed> $productCountAggregation
      * @return int[]
      */
     protected function extractCategoryIdsAggregation(array $productCountAggregation): array

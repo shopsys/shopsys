@@ -78,6 +78,10 @@ class ProductPickerController extends AdminBaseController
         );
     }
 
+    /**
+     * @param array<string, mixed> $viewParameters
+     * @param array<string, mixed> $gridViewParameters
+     */
     protected function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters): Response
     {
         $advancedSearchForm = $this->advancedSearchProductFacade->createAdvancedSearchForm($request);

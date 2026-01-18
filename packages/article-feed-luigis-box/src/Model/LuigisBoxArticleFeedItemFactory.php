@@ -18,6 +18,9 @@ class LuigisBoxArticleFeedItemFactory
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $articleData
+     */
     public function create(array $articleData): LuigisBoxArticleFeedItem
     {
         $imageUrl = $articleData['imageUrl'] ?? null;

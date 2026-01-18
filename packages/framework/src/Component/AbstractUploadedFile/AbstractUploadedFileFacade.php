@@ -67,6 +67,9 @@ abstract class AbstractUploadedFileFacade
         throw new EntityIdentifierException($message);
     }
 
+    /**
+     * @param array<int, string> $fileNamesIndexedByFileId
+     */
     protected function updateFilenamesAndSlugs(array $fileNamesIndexedByFileId): void
     {
         foreach ($fileNamesIndexedByFileId as $fileId => $fileName) {

@@ -55,6 +55,9 @@ class ProductGridFactory
         return $grid;
     }
 
+    /**
+     * @param array<string, mixed> $gridViewParameters
+     */
     public function getProductPickerControllerGrid(QueryBuilder $queryBuilder, array $gridViewParameters): Grid
     {
         $dataSource = $this->getGridDataSource($queryBuilder);

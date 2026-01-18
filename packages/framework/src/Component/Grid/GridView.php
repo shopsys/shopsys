@@ -15,7 +15,7 @@ use Twig\TemplateWrapper;
 class GridView
 {
     /**
-     * @var mixed[]
+     * @var array<string, mixed>
      */
     protected array $templateParameters;
 
@@ -31,6 +31,7 @@ class GridView
 
     /**
      * @param string|string[] $theme
+     * @param array<string, mixed> $templateParameters
      */
     public function __construct(
         protected readonly Grid $grid,
@@ -48,6 +49,9 @@ class GridView
         $this->renderBlock('grid');
     }
 
+    /**
+     * @param array<string, mixed>|string|null $removeParameters
+     */
     public function renderHiddenInputs(array|string|null $removeParameters = null): void
     {
         $this->renderBlock('grid_hidden_inputs', [
@@ -55,6 +59,9 @@ class GridView
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $parameters
+     */
     public function renderBlock(string $name, array $parameters = [], bool $echo = true): ?string
     {
         foreach ($this->getTemplates() as $template) {
@@ -85,6 +92,9 @@ class GridView
         );
     }
 
+    /**
+     * @param array<string, mixed>|null $row
+     */
     public function renderCell(Column $column, ?array $row = null, ?FormView $formView = null): void
     {
         if ($row !== null) {
@@ -129,6 +139,9 @@ class GridView
         }
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     public function renderActionCell(ActionColumn|GridRowActionInterface $actionColumn, array $row): void
     {
         if ($actionColumn instanceof ActionColumn) {
@@ -172,6 +185,10 @@ class GridView
         }
     }
 
+    /**
+     * @param array<string, mixed>|null $parameters
+     * @param array<string, mixed>|string|null $removeParameters
+     */
     public function getUrl(?array $parameters = null, array|string|null $removeParameters = null): string
     {
         $masterRequest = $this->requestStack->getMainRequest();
@@ -195,6 +212,9 @@ class GridView
         return false;
     }
 
+    /**
+     * @return string|string[]|null
+     */
     public function getTheme(): array|string|null
     {
         return $this->theme;
@@ -202,7 +222,7 @@ class GridView
 
     /**
      * @param string[]|string $theme
-     * @param mixed[] $parameters
+     * @param array<string, mixed> $parameters
      */
     protected function setTheme(array|string $theme, array $parameters = []): void
     {
@@ -235,6 +255,9 @@ class GridView
         return $this->twig->load($theme);
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     protected function getCellValue(Column $column, array $row): mixed
     {
         return $this->grid->getValueFromRowBySourceColumnName($row, $column->getSourceColumnName());

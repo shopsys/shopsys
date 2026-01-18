@@ -16,6 +16,9 @@ final class FriendlyUrlType extends AbstractType
 {
     protected const string SLUG_REGEX = '/^[\w_\-\/]+$/';
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -16,6 +16,9 @@ class ProductElasticsearchProvider
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getVisibleProductArrayById(int $productId): array
     {
         $products = $this->productElasticsearchRepository->getProductsByFilterQuery(
@@ -31,6 +34,7 @@ class ProductElasticsearchProvider
 
     /**
      * @param int[] $productIds
+     * @return array<int, array<string, mixed>>
      */
     public function getSellableProductArrayByIds(array $productIds, ?int $limit = null): array
     {
@@ -41,6 +45,7 @@ class ProductElasticsearchProvider
 
     /**
      * @param int[] $productIds
+     * @return array<int, array<string, mixed>>
      */
     public function getListableProductArrayByIds(array $productIds, ?int $limit = null): array
     {
@@ -49,6 +54,9 @@ class ProductElasticsearchProvider
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getVisibleProductArrayByUuid(string $productUuid): array
     {
         $products = $this->productElasticsearchRepository->getProductsByFilterQuery(
@@ -64,6 +72,7 @@ class ProductElasticsearchProvider
 
     /**
      * @param string[] $productUuids
+     * @return array<int, array<string, mixed>>
      */
     public function getSellableProductArrayByUuids(array $productUuids): array
     {
@@ -83,6 +92,7 @@ class ProductElasticsearchProvider
 
     /**
      * @param string[] $productUuids
+     * @return int[]
      */
     public function getSellableProductIdsByUuids(array $productUuids): array
     {

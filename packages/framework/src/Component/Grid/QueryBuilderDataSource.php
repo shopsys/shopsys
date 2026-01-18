@@ -46,6 +46,9 @@ class QueryBuilderDataSource implements DataSourceInterface
         return $queryPaginator->getResult($page, $limit, $this->getTotalRowsCount());
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     #[Override]
     public function getOneRow(int|string $rowId): array
     {

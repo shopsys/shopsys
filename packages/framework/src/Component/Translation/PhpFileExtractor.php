@@ -57,6 +57,9 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         }
     }
 
+    /**
+     * @param array<\PhpParser\Node> $ast
+     */
     #[Override]
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
@@ -223,7 +226,8 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * {@inheritdoc}
+     * @param array<\PhpParser\Node> $nodes
+     * @return array<\PhpParser\Node>|null
      */
     #[Override]
     public function beforeTraverse(array $nodes): ?array
@@ -241,7 +245,8 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * {@inheritdoc}
+     * @param array<\PhpParser\Node> $nodes
+     * @return array<\PhpParser\Node>|null
      */
     #[Override]
     public function afterTraverse(array $nodes): ?array

@@ -9,7 +9,7 @@ use const E_USER_DEPRECATED;
 final class DeprecationHelper
 {
     /**
-     * @param mixed $arguments
+     * @param mixed ...$arguments
      */
     public static function trigger(string $message, ...$arguments): void
     {
@@ -75,6 +75,9 @@ final class DeprecationHelper
         );
     }
 
+    /**
+     * @param array<int, mixed> $functionArguments
+     */
     public static function triggerNewArgumentInMethod(
         string $methodName,
         string $argumentName,

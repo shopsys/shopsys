@@ -59,6 +59,9 @@ class LuigisBoxArticleFeedItemTest extends TestCase
         return $domainConfigMock;
     }
 
+    /**
+     * @param array<string, mixed> $articleData
+     */
     #[DataProvider('articleFeedItemCreationDataProvider')]
     public function testArticleFeedItemCreation(array $articleData): void
     {
@@ -79,6 +82,9 @@ class LuigisBoxArticleFeedItemTest extends TestCase
             ->with($domain, $article)->willReturn($url);
     }
 
+    /**
+     * @param array<string, mixed> $articleData
+     */
     public function assertLuigisBoxCategoryFeedItemWithImageLink(array $articleData): void
     {
         if ($articleData['imageUrl'] === null) {

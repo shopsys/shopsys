@@ -70,6 +70,10 @@ class MicroserviceClient
         ];
     }
 
+    /**
+     * @param array<string, mixed> $jsonData
+     * @return array<string, mixed>
+     */
     protected function createJsonOptions(array $jsonData): array
     {
         return array_merge(

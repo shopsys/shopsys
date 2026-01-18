@@ -44,8 +44,8 @@ class ArticleExportRepository
     }
 
     /**
-     * @param int[] $articleIds
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
+     * @param array<int, int> $articleIds
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Article\Article>
      */
     public function getVisibleArticleSitesByDomainIdAndArticleIds(int $domainId, array $articleIds): array
     {
@@ -56,6 +56,9 @@ class ArticleExportRepository
             ->getResult();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function extractArticle(Article $article): array
     {
         $domainId = $article->getDomainId();

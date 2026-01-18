@@ -36,6 +36,7 @@ class TranslationExtension extends AbstractExtension
      *
      * Helpful for protection from XSS when providing user input as translation argument
      *
+     * @param array<string, mixed> $arguments
      * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::trans()
      */
     public function transHtml(
@@ -53,6 +54,9 @@ class TranslationExtension extends AbstractExtension
 
     /**
      * Escapes all elements in array with default twig "escape" filter
+     *
+     * @param array<string, mixed> $elements
+     * @return array<string, mixed>
      */
     protected function getEscapedElements(Environment $twig, array $elements): array
     {

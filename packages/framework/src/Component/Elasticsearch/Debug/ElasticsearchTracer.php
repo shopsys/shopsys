@@ -48,6 +48,7 @@ class ElasticsearchTracer extends AbstractLogger
     /**
      * @param mixed $level
      * @param string $message
+     * @param array<string, mixed> $context
      */
     #[Override]
     public function log($level, $message, array $context = []): void
@@ -71,6 +72,7 @@ class ElasticsearchTracer extends AbstractLogger
 
     /**
      * @param string $message
+     * @param array<string, mixed> $context
      */
     protected function logRequest($message, array $context = []): void
     {

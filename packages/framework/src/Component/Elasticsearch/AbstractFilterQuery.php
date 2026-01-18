@@ -60,6 +60,9 @@ abstract class AbstractFilterQuery
         return $clone;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getQuery(): array
     {
         return [

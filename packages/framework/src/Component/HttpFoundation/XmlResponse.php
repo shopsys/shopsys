@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class XmlResponse extends Response
 {
+    /**
+     * @param array<string, string> $headers
+     */
     public function __construct(
         protected readonly XmlNormalizerHelper $xmlNormalizerHelper,
         ?string $content = '',

@@ -12,6 +12,9 @@ use Symfony\Component\Form\FormEvents;
 
 class TimedSpamValidationListener implements EventSubscriberInterface
 {
+    /**
+     * @param array<string, mixed> $options
+     */
     public function __construct(
         protected readonly FormTimeProvider $formTimeProvider,
         protected readonly array $options,

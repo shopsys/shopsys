@@ -37,6 +37,9 @@ class CombinedArticleElasticsearchRepository
         return $this->extractHits($result, $domainId);
     }
 
+    /**
+     * @param array<string, mixed> $result
+     */
     protected function extractHits(array $result, int $domainId): array
     {
         return array_map(function ($value) use ($domainId) {
@@ -65,6 +68,9 @@ class CombinedArticleElasticsearchRepository
         throw new InvalidArgumentException(sprintf('Unsupported index version "%s"', $indexVersion));
     }
 
+    /**
+     * @param array<string, mixed> $article
+     */
     public function fillEmptyFields(array $article): array
     {
         $result = $article;

@@ -298,6 +298,9 @@ class PriceListFacade
         return ',';
     }
 
+    /**
+     * @param array<string, string> $row
+     */
     protected function preProcessCsvRow(array $row): array
     {
         if (!array_key_exists(PriceListCsvColumnsEnum::PRICE, $row)) {

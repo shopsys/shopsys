@@ -11,6 +11,9 @@ class CountryDataModifierVersion20190121094400
      */
     private array $tmpIds;
 
+    /**
+     * @param array<int, array<string, mixed>> $data
+     */
     public function __construct(private readonly array $data)
     {
         $this->tmpIds = [];
@@ -139,6 +142,9 @@ class CountryDataModifierVersion20190121094400
         return array_values(array_diff($obsoleteIds, $usedIds));
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $data
+     */
     private function groupDataIntoDomains(array $data): array
     {
         $tmp = [];

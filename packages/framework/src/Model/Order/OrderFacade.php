@@ -157,7 +157,7 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundData[] $transactionsIndexedByPaymentTransactionId
+     * @param array<int, \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundData> $transactionsIndexedByPaymentTransactionId
      */
     protected function handleRefundTransactions(array $transactionsIndexedByPaymentTransactionId): void
     {
@@ -207,7 +207,7 @@ class OrderFacade
     }
 
     /**
-     * @param int[] $ids
+     * @param array<int, int> $ids
      * @return array<int, \Shopsys\FrameworkBundle\Model\Order\Order>
      */
     public function findByIds(array $ids): array

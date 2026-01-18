@@ -28,6 +28,9 @@ class FeedRegistry
     ) {
     }
 
+    /**
+     * @param int[] $domainIds
+     */
     public function registerFeed(FeedInterface $feed, string $timeHours, string $timeMinutes, array $domainIds): void
     {
         $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);

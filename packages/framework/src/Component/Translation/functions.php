@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 /**
+ * @param array<string, string|int|float> $parameters
  * @param string|null $domain Translation domain (default is "messages")
  */
 function t(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string

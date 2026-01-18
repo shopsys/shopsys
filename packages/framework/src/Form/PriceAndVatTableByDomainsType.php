@@ -24,6 +24,9 @@ final class PriceAndVatTableByDomainsType extends AbstractType
     {
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -41,6 +44,9 @@ final class PriceAndVatTableByDomainsType extends AbstractType
             ->setAllowedTypes('pricesIndexedByDomainId', ['array']);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -70,6 +70,7 @@ class ParameterFilterChoiceRepository
     }
 
     /**
+     * @param array<int, array<string, mixed>> $rows
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     protected function getVisibleParametersIndexedByIdOrderedByName(array $rows, string $locale): array
@@ -102,6 +103,7 @@ class ParameterFilterChoiceRepository
     }
 
     /**
+     * @param array<int, array<string, mixed>> $rows
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[][]
      */
     protected function getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, string $locale): array
@@ -128,6 +130,7 @@ class ParameterFilterChoiceRepository
     }
 
     /**
+     * @param array<int, array<string, mixed>> $rows
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     protected function getParameterValuesIndexedByIdOrderedByText(array $rows, string $locale): array

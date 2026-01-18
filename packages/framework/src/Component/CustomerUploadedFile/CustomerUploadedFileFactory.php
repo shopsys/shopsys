@@ -50,6 +50,8 @@ class CustomerUploadedFileFactory
     }
 
     /**
+     * @param array<string> $temporaryFilenames
+     * @param array<string> $uploadedFilenames
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[]
      */
     public function createMultiple(

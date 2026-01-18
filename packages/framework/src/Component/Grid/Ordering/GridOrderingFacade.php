@@ -14,7 +14,8 @@ class GridOrderingFacade
     }
 
     /**
-     * @param string $entityClass
+     * @param class-string $entityClass
+     * @param array<int|string> $rowIds
      */
     public function saveOrdering($entityClass, array $rowIds): void
     {
@@ -30,7 +31,7 @@ class GridOrderingFacade
     }
 
     /**
-     * @param string $entityClass
+     * @param class-string $entityClass
      * @return mixed
      */
     protected function getEntityRepository($entityClass)

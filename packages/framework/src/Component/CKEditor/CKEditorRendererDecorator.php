@@ -26,6 +26,10 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
         return $this->baseCkEditorRenderer->renderJsPath($jsPath);
     }
 
+    /**
+     * @param array<string, mixed> $config
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function renderWidget(string $id, array $config, array $options = []): string
     {
@@ -44,18 +48,27 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
         return $this->baseCkEditorRenderer->renderDestroy($id);
     }
 
+    /**
+     * @param array<string, mixed> $plugin
+     */
     #[Override]
     public function renderPlugin(string $name, array $plugin): string
     {
         return $this->baseCkEditorRenderer->renderPlugin($name, $plugin);
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $stylesSet
+     */
     #[Override]
     public function renderStylesSet(string $name, array $stylesSet): string
     {
         return $this->baseCkEditorRenderer->renderStylesSet($name, $stylesSet);
     }
 
+    /**
+     * @param array<string, mixed> $template
+     */
     #[Override]
     public function renderTemplate(string $name, array $template): string
     {

@@ -9,7 +9,7 @@ use ReflectionObject;
 class EntityNameResolver
 {
     /**
-     * @param string[] $entityExtensionMap
+     * @param array<string, string> $entityExtensionMap
      */
     public function __construct(
         protected array $entityExtensionMap,
@@ -55,6 +55,10 @@ class EntityNameResolver
         return $string;
     }
 
+    /**
+     * @param array<mixed> $array
+     * @return array<mixed>
+     */
     protected function resolveInArray(array $array): array
     {
         return array_map([$this, 'resolveIn'], $array);

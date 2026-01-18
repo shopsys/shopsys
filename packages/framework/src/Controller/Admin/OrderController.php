@@ -232,7 +232,9 @@ class OrderController extends AdminBaseController
     }
 
     /**
+     * @param array<string, mixed> $row
      * @param int[] $ids
+     * @return array<string, mixed>
      */
     protected function addOrderEntityToDataSource(array $row, array $ids): array
     {

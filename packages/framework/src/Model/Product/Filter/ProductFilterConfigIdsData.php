@@ -6,6 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 class ProductFilterConfigIdsData
 {
+    /**
+     * @param array<int, int[]> $parameterValueIdsByParameterId
+     * @param int[] $flagIds
+     * @param int[] $brandIds
+     */
     public function __construct(
         protected readonly array $parameterValueIdsByParameterId,
         protected readonly array $flagIds,

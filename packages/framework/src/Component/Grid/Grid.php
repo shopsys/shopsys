@@ -57,7 +57,7 @@ class Grid
     protected bool $isOrderFromRequest = false;
 
     /**
-     * @var mixed[]
+     * @var array<int, array<string, mixed>>
      */
     protected array $rows = [];
 
@@ -75,7 +75,7 @@ class Grid
     protected string|array|null $viewTheme = null;
 
     /**
-     * @var mixed[]
+     * @var array<string, mixed>
      */
     protected array $viewTemplateParameters = [];
 
@@ -134,6 +134,10 @@ class Grid
         return $column;
     }
 
+    /**
+     * @param array<string, string> $bindingRouteParams
+     * @param array<string, mixed> $additionalRouteParams
+     */
     public function addActionColumn(
         string $type,
         string $name,
@@ -159,6 +163,10 @@ class Grid
         return $actionColumn;
     }
 
+    /**
+     * @param array<string, string> $bindingRouteParams
+     * @param array<string, mixed> $additionalRouteParams
+     */
     public function addEditActionColumn(
         string $route,
         array $bindingRouteParams = [],
@@ -173,6 +181,10 @@ class Grid
         );
     }
 
+    /**
+     * @param array<string, string> $bindingRouteParams
+     * @param array<string, mixed> $additionalRouteParams
+     */
     public function addDeleteActionColumn(
         string $route,
         array $bindingRouteParams = [],
@@ -213,6 +225,9 @@ class Grid
         return $this->inlineEditService;
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     public function getRowId(array $row): mixed
     {
         return $this->getValueFromRowBySourceColumnName($row, $this->dataSource->getRowIdSourceColumnName());
@@ -225,6 +240,7 @@ class Grid
 
     /**
      * @param string|string[] $viewTheme
+     * @param array<string, mixed> $viewParameters
      */
     public function setTheme(array|string $viewTheme, array $viewParameters = []): void
     {
@@ -317,6 +333,9 @@ class Grid
         return $this->actionColumns;
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getRows(): array
     {
         return $this->rows;
@@ -332,6 +351,9 @@ class Grid
         return $this->enableSelecting && $this->accessChecker->canEdit($this->roleConstant);
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     public function isRowSelected(array $row): bool
     {
         $rowId = $this->getRowId($row);
@@ -339,6 +361,9 @@ class Grid
         return in_array($rowId, $this->selectedRowIds, true);
     }
 
+    /**
+     * @return int[]
+     */
     public function getSelectedRowIds(): array
     {
         return $this->selectedRowIds;
@@ -356,6 +381,9 @@ class Grid
         }
     }
 
+    /**
+     * @return int[]
+     */
     public function getAllowedLimits(): array
     {
         return $this->allowedLimits;
@@ -452,6 +480,10 @@ class Grid
         }
     }
 
+    /**
+     * @param array<string, mixed>|string|null $removeParameters
+     * @return array<string, mixed>
+     */
     public function getGridParameters(array|string|null $removeParameters = []): array
     {
         $gridParameters = [];
@@ -477,6 +509,11 @@ class Grid
         return $gridParameters;
     }
 
+    /**
+     * @param array<string, mixed>|string|null $parameters
+     * @param array<string, mixed>|string|null $removeParameters
+     * @return array<string, mixed>
+     */
     public function getUrlGridParameters(
         array|string|null $parameters = null,
         array|string|null $removeParameters = null,
@@ -489,6 +526,11 @@ class Grid
         return [self::GET_PARAMETER => [$this->getId() => $gridParameters]];
     }
 
+    /**
+     * @param array<string, mixed>|string|null $parameters
+     * @param array<string, mixed>|string|null $removeParameters
+     * @return array<string, mixed>
+     */
     public function getUrlParameters(
         array|string|null $parameters = null,
         array|string|null $removeParameters = null,
@@ -539,6 +581,9 @@ class Grid
         $this->page = min($this->page, $this->pageCount);
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     public function getValueFromRowBySourceColumnName(array $row, string $sourceColumnName): mixed
     {
         if (array_key_exists($sourceColumnName, $row)) {

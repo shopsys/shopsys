@@ -69,6 +69,7 @@ class ImageFacade extends BaseImageFacade
 
     /**
      * @param mixed $entity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $images
      */
     #[Override]
     public function deleteImages($entity, array $images): void

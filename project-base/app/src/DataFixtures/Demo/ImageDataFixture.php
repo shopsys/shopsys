@@ -342,6 +342,9 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
+    /**
+     * @param array<string, string> $names
+     */
     private function saveImageIntoDb(
         int $entityId,
         string $entityName,

@@ -63,6 +63,7 @@ class ImageExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
+     * @param array<string, mixed> $attributes
      */
     protected function getImageUrl(object $imageOrEntity, array $attributes, DomainConfig $domainConfig): string
     {
@@ -90,6 +91,7 @@ class ImageExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
+     * @param array<string, mixed> $attributes
      */
     public function getImageHtml(
         object $imageOrEntity,
@@ -112,6 +114,9 @@ class ImageExtension extends AbstractExtension
         }
     }
 
+    /**
+     * @param array<string, mixed> $attributes
+     */
     protected function getNoimageHtml(DomainConfig $domainConfig, array $attributes = []): string
     {
         $this->preventDefault($attributes);
@@ -147,6 +152,9 @@ class ImageExtension extends AbstractExtension
         return 'image_extension';
     }
 
+    /**
+     * @param array<string, mixed> $attributes
+     */
     protected function preventDefault(array &$attributes): void
     {
         Utils::setArrayDefaultValue($attributes, 'type');
@@ -154,6 +162,9 @@ class ImageExtension extends AbstractExtension
         Utils::setArrayDefaultValue($attributes, 'title', $attributes['alt']);
     }
 
+    /**
+     * @param array<string, mixed> $attributes
+     */
     protected function getImageHtmlByEntityName(array $attributes, string $entityName): string
     {
         $htmlAttributes = $this->extractHtmlAttributesFromAttributes($attributes);
@@ -164,6 +175,10 @@ class ImageExtension extends AbstractExtension
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $attributes
+     * @return array<string, mixed>
+     */
     protected function extractHtmlAttributesFromAttributes(array $attributes): array
     {
         $htmlAttributes = $attributes;

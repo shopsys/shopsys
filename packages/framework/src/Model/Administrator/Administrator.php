@@ -444,7 +444,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole[] $administratorRoles
+     * @param array<int, \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole> $administratorRoles
      */
     public function addRoles(array $administratorRoles): void
     {

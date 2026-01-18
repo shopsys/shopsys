@@ -6,6 +6,9 @@ namespace Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem;
 
 class HeurekaDeliveryFeedItemFactory
 {
+    /**
+     * @param array<string, mixed> $dataRow
+     */
     public function create(array $dataRow): HeurekaDeliveryFeedItem
     {
         foreach (['id', 'stockQuantity'] as $requiredKey) {

@@ -32,7 +32,7 @@ interface AdvancedSearchFilterInterface
     /**
      * Returns an array of OPERATOR_* constants specifying which operators can be used with this filter
      *
-     * @return string[]
+     * @return array<int, string>
      */
     public function getAllowedOperators(): array;
 
@@ -43,13 +43,15 @@ interface AdvancedSearchFilterInterface
 
     /**
      * Returns options that will be passed to the form type used for value selection
+     *
+     * @return array<string, mixed>
      */
     public function getValueFormOptions(): array;
 
     /**
      * Method that applies the filtering conditions specified by $rulesData to the provided query builder
      *
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
+     * @param array<int, \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData> $rulesData
      */
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void;
 }

@@ -68,6 +68,9 @@ class LocalizedRouterFactory
         return $this->cacheDir . '/' . $locale;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getRouterOptions(string $locale): array
     {
         $options = [];

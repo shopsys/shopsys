@@ -26,6 +26,9 @@ final class CustomerUserUpdateFormType extends AbstractType
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -76,6 +79,7 @@ final class CustomerUserUpdateFormType extends AbstractType
     }
 
     /**
+     * @param array<string, mixed> $options
      * @throws \Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException
      */
     private function addCustomerUserList(array $options, FormBuilderInterface $builder): void

@@ -37,7 +37,7 @@ class EntityLogData
     public $source = null;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     public $changeSet = [];
 

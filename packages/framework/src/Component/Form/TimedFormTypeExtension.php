@@ -38,6 +38,9 @@ final class TimedFormTypeExtension extends AbstractTypeExtension
         ));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {

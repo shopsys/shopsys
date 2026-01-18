@@ -30,6 +30,9 @@ final class UrlListType extends AbstractType
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -84,6 +87,9 @@ final class UrlListType extends AbstractType
         }
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -119,7 +125,8 @@ final class UrlListType extends AbstractType
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[][]
+     * @param array<int, int> $limitDomainsByIds
+     * @return array<int, array<int, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl>>
      */
     private function getFriendlyUrlsIndexedByDomain(string $routeName, int $entityId, array $limitDomainsByIds): array
     {
@@ -139,8 +146,8 @@ final class UrlListType extends AbstractType
     }
 
     /**
-     * @param int[] $limitDomainsByIds
-     * @return string[][]
+     * @param array<int, int> $limitDomainsByIds
+     * @return array<int, array<string, string>>
      */
     private function getAbsoluteUrlsIndexedByDomainIdAndSlug(
         string $routeName,
@@ -168,7 +175,8 @@ final class UrlListType extends AbstractType
     }
 
     /**
-     * @return string[]
+     * @param array<int, int> $limitDomainsByIds
+     * @return array<int, string|null>
      */
     private function getMainFriendlyUrlSlugsIndexedByDomainId(
         string $routeName,

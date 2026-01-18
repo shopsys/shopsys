@@ -69,7 +69,9 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
     }
 
     /**
+     * @param array<int, array<string, mixed>> $rows
      * @param \App\Model\Category\Category $category
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter>
      */
     protected function getVisibleParametersIndexedByIdOrderedByParameterPositionInCategory(
         array $rows,

@@ -13,6 +13,7 @@ class SqlParametersFlattener
      * inspired by @see \Doctrine\DBAL\Connection::expandArrayParameters()
      *
      * @param array<string, mixed> $parameters
+     * @return array<string, mixed>
      */
     public static function flattenArrayParameters(string $dql, array $parameters): array
     {

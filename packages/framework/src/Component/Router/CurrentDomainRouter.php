@@ -47,12 +47,18 @@ class CurrentDomainRouter implements ChainRouterInterface
         return $this->getDomainRouter()->getRouteCollection();
     }
 
+    /**
+     * @param array<string, mixed> $parameters
+     */
     #[Override]
     public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->getDomainRouter()->generate($name, $parameters, $referenceType);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     #[Override]
     public function match(string $pathinfo): array
     {
@@ -85,6 +91,9 @@ class CurrentDomainRouter implements ChainRouterInterface
         return $allRouters;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     #[Override]
     public function matchRequest(Request $request): array
     {

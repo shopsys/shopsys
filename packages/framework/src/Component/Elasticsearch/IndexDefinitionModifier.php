@@ -14,6 +14,10 @@ class IndexDefinitionModifier
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $decodedDefinition
+     * @return array<string, mixed>
+     */
     public function modifyDefinition(array $decodedDefinition): array
     {
         if ($this->environment !== EnvironmentType::PRODUCTION || $this->forceElasticLimit) {

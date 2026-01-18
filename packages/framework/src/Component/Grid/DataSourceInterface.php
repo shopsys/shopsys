@@ -18,6 +18,9 @@ interface DataSourceInterface
         string $orderDirection = self::ORDER_ASC,
     ): PaginationResult;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getOneRow(int|string $rowId): array;
 
     public function getTotalRowsCount(): int;

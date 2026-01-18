@@ -26,6 +26,7 @@ class Email extends BaseEmail
 
     /**
      * @internal
+     * @return array<int, mixed>
      */
     #[Override]
     public function __serialize(): array
@@ -35,6 +36,7 @@ class Email extends BaseEmail
 
     /**
      * @internal
+     * @param array<int, mixed> $data
      */
     #[Override]
     public function __unserialize(array $data): void

@@ -103,6 +103,9 @@ EOF,
         return $this->display($io, $filesInfo);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function validate(string $content, int $flags, ?SplFileInfo $file = null): array
     {
         $prevErrorHandler = set_error_handler(function ($level, $message, $file, $line) use (&$prevErrorHandler) {
@@ -124,6 +127,9 @@ EOF,
         return ['file' => $file, 'valid' => true];
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $files
+     */
     protected function display(SymfonyStyle $io, array $files): int
     {
         switch ($this->format) {
@@ -136,6 +142,9 @@ EOF,
         }
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $filesInfo
+     */
     protected function displayTxt(SymfonyStyle $io, array $filesInfo): int
     {
         $countFiles = count($filesInfo);
@@ -166,6 +175,9 @@ EOF,
         return min($erroredFiles, 1);
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $filesInfo
+     */
     protected function displayJson(SymfonyStyle $io, array $filesInfo): int
     {
         $errors = 0;

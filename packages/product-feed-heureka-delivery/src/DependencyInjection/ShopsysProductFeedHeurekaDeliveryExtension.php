@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class ShopsysProductFeedHeurekaDeliveryExtension extends Extension
 {
     /**
-     * {@inheritdoc}
+     * @param array<int, array<string, mixed>> $configs
      */
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void

@@ -24,7 +24,8 @@ class ArticleIndex extends AbstractIndex
     }
 
     /**
-     * @param string[] $fields
+     * @param array<int, string> $fields
+     * @return array<int, array<string, mixed>>
      */
     #[Override]
     public function getExportDataForBatch(
@@ -46,7 +47,9 @@ class ArticleIndex extends AbstractIndex
     }
 
     /**
-     * @param string[] $fields
+     * @param array<int, int> $restrictToIds
+     * @param array<int, string> $fields
+     * @return array<int, array<string, mixed>>
      */
     #[Override]
     public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array

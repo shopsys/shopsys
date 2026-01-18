@@ -11,6 +11,9 @@ class ElasticsearchRequestCollection
      */
     protected array $collectedData = [];
 
+    /**
+     * @return array<int, array{requestCurl: string, requestJson: string|null, requestData: mixed, method: string, uri: string, statusCode: int|null, response: mixed, duration: float}>
+     */
     public function getCollectedData(): array
     {
         return $this->collectedData;

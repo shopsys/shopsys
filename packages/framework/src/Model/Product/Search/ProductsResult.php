@@ -6,6 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 class ProductsResult
 {
+    /**
+     * @param array<int, array<string, mixed>> $hits
+     */
     public function __construct(protected readonly int $total, protected readonly array $hits)
     {
     }

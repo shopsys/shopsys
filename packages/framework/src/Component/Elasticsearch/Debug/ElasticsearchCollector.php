@@ -44,6 +44,9 @@ class ElasticsearchCollector extends DataCollector
         return 'shopsys.elasticsearch_collector';
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getData(): array
     {
         return $this->data;

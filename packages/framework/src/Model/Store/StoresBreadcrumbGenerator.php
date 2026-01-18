@@ -19,7 +19,8 @@ class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 
     /**
      * @param string $routeName
-     * @return array|\Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
+     * @param array<string, mixed> $routeParameters
+     * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     #[Override]
     public function getBreadcrumbItems($routeName, array $routeParameters = []): array

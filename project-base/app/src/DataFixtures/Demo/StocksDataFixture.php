@@ -36,6 +36,9 @@ class StocksDataFixture extends AbstractReferenceFixture
         }
     }
 
+    /**
+     * @param array<string, mixed> $demoRow
+     */
     protected function initStockData(array $demoRow): StockData
     {
         $stockData = $this->stockDataFactory->create();

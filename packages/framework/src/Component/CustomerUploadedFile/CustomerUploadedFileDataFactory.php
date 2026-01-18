@@ -36,6 +36,9 @@ class CustomerUploadedFileDataFactory
         return $customerUploadedFileData;
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[] $customerUploadedFiles
+     */
     protected function fillByCustomerUploadedFiles(
         CustomerUploadedFileData $customerUploadedFileData,
         array $customerUploadedFiles,

@@ -16,6 +16,9 @@ class BridgeConfig
 
     private string $password;
 
+    /**
+     * @param array<string, mixed> $bridgeConfig
+     */
     public function __construct(array $bridgeConfig)
     {
         $optionsResolver = new OptionsResolver();

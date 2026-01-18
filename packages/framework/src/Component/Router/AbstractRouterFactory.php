@@ -50,6 +50,9 @@ class AbstractRouterFactory
         return $requestContext;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getRouterOptions(): array
     {
         $options = ['resource_type' => 'service'];
