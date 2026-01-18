@@ -29,6 +29,17 @@ class AnnotationsReplacer
     public function replaceInMethodReturnType(ReflectionMethod $reflectionMethod): string
     {
         $methodReturnTypes = $this->docBlockParser->getReturnTypes($reflectionMethod->getDocComment());
+
+        if ($methodReturnTypes === []) {
+            $typehintReturnType = $this->typehintHelper->getMethodReturnTypeFromTypehint($reflectionMethod);
+
+            if ($typehintReturnType !== null) {
+                return $this->replaceIn($typehintReturnType);
+            }
+
+            return '';
+        }
+
         $replacedReturnTypes = [];
 
         foreach ($methodReturnTypes as $methodReturnType) {
@@ -56,6 +67,10 @@ class AnnotationsReplacer
     public function replaceInParameterType(ReflectionParameter $reflectionParameter): string
     {
         $type = $this->docBlockParser->getParameterType($reflectionParameter);
+
+        if ($type === null) {
+            $type = $this->typehintHelper->getParameterTypeFromTypehint($reflectionParameter);
+        }
 
         if ($type === null) {
             return '';
