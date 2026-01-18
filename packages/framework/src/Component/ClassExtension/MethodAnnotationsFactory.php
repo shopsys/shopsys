@@ -20,6 +20,7 @@ class MethodAnnotationsFactory
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
         protected readonly AnnotationsReplacer $annotationsReplacer,
         protected readonly DocBlockParser $docBlockParser,
+        protected readonly TypehintHelper $typehintHelper,
     ) {
     }
 
@@ -60,18 +61,9 @@ class MethodAnnotationsFactory
                 continue;
             }
 
-            try {
-                $docBlockReturnTypes = $this->docBlockParser
-                    ->getReturnTypes($reflectionMethodFromFrameworkClass->getDocComment());
-            } catch (InvalidArgumentException $exception) {
-                $this->warningBag[] = $exception;
-
-                continue;
-            }
-
             $methodReturnTypeIsExtended = $this->methodReturningTypeIsExtendedInProject(
                 $frameworkClassPattern,
-                $docBlockReturnTypes,
+                $reflectionMethodFromFrameworkClass,
             );
 
             $methodParameterTypeIsExtended = $this->methodParameterTypeIsExtendedInProject(
@@ -139,20 +131,35 @@ class MethodAnnotationsFactory
         return implode(', ', $methodParameterNamesWithTypes);
     }
 
-    /**
-     * @param \phpDocumentor\Reflection\Type[] $docBlockReturnTypes
-     */
     protected function methodReturningTypeIsExtendedInProject(
         string $frameworkClassPattern,
-        array $docBlockReturnTypes,
+        ReflectionMethod $reflectionMethod,
     ): bool {
-        foreach ($docBlockReturnTypes as $docBlockReturnType) {
-            if (preg_match($frameworkClassPattern, (string)$docBlockReturnType)) {
-                return true;
-            }
+        try {
+            $docBlockReturnTypes = $this->docBlockParser->getReturnTypes($reflectionMethod->getDocComment());
+        } catch (InvalidArgumentException $exception) {
+            $this->warningBag[] = $exception;
+            $docBlockReturnTypes = [];
         }
 
-        return false;
+        if ($docBlockReturnTypes !== []) {
+            foreach ($docBlockReturnTypes as $docBlockReturnType) {
+                if (preg_match($frameworkClassPattern, (string)$docBlockReturnType)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // Fallback to typehint when no docblock annotation exists or when docblock parsing failed
+        $typehintReturnType = $this->typehintHelper->getMethodReturnTypeFromTypehint($reflectionMethod);
+
+        if ($typehintReturnType === null) {
+            return false;
+        }
+
+        return (bool)preg_match($frameworkClassPattern, $typehintReturnType);
     }
 
     /**
@@ -166,7 +173,11 @@ class MethodAnnotationsFactory
             $type = $this->docBlockParser->getParameterType($methodParameter);
 
             if ($type === null) {
-                return false;
+                $type = $this->typehintHelper->getParameterTypeFromTypehint($methodParameter);
+            }
+
+            if ($type === null) {
+                continue;
             }
 
             if (preg_match($frameworkClassPattern, (string)$type)) {
