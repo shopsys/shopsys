@@ -11,6 +11,7 @@ use PhpParser\ParserFactory;
 use PhpParser\PhpVersion;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor;
 use Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractorFactory;
 use Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -69,7 +70,7 @@ class PhpFileExtractorTest extends TestCase
         $this->assertEquals($expected, $catalogue);
     }
 
-    private function getExtractor()
+    private function getExtractor(): PhpFileExtractor
     {
         $phpFileExtractorFactory = new PhpFileExtractorFactory(new PhpParserNodeHelper());
 
@@ -79,7 +80,7 @@ class PhpFileExtractorTest extends TestCase
     /**
      * @param mixed $filename
      */
-    private function extract($filename)
+    private function extract($filename): MessageCatalogue
     {
         if (!is_file($filename)) {
             throw new RuntimeException(sprintf('The file "%s" does not exist.', $filename));

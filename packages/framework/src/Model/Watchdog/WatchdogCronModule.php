@@ -31,7 +31,7 @@ class WatchdogCronModule implements IteratedCronModuleInterface
     }
 
     #[Override]
-    public function iterate()
+    public function iterate(): bool
     {
         $watchdog = $this->watchdogFacade->findNextWatchdogToSend();
 

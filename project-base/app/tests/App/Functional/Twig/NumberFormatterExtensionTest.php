@@ -14,7 +14,10 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
 {
     protected const NBSP = "\xc2\xa0";
 
-    public static function formatNumberDataProvider()
+    /**
+     * @return array<int, array{input: string, locale: string, result: string}>
+     */
+    public static function formatNumberDataProvider(): array
     {
         return [
             ['input' => '12', 'locale' => 'cs', 'result' => '12'],

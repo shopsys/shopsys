@@ -199,7 +199,7 @@ class SettingTest extends TestCase
         $setting->setForDomain('nonexistentKey', 'anyValue', 1);
     }
 
-    private function createDummyEntityManagerMock()
+    private function createDummyEntityManagerMock(): EntityManager
     {
         return $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()

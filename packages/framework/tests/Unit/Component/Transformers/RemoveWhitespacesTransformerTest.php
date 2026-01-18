@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Form\Transformers\RemoveWhitespacesTransformer;
 
 class RemoveWhitespacesTransformerTest extends TestCase
 {
-    public static function transformValuesProvider()
+    public static function transformValuesProvider(): array
     {
         return [
             ['value' => 'foo bar', 'expected' => 'foobar'],

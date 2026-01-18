@@ -58,8 +58,9 @@ class PerformanceTestSamplesAggregator
 
     /**
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
+     * @return array<string, array<int, \Tests\App\Performance\Page\PerformanceTestSample>>
      */
-    private function getPerformanceTestSamplesGroupedByUrl(array $performanceTestSamples)
+    private function getPerformanceTestSamplesGroupedByUrl(array $performanceTestSamples): array
     {
         $performanceTestSamplesGroupedByUrl = [];
 

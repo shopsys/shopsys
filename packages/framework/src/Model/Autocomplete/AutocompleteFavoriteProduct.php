@@ -41,16 +41,25 @@ class AutocompleteFavoriteProduct implements OrderableEntityInterface
         $this->position = $position;
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     */
     public function getProduct()
     {
         return $this->product;
     }
 
+    /**
+     * @return int
+     */
     public function getDomainId()
     {
         return $this->domainId;
     }
 
+    /**
+     * @return int
+     */
     public function getPosition()
     {
         return $this->position;

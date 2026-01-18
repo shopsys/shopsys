@@ -16,7 +16,7 @@ class TokenMock implements TokenInterface
     {
     }
 
-    public function serialize()
+    public function serialize(): ?string
     {
         return null;
     }
@@ -54,7 +54,7 @@ class TokenMock implements TokenInterface
     {
     }
 
-    public function isAuthenticated()
+    public function isAuthenticated(): bool
     {
         return true;
     }
@@ -108,7 +108,7 @@ class TokenMock implements TokenInterface
     {
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return '';
     }

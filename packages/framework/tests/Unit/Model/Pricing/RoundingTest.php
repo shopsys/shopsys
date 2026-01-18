@@ -14,7 +14,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class RoundingTest extends TestCase
 {
-    public static function roundingProvider()
+    public static function roundingProvider(): array
     {
         return [
             [
@@ -84,7 +84,7 @@ class RoundingTest extends TestCase
         $this->assertThat($rounding->roundVatAmount($unroundedPrice, $currency), new IsMoneyEqual($expectedAsVatAmount));
     }
 
-    public static function roundingPriceWithVatProvider()
+    public static function roundingPriceWithVatProvider(): array
     {
         return [
             [

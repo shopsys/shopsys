@@ -26,7 +26,7 @@ class InputPriceCalculationTest extends TestCase
         $this->assertThat($actualInputPrice, new IsMoneyEqual($expectedResult));
     }
 
-    public static function getInputPriceDataProvider()
+    public static function getInputPriceDataProvider(): array
     {
         return [
             [

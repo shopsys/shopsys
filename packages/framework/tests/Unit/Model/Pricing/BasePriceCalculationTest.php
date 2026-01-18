@@ -20,7 +20,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class BasePriceCalculationTest extends TestCase
 {
-    public static function calculateBasePriceProvider()
+    public static function calculateBasePriceProvider(): array
     {
         return [
             [

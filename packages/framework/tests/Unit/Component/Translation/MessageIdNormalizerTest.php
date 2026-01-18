@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer;
 
 class MessageIdNormalizerTest extends TestCase
 {
-    public static function normalizeMessageIdProvider()
+    public static function normalizeMessageIdProvider(): array
     {
         return [
             ['Příliš žluťoučký kůň úpěl ďábelské ódy.', 'Příliš žluťoučký kůň úpěl ďábelské ódy.'],

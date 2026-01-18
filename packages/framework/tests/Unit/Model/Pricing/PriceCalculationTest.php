@@ -18,7 +18,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class PriceCalculationTest extends TestCase
 {
-    public static function applyVatPercentProvider()
+    public static function applyVatPercentProvider(): array
     {
         return [
             [
@@ -62,7 +62,7 @@ class PriceCalculationTest extends TestCase
         $this->assertThat($actualPriceWithVat, new IsMoneyEqual($expectedPriceWithVat));
     }
 
-    public static function getVatAmountByPriceWithVatProvider()
+    public static function getVatAmountByPriceWithVatProvider(): array
     {
         return [
             [

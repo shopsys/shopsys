@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess;
 
 class FilemanagerAccessTest extends TestCase
 {
-    public static function isPathAccessibleProvider()
+    public static function isPathAccessibleProvider(): array
     {
         return [
             [

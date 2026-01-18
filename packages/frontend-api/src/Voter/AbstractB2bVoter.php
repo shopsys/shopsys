@@ -23,7 +23,7 @@ abstract class AbstractB2bVoter extends Voter
     #[Override]
     abstract protected function supports(string $attribute, $subject): bool;
 
-    abstract protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token);
+    abstract protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token): bool;
 
     /**
      * @param mixed $subject
