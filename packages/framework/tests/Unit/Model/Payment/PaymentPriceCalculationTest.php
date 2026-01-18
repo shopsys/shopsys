@@ -27,7 +27,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class PaymentPriceCalculationTest extends TestCase
 {
-    public static function calculateIndependentPriceProvider()
+    public static function calculateIndependentPriceProvider(): array
     {
         return [
             [
@@ -47,7 +47,7 @@ class PaymentPriceCalculationTest extends TestCase
         ];
     }
 
-    public static function calculatePriceProvider()
+    public static function calculatePriceProvider(): array
     {
         return [
             [

@@ -13,7 +13,7 @@ use Symfony\Component\Clock\DatePoint;
 
 class CronTimeResolverTest extends TestCase
 {
-    public static function validTimeStringProvider()
+    public static function validTimeStringProvider(): array
     {
         return [
             ['*', 1, 1],
@@ -38,7 +38,7 @@ class CronTimeResolverTest extends TestCase
         $cronTimeResolver->validateTimeString($timeString, $maxValue, $divisibleBy);
     }
 
-    public static function invalidTimeStringProvider()
+    public static function invalidTimeStringProvider(): array
     {
         return [
             ['abcd', 1, 1],
@@ -64,7 +64,7 @@ class CronTimeResolverTest extends TestCase
         $cronTimeResolver->validateTimeString($invalidTimeString, $maxValue, $divisibleBy);
     }
 
-    public static function isValidAtTimeProvider()
+    public static function isValidAtTimeProvider(): array
     {
         return [
             ['0', '0', '2000-01-01 00:00:00', true],

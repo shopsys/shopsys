@@ -51,7 +51,7 @@ class JsFileExtractorTest extends TestCase
     /**
      * @param mixed $filename
      */
-    private function extract($filename)
+    private function extract($filename): MessageCatalogue
     {
         if (!is_file($filename)) {
             throw new RuntimeException(sprintf('The file "%s" does not exist.', $filename));
@@ -66,7 +66,7 @@ class JsFileExtractorTest extends TestCase
         return $catalogue;
     }
 
-    private function getExtractor()
+    private function getExtractor(): JsFileExtractor
     {
         return new JsFileExtractor();
     }

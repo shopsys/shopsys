@@ -101,6 +101,9 @@ class Vat
         $this->replaceWith = $newVat;
     }
 
+    /**
+     * @return bool
+     */
     public function isMarkedAsDeleted()
     {
         return $this->replaceWith !== null;

@@ -36,12 +36,12 @@ interface PluginCrudExtensionInterface
      * @param int $id
      * @param mixed $data
      */
-    public function saveData($id, $data);
+    public function saveData($id, $data): void;
 
     /**
      * Removes all saved data of an entity with provided id after deleting the entity
      *
      * @param int $id
      */
-    public function removeData($id);
+    public function removeData($id): void;
 }

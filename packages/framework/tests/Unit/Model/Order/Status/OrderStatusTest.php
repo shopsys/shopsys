@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 
 class OrderStatusTest extends TestCase
 {
-    public static function checkForDeleteProvider()
+    public static function checkForDeleteProvider(): array
     {
         return [
             ['statusType' => OrderStatusTypeEnum::TYPE_NEW, 'expectedException' => OrderStatusDeletionForbiddenException::class],

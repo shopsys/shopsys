@@ -117,7 +117,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
     /**
      * This method must be implemented to customize and configure the test cases for individual routes
      */
-    abstract protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer);
+    abstract protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void;
 
     /**
      * @return \Symfony\Component\HttpFoundation\Request

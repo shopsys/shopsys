@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class FormTimeProviderTest extends TestCase
 {
-    public static function isFormTimeValidProvider()
+    public static function isFormTimeValidProvider(): array
     {
         return [
             [9, '-10 second', true],

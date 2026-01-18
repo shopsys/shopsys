@@ -21,7 +21,7 @@ class TransformStringTest extends TestCase
         parent::setUp();
     }
 
-    public static function safeFilenameProvider()
+    public static function safeFilenameProvider(): array
     {
         return [
             [
@@ -69,7 +69,7 @@ class TransformStringTest extends TestCase
         $this->assertSame($expected, $this->transformStringHelper->safeFilename($actual));
     }
 
-    public static function stringToFriendlyUrlSlugProvider()
+    public static function stringToFriendlyUrlSlugProvider(): array
     {
         return [
             [
@@ -113,7 +113,7 @@ class TransformStringTest extends TestCase
         $this->assertSame($expected, $this->transformStringHelper->stringToFriendlyUrlSlug($actual));
     }
 
-    public static function stringToCamelCaseProvider()
+    public static function stringToCamelCaseProvider(): array
     {
         return [
             [

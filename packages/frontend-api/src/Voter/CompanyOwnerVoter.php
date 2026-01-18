@@ -32,11 +32,8 @@ class CompanyOwnerVoter extends AbstractB2bVoter
         return $attribute === 'is_company_owner_voter';
     }
 
-    /**
-     * @return bool
-     */
     #[Override]
-    protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token)
+    protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token): bool
     {
         if ($this->security->isGranted(CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS)) {
             return $this->isCompanyCustomer($token);

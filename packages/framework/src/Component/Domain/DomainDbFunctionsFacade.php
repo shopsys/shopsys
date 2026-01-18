@@ -18,7 +18,7 @@ class DomainDbFunctionsFacade
         $this->createLocaleByDomainIdFunction();
     }
 
-    protected function createDomainIdsByLocaleFunction()
+    protected function createDomainIdsByLocaleFunction(): void
     {
         $domainsIdsByLocale = [];
 
@@ -37,7 +37,7 @@ class DomainDbFunctionsFacade
             $domainIdsByLocaleSqlClauses[] = $sql;
         }
 
-        return $this->em->getConnection()->executeStatement(
+        $this->em->getConnection()->executeStatement(
             'CREATE OR REPLACE FUNCTION get_domain_ids_by_locale(locale text) RETURNS SETOF integer AS $$
             BEGIN
                 CASE
@@ -49,7 +49,7 @@ class DomainDbFunctionsFacade
         );
     }
 
-    protected function createLocaleByDomainIdFunction()
+    protected function createLocaleByDomainIdFunction(): void
     {
         $localeByDomainIdSqlClauses = [];
 
@@ -59,7 +59,7 @@ class DomainDbFunctionsFacade
                 . ' THEN RETURN \'' . $domainConfig->getLocale() . '\';';
         }
 
-        return $this->em->getConnection()->executeStatement(
+        $this->em->getConnection()->executeStatement(
             'CREATE OR REPLACE FUNCTION get_domain_locale(domain_id integer) RETURNS text AS $$
             BEGIN
                 CASE

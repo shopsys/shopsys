@@ -21,10 +21,8 @@ class RecalculateGiftFlagsCronModule implements SimpleCronModuleInterface
     }
 
     #[Override]
-    public function run()
+    public function run(): void
     {
         $this->giftFlagSynchronizerFacade->refreshAllGiftPlans();
-
-        return true;
     }
 }

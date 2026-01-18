@@ -803,6 +803,7 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null $promotionXy
+     * @param int $domainId
      */
     public function setPromotionXy($promotionXy, $domainId): void
     {

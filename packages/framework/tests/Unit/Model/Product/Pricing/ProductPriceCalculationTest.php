@@ -116,7 +116,7 @@ class ProductPriceCalculationTest extends TestCase
         $this->assertEquals($minimumPrice, $productPriceCalculation->getMinimumPriceByPriceWithoutVat($prices));
     }
 
-    public static function getMinimumPriceProvider()
+    public static function getMinimumPriceProvider(): array
     {
         return [
             [
@@ -157,7 +157,7 @@ class ProductPriceCalculationTest extends TestCase
         $this->assertSame($arePricesDifferent, $productPriceCalculation->arePricesDifferent($prices));
     }
 
-    public static function getArePricesDifferentProvider()
+    public static function getArePricesDifferentProvider(): array
     {
         return [
             [

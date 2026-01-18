@@ -119,7 +119,10 @@ class TransportFacade
         $this->em->flush();
     }
 
-    public function getAll()
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    public function getAll(): array
     {
         return $this->transportRepository->getAll();
     }

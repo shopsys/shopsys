@@ -26,7 +26,7 @@ class UserTest extends TestCase
         $this->assertSame('companyName', $customerUser->getFullName());
     }
 
-    public static function isResetPasswordHashValidProvider()
+    public static function isResetPasswordHashValidProvider(): array
     {
         return [
             [

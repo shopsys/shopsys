@@ -14,5 +14,5 @@ interface TimelimitLoginInterface
     /**
      * @param \DateTimeImmutable $lastActivity
      */
-    public function setLastActivity($lastActivity);
+    public function setLastActivity($lastActivity): void;
 }

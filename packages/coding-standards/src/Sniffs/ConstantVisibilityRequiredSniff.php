@@ -28,6 +28,9 @@ class ConstantVisibilityRequiredSniff implements Sniff
         return [T_CONST];
     }
 
+    /**
+     * @param int $constPosition
+     */
     #[Override]
     public function process(File $file, $constPosition): void
     {

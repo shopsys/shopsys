@@ -29,7 +29,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class TransportPriceCalculationTest extends TestCase
 {
-    public static function calculateIndependentPriceProvider()
+    public static function calculateIndependentPriceProvider(): array
     {
         return [
             [

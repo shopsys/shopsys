@@ -14,5 +14,5 @@ interface UniqueLoginInterface
     /**
      * @param string $loginToken
      */
-    public function setLoginToken($loginToken);
+    public function setLoginToken($loginToken): void;
 }
