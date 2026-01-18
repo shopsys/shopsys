@@ -8,6 +8,10 @@ class RuleFormViewDataFactory
 {
     public const TEMPLATE_RULE_FORM_KEY = '__template__';
 
+    /**
+     * @param array<int, array<string, mixed>>|null $requestData
+     * @return array<int|string, array<string, mixed>>
+     */
     public function createFromRequestData(string $defaultFilterName, ?array $requestData = null): array
     {
         if ($requestData === null) {
@@ -25,6 +29,9 @@ class RuleFormViewDataFactory
         return $searchRulesViewData;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function createDefault(string $filterName): array
     {
         return [

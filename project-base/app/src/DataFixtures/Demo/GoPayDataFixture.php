@@ -147,6 +147,9 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     private function getGoPayPaymentMethodData(
         array $data,
         string $locale,
@@ -165,6 +168,9 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         return $goPayPaymentMethodData;
     }
 
+    /**
+     * @param array<string, mixed> $swiftData
+     */
     private function createGoPayBankSwift(
         GoPayPaymentMethod $goPayPaymentMethod,
         array $swiftData,

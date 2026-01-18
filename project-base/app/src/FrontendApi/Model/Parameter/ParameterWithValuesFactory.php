@@ -34,6 +34,10 @@ class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
         return $parametersWithValues;
     }
 
+    /**
+     * @param array<string, mixed> $product
+     * @return array<string, mixed>
+     */
     #[Override]
     protected function mapParameterArray(array $product): array
     {

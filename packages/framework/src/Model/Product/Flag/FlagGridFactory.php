@@ -54,6 +54,9 @@ class FlagGridFactory implements GridFactoryInterface
         return $grid;
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     protected function addTextColorToEnsureReadability(array $row): array
     {
         $color = strtr($row['f']['rgbColor'], ['#' => '']);

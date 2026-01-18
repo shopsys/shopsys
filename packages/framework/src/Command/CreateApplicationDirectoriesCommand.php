@@ -44,10 +44,10 @@ class CreateApplicationDirectoriesCommand extends Command
     private ?array $publicDirectories = null;
 
     /**
-     * @param array $defaultInternalDirectories
-     * @param array $defaultPublicDirectories
-     * @param array|null $internalDirectories
-     * @param array|null $publicDirectories
+     * @param array<string> $defaultInternalDirectories
+     * @param array<string> $defaultPublicDirectories
+     * @param array<string>|null $internalDirectories
+     * @param array<string>|null $publicDirectories
      */
     public function __construct(
         $defaultInternalDirectories,
@@ -125,7 +125,7 @@ class CreateApplicationDirectoriesCommand extends Command
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     private function getInternalDirectories()
     {

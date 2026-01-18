@@ -20,6 +20,10 @@ class ActionColumn
 
     protected bool $isAjaxConfirm = false;
 
+    /**
+     * @param array<string, string> $bindingRouteParams
+     * @param array<string, mixed> $additionalRouteParams
+     */
     public function __construct(
         protected readonly RouterInterface $router,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
@@ -78,6 +82,9 @@ class ActionColumn
         return $this->isAjaxConfirm;
     }
 
+    /**
+     * @param array<string, mixed> $row
+     */
     public function getTargetUrl(array $row): string
     {
         $parameters = $this->additionalRouteParams;

@@ -320,6 +320,7 @@ class ParameterRepository
     }
 
     /**
+     * @param array<int, array{productId: int, name: string, text: string, unit: string|null}> $productIdsAndParameterNamesAndValues
      * @return string[][]
      */
     protected function getParameterValuesIndexedByProductIdAndParameterName(

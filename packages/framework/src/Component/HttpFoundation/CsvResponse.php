@@ -9,6 +9,10 @@ use Symfony\Component\Serializer\Encoder\CsvEncoder;
 
 class CsvResponse extends Response
 {
+    /**
+     * @param array<int, array<string, mixed>> $data
+     * @param string[]|null $csvHeaders
+     */
     public function __construct(array $data, string $fileName, ?array $csvHeaders = null)
     {
         $csvEncoder = new CsvEncoder();

@@ -47,6 +47,9 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     #[Override]
     public function getOneRow(int|string $rowId): array
     {
@@ -67,6 +70,10 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
         return $this->innerDataSource->getRowIdSourceColumnName();
     }
 
+    /**
+     * @param array<string, mixed> $row
+     * @return array<string, mixed>
+     */
     protected function convertRow(array $row): array
     {
         foreach ($this->moneyColumnNames as $columnName) {

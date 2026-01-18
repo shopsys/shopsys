@@ -43,8 +43,8 @@ final class DomainType extends AbstractType
     }
 
     /**
-     * @param int[] $limitDomainsByIds
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
+     * @param array<int, int> $limitDomainsByIds
+     * @return array<int, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig>
      */
     private function getSortedDomainConfigsByAdminDomainTabs(array $limitDomainsByIds): array
     {

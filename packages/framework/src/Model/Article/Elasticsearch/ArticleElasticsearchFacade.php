@@ -11,18 +11,25 @@ class ArticleElasticsearchFacade
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getByUuid(string $uuid): array
     {
         return $this->articleElasticsearchRepository->getByUuid($uuid);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getBySlug(string $slug): array
     {
         return $this->articleElasticsearchRepository->getBySlug($slug);
     }
 
     /**
-     * @param string[] $placements
+     * @param array<int, string> $placements
+     * @return array<int, array<string, mixed>>
      */
     public function getAllArticles(int $offset, int $limit, array $placements): array
     {
@@ -30,13 +37,16 @@ class ArticleElasticsearchFacade
     }
 
     /**
-     * @param string[] $placements
+     * @param array<int, string> $placements
      */
     public function getAllArticlesTotalCount(array $placements): int
     {
         return $this->articleElasticsearchRepository->getAllArticlesTotalCount($placements);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getById(int $articleId): array
     {
         return $this->articleElasticsearchRepository->getById($articleId);

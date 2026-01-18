@@ -17,6 +17,9 @@ class ArticleElasticsearchRepository
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getByUuid(string $uuid): array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredByUuid($uuid);
@@ -28,6 +31,9 @@ class ArticleElasticsearchRepository
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getById(int $articleId): array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredById($articleId);
@@ -40,7 +46,7 @@ class ArticleElasticsearchRepository
     }
 
     /**
-     * @param string[] $placements
+     * @param array<int, string> $placements
      */
     public function getAllArticlesTotalCount(array $placements): int
     {
@@ -54,7 +60,8 @@ class ArticleElasticsearchRepository
     }
 
     /**
-     * @param string[] $placements
+     * @param array<int, string> $placements
+     * @return array<int, array<string, mixed>>
      */
     public function getAllArticles(int $offset, int $limit, array $placements): array
     {
@@ -67,6 +74,9 @@ class ArticleElasticsearchRepository
         return $this->articleElasticsearchDataFetcher->getAllResults($filterQuery);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getBySlug(string $slug): array
     {
         $article = $this->findBySlug($slug);
@@ -82,6 +92,9 @@ class ArticleElasticsearchRepository
         return $article;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     protected function findBySlug(string $slug): ?array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredBySlug($slug);

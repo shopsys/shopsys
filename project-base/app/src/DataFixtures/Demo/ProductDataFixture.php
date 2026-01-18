@@ -4101,6 +4101,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
+     * @param array<int, array<string, mixed>> $parameterValues
      * @param array<string, string> $parameterValuesData
      */
     private function addParameterValues(

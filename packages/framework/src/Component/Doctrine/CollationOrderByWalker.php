@@ -104,7 +104,7 @@ class CollationOrderByWalker extends TreeWalkerAdapter
     }
 
     /**
-     * @param array<string, array> $queryComponents
+     * @param array<string, array<string, mixed>> $queryComponents
      */
     protected function isPathExpressionFieldString(array $queryComponents, PathExpression $fieldPathExpression): bool
     {

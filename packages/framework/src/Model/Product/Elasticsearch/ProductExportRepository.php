@@ -398,6 +398,9 @@ class ProductExportRepository
         return $accessoriesIds;
     }
 
+    /**
+     * @param string[] $fields
+     */
     protected function getResults(QueryBuilder $queryBuilder, array $fields, int $domainId, string $locale): array
     {
         $query = $queryBuilder->getQuery();

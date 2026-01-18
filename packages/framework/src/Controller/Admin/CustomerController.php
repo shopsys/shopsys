@@ -383,6 +383,10 @@ class CustomerController extends AdminBaseController
         return $this->redirectToRoute('admin_customer_list');
     }
 
+    /**
+     * @param array<string, mixed> $row
+     * @return array<string, mixed>
+     */
     protected function manipulateRow(array $row): array
     {
         $domain = $this->domain->getDomainConfigById($row['domainId']);

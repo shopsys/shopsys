@@ -17,6 +17,7 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 
     /**
      * @param string $routeName
+     * @param array<string, mixed> $routeParameters
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     #[Override]

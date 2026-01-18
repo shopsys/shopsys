@@ -15,6 +15,9 @@ class ScalarDataTypeResolver extends AbstractDataTypeResolver
         return is_scalar($value);
     }
 
+    /**
+     * @param array{0: mixed, 1: mixed} $changes
+     */
     #[Override]
     public function getResolvedChanges(array $changes): ResolvedChanges
     {

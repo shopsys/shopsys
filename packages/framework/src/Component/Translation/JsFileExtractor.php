@@ -50,6 +50,9 @@ class JsFileExtractor implements FileVisitorInterface
         return $file->getFilename() === static::DUMP_FILE;
     }
 
+    /**
+     * @param \PhpParser\Node[] $ast
+     */
     #[Override]
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {

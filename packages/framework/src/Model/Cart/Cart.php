@@ -171,6 +171,9 @@ class Cart
         return $this->getItemsCount() === 0;
     }
 
+    /**
+     * @param array<int, int> $quantitiesByItemId
+     */
     public function changeQuantities(array $quantitiesByItemId): void
     {
         foreach ($this->items as $item) {

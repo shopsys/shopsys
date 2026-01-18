@@ -50,6 +50,9 @@ final class CustomerUserFormType extends AbstractType
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -23,6 +23,9 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
         parent::__construct($queryBuilder, $rowIdSourceColumnName, $hints);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     #[Override]
     public function getOneRow(int|string $rowId): array
     {

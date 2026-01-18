@@ -46,6 +46,7 @@ class DomainRouter extends ChainRouter
     }
 
     /**
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      * @return string
      */
@@ -69,6 +70,9 @@ class DomainRouter extends ChainRouter
         parent::setContext($context);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     #[Override]
     public function match(string $pathinfo): array
     {
@@ -77,6 +81,9 @@ class DomainRouter extends ChainRouter
         return parent::match($pathinfo);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     #[Override]
     public function matchRequest(Request $request): array
     {
@@ -148,6 +155,9 @@ class DomainRouter extends ChainRouter
         return str_replace($domainUrl, $baseUrl, $url);
     }
 
+    /**
+     * @param array<string, mixed> $parameters
+     */
     #[Override]
     public function generate(
         string $name,

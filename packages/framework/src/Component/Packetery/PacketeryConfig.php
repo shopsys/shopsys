@@ -16,6 +16,9 @@ class PacketeryConfig
 
     protected string $sender;
 
+    /**
+     * @param array<string, mixed> $packeteryConfig
+     */
     public function __construct(array $packeteryConfig)
     {
         $optionsResolver = new OptionsResolver();

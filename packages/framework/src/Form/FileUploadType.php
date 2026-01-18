@@ -43,6 +43,9 @@ final class FileUploadType extends AbstractType
             ->setAllowedTypes('file_type', 'string');
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -53,6 +56,9 @@ final class FileUploadType extends AbstractType
         $view->vars['multiple'] = $this->isMultiple($options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -113,7 +119,8 @@ final class FileUploadType extends AbstractType
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
+     * @param array<string, mixed> $options
+     * @return array<int, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile>
      */
     private function getFilesIndexedById(array $options): array
     {
@@ -135,6 +142,9 @@ final class FileUploadType extends AbstractType
         return $uploadedFilesIndexedById;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     private function isMultiple(array $options): bool
     {
         if ($options['file_entity_class'] === null) {

@@ -63,6 +63,9 @@ final class ImageUploadType extends AbstractType
         );
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -73,6 +76,9 @@ final class ImageUploadType extends AbstractType
         $view->vars['hide_delete_button'] = $options['hide_delete_button'];
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -136,7 +142,8 @@ final class ImageUploadType extends AbstractType
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
+     * @param array<string, mixed> $options
+     * @return array<int, \Shopsys\FrameworkBundle\Component\Image\Image>
      */
     private function getImagesIndexedById(array $options): array
     {
@@ -147,6 +154,9 @@ final class ImageUploadType extends AbstractType
         return $this->imageFacade->getImagesByEntityIndexedById($options['entity'], $options['image_type']);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     private function isMultiple(array $options): bool
     {
         if ($options['multiple'] !== null) {

@@ -116,6 +116,7 @@ class ImageRepository
     }
 
     /**
+     * @param array<int|object> $entitiesOrEntityIds
      * @param string $entityName
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */

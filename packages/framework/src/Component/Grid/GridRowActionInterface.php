@@ -8,6 +8,9 @@ interface GridRowActionInterface
 {
     public function getName(): string;
 
+    /**
+     * @return array{template: string, parameters: array<string, mixed>}|null
+     */
     public function renderData(): ?array;
 
     public function validate(mixed $data): bool;

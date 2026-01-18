@@ -25,6 +25,9 @@ class Utils
         return $testVariable ?? $default;
     }
 
+    /**
+     * @param array<int|string, mixed> $array
+     */
     public static function setArrayDefaultValue(array &$array, int|string $key, mixed $defaultValue = null): void
     {
         if (!array_key_exists($key, $array)) {

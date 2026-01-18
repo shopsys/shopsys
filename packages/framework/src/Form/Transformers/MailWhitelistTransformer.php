@@ -32,6 +32,9 @@ class MailWhitelistTransformer implements DataTransformerInterface
         return $value;
     }
 
+    /**
+     * @return array<int, string>
+     */
     protected function doTransformMailWhitelist(?string $item): array
     {
         if ($item === null) {
@@ -41,6 +44,9 @@ class MailWhitelistTransformer implements DataTransformerInterface
         return Json::decode($item, true);
     }
 
+    /**
+     * @param array<int, string> $item
+     */
     protected function doReverseTransformMailWhitelist(array $item): ?string
     {
         if ($item === []) {

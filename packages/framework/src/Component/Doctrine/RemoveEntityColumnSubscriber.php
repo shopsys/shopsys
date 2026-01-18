@@ -45,6 +45,10 @@ class RemoveEntityColumnSubscriber implements EventSubscriber
         $classMetadata->fieldNames = $this->removeMappingByValue($propertyName, $classMetadata->fieldNames);
     }
 
+    /**
+     * @param array<string, mixed> $mapping
+     * @return array<string, mixed>
+     */
     protected function removeMappingByKey(string $propertyName, array $mapping): array
     {
         if (array_key_exists($propertyName, $mapping)) {
@@ -54,6 +58,10 @@ class RemoveEntityColumnSubscriber implements EventSubscriber
         return $mapping;
     }
 
+    /**
+     * @param array<string, mixed> $mapping
+     * @return array<string, mixed>
+     */
     protected function removeMappingByValue(string $propertyName, array $mapping): array
     {
         $key = array_search($propertyName, $mapping, true);

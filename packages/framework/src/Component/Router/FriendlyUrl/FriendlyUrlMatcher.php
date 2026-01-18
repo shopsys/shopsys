@@ -21,6 +21,9 @@ class FriendlyUrlMatcher
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function match(string $pathinfo, RouteCollection $routeCollection, DomainConfig $domainConfig): array
     {
         if ($pathinfo === self::IGNORED_INTERNAL_ROUTE) {
@@ -75,6 +78,10 @@ class FriendlyUrlMatcher
         return $matchedParameters;
     }
 
+    /**
+     * @param array<string, mixed> $matchedParameters
+     * @return array<string, mixed>
+     */
     protected function getMatchedParametersForMainFrontCategorySeoFriendlyUrl(
         FriendlyUrl $friendlyUrl,
         array $matchedParameters,
@@ -93,6 +100,10 @@ class FriendlyUrlMatcher
         return $matchedParameters;
     }
 
+    /**
+     * @param array<string, mixed> $matchedParameters
+     * @return array<string, mixed>
+     */
     protected function getMatchedParametersForNonMainFrontCategorySeoFriendlyUrl(
         FriendlyUrl $friendlyUrl,
         array $matchedParameters,

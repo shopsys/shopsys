@@ -415,6 +415,9 @@ class ProductFacade
         return $this->productRepository->getAllByIds($ids);
     }
 
+    /**
+     * @param array<string, string|null> $originalNames
+     */
     protected function createFriendlyUrlsWhenRenamed(Product $product, array $originalNames): void
     {
         $changedNames = $this->getChangedNamesByLocale($product, $originalNames);
@@ -430,6 +433,10 @@ class ProductFacade
         );
     }
 
+    /**
+     * @param array<string, string|null> $originalNames
+     * @return array<string, string>
+     */
     protected function getChangedNamesByLocale(Product $product, array $originalNames): array
     {
         $changedProductNames = [];
@@ -457,6 +464,9 @@ class ProductFacade
         return $this->productRepository->findAllByCatnums($catnums);
     }
 
+    /**
+     * @return array<int, bool>
+     */
     public function getCalculatedSellingDeniedPerDomainIds(Product $product): array
     {
         return $this->productRepository->getCalculatedSellingDeniedPerDomainIds($product);

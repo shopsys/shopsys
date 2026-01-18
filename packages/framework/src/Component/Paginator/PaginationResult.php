@@ -27,7 +27,7 @@ class PaginationResult
      * @param int $page
      * @param int|null $pageSize
      * @param int $totalCount
-     * @param array $results
+     * @param array<int, mixed> $results
      */
     public function __construct($page, $pageSize, $totalCount, $results)
     {
@@ -81,7 +81,7 @@ class PaginationResult
     }
 
     /**
-     * @return array
+     * @return array<int, mixed>
      */
     public function getResults()
     {

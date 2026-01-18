@@ -38,6 +38,9 @@ class SearchAdminController extends AdminBaseController
         );
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $results
+     */
     protected function buildResultsList(array &$results, ItemInterface $item, string $searchString): void
     {
         if ($item->getLabel() && $item->getUri() && $this->containsLabelSearchString($item->getLabel(), $searchString)) {

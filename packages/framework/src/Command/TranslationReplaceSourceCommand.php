@@ -184,6 +184,7 @@ class TranslationReplaceSourceCommand extends Command
     /**
      * @see \Symfony\Component\Translation\Loader\PoFileLoader::addMessage
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $translationSourceReplacements
+     * @param array<string, mixed> $item
      */
     private function parsePoFileItem(array &$translationSourceReplacements, array $item): void
     {

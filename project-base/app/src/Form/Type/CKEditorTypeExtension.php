@@ -27,6 +27,10 @@ final class CKEditorTypeExtension extends AbstractTypeExtension
         $builder->setAttribute('config', $this->resolveConfig($options));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>
+     */
     private function resolveConfig(array $options): array
     {
         $config = $options['config'];

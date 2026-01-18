@@ -40,7 +40,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param int $productId
-     * @return array
+     * @return array<string, array<int, mixed>>
      */
     #[Override]
     public function getData($productId)
@@ -56,7 +56,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param int $productId
-     * @param array $data
+     * @param array<string, array<int, mixed>> $data
      */
     #[Override]
     public function saveData($productId, $data): void
@@ -113,7 +113,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[] $zboziProductDomains
-     * @return array
+     * @return array<string, array<int, mixed>>
      */
     private function getZboziProductDomainsAsPluginDataArray(array $zboziProductDomains)
     {

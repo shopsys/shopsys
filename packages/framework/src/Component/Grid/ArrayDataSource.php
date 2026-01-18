@@ -12,6 +12,9 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class ArrayDataSource implements DataSourceInterface
 {
+    /**
+     * @param array<int, array<string, mixed>> $data
+     */
     public function __construct(
         protected array $data,
         protected ?string $rowIdSourceColumnName = null,
@@ -24,6 +27,9 @@ class ArrayDataSource implements DataSourceInterface
         return $this->rowIdSourceColumnName;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     #[Override]
     public function getOneRow(int|string $rowId): array
     {

@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueCollectionValidator extends ConstraintValidator
 {
     /**
-     * @param array $values
+     * @param array<int, mixed> $values
      */
     #[Override]
     public function validate(mixed $values, Constraint $constraint): void
@@ -63,6 +63,7 @@ class UniqueCollectionValidator extends ConstraintValidator
     }
 
     /**
+     * @param array<int, string> $fields
      * @param mixed $value1
      * @param mixed $value2
      */

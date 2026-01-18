@@ -61,10 +61,10 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * {@inheritdoc}
+     * @param array<\PhpParser\Node> $ast
      */
     #[Override]
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
         $this->file = $file;
         $this->catalogue = $catalogue;
@@ -140,7 +140,8 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * {@inheritdoc}
+     * @param array<\PhpParser\Node> $nodes
+     * @return array<\PhpParser\Node>|null
      */
     #[Override]
     public function beforeTraverse(array $nodes): ?array
@@ -162,7 +163,8 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * {@inheritdoc}
+     * @param array<\PhpParser\Node> $nodes
+     * @return array<\PhpParser\Node>|null
      */
     #[Override]
     public function afterTraverse(array $nodes): ?array

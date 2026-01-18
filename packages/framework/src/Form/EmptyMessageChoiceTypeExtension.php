@@ -13,6 +13,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class EmptyMessageChoiceTypeExtension extends AbstractTypeExtension
 {
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {

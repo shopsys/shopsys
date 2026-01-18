@@ -30,6 +30,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
     /**
      * @param string $routeName
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      * @return string
      */
@@ -74,6 +75,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
     /**
      * @param string $routeName
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      * @return string
      */
@@ -106,6 +108,9 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         );
     }
 
+    /**
+     * @param array<string, mixed> $parameters
+     */
     public function getGeneratedUrlBySlug(
         string $routeName,
         Route $route,

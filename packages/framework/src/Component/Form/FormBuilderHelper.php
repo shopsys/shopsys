@@ -13,6 +13,9 @@ class FormBuilderHelper
     ) {
     }
 
+    /**
+     * @param string[] $disabledFields
+     */
     public function disableFieldsByConfigurations(FormBuilderInterface $builder, array $disabledFields): void
     {
         if (!$this->disableFields) {
@@ -21,6 +24,10 @@ class FormBuilderHelper
         $this->trackFormElements($builder->all(), $disabledFields);
     }
 
+    /**
+     * @param array<string, \Symfony\Component\Form\FormBuilderInterface> $elements
+     * @param string[] $disabledFields
+     */
     protected function trackFormElements(array $elements, array $disabledFields): void
     {
         foreach ($elements as $element) {

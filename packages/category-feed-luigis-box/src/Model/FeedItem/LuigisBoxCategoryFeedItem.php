@@ -11,6 +11,9 @@ class LuigisBoxCategoryFeedItem implements FeedItemInterface
 {
     public const UNIQUE_IDENTIFIER_PREFIX = 'category';
 
+    /**
+     * @param array<string> $hierarchyNames
+     */
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,

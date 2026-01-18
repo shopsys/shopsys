@@ -13,6 +13,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class HeurekaFeedSettingFormType extends AbstractType
 {
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

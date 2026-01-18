@@ -8,6 +8,9 @@ use Exception;
 
 class ElasticsearchDeleteIndexException extends Exception
 {
+    /**
+     * @param array<string, mixed> $error
+     */
     public function __construct(string $indexName, array $error)
     {
         parent::__construct(sprintf(

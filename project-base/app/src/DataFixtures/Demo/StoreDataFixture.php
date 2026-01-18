@@ -307,6 +307,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         return $stores;
     }
 
+    /**
+     * @param array<string, mixed> $demoRow
+     */
     private function initStoreData(array $demoRow): StoreData
     {
         $domainId = $demoRow[self::ATTR_DOMAIN_ID];

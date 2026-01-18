@@ -66,17 +66,24 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         );
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function getPartNumber(array $data): ?string
     {
         return $data['partno'];
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function getCatalogNumber(array $data): string
     {
         return $data['catnum'];
     }
 
     /**
+     * @param array<string, mixed> $data
      * @return int[]
      */
     public function getRelatedProducts(array $data): array
@@ -87,26 +94,42 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         );
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @return array<int, array<string, mixed>>
+     */
     public function getBreadcrumb(array $data): array
     {
         return $data['breadcrumb'];
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function getCategoriesPromise(array $data): Promise
     {
         return $this->categoriesBatchLoader->load($data['categories']);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function getFlagsPromise(array $data): Promise
     {
         return $this->flagsBatchLoader->load($data['flags']);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function getRelatedProductsPromise(array $data): Promise
     {
         return $this->productsSellableByIdsBatchLoader->load($data['related_products']);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function getBrandPromise(array $data): ?Promise
     {
         $brandId = $data['brand'];
@@ -114,6 +137,9 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         return $brandId !== '' ? $this->brandsBatchLoader->load($brandId) : null;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function isMainVariant(array $data): bool
     {
         return $data['is_main_variant'];

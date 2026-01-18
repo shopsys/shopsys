@@ -35,6 +35,9 @@ final class MultiLocaleBasicFileUploadType extends AbstractType
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -43,6 +46,9 @@ final class MultiLocaleBasicFileUploadType extends AbstractType
         $view->vars['multiple'] = $options['multiple'];
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

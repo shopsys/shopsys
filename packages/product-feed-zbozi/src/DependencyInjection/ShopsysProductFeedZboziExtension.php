@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class ShopsysProductFeedZboziExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * {@inheritdoc}
+     * @param array<int, array<string, mixed>> $configs
      */
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void

@@ -45,7 +45,7 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
     }
 
     /**
-     * @param array $value
+     * @param array<string, mixed> $value
      */
     #[Override]
     public function reverseTransform($value): string
@@ -55,6 +55,7 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
 
     /**
      * @param string $value
+     * @return array<string, mixed>
      */
     #[Override]
     public function transform($value): array
@@ -62,6 +63,9 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
         return ['uploadedFiles' => (array)$value];
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -70,6 +74,9 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
         $view->vars['info_text'] = $options['info_text'];
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -109,8 +116,8 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
     }
 
     /**
-     * @param string[]|null $uploadedFiles
-     * @param \Symfony\Component\Validator\Constraint[] $fileConstraints
+     * @param array<int, string>|null $uploadedFiles
+     * @param array<int, \Symfony\Component\Validator\Constraint> $fileConstraints
      */
     public function validateUploadedFiles(
         ?array $uploadedFiles,

@@ -20,7 +20,7 @@ class AdministratorRoleFacade
     }
 
     /**
-     * @param string[] $roles
+     * @param array<int, string> $roles
      */
     public function refreshAdministratorRoles(Administrator $administrator, array $roles): void
     {
@@ -46,8 +46,8 @@ class AdministratorRoleFacade
     }
 
     /**
-     * @param string[] $roles
-     * @return string[]
+     * @param array<int, string> $roles
+     * @return array<int, string>
      */
     protected function addAdminRoleIfMissing(Administrator $administrator, array $roles): array
     {

@@ -54,7 +54,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * {@inheritdoc}
+     * @param array<\PhpParser\Node> $ast
      */
     #[Override]
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
@@ -110,7 +110,8 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * {@inheritdoc}
+     * @param array<\PhpParser\Node> $nodes
+     * @return array<\PhpParser\Node>|null
      */
     #[Override]
     public function beforeTraverse(array $nodes): ?array
@@ -132,7 +133,8 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * {@inheritdoc}
+     * @param array<\PhpParser\Node> $nodes
+     * @return array<\PhpParser\Node>|null
      */
     #[Override]
     public function afterTraverse(array $nodes): ?array

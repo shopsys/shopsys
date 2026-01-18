@@ -98,7 +98,7 @@ class Mailer
     }
 
     /**
-     * @param string[] $variablesKeysAndValues
+     * @param array<string, string> $variablesKeysAndValues
      */
     protected function replaceVariables(string $string, array $variablesKeysAndValues): string
     {

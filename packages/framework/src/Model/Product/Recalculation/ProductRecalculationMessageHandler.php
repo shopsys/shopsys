@@ -25,6 +25,9 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
         return $this->handle($message, $ack);
     }
 
+    /**
+     * @param array<int, array{0: \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage, 1: \Symfony\Component\Messenger\Handler\Acknowledger}> $jobs
+     */
     protected function process(array $jobs): void
     {
         $priorities = [];

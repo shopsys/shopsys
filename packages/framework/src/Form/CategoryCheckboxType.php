@@ -19,6 +19,9 @@ final class CategoryCheckboxType extends AbstractType
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {

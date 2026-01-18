@@ -24,6 +24,9 @@ class GoPayClient
 
     protected CachedOAuth $oAuth;
 
+    /**
+     * @param array<string, mixed> $config
+     */
     public function __construct(protected readonly array $config)
     {
         $browser = new JsonBrowser(new NullLogger(), $this->config['timeout']);

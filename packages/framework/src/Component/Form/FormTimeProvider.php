@@ -30,6 +30,7 @@ class FormTimeProvider
 
     /**
      * @param string $name
+     * @param array<string, mixed> $options
      * @return bool
      */
     public function isFormTimeValid($name, array $options)

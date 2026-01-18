@@ -30,6 +30,9 @@ class FileUpload
     protected const int DELETE_OLD_FILES_SECONDS = 86400;
     protected const string POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE = 'positionByEntityAndType';
 
+    /**
+     * @param array<class-string, string> $directoriesByFileClass
+     */
     public function __construct(
         protected readonly string $temporaryDir,
         protected array $directoriesByFileClass,

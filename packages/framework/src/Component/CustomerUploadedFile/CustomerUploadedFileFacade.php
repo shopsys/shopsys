@@ -109,6 +109,10 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         $this->em->flush();
     }
 
+    /**
+     * @param array<string> $temporaryFilenames
+     * @param array<string> $uploadedFilenames
+     */
     protected function uploadFiles(
         object $entity,
         string $entityName,
@@ -195,6 +199,9 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         $this->em->flush();
     }
 
+    /**
+     * @param array<int, string> $fileNamesIndexedByFileId
+     */
     #[Override]
     protected function updateFilenamesAndSlugs(array $fileNamesIndexedByFileId): void
     {

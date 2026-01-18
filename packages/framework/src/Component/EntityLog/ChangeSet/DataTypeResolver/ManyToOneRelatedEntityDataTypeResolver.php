@@ -23,6 +23,9 @@ class ManyToOneRelatedEntityDataTypeResolver extends AbstractDataTypeResolver
         return is_object($value) && method_exists($value, 'getId');
     }
 
+    /**
+     * @param array{0: mixed, 1: mixed} $changes
+     */
     #[Override]
     public function getResolvedChanges(array $changes): ResolvedChanges
     {

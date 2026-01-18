@@ -119,6 +119,9 @@ class IndexRepository
         ]);
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $data
+     */
     public function bulkUpdate(string $indexAlias, array $data, bool $createIfNotExists = true): void
     {
         $params = ['body' => []];
@@ -144,6 +147,9 @@ class IndexRepository
         }
     }
 
+    /**
+     * @return string[]
+     */
     protected function findIndexNamesForAlias(string $aliasName): array
     {
         if (!$this->isAliasCreated($aliasName)) {

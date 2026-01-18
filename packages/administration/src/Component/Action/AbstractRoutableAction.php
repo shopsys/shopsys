@@ -25,7 +25,7 @@ abstract class AbstractRoutableAction extends AbstractAction
      * Parameters can be passed as array or Closure function that will return array.
      *
      * @param string $route #Route
-     * @param array|\Closure(mixed): array $parameters
+     * @param array<mixed>|\Closure(mixed): array $parameters
      */
     public function linkToRoute(string $route, array|Closure $parameters = []): static
     {

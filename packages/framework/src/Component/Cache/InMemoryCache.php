@@ -41,6 +41,9 @@ class InMemoryCache implements ResettableInterface
         return $this->getNamespaceCache($namespace)->getItem($key)->get();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getValuesByNamespace(string $namespace): array
     {
         $namespace = $this->replaceNotAllowedCharactersInKey($namespace);
@@ -166,6 +169,9 @@ class InMemoryCache implements ResettableInterface
         return $value;
     }
 
+    /**
+     * @param array<string|int> $keyParts
+     */
     protected function generateKey(array $keyParts): string
     {
         $key = implode('~', $keyParts);

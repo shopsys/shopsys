@@ -15,6 +15,7 @@ class FriendlyUrlUniqueResultFactory
     }
 
     /**
+     * @param array<string, mixed>|null $matchedRouteData
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult
      */
     public function create(

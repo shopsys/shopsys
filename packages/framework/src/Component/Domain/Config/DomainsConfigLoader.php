@@ -59,6 +59,7 @@ class DomainsConfigLoader
     }
 
     /**
+     * @param array<int, array<string, mixed>> $processedConfigsByDomainId
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
     protected function loadDomainConfigsFromArray(array $processedConfigsByDomainId): array
@@ -72,6 +73,9 @@ class DomainsConfigLoader
         return $domainConfigs;
     }
 
+    /**
+     * @param array<string, mixed> $domainConfig
+     */
     protected function processDomainConfigArray(array $domainConfig): DomainConfig
     {
         $url = $domainConfig[DomainsUrlsConfigDefinition::CONFIG_URL];
@@ -95,6 +99,11 @@ class DomainsConfigLoader
         );
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $domainConfigsByDomainId
+     * @param array<int, array<string, mixed>> $domainUrlsConfigsByDomainId
+     * @return array<int, array<string, mixed>>
+     */
     protected function addUrlsToProcessedConfig(
         array $domainConfigsByDomainId,
         array $domainUrlsConfigsByDomainId,
@@ -108,6 +117,9 @@ class DomainsConfigLoader
         return $domainConfigsByDomainId;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getProcessedConfig(string $filepath, ConfigurationInterface $configDefinition): array
     {
         $yamlParser = new Parser();
@@ -124,6 +136,10 @@ class DomainsConfigLoader
         return $processor->processConfiguration($configDefinition, [$parsedConfig]);
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $domainConfigsByDomainId
+     * @param array<int, array<string, mixed>> $domainUrlsConfigsByDomainId
+     */
     protected function isConfigMatchingUrlsConfig(
         array $domainConfigsByDomainId,
         array $domainUrlsConfigsByDomainId,

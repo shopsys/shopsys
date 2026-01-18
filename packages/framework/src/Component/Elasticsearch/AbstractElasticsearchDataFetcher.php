@@ -13,8 +13,15 @@ abstract class AbstractElasticsearchDataFetcher
     {
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
     abstract protected function fillEmptyFields(array $data): array;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getSingleResult(AbstractFilterQuery $filterQuery): array
     {
         $singleItemQuery = $filterQuery->setLimit(1);
@@ -27,6 +34,9 @@ abstract class AbstractElasticsearchDataFetcher
         return array_shift($results);
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getAllResults(AbstractFilterQuery $filterQuery): array
     {
         $result = $this->client->search($filterQuery->getQuery());

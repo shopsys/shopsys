@@ -16,6 +16,9 @@ class HintsHelper
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getDefaultHints(): array
     {
         return [

@@ -40,6 +40,8 @@ class UploadedFileFactory
     }
 
     /**
+     * @param array<int, string> $temporaryFilenames
+     * @param array<int, string> $uploadedFilenames
      * @param array<int, array<string, string>> $namesIndexedByFileIdAndLocale
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */

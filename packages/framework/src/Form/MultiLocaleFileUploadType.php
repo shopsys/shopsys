@@ -13,6 +13,9 @@ use Symfony\Component\Validator\Constraints;
 
 final class MultiLocaleFileUploadType extends AbstractType
 {
+    /**
+     * @param array<string, mixed> $options
+     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
