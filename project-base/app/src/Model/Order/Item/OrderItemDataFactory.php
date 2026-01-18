@@ -9,10 +9,10 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData as BaseOrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory as BaseOrderItemDataFactory;
 
 /**
- * @method addFieldsByOrderItemType(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Item\OrderItem $orderItem)
+ * @method void addFieldsByOrderItemType(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Item\OrderItem $orderItem)
  * @method bool isUsingPriceCalculation(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Item\OrderItem $orderItem)
  * @method \App\Model\Order\Item\OrderItemData createFromOrderItem(\App\Model\Order\Item\OrderItem $orderItem)
- * @method fillFromOrderItem(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Item\OrderItem $orderItem)
+ * @method void fillFromOrderItem(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Item\OrderItem $orderItem)
  * @method \App\Model\Order\Item\OrderItemData create(string $orderItemType)
  * @method \App\Model\Order\Item\OrderItemData createFromQuantifiedProduct(\Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct, \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface $quantifiedItemPrice, string $locale)
  */

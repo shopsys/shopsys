@@ -10,9 +10,9 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandData as BaseBrandData;
 
 /**
- * @method setTranslations(\App\Model\Product\Brand\BrandData $brandData)
- * @method setDomains(\App\Model\Product\Brand\BrandData $brandData)
- * @method createDomains(\App\Model\Product\Brand\BrandData $brandData)
+ * @method void setTranslations(\App\Model\Product\Brand\BrandData $brandData)
+ * @method void setDomains(\App\Model\Product\Brand\BrandData $brandData)
+ * @method void createDomains(\App\Model\Product\Brand\BrandData $brandData)
  */
 #[ORM\Table(name: 'brands')]
 #[ORM\Entity]
