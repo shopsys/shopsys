@@ -26,6 +26,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade as BaseTransportFaca
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Transport\TransportRepository $transportRepository, \App\Model\Payment\PaymentRepository $paymentRepository, \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation, \Shopsys\FrameworkBundle\Model\Transport\TransportFactory $transportFactory, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactory $transportPriceFactory, \App\Model\Payment\PaymentFacade $paymentFacade)
  * @method \App\Model\Transport\Transport[] getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations( $cart = null)
  * @method deleteAllPricesByTransport(\App\Model\Transport\Transport $transport)
+ * @method \App\Model\Transport\Transport[] getAll()
  */
 class TransportFacade extends BaseTransportFacade
 {

@@ -32,7 +32,7 @@ class VarDumperExtension extends AbstractExtension
         d($var);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'var_dumper_extension';
     }

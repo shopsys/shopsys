@@ -155,6 +155,10 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         $this->clearTemporaryFolder();
     }
 
+    /**
+     * @param resource $fileHandle
+     * @return array{0: array<int, string>, 1: array<int, string>}
+     */
     private function parseFileToLines($fileHandle): array
     {
         $lineNumber = 0;

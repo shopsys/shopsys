@@ -13,7 +13,7 @@ use Symfony\Component\Clock\DatePoint;
 
 class SettingValueTest extends TestCase
 {
-    public static function editProvider()
+    public static function editProvider(): array
     {
         return [
             ['string'],
@@ -25,7 +25,7 @@ class SettingValueTest extends TestCase
         ];
     }
 
-    public static function editExceptionProvider()
+    public static function editExceptionProvider(): array
     {
         return [
             [[]],

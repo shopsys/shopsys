@@ -16,7 +16,7 @@ class DummyResetPasswordUser implements ResetPasswordInterface
     }
 
     #[Override]
-    public function getId()
+    public function getId(): int
     {
         return 1;
     }
@@ -28,13 +28,13 @@ class DummyResetPasswordUser implements ResetPasswordInterface
     }
 
     #[Override]
-    public function getResetPasswordHash()
+    public function getResetPasswordHash(): string
     {
         return static::DUMMY_RESET_PASSWORD_HASH;
     }
 
     #[Override]
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }

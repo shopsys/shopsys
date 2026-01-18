@@ -45,6 +45,11 @@ class ImageRepository extends BaseImageRepository
         return $images;
     }
 
+    /**
+     * @param string $entityName
+     * @param int $entityId
+     * @param string|null $type
+     */
     #[Override]
     public function getImageByEntity($entityName, $entityId, $type): Image
     {

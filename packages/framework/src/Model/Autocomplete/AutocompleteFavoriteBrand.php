@@ -41,16 +41,25 @@ class AutocompleteFavoriteBrand implements OrderableEntityInterface
         $this->position = $position;
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+     */
     public function getBrand()
     {
         return $this->brand;
     }
 
+    /**
+     * @return int
+     */
     public function getDomainId()
     {
         return $this->domainId;
     }
 
+    /**
+     * @return int
+     */
     public function getPosition()
     {
         return $this->position;

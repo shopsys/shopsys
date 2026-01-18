@@ -113,7 +113,7 @@ class VatRepository
         return $query->getResult();
     }
 
-    public function isVatUsed(Vat $vat)
+    public function isVatUsed(Vat $vat): bool
     {
         return $this->existsPaymentWithVat($vat)
             || $this->existsTransportWithVat($vat)

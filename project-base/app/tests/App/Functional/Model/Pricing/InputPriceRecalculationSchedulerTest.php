@@ -84,7 +84,10 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $inputPriceRecalculationScheduler->onKernelResponse($responseEvent);
     }
 
-    public static function inputPricesTestDataProvider()
+    /**
+     * @return array<int, array{inputPriceWithoutVat: \Shopsys\FrameworkBundle\Component\Money\Money, inputPriceWithVat: \Shopsys\FrameworkBundle\Component\Money\Money, vatPercent: string}>
+     */
+    public static function inputPricesTestDataProvider(): array
     {
         return [
             [

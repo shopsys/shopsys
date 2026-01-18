@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class PaginationResultTest extends TestCase
 {
-    public static function getTestPageCountData()
+    public static function getTestPageCountData(): array
     {
         return [
             [1, 10, 40, [], 4],
@@ -40,7 +40,7 @@ class PaginationResultTest extends TestCase
         $this->assertSame($expectedPageCount, $paginationResult->getPageCount());
     }
 
-    public static function getTestIsFirstPageData()
+    public static function getTestIsFirstPageData(): iterable
     {
         yield [1, 10, 20, true];
 
@@ -57,7 +57,7 @@ class PaginationResultTest extends TestCase
         $this->assertSame($expectedIsFirst, $paginationResult->isFirstPage());
     }
 
-    public static function getTestIsLastPageData()
+    public static function getTestIsLastPageData(): iterable
     {
         yield [1, 10, 20, false];
 
@@ -80,7 +80,7 @@ class PaginationResultTest extends TestCase
         $this->assertSame($expectedIsLast, $paginationResult->isLastPage());
     }
 
-    public static function getTestGetPreviousPageData()
+    public static function getTestGetPreviousPageData(): iterable
     {
         yield [1, 10, 20, null];
 
@@ -99,7 +99,7 @@ class PaginationResultTest extends TestCase
         $this->assertSame($expectedPrevious, $paginationResult->getPreviousPage());
     }
 
-    public static function getTestGetNextPageData()
+    public static function getTestGetNextPageData(): iterable
     {
         yield [1, 10, 20, 2];
 

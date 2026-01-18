@@ -22,7 +22,7 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
@@ -31,7 +31,7 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function run()
+    public function run(): void
     {
         try {
             $heurekaCategoriesData = $this->heurekaCategoryDownloader->getHeurekaCategories();

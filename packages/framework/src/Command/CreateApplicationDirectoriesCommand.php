@@ -111,9 +111,9 @@ class CreateApplicationDirectoriesCommand extends Command
     }
 
     /**
-     * return array
+     * @return string[]
      */
-    private function getPublicDirectories()
+    private function getPublicDirectories(): array
     {
         $directories = $this->defaultPublicDirectories;
 

@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ErrorHandlerController extends AbstractController
 {
     #[Route(path: '/error-handler/notice')]
-    public function noticeAction()
+    public function noticeAction(): Response
     {
         $undefined[42];
 
