@@ -9,17 +9,11 @@ use Tests\CodingStandards\Unit\Sniffs\RequireOverrideAttributeSniff\Base\TestInt
 
 class CombinedParentsClass extends AbstractTestClass implements TestInterface
 {
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'name';
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return 'description';
@@ -33,9 +27,6 @@ class CombinedParentsClass extends AbstractTestClass implements TestInterface
     {
     }
 
-    /**
-     * @return string
-     */
     public function uniqueMethod(): string
     {
         return 'This method should not need Override';

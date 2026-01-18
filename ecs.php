@@ -100,6 +100,7 @@ return ECSConfig::configure()
             __DIR__ . '/packages/coding-standards/tests/Unit/**/correct/*',
             __DIR__ . '/packages/coding-standards/tests/Unit/**/Correct/*',
             __DIR__ . '/packages/coding-standards/tests/Unit/**/fixed/*',
+            __DIR__ . '/packages/coding-standards/tests/Unit/**/Fixed/*',
             __DIR__ . '/packages/maker/templates/*',
             AssignmentInConditionSniff::class => [
                 __DIR__ . '/project-base/app/src/Kernel.php',
