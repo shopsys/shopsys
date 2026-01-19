@@ -41,5 +41,11 @@ front_personal_data_export:
 front_stores:
     path: /stores
 
+front_catalog:
+    path: /catalog
+
+front_contact_form:
+    path: /contact-form
+
 front_complaint_detail:
     path: /customer/complaint-detail
