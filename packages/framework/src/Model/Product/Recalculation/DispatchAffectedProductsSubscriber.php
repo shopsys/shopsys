@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScope
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagEvent;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterEvent;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupEvent;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueEvent;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitEvent;
 use Shopsys\FrameworkBundle\Model\Stock\StockEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -104,6 +105,20 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueEvent $parameterValueEvent
+     */
+    public function dispatchAffectedByParameterValues(ParameterValueEvent $parameterValueEvent): void
+    {
+        $productIds = $this->affectedProductsFacade->getProductIdsWithParameterValues($parameterValueEvent->getParameterValues());
+
+        $this->productRecalculationDispatcher->dispatchProductIds(
+            $productIds,
+            ProductRecalculationPriorityEnum::REGULAR,
+            [ProductExportScopeConfig::SCOPE_PARAMETERS],
+        );
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockEvent $stockEvent
      */
     public function dispatchAllProductsIfStockDomainsChanged(StockEvent $stockEvent): void
@@ -157,6 +172,7 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
             ParameterEvent::UPDATE => 'dispatchAffectedByParameter',
             ParameterGroupEvent::DELETE => 'dispatchAffectedByParameterGroup',
             ParameterGroupEvent::UPDATE => 'dispatchAffectedByParameterGroup',
+            ParameterValueEvent::UPDATE => 'dispatchAffectedByParameterValues',
             PricingGroupEvent::CREATE => 'dispatchAllProducts',
             PricingGroupEvent::DELETE => 'dispatchAllProducts',
             StockEvent::DELETE => 'dispatchAllProducts',

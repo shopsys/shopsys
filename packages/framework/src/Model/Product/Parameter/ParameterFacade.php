@@ -11,10 +11,8 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
 use Shopsys\FrameworkBundle\Model\CategorySeo\DeleteReadyCategorySeoMixFacade;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParameterFacade
@@ -28,7 +26,6 @@ class ParameterFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\DeleteReadyCategorySeoMixFacade $deleteReadyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterSortingHelper $parameterSortingHelper
      */
@@ -41,7 +38,6 @@ class ParameterFacade
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly ParameterValueDataFactory $parameterValueDataFactory,
         protected readonly ParameterValueFactory $parameterValueFactory,
-        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly DeleteReadyCategorySeoMixFacade $deleteReadyCategorySeoMixFacade,
         protected readonly ParameterSortingHelper $parameterSortingHelper,
     ) {
@@ -215,6 +211,14 @@ class ParameterFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
+     */
+    protected function dispatchParameterValueEvent(array $parameterValues): void
+    {
+        $this->eventDispatcher->dispatch(new ParameterValueEvent($parameterValues), ParameterValueEvent::UPDATE);
+    }
+
+    /**
      * @param string[] $uuids
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
@@ -298,6 +302,8 @@ class ParameterFacade
 
         $this->em->flush();
 
+        $this->dispatchParameterValueEvent([$parameterValue]);
+
         return $parameterValue;
     }
 
@@ -342,9 +348,7 @@ class ParameterFacade
             $newParameterValues[] = $newParameterValue;
         }
 
-        $productsChangedByConversion = $this->parameterRepository->getProductsByParameterValues($newParameterValues);
-
-        $this->productRecalculationDispatcher->dispatchProducts($productsChangedByConversion, exportScopes: [ProductExportScopeConfig::SCOPE_PARAMETERS]);
+        $this->dispatchParameterValueEvent($newParameterValues);
     }
 
     /**

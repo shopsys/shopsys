@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -113,6 +114,22 @@ class AffectedProductsRepository
         $queryBuilder = $this->createQueryBuilder()
             ->where('p.unit = :unit')
             ->setParameter('unit', $unit);
+
+        return $this->getSingleColumnResultFromQueryBuilder($queryBuilder);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
+     * @return int[]
+     */
+    public function getProductIdsWithParameterValues(array $parameterValues): array
+    {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('p.id')
+            ->from(Product::class, 'p')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'ppv.product = p')
+            ->where('ppv.value IN(:parameterValues)')
+            ->setParameter('parameterValues', $parameterValues);
 
         return $this->getSingleColumnResultFromQueryBuilder($queryBuilder);
     }

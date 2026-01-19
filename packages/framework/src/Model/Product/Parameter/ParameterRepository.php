@@ -629,22 +629,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsByParameterValues(array $parameterValues): array
-    {
-        return $this->em->createQueryBuilder()
-            ->select('p')
-            ->from(Product::class, 'p')
-            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'ppv.product = p')
-            ->where('ppv.value IN(:parameterValues)')
-            ->setParameter('parameterValues', $parameterValues)
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
      * @param string $name
      * @param string $locale
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null $excludeParameter
