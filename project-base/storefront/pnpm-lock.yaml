@@ -20,31 +20,31 @@ importers:
     dependencies:
       '@hookform/resolvers':
         specifier: ~2.6.1
-        version: 2.6.1(react-hook-form@7.54.2(react@18.2.0))
+        version: 2.6.1(react-hook-form@7.54.2(react@19.0.4))
       '@next/bundle-analyzer':
         specifier: ~15.4.10
         version: 15.4.10
       '@sentry/nextjs':
         specifier: ~9.38.0
-        version: 9.38.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(webpack@5.101.3)
+        version: 9.38.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.4(react@19.0.4))(react@19.0.4))(react@19.0.4)(webpack@5.101.3)
       '@urql/devtools':
         specifier: ~2.0.3
         version: 2.0.3(@urql/core@6.0.1(graphql@16.8.2))(graphql@16.8.2)
       '@urql/exchange-auth':
-        specifier: ~2.1.6
-        version: 2.1.6(graphql@16.8.2)
+        specifier: ~2.2.0
+        version: 2.2.1(@urql/core@6.0.1(graphql@16.8.2))
       '@urql/exchange-graphcache':
-        specifier: ~6.4.1
-        version: 6.4.1(graphql@16.8.2)
+        specifier: ~7.2.0
+        version: 7.2.4(@urql/core@6.0.1(graphql@16.8.2))(graphql@16.8.2)
       cookies-next:
         specifier: ~4.3.0
         version: 4.3.0
       framer-motion:
         specifier: ^11.18.2
-        version: 11.18.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 11.18.2(react-dom@19.0.4(react@19.0.4))(react@19.0.4)
       google-map-react:
         specifier: ^2.2.5
-        version: 2.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 2.2.5(react-dom@19.0.4(react@19.0.4))(react@19.0.4)
       graphql:
         specifier: ~16.8.2
         version: 16.8.2
@@ -62,43 +62,43 @@ importers:
         version: 1.5.0
       next:
         specifier: ~15.4.10
-        version: 15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.4(react@19.0.4))(react@19.0.4)
       next-translate:
         specifier: ~2.6.2
-        version: 2.6.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
+        version: 2.6.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.4(react@19.0.4))(react@19.0.4))(react@19.0.4)
       next-translate-plugin:
         specifier: ~2.6.2
-        version: 2.6.2(next-translate@2.6.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0))
+        version: 2.6.2(next-translate@2.6.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.4(react@19.0.4))(react@19.0.4))(react@19.0.4))
       next-urql:
         specifier: ~5.0.2
-        version: 5.0.2(react@18.2.0)(urql@4.0.7(graphql@16.8.2)(react@18.2.0))
+        version: 5.0.2(react@19.0.4)(urql@5.0.1(@urql/core@6.0.1(graphql@16.8.2))(react@19.0.4))
       nprogress:
         specifier: ~0.2.0
         version: 0.2.0
       react:
-        specifier: ~18.2.0
-        version: 18.2.0
+        specifier: ~19.0.0
+        version: 19.0.4
       react-dom:
-        specifier: ~18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: ~19.0.0
+        version: 19.0.4(react@19.0.4)
       react-dropzone:
         specifier: ^14.3.8
-        version: 14.3.8(react@18.2.0)
+        version: 14.3.8(react@19.0.4)
       react-hook-form:
         specifier: ~7.54.0
-        version: 7.54.2(react@18.2.0)
+        version: 7.54.2(react@19.0.4)
       react-infinite-scroll-component:
         specifier: ~6.1.1
-        version: 6.1.1(react@18.2.0)
+        version: 6.1.1(react@19.0.4)
       react-remove-scroll:
         specifier: ^2.7.2
-        version: 2.7.2(@types/react@18.2.79)(react@18.2.0)
+        version: 2.7.2(@types/react@19.0.14)(react@19.0.4)
       react-swipeable:
         specifier: ~7.0.2
-        version: 7.0.2(react@18.2.0)
+        version: 7.0.2(react@19.0.4)
       react-toastify:
         specifier: ~10.0.6
-        version: 10.0.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 10.0.6(react-dom@19.0.4(react@19.0.4))(react@19.0.4)
       redis:
         specifier: ~4.7.1
         version: 4.7.1
@@ -109,11 +109,11 @@ importers:
         specifier: ~3.0.2
         version: 3.0.2
       urql:
-        specifier: ~4.0.7
-        version: 4.0.7(graphql@16.8.2)(react@18.2.0)
+        specifier: ~5.0.1
+        version: 5.0.1(@urql/core@6.0.1(graphql@16.8.2))(react@19.0.4)
       use-supercluster:
         specifier: ^1.2.0
-        version: 1.2.0(react@18.2.0)(supercluster@8.0.1)
+        version: 1.2.0(react@19.0.4)(supercluster@8.0.1)
       uuid:
         specifier: ~9.0.1
         version: 9.0.1
@@ -125,7 +125,7 @@ importers:
         version: 1.6.1
       zustand:
         specifier: ~4.4.7
-        version: 4.4.7(@types/react@18.2.79)(react@18.2.0)
+        version: 4.4.7(@types/react@19.0.14)(react@19.0.4)
     devDependencies:
       '@eslint/compat':
         specifier: ^1.4.1
@@ -174,7 +174,7 @@ importers:
         version: 6.9.1
       '@testing-library/react':
         specifier: ~16.2.0
-        version: 16.2.0(@testing-library/dom@10.4.1)(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 16.2.0(@testing-library/dom@10.4.1)(@types/react-dom@19.0.6(@types/react@19.0.14))(@types/react@19.0.14)(react-dom@19.0.4(react@19.0.4))(react@19.0.4)
       '@testing-library/user-event':
         specifier: ^14.6.1
         version: 14.6.1(@testing-library/dom@10.4.1)
@@ -191,11 +191,11 @@ importers:
         specifier: ~0.2.3
         version: 0.2.3
       '@types/react':
-        specifier: ~18.2.79
-        version: 18.2.79
+        specifier: ~19.0.0
+        version: 19.0.14
       '@types/react-dom':
-        specifier: ~18.2.25
-        version: 18.2.25
+        specifier: ~19.0.0
+        version: 19.0.6(@types/react@19.0.14)
       '@types/supercluster':
         specifier: ^7.1.3
         version: 7.1.3
@@ -2704,14 +2704,13 @@ packages:
   '@types/pg@8.6.1':
     resolution: {integrity: sha512-1Kc4oAGzAl7uqUStZCDvaLFqZrW9qWSjXOmBfdgyBP5La7Us6Mg4GBvRlSoaZMhQF/zSj1C8CtKMBkoiT8eL8w==}
 
-  '@types/prop-types@15.7.15':
-    resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
+  '@types/react-dom@19.0.6':
+    resolution: {integrity: sha512-lo6MuY+rFr8kIiFnr+7TzO+Av0wUPcEcepiPV4epGP0eTQpkDfp9czudg73isV8UxKauCUNlL1N8fXhcnx4iBw==}
+    peerDependencies:
+      '@types/react': ^19.0.0
 
-  '@types/react-dom@18.2.25':
-    resolution: {integrity: sha512-o/V48vf4MQh7juIKZU2QGDfli6p1+OOi5oXx36Hffpc9adsHeXjVp8rHuPkjd8VT8sOJ2Zp05HR7CdpGTIUFUA==}
-
-  '@types/react@18.2.79':
-    resolution: {integrity: sha512-RwGAGXPl9kSXwdNTafkOEuFrTBD5SA2B3iEB96xi8+xu5ddUa/cpvyVCSNn+asgLCTHkb5ZxN8gbuibYJi4s1w==}
+  '@types/react@19.0.14':
+    resolution: {integrity: sha512-ixLZ7zG7j1fM0DijL9hDArwhwcCb4vqmePgwtV0GfnkHRSCUEv4LvzarcTdhoqgyMznUx/EhoTUv31CKZzkQlw==}
 
   '@types/shimmer@1.2.0':
     resolution: {integrity: sha512-UE7oxhQLLd9gub6JKIAhDq06T0F6FnztwMNRvYgjeQSBeMc1ZG/tA47EwfduvkuQS8apbkM/lpLpWsaCeYsXVg==}
@@ -2805,11 +2804,15 @@ packages:
       '@urql/core': 6.0.1
       graphql: '>= 0.11.0'
 
-  '@urql/exchange-auth@2.1.6':
-    resolution: {integrity: sha512-snOlt7p5kYq0KnPDuXkKe2qW3/BucQZOElvTeo3svLQuk9JiNJVnm6ffQ6QGiGO+G3AtMrctnno1+X44fLtDuQ==}
+  '@urql/exchange-auth@2.2.1':
+    resolution: {integrity: sha512-n4xUxxjvY36GJh539sLaPFyvFzreADOv8EFQdTiXOCIRVoXXhWVVI7DjY/HNtLICfbg1+UlbvQ7sNkwaBouDHg==}
+    peerDependencies:
+      '@urql/core': 6.0.1
 
-  '@urql/exchange-graphcache@6.4.1':
-    resolution: {integrity: sha512-hWa4/5B7Op93oA6yWvffPU3L0XH55tlluEaq6aoFE9zsiNhktFjhp/SU2CKvSD8iD0Tfreoo63drv64Ad0+Gxw==}
+  '@urql/exchange-graphcache@7.2.4':
+    resolution: {integrity: sha512-kiKbT0ZrtyQmmgNLYR0qkZAJjWHQOtrd+6Dt9JMtm3L/A8r3D6ptcJn668BADP6J+vkxcfNFtdI+0OdmBBkRgw==}
+    peerDependencies:
+      '@urql/core': 6.0.1
 
   '@urql/introspection@1.2.1':
     resolution: {integrity: sha512-U9FTSISz69EEK3bHWDsqux9JqOeiLzr3eDFBQ5DmHuTLaBsd5mjPdtLRzzzmb9nW1Ygd6IR8YcuM7zeNqQ5lCQ==}
@@ -5262,10 +5265,10 @@ packages:
   randombytes@2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
 
-  react-dom@18.2.0:
-    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
+  react-dom@19.0.4:
+    resolution: {integrity: sha512-JiVlwQwuINIQf2+XUjtRFtLxhTE6hcyX7ZyCmY0HM7I/Kgi7qyXThkzwzg6uCfu3rTg9Ofe1x8qWYrfqthIrzg==}
     peerDependencies:
-      react: ^18.2.0
+      react: ^19.0.4
 
   react-dropzone@14.3.8:
     resolution: {integrity: sha512-sBgODnq+lcA4P296DY4wacOZz3JFpD99fp+hb//iBO2HHnyeZU3FwWyXJ6salNpqQdsZrgMrotuko/BdJMV8Ug==}
@@ -5340,8 +5343,8 @@ packages:
       react: '>=18'
       react-dom: '>=18'
 
-  react@18.2.0:
-    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
+  react@19.0.4:
+    resolution: {integrity: sha512-6RpEg9/n0sThnO+2CaMLWuvL1iyctm9/lcSTwvmyCoJYD5eiIrwxevXtrMqrtUr96HCdQB8/Yf+oK1QGy8kXEQ==}
     engines: {node: '>=0.10.0'}
 
   read-installed@4.0.3:
@@ -5519,8 +5522,8 @@ packages:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
     engines: {node: '>=v12.22.7'}
 
-  scheduler@0.23.2:
-    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
+  scheduler@0.25.0:
+    resolution: {integrity: sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==}
 
   schema-utils@4.3.3:
     resolution: {integrity: sha512-eflK8wEtyOE6+hsaRVPxvUKYCpRgzLqDTb8krvAsRIwOGlHoSgYLgBXoubGgLd2fT41/OUYdb48v4k4WWHQurA==}
@@ -6065,9 +6068,10 @@ packages:
   urlpattern-polyfill@10.1.0:
     resolution: {integrity: sha512-IGjKp/o0NL3Bso1PymYURCJxMPNAf/ILOpendP9f5B6e1rTJgdgiOvgfoT8VxCAdY+Wisb9uhGaJJf3yZ2V9nw==}
 
-  urql@4.0.7:
-    resolution: {integrity: sha512-wnOONtZoYEobmamM5ushUBGil6UCUPd7SH5uEAqsz5Y/qBV88/2QG6jq7v6xP+413x5Lqy0h0hCGRB0KIeG6Kg==}
+  urql@5.0.1:
+    resolution: {integrity: sha512-r58gYlWvCTC19QvkTaARaCLV9/bp870byH/qbLaw3S7f8i/bC6x2Szub8RVXptiMxWmqq5dyVBjUL9G+xPEuqg==}
     peerDependencies:
+      '@urql/core': 6.0.1
       react: '>= 16.8.0'
 
   use-callback-ref@1.3.3:
@@ -7763,9 +7767,9 @@ snapshots:
     dependencies:
       is-negated-glob: 1.0.0
 
-  '@hookform/resolvers@2.6.1(react-hook-form@7.54.2(react@18.2.0))':
+  '@hookform/resolvers@2.6.1(react-hook-form@7.54.2(react@19.0.4))':
     dependencies:
-      react-hook-form: 7.54.2(react@18.2.0)
+      react-hook-form: 7.54.2(react@19.0.4)
 
   '@humanfs/core@0.19.1': {}
 
@@ -8647,7 +8651,7 @@ snapshots:
 
   '@sentry/core@9.38.0': {}
 
-  '@sentry/nextjs@9.38.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(webpack@5.101.3)':
+  '@sentry/nextjs@9.38.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.4(react@19.0.4))(react@19.0.4))(react@19.0.4)(webpack@5.101.3)':
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/semantic-conventions': 1.38.0
@@ -8656,11 +8660,11 @@ snapshots:
       '@sentry/core': 9.38.0
       '@sentry/node': 9.38.0
       '@sentry/opentelemetry': 9.38.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.38.0)
-      '@sentry/react': 9.38.0(react@18.2.0)
+      '@sentry/react': 9.38.0(react@19.0.4)
       '@sentry/vercel-edge': 9.38.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))
       '@sentry/webpack-plugin': 3.6.1(webpack@5.101.3)
       chalk: 3.0.0
-      next: 15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      next: 15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.4(react@19.0.4))(react@19.0.4)
       resolve: 1.22.8
       rollup: 4.35.0
       stacktrace-parser: 0.1.11
@@ -8737,12 +8741,12 @@ snapshots:
       '@opentelemetry/semantic-conventions': 1.38.0
       '@sentry/core': 9.38.0
 
-  '@sentry/react@9.38.0(react@18.2.0)':
+  '@sentry/react@9.38.0(react@19.0.4)':
     dependencies:
       '@sentry/browser': 9.38.0
       '@sentry/core': 9.38.0
       hoist-non-react-statics: 3.3.2
-      react: 18.2.0
+      react: 19.0.4
 
   '@sentry/vercel-edge@9.38.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))':
     dependencies:
@@ -8870,15 +8874,15 @@ snapshots:
       picocolors: 1.1.1
       redent: 3.0.0
 
-  '@testing-library/react@16.2.0(@testing-library/dom@10.4.1)(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@testing-library/react@16.2.0(@testing-library/dom@10.4.1)(@types/react-dom@19.0.6(@types/react@19.0.14))(@types/react@19.0.14)(react-dom@19.0.4(react@19.0.4))(react@19.0.4)':
     dependencies:
       '@babel/runtime': 7.28.4
       '@testing-library/dom': 10.4.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 19.0.4
+      react-dom: 19.0.4(react@19.0.4)
     optionalDependencies:
-      '@types/react': 18.2.79
-      '@types/react-dom': 18.2.25
+      '@types/react': 19.0.14
+      '@types/react-dom': 19.0.6(@types/react@19.0.14)
 
   '@testing-library/user-event@14.6.1(@testing-library/dom@10.4.1)':
     dependencies:
@@ -8962,7 +8966,7 @@ snapshots:
 
   '@types/google-map-react@2.1.10':
     dependencies:
-      '@types/react': 18.2.79
+      '@types/react': 19.0.14
 
   '@types/js-yaml@4.0.9': {}
 
@@ -8992,15 +8996,12 @@ snapshots:
       pg-protocol: 1.10.3
       pg-types: 2.2.0
 
-  '@types/prop-types@15.7.15': {}
-
-  '@types/react-dom@18.2.25':
+  '@types/react-dom@19.0.6(@types/react@19.0.14)':
     dependencies:
-      '@types/react': 18.2.79
+      '@types/react': 19.0.14
 
-  '@types/react@18.2.79':
+  '@types/react@19.0.14':
     dependencies:
-      '@types/prop-types': 15.7.15
       csstype: 3.2.3
 
   '@types/shimmer@1.2.0': {}
@@ -9137,14 +9138,12 @@ snapshots:
       graphql: 16.8.2
       wonka: 6.3.5
 
-  '@urql/exchange-auth@2.1.6(graphql@16.8.2)':
+  '@urql/exchange-auth@2.2.1(@urql/core@6.0.1(graphql@16.8.2))':
     dependencies:
       '@urql/core': 6.0.1(graphql@16.8.2)
       wonka: 6.3.5
-    transitivePeerDependencies:
-      - graphql
 
-  '@urql/exchange-graphcache@6.4.1(graphql@16.8.2)':
+  '@urql/exchange-graphcache@7.2.4(@urql/core@6.0.1(graphql@16.8.2))(graphql@16.8.2)':
     dependencies:
       '@0no-co/graphql.web': 1.2.0(graphql@16.8.2)
       '@urql/core': 6.0.1(graphql@16.8.2)
@@ -10490,14 +10489,14 @@ snapshots:
 
   forwarded-parse@2.1.2: {}
 
-  framer-motion@11.18.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  framer-motion@11.18.2(react-dom@19.0.4(react@19.0.4))(react@19.0.4):
     dependencies:
       motion-dom: 11.18.1
       motion-utils: 11.18.1
       tslib: 2.8.1
     optionalDependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 19.0.4
+      react-dom: 19.0.4(react@19.0.4)
 
   fs-extra@11.3.3:
     dependencies:
@@ -10662,14 +10661,14 @@ snapshots:
 
   globrex@0.1.2: {}
 
-  google-map-react@2.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  google-map-react@2.2.5(react-dom@19.0.4(react@19.0.4))(react@19.0.4):
     dependencies:
       '@googlemaps/js-api-loader': 1.16.10
       '@mapbox/point-geometry': 0.1.0
       eventemitter3: 4.0.7
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 19.0.4
+      react-dom: 19.0.4(react@19.0.4)
 
   gopd@1.2.0: {}
 
@@ -11456,31 +11455,31 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next-translate-plugin@2.6.2(next-translate@2.6.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)):
+  next-translate-plugin@2.6.2(next-translate@2.6.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.4(react@19.0.4))(react@19.0.4))(react@19.0.4)):
     dependencies:
-      next-translate: 2.6.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
+      next-translate: 2.6.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.4(react@19.0.4))(react@19.0.4))(react@19.0.4)
       typescript: 4.5.2
 
-  next-translate@2.6.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0):
+  next-translate@2.6.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.4(react@19.0.4))(react@19.0.4))(react@19.0.4):
     dependencies:
-      next: 15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      react: 18.2.0
+      next: 15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.4(react@19.0.4))(react@19.0.4)
+      react: 19.0.4
 
-  next-urql@5.0.2(react@18.2.0)(urql@4.0.7(graphql@16.8.2)(react@18.2.0)):
+  next-urql@5.0.2(react@19.0.4)(urql@5.0.1(@urql/core@6.0.1(graphql@16.8.2))(react@19.0.4)):
     dependencies:
-      react: 18.2.0
-      react-ssr-prepass: 1.6.0(react@18.2.0)
-      urql: 4.0.7(graphql@16.8.2)(react@18.2.0)
+      react: 19.0.4
+      react-ssr-prepass: 1.6.0(react@19.0.4)
+      urql: 5.0.1(@urql/core@6.0.1(graphql@16.8.2))(react@19.0.4)
 
-  next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.4(react@19.0.4))(react@19.0.4):
     dependencies:
       '@next/env': 15.4.10
       '@swc/helpers': 0.5.15
       caniuse-lite: 1.0.30001761
       postcss: 8.4.31
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      styled-jsx: 5.1.6(@babel/core@7.28.5)(react@18.2.0)
+      react: 19.0.4
+      react-dom: 19.0.4(react@19.0.4)
+      styled-jsx: 5.1.6(@babel/core@7.28.5)(react@19.0.4)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.4.8
       '@next/swc-darwin-x64': 15.4.8
@@ -11854,26 +11853,25 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  react-dom@18.2.0(react@18.2.0):
+  react-dom@19.0.4(react@19.0.4):
     dependencies:
-      loose-envify: 1.4.0
-      react: 18.2.0
-      scheduler: 0.23.2
+      react: 19.0.4
+      scheduler: 0.25.0
 
-  react-dropzone@14.3.8(react@18.2.0):
+  react-dropzone@14.3.8(react@19.0.4):
     dependencies:
       attr-accept: 2.2.5
       file-selector: 2.1.2
       prop-types: 15.8.1
-      react: 18.2.0
+      react: 19.0.4
 
-  react-hook-form@7.54.2(react@18.2.0):
+  react-hook-form@7.54.2(react@19.0.4):
     dependencies:
-      react: 18.2.0
+      react: 19.0.4
 
-  react-infinite-scroll-component@6.1.1(react@18.2.0):
+  react-infinite-scroll-component@6.1.1(react@19.0.4):
     dependencies:
-      react: 18.2.0
+      react: 19.0.4
       throttle-debounce: 2.3.0
 
   react-is@16.13.1: {}
@@ -11882,50 +11880,48 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react-remove-scroll-bar@2.3.8(@types/react@18.2.79)(react@18.2.0):
+  react-remove-scroll-bar@2.3.8(@types/react@19.0.14)(react@19.0.4):
     dependencies:
-      react: 18.2.0
-      react-style-singleton: 2.2.3(@types/react@18.2.79)(react@18.2.0)
+      react: 19.0.4
+      react-style-singleton: 2.2.3(@types/react@19.0.14)(react@19.0.4)
       tslib: 2.8.1
     optionalDependencies:
-      '@types/react': 18.2.79
+      '@types/react': 19.0.14
 
-  react-remove-scroll@2.7.2(@types/react@18.2.79)(react@18.2.0):
+  react-remove-scroll@2.7.2(@types/react@19.0.14)(react@19.0.4):
     dependencies:
-      react: 18.2.0
-      react-remove-scroll-bar: 2.3.8(@types/react@18.2.79)(react@18.2.0)
-      react-style-singleton: 2.2.3(@types/react@18.2.79)(react@18.2.0)
+      react: 19.0.4
+      react-remove-scroll-bar: 2.3.8(@types/react@19.0.14)(react@19.0.4)
+      react-style-singleton: 2.2.3(@types/react@19.0.14)(react@19.0.4)
       tslib: 2.8.1
-      use-callback-ref: 1.3.3(@types/react@18.2.79)(react@18.2.0)
-      use-sidecar: 1.1.3(@types/react@18.2.79)(react@18.2.0)
+      use-callback-ref: 1.3.3(@types/react@19.0.14)(react@19.0.4)
+      use-sidecar: 1.1.3(@types/react@19.0.14)(react@19.0.4)
     optionalDependencies:
-      '@types/react': 18.2.79
+      '@types/react': 19.0.14
 
-  react-ssr-prepass@1.6.0(react@18.2.0):
+  react-ssr-prepass@1.6.0(react@19.0.4):
     dependencies:
-      react: 18.2.0
+      react: 19.0.4
 
-  react-style-singleton@2.2.3(@types/react@18.2.79)(react@18.2.0):
+  react-style-singleton@2.2.3(@types/react@19.0.14)(react@19.0.4):
     dependencies:
       get-nonce: 1.0.1
-      react: 18.2.0
+      react: 19.0.4
       tslib: 2.8.1
     optionalDependencies:
-      '@types/react': 18.2.79
+      '@types/react': 19.0.14
 
-  react-swipeable@7.0.2(react@18.2.0):
+  react-swipeable@7.0.2(react@19.0.4):
     dependencies:
-      react: 18.2.0
+      react: 19.0.4
 
-  react-toastify@10.0.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  react-toastify@10.0.6(react-dom@19.0.4(react@19.0.4))(react@19.0.4):
     dependencies:
       clsx: 2.1.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 19.0.4
+      react-dom: 19.0.4(react@19.0.4)
 
-  react@18.2.0:
-    dependencies:
-      loose-envify: 1.4.0
+  react@19.0.4: {}
 
   read-installed@4.0.3:
     dependencies:
@@ -12181,9 +12177,7 @@ snapshots:
     dependencies:
       xmlchars: 2.2.0
 
-  scheduler@0.23.2:
-    dependencies:
-      loose-envify: 1.4.0
+  scheduler@0.25.0: {}
 
   schema-utils@4.3.3:
     dependencies:
@@ -12515,10 +12509,10 @@ snapshots:
 
   strip-json-comments@5.0.3: {}
 
-  styled-jsx@5.1.6(@babel/core@7.28.5)(react@18.2.0):
+  styled-jsx@5.1.6(@babel/core@7.28.5)(react@19.0.4):
     dependencies:
       client-only: 0.0.1
-      react: 18.2.0
+      react: 19.0.4
     optionalDependencies:
       '@babel/core': 7.28.5
 
@@ -12777,45 +12771,43 @@ snapshots:
 
   urlpattern-polyfill@10.1.0: {}
 
-  urql@4.0.7(graphql@16.8.2)(react@18.2.0):
+  urql@5.0.1(@urql/core@6.0.1(graphql@16.8.2))(react@19.0.4):
     dependencies:
       '@urql/core': 6.0.1(graphql@16.8.2)
-      react: 18.2.0
+      react: 19.0.4
       wonka: 6.3.5
-    transitivePeerDependencies:
-      - graphql
 
-  use-callback-ref@1.3.3(@types/react@18.2.79)(react@18.2.0):
+  use-callback-ref@1.3.3(@types/react@19.0.14)(react@19.0.4):
     dependencies:
-      react: 18.2.0
+      react: 19.0.4
       tslib: 2.8.1
     optionalDependencies:
-      '@types/react': 18.2.79
+      '@types/react': 19.0.14
 
-  use-deep-compare-effect@1.8.1(react@18.2.0):
+  use-deep-compare-effect@1.8.1(react@19.0.4):
     dependencies:
       '@babel/runtime': 7.28.4
       dequal: 2.0.3
-      react: 18.2.0
+      react: 19.0.4
 
-  use-sidecar@1.1.3(@types/react@18.2.79)(react@18.2.0):
+  use-sidecar@1.1.3(@types/react@19.0.14)(react@19.0.4):
     dependencies:
       detect-node-es: 1.1.0
-      react: 18.2.0
+      react: 19.0.4
       tslib: 2.8.1
     optionalDependencies:
-      '@types/react': 18.2.79
+      '@types/react': 19.0.14
 
-  use-supercluster@1.2.0(react@18.2.0)(supercluster@8.0.1):
+  use-supercluster@1.2.0(react@19.0.4)(supercluster@8.0.1):
     dependencies:
       dequal: 2.0.3
-      react: 18.2.0
+      react: 19.0.4
       supercluster: 8.0.1
-      use-deep-compare-effect: 1.8.1(react@18.2.0)
+      use-deep-compare-effect: 1.8.1(react@19.0.4)
 
-  use-sync-external-store@1.2.0(react@18.2.0):
+  use-sync-external-store@1.2.0(react@19.0.4):
     dependencies:
-      react: 18.2.0
+      react: 19.0.4
 
   util-deprecate@1.0.2: {}
 
@@ -13209,9 +13201,9 @@ snapshots:
 
   zod@4.3.6: {}
 
-  zustand@4.4.7(@types/react@18.2.79)(react@18.2.0):
+  zustand@4.4.7(@types/react@19.0.14)(react@19.0.4):
     dependencies:
-      use-sync-external-store: 1.2.0(react@18.2.0)
+      use-sync-external-store: 1.2.0(react@19.0.4)
     optionalDependencies:
-      '@types/react': 18.2.79
-      react: 18.2.0
+      '@types/react': 19.0.14
+      react: 19.0.4
