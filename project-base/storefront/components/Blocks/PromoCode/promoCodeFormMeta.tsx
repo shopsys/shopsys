@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMemo } from 'react';
+import { ReactElement, useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PromoCodeFormType } from 'types/form';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -26,7 +26,7 @@ type PromoCodeFormMetaType = {
     fields: {
         [key in keyof PromoCodeFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | ReactElement;
             errorMessage: string | undefined;
         };
     };

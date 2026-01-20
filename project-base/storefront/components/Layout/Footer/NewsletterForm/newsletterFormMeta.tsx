@@ -3,7 +3,7 @@ import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import { useMemo } from 'react';
+import { ReactElement, useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -32,7 +32,7 @@ type NewsletterFormMetaType = {
     fields: {
         [key in keyof NewsletterFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | ReactElement;
             errorMessage: string | undefined;
         };
     };

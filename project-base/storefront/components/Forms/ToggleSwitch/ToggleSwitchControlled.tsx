@@ -5,7 +5,7 @@ import { Control, useController } from 'react-hook-form';
 type ToggleSwitchControlledProps = {
     ariaLabel: string;
     name: string;
-    render: (input: JSX.Element) => ReactElement<any, any> | null;
+    render: (input: ReactElement) => ReactElement<any, any> | null;
     control: Control<any>;
     formName: string;
 };

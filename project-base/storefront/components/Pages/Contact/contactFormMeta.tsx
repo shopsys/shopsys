@@ -4,7 +4,7 @@ import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validatio
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import { useMemo } from 'react';
+import { ReactElement, useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -46,7 +46,7 @@ type ContactFormMetaType = {
     fields: {
         [key in keyof ContactFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | ReactElement;
             errorMessage: string | undefined;
         };
     };

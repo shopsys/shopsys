@@ -1,11 +1,11 @@
-import { cloneElement, useCallback, useRef, useState } from 'react';
+import { cloneElement, ReactElement, useCallback, useRef, useState } from 'react';
 
 type Placement = 'top' | 'bottom' | 'left' | 'right';
 
 type TooltipProps = {
     label?: string;
     placement?: Placement;
-    children: JSX.Element;
+    children: ReactElement<any>;
 };
 
 const OFFSET = 8;

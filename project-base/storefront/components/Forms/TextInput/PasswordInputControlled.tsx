@@ -18,7 +18,7 @@ type PasswordInputProps = NativeProps & {
 
 type PasswordInputControlledProps = {
     name: string;
-    render: (input: JSX.Element) => ReactElement<any, any> | null;
+    render: (input: ReactElement) => ReactElement<any, any> | null;
     passwordInputProps: PasswordInputProps;
     control: Control<any>;
     formName: string;

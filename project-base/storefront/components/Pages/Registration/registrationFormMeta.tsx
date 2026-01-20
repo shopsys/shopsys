@@ -19,7 +19,7 @@ import {
 } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import { useMemo } from 'react';
+import { ReactElement, useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 import { RegistrationFormType } from 'types/form';
@@ -92,7 +92,7 @@ type RegistrationFormMetaType = {
     fields: {
         [key in keyof RegistrationFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | ReactElement;
             errorMessage: string | undefined;
         };
     };

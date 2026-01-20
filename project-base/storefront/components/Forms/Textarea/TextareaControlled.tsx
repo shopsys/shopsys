@@ -5,7 +5,7 @@ import { Control, useController } from 'react-hook-form';
 
 type TextareaControlledProps = {
     name: string;
-    render: (input: JSX.Element) => ReactElement<any, any> | null;
+    render: (input: ReactElement) => ReactElement<any, any> | null;
     textareaProps: Pick<TextareaProps, 'disabled' | 'label' | 'required' | 'rows' | 'onBlur' | 'onChange'>;
     control: Control<any>;
     formName: string;

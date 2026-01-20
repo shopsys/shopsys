@@ -2,7 +2,7 @@ import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Controller, Control, useController, FieldError } from 'react-hook-form';
 import { formatBytes } from 'utils/formaters/formatBytes';
@@ -13,7 +13,7 @@ type DropzoneControlledProps = {
     control: Control<any>;
     formName: string;
     name: string;
-    render: (dropzone: JSX.Element) => JSX.Element;
+    render: (dropzone: ReactElement) => ReactElement;
     label: string;
     required?: boolean;
     disabled?: boolean;
