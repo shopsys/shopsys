@@ -7,7 +7,6 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff as PhpCsValidVariableNameSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
-use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use Shopsys\CodingStandards\CsFixer\FinalFormTypeFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
@@ -21,7 +20,9 @@ use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\EarlyExitSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 $packagePaths = [];
@@ -42,6 +43,20 @@ foreach ($packagesDirectoryIterator as $path) {
     }
 }
 
+/**
+ * Beware, the following variable needs to have a distinct name from the one defined in ecs-skip-rules.php.
+ * As ecs-skip-rules.php file is included in this file, the variable would be overridden.
+ */
+$pathsExcludedFromStrictTyping = [
+    __DIR__ . '/packages/framework/tests/Unit/Component/ClassExtension/Source/*',
+    __DIR__ . '/packages/framework/src/Model/Localization/TranslatableEntityTrait.php',
+    __DIR__ . '/packages/framework/src/Model/Security/UniqueLoginInterface.php',
+    __DIR__ . '/packages/framework/src/Model/Security/TimelimitLoginInterface.php',
+    __DIR__ . '/packages/framework/src/Component/Security/ResetPasswordInterface.php',
+    __DIR__ . '/packages/framework/src/Component/FileUpload/EntityFileUploadInterface.php',
+    __DIR__ . '/packages/framework/src/Component/AbstractUploadedFile/UploadedFileInterface.php',
+];
+
 return ECSConfig::configure()
     ->withPaths([
         ...$packagePaths,
@@ -55,7 +70,6 @@ return ECSConfig::configure()
         __DIR__ . '/project-base/app/ecs.php',
     ])
     ->withRules([
-        PhpdocToPropertyTypeFixer::class,
         ForceLateStaticBindingForProtectedConstantsSniff::class,
         FinalFormTypeFixer::class,
     ])
@@ -181,10 +195,6 @@ return ECSConfig::configure()
             ParentCallSpacingSniff::class . '.IncorrectLinesCountBeforeControlStructure' => [
                 __DIR__ . '/packages/framework/src/Component/Filesystem/Flysystem/VolumeDriver.php',
             ],
-            PhpdocToPropertyTypeFixer::class => [
-                __DIR__ . '/packages/*/src/*',
-                __DIR__ . '/packages/framework/tests/Unit/Component/ClassExtension/Source/*',
-            ],
             PhpCsValidVariableNameSniff::class => [
                 __DIR__ . '/packages/product-feed-heureka/src/Model/HeurekaCategory/HeurekaCategoryDownloader.php',
             ],
@@ -195,9 +205,11 @@ return ECSConfig::configure()
             ForbiddenSuperGlobalSniff::class => [
                 __DIR__ . '/packages/framework/src/Component/HttpFoundation/Exception/NotFoundRedirectToStorefrontException.php',
             ],
-            PropertyTypeHintSniff::class => [
-                __DIR__ . '/packages/framework/tests/Unit/Component/ClassExtension/Source/*',
-            ],
+            PropertyTypeHintSniff::class => $pathsExcludedFromStrictTyping,
+            ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT => $pathsExcludedFromStrictTyping,
+            ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_USELESS_ANNOTATION => $pathsExcludedFromStrictTyping,
+            ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT => $pathsExcludedFromStrictTyping,
+            ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_USELESS_ANNOTATION => $pathsExcludedFromStrictTyping,
             ObjectIsCreatedByFactorySniff::class => [
                 __DIR__ . '/packages/framework/src/Component/Domain/DomainFactoryOverwritingDomainUrl.php',
                 __DIR__ . '/packages/framework/src/Component/EntityExtension/EntityExtensionSubscriber.php',
