@@ -1,11 +1,11 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { CustomerUserAreaEnum } from 'types/customer';
 import { DomainConfigType } from 'utils/domain/domainConfig';
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { testFocusManagement } from 'vitest/utils/accessibility/a11y-testing';
 import {
     navigateWithArrows,
@@ -147,10 +147,6 @@ describe('SortingBar', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         mockCanSeePrices.mockReturnValue(true);
-    });
-
-    afterEach(() => {
-        cleanup();
     });
 
     describe('Basic Rendering', () => {

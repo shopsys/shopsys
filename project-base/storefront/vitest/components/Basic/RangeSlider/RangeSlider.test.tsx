@@ -1,7 +1,7 @@
-import { fireEvent, render, cleanup, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
-import { describe, expect, test, vi, beforeEach, afterEach } from 'vitest';
+import { describe, expect, test, vi, beforeEach } from 'vitest';
 
 vi.mock('next-translate/useTranslation', () => ({
     __esModule: true,
@@ -30,10 +30,6 @@ describe('RangeSlider Component', () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
-    });
-
-    afterEach(() => {
-        cleanup();
     });
 
     describe('Basic Rendering', () => {
