@@ -25,6 +25,13 @@ const ApplicationErrors = {
     'register-by-order-is-not-possible': 'flash-message',
     'store-not-found': 'flash-message',
     'too-many-login-attempts': 'flash-message',
+    // Cart mutation errors - handled by hooks, messages centralized here
+    'add-order-items-error': 'flash-message',
+    'add-to-cart-error': 'flash-message',
+    'payment-error': 'flash-message',
+    'promo-code-apply-error': 'flash-message',
+    'promo-code-remove-error': 'flash-message',
+    'transport-error': 'flash-message',
 
     // No-flash-message codes (logged but no toast shown to user)
     'advert-position-without-category': 'no-flash-message',

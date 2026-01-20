@@ -123,14 +123,6 @@ class ErrorOrchestratorImpl {
             }
         });
     }
-
-    public registerCustomHandler(errorType: ApplicationErrorsType, handler: CustomErrorHandler): void {
-        this.config.customHandlers.set(errorType, handler);
-    }
-
-    public unregisterCustomHandler(errorType: ApplicationErrorsType): void {
-        this.config.customHandlers.delete(errorType);
-    }
 }
 
 // Singleton instance

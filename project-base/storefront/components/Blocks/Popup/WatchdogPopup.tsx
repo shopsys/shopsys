@@ -52,13 +52,12 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
             },
         });
 
-        updatePortalContent(null);
-
         if (createWatchdogResult.error !== undefined) {
             handleError(createWatchdogResult.error);
             return;
         }
 
+        updatePortalContent(null);
         showSuccessMessage(t('Your watchdog has been created'));
 
         onGtmCreateWatchdotEventHandler(watchdogFormData);

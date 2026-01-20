@@ -1,19 +1,14 @@
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useApplyPromoCodeToCartMutation } from 'graphql/requests/cart/mutations/ApplyPromoCodeToCartMutation.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
-import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type ApplyPromoCodeToCart = (newPromoCode: string) => Promise<TypeCartFragment | undefined | null>;
 
-export const useApplyPromoCodeToCart = (messages: { success: string; error: string }) => {
+export const useApplyPromoCodeToCart = (messages: { success: string }) => {
     const [, applyPromoCodeToCartMutation] = useApplyPromoCodeToCartMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const { t } = useTranslation();
 
     const applyPromoCodeToCart = useCallback<ApplyPromoCodeToCart>(
         async (newPromoCode) => {
@@ -22,13 +17,6 @@ export const useApplyPromoCodeToCart = (messages: { success: string; error: stri
             });
 
             if (applyPromoCodeResult.error !== undefined) {
-                const { userError } = getUserFriendlyErrors(applyPromoCodeResult.error, t);
-                if (userError?.validation?.promoCode !== undefined) {
-                    showErrorMessage(userError.validation.promoCode.message, GtmMessageOriginType.cart);
-                } else {
-                    showErrorMessage(messages.error, GtmMessageOriginType.cart);
-                }
-
                 return null;
             }
 
@@ -36,7 +24,7 @@ export const useApplyPromoCodeToCart = (messages: { success: string; error: stri
 
             return applyPromoCodeResult.data?.ApplyPromoCodeToCart;
         },
-        [applyPromoCodeToCartMutation, cartUuid, t],
+        [applyPromoCodeToCartMutation, cartUuid, messages.success],
     );
 
     return { applyPromoCodeToCart };

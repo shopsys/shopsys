@@ -10,7 +10,6 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
@@ -61,8 +60,6 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
         }
 
         if (addToCartActionResult.error) {
-            showErrorMessage(t('Unable to add product to cart'), gtmMessageOrigin);
-
             return null;
         }
 

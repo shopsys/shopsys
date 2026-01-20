@@ -1,13 +1,9 @@
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useChangePaymentInCartMutation } from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
-import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { useLatest } from 'utils/ui/useLatest';
 
 export type ChangePaymentInCart = (
@@ -18,7 +14,6 @@ export type ChangePaymentInCart = (
 export const useChangePaymentInCart = () => {
     const [{ fetching: isChangingPaymentInOrder }, changePaymentInCartMutation] = useChangePaymentInCartMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const { t } = useTranslation();
     const { gtmCartInfo } = useGtmCartInfo();
     const { canSeePrices } = useAuthorization();
 
@@ -36,20 +31,6 @@ export const useChangePaymentInCart = () => {
             // EXTEND PAYMENT MODIFICATIONS HERE
 
             if (changePaymentResult.error !== undefined) {
-                const { userError } = getUserFriendlyErrors(changePaymentResult.error, t);
-                if (userError?.validation?.payment !== undefined) {
-                    showErrorMessage(
-                        userError.validation.payment.message,
-                        GtmMessageOriginType.transport_and_payment_page,
-                    );
-                }
-                if (userError?.validation?.goPaySwift !== undefined) {
-                    showErrorMessage(
-                        userError.validation.goPaySwift.message,
-                        GtmMessageOriginType.transport_and_payment_page,
-                    );
-                }
-
                 return null;
             }
 
@@ -63,7 +44,7 @@ export const useChangePaymentInCart = () => {
 
             return changePaymentResult.data?.ChangePaymentInCart;
         },
-        [cartUuid, changePaymentInCartMutation, gtmCart, t],
+        [cartUuid, changePaymentInCartMutation, gtmCart, canSeePrices],
     );
 
     return { changePaymentInCart, isChangingPaymentInOrder };

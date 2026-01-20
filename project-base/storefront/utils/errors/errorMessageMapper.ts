@@ -26,6 +26,13 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'register-by-order-is-not-possible': t('It was not possible to create register new user from the order'),
         'store-not-found': t('Store not found.'),
         'too-many-login-attempts': t('Too many login attempts. Try again later.'),
+        // Cart mutation errors
+        'add-order-items-error': t('Could not prefill your cart.'),
+        'add-to-cart-error': t('Unable to add product to cart.'),
+        'payment-error': t('There was an error while changing the payment method.'),
+        'promo-code-apply-error': t('There was an error while adding a promo code to the order.'),
+        'promo-code-remove-error': t('There was an error while removing the promo code from the order.'),
+        'transport-error': t('There was an error while changing the transport method.'),
     };
 
     return ERROR_MESSAGES[errorCode];

@@ -6,9 +6,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 const NotAddedProductsPopup = dynamic(() =>
@@ -24,7 +22,6 @@ export const useAddOrderItemsToCart = () => {
     const domainConfig = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainConfig.url);
     const [, addOrderItemsToCart] = useAddOrderItemsToCartMutation();
-    const { t } = useTranslation();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const updatePortalContent = useSessionStore((store) => store.updatePortalContent);
 
@@ -32,8 +29,6 @@ export const useAddOrderItemsToCart = () => {
         const addOrderItemsToCartResponse = await addOrderItemsToCart({ input });
 
         if (addOrderItemsToCartResponse.error) {
-            showErrorMessage(t('Could not prefill your cart'));
-
             return;
         }
 

@@ -30,7 +30,6 @@ export const CartPreview: FC<CartPreviewProps> = ({
 
     const { removePromoCodeFromCart, isRemovingPromoCodeFromCart } = useRemovePromoCodeFromCart({
         success: t('Promo code was removed from the order.'),
-        error: t('There was an error while removing the promo code from the order.'),
     });
 
     if (!cart?.items.length) {
