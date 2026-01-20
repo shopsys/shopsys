@@ -14,7 +14,7 @@ export const useGtmPaginatedProductListViewEvent = (
     paginatedProducts: TypeListedProductFragment[] | undefined,
     gtmProductListName: GtmProductListNameType,
 ): void => {
-    const lastViewedStringifiedProducts = useRef<string>();
+    const lastViewedStringifiedProducts = useRef<string>(undefined);
     const currentPage = useCurrentPageQuery();
     const currentLoadMore = useCurrentLoadMoreQuery();
     const previousLoadMoreRef = useRef(currentLoadMore);

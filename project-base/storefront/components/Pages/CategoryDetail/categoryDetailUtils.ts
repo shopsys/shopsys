@@ -27,8 +27,8 @@ export const useCategoryDetailData = (
     const currentSort = useCurrentSortQuery();
     const mappedProductFilter = mapParametersFilter(filter);
 
-    const lastUsedUrlRef = useRef<string>();
-    const lastSeoCategoryRedirectRef = useRef<string>();
+    const lastUsedUrlRef = useRef<string>(undefined);
+    const lastSeoCategoryRedirectRef = useRef<string>(undefined);
 
     const setOriginalCategorySlug = useSessionStore((s) => s.setOriginalCategorySlug);
     const wasRedirectedFromSeoCategory = useSessionStore((s) => s.wasRedirectedFromSeoCategory);

@@ -12,7 +12,7 @@ export const useGtmProductDetailViewEvent = (
     slug: string,
     isProductFetching: boolean,
 ): void => {
-    const lastViewedProductDetailSlug = useRef<string | undefined>(undefined);
+    const lastViewedProductDetailSlug = useRef<string>(undefined);
     const { url, currencyCode } = useDomainConfig();
     const { didPageViewRun, isScriptLoaded } = useGtmContext();
     const { canSeePrices } = useAuthorization();
