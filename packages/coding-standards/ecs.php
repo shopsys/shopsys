@@ -358,14 +358,9 @@ return ECSConfig::configure()
         // rule breaks jms/translation-bundle as it fails on this usage: `[, $b] = $var`
         // won't do any changes after upgrade
         ListSyntaxFixer::class => null,
-        // Enable MissingAnyTypeHint only
-        ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT,
         ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_MISSING_TRAVERSABLE_TYPE_HINT_SPECIFICATION,
-        ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_USELESS_ANNOTATION,
         ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_USELESS_SUPPRESS,
-        ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT,
         ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_MISSING_TRAVERSABLE_TYPE_HINT_SPECIFICATION,
-        ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_USELESS_ANNOTATION,
         ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_USELESS_SUPPRESS,
         ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_LESS_SPECIFIC_NATIVE_TYPE_HINT,
     ]);
