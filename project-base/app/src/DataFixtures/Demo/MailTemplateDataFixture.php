@@ -160,7 +160,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     private function createOrderProcessedMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
-        $mailTemplateData->sendMail = false;
+        $mailTemplateData->sendMail = true;
 
         $mailTemplateData->subject = t('
             Your order no. {number} is being processed
@@ -196,7 +196,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     private function createOrderFinishedMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
-        $mailTemplateData->sendMail = false;
+        $mailTemplateData->sendMail = true;
 
         $mailTemplateData->subject = t('
             Your order no. {number} has been completed
@@ -232,7 +232,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     private function createOrderCanceledMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
-        $mailTemplateData->sendMail = false;
+        $mailTemplateData->sendMail = true;
 
         $mailTemplateData->subject = t('
             Your order no. {number} has been cancelled
