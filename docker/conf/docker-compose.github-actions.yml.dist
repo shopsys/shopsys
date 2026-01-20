@@ -18,8 +18,10 @@ services:
         image: nginx:1.27-alpine
         container_name: shopsys-framework-webserver
         depends_on:
-            - php-fpm
-            - storefront
+            php-fpm:
+                condition: service_healthy
+            storefront:
+                condition: service_healthy
         volumes:
             - web-data:/var/www/html/project-base/app/web
             - ./project-base/docker/nginx/nginx.conf:/etc/nginx/templates/default.conf.template:ro
@@ -53,6 +55,12 @@ services:
             - web-data:/var/www/html/project-base/app/web
         ports:
             - "35729:35729"
+        healthcheck:
+            test: ["CMD-SHELL", "pgrep -x php-fpm > /dev/null || exit 1"]
+            start_period: 30s
+            interval: 10s
+            timeout: 5s
+            retries: 10
 
     redis:
         image: redis:7.4-alpine
