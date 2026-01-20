@@ -5,7 +5,7 @@ import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailPrice } from './ProductDetailPrice';
-import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
+import { ProductDetailSections } from './ProductDetailSections/ProductDetailSections';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
@@ -114,7 +114,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                     </div>
                 </Webline>
 
-                <ProductDetailTabs
+                <ProductDetailSections
                     description={product.description}
                     files={product.files}
                     parameters={product.parameters}

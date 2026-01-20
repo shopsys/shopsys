@@ -3,11 +3,12 @@ import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { FreeTransportRange } from 'components/Blocks/FreeTransport/FreeTransportRange';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { RefObject, useEffect, useState } from 'react';
+import { RefObject } from 'react';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
+import { useIntersectionObserver } from 'utils/ui/useIntersectionObserver';
 
 const MIN_ITEMS_FOR_STICKY_BAR = 4;
 
@@ -20,27 +21,13 @@ export const CartStickyBar: FC<CartStickyBarProps> = ({ originalButtonRef }) => 
     const formatPrice = useFormatPrice();
     const { cart } = useCurrentCart();
     const { goToNextStepFromCartPage } = useCartPageNavigation();
-    const [isVisible, setIsVisible] = useState(false);
 
     const shouldShowStickyBar = cart && cart.items.length > MIN_ITEMS_FOR_STICKY_BAR;
 
-    useEffect(() => {
-        if (!shouldShowStickyBar || !originalButtonRef.current) {
-            setIsVisible(false);
-
-            return undefined;
-        }
-
-        const observer = new IntersectionObserver(([entry]) => {
-            setIsVisible(!entry.isIntersecting);
-        });
-
-        observer.observe(originalButtonRef.current);
-
-        return () => {
-            observer.disconnect();
-        };
-    }, [shouldShowStickyBar, originalButtonRef]);
+    const { isIntersecting: isEndOfList } = useIntersectionObserver({
+        ref: originalButtonRef,
+        enabled: !!shouldShowStickyBar,
+    });
 
     if (!shouldShowStickyBar) {
         return null;
@@ -49,7 +36,7 @@ export const CartStickyBar: FC<CartStickyBarProps> = ({ originalButtonRef }) => 
     return (
         <div
             className={`z-above bg-background-default fixed right-0 bottom-0 left-0 transform shadow-[0_-4px_16px_rgba(0,0,0,0.1)] transition-transform duration-300 ${
-                isVisible ? 'translate-y-0' : 'translate-y-full'
+                isEndOfList ? 'translate-y-full' : 'translate-y-0'
             }`}
         >
             <Webline>
