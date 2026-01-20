@@ -13,7 +13,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 
 type CartPreviewProps = {
-    wrapperRef?: RefObject<HTMLDivElement>;
+    wrapperRef?: RefObject<HTMLDivElement | null>;
     isFirstStep?: boolean;
     isTransportOrPaymentLoading?: boolean;
 };

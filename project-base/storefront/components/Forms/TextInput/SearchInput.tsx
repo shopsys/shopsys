@@ -14,7 +14,7 @@ type SearchInputProps = NativeProps & {
     label: string;
     shouldShowSpinnerInInput: boolean;
     className?: string;
-    inputRef?: RefObject<HTMLInputElement>;
+    inputRef?: RefObject<HTMLInputElement | null>;
     onClear: () => void;
     onSearch?: () => void;
     onOpenPopup?: () => void;

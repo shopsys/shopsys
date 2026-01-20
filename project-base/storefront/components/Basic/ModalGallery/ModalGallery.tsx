@@ -29,7 +29,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
 
     const [selectedIndex, setSelectedIndex] = useState(initialIndex);
     const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
-    const itemsRefs: Array<RefObject<HTMLLIElement>> = Array(items.length)
+    const itemsRefs: Array<RefObject<HTMLLIElement | null>> = Array(items.length)
         .fill(null)
         .map(() => createRef());
     const [isLoaded, setIsLoaded] = useState(false);

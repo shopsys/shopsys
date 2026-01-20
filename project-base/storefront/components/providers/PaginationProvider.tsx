@@ -2,13 +2,13 @@ import { createContext, useContext } from 'react';
 import { RefObject } from 'react';
 
 type PaginationContextType = {
-    paginationScrollTargetRef: RefObject<HTMLElement> | null;
+    paginationScrollTargetRef: RefObject<HTMLElement | null> | null;
 };
 
 const PaginationContext = createContext<PaginationContextType | null>(null);
 
 type PaginationProviderProps = {
-    paginationScrollTargetRef: RefObject<HTMLElement> | null;
+    paginationScrollTargetRef: RefObject<HTMLElement | null> | null;
 };
 
 export const PaginationProvider: FC<PaginationProviderProps> = ({ paginationScrollTargetRef, children }) => {

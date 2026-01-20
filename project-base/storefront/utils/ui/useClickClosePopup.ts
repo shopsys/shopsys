@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const useClickClosePopup = (refs: React.RefObject<HTMLElement>[], onOutsideClick: () => void) => {
+const useClickClosePopup = (refs: React.RefObject<HTMLElement | null>[], onOutsideClick: () => void) => {
     useEffect(() => {
         const handleDocumentClick = (event: MouseEvent) => {
             const isClickedInsideRefs = refs.some((ref) => {

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { RefObject, useEffect, useRef } from 'react';
 
 type MutuallyExcludedProps = {
-    scrollTargetRef: RefObject<HTMLElement> | null;
+    scrollTargetRef: RefObject<HTMLElement | null> | null;
     scrollY: number;
 };
 

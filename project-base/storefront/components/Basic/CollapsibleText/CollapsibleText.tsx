@@ -5,7 +5,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type CollapsibleTextProps = {
     text: string;
-    scrollTargetRef: RefObject<HTMLDivElement>;
+    scrollTargetRef: RefObject<HTMLDivElement | null>;
 };
 
 export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRef }) => {

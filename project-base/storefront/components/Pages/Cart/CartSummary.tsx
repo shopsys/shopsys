@@ -4,7 +4,7 @@ import { CartPreview } from 'components/Pages/Cart/CartPreview';
 import { RefObject } from 'react';
 
 type CartSummaryProps = {
-    cartPreviewRef?: RefObject<HTMLDivElement>;
+    cartPreviewRef?: RefObject<HTMLDivElement | null>;
 };
 
 export const CartSummary: FC<CartSummaryProps> = ({ cartPreviewRef }) => (

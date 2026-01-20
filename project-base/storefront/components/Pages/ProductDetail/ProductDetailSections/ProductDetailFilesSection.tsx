@@ -8,7 +8,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductDetailFilesSectionProps = {
     files: TypeFileFragment[];
-    sectionRef: RefObject<HTMLDivElement>;
+    sectionRef: RefObject<HTMLDivElement | null>;
 };
 
 export const ProductDetailFilesSection = ({ files, sectionRef }: ProductDetailFilesSectionProps) => {

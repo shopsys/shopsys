@@ -13,7 +13,7 @@ import { useIntersectionObserver } from 'utils/ui/useIntersectionObserver';
 const MIN_ITEMS_FOR_STICKY_BAR = 4;
 
 type CartStickyBarProps = {
-    originalButtonRef: RefObject<HTMLDivElement>;
+    originalButtonRef: RefObject<HTMLDivElement | null>;
 };
 
 export const CartStickyBar: FC<CartStickyBarProps> = ({ originalButtonRef }) => {

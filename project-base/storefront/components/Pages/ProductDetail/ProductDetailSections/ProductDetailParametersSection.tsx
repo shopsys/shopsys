@@ -9,7 +9,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductDetailParametersSectionProps = {
     parameters: TypeParameterFragment[];
-    sectionRef: RefObject<HTMLDivElement>;
+    sectionRef: RefObject<HTMLDivElement | null>;
 };
 
 const renderParameterValues = (parameter: TypeParameterFragment) =>
