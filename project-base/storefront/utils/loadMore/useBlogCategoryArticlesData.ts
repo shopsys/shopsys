@@ -26,19 +26,13 @@ export const useBlogCategoryArticlesData = (queryDocument: DocumentNode, uuid: s
     const previousPageRef = useRef(currentPage);
     const initialPageSizeRef = useRef(calculatePageSize(currentLoadMore, DEFAULT_BLOG_PAGE_SIZE));
 
-    const [blogCategoryArticlesData, setBlogCategoryArticlesData] = useState(
-        readBlogCategoryArticlesFromCache(
-            queryDocument,
-            client,
-            uuid,
-            getEndCursor(currentPage, 0, DEFAULT_BLOG_PAGE_SIZE),
-            initialPageSizeRef.current,
-        ),
-    );
+    const [blogCategoryArticlesData, setBlogCategoryArticlesData] = useState<{
+        blogCategoryArticles: TypeBlogArticleConnectionFragment['edges'] | undefined;
+        hasNextPage: boolean;
+    }>({ blogCategoryArticles: undefined, hasNextPage: false });
 
-    const [areBlogCategoryArticlesFetching, setAreBlogCategoryArticlesFetching] = useState(
-        !blogCategoryArticlesData.blogCategoryArticles,
-    );
+    const [areBlogCategoryArticlesFetching, setAreBlogCategoryArticlesFetching] = useState(true);
+    const isInitializedRef = useRef(false);
     const [isLoadingMoreBlogCategoryArticles, setIsLoadingMoreBlogCategoryArticles] = useState(false);
 
     const fetchBlogCategoryArticles = async (
@@ -80,6 +74,26 @@ export const useBlogCategoryArticlesData = (queryDocument: DocumentNode, uuid: s
     };
 
     useEffect(() => {
+        // Initial cache read - only on first render
+        if (!isInitializedRef.current) {
+            isInitializedRef.current = true;
+
+            const cachedData = readBlogCategoryArticlesFromCache(
+                queryDocument,
+                client,
+                uuid,
+                getEndCursor(currentPage, 0, DEFAULT_BLOG_PAGE_SIZE),
+                initialPageSizeRef.current,
+            );
+
+            if (cachedData.blogCategoryArticles) {
+                setBlogCategoryArticlesData(cachedData);
+                setAreBlogCategoryArticlesFetching(false);
+
+                return;
+            }
+        }
+
         if (previousPageRef.current !== currentPage) {
             previousPageRef.current = currentPage;
             initialPageSizeRef.current = DEFAULT_BLOG_PAGE_SIZE;

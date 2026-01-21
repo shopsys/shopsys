@@ -51,19 +51,13 @@ export const useProductsData = (
     const previousPageRef = useRef(currentPage);
     const initialPageSizeRef = useRef(calculatePageSize(currentLoadMore));
 
-    const [productsData, setProductsData] = useState(
-        readProductsFromCache(
-            queryDocument,
-            client,
-            urlSlug,
-            currentSort,
-            mappedFilter,
-            getEndCursor(currentPage),
-            initialPageSizeRef.current,
-        ),
-    );
+    const [productsData, setProductsData] = useState<{
+        products: TypeListedProductConnectionFragment['edges'] | undefined;
+        hasNextPage: boolean;
+    }>({ products: undefined, hasNextPage: false });
 
-    const [areProductsFetching, setAreProductsFetching] = useState(!productsData.products);
+    const [areProductsFetching, setAreProductsFetching] = useState(true);
+    const isInitializedRef = useRef(false);
     const [isLoadingMoreProducts, setIsLoadingMoreProducts] = useState(false);
 
     const fetchProducts = async (
@@ -115,6 +109,28 @@ export const useProductsData = (
             additionalParams.abortedFetchCallback();
 
             return;
+        }
+
+        // Initial cache read - only on first render
+        if (!isInitializedRef.current) {
+            isInitializedRef.current = true;
+
+            const cachedData = readProductsFromCache(
+                queryDocument,
+                client,
+                urlSlug,
+                currentSort,
+                mappedFilter,
+                getEndCursor(currentPage),
+                initialPageSizeRef.current,
+            );
+
+            if (cachedData.products) {
+                setProductsData(cachedData);
+                setAreProductsFetching(false);
+
+                return;
+            }
         }
 
         if (previousPageRef.current !== currentPage) {
