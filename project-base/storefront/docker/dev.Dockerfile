@@ -12,8 +12,6 @@ RUN apk add --no-cache shadow
 
 RUN if [[ -n "$node_uid" && "$node_uid" -ne 1000 ]]; then usermod -u $node_uid node && chown -R node $HOME_DIR; fi;
 
-RUN mkdir -p $APP_DIR/node_modules && chown node:node $APP_DIR/node_modules
-
 USER node
 WORKDIR $APP_DIR
 
