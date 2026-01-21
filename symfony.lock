@@ -210,9 +210,6 @@
             ".php-cs-fixer.dist.php"
         ]
     },
-    "friendsofphp/proxy-manager-lts": {
-        "version": "v1.0.3"
-    },
     "friendsofsymfony/ckeditor-bundle": {
         "version": "2.0",
         "recipe": {
@@ -302,9 +299,6 @@
     },
     "knplabs/knp-menu-bundle": {
         "version": "v2.3.0"
-    },
-    "laminas/laminas-code": {
-        "version": "3.4.1"
     },
     "lcobucci/jwt": {
         "version": "3.3.1"
@@ -809,9 +803,6 @@
         "version": "v3.4.32"
     },
     "symfony/property-info": {
-        "version": "v3.4.32"
-    },
-    "symfony/proxy-manager-bridge": {
         "version": "v3.4.32"
     },
     "symfony/routing": {

@@ -4,5 +4,6 @@ snc_redis:
             type: 'phpredis'
             alias: 'test'
             dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
             options:
                 prefix: '%env(REDIS_PREFIX)%test:'
