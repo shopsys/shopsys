@@ -12,6 +12,7 @@ const isSentryFeedbackEnabled = process.env.SENTRY_FEEDBACK_ENABLE === '1';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     experimental: {
+        reactCompiler: true,
         scrollRestoration: true,
         middlewarePrefetch: 'strict',
     },

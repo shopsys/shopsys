@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
-import { memo, useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -14,7 +14,7 @@ type CategoryBestsellersProps = {
     products: TypeListedProductFragment[];
 };
 
-const CategoryBestsellersComp: FC<CategoryBestsellersProps> = ({ products }) => {
+export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) => {
     const { t } = useTranslation();
     const [isCollapsed, setIsCollapsed] = useState(true);
     const [shouldFocusNewItem, setShouldFocusNewItem] = useState(false);
@@ -100,5 +100,3 @@ const CategoryBestsellersComp: FC<CategoryBestsellersProps> = ({ products }) => 
         </div>
     );
 };
-
-export const CategoryBestsellers = memo(CategoryBestsellersComp);

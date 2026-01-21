@@ -1,7 +1,7 @@
 import { CollapsibleText } from 'components/Basic/CollapsibleText/CollapsibleText';
 import { Image } from 'components/Basic/Image/Image';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { memo, useRef } from 'react';
+import { useRef } from 'react';
 
 type CollapsibleDescriptionWithImageProps = {
     title: string | null | undefined;
@@ -11,7 +11,7 @@ type CollapsibleDescriptionWithImageProps = {
     imageUrl: string | undefined;
 };
 
-const CollapsibleDescriptionWithImageComp: FC<CollapsibleDescriptionWithImageProps> = ({
+export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImageProps> = ({
     title,
     description,
     currentPage,
@@ -46,5 +46,3 @@ const CollapsibleDescriptionWithImageComp: FC<CollapsibleDescriptionWithImagePro
         </Webline>
     );
 };
-
-export const CollapsibleDescriptionWithImage = memo(CollapsibleDescriptionWithImageComp);

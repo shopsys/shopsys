@@ -4,7 +4,6 @@ import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
-import { memo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { generateProductImageAlt } from 'utils/productAltText';
 
@@ -19,7 +18,7 @@ type OrderItemProductCardProps = {
     price: TypeProductPriceFragment;
 };
 
-const OrderItemProductCardComp: FC<OrderItemProductCardProps> = ({
+export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
     mainImage,
     fullName,
     categoryName,
@@ -65,5 +64,3 @@ const OrderItemProductCardComp: FC<OrderItemProductCardProps> = ({
         </li>
     );
 };
-
-export const OrderItemProductCard = memo(OrderItemProductCardComp);

@@ -15,7 +15,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import { usePathname } from 'next/navigation';
-import { memo, useRef } from 'react';
+import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useLogout } from 'utils/auth/useLogout';
@@ -30,7 +30,7 @@ type UserMenuProps = {
     hideFocusTrap?: boolean;
 };
 
-const UserMenuComp: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
+export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
     const { t } = useTranslation();
     const pathname = usePathname();
     const logout = useLogout();
@@ -187,5 +187,3 @@ const UserMenuComp: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
         </div>
     );
 };
-
-export const UserMenu = memo(UserMenuComp);
