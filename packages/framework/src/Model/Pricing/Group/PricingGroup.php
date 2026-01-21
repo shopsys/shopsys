@@ -6,30 +6,28 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="pricing_groups")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'pricing_groups')]
+#[ORM\Entity]
 class PricingGroup
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $name;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**

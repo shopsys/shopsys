@@ -7,39 +7,37 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
-/**
- * @ORM\Table(name="product_visibilities")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'product_visibilities')]
+#[ORM\Entity]
 class ProductVisibility
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
-     * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, name: 'product_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $product;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup")
-     * @ORM\JoinColumn(nullable=false, name="pricing_group_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, name: 'pricing_group_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: PricingGroup::class)]
     protected $pricingGroup;
 
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $visible;
 
     /**

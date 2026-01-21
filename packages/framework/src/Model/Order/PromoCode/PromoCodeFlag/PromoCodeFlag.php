@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 
-/**
- * @ORM\Table(name="promo_code_flags")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'promo_code_flags')]
+#[ORM\Entity]
 class PromoCodeFlag
 {
     public const TYPE_INCLUSIVE = 'with';
@@ -18,24 +17,24 @@ class PromoCodeFlag
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode")
-     * @ORM\JoinColumn(nullable=false, name="promo_code_id", referencedColumnName="id", onDelete="CASCADE")
-     * @ORM\Id
      */
+    #[ORM\JoinColumn(nullable: false, name: 'promo_code_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: PromoCode::class)]
+    #[ORM\Id]
     protected $promoCode;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Flag\Flag")
-     * @ORM\JoinColumn(nullable=false, name="flag_id", referencedColumnName="id", onDelete="CASCADE")
-     * @ORM\Id
      */
+    #[ORM\JoinColumn(nullable: false, name: 'flag_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Flag::class)]
+    #[ORM\Id]
     protected $flag;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     protected $type;
 
     /**

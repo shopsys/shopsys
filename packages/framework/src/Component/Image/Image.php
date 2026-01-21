@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
@@ -17,10 +17,11 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Symfony\Component\Clock\DatePoint;
 
 /**
- * @ORM\Table(name="images", indexes={@ORM\Index(columns={"entity_name", "entity_id", "type"})})
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Component\Image\ImageTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'images')]
+#[ORM\Index(columns: ['entity_name', 'entity_id', 'type'])]
+#[ORM\Entity]
 class Image extends AbstractTranslatableEntity implements EntityFileUploadInterface
 {
     protected const string UPLOAD_KEY = 'image';
@@ -28,54 +29,52 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
 
     /**
      * @var int|null
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Component\Image\ImageTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Component\Image\ImageTranslation")
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[Prezent\Translations(targetEntity: ImageTranslation::class)]
     protected $translations;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: 'string', length: 100)]
     protected $entityName;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $entityId;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $type;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=5)
      */
+    #[ORM\Column(type: 'string', length: 5)]
     protected $extension;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $position;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
      */
+    #[ORM\Column(type: 'datetime_immutable')]
     protected $modifiedAt;
 
     /**

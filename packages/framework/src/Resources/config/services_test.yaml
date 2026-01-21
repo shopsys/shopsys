@@ -28,4 +28,6 @@ services:
             $factory: '@prezent_doctrine_translatable.metadata_factory'
         class: Tests\FrameworkBundle\Test\TestTranslatableListener
         tags:
-            - 'doctrine.event_subscriber'
+            - { name: 'doctrine.event_listener', event: 'loadClassMetadata' }
+            - { name: 'doctrine.event_listener', event: 'postLoad' }
+            - { name: 'doctrine.event_listener', event: 'postPersist' }

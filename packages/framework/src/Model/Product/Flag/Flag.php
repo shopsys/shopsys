@@ -7,62 +7,63 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy;
 
 /**
- * @ORM\Table(name="flags")
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'flags')]
+#[ORM\Entity]
 class Flag extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[Prezent\Translations(targetEntity: FlagTranslation::class)]
     protected $translations;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=7)
      */
+    #[ORM\Column(type: 'string', length: 7)]
     protected $rgbColor;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $visible;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $lockedForDeletion;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy")
-     * @ORM\JoinColumn(name="promotion_xy_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'promotion_xy_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: ProductPromotionXy::class)]
     protected $promotionXy;
 
     /**

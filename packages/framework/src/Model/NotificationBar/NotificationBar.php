@@ -7,60 +7,58 @@ namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="notification_bars")
- */
+#[ORM\Table(name: 'notification_bars')]
+#[ORM\Entity]
 class NotificationBar
 {
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $text;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $validityFrom;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $validityTo;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=7)
      */
+    #[ORM\Column(type: 'string', length: 7)]
     protected $rgbColor;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $hidden;
 
     /**

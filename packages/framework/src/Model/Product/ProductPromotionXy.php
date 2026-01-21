@@ -6,30 +6,28 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="product_promotion_xy")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'product_promotion_xy')]
+#[ORM\Entity]
 class ProductPromotionXy
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var int
-     * @ORM\Column(type="integer", nullable=false, name="buy_quantity")
      */
+    #[ORM\Column(type: 'integer', nullable: false, name: 'buy_quantity')]
     protected $buyQuantity;
 
     /**
      * @var int
-     * @ORM\Column(type="integer", nullable=false, name="free_quantity")
      */
+    #[ORM\Column(type: 'integer', nullable: false, name: 'free_quantity')]
     protected $freeQuantity;
 
     /**

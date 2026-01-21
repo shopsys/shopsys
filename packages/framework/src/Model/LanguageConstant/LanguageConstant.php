@@ -7,44 +7,43 @@ namespace Shopsys\FrameworkBundle\Model\LanguageConstant;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @ORM\Table(name="language_constants", uniqueConstraints={
- *     @ORM\UniqueConstraint(name="language_constants_key_namespace", columns={"key", "namespace"})
- * })
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'language_constants')]
+#[ORM\UniqueConstraint(name: 'language_constants_key_namespace', columns: ['key', 'namespace'])]
+#[ORM\Entity]
 class LanguageConstant extends AbstractTranslatableEntity
 {
     public const string NAMESPACE_COMMON = 'common';
 
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $key;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: 'string', length: 100)]
     protected $namespace;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation")
      */
+    #[Prezent\Translations(targetEntity: LanguageConstantTranslation::class)]
     protected $translations;
 
     /**

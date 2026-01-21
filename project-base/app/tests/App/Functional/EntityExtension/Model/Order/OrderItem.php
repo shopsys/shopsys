@@ -8,49 +8,33 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Functional\EntityExtension\Model\Product\Product;
 
-/**
- * @ORM\Table(name="order_items")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'order_items')]
+#[ORM\Entity]
 class OrderItem
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Tests\App\Functional\EntityExtension\Model\Order\Order", inversedBy="items")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'items')]
+    #[ORM\JoinColumn(name: 'order_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     protected Order $order;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     protected string $name;
 
-    /**
-     * @ORM\Column(type="money", precision=20, scale=6)
-     */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected Money $priceWithoutVat;
 
-    /**
-     * @ORM\Column(type="decimal", precision=20, scale=6)
-     */
+    #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     protected string $vatPercent;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     protected int $quantity;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Tests\App\Functional\EntityExtension\Model\Product\Product")
-     * @ORM\JoinColumn(nullable=true, name="product_id", referencedColumnName="id", onDelete="SET NULL")
-     */
+    #[ORM\ManyToOne(targetEntity: Product::class)]
+    #[ORM\JoinColumn(nullable: true, name: 'product_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     protected ?Product $product = null;
 
     /**

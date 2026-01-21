@@ -42,8 +42,6 @@ class ForbiddenDoctrineDefaultValueSniffTest extends AbstractSniffTestCase
     public static function getCorrectFiles(): iterable
     {
         yield [__DIR__ . '/correct/missing_default_value_annotation.php'];
-
-        yield [__DIR__ . '/correct/invalid_docblock_annotation.php'];
     }
 
     /**

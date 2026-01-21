@@ -62,7 +62,7 @@ class EntityShouldHaveFactoryRule implements Rule
                 RuleErrorBuilder::message(sprintf(
                     'Factory %s do not use entity name resolver',
                     $factoryClassName,
-                ))->build(),
+                ))->identifier('shopsys.entityShouldHaveFactory')->build(),
             ];
         }
 
@@ -70,7 +70,7 @@ class EntityShouldHaveFactoryRule implements Rule
             RuleErrorBuilder::message(sprintf(
                 'Entity %s is missing a factory (don\'t forget to use entity name resolver)',
                 $scope->getClassReflection()?->getDisplayName(),
-            ))->build(),
+            ))->identifier('shopsys.entityShouldHaveFactory')->build(),
         ];
     }
 
@@ -87,7 +87,21 @@ class EntityShouldHaveFactoryRule implements Rule
             }
         }
 
-        return str_contains($node->getDocComment()?->getText() ?? '', '@ORM\Entity');
+        $classNode = $node->getOriginalNode();
+
+        if ($classNode instanceof Node\Stmt\Class_) {
+            foreach ($classNode->attrGroups as $attributeGroup) {
+                foreach ($attributeGroup->attrs as $attribute) {
+                    $attributeName = $attribute->name->toString();
+
+                    if ($attributeName === 'Doctrine\ORM\Mapping\Entity') {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

@@ -9,8 +9,6 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
 
 /**
- * @ORM\Table(name="transports")
- * @ORM\Entity
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Payment\Payment> $payments
  * @method \App\Model\Payment\Payment[] getPayments()
  * @method setDomains(\App\Model\Transport\TransportData $transportData)
@@ -25,6 +23,8 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
  * @method setData(\App\Model\Transport\TransportData $transportData)
  * @method setTranslations(\App\Model\Transport\TransportData $transportData)
  */
+#[ORM\Table(name: 'transports')]
+#[ORM\Entity]
 class Transport extends BaseTransport
 {
     /**

@@ -1,11 +1,13 @@
 <?php
 
+use Doctrine\ORM\Mapping as ORM;
+
 class Bar
 {
     /**
      * @var \StdObject
-     * @ORM\ManyToOne(targetEntity="StdObject")
-     * @ORM\JoinColumn(name="std_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: StdObject::class)]
+    #[ORM\JoinColumn(name: 'std_id', referencedColumnName: 'id')]
     private $foo3;
 }

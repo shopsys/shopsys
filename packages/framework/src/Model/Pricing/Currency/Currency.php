@@ -7,10 +7,8 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidRoundingTypeException;
 
-/**
- * @ORM\Table(name="currencies")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'currencies')]
+#[ORM\Entity]
 class Currency
 {
     public const string CODE_CZK = 'CZK';
@@ -29,46 +27,46 @@ class Currency
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=50)
      */
+    #[ORM\Column(type: 'string', length: 50)]
     protected $name;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=3)
      */
+    #[ORM\Column(type: 'string', length: 3)]
     protected $code;
 
     /**
      * @var string
-     * @ORM\Column(type="decimal", precision=20, scale=6)
      */
+    #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     protected $exchangeRate;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $minFractionDigits;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=15)
      */
+    #[ORM\Column(type: 'string', length: 15)]
     protected $roundingType;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $roundingPlacesPriceWithoutVat;
 
     /**

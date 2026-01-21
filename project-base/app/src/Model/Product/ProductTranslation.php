@@ -8,10 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\ProductTranslation as BaseProductTranslation;
 
 /**
- * @ORM\Table(name="product_translations")
- * @ORM\Entity
  * @property \App\Model\Product\Product $translatable
  */
+#[ORM\Table(name: 'product_translations')]
+#[ORM\Entity]
 class ProductTranslation extends BaseProductTranslation
 {
 }

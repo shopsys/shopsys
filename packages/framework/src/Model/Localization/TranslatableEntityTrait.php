@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Localization;
 
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Prezent\Doctrine\Translatable\Entity\TranslatableTrait;
 use Shopsys\FrameworkBundle\Model\Localization\Exception\ImplicitLocaleNotSetException;
@@ -13,9 +13,7 @@ trait TranslatableEntityTrait
 {
     use TranslatableTrait;
 
-    /**
-     * @Prezent\CurrentLocale
-     */
+    #[Prezent\CurrentLocale]
     protected ?string $currentLocale = null;
 
     protected ?AbstractTranslation $currentTranslation = null;

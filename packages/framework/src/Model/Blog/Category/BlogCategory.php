@@ -8,79 +8,79 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @Gedmo\Tree(type="nested")
- * @ORM\Table(name="blog_categories")
- * @ORM\Entity
  * @method translation($locale = null): BlogCategoryTranslation
  */
+#[ORM\Table(name: 'blog_categories')]
+#[ORM\Entity]
+#[Gedmo\Tree(type: 'nested')]
 class BlogCategory extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryTranslation")
      */
+    #[Prezent\Translations(targetEntity: BlogCategoryTranslation::class)]
     protected $translations;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|null
-     * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory", inversedBy="children")
-     * @ORM\JoinColumn(nullable=true, name="parent_id", referencedColumnName="id")
      */
+    #[ORM\JoinColumn(nullable: true, name: 'parent_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
+    #[Gedmo\TreeParent]
     protected $parent;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory", mappedBy="parent")
-     * @ORM\OrderBy({"lft" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
     protected $children;
 
     /**
      * @var int
-     * @Gedmo\TreeLevel
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\TreeLevel]
     protected $level;
 
     /**
      * @var int
-     * @Gedmo\TreeLeft
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\TreeLeft]
     protected $lft;
 
     /**
      * @var int
-     * @Gedmo\TreeRight
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\TreeRight]
     protected $rgt;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDomain>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDomain", mappedBy="blogCategory", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
+    #[ORM\OneToMany(targetEntity: BlogCategoryDomain::class, mappedBy: 'blogCategory', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     protected $domains;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**

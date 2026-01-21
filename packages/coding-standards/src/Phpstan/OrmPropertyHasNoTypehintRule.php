@@ -8,7 +8,6 @@ use Override;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\ClassPropertyNode;
-use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 
@@ -45,12 +44,10 @@ class OrmPropertyHasNoTypehintRule implements Rule
             return [];
         }
 
-        $propertyReflection = $scope->getClassReflection()?->getProperty($node->getName(), $scope);
-
-        if ($this->hasOrmAnnotation($propertyReflection)) {
+        if ($this->hasOrmMapping($node)) {
             return [
                 RuleErrorBuilder::message(sprintf(
-                    'Property %s::%s has ORM annotation, so it should not have typehint.',
+                    'Property %s::%s has ORM mapping, so it should not have typehint.',
                     $scope->getClassReflection()?->getDisplayName(),
                     $node->getName(),
                 ))->build(),
@@ -61,11 +58,27 @@ class OrmPropertyHasNoTypehintRule implements Rule
     }
 
     /**
-     * @param \PHPStan\Reflection\PropertyReflection $property
+     * @param \PHPStan\Node\ClassPropertyNode $node
      * @return bool
      */
-    private function hasOrmAnnotation(PropertyReflection $property): bool
+    private function hasOrmMapping(ClassPropertyNode $node): bool
     {
-        return $property->getDocComment() !== null && str_contains($property->getDocComment(), '@ORM\\');
+        foreach ($node->getAttributes() as $attributeGroup) {
+            if ($attributeGroup->attrGroups === null) {
+                continue;
+            }
+
+            foreach ($attributeGroup->attrGroups as $attributeGroup) {
+                foreach ($attributeGroup->attrs as $attribute) {
+                    $attributeName = $attribute->name->toString();
+
+                    if (str_starts_with($attributeName, 'Doctrine\ORM\Mapping')) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

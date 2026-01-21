@@ -7,92 +7,86 @@ namespace Shopsys\FrameworkBundle\Component\EntityLog\Model;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Clock\DatePoint;
 
-/**
- * @ORM\Table(
- *     name="entity_log",
- *     indexes={
- *         @ORM\Index(columns={"entity_name"}),
- *         @ORM\Index(columns={"entity_id"}),
- *         @ORM\Index(columns={"parent_entity_name"}),
- *         @ORM\Index(columns={"parent_entity_id"}),
- *     }
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'entity_log')]
+#[ORM\Index(columns: ['entity_name'])]
+#[ORM\Index(columns: ['entity_id'])]
+#[ORM\Index(columns: ['parent_entity_name'])]
+#[ORM\Index(columns: ['parent_entity_id'])]
+#[ORM\Entity]
 class EntityLog
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $action;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $userIdentifier;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $entityName;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $entityId;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $entityIdentifier;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $source;
 
     /**
      * @var string[]
-     * @ORM\Column(type="json")
      */
+    #[ORM\Column(type: 'json')]
     protected $changeSet;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $parentEntityName;
 
     /**
      * @var int|null
-     * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected $parentEntityId;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=50)
      */
+    #[ORM\Column(type: 'string', length: 50)]
     protected $logCollectionNumber;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
      */
+    #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 
     /**

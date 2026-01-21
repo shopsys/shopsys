@@ -7,155 +7,153 @@ namespace Shopsys\FrameworkBundle\Model\Complaint;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
+use Shopsys\FrameworkBundle\Model\Country\Country;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 
-/**
- * @ORM\Table(name="complaints")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'complaints')]
+#[ORM\Entity]
 class Complaint
 {
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=30, unique=true, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 30, unique: true, nullable: false)]
     protected $number;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Order|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Order")
-     * @ORM\JoinColumn(nullable=true, name="order_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: true, name: 'order_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Order::class)]
     protected $order;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
-     * @ORM\JoinColumn(nullable=true, name="customer_user_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(nullable: true, name: 'customer_user_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: CustomerUser::class)]
     protected $customerUser;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $deliveryFirstName;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $deliveryLastName;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $deliveryCompanyName;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=30, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 30, nullable: true)]
     protected $deliveryTelephone;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: 'string', length: 100)]
     protected $deliveryStreet;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: 'string', length: 100)]
     protected $deliveryCity;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=30)
      */
+    #[ORM\Column(type: 'string', length: 30)]
     protected $deliveryPostcode;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Country\Country")
-     * @ORM\JoinColumn(name="delivery_country_id", referencedColumnName="id", nullable=true)
      */
+    #[ORM\JoinColumn(name: 'delivery_country_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity: Country::class)]
     protected $deliveryCountry;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
      */
+    #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus")
-     * @ORM\JoinColumn(nullable=false)
      */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: ComplaintStatus::class)]
     protected $status;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem>
-     * @ORM\OneToMany(
-     *     targetEntity="Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem",
-     *     mappedBy="complaint",
-     *     cascade={"persist"},
-     *     orphanRemoval=true
-     * )
      */
+    #[ORM\OneToMany(targetEntity: ComplaintItem::class, mappedBy: 'complaint', cascade: ['persist'], orphanRemoval: true)]
     protected $items;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\Customer")
-     * @ORM\JoinColumn(nullable=true, name="customer_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(nullable: true, name: 'customer_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: Customer::class)]
     protected $customer;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $email;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $manualDocumentNumber;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=20, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 20, nullable: false)]
     protected $resolution;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=34, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 34, nullable: true)]
     protected $bankAccountNumber;
 
     /**

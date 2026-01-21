@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\CodingStandards\CsFixer;
 
 use Override;
-use PhpCsFixer\DocBlock\Annotation;
-use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use SplFileInfo;
@@ -24,21 +23,21 @@ final class OrmJoinColumnRequireNullableFixer implements FixerInterface
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Annotations @ORM\ManyToOne and @ORM\OneToOne must have defined nullable option in @ORM\JoinColumn',
+            '#[ORM\ManyToOne] and #[ORM\OneToOne] attributes must have defined nullable option in #[ORM\JoinColumn]',
             [new CodeSample(
                 <<<'SAMPLE'
 /**
- * @var \StdObject
- * @ORM\ManyToOne(targetEntity="StdObject")
- */
+  * @var \StdObject
+  */
+#[ORM\ManyToOne(targetEntity: StdObject::class)]
 private $foo;
 SAMPLE,
             ), new CodeSample(
                 <<<'SAMPLE'
 /**
- * @var \StdObject
- * @ORM\OneToOne(targetEntity="StdObject")
- */
+  * @var \StdObject
+  */
+#[ORM\OneToOne(targetEntity: StdObject::class)]
 private $foo;
 SAMPLE,
             )],
@@ -51,7 +50,7 @@ SAMPLE,
     #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
-        return true;
+        return $tokens->isTokenKindFound(T_ATTRIBUTE);
     }
 
     /**
@@ -69,15 +68,21 @@ SAMPLE,
     #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
-        /** @var \PhpCsFixer\Tokenizer\Token $token */
-        foreach ($tokens->findGivenKind(T_DOC_COMMENT) as $index => $token) {
-            $doc = new DocBlock($token->getContent());
+        for ($index = $tokens->count() - 1; $index > 0; --$index) {
+            if (!$tokens[$index]->isGivenKind(T_VARIABLE)) {
+                continue;
+            }
 
-            foreach ($doc->getAnnotations() as $annotation) {
-                if ($this->isRelationAnnotation($annotation)) {
-                    $this->fixRelationAnnotation($doc, $annotation);
-                    $tokens[$index] = new Token([T_DOC_COMMENT, $doc->getContent()]);
-                }
+            $propertyInfo = $this->analyzeProperty($tokens, $index);
+
+            if ($propertyInfo === null || !$propertyInfo['hasRelation'] || $propertyInfo['hasNullable']) {
+                continue;
+            }
+
+            if ($propertyInfo['joinColumnIndex'] !== null) {
+                $this->addNullableToExistingJoinColumn($tokens, $propertyInfo['joinColumnIndex']);
+            } else {
+                $this->addNewJoinColumnAttribute($tokens, $propertyInfo['lastAttributeEnd']);
             }
         }
     }
@@ -110,38 +115,93 @@ SAMPLE,
     }
 
     /**
-     * @param \PhpCsFixer\DocBlock\Annotation $annotation
-     * @return bool
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $propertyIndex
+     * @return array{hasRelation: bool, hasNullable: bool, joinColumnIndex: int|null, lastAttributeEnd: int|null}|null
      */
-    private function isRelationAnnotation(Annotation $annotation): bool
+    private function analyzeProperty(Tokens $tokens, int $propertyIndex): ?array
     {
-        return preg_match('~@ORM\\\(ManyToOne|OneToOne)\\(~', $annotation->getContent()) === 1;
-    }
+        $result = [
+            'hasRelation' => false,
+            'hasNullable' => false,
+            'joinColumnIndex' => null,
+            'lastAttributeEnd' => null,
+        ];
 
-    /**
-     * @param \PhpCsFixer\DocBlock\DocBlock $doc
-     * @param \PhpCsFixer\DocBlock\Annotation $relationAnnotation
-     */
-    private function fixRelationAnnotation(DocBlock $doc, Annotation $relationAnnotation): void
-    {
-        $joinColumnAnnotation = $this->findJoinColumnAnnotation($doc);
+        $index = $this->findAttributesStart($tokens, $propertyIndex);
 
-        if ($joinColumnAnnotation === null) {
-            $this->addJoinColumnAnnotation($doc, $relationAnnotation);
-        } elseif (preg_match('~(,|\\(|\\*\\s)\\s*nullable\\s*=~', $joinColumnAnnotation->getContent()) !== 1) {
-            $this->extendJoinColumnAnnotation($doc, $joinColumnAnnotation);
+        if ($index === null) {
+            return null;
         }
+
+        while ($index > 0 && $tokens[$index]->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
+            $attrStart = $this->findMatchingAttributeOpen($tokens, $index);
+
+            if ($attrStart === null) {
+                break;
+            }
+
+            $content = $this->getTokensContent($tokens, $attrStart, $index);
+
+            if ($this->isRelationAttribute($content)) {
+                $result['hasRelation'] = true;
+            }
+
+            if ($this->isJoinColumnAttribute($content)) {
+                $result['joinColumnIndex'] = $attrStart;
+                $result['hasNullable'] = $this->hasNullableParam($content);
+            }
+
+            if ($result['lastAttributeEnd'] === null) {
+                $result['lastAttributeEnd'] = $index;
+            }
+
+            $index = $tokens->getPrevMeaningfulToken($attrStart);
+        }
+
+        return $result;
     }
 
     /**
-     * @param \PhpCsFixer\DocBlock\DocBlock $doc
-     * @return \PhpCsFixer\DocBlock\Annotation|null
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $propertyIndex
+     * @return int|null
      */
-    private function findJoinColumnAnnotation(DocBlock $doc): ?Annotation
+    private function findAttributesStart(Tokens $tokens, int $propertyIndex): ?int
     {
-        foreach ($doc->getAnnotations() as $annotation) {
-            if (preg_match('~@ORM\\\JoinColumn\\(~', $annotation->getContent()) === 1) {
-                return $annotation;
+        $index = $tokens->getPrevMeaningfulToken($propertyIndex);
+
+        // Skip type hint
+        while ($tokens[$index]->isGivenKind([T_STRING, T_NS_SEPARATOR, CT::T_NULLABLE_TYPE])) {
+            $index = $tokens->getPrevMeaningfulToken($index);
+        }
+
+        // Skip visibility
+        if ($tokens[$index]->isGivenKind([T_PRIVATE, T_PROTECTED, T_PUBLIC])) {
+            $index = $tokens->getPrevMeaningfulToken($index);
+        }
+
+        return $tokens[$index]->isGivenKind(CT::T_ATTRIBUTE_CLOSE) ? $index : null;
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $closeIndex
+     * @return int|null
+     */
+    private function findMatchingAttributeOpen(Tokens $tokens, int $closeIndex): ?int
+    {
+        $depth = 1;
+
+        for ($i = $closeIndex - 1; $i > 0 && $depth > 0; $i--) {
+            if ($tokens[$i]->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
+                $depth++;
+            } elseif ($tokens[$i]->isGivenKind(T_ATTRIBUTE)) {
+                $depth--;
+
+                if ($depth === 0) {
+                    return $i;
+                }
             }
         }
 
@@ -149,38 +209,180 @@ SAMPLE,
     }
 
     /**
-     * @param \PhpCsFixer\DocBlock\DocBlock $doc
-     * @param \PhpCsFixer\DocBlock\Annotation $relationAnnotation
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $start
+     * @param int $end
+     * @return string
      */
-    private function addJoinColumnAnnotation(DocBlock $doc, Annotation $relationAnnotation): void
+    private function getTokensContent(Tokens $tokens, int $start, int $end): string
     {
-        $matches = null;
-        preg_match_all('~\\s*\*~', $relationAnnotation->getContent(), $matches);
-        $lastLine = $doc->getLine($relationAnnotation->getEnd());
-        $lastLine->setContent($lastLine->getContent() . $matches[0][0] . ' @ORM\JoinColumn(nullable=false)' . "\n");
+        $content = '';
+
+        for ($i = $start; $i <= $end; $i++) {
+            $content .= $tokens[$i]->getContent();
+        }
+
+        return $content;
     }
 
     /**
-     * @param \PhpCsFixer\DocBlock\DocBlock $doc
-     * @param \PhpCsFixer\DocBlock\Annotation $joinColumnAnnotation
+     * @param string $content
+     * @return bool
      */
-    private function extendJoinColumnAnnotation(DocBlock $doc, Annotation $joinColumnAnnotation): void
+    private function isRelationAttribute(string $content): bool
     {
-        $firstLine = $doc->getLine($joinColumnAnnotation->getStart());
+        return preg_match('~ORM\\\\(ManyToOne|OneToOne)\b~', $content) === 1;
+    }
 
-        if (preg_match('~\\)\\s*$~', $firstLine->getContent()) === 1) {
-            $firstLine->setContent(preg_replace(
-                '~(@ORM\\\JoinColumn\\()~',
-                '$1nullable=false, ',
-                $firstLine->getContent(),
-            ));
+    /**
+     * @param string $content
+     * @return bool
+     */
+    private function isJoinColumnAttribute(string $content): bool
+    {
+        return preg_match('~ORM\\\\JoinColumn\b~', $content) === 1;
+    }
+
+    /**
+     * @param string $content
+     * @return bool
+     */
+    private function hasNullableParam(string $content): bool
+    {
+        return preg_match('~\bnullable\s*:~', $content) === 1;
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $attrStart
+     */
+    private function addNullableToExistingJoinColumn(Tokens $tokens, int $attrStart): void
+    {
+        $openParen = $tokens->getNextTokenOfKind($attrStart, ['(']);
+        $closeParen = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParen);
+
+        $isMultiline = $this->isMultiline($tokens, $openParen, $closeParen);
+        $hasParams = $this->hasExistingParams($tokens, $openParen, $closeParen);
+
+        if ($isMultiline) {
+            $indent = $this->detectIndent($tokens, $openParen, $closeParen);
+            $insertTokens = [
+                new Token([T_WHITESPACE, "\n" . $indent]),
+                new Token([CT::T_NAMED_ARGUMENT_NAME, 'nullable']),
+                new Token([CT::T_NAMED_ARGUMENT_COLON, ':']),
+                new Token([T_WHITESPACE, ' ']),
+                new Token([T_STRING, 'false']),
+                new Token(','),
+            ];
         } else {
-            $matches = null;
-            preg_match_all('~\\s*\*~', $joinColumnAnnotation->getContent(), $matches);
-            $newText = "\n" . $matches[0][0] . '     nullable=false,';
-            $firstLine->setContent(
-                preg_replace('~(@ORM\\\JoinColumn\\()~', '$1' . $newText, $firstLine->getContent()),
-            );
+            $insertTokens = [
+                new Token([CT::T_NAMED_ARGUMENT_NAME, 'nullable']),
+                new Token([CT::T_NAMED_ARGUMENT_COLON, ':']),
+                new Token([T_WHITESPACE, ' ']),
+                new Token([T_STRING, 'false']),
+            ];
+
+            if ($hasParams) {
+                $insertTokens[] = new Token(',');
+                $insertTokens[] = new Token([T_WHITESPACE, ' ']);
+            }
         }
+
+        $tokens->insertAt($openParen + 1, $insertTokens);
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $lastAttrEnd
+     */
+    private function addNewJoinColumnAttribute(Tokens $tokens, int $lastAttrEnd): void
+    {
+        $indent = $this->detectIndentAfterAttribute($tokens, $lastAttrEnd);
+
+        $insertTokens = [
+            new Token([T_WHITESPACE, "\n" . $indent]),
+            new Token([T_ATTRIBUTE, '#[']),
+            new Token([T_STRING, 'ORM']),
+            new Token([T_NS_SEPARATOR, '\\']),
+            new Token([T_STRING, 'JoinColumn']),
+            new Token('('),
+            new Token([CT::T_NAMED_ARGUMENT_NAME, 'nullable']),
+            new Token([CT::T_NAMED_ARGUMENT_COLON, ':']),
+            new Token([T_WHITESPACE, ' ']),
+            new Token([T_STRING, 'false']),
+            new Token(')'),
+            new Token([CT::T_ATTRIBUTE_CLOSE, ']']),
+        ];
+
+        $tokens->insertAt($lastAttrEnd + 1, $insertTokens);
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $start
+     * @param int $end
+     * @return bool
+     */
+    private function isMultiline(Tokens $tokens, int $start, int $end): bool
+    {
+        for ($i = $start; $i <= $end; $i++) {
+            if (str_contains($tokens[$i]->getContent(), "\n")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $openParen
+     * @param int $closeParen
+     * @return bool
+     */
+    private function hasExistingParams(Tokens $tokens, int $openParen, int $closeParen): bool
+    {
+        for ($i = $openParen + 1; $i < $closeParen; $i++) {
+            if (!$tokens[$i]->isWhitespace() && !$tokens[$i]->isComment()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $openParen
+     * @param int $closeParen
+     * @return string
+     */
+    private function detectIndent(Tokens $tokens, int $openParen, int $closeParen): string
+    {
+        for ($i = $openParen + 1; $i < $closeParen; $i++) {
+            if (preg_match('/\n(\s+)/', $tokens[$i]->getContent(), $matches)) {
+                return $matches[1];
+            }
+        }
+
+        return '        ';
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $attrEnd
+     * @return string
+     */
+    private function detectIndentAfterAttribute(Tokens $tokens, int $attrEnd): string
+    {
+        $next = $attrEnd + 1;
+
+        if (isset($tokens[$next]) && $tokens[$next]->isWhitespace()) {
+            if (preg_match('/\n(\s+)/', $tokens[$next]->getContent(), $matches)) {
+                return $matches[1];
+            }
+        }
+
+        return '    ';
     }
 }

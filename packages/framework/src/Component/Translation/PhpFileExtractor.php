@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
-use Doctrine\Common\Annotations\DocParser;
-use JMS\TranslationBundle\Annotation\Ignore;
 use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
 use Override;
-use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\MethodCall;
@@ -36,15 +33,11 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
      */
     protected array $transMethodSpecifications;
 
-    protected ?Node $previousNode = null;
-
     /**
-     * @param \Doctrine\Common\Annotations\DocParser $docParser
      * @param \Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper $phpParserNodeHelper
      * @param \Shopsys\FrameworkBundle\Component\Translation\TransMethodSpecification[] $transMethodSpecifications
      */
     public function __construct(
-        protected readonly DocParser $docParser,
         protected readonly PhpParserNodeHelper $phpParserNodeHelper,
         array $transMethodSpecifications,
     ) {
@@ -79,20 +72,16 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     public function enterNode(Node $node): int|Node|null
     {
         if ($this->isTransMethodOrFuncCall($node)) {
-            if (!$this->isIgnored($node)) {
-                /** @var \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\MethodCall $transNode */
-                $transNode = $node;
-                $messageId = $this->getMessageId($transNode);
-                $domain = $this->getDomain($transNode);
+            /** @var \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\MethodCall $transNode */
+            $transNode = $node;
+            $messageId = $this->getMessageId($transNode);
+            $domain = $this->getDomain($transNode);
 
-                $message = new Message($messageId, $domain);
-                $message->addSource(new FileSource((string)$this->file->getFilename(), $node->getLine()));
+            $message = new Message($messageId, $domain);
+            $message->addSource(new FileSource((string)$this->file->getFilename(), $node->getLine()));
 
-                $this->catalogue->add($message);
-            }
+            $this->catalogue->add($message);
         }
-
-        $this->previousNode = $node;
 
         return null;
     }
@@ -180,56 +169,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         }
 
         return false;
-    }
-
-    /**
-     * @param \PhpParser\Node $node
-     * @return bool
-     */
-    protected function isIgnored(Node $node): bool
-    {
-        foreach ($this->getAnnotations($node) as $annotation) {
-            if ($annotation instanceof Ignore) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PhpParser\Node $node
-     * @return \Doctrine\Common\Annotations\Annotation[]|\JMS\TranslationBundle\Annotation\Ignore[]
-     */
-    protected function getAnnotations(Node $node): array
-    {
-        $docComment = $this->getDocComment($node);
-
-        if ($docComment !== null) {
-            return $this->docParser->parse(
-                $docComment->getText(),
-                'file ' . $this->file . ' near line ' . $node->getLine(),
-            );
-        }
-
-        return [];
-    }
-
-    /**
-     * @param \PhpParser\Node $node
-     * @return \PhpParser\Comment\Doc|null
-     */
-    protected function getDocComment(Node $node): ?Doc
-    {
-        $docComment = $node->getDocComment();
-
-        if ($docComment === null) {
-            if ($this->previousNode !== null) {
-                $docComment = $this->previousNode->getDocComment();
-            }
-        }
-
-        return $docComment;
     }
 
     /**

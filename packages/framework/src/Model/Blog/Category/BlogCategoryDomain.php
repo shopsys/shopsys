@@ -6,57 +6,53 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(
- *     name="blog_category_domains"
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'blog_category_domains')]
+#[ORM\Entity]
 class BlogCategoryDomain
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory", inversedBy="domains")
-     * @ORM\JoinColumn(nullable=false, name="blog_category_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, name: 'blog_category_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: BlogCategory::class, inversedBy: 'domains')]
     protected $blogCategory;
 
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $seoTitle;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $seoMetaDescription;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $seoH1;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $enabled;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $visible;
 
     /**

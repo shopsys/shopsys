@@ -8,30 +8,30 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductCannotBeTransformedException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsNotVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
  * Product
  *
- * @ORM\Table(
- *     name="products",
- *     indexes={
- *         @ORM\Index(columns={"variant_type"})
- *     }
- * )
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Product\ProductTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'products')]
+#[ORM\Index(columns: ['variant_type'])]
+#[ORM\Entity]
 class Product extends AbstractTranslatableEntity
 {
     public const VARIANT_TYPE_NONE = 'none';
@@ -40,153 +40,143 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\ProductTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductTranslation")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[Prezent\Translations(targetEntity: ProductTranslation::class)]
     protected $translations;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $catnum;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $partno;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $ean;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $sellingFrom;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $sellingTo;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $sellingDenied;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $hidden;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Unit\Unit")
-     * @ORM\JoinColumn(name="unit_id", referencedColumnName="id", nullable=false)
      */
+    #[ORM\JoinColumn(name: 'unit_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Unit::class)]
     protected $unit;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain>
-     * @ORM\OneToMany(
-     *   targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain",
-     *   mappedBy="product",
-     *   orphanRemoval=true,
-     *   cascade={"persist"}
-     * )
      */
+    #[ORM\OneToMany(targetEntity: ProductCategoryDomain::class, mappedBy: 'product', orphanRemoval: true, cascade: ['persist'])]
     protected $productCategoryDomains;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Brand\Brand")
-     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
      */
+    #[ORM\JoinColumn(name: 'brand_id', referencedColumnName: 'id', onDelete: 'SET NULL', nullable: true)]
+    #[ORM\ManyToOne(targetEntity: Brand::class)]
     protected $brand;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Product>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product", mappedBy="mainVariant", cascade={"persist"})
-     * @ORM\OrderBy({"id" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'mainVariant', cascade: ['persist'])]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     protected $variants;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product", inversedBy="variants", cascade={"persist"})
-     * @ORM\JoinColumn(name="main_variant_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'main_variant_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'variants', cascade: ['persist'])]
     protected $mainVariant;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=32, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 32, nullable: false)]
     protected $variantType;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\ProductDomain>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductDomain", mappedBy="product", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
+    #[ORM\OneToMany(targetEntity: ProductDomain::class, mappedBy: 'product', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     protected $domains;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var int|null
-     * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected $weight;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\Transport>
-     * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
-     * @ORM\JoinTable(name="product_excluded_transports")
      */
+    #[ORM\JoinTable(name: 'product_excluded_transports')]
+    #[ORM\ManyToMany(targetEntity: Transport::class)]
     protected $excludedTransports;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=32, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 32, nullable: false)]
     protected $productType;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo>
-     * @ORM\OneToMany(
-     *   targetEntity="Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo",
-     *   mappedBy="product",
-     *   orphanRemoval=true,
-     *   cascade={"persist"}
-     * )
      */
+    #[ORM\OneToMany(targetEntity: ProductVideo::class, mappedBy: 'product', orphanRemoval: true, cascade: ['persist'])]
     protected $productVideos;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $isAllowedNegativeStock;
 
     /**

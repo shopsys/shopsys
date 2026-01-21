@@ -6,48 +6,42 @@ namespace Shopsys\FrameworkBundle\Model\Country;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(
- *     name="country_domains",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="country_domain", columns={"country_id", "domain_id"})
- *     }
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'country_domains')]
+#[ORM\UniqueConstraint(name: 'country_domain', columns: ['country_id', 'domain_id'])]
+#[ORM\Entity]
 class CountryDomain
 {
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Country\Country", inversedBy="domains")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Country::class, inversedBy: 'domains')]
     protected $country;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $enabled = false;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $priority;
 
     /**

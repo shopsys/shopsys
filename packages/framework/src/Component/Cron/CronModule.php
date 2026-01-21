@@ -7,10 +7,8 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Clock\DatePoint;
 
-/**
- * @ORM\Table(name="cron_modules")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'cron_modules')]
+#[ORM\Entity]
 class CronModule
 {
     public const CRON_STATUS_OK = 'ok';
@@ -19,51 +17,51 @@ class CronModule
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
-     * @ORM\Id
      */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Id]
     protected $serviceId;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $scheduled;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $suspended;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $enabled;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     protected $status;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $lastStartedAt;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $lastFinishedAt;
 
     /**
      * @var int|null
-     * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected $lastDuration;
 
     /**

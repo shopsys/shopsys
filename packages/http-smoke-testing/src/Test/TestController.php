@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\HttpSmokeTesting\Test;
 
-use Shopsys\HttpSmokeTesting\Annotation\DataSet;
-use Shopsys\HttpSmokeTesting\Annotation\Parameter;
-use Shopsys\HttpSmokeTesting\Annotation\Skipped;
+use Shopsys\HttpSmokeTesting\Attribute\DataSet;
+use Shopsys\HttpSmokeTesting\Attribute\Parameter;
+use Shopsys\HttpSmokeTesting\Attribute\Skipped;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -15,14 +15,10 @@ class TestController
     /**
      * @param string $name
      * @return \Symfony\Component\HttpFoundation\Response
-     * @DataSet(parameters={
-     *     @Parameter(name="name", value="Batman")
-     * })
-     * @DataSet(statusCode=404, parameters={
-     *     @Parameter(name="name", value="World")
-     * })
      */
     #[Route(path: '/hello/{name}')]
+    #[DataSet(parameters: [new Parameter(name: 'name', value: 'Batman')])]
+    #[DataSet(statusCode: 404, parameters: [new Parameter(name: 'name', value: 'World')])]
     public function helloAction(string $name): Response
     {
         if ($name === 'Batman') {
@@ -35,11 +31,9 @@ class TestController
     /**
      * @param string $name
      * @return \Symfony\Component\HttpFoundation\Response
-     * @DataSet(parameters={
-     *     @Parameter(name="myName", value="Batman")
-     * })
      */
     #[Route(path: '/test')]
+    #[DataSet(parameters: [new Parameter(name: 'myName', value: 'Batman')])]
     public function testAction(string $name): Response
     {
         if ($name === 'Batman') {
@@ -51,9 +45,9 @@ class TestController
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Skipped()
      */
     #[Route(path: '/untested')]
+    #[Skipped]
     public function untestedAction(): Response
     {
         return new Response('', 500);

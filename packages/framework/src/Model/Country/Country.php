@@ -7,46 +7,46 @@ namespace Shopsys\FrameworkBundle\Model\Country;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Model\Country\Exception\CountryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @ORM\Table(name="countries")
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Country\CountryTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'countries')]
+#[ORM\Entity]
 class Country extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * Country code in ISO 3166-1 alpha-2
      *
      * @var string
-     * @ORM\Column(type="string", length=2)
      */
+    #[ORM\Column(type: 'string', length: 2)]
     protected $code;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Country\CountryTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Country\CountryTranslation")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[Prezent\Translations(targetEntity: CountryTranslation::class)]
     protected $translations;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Country\CountryDomain>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Country\CountryDomain", mappedBy="country", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
+    #[ORM\OneToMany(targetEntity: CountryDomain::class, mappedBy: 'country', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     protected $domains;
 
     /**

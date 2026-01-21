@@ -13,56 +13,59 @@ namespace <?= $namespace; ?>;
 
 <?= $use_statements; ?>
 
-/**
- * @ORM\Table(name="<?= $entity_config->tableName ?>")
- * @ORM\Entity
 <?php if ($entity_config->isTranslatable): ?>
+/**
  * @method \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?> translation(?string $locale = null)
  * @method \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>> getTranslations()
-<?php endif; ?>
  */
+<?php endif; ?>
+#[ORM\Table(name: '<?= $entity_config->tableName ?>')]
+#[ORM\Entity]
 class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends AbstractTranslatableEntity<?php endif ?>
 {
 <?php if ($entity_config->hasId): ?>
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     <?php if ($entity_config->isTranslatable): ?>protected<?php else: ?>private int<?php endif ?> $id;
 <?php endif ?>
 
 <?php if ($entity_config->hasUuid): ?>
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     private string $uuid;
 <?php endif ?>
 
 <?php if ($entity_config->isTranslatable): ?>
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>>
-     * @Prezent\Translations(targetEntity="<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>")
      */
+    #[Prezent\Translations(targetEntity: \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>::class)]
     protected $translations;
 <?php endif ?>
 
 <?php if ($entity_config->isMultiDomain): ?>
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::DOMAIN); ?>>
-     * @ORM\OneToMany(targetEntity="<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::DOMAIN); ?>", mappedBy="<?= lcfirst($entity_config->entityName) ?>", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
+    #[ORM\OneToMany(targetEntity: \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::DOMAIN); ?>::class, mappedBy: '<?= lcfirst($entity_config->entityName) ?>', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     private Collection $domains;
 <?php endif ?>
 
 <?php foreach ($entity_config->getEntityPropertiesOnly() as $property): ?>
     <?= PHP_EOL; ?>
 <?= $property->getAdditionalInformation(); ?>
-    /**<?= PHP_EOL; ?>
-     * <?= implode(PHP_EOL . '     * ', $property->getAnnotationLines()) . PHP_EOL; ?>
-     */<?= PHP_EOL; ?>
+<?php if ($property instanceof \Shopsys\MakerBundle\EntityConfig\RelationProperty && $property->getVarDocBlock()): ?>
+    /**
+     * <?= $property->getVarDocBlock() . PHP_EOL; ?>
+     */
+<?php endif; ?>
+    <?= implode(PHP_EOL . '    ', $property->getAttributeLines()) . PHP_EOL; ?>
     private <?= $property->getTypeHint() ?> $<?= $property->propertyName; ?>;
     <?= PHP_EOL; ?>
 <?php endforeach; ?>

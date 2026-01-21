@@ -11,15 +11,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 
 /**
- * @Gedmo\Tree(type="nested")
- * @ORM\Table(
- *     name="categories",
- *     indexes={
- *         @ORM\Index(columns={"lft"}),
- *         @ORM\Index(columns={"rgt"}),
- *     }
- * )
- * @ORM\Entity
  * @property \App\Model\Category\Category|null $parent
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Category\Category> $children
  * @method \App\Model\Category\Category|null getParent()
@@ -30,6 +21,11 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
  * @method createDomains(\App\Model\Category\CategoryData $categoryData)
  * @method __construct(\App\Model\Category\CategoryData $categoryData)
  */
+#[ORM\Table(name: 'categories')]
+#[ORM\Index(columns: ['lft'])]
+#[ORM\Index(columns: ['rgt'])]
+#[ORM\Entity]
+#[Gedmo\Tree(type: 'nested')]
 class Category extends BaseCategory
 {
     private const CATEGORY_LEVEL_0 = 0;

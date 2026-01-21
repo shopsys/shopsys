@@ -6,50 +6,49 @@ namespace Shopsys\FrameworkBundle\Model\Store\ClosedDay;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 
-/**
- * @ORM\Table(name="closed_days")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'closed_days')]
+#[ORM\Entity]
 class ClosedDay
 {
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Store\Store>
-     * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Store\Store")
-     * @ORM\JoinTable(name="closed_day_excluded_stores")
      */
+    #[ORM\JoinTable(name: 'closed_day_excluded_stores')]
+    #[ORM\ManyToMany(targetEntity: Store::class)]
     protected $excludedStores;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="date_immutable")
      */
+    #[ORM\Column(type: 'date_immutable')]
     protected $date;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $name;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $isPublicHoliday;
 
     /**

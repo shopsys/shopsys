@@ -17,11 +17,11 @@ class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
     #[Override]
     public function process(ContainerBuilder $container): void
     {
-        /** @var \Doctrine\ORM\Mapping\Driver\AnnotationDriver $annotationReader */
-        $annotationReader = $container->get('doctrine.orm.default_metadata_driver');
+        /** @var \Doctrine\ORM\Mapping\Driver\AttributeDriver $attributeReader */
+        $attributeReader = $container->get('doctrine.orm.default_metadata_driver');
 
         $entityExtensionMap = [];
-        $allClasses = $annotationReader->getAllClassNames();
+        $allClasses = $attributeReader->getAllClassNames();
 
         foreach ($allClasses as $class) {
             if (strpos($class, 'App\\') === 0) {
@@ -30,9 +30,9 @@ class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
                 if (
                     $parentClass !== false
                     && strpos($parentClass, 'Shopsys\\') === 0
-                    && !$annotationReader->isTransient($parentClass)
+                    && !$attributeReader->isTransient($parentClass)
                 ) {
-                    $annotationReader->loadMetadataForClass($parentClass, new ClassMetadata($parentClass));
+                    $attributeReader->loadMetadataForClass($parentClass, new ClassMetadata($parentClass));
                     $entityExtensionMap[$parentClass] = $class;
                 }
             }

@@ -8,50 +8,48 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Webmozart\Assert\Assert;
 
-/**
- * @ORM\Table(name="parameter_values")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'parameter_values')]
+#[ORM\Entity]
 class ParameterValue
 {
     public const string ENTITY_NAME_FOR_FILES_CONFIG = 'parameterValue';
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $text;
 
     /**
      * @var string|null
-     * @ORM\Column(type="decimal", precision=20, scale=6, nullable=true)
      */
+    #[ORM\Column(type: 'decimal', precision: 20, scale: 6, nullable: true)]
     protected $numericValue;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     protected $locale;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=10, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
     protected $rgbHex;
 
     /**

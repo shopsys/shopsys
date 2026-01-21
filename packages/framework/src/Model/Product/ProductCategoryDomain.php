@@ -7,36 +7,32 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
-/**
- * @ORM\Table(
- *     name="product_category_domains",
- *     indexes={@ORM\Index(columns={"category_id", "domain_id"})}
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'product_category_domains')]
+#[ORM\Index(columns: ['category_id', 'domain_id'])]
+#[ORM\Entity]
 class ProductCategoryDomain
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product", inversedBy="productCategoryDomains")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'productCategoryDomains')]
     protected $product;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Category::class)]
     protected $category;
 
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**

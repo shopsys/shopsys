@@ -8,38 +8,36 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageDomainNotFoundException;
 
-/**
- * @ORM\Table(name="seo_pages")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'seo_pages')]
+#[ORM\Entity]
 class SeoPage
 {
     public const string SEO_PAGE_HOMEPAGE_SLUG = '/';
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="text", nullable=false)
      */
+    #[ORM\Column(type: 'text', nullable: false)]
     protected $pageName;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDomain>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDomain", mappedBy="seoPage", cascade={"persist"})
      */
+    #[ORM\OneToMany(targetEntity: SeoPageDomain::class, mappedBy: 'seoPage', cascade: ['persist'])]
     protected $domains;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
      */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     protected $defaultPage;
 
     /**

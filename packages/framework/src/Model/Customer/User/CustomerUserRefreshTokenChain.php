@@ -6,50 +6,49 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
-/**
- * @ORM\Table(name="customer_user_refresh_token_chain")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'customer_user_refresh_token_chain')]
+#[ORM\Entity]
 class CustomerUserRefreshTokenChain
 {
     /**
      * @var string
-     * @ORM\Id
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser", inversedBy="refreshTokenChain")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: CustomerUser::class, inversedBy: 'refreshTokenChain')]
     protected $customerUser;
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected $tokenChain;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", nullable=false)
      */
+    #[ORM\Column(type: 'guid', nullable: false)]
     protected $deviceId;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
      */
+    #[ORM\Column(type: 'datetime_immutable')]
     protected $expiredAt;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Administrator\Administrator")
-     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Administrator::class)]
     protected $administrator;
 
     /**

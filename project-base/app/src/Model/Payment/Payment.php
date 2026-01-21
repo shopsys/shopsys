@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Payment\Payment as BasePayment;
 
 /**
- * @ORM\Table(name="payments")
- * @ORM\Entity
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Transport\Transport> $transports
  * @method \App\Model\Transport\Transport[] getTransports()
  * @method addTransport(\App\Model\Transport\Transport $transport)
@@ -22,6 +20,8 @@ use Shopsys\FrameworkBundle\Model\Payment\Payment as BasePayment;
  * @method edit(\App\Model\Payment\PaymentData $paymentData)
  * @method setData(\App\Model\Payment\PaymentData $paymentData)
  */
+#[ORM\Table(name: 'payments')]
+#[ORM\Entity]
 class Payment extends BasePayment
 {
 }

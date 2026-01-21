@@ -9,31 +9,29 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
-/**
- * @ORM\Table(name="autocomplete_favorite_categories")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'autocomplete_favorite_categories')]
+#[ORM\Entity]
 class AutocompleteFavoriteCategory implements OrderableEntityInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     * @ORM\Id
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\Id]
     protected $category;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
     protected $domainId;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $position;
 
     /**

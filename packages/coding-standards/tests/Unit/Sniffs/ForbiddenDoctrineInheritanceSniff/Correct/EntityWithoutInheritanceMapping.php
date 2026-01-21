@@ -6,10 +6,7 @@ namespace Tests\CodingStandards\Unit\Sniffs\ForbiddenDoctrineInheritanceSniff\Co
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * Doctrine\ORM\Mapping\InheritanceType
- */
+#[ORM\Entity]
 class EntityWithoutInheritanceMapping
 {
 }

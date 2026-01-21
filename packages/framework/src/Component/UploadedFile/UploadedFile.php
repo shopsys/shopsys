@@ -7,16 +7,16 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\TranslatableInterface;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFile;
 use Shopsys\FrameworkBundle\Model\Localization\TranslatableEntityTrait;
 
 /**
- * @ORM\Table(name="uploaded_files")})
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'uploaded_files')]
+#[ORM\Entity]
 class UploadedFile extends AbstractUploadedFile implements TranslatableInterface
 {
     use TranslatableEntityTrait;
@@ -25,8 +25,8 @@ class UploadedFile extends AbstractUploadedFile implements TranslatableInterface
 
     /**
      * @var \Doctrine\Common\Collections\Collection<string, \Prezent\Doctrine\Translatable\TranslationInterface|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation")
      */
+    #[Prezent\Translations(targetEntity: UploadedFileTranslation::class)]
     protected $translations;
 
     /**

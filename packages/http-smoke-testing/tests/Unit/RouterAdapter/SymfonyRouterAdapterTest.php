@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\HttpSmokeTesting\Unit\RouterAdapter;
 
 use PHPUnit\Framework\TestCase;
-use Shopsys\HttpSmokeTesting\Annotation\DataSet;
-use Shopsys\HttpSmokeTesting\Annotation\Parameter;
-use Shopsys\HttpSmokeTesting\Annotation\Skipped;
+use Shopsys\HttpSmokeTesting\Attribute\DataSet;
+use Shopsys\HttpSmokeTesting\Attribute\Parameter;
+use Shopsys\HttpSmokeTesting\Attribute\Skipped;
 use Shopsys\HttpSmokeTesting\RouteInfo;
 use Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter;
 use Shopsys\HttpSmokeTesting\Test\TestController;

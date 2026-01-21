@@ -14,10 +14,8 @@ use function get_class;
 use function gettype;
 use function is_object;
 
-/**
- * @ORM\Table(name="setting_values")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'setting_values')]
+#[ORM\Entity]
 class SettingValue
 {
     protected const DATETIME_STORED_FORMAT = DateTimeInterface::ISO8601;
@@ -37,28 +35,28 @@ class SettingValue
 
     /**
      * @var string
-     * @ORM\Id
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'string', length: 255)]
     protected $name;
 
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $value;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=8)
      */
+    #[ORM\Column(type: 'string', length: 8)]
     protected $type;
 
     /**

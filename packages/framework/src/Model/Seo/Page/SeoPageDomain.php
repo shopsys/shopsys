@@ -6,72 +6,66 @@ namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(
- *     name="seo_page_domains",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="seo_page_domain", columns={"seo_page_id", "domain_id"})
- *     }
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'seo_page_domains')]
+#[ORM\UniqueConstraint(name: 'seo_page_domain', columns: ['seo_page_id', 'domain_id'])]
+#[ORM\Entity]
 class SeoPageDomain
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var int
-     * @ORM\Column(name="domain_id", type="integer")
      */
+    #[ORM\Column(name: 'domain_id', type: 'integer')]
     protected $domainId;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $seoTitle;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $seoMetaDescription;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $canonicalUrl;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $seoOgTitle;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $seoOgDescription;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $pageSlug;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage", inversedBy="domains")
-     * @ORM\JoinColumn(name="seo_page_id", nullable=false, referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'seo_page_id', nullable: false, referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: SeoPage::class, inversedBy: 'domains')]
     protected $seoPage;
 
     /**

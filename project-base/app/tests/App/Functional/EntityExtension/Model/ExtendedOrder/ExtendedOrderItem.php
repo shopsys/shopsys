@@ -7,15 +7,11 @@ namespace Tests\App\Functional\EntityExtension\Model\ExtendedOrder;
 use Doctrine\ORM\Mapping as ORM;
 use Tests\App\Functional\EntityExtension\Model\Order\OrderItem;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="order_items")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'order_items')]
 class ExtendedOrderItem extends OrderItem
 {
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $stringField;
 
     /**

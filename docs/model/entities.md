@@ -72,41 +72,35 @@ You should provide your own implementation if you need to alter the list of doma
 namespace Shopsys\FrameworkBundle\Model\Product\Brand
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="brand_domains")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'brand_domains')]
+#[ORM\Entity]
 class BrandDomain
 {
-     /**
+    /**
      * @var int
-     *
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     *
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Brand\Brand", inversedBy="domains")
-     * @ORM\JoinColumn(nullable=false, name="brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\ManyToOne(targetEntity: Brand::class, inversedBy: 'domains')]
+    #[ORM\JoinColumn(nullable: false, name: 'brand_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected $brand;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $seoTitle;
 
     // ...
@@ -149,10 +143,8 @@ class BrandDomain
 
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
-/**
- * @ORM\Table(name="brands")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'brands')]
+#[ORM\Entity]
 class Brand extends AbstractTranslatableEntity
 {
 
@@ -206,25 +198,20 @@ _The concept is similar to [domain entities](#domain-entity)_ but uses Doctrine 
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Doctrine\ORM\Mapping as ORM;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Mapping\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
-/**
- * @ORM\Table(name="brand_translations")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'brand_translations')]
+#[ORM\Entity]
 class BrandTranslation extends AbstractTranslation
 {
-    /**
-     * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Product\Brand\Brand")
-     */
+    #[Prezent\Translatable(targetEntity: Brand::class)]
     protected $translatable;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $description;
 
     /**
@@ -252,10 +239,8 @@ class BrandTranslation extends AbstractTranslation
 
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
-/**
- * @ORM\Table(name="brands")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'brands')]
+#[ORM\Entity]
 class Brand extends AbstractTranslatableEntity
 {
 

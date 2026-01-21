@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
 
 /**
- * @ORM\Table(name="carts")
- * @ORM\Entity
  * @property \App\Model\Customer\User\CustomerUser|null $customerUser
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Cart\Item\CartItem> $items
  * @method addItem(\App\Model\Cart\Item\CartItem $item)
@@ -29,6 +27,8 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
  * @method \App\Model\Cart\Item\CartItem[] getProductGiftCartItems()
  * @method \App\Model\Cart\Item\CartItem[] getProductCartItems()
  */
+#[ORM\Table(name: 'carts')]
+#[ORM\Entity]
 class Cart extends BaseCart
 {
 }

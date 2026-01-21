@@ -8,38 +8,38 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @ORM\Table(name="parameter_groups")
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'parameter_groups')]
+#[ORM\Entity]
 class ParameterGroup extends AbstractTranslatableEntity implements OrderableEntityInterface
 {
     protected const GEDMO_SORTABLE_LAST_POSITION = -1;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation")
      */
+    #[Prezent\Translations(targetEntity: ParameterGroupTranslation::class)]
     protected $translations;
 
     /**
      * @var int
-     * @Gedmo\SortablePosition
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\SortablePosition]
     protected $position;
 
     /**

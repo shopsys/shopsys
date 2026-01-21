@@ -9,36 +9,32 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
-/**
- * @ORM\Table(name="login_as_user_exchange_tokens")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'login_as_user_exchange_tokens')]
+#[ORM\Entity]
 class LoginAsUserExchangeToken
 {
     /**
      * @var string
-     * @ORM\Column(type="string", length=64)
-     * @ORM\Id
      */
+    #[ORM\Column(type: 'string', length: 64)]
+    #[ORM\Id]
     protected $token;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
-     * @ORM\JoinColumn(nullable=false, name="customer_user_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, name: 'customer_user_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: CustomerUser::class)]
     protected $customerUser;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Administrator\Administrator")
-     * @ORM\JoinColumn(nullable=false, name="administrator_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\JoinColumn(nullable: false, name: 'administrator_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Administrator::class)]
     protected $administrator;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
      */
+    #[ORM\Column(type: 'datetime_immutable')]
     protected $expiresAt;
 
     /**

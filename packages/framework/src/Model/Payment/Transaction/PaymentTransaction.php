@@ -11,79 +11,78 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Exception\PaymentTransactionHasNoAssignedPayment;
 
-/**
- * @ORM\Table(name="payment_transactions")
- * @ORM\Entity
- */
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
+#[ORM\Table(name: 'payment_transactions')]
+#[ORM\Entity]
 class PaymentTransaction
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Order
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Order", inversedBy="paymentTransactions")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     #[LoggableParentProperty]
+    #[ORM\JoinColumn(name: 'order_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'paymentTransactions')]
     protected $order;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: Payment::class)]
     protected $payment;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=200, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 200, nullable: false)]
     protected $externalPaymentIdentifier;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $externalPaymentStatus;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $paidAmount;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $refundedAmount;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $externalPaymentUrl;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $externalPaymentSubStatus;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $externalPaymentMethod;
 
     /**

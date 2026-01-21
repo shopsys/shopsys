@@ -15,21 +15,16 @@ use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
 use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @ORM\Entity
- * @ORM\Table(
- *   name="administrators",
- *   indexes={
- *     @ORM\Index(columns={"username"})
- *   }
- * )
- */
+#[ORM\Table(name: 'administrators')]
+#[ORM\Index(columns: ['username'])]
+#[ORM\Entity]
 class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLoginInterface, PasswordAuthenticatedUserInterface, EmailTwoFactorInterface, GoogleTwoFactorInterface, ResetPasswordInterface
 {
     public const string TWO_FACTOR_AUTHENTICATION_TYPE_EMAIL = 'email';
@@ -44,34 +39,34 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100, unique = true)
      */
+    #[ORM\Column(type: 'string', length: 100, unique: true)]
     protected $username;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: 'string', length: 100)]
     protected $realName;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $password;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=32)
      */
+    #[ORM\Column(type: 'string', length: 32)]
     protected $loginToken;
 
     /**
@@ -81,97 +76,87 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, unique=true)
      */
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     protected $email;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit>
-     * @ORM\OneToMany(
-     *     targetEntity="Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit",
-     *     mappedBy="administrator",
-     *     cascade={"persist"},
-     *     orphanRemoval=true
-     * )
      */
+    #[ORM\OneToMany(targetEntity: AdministratorGridLimit::class, mappedBy: 'administrator', cascade: ['persist'], orphanRemoval: true)]
     protected $gridLimits;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole>
-     * @ORM\OneToMany(
-     *     targetEntity="\Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole",
-     *     mappedBy="administrator",
-     *     cascade={"persist"},
-     *     orphanRemoval=true
-     * )
      */
+    #[ORM\OneToMany(targetEntity: AdministratorRole::class, mappedBy: 'administrator', cascade: ['persist'], orphanRemoval: true)]
     protected $roles;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $rolesChangedAt;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
      */
+    #[ORM\Column(type: 'datetime_immutable')]
     protected $transferIssuesLastSeenDateTime;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=32, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 32, nullable: true)]
     protected $twoFactorAuthenticationType;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=16, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 16, nullable: true)]
     protected $emailAuthenticationCode;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected $googleAuthenticatorSecret;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup")
-     * @ORM\JoinColumn(name="role_group_id", referencedColumnName="id", nullable=true)
      */
+    #[ORM\JoinColumn(name: 'role_group_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity: AdministratorRoleGroup::class)]
     protected $roleGroup;
 
     /**
      * @var int[]|null
-     * @ORM\Column(type="simple_array", nullable=true)
      */
+    #[ORM\Column(type: 'simple_array', nullable: true)]
     protected $displayOnlyDomainIds;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=10)
      */
+    #[ORM\Column(type: 'string', length: 10)]
     protected $selectedLocale;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=50, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $resetPasswordHash;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $resetPasswordHashValidThrough;
 
     /**

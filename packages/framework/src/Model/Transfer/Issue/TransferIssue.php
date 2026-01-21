@@ -9,16 +9,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Shopsys\FrameworkBundle\Model\Transfer\Transfer;
 use Symfony\Component\Clock\DatePoint;
 
-/**
- * @ORM\Table(
- *     name="transfer_issues",
- *     indexes={
- *          @ORM\Index(columns={"created_at", "deleted_at", "transfer_id"}),
- *      }
- * )
- * @ORM\Entity
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- */
+#[ORM\Table(name: 'transfer_issues')]
+#[ORM\Index(columns: ['created_at', 'deleted_at', 'transfer_id'])]
+#[ORM\Entity]
+#[Gedmo\SoftDeleteable(fieldName: 'deletedAt', timeAware: false)]
 class TransferIssue
 {
     public const string SEVERITY_ERROR = 'error';
@@ -27,41 +21,41 @@ class TransferIssue
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transfer\Transfer
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transfer\Transfer")
-     * @ORM\JoinColumn(name="transfer_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(name: 'transfer_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Transfer::class)]
     protected $transfer;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=10, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 10, nullable: false)]
     protected $severity;
 
     /**
      * @var string
-     * @ORM\Column(type="text", nullable=false)
      */
+    #[ORM\Column(type: 'text', nullable: false)]
     protected $message;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected $createdAt;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(name="deleted_at", type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(name: 'deleted_at', type: 'datetime_immutable', nullable: true)]
     protected $deletedAt;
 
     /**

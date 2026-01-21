@@ -5,26 +5,24 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Unit;
 
 use Doctrine\ORM\Mapping as ORM;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
-/**
- * @ORM\Table(name="unit_translations")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'unit_translations')]
+#[ORM\Entity]
 class UnitTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
-     * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Product\Unit\Unit")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[Prezent\Translatable(targetEntity: Unit::class)]
     protected $translatable;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=10)
      */
+    #[ORM\Column(type: 'string', length: 10)]
     protected $name;
 
     /**

@@ -22,39 +22,31 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
-/**
- * @ORM\Table(name="services")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'services')]
+#[ORM\Entity]
 class Service
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer')]
     protected int $id;
 
-    /**
-     * @ORM\Column(type="guid", unique=true)
-     */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected string $uuid;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected string $name;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected Money $priceWithVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected Money $priceWithoutVat;
 
     /**
@@ -289,10 +281,8 @@ use App\DataFixtures\Demo\ServiceDataFixture;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
 
-/**
- * @ORM\Table(name="carts")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'carts')]
+#[ORM\Entity]
 class Cart extends BaseCart
 {
     /**

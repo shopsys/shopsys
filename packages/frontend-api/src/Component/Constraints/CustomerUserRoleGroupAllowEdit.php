@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
+use Attribute;
 use Override;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
+#[Attribute(Attribute::TARGET_CLASS | Attribute::IS_REPEATABLE)]
 class CustomerUserRoleGroupAllowEdit extends Constraint
 {
     public const CUSTOMER_USER_ROLE_GROUP_CANNOT_BE_CHANGED = '8af342d1-9034-4995-a8cf-60375ca499bf';

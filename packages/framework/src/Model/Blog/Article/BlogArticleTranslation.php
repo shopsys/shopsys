@@ -5,36 +5,32 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
 use Doctrine\ORM\Mapping as ORM;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
-/**
- * @ORM\Table(name="blog_article_translations")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'blog_article_translations')]
+#[ORM\Entity]
 class BlogArticleTranslation extends AbstractTranslation
 {
-    /**
-     * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle")
-     */
+    #[Prezent\Translatable(targetEntity: BlogArticle::class)]
     protected $translatable;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $name;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $description;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $perex;
 
     /**

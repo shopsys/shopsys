@@ -7,15 +7,16 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 /**
- * @ORM\Table(name="parameters")
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'parameters')]
+#[ORM\Entity]
 class Parameter extends AbstractTranslatableEntity
 {
     public const string PARAMETER_TYPE_COMMON = 'checkbox';
@@ -29,50 +30,50 @@ class Parameter extends AbstractTranslatableEntity
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[Prezent\Translations(targetEntity: ParameterTranslation::class)]
     protected $translations;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 100, nullable: false)]
     protected $parameterType;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $orderingPriority;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Unit\Unit")
-     * @ORM\JoinColumn(nullable=true, name="unit_id", referencedColumnName="id")
      */
+    #[ORM\JoinColumn(nullable: true, name: 'unit_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: Unit::class)]
     protected $unit;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup")
-     * @ORM\JoinColumn(nullable=true, name="group_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(nullable: true, name: 'group_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: ParameterGroup::class)]
     protected $group;
 
     /**

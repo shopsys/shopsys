@@ -22,7 +22,7 @@ class ShopsysFrontendApiBundle extends Bundle
 
         $container->addCompilerPass(new RegisterSearchResultsProvidersCompilerPass());
         $container->addCompilerPass(
-            DoctrineOrmMappingsPass::createAnnotationMappingDriver(
+            DoctrineOrmMappingsPass::createAttributeMappingDriver(
                 [$this->getNamespace() . '\Model'],
                 [$this->getPath() . '/Model'],
             ),

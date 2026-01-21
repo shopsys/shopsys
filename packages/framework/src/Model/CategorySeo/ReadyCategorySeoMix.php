@@ -7,109 +7,100 @@ namespace Shopsys\FrameworkBundle\Model\CategorySeo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 
-/**
- * @ORM\Table(
- *     name="ready_category_seo_mixes",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="selected_category_seo_mix_combination_json", columns={"selected_category_seo_mix_combination_json"})
- *     }
- * )
- * @ORM\Entity
- */
+#[ORM\Table(name: 'ready_category_seo_mixes')]
+#[ORM\UniqueConstraint(name: 'selected_category_seo_mix_combination_json', columns: ['selected_category_seo_mix_combination_json'])]
+#[ORM\Entity]
 class ReadyCategorySeoMix
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $selectedCategorySeoMixCombinationJson;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
-     * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, name: 'category_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Category::class)]
     protected $category;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Flag\Flag")
-     * @ORM\JoinColumn(nullable=true, name="flag_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: true, name: 'flag_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Flag::class)]
     protected $flag;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=false)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
     protected $ordering;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue>
-     * @ORM\OneToMany(
-     *     targetEntity="Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue",
-     *     mappedBy="readyCategorySeoMix",
-     *     cascade={"persist" ,"remove"},
-     *     fetch="EXTRA_LAZY"
-     * )
      */
+    #[ORM\OneToMany(targetEntity: ReadyCategorySeoMixParameterParameterValue::class, mappedBy: 'readyCategorySeoMix', cascade: ['persist', 'remove'], fetch: 'EXTRA_LAZY')]
     protected $readyCategorySeoMixParameterParameterValues;
 
     /**
      * @var string
-     * @ORM\Column(type="text", nullable=false)
      */
+    #[ORM\Column(type: 'text', nullable: false)]
     protected $h1;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $shortDescription;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $description;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $title;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $metaDescription;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $showInCategory;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**

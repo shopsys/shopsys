@@ -6,9 +6,6 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
 class PositiveMoneyAmount extends Constraint
 {
     public string $message = 'Amount of money should be greater to zero.';

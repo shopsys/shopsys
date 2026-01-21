@@ -10,16 +10,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData;
 
 /**
- * @ORM\Table(
- *     name="customer_users",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="email_domain", columns={"email", "domain_id"})
- *     },
- *     indexes={
- *         @ORM\Index(columns={"email"})
- *     }
- * )
- * @ORM\Entity
  * @property \App\Model\Customer\DeliveryAddress|null $defaultDeliveryAddress
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Customer\User\CustomerUserRefreshTokenChain> $refreshTokenChain
  * @method addRefreshTokenChain(\App\Model\Customer\User\CustomerUserRefreshTokenChain $customerUserRefreshTokenChain)
@@ -27,6 +17,10 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
  * @method setData(\App\Model\Customer\User\CustomerUserData $customerUserData)
  * @method setDefaultDeliveryAddress(\App\Model\Customer\DeliveryAddress $defaultDeliveryAddress)
  */
+#[ORM\Table(name: 'customer_users')]
+#[ORM\Index(columns: ['email'])]
+#[ORM\UniqueConstraint(name: 'email_domain', columns: ['email', 'domain_id'])]
+#[ORM\Entity]
 class CustomerUser extends BaseUser
 {
     /**

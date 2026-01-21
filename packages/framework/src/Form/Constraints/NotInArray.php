@@ -9,9 +9,6 @@ use Override;
 use Symfony\Component\Validator\Constraint;
 use Traversable;
 
-/**
- * @Annotation
- */
 class NotInArray extends Constraint
 {
     public string $message = 'Value must not be neither of following: {{ array }}';

@@ -5,31 +5,30 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class PromoCodeLimit
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode")
-     * @ORM\JoinColumn(nullable=false, onDelete="cascade")
-     * @ORM\Id
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'cascade')]
+    #[ORM\ManyToOne(targetEntity: PromoCode::class)]
+    #[ORM\Id]
     protected $promoCode;
 
     /**
      * @var string
-     * @ORM\Column(type="decimal", precision=20, scale=6)
-     * @ORM\Id
      */
+    #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
+    #[ORM\Id]
     protected $fromPrice;
 
     /**
      * @var string
-     * @ORM\Column(type="decimal", precision=20, scale=6)
      */
+    #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     protected $discount;
 
     /**

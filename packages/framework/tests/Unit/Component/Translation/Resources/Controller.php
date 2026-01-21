@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Translation\Resources;
 
-use JMS\TranslationBundle\Annotation\Ignore;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -34,10 +33,5 @@ class Controller extends AbstractController
         t('my %adjective% string with named locale', ['%adjective%' => 'awesome'], 'someDomain', locale: $locale);
         t('my %adjective% string with unsorted arguments', ['%adjective%' => 'awesome'], locale: $locale, domain: 'unsortedDomain');
         t('my %adjective% string with null domain', ['%adjective%' => 'awesome'], null, $locale);
-
-        /** @Ignore */
-        t('ignored');
-        /** @Ignore */
-        $this->translator->trans('ignored');
     }
 }

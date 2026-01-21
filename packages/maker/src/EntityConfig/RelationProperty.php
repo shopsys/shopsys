@@ -39,35 +39,43 @@ class RelationProperty extends Property
      * @return string[]
      */
     #[Override]
-    public function getAnnotationLines(): array
+    public function getAttributeLines(): array
     {
         $options = [];
 
-        $options[] = sprintf('targetEntity="%s"', $this->relationTargetEntity);
+        $options[] = sprintf('targetEntity: \%s::class', $this->relationTargetEntity);
 
         if ($this->orphanRemoval === true) {
-            $options[] = 'orphanRemoval=true';
+            $options[] = 'orphanRemoval: true';
         }
 
         if ($this->inverseProperty !== null) {
-            $options[] = sprintf('%s="%s"', $this->getInverseSettingName($this->relationType), $this->inverseProperty);
+            $options[] = sprintf("%s: '%s'", $this->getInverseSettingName($this->relationType), $this->inverseProperty);
         }
 
-        $annotationLines = [];
+        $attributeLines = [];
 
-        if ($this->isCollection()) {
-            $annotationLines[] = sprintf('@var \Doctrine\Common\Collections\Collection<int, \%s>', $this->relationTargetEntity);
-        }
-
-        $annotationLines[] = sprintf('@ORM\%s(%s)', $this->relationType->value, implode(', ', $options));
+        $attributeLines[] = sprintf('#[ORM\%s(%s)]', $this->relationType->value, implode(', ', $options));
 
         if ($this->relationType === EntityRelationTypeEnum::MANY_TO_ONE) {
-            $annotationLines[] = sprintf('@ORM\JoinColumn(nullable=%s, onDelete="%s")', $this->isNullable ? 'true' : 'false', $this->isNullable ? 'SET NULL' : 'CASCADE');
+            $attributeLines[] = sprintf("#[ORM\JoinColumn(nullable: %s, onDelete: '%s')]", $this->isNullable ? 'true' : 'false', $this->isNullable ? 'SET NULL' : 'CASCADE');
         } elseif ($this->relationType === EntityRelationTypeEnum::MANY_TO_MANY) {
-            $annotationLines[] = sprintf('@ORM\JoinTable(name="%s")', NamingHelper::getJoinTableName($this->relationOwningClass, $this->relationTargetEntity));
+            $attributeLines[] = sprintf("#[ORM\JoinTable(name: '%s')]", NamingHelper::getJoinTableName($this->relationOwningClass, $this->relationTargetEntity));
         }
 
-        return $annotationLines;
+        return $attributeLines;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVarDocBlock(): ?string
+    {
+        if ($this->isCollection()) {
+            return sprintf('@var \Doctrine\Common\Collections\Collection<int, \%s>', $this->relationTargetEntity);
+        }
+
+        return null;
     }
 
     /**
@@ -136,18 +144,16 @@ class RelationProperty extends Property
                 $this->inverseProperty,
                 $this->relationTargetEntity,
             ),
-            '//  /**',
         ];
 
         $inverseRelation = EntityRelationTypeEnum::getInverseType($this->relationType);
         $infoLines[] = sprintf(
-            '//   * @ORM\%s(targetEntity="%s", %s="%s")',
+            "//  #[ORM\%s(targetEntity: \%s::class, %s: '%s')]",
             $inverseRelation->value,
             $this->relationOwningClass,
             $inverseRelation === EntityRelationTypeEnum::MANY_TO_MANY ? 'mappedBy' : $this->getInverseSettingName($inverseRelation),
             $this->propertyName,
         );
-        $infoLines[] = '//   */';
         $typehint = $inverseRelation === EntityRelationTypeEnum::MANY_TO_ONE ? $this->relationOwningClass : Collection::class;
         $infoLines[] = sprintf('//  private \%s $%s;', $typehint, $this->inverseProperty);
 

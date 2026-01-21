@@ -11,86 +11,85 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 
 /**
  * SliderItem
- *
- * @ORM\Table(name="slider_items")
- * @ORM\Entity
  */
+#[ORM\Table(name: 'slider_items')]
+#[ORM\Entity]
 class SliderItem implements OrderableEntityInterface
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $name;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $link;
 
     /**
      * @var int
-     * @Gedmo\SortableGroup
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\SortableGroup]
     protected $domainId;
 
     /**
      * @var int|null
-     * @Gedmo\SortablePosition
-     * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Gedmo\SortablePosition]
     protected $position;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $hidden;
 
     /**
      * @var string
-     * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $description;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=7)
      */
+    #[ORM\Column(type: 'string', length: 7)]
     protected $rgbBackgroundColor;
 
     /**
      * @var float
-     * @ORM\Column(type="decimal", precision=3, scale=2)
      */
+    #[ORM\Column(type: 'decimal', precision: 3, scale: 2)]
     protected $opacity;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable",nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $datetimeVisibleFrom;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime_immutable",nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $datetimeVisibleTo;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $routeName;
 
     /**

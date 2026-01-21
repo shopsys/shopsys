@@ -47,9 +47,7 @@ namespace App\Model\Product;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 final class Product extends BaseProduct
 {
     // Custom fields and methods

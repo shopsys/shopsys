@@ -14,7 +14,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
      * @return int[]
      */
     #[Override]
-    public function register()
+    public function register(): array
     {
         return [T_CLASS];
     }
@@ -24,57 +24,26 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
      * @param int $classPosition
      */
     #[Override]
-    public function process(File $file, $classPosition)
+    public function process(File $file, $classPosition): void
     {
-        $phpDocStartPosition = $file->findPrevious(T_DOC_COMMENT_OPEN_TAG, $classPosition);
+        $tokens = $file->getTokens();
 
-        if ($phpDocStartPosition === false) {
+        $contentBeforeClass = '';
+
+        for ($i = 0; $i < $classPosition; $i++) {
+            $contentBeforeClass .= $tokens[$i]['content'];
+        }
+
+        if (preg_match('~#\[.*ORM.*InheritanceType.*\]~s', $contentBeforeClass) !== 1) {
             return;
         }
 
-        $phpDocTags = $this->findPhpDocTags($file, $classPosition, $phpDocStartPosition);
+        $message = 'It is forbidden to use Doctrine inheritance mapping because it causes problems during entity extension. Such problem with `OrderItem` was resolved during making OrderItem extendable #715.';
 
-        foreach ($phpDocTags as $position => $token) {
-            if ($this->isDoctrineInheritanceAnnotation($token)) {
-                $message = 'It is forbidden to use Doctrine inheritance mapping because it causes problems during entity extension. Such problem with `OrderItem` was resolved during making OrderItem extendable #715.';
-                $file->addError(
-                    $message,
-                    $position,
-                    self::class,
-                );
-            }
-        }
-    }
-
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $classPosition
-     * @param int $phpDocStartPosition
-     * @return array
-     */
-    private function findPhpDocTags(File $file, int $classPosition, int $phpDocStartPosition): array
-    {
-        $phpDocEndPosition = $file->findPrevious(T_DOC_COMMENT_CLOSE_TAG, $classPosition);
-
-        $result = [];
-        $tokens = $file->getTokens();
-
-        for ($i = $phpDocStartPosition; $i < $phpDocEndPosition; $i++) {
-            if ($tokens[$i]['code'] === T_DOC_COMMENT_TAG) {
-                $result[$i] = $tokens[$i];
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param array $token
-     */
-    private function isDoctrineInheritanceAnnotation(array $token)
-    {
-        $content = $token['content'];
-
-        return preg_match('~^.*ORM.*InheritanceType~', $content) === 1;
+        $file->addError(
+            $message,
+            $classPosition,
+            self::class,
+        );
     }
 }

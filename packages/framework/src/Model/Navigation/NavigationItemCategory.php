@@ -10,40 +10,38 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
-/**
- * @ORM\Table(name="navigation_item_categories")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'navigation_item_categories')]
+#[ORM\Entity]
 class NavigationItemCategory implements OrderableEntityInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Navigation\NavigationItem")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: NavigationItem::class)]
     protected $navigationItem;
 
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     protected $columnNumber;
 
     /**
      * @var int
-     * @Gedmo\SortablePosition
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\SortablePosition]
     protected $position;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Category::class)]
     protected $category;
 
     /**

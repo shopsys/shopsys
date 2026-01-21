@@ -6,38 +6,37 @@ namespace Shopsys\FrameworkBundle\Model\Store\OpeningHours;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="store_opening_hours")
- */
+#[ORM\Table(name: 'store_opening_hours')]
+#[ORM\Entity]
 class OpeningHours
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Store\Store
-     * @ORM\JoinColumn(nullable=false)
-     * @ORM\ManyToOne(targetEntity="\Shopsys\FrameworkBundle\Model\Store\Store", inversedBy="openingHours")
      */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Store::class, inversedBy: 'openingHours')]
     protected $store;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $dayOfWeek;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRange>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRange", mappedBy="openingHours", cascade={"persist"}, orphanRemoval=true)
      */
+    #[ORM\OneToMany(targetEntity: OpeningHoursRange::class, mappedBy: 'openingHours', cascade: ['persist'], orphanRemoval: true)]
     protected $openingHoursRanges;
 
     /**

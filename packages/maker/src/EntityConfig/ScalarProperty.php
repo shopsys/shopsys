@@ -45,30 +45,30 @@ class ScalarProperty extends Property
      * @return string[]
      */
     #[Override]
-    public function getAnnotationLines(): array
+    public function getAttributeLines(): array
     {
         $options = [];
 
-        $options[] = sprintf('type="%s"', $this->type);
+        $options[] = sprintf("type: '%s'", $this->type);
 
         if (is_numeric($this->length)) {
-            $options[] = sprintf('length=%d', $this->length);
+            $options[] = sprintf('length: %d', $this->length);
         }
 
         if (is_numeric($this->precision)) {
-            $options[] = sprintf('precision=%d', $this->precision);
+            $options[] = sprintf('precision: %d', $this->precision);
         }
 
         if (is_numeric($this->scale)) {
-            $options[] = sprintf('scale=%d', $this->scale);
+            $options[] = sprintf('scale: %d', $this->scale);
         }
 
         if ($this->nullable) {
-            $options[] = 'nullable=true';
+            $options[] = 'nullable: true';
         }
 
         if ($this->unique) {
-            $options[] = 'unique=true';
+            $options[] = 'unique: true';
         }
 
         // Handling additional 'options' array (e.g., 'default', 'comment')
@@ -76,19 +76,19 @@ class ScalarProperty extends Property
 
         foreach ($this->options as $key => $value) {
             if (is_string($value)) {
-                $optionStrings[] = sprintf('"%s"="%s"', $key, addslashes($value));
+                $optionStrings[] = sprintf("'%s' => '%s'", $key, addslashes($value));
             } elseif (is_bool($value)) {
-                $optionStrings[] = sprintf('"%s"=%s', $key, $value ? 'true' : 'false');
+                $optionStrings[] = sprintf("'%s' => %s", $key, $value ? 'true' : 'false');
             } elseif (is_numeric($value)) {
-                $optionStrings[] = sprintf('"%s"=%d', $key, $value);
+                $optionStrings[] = sprintf("'%s' => %d", $key, $value);
             }
         }
 
         if (count($optionStrings) > 0) {
-            $options[] = sprintf('options={%s}', implode(', ', $optionStrings));
+            $options[] = sprintf('options: [%s]', implode(', ', $optionStrings));
         }
 
-        return [sprintf('@ORM\Column(%s)', implode(', ', $options))];
+        return [sprintf('#[ORM\Column(%s)]', implode(', ', $options))];
     }
 
     /**

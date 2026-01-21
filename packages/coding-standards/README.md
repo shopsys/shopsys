@@ -47,9 +47,9 @@ If the `type` is not specified it will be fixed to `type="button""` because the 
 
 #### `Shopsys/orm_join_column_require_nullable`
 
-Doctrine annotations `@ORM\ManyToOne` and `@ORM\OneToOne` must have `nullable` option defined explicitly in `@ORM\JoinColumn`.
+Doctrine attributes `#[ORM\ManyToOne]` and `#[ORM\OneToOne]` must have `nullable` option defined explicitly in `#[ORM\JoinColumn]`.
 
-If the `nullable` option is not specified it will be fixed to `nullable=false` because the implicit value is `true` but this is the opposite to the implicit value of `nullable` for `@Column` annotation.
+If the `nullable` option is not specified it will be fixed to `nullable: false` because the implicit value is `true` but this is the opposite to the implicit value of `nullable` for `#[ORM\Column]` attribute.
 This makes it consistent.
 
 ### Rules for [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)

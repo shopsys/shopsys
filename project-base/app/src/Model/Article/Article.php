@@ -7,10 +7,8 @@ namespace App\Model\Article;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Article\Article as BaseArticle;
 
-/**
- * @ORM\Table(name="articles")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'articles')]
+#[ORM\Entity]
 class Article extends BaseArticle
 {
 }

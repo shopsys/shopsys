@@ -73,13 +73,16 @@ class EntityDataObjectPropertyHasNoTypehintRule implements Rule
 
         try {
             $reflectionClass = new ReflectionClass(substr($className, 0, -4));
-            $docComment = $reflectionClass->getDocComment();
 
-            if ($docComment === false) {
-                return false;
+            foreach ($reflectionClass->getAttributes() as $attribute) {
+                $attrName = $attribute->getName();
+
+                if ($attrName === 'Doctrine\ORM\Mapping\Entity') {
+                    return true;
+                }
             }
 
-            return str_contains($docComment, '@ORM\Entity');
+            return false;
         } catch (ReflectionException) {
             return false;
         }

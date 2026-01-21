@@ -10,53 +10,50 @@ use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFile;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
-/**
- * @ORM\Table(name="customer_uploaded_files", indexes={
- *     @ORM\Index(columns={"entity_name", "entity_id"}),
- *     @ORM\Index(columns={"id", "slug", "extension", "customer_user_id"}),
- *     @ORM\Index(columns={"id", "slug", "extension", "hash"}),
- * })
- * @ORM\Entity
- */
+#[ORM\Table(name: 'customer_uploaded_files')]
+#[ORM\Index(columns: ['entity_name', 'entity_id'])]
+#[ORM\Index(columns: ['id', 'slug', 'extension', 'customer_user_id'])]
+#[ORM\Index(columns: ['id', 'slug', 'extension', 'hash'])]
+#[ORM\Entity]
 class CustomerUploadedFile extends AbstractUploadedFile
 {
     protected const string UPLOAD_KEY = 'customerUploadedFile';
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: 'string', length: 100)]
     protected $entityName;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $entityId;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: 'string', length: 100)]
     protected $type;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $position;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
-     * @ORM\JoinColumn(name="customer_user_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'customer_user_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: CustomerUser::class)]
     protected $customerUser;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=32)
      */
+    #[ORM\Column(type: 'string', length: 32)]
     protected $hash;
 
     /**

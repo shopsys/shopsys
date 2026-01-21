@@ -6,7 +6,7 @@ Basic information about custom entities can be found in the [separate article](.
 Let's say we need to keep an agenda of salesmen. After finishing this cookbook, the new salesman entity will not be presented on the FE in any fashion,
 however, you can continue with another [cookbook](./create-basic-grid.md) that will show you how to display a list of salesmen using a grid in administration.
 
-## 1. Create a new class `Salesman` and set it as an entity using Doctrine annotation
+## 1. Create a new class `Salesman` and set it as an entity using Doctrine attributes
 
 ```php
 // src\Model\Salesman\Salesman.php
@@ -15,16 +15,14 @@ namespace App\Model\Salesman;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="salesmen")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'salesmen')]
+#[ORM\Entity]
 class Salesman
 {
 }
 ```
 
-## 2. Add salesmen attributes and set them as database columns using Doctrine annotations
+## 2. Add salesmen attributes and set them as database columns using Doctrine attributes
 
 Each salesman entity will have the following properties.
 
@@ -37,33 +35,28 @@ namespace App\Model\Salesman;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="salesmen")
- * @ORM\Entity
- */
++#[ORM\Table(name: 'salesmen')]
++#[ORM\Entity]
 class Salesman
 {
 +    /**
 +     * @var int
-+     *
-+     * @ORM\Column(type="integer")
-+     * @ORM\Id
-+     * @ORM\GeneratedValue(strategy="IDENTITY")
 +     */
++    #[ORM\Column(type: 'integer')]
++    #[ORM\Id]
++    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
 +    protected $id;
 +
 +    /**
 +     * @var string
-+     *
-+     * @ORM\Column(type="string", length=100)
 +     */
++    #[ORM\Column(type: 'string', length: 100)]
 +    protected $name;
 +
 +    /**
 +     * @var \DateTime
-+     *
-+     * @ORM\Column(type="datetime")
 +     */
++    #[ORM\Column(type: 'datetime')]
 +    protected $registeredAt;
 }
 ```
@@ -116,7 +109,7 @@ class Version20190301122526 extends AbstractMigration
 !!! tip
 
     We recommend you check this migration and verify that everything is set up as expected.<br>
-    If the system doesn't generate the migration, the entity is probably in an incorrect namespace or has the wrong Doctrine annotation mapping.
+    If the system doesn't generate the migration, the entity is probably in an incorrect namespace or has the wrong Doctrine attribute mapping.
 
 ## 4. Add default salesmen
 

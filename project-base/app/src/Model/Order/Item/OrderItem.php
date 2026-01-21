@@ -10,8 +10,6 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 
 /**
- * @ORM\Table(name="order_items")
- * @ORM\Entity
  * @property \App\Model\Order\Order $order
  * @property \App\Model\Transport\Transport|null $transport
  * @property \App\Model\Payment\Payment|null $payment
@@ -32,6 +30,8 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
  * @method \App\Model\Product\Product|null getProductGift()
  */
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
+#[ORM\Table(name: 'order_items')]
+#[ORM\Entity]
 class OrderItem extends BaseOrderItem
 {
 }

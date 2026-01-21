@@ -16,60 +16,61 @@ use Shopsys\FrameworkBundle\Model\Order\Item\Exception\MainVariantCannotBeOrdere
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasOnlyOneTotalPriceException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\WrongItemTypeException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
+use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
-/**
- * @ORM\Table(name="order_items")
- * @ORM\Entity
- */
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
+#[ORM\Table(name: 'order_items')]
+#[ORM\Entity]
 class OrderItem
 {
     /**
      * @var int|null
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     protected $type;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Order
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Order", inversedBy="items")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     #[LoggableParentProperty]
+    #[ORM\JoinColumn(name: 'order_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'items')]
     protected $order;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $name;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $unitPriceWithoutVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $unitPriceWithVat;
 
     /**
@@ -77,8 +78,8 @@ class OrderItem
      * Otherwise, it should be set to NULL (which means it will be calculated automatically).
      *
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
     protected $totalPriceWithoutVat;
 
     /**
@@ -86,63 +87,62 @@ class OrderItem
      * Otherwise, it should be set to NULL (which means it will be calculated automatically).
      *
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
+    #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
     protected $totalPriceWithVat;
 
     /**
      * @var string
-     * @ORM\Column(type="decimal", precision=20, scale=6)
      */
+    #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     protected $vatPercent;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $quantity;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=10, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
     protected $unitName;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $catnum;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
-     * @ORM\JoinColumn(nullable=true)
      */
+    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(targetEntity: Transport::class)]
     protected $transport;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment")
-     * @ORM\JoinColumn(nullable=true)
      */
+    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(targetEntity: Payment::class)]
     protected $payment;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
-     * @ORM\JoinColumn(nullable=true, name="product_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(nullable: true, name: 'product_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $product;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>
-     * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Order\Item\OrderItem")
-     * @ORM\JoinTable(name="order_item_relations",
-     *      joinColumns={@ORM\JoinColumn(name="order_item_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="related_item_id", referencedColumnName="id")}
-     * )
      */
+    #[ORM\JoinTable(name: 'order_item_relations')]
+    #[ORM\JoinColumn(name: 'order_item_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'related_item_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: self::class)]
     protected $relatedItems;
 
     /**

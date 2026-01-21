@@ -6,27 +6,19 @@ namespace Tests\App\Functional\EntityExtension\Model\ExtendedProduct;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class ProductOneToManyBidirectionalEntity
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="ExtendedProduct", inversedBy="oneToManyBidirectionalEntities")
-     * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: ExtendedProduct::class, inversedBy: 'oneToManyBidirectionalEntities')]
+    #[ORM\JoinColumn(nullable: false, name: 'product_id', referencedColumnName: 'id')]
     protected ExtendedProduct $product;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected string $name;
 
     /**

@@ -5,26 +5,25 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator\Role;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
-/**
- * @ORM\Table(name="administrator_roles")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'administrator_roles')]
+#[ORM\Entity]
 class AdministratorRole
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Administrator\Administrator", inversedBy="roles")
-     * @ORM\JoinColumn(nullable=false, name="administrator_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, name: 'administrator_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Administrator::class, inversedBy: 'roles')]
     protected $administrator;
 
     /**
      * @var string
-     * @ORM\Id
-     * @ORM\Column(type="string")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'string')]
     protected $role;
 
     /**

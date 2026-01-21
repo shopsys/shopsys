@@ -7,77 +7,72 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @ORM\Table(name="blog_articles")
- * @ORM\Entity
  * @method translation($locale = null): BlogArticleTranslation
  */
+#[ORM\Table(name: 'blog_articles')]
+#[ORM\Entity]
 class BlogArticle extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomain>
-     * @ORM\OneToMany(
-     *   targetEntity="Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomain",
-     *   mappedBy="blogArticle",
-     *   orphanRemoval=true,
-     *   cascade={"persist"}
-     * )
      */
+    #[ORM\OneToMany(targetEntity: BlogArticleBlogCategoryDomain::class, mappedBy: 'blogArticle', orphanRemoval: true, cascade: ['persist'])]
     protected $blogArticleBlogCategoryDomains;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleTranslation")
      */
+    #[Prezent\Translations(targetEntity: BlogArticleTranslation::class)]
     protected $translations;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDomain>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDomain", mappedBy="blogArticle", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
+    #[ORM\OneToMany(targetEntity: BlogArticleDomain::class, mappedBy: 'blogArticle', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     protected $domains;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $hidden;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
      */
+    #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $visibleOnHomepage;
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
      */
+    #[ORM\Column(type: 'datetime_immutable')]
     protected $publishDate;
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
      */
+    #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**

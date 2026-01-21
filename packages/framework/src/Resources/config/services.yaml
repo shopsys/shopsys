@@ -25,9 +25,6 @@ services:
     Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader:
         alias: doctrine.fixtures.loader
 
-    Doctrine\Common\Annotations\DocParser:
-        alias: jms_translation.doc_parser
-
     Doctrine\Common\EventManager:
         alias: doctrine.dbal.default_connection.event_manager
 
@@ -926,7 +923,9 @@ services:
             $factory: '@prezent_doctrine_translatable.metadata_factory'
         class: Shopsys\FrameworkBundle\Model\Localization\TranslatableListener
         tags:
-            - 'doctrine.event_subscriber'
+            - { name: 'doctrine.event_listener', event: 'loadClassMetadata' }
+            - { name: 'doctrine.event_listener', event: 'postLoad' }
+            - { name: 'doctrine.event_listener', event: 'postPersist' }
 
     profiler.storage:
         alias: Shopsys\FrameworkBundle\Component\HttpKernel\Profiler\FileProfilerStorage

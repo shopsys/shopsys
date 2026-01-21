@@ -7,35 +7,35 @@ namespace Shopsys\FrameworkBundle\Model\Complaint\Status;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\Exception\ComplaintStatusDeletionForbiddenException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @ORM\Table(name="complaint_statuses")
- * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation translation(?string $locale = null)
  */
+#[ORM\Table(name: 'complaint_statuses')]
+#[ORM\Entity]
 class ComplaintStatus extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation")
      */
+    #[Prezent\Translations(targetEntity: ComplaintStatusTranslation::class)]
     protected $translations;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=25)
      */
+    #[ORM\Column(type: 'string', length: 25)]
     protected $statusType;
 
     /**
