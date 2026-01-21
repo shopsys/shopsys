@@ -32,8 +32,7 @@ class AdvancedSearchProductFacade
      */
     public function createAdvancedSearchForm(Request $request)
     {
-        $rawRulesData = $request->get(static::RULES_FORM_NAME);
-        $rulesData = is_array($rawRulesData) ? $rawRulesData : [];
+        $rulesData = $request->query->all(static::RULES_FORM_NAME);
         $rulesFormData = $this->ruleFormViewDataFactory->createFromRequestData(ProductNameFilter::NAME, $rulesData);
 
         return $this->advancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesFormData);
@@ -71,8 +70,6 @@ class AdvancedSearchProductFacade
      */
     public function isAdvancedSearchFormSubmitted(Request $request)
     {
-        $rulesData = $request->get(static::RULES_FORM_NAME);
-
-        return $rulesData !== null;
+        return $request->query->has(static::RULES_FORM_NAME);
     }
 }

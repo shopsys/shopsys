@@ -73,9 +73,9 @@ class BestsellingProductController extends AdminBaseController
     #[CanView(methods: [HttpMethod::GET])]
     public function detailAction(Request $request): Response
     {
-        $categoryId = (int)$request->query->get('categoryId');
+        $categoryId = $request->query->getInt('categoryId');
         $category = $this->categoryFacade->getById($categoryId);
-        $domainId = (int)$request->get('domainId');
+        $domainId = $request->query->getInt('domainId');
 
         $products = $this->manualBestsellingProductFacade->getProductsIndexedByPosition(
             $category,

@@ -319,8 +319,8 @@ class OrderController extends AdminBaseController
     public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchOrderFacade->createRuleForm(
-            $request->get('filterName'),
-            $request->get('newIndex'),
+            $request->request->getString('filterName'),
+            $request->request->getString('newIndex'),
         );
 
         return $this->render('@ShopsysAdministration/content/order/advancedSearch/ruleForm.html.twig', [

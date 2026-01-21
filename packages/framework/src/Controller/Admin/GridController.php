@@ -33,10 +33,10 @@ class GridController extends AdminBaseController
     #[RequireRole(SystemRole::ADMIN)]
     public function getFormAction(Request $request): JsonResponse
     {
-        $rowId = $request->get('rowId') !== null ? json_decode($request->get('rowId')) : null;
+        $rowId = $request->request->has('rowId') ? json_decode($request->request->getString('rowId')) : null;
 
         $renderedFormRow = $this->inlineEditFacade->getRenderedFormRow(
-            $request->get('serviceName'),
+            $request->request->getString('serviceName'),
             $rowId,
         );
 
@@ -52,14 +52,15 @@ class GridController extends AdminBaseController
     public function saveFormAction(Request $request): JsonResponse
     {
         $responseData = [];
-        $rowId = $request->get('rowId') !== null ? json_decode($request->get('rowId')) : null;
+        $rowId = $request->request->has('rowId') ? json_decode($request->request->getString('rowId')) : null;
+        $serviceName = $request->request->getString('serviceName');
 
         try {
-            $rowId = $this->inlineEditFacade->saveFormData($request->get('serviceName'), $request, $rowId);
+            $rowId = $this->inlineEditFacade->saveFormData($serviceName, $request, $rowId);
 
             $responseData['success'] = true;
             $responseData['rowHtml'] = $this->inlineEditFacade->getRenderedRowHtml(
-                $request->get('serviceName'),
+                $serviceName,
                 $rowId,
             );
         } catch (InvalidFormDataException $e) {
@@ -80,8 +81,8 @@ class GridController extends AdminBaseController
     public function saveOrderingAction(Request $request): JsonResponse
     {
         $this->gridOrderingFacade->saveOrdering(
-            $request->get('entityClass'),
-            array_map('json_decode', $request->get('rowIds')),
+            $request->request->getString('entityClass'),
+            array_map('json_decode', $request->request->all('rowIds')),
         );
         $responseData = ['success' => true];
 

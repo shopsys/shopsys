@@ -101,7 +101,7 @@ class VatController extends AdminBaseController
     #[CsrfProtection]
     public function deleteAction(Request $request, int $id): Response
     {
-        $newId = $request->get('newId');
+        $newId = $request->query->has('newId') ? $request->query->getInt('newId') : null;
 
         try {
             $fullName = $this->vatFacade->getById($id)->getName();

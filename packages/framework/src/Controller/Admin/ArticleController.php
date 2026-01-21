@@ -231,7 +231,7 @@ class ArticleController extends AdminBaseController
     #[CanEdit]
     public function saveOrderingAction(Request $request): JsonResponse
     {
-        $this->articleFacade->saveOrdering($request->get('rowIdsByGridId'));
+        $this->articleFacade->saveOrdering($request->request->all('rowIdsByGridId'));
 
         $responseData = ['success' => true];
 

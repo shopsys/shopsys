@@ -151,8 +151,8 @@ class ComplaintController extends AdminBaseController
     public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchComplaintFacade->createRuleForm(
-            $request->get('filterName'),
-            $request->get('newIndex'),
+            $request->request->getString('filterName'),
+            $request->request->getString('newIndex'),
         );
 
         return $this->render('@ShopsysAdministration/content/complaint/advancedSearch/ruleForm.html.twig', [

@@ -66,8 +66,7 @@ class PricingGroupController extends AdminBaseController
     #[CsrfProtection]
     public function deleteAction(Request $request, int $id): Response
     {
-        $newId = $request->get('newId');
-        $newId = $newId !== null ? (int)$newId : null;
+        $newId = $request->query->has('newId') ? $request->query->getInt('newId') : null;
 
         try {
             $name = $this->pricingGroupFacade->getById($id)->getName();
