@@ -2496,7 +2496,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('Nikon ND-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $productData->descriptions[$domain->getId()] = t('<h2>Nikon EH-22L</h2> High quality, elegant, soft, and yet reliably protecting brand case for your Nikon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->descriptions[$domain->getId()] = t('<h2>Nikon EH-22L</h2>High quality, elegant, soft, and yet reliably protecting brand case for your Nikon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
@@ -2626,7 +2626,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('Canon EH-22M', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $productData->descriptions[$domain->getId()] = t('<h2>Canon EH-22L</h2> High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->descriptions[$domain->getId()] = t('<h2>Canon EH-22L</h2>High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
