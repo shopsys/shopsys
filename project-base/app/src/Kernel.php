@@ -11,7 +11,6 @@ use ReflectionMethod;
 use ReflectionObject;
 use Shopsys\FrameworkBundle\Component\AttributeRouteControllerLoader;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -41,9 +40,6 @@ class Kernel extends BaseKernel
         ]);
 
         parent::boot();
-
-        $filemanagerAccess = $this->container->get(FilemanagerAccess::class);
-        FilemanagerAccess::injectSelf($filemanagerAccess);
 
         $translator = $this->container->get('translator');
         Translator::injectSelf($translator);

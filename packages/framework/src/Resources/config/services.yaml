@@ -275,8 +275,6 @@ services:
                 Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile: '%shopsys.uploaded_file_dir%'
                 Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile: '%shopsys.customer_uploaded_file_dir%'
 
-    Shopsys\FrameworkBundle\Component\Filesystem\FilepathComparator: ~
-
     Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory:
         arguments:
             $projectDir: '%kernel.project_dir%'
@@ -783,11 +781,6 @@ services:
         arguments:
             - '%kernel.environment%'
             - '%env(bool:IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK)%'
-
-    Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess:
-        arguments:
-            - '%shopsys.filemanager_upload_dir%'
-        public: true
 
     Shopsys\FrameworkBundle\Model\Security\LoginListener:
         tags:
