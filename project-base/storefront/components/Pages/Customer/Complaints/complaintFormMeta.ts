@@ -16,7 +16,6 @@ import {
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
-import { useMemo } from 'react';
 import { FieldError, UseFormReturn } from 'react-hook-form';
 import { ComplaintFormType } from 'types/form';
 import { SelectOptionType } from 'types/selectOptions';
@@ -143,126 +142,102 @@ export const useComplaintFormMeta = (formProviderMethods: UseFormReturn<Complain
 
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'complaint-form',
-            messages: {
-                error: t('Could not create complaint'),
+    return {
+        formName: 'complaint-form',
+        messages: {
+            error: t('Could not create complaint'),
+        },
+        fields: {
+            quantity: {
+                name: 'quantity' as const,
+                label: t('Quantity', { ns: 'accessibility' }),
+                errorMessage: errors.quantity?.message,
             },
-            fields: {
-                quantity: {
-                    name: 'quantity' as const,
-                    label: t('Quantity', { ns: 'accessibility' }),
-                    errorMessage: errors.quantity?.message,
-                },
-                description: {
-                    name: 'description' as const,
-                    label: t('Description'),
-                    errorMessage: errors.description?.message,
-                },
-                files: {
-                    name: 'files' as const,
-                    label: t('Files'),
-                    errorMessage: errors.files?.message,
-                },
-                email: {
-                    name: 'email' as const,
-                    label: t('Email'),
-                    errorMessage: errors.email?.message,
-                },
-                deliveryAddressUuid: {
-                    name: 'deliveryAddressUuid' as const,
-                    label: t('Delivery address'),
-                    errorMessage: undefined,
-                },
-                firstName: {
-                    name: 'firstName' as const,
-                    label: t('First name'),
-                    errorMessage: errors.firstName?.message,
-                },
-                lastName: {
-                    name: 'lastName' as const,
-                    label: t('Last name'),
-                    errorMessage: errors.lastName?.message,
-                },
-                companyName: {
-                    name: 'companyName' as const,
-                    label: t('Company'),
-                    errorMessage: errors.companyName?.message,
-                },
-                telephone: {
-                    name: 'telephone' as const,
-                    label: t('Phone'),
-                    errorMessage: errors.telephone?.message,
-                },
-                street: {
-                    name: 'street' as const,
-                    label: t('Street and house no.'),
-                    errorMessage: errors.street?.message,
-                },
-                city: {
-                    name: 'city' as const,
-                    label: t('City'),
-                    errorMessage: errors.city?.message,
-                },
-                postcode: {
-                    name: 'postcode' as const,
-                    label: t('Postcode'),
-                    errorMessage: errors.postcode?.message,
-                },
-                country: {
-                    name: 'country' as const,
-                    label: t('Country'),
-                    errorMessage: (errors.country as FieldError | undefined)?.message,
-                },
-                manualDocumentNumber: {
-                    name: 'manualDocumentNumber' as const,
-                    label: t('Order or document number'),
-                    errorMessage: errors.manualDocumentNumber?.message,
-                },
-                manualComplaintItemName: {
-                    name: 'manualComplaintItemName' as const,
-                    label: t('Item name'),
-                    errorMessage: errors.manualComplaintItemName?.message,
-                },
-                manualComplaintItemCatnum: {
-                    name: 'manualComplaintItemCatnum' as const,
-                    label: t('Catalog number'),
-                    errorMessage: errors.manualComplaintItemCatnum?.message,
-                },
-                resolution: {
-                    name: 'resolution' as const,
-                    label: t('Resolution'),
-                    errorMessage: errors.resolution?.message,
-                },
-                bankAccountNumber: {
-                    name: 'bankAccountNumber' as const,
-                    label: t('Bank account number'),
-                    errorMessage: errors.bankAccountNumber?.message,
-                },
+            description: {
+                name: 'description' as const,
+                label: t('Description'),
+                errorMessage: errors.description?.message,
             },
-        }),
-        [
-            errors.quantity?.message,
-            errors.description?.message,
-            errors.bankAccountNumber?.message,
-            errors.files?.message,
-            errors.email?.message,
-            errors.firstName?.message,
-            errors.lastName?.message,
-            errors.companyName?.message,
-            errors.telephone?.message,
-            errors.street?.message,
-            errors.city?.message,
-            errors.postcode?.message,
-            errors.country,
-            errors.manualDocumentNumber?.message,
-            errors.manualComplaintItemName?.message,
-            errors.manualComplaintItemCatnum?.message,
-            errors.resolution,
-            t,
-        ],
-    );
-
-    return formMeta;
+            files: {
+                name: 'files' as const,
+                label: t('Files'),
+                errorMessage: errors.files?.message,
+            },
+            email: {
+                name: 'email' as const,
+                label: t('Email'),
+                errorMessage: errors.email?.message,
+            },
+            deliveryAddressUuid: {
+                name: 'deliveryAddressUuid' as const,
+                label: t('Delivery address'),
+                errorMessage: undefined,
+            },
+            firstName: {
+                name: 'firstName' as const,
+                label: t('First name'),
+                errorMessage: errors.firstName?.message,
+            },
+            lastName: {
+                name: 'lastName' as const,
+                label: t('Last name'),
+                errorMessage: errors.lastName?.message,
+            },
+            companyName: {
+                name: 'companyName' as const,
+                label: t('Company'),
+                errorMessage: errors.companyName?.message,
+            },
+            telephone: {
+                name: 'telephone' as const,
+                label: t('Phone'),
+                errorMessage: errors.telephone?.message,
+            },
+            street: {
+                name: 'street' as const,
+                label: t('Street and house no.'),
+                errorMessage: errors.street?.message,
+            },
+            city: {
+                name: 'city' as const,
+                label: t('City'),
+                errorMessage: errors.city?.message,
+            },
+            postcode: {
+                name: 'postcode' as const,
+                label: t('Postcode'),
+                errorMessage: errors.postcode?.message,
+            },
+            country: {
+                name: 'country' as const,
+                label: t('Country'),
+                errorMessage: (errors.country as FieldError | undefined)?.message,
+            },
+            manualDocumentNumber: {
+                name: 'manualDocumentNumber' as const,
+                label: t('Order or document number'),
+                errorMessage: errors.manualDocumentNumber?.message,
+            },
+            manualComplaintItemName: {
+                name: 'manualComplaintItemName' as const,
+                label: t('Item name'),
+                errorMessage: errors.manualComplaintItemName?.message,
+            },
+            manualComplaintItemCatnum: {
+                name: 'manualComplaintItemCatnum' as const,
+                label: t('Catalog number'),
+                errorMessage: errors.manualComplaintItemCatnum?.message,
+            },
+            resolution: {
+                name: 'resolution' as const,
+                label: t('Resolution'),
+                errorMessage: errors.resolution?.message,
+            },
+            bankAccountNumber: {
+                name: 'bankAccountNumber' as const,
+                label: t('Bank account number'),
+                errorMessage: errors.bankAccountNumber?.message,
+            },
+        },
+    };
 };

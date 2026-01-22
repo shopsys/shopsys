@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';
@@ -30,23 +29,18 @@ type UserConsentFormMeta = {
 };
 
 export const useUserConsentFormMeta = (): UserConsentFormMeta => {
-    const formMeta = useMemo(
-        () => ({
-            formName: 'user-consent-form',
-            fields: {
-                marketing: {
-                    name: 'marketing' as const,
-                },
-                preferences: {
-                    name: 'preferences' as const,
-                },
-                statistics: {
-                    name: 'statistics' as const,
-                },
+    return {
+        formName: 'user-consent-form',
+        fields: {
+            marketing: {
+                name: 'marketing' as const,
             },
-        }),
-        [],
-    );
-
-    return formMeta;
+            preferences: {
+                name: 'preferences' as const,
+            },
+            statistics: {
+                name: 'statistics' as const,
+            },
+        },
+    };
 };

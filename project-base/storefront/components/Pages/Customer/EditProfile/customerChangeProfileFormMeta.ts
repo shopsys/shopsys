@@ -12,7 +12,6 @@ import {
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
-import { useMemo } from 'react';
 import { FieldError, UseFormReturn } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -79,96 +78,77 @@ export const useCustomerChangeProfileFormMeta = (
     const companyCustomer = formProviderMethods.formState.dirtyFields.companyCustomer;
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'customer-change-profile-form',
-            messages: {
-                error: t('An error occurred while saving your profile'),
-                success: t('Your profile has been changed successfully'),
+    return {
+        formName: 'customer-change-profile-form',
+        messages: {
+            error: t('An error occurred while saving your profile'),
+            success: t('Your profile has been changed successfully'),
+        },
+        fields: {
+            companyCustomer: {
+                name: 'companyCustomer' as const,
+                label: '',
             },
-            fields: {
-                companyCustomer: {
-                    name: 'companyCustomer' as const,
-                    label: '',
-                },
-                email: {
-                    name: 'email' as const,
-                    label: t('Your email'),
-                    errorMessage: errors.email?.message,
-                },
-                telephone: {
-                    name: 'telephone' as const,
-                    label: t('Phone'),
-                    errorMessage: errors.telephone?.message,
-                },
-                firstName: {
-                    name: 'firstName' as const,
-                    label: t('First name'),
-                    errorMessage: errors.firstName?.message,
-                },
-                lastName: {
-                    name: 'lastName' as const,
-                    label: t('Last name'),
-                    errorMessage: errors.lastName?.message,
-                },
-                companyName: {
-                    name: 'companyName' as const,
-                    label: t('Company name'),
-                    errorMessage: companyCustomer ? errors.companyName?.message : undefined,
-                },
-                companyNumber: {
-                    name: 'companyNumber' as const,
-                    label: t('Company number'),
-                    errorMessage: companyCustomer ? errors.companyNumber?.message : undefined,
-                },
-                companyTaxNumber: {
-                    name: 'companyTaxNumber' as const,
-                    label: t('Tax number'),
-                    errorMessage: companyCustomer ? errors.companyTaxNumber?.message : undefined,
-                },
-                street: {
-                    name: 'street' as const,
-                    label: t('Street and house no.'),
-                    errorMessage: errors.street?.message,
-                },
-                city: {
-                    name: 'city' as const,
-                    label: t('City'),
-                    errorMessage: errors.city?.message,
-                },
-                postcode: {
-                    name: 'postcode' as const,
-                    label: t('Postcode'),
-                    errorMessage: errors.postcode?.message,
-                },
-                country: {
-                    name: 'country' as const,
-                    label: t('Country'),
-                    errorMessage: (errors.country as FieldError | undefined)?.message,
-                },
-                newsletterSubscription: {
-                    name: 'newsletterSubscription' as const,
-                    label: t('I agree to receive the newsletter'),
-                    errorMessage: errors.newsletterSubscription?.message,
-                },
+            email: {
+                name: 'email' as const,
+                label: t('Your email'),
+                errorMessage: errors.email?.message,
             },
-        }),
-        [
-            errors.email?.message,
-            errors.telephone?.message,
-            errors.firstName?.message,
-            errors.lastName?.message,
-            errors.companyName?.message,
-            errors.companyNumber?.message,
-            errors.companyTaxNumber?.message,
-            errors.street?.message,
-            errors.city?.message,
-            errors.postcode?.message,
-            errors.country,
-            errors.newsletterSubscription?.message,
-            companyCustomer,
-            t,
-        ],
-    );
-    return formMeta;
+            telephone: {
+                name: 'telephone' as const,
+                label: t('Phone'),
+                errorMessage: errors.telephone?.message,
+            },
+            firstName: {
+                name: 'firstName' as const,
+                label: t('First name'),
+                errorMessage: errors.firstName?.message,
+            },
+            lastName: {
+                name: 'lastName' as const,
+                label: t('Last name'),
+                errorMessage: errors.lastName?.message,
+            },
+            companyName: {
+                name: 'companyName' as const,
+                label: t('Company name'),
+                errorMessage: companyCustomer ? errors.companyName?.message : undefined,
+            },
+            companyNumber: {
+                name: 'companyNumber' as const,
+                label: t('Company number'),
+                errorMessage: companyCustomer ? errors.companyNumber?.message : undefined,
+            },
+            companyTaxNumber: {
+                name: 'companyTaxNumber' as const,
+                label: t('Tax number'),
+                errorMessage: companyCustomer ? errors.companyTaxNumber?.message : undefined,
+            },
+            street: {
+                name: 'street' as const,
+                label: t('Street and house no.'),
+                errorMessage: errors.street?.message,
+            },
+            city: {
+                name: 'city' as const,
+                label: t('City'),
+                errorMessage: errors.city?.message,
+            },
+            postcode: {
+                name: 'postcode' as const,
+                label: t('Postcode'),
+                errorMessage: errors.postcode?.message,
+            },
+            country: {
+                name: 'country' as const,
+                label: t('Country'),
+                errorMessage: (errors.country as FieldError | undefined)?.message,
+            },
+            newsletterSubscription: {
+                name: 'newsletterSubscription' as const,
+                label: t('I agree to receive the newsletter'),
+                errorMessage: errors.newsletterSubscription?.message,
+            },
+        },
+    };
 };

@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validateNewPassword, validateNewPasswordConfirm, validateOldPassword } from 'components/Forms/validationRules';
-import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ChangePasswordFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -44,32 +43,28 @@ export const useChangePasswordFormMeta = (
     const { t } = useTranslation();
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'customer-change-password-form',
-            messages: {
-                error: t('An error occurred while changing your password'),
-                success: t('Your password has been changed successfully'),
+    return {
+        formName: 'customer-change-password-form',
+        messages: {
+            error: t('An error occurred while changing your password'),
+            success: t('Your password has been changed successfully'),
+        },
+        fields: {
+            oldPassword: {
+                name: 'oldPassword' as const,
+                label: t('Current password'),
+                errorMessage: errors.oldPassword?.message,
             },
-            fields: {
-                oldPassword: {
-                    name: 'oldPassword' as const,
-                    label: t('Current password'),
-                    errorMessage: errors.oldPassword?.message,
-                },
-                newPassword: {
-                    name: 'newPassword' as const,
-                    label: t('New password'),
-                    errorMessage: errors.newPassword?.message,
-                },
-                newPasswordConfirm: {
-                    name: 'newPasswordConfirm' as const,
-                    label: t('New password again'),
-                    errorMessage: errors.newPasswordConfirm?.message,
-                },
+            newPassword: {
+                name: 'newPassword' as const,
+                label: t('New password'),
+                errorMessage: errors.newPassword?.message,
             },
-        }),
-        [errors.oldPassword?.message, errors.newPassword?.message, errors.newPasswordConfirm?.message, t],
-    );
-    return formMeta;
+            newPasswordConfirm: {
+                name: 'newPasswordConfirm' as const,
+                label: t('New password again'),
+                errorMessage: errors.newPasswordConfirm?.message,
+            },
+        },
+    };
 };

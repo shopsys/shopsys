@@ -4,7 +4,7 @@ import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validatio
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import { ReactElement, useMemo } from 'react';
+import { ReactElement } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -58,50 +58,45 @@ export const useContactFormMeta = (formProviderMethods: UseFormReturn<ContactFor
     const privacyPolicyUrl = settingsData?.settings?.privacyPolicyArticleUrl;
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'contact-form',
-            messages: {
-                error: t('The message could not be sent'),
-                success: t('Thank you! Your message was successfully sent.'),
+    return {
+        formName: 'contact-form',
+        messages: {
+            error: t('The message could not be sent'),
+            success: t('Thank you! Your message was successfully sent.'),
+        },
+        fields: {
+            email: {
+                name: 'email' as const,
+                label: t('Your email'),
+                errorMessage: errors.email?.message,
             },
-            fields: {
-                email: {
-                    name: 'email' as const,
-                    label: t('Your email'),
-                    errorMessage: errors.email?.message,
-                },
-                name: {
-                    name: 'name' as const,
-                    label: t('Your name'),
-                    errorMessage: errors.name?.message,
-                },
-                message: {
-                    name: 'message' as const,
-                    label: t('Message'),
-                    errorMessage: errors.message?.message,
-                },
-                privacyPolicy: {
-                    name: 'privacyPolicy' as const,
-                    label: (
-                        <Trans
-                            defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
-                            i18nKey="GdprAgreementCheckbox"
-                            components={{
-                                lnk1: privacyPolicyUrl ? (
-                                    <Link className="inline text-sm" href={privacyPolicyUrl} target="_blank" />
-                                ) : (
-                                    <span className={linkPlaceholderTwClass} />
-                                ),
-                            }}
-                        />
-                    ),
-                    errorMessage: errors.privacyPolicy?.message,
-                },
+            name: {
+                name: 'name' as const,
+                label: t('Your name'),
+                errorMessage: errors.name?.message,
             },
-        }),
-        [errors.email?.message, errors.name?.message, errors.message?.message, t],
-    );
-
-    return formMeta;
+            message: {
+                name: 'message' as const,
+                label: t('Message'),
+                errorMessage: errors.message?.message,
+            },
+            privacyPolicy: {
+                name: 'privacyPolicy' as const,
+                label: (
+                    <Trans
+                        defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
+                        i18nKey="GdprAgreementCheckbox"
+                        components={{
+                            lnk1: privacyPolicyUrl ? (
+                                <Link className="inline text-sm" href={privacyPolicyUrl} target="_blank" />
+                            ) : (
+                                <span className={linkPlaceholderTwClass} />
+                            ),
+                        }}
+                    />
+                ),
+                errorMessage: errors.privacyPolicy?.message,
+            },
+        },
+    };
 };
