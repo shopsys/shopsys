@@ -106,7 +106,6 @@
         "symfony/messenger": "^6.4",
         "symfony/monolog-bundle": "^3.5.0",
         "symfony/property-info": "^6.4",
-        "symfony/proxy-manager-bridge": "^6.4",
         "symfony/rate-limiter": "^6.4",
         "symfony/security-bundle": "^6.4",
         "symfony/serializer": "^6.4",

@@ -4,6 +4,7 @@ snc_redis:
             type: 'phpredis'
             alias: 'bestselling_products'
             dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
             options:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:bestselling_products:'
                 connection_timeout: 2
@@ -12,6 +13,7 @@ snc_redis:
             type: 'phpredis'
             alias: 'blog_article_export_queue'
             dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
             options:
                 serialization: 'json'
                 prefix: '%env(REDIS_PREFIX)%:queue:blog_article_export:'
@@ -21,6 +23,7 @@ snc_redis:
             type: 'phpredis'
             alias: 'doctrine_query'
             dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
             options:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:doctrine:query:'
                 connection_timeout: 2
@@ -30,6 +33,7 @@ snc_redis:
             type: 'phpredis'
             alias: 'global'
             dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
             options:
                 prefix: '%env(REDIS_PREFIX)%:'
                 connection_timeout: 2
@@ -38,6 +42,7 @@ snc_redis:
             type: 'phpredis'
             alias: 'image'
             dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
             options:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:image:'
                 connection_timeout: 2
@@ -46,6 +51,7 @@ snc_redis:
             type: 'phpredis'
             alias: 'main_friendly_url_slugs'
             dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
             options:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:main_friendly_url_slugs:'
                 connection_timeout: 2
@@ -54,6 +60,7 @@ snc_redis:
             type: 'phpredis'
             alias: 'product_recalculation_queue'
             dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
             options:
                 prefix: '%env(REDIS_PREFIX)%:queue:recalculation:'
                 connection_timeout: 2
@@ -62,6 +69,7 @@ snc_redis:
             type: 'phpredis'
             alias: 'storefront_graphql_query'
             dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
             options:
                 prefix: '%env(REDIS_PREFIX)%:fe:'
                 connection_timeout: 2
