@@ -7,7 +7,7 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useHashNavigation } from 'utils/ui/useHashNavigation';
 
@@ -38,26 +38,22 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
     const relatedProductsRef = useRef<HTMLDivElement>(null);
     const filesRef = useRef<HTMLDivElement>(null);
 
-    const sections = useMemo(
-        () =>
-            [
-                { id: PRODUCT_DETAIL_SECTIONS_IDS.overview, label: t('Overview'), ref: overviewRef, isVisible: true },
-                {
-                    id: PRODUCT_DETAIL_SECTIONS_IDS.parameters,
-                    label: t('Parameters'),
-                    ref: parametersRef,
-                    isVisible: !!parameters.length,
-                },
-                {
-                    id: PRODUCT_DETAIL_SECTIONS_IDS.relatedProducts,
-                    label: t('Related Products'),
-                    ref: relatedProductsRef,
-                    isVisible: !!relatedProducts.length,
-                },
-                { id: PRODUCT_DETAIL_SECTIONS_IDS.files, label: t('Files'), ref: filesRef, isVisible: !!files.length },
-            ].filter((section) => section.isVisible),
-        [t, parameters.length, relatedProducts.length, files.length],
-    );
+    const sections = [
+        { id: PRODUCT_DETAIL_SECTIONS_IDS.overview, label: t('Overview'), ref: overviewRef, isVisible: true },
+        {
+            id: PRODUCT_DETAIL_SECTIONS_IDS.parameters,
+            label: t('Parameters'),
+            ref: parametersRef,
+            isVisible: !!parameters.length,
+        },
+        {
+            id: PRODUCT_DETAIL_SECTIONS_IDS.relatedProducts,
+            label: t('Related Products'),
+            ref: relatedProductsRef,
+            isVisible: !!relatedProducts.length,
+        },
+        { id: PRODUCT_DETAIL_SECTIONS_IDS.files, label: t('Files'), ref: filesRef, isVisible: !!files.length },
+    ].filter((section) => section.isVisible);
 
     const { scrollToSection, activeSection } = useHashNavigation(sections);
 

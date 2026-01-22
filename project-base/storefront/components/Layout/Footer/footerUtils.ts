@@ -1,7 +1,6 @@
 import { TypeSimpleNotBlogArticleFragment } from 'graphql/requests/articlesInterface/articles/fragments/SimpleNotBlogArticleFragment.generated';
 import { useArticlesQuery } from 'graphql/requests/articlesInterface/articles/queries/ArticlesQuery.generated';
 import { TypeArticlePlacementTypeEnum } from 'graphql/types';
-import { useMemo } from 'react';
 import { FooterArticle } from 'types/footerArticle';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -19,31 +18,28 @@ export const useFooterArticles = () => {
         },
     });
 
-    const footerArticles: FooterArticle[] = useMemo(
-        () => [
-            {
-                key: 'about-cc',
-                title: t('About Shopsys'),
-                items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer1),
-            },
-            {
-                key: 'about-shopping',
-                title: t('About shopping'),
-                items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer2),
-            },
-            {
-                key: 'e-shop',
-                title: t('E-shop'),
-                items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer3),
-            },
-            {
-                key: 'stores',
-                title: t('Stores'),
-                items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer4),
-            },
-        ],
-        [articlesData?.articles.edges],
-    );
+    const footerArticles: FooterArticle[] = [
+        {
+            key: 'about-cc',
+            title: t('About Shopsys'),
+            items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer1),
+        },
+        {
+            key: 'about-shopping',
+            title: t('About shopping'),
+            items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer2),
+        },
+        {
+            key: 'e-shop',
+            title: t('E-shop'),
+            items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer3),
+        },
+        {
+            key: 'stores',
+            title: t('Stores'),
+            items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer4),
+        },
+    ];
 
     return footerArticles;
 };

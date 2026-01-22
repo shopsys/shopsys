@@ -4,7 +4,7 @@ import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
@@ -12,6 +12,36 @@ import { twMergeCustom } from 'utils/twMerge';
 
 type ProductComparisonContentProps = {
     comparedProducts: TypeProductInProductListFragment[];
+};
+
+const getParametersData = (comparedProducts: TypeProductInProductListFragment[]) => {
+    const parametersData: { name: string; unit: string | undefined; values: string[] }[] = [];
+    comparedProducts.forEach((product) => {
+        product.parameters.forEach((parameter) => {
+            const indexOfParameter = parametersData.findIndex((item) => item.name === parameter.name);
+
+            if (indexOfParameter === -1) {
+                parametersData.push({ name: parameter.name, unit: parameter.unit?.name, values: [] });
+            }
+        });
+    });
+
+    comparedProducts.forEach((product, productIndex) => {
+        product.parameters.forEach((parameter) => {
+            const indexOfParameter = parametersData.findIndex((item) => item.name === parameter.name);
+
+            parametersData[indexOfParameter].values.push(parameter.values[0].text);
+        });
+
+        for (let i = 0; i < parametersData.length; i++) {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (parametersData[i].values[productIndex] === undefined) {
+                parametersData[i].values.push('-');
+            }
+        }
+    });
+
+    return parametersData;
 };
 
 export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ comparedProducts }) => {
@@ -26,35 +56,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
         tableMarginLeft,
     } = useComparisonTable(comparedProducts.length);
 
-    const getParametersDataState = useMemo(() => {
-        const parametersData: { name: string; unit: string | undefined; values: string[] }[] = [];
-        comparedProducts.forEach((product) => {
-            product.parameters.forEach((parameter) => {
-                const indexOfParameter = parametersData.findIndex((item) => item.name === parameter.name);
-
-                if (indexOfParameter === -1) {
-                    parametersData.push({ name: parameter.name, unit: parameter.unit?.name, values: [] });
-                }
-            });
-        });
-
-        comparedProducts.forEach((product, productIndex) => {
-            product.parameters.forEach((parameter) => {
-                const indexOfParameter = parametersData.findIndex((item) => item.name === parameter.name);
-
-                parametersData[indexOfParameter].values.push(parameter.values[0].text);
-            });
-
-            for (let i = 0; i < parametersData.length; i++) {
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                if (parametersData[i].values[productIndex] === undefined) {
-                    parametersData[i].values.push('-');
-                }
-            }
-        });
-
-        return parametersData;
-    }, [comparedProducts]);
+    const parametersDataState = getParametersData(comparedProducts);
 
     useEffect(() => {
         calcMaxMarginLeft();
@@ -87,7 +89,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
                     <ProductComparisonHead comparedProducts={comparedProducts} />
                     <ProductComparisonBody
                         comparedProducts={comparedProducts}
-                        parametersDataState={getParametersDataState}
+                        parametersDataState={parametersDataState}
                     />
                 </table>
             </div>

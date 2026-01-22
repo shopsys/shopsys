@@ -7,7 +7,6 @@ import {
     InputHTMLAttributes,
     KeyboardEventHandler,
     useEffect,
-    useMemo,
     useRef,
     useState,
 } from 'react';
@@ -51,7 +50,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     title,
 }) => {
     const { t } = useTranslation();
-    const step = useMemo(() => getStep(min, max), [min, max]);
+    const step = getStep(min, max);
 
     const [minValueInput, setMinValueInput] = useState<number | ''>(min);
     const [minValueThumb, setMinValueThumb] = useState(min);

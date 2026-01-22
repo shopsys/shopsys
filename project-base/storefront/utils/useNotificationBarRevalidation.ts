@@ -1,5 +1,5 @@
 import { useNotificationBars } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
 const DEFAULT_POLLING_INTERVAL_MS = 300_000; // 5 minutes (matches @redisCache TTL)
 
@@ -28,9 +28,8 @@ export const useNotificationBarsWithRevalidation = (pollingIntervalMs = DEFAULT_
         return () => clearInterval(intervalId);
     }, [fetchNotificationBars, pollingIntervalMs]);
 
-    const activeNotificationBars = useMemo(
-        () => notificationBarsData?.notificationBars?.filter((notification) => isFutureDate(notification.validityTo)),
-        [notificationBarsData],
+    const activeNotificationBars = notificationBarsData?.notificationBars?.filter((notification) =>
+        isFutureDate(notification.validityTo),
     );
 
     return { notificationBarsData, activeNotificationBars, fetchNotificationBars };

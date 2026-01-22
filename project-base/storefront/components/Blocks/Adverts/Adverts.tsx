@@ -22,17 +22,15 @@ export const Adverts: FC<AdvertsProps> = ({ positionName, withWebline, currentCa
         },
     });
 
-    const advertsForPosition = useMemo(
-        () => advertsData?.adverts.filter((advert) => advert.positionName === positionName) ?? [],
-        [advertsData?.adverts, positionName],
-    );
-
+    // keep useMemo for Math.random() - needs stable value across renders
     const displayedAdverts = useMemo(() => {
+        const advertsForPosition = advertsData?.adverts.filter((advert) => advert.positionName === positionName) ?? [];
+
         if (isSingle && advertsForPosition.length) {
             return [advertsForPosition[Math.floor(Math.random() * advertsForPosition.length)]];
         }
         return advertsForPosition;
-    }, [isSingle, advertsForPosition]);
+    }, [isSingle, advertsData?.adverts, positionName]);
 
     if (!displayedAdverts.length) {
         return null;

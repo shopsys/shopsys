@@ -5,7 +5,6 @@ import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModul
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import { useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
@@ -20,7 +19,7 @@ export type BlogPreviewProps = {
 export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetchingArticles }) => {
     const { t } = useTranslation();
 
-    const blogItems = useMemo(() => mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticles), [blogArticles]);
+    const blogItems = mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticles);
     const blogMainItems = blogItems?.slice(0, 2);
     const blogSideItems = blogItems?.slice(2);
 

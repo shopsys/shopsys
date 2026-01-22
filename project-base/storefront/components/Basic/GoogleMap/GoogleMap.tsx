@@ -2,7 +2,7 @@ import { GoogleMapMarker } from './GoogleMapMarker';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import GoogleMapReact from 'google-map-react';
 import { TypeCoordinates } from 'graphql/types';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PointFeature } from 'supercluster';
 import { MapMarker, MapMarkerNullable } from 'types/map';
 import useSupercluster from 'use-supercluster';
@@ -66,12 +66,9 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     const mapRef = useRef<any>(null);
     const [isGoogleApiLoaded, setIsGoogleApiLoaded] = useState(false);
 
-    const markersClusterConfig: PointFeature<MarkerProperties>[] = useMemo(() => {
-        const validMarkers = (markers?.filter((marker) => marker.latitude !== null && marker.longitude !== null) ??
-            []) as MapMarker[];
-
-        return validMarkers.map(markerMapper);
-    }, [markers]);
+    const validMarkers = (markers?.filter((marker) => marker.latitude !== null && marker.longitude !== null) ??
+        []) as MapMarker[];
+    const markersClusterConfig: PointFeature<MarkerProperties>[] = validMarkers.map(markerMapper);
 
     const { clusters, supercluster } = useSupercluster({
         points: markersClusterConfig,

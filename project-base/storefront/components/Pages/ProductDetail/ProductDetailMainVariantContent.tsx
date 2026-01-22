@@ -14,7 +14,6 @@ import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageVie
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
 type ProductDetailMainVariantContentProps = {
@@ -27,17 +26,16 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
     isProductDetailFetching,
 }) => {
     const router = useRouter();
-    const mainVariantImagesWithVariantImages = useMemo(() => {
-        const variantImages = product.variants.reduce((mappedVariantImages, variant) => {
-            if (variant.mainImage) {
-                mappedVariantImages.push(variant.mainImage);
-            }
 
-            return mappedVariantImages;
-        }, [] as TypeImageFragment[]);
+    const variantImages = product.variants.reduce((mappedVariantImages, variant) => {
+        if (variant.mainImage) {
+            mappedVariantImages.push(variant.mainImage);
+        }
 
-        return [...product.images, ...variantImages];
-    }, [product]);
+        return mappedVariantImages;
+    }, [] as TypeImageFragment[]);
+
+    const mainVariantImagesWithVariantImages = [...product.images, ...variantImages];
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(product);
     useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);

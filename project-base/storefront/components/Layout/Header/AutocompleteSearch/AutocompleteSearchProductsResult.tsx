@@ -8,7 +8,6 @@ import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/Aut
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { GtmSectionType } from 'gtm/enums/GtmSectionType';
 import { onGtmAutocompleteResultClickEventHandler } from 'gtm/handlers/onGtmAutocompleteResultClickEventHandler';
-import { useMemo } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 
@@ -25,10 +24,7 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
 }) => {
     const { t } = useTranslation();
 
-    const mappedProductSearchResults = useMemo(
-        () => mapConnectionEdges<TypeListedProductFragment>(productsSearch.edges),
-        [productsSearch.edges],
-    );
+    const mappedProductSearchResults = mapConnectionEdges<TypeListedProductFragment>(productsSearch.edges);
 
     const onProductDetailRedirectHandler = (product: TypeSimpleProductFragment | TypeListedProductFragment) => {
         onGtmAutocompleteResultClickEventHandler(
