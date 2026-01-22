@@ -142,10 +142,15 @@ Analyzes PR diffs to identify breaking changes, feature movements, and scope.
 - Focus on WHAT to do, not WHY
 - Key test: "Will code break without manual changes?" → YES = include
 
+**Code example formatting:**
+- Use ` ```diff ``` ` for code blocks (preferred styling)
+- Use markdown tables for simple value mappings/replacements (e.g., old method → new method)
+- Show actual code from commits as examples, not generic placeholders
+
 **Critical:**
 - MOVEMENTS FIRST - never mark movement as "removed"
 - FQCN ALWAYS
-- #project-base-diff - if ANY project-base files changed
+- `- see #project-base-diff to update your project` - ONLY if there were any changes in `project-base/` folder
 - Constructor changes - ONLY for `new ClassName()`, NOT autowired
 
 **Real-World Example Patterns:**
