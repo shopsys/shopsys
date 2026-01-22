@@ -2,7 +2,7 @@ import { TextInput } from './TextInput';
 import eyeIcon from '/public/svg/eye.svg';
 import { Image } from 'components/Basic/Image/Image';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { InputHTMLAttributes, ReactElement, ReactNode, useCallback, useState } from 'react';
+import { InputHTMLAttributes, ReactElement, ReactNode, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
@@ -39,9 +39,9 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
 
     const [inputType, setInputType] = useState<'text' | 'password'>('password');
 
-    const togglePasswordVisibilityHandler = useCallback(() => {
+    const togglePasswordVisibilityHandler = () => {
         setInputType((currentInputType) => (currentInputType === 'password' ? 'text' : 'password'));
-    }, []);
+    };
 
     return render(
         <>

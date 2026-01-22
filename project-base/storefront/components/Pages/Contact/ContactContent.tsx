@@ -13,7 +13,7 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useContactFormMutation } from 'graphql/requests/contact/mutations/ContactFormMutation.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
@@ -32,26 +32,23 @@ export const ContactContent: FC = () => {
         customMessage: formMeta.messages.error,
     });
 
-    const onSubmitHandler = useCallback<SubmitHandler<ContactFormType>>(
-        async (values) => {
-            const { name, email, message } = values;
-            const contactFormResult = await contactForm({
-                input: {
-                    name,
-                    email,
-                    message,
-                },
-            });
+    const onSubmitHandler: SubmitHandler<ContactFormType> = async (values) => {
+        const { name, email, message } = values;
+        const contactFormResult = await contactForm({
+            input: {
+                name,
+                email,
+                message,
+            },
+        });
 
-            if (contactFormResult.data?.ContactForm !== undefined) {
-                setIsSuccess(true);
-            }
+        if (contactFormResult.data?.ContactForm !== undefined) {
+            setIsSuccess(true);
+        }
 
-            handleError(contactFormResult.error);
-            clearForm(contactFormResult.error, formProviderMethods, defaultValues);
-        },
-        [contactForm, formMeta.messages, formProviderMethods, defaultValues, handleError],
-    );
+        handleError(contactFormResult.error);
+        clearForm(contactFormResult.error, formProviderMethods, defaultValues);
+    };
 
     return (
         <Webline className="mt-8" width="lg">

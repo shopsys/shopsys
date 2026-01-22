@@ -6,7 +6,7 @@ import { usePayOrderMutation } from 'graphql/requests/orders/mutations/PayOrderM
 import { TypeGoPayCreatePaymentSetup } from 'graphql/types';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -39,7 +39,7 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
 
     const autoTriggeredOrderRef = useRef<string | null>(null);
 
-    const handlePayOrder = useCallback(async () => {
+    const handlePayOrder = async () => {
         setInitiatedPaymentGate(true);
 
         const query = {
@@ -81,7 +81,7 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
         }
 
         setGoPayPaymentSetup(payOrderResult.data?.PayOrder.goPayCreatePaymentSetup ?? undefined);
-    }, [router, domainUrl, payOrder, orderUuid, t, onMaxTransactionCountReached]);
+    };
 
     const initGoPayCheckout = (gatewayUrl: string) => () => {
         const attemptCheckout = (attempt = 0) => {

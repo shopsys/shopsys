@@ -10,7 +10,6 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mutations/RecoverPasswordMutation.generated';
-import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { NewPasswordFormType } from 'types/form';
@@ -45,40 +44,27 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
         field: { value: newPasswordValue },
     } = useController({ name: formMeta.fields.newPasswordConfirm.name, control: formProviderMethods.control });
 
-    const onNewPasswordHandler = useCallback<SubmitHandler<NewPasswordFormType>>(
-        async (newPasswordFormData) => {
-            const newPasswordResult = await newPassword({
-                hash,
-                email,
-                newPassword: newPasswordFormData.newPassword,
-                cartUuid: cartUuid ?? undefined,
-                productListsUuids: Object.values(productListUuids),
-            });
-
-            const recoverPasswordData = newPasswordResult.data?.RecoverPassword;
-
-            if (recoverPasswordData?.tokens.accessToken) {
-                const { accessToken, refreshToken } = recoverPasswordData.tokens;
-
-                showSuccessMessage(formMeta.messages.success);
-
-                handleActionsAfterPasswordRecovery(recoverPasswordData.showCartMergeInfo, accessToken, refreshToken);
-            }
-
-            handleError(newPasswordResult.error);
-        },
-        [
-            cartUuid,
-            email,
-            formMeta.messages.success,
-            formProviderMethods,
-            handleActionsAfterPasswordRecovery,
+    const onNewPasswordHandler: SubmitHandler<NewPasswordFormType> = async (newPasswordFormData) => {
+        const newPasswordResult = await newPassword({
             hash,
-            newPassword,
-            productListUuids,
-            handleError,
-        ],
-    );
+            email,
+            newPassword: newPasswordFormData.newPassword,
+            cartUuid: cartUuid ?? undefined,
+            productListsUuids: Object.values(productListUuids),
+        });
+
+        const recoverPasswordData = newPasswordResult.data?.RecoverPassword;
+
+        if (recoverPasswordData?.tokens.accessToken) {
+            const { accessToken, refreshToken } = recoverPasswordData.tokens;
+
+            showSuccessMessage(formMeta.messages.success);
+
+            handleActionsAfterPasswordRecovery(recoverPasswordData.showCartMergeInfo, accessToken, refreshToken);
+        }
+
+        handleError(newPasswordResult.error);
+    };
 
     if (hash === '' || email === '') {
         return (

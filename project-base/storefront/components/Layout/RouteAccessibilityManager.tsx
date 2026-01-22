@@ -1,56 +1,47 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, ReactNode } from 'react';
+import { useEffect, ReactNode } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 
 export const RouteAccessibilityManager: FC<{ children: ReactNode }> = ({ children }) => {
     const router = useRouter();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
 
-    const handleRouteChangeStart = useCallback(
-        (_url: string, options: { shallow: boolean }) => {
-            const { shallow } = options;
+    const handleRouteChangeStart = (_url: string, options: { shallow: boolean }) => {
+        const { shallow } = options;
 
-            if (shallow) {
-                return;
-            }
+        if (shallow) {
+            return;
+        }
 
-            updatePageLoadingState({
-                hadClientSideNavigation: true,
-                isPageLoading: true,
-            });
-        },
-        [updatePageLoadingState],
-    );
+        updatePageLoadingState({
+            hadClientSideNavigation: true,
+            isPageLoading: true,
+        });
+    };
 
-    const handleRouteChangeComplete = useCallback(
-        (_url: string, options: { shallow: boolean }) => {
-            const { shallow } = options;
+    const handleRouteChangeComplete = (_url: string, options: { shallow: boolean }) => {
+        const { shallow } = options;
 
-            if (shallow) {
-                return;
-            }
+        if (shallow) {
+            return;
+        }
 
-            updatePageLoadingState({
-                isPageLoading: false,
-            });
-        },
-        [updatePageLoadingState],
-    );
+        updatePageLoadingState({
+            isPageLoading: false,
+        });
+    };
 
-    const handleRouteChangeError = useCallback(
-        (_err: Error, _url: string, options: { shallow: boolean }) => {
-            const { shallow } = options;
+    const handleRouteChangeError = (_err: Error, _url: string, options: { shallow: boolean }) => {
+        const { shallow } = options;
 
-            if (shallow) {
-                return;
-            }
+        if (shallow) {
+            return;
+        }
 
-            updatePageLoadingState({
-                isPageLoading: false,
-            });
-        },
-        [updatePageLoadingState],
-    );
+        updatePageLoadingState({
+            isPageLoading: false,
+        });
+    };
 
     useEffect(() => {
         router.events.on('routeChangeStart', handleRouteChangeStart);

@@ -11,7 +11,6 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
-import { useCallback } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { generateProductImageAlt } from 'utils/productAltText';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
@@ -34,12 +33,13 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
     const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
     const { canSeePrices } = useAuthorization();
 
-    const onProductDetailRedirectHandler = useCallback(
-        (product: TypeListedProductFragment, listName: GtmProductListNameType, index: number) => {
-            onGtmProductClickEventHandler(product, listName, index, url, !canSeePrices);
-        },
-        [url],
-    );
+    const onProductDetailRedirectHandler = (
+        product: TypeListedProductFragment,
+        listName: GtmProductListNameType,
+        index: number,
+    ) => {
+        onGtmProductClickEventHandler(product, listName, index, url, !canSeePrices);
+    };
 
     return (
         <th className="relative px-3 pb-3 align-top font-semibold sm:px-5 sm:pb-5" id="js-table-compare-product">

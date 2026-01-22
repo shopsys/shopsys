@@ -2,7 +2,6 @@ import { ErrorPopup } from 'components/Blocks/Popup/ErrorPopup';
 import { getTransportAndPaymentValidationMessages } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -22,35 +21,32 @@ export const useCartStepNavigation = (): { handleStepClick: StepClickHandler; is
 
     const isSecondStepFilled = !hasValidationErrors(validationMessages);
 
-    const handleStepClick: StepClickHandler = useCallback(
-        (step: number, url: string, redirectPageType: PageType) => {
-            return (currentStep: number) => {
-                if (currentStep === step) {
+    const handleStepClick: StepClickHandler = (step: number, url: string, redirectPageType: PageType) => {
+        return (currentStep: number) => {
+            if (currentStep === step) {
+                return;
+            }
+
+            if (currentStep === 1 && step === 3 && !isSecondStepFilled) {
+                return;
+            }
+
+            if (step === 3 && (currentStep === 2 || isSecondStepFilled)) {
+                if (!isSecondStepFilled) {
+                    updatePortalContent(
+                        <ErrorPopup
+                            fields={validationMessages}
+                            gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
+                        />,
+                    );
                     return;
                 }
+            }
 
-                if (currentStep === 1 && step === 3 && !isSecondStepFilled) {
-                    return;
-                }
-
-                if (step === 3 && (currentStep === 2 || isSecondStepFilled)) {
-                    if (!isSecondStepFilled) {
-                        updatePortalContent(
-                            <ErrorPopup
-                                fields={validationMessages}
-                                gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
-                            />,
-                        );
-                        return;
-                    }
-                }
-
-                updatePageLoadingState({ isPageLoading: true, redirectPageType });
-                router.push(url);
-            };
-        },
-        [router, updatePageLoadingState, updatePortalContent, validationMessages, isSecondStepFilled],
-    );
+            updatePageLoadingState({ isPageLoading: true, redirectPageType });
+            router.push(url);
+        };
+    };
 
     return { handleStepClick, isSecondStepFilled };
 };

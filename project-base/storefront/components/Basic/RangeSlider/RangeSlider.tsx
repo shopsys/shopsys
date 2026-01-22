@@ -6,7 +6,6 @@ import {
     FocusEventHandler,
     InputHTMLAttributes,
     KeyboardEventHandler,
-    useCallback,
     useEffect,
     useMemo,
     useRef,
@@ -88,7 +87,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         }
     }, [maxValue, minValue, max]);
 
-    const getPercent = useCallback((value: number) => Math.round(((value - min) / (max - min)) * 100), [min, max]);
+    const getPercent = (value: number) => Math.round(((value - min) / (max - min)) * 100);
 
     useEffect(() => {
         const minPercent = getPercent(minValueThumb);

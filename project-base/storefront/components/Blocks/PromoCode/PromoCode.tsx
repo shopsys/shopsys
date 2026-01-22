@@ -4,7 +4,7 @@ import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PromoCodeFormType } from 'types/form';
 import { collapseExpandAnimation } from 'utils/animations/animationVariants';
@@ -25,13 +25,10 @@ export const PromoCode: FC = () => {
 
     const [isContentVisible, setIsContentVisible] = useState(!!defaultValues.promoCode);
 
-    const onApplyPromoCodeHandler = useCallback<SubmitHandler<PromoCodeFormType>>(
-        async (promoCodeFormData) => {
-            blurInput();
-            await applyPromoCodeToCart(promoCodeFormData.promoCode);
-        },
-        [applyPromoCodeToCart],
-    );
+    const onApplyPromoCodeHandler: SubmitHandler<PromoCodeFormType> = async (promoCodeFormData) => {
+        blurInput();
+        await applyPromoCodeToCart(promoCodeFormData.promoCode);
+    };
 
     useScrollToFirstError(formMeta.formName, formProviderMethods);
 

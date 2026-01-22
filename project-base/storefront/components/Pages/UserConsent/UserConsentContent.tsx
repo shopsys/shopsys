@@ -2,7 +2,6 @@ import { UserConsentForm } from 'components/Blocks/UserConsent/UserConsentForm';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -10,10 +9,10 @@ export const UserConsentContent: FC = () => {
     const { t } = useTranslation();
     const { push } = useRouter();
 
-    const onSetCallback = useCallback(() => {
+    const onSetCallback = () => {
         showSuccessMessage(t('Your preferences have been set.'));
         push('/');
-    }, [push, t]);
+    };
 
     return (
         <Webline width="lg">
