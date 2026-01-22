@@ -113,7 +113,6 @@
         "gedmo/doctrine-extensions": "^3.22",
         "google/cloud-storage": "^1.10",
         "gopay/payments-sdk-php": "^1.7",
-        "gordalina/cachetool": "^9.2",
         "guzzlehttp/guzzle": "^7.5",
         "helios-ag/fm-elfinder-bundle": "^12.2",
         "heureka/overeno-zakazniky": "^4.0.1",
