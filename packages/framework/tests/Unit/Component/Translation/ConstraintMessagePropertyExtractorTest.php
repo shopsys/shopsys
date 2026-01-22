@@ -46,6 +46,25 @@ class ConstraintMessagePropertyExtractorTest extends TestCase
         $this->assertEquals($expectedCatalogue, $actualCatalogue);
     }
 
+    public function testMessagesAreExtractedFromPromotedProperties(): void
+    {
+        $file = new SplFileInfo(__DIR__ . '/Resources/ConstraintWithPromotedProperties.php');
+
+        $actualCatalogue = $this->extract($file);
+
+        $expectedCatalogue = new MessageCatalogue();
+
+        $message = new Message('Promoted message will be extracted.', 'validators');
+        $message->addSource(new FileSource($file->getFilename(), 19));
+        $expectedCatalogue->add($message);
+
+        $message = new Message('Another promoted message.', 'validators');
+        $message->addSource(new FileSource($file->getFilename(), 20));
+        $expectedCatalogue->add($message);
+
+        $this->assertEquals($expectedCatalogue, $actualCatalogue);
+    }
+
     /**
      * @param \SplFileInfo $file
      * @return \JMS\TranslationBundle\Model\MessageCatalogue
