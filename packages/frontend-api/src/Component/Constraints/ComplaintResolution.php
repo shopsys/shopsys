@@ -12,10 +12,6 @@ class ComplaintResolution extends Constraint
     public const string SELECTED_COMPLAINT_RESOLUTION_NOT_SUPPORTED_ERROR = 'a05b7eae-364b-4a77-a2db-b37398c417b1';
     public const string SELECTED_COMPLAINT_RESOLUTION_REQUIRES_BANK_ACCOUNT_NUMBER_FILLED_ERROR = 'aea614ec-f673-432d-8eec-ac3f43b4ea60';
 
-    public string $selectedComplaintResolutionNotSupportedMessage = 'Selected complaint resolution is not supported';
-
-    public string $selecteComplaintResolutionRequiresBankAccountFilledMessage = 'Selected complaint resolution requires bank account number to be filled';
-
     /**
      * @var array<string, string>
      */
@@ -23,6 +19,21 @@ class ComplaintResolution extends Constraint
         self::SELECTED_COMPLAINT_RESOLUTION_NOT_SUPPORTED_ERROR => 'SELECTED_COMPLAINT_RESOLUTION_NOT_SUPPORTED_ERROR',
         self::SELECTED_COMPLAINT_RESOLUTION_REQUIRES_BANK_ACCOUNT_NUMBER_FILLED_ERROR => 'SELECTED_COMPLAINT_RESOLUTION_REQUIRES_BANK_ACCOUNT_FILLED_ERROR',
     ];
+
+    /**
+     * @param string $selectedComplaintResolutionNotSupportedMessage
+     * @param string $selecteComplaintResolutionRequiresBankAccountFilledMessage
+     * @param array|null $groups
+     * @param mixed $payload
+     */
+    public function __construct(
+        public string $selectedComplaintResolutionNotSupportedMessage = 'Selected complaint resolution is not supported',
+        public string $selecteComplaintResolutionRequiresBankAccountFilledMessage = 'Selected complaint resolution requires bank account number to be filled',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        parent::__construct([], $groups, $payload);
+    }
 
     /**
      * {@inheritdoc}

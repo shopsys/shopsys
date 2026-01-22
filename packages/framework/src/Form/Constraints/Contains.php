@@ -9,18 +9,27 @@ use Symfony\Component\Validator\Constraint;
 
 class Contains extends Constraint
 {
-    public string $message = 'Field must contain {{ needle }}.';
-
-    public ?string $needle = null;
+    /**
+     * @param string $needle
+     * @param string $message
+     * @param array|null $groups
+     * @param mixed $payload
+     */
+    public function __construct(
+        public string $needle,
+        public string $message = 'Field must contain {{ needle }}.',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        parent::__construct([], $groups, $payload);
+    }
 
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getRequiredOptions(): array
+    public function getTargets(): string|array
     {
-        return [
-            'needle',
-        ];
+        return self::PROPERTY_CONSTRAINT;
     }
 }

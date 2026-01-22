@@ -9,27 +9,27 @@ use Symfony\Component\Validator\Constraint;
 
 class FileExtensionMaxLength extends Constraint
 {
-    public string $message = 'File extension {{ value }} is too long. It should have {{ limit }} character or less.';
-
-    public int $limit;
-
     /**
-     * {@inheritdoc}
+     * @param int $limit
+     * @param string $message
+     * @param array|null $groups
+     * @param mixed $payload
      */
-    #[Override]
-    public function getRequiredOptions(): array
-    {
-        return [
-            'limit',
-        ];
+    public function __construct(
+        public int $limit,
+        public string $message = 'File extension {{ value }} is too long. It should have {{ limit }} character or less.',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        parent::__construct([], $groups, $payload);
     }
 
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getDefaultOption(): ?string
+    public function getTargets(): string|array
     {
-        return 'limit';
+        return self::PROPERTY_CONSTRAINT;
     }
 }

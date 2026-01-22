@@ -20,22 +20,6 @@ class PromoCode extends Constraint
     public const ALREADY_APPLIED_PROMO_CODE_ERROR = 'bde9e59e-6881-460e-8501-7f5e9a57a266';
     public const LIMIT_NOT_REACHED_ERROR = '3f94ee5e-b496-441b-9744-d8b6375000e6';
 
-    public string $invalidMessage = 'The promo code is not valid or it has been already used. Check it, please.';
-
-    public string $notYetValidMessage = 'The promo code is not valid yet. Check it, please.';
-
-    public string $noLongerValidMessage = 'The promo code is no longer valid. Check it, please.';
-
-    public string $noRelationToProductsInCartMessage = 'The promo code is not applicable to any of the products in your cart. Check it, please.';
-
-    public string $forRegisteredCustomerUsersOnlyMessage = 'Promo code is available for registered customers only.';
-
-    public string $notAvailableForCustomerUserPricingGroupMessage = 'Promo code is not available for your pricing group. Maybe you forgot to log in.';
-
-    public string $alreadyAppliedPromoCodeMessage = 'Promo code is already applied in the current cart.';
-
-    public string $limitNotReachedMessage = 'The promo code can only be used for a higher total price.';
-
     /**
      * @var array<string, string>
      */
@@ -49,6 +33,33 @@ class PromoCode extends Constraint
         self::ALREADY_APPLIED_PROMO_CODE_ERROR => 'ALREADY_APPLIED_PROMO_CODE_ERROR',
         self::LIMIT_NOT_REACHED_ERROR => 'LIMIT_NOT_REACHED_ERROR',
     ];
+
+    /**
+     * @param string $invalidMessage
+     * @param string $notYetValidMessage
+     * @param string $noLongerValidMessage
+     * @param string $noRelationToProductsInCartMessage
+     * @param string $forRegisteredCustomerUsersOnlyMessage
+     * @param string $notAvailableForCustomerUserPricingGroupMessage
+     * @param string $alreadyAppliedPromoCodeMessage
+     * @param string $limitNotReachedMessage
+     * @param array|null $groups
+     * @param mixed $payload
+     */
+    public function __construct(
+        public string $invalidMessage = 'The promo code is not valid or it has been already used. Check it, please.',
+        public string $notYetValidMessage = 'The promo code is not valid yet. Check it, please.',
+        public string $noLongerValidMessage = 'The promo code is no longer valid. Check it, please.',
+        public string $noRelationToProductsInCartMessage = 'The promo code is not applicable to any of the products in your cart. Check it, please.',
+        public string $forRegisteredCustomerUsersOnlyMessage = 'Promo code is available for registered customers only.',
+        public string $notAvailableForCustomerUserPricingGroupMessage = 'Promo code is not available for your pricing group. Maybe you forgot to log in.',
+        public string $alreadyAppliedPromoCodeMessage = 'Promo code is already applied in the current cart.',
+        public string $limitNotReachedMessage = 'The promo code can only be used for a higher total price.',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        parent::__construct([], $groups, $payload);
+    }
 
     /**
      * {@inheritdoc}

@@ -4,33 +4,34 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\MissingOptionsException;
-use function get_class;
-use function gettype;
-use function is_object;
 
 class MoneyRange extends Constraint
 {
-    public string $minMessage = 'The amount of money should be {{ limit }} or more.';
-
-    public string $maxMessage = 'The amount of money should be {{ limit }} or less.';
-
-    public Money|null $min = null;
-
-    public Money|null $max = null;
-
     /**
-     * @param array $options
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $min
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $max
+     * @param string $minMessage
+     * @param string $maxMessage
+     * @param array|null $groups
+     * @param mixed $payload
      */
-    public function __construct(array $options)
-    {
-        $this->validateMoneyOrNullOption('min', $options);
-        $this->validateMoneyOrNullOption('max', $options);
+    public function __construct(
+        public ?Money $min = null,
+        public ?Money $max = null,
+        public string $minMessage = 'The amount of money should be {{ limit }} or more.',
+        public string $maxMessage = 'The amount of money should be {{ limit }} or less.',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        $this->validateMoneyOrNullOption('min', $min);
+        $this->validateMoneyOrNullOption('max', $max);
 
-        parent::__construct($options);
+        parent::__construct([], $groups, $payload);
 
         if ($this->min === null && $this->max === null) {
             $message = sprintf('Either option "min" or "max" must be given for constraint "%s".', self::class);
@@ -41,15 +42,13 @@ class MoneyRange extends Constraint
 
     /**
      * @param string $optionName
-     * @param array $options
+     * @param mixed $value
      */
-    protected function validateMoneyOrNullOption(string $optionName, array $options): void
+    protected function validateMoneyOrNullOption(string $optionName, mixed $value): void
     {
-        if (!isset($options[$optionName])) {
+        if ($value === null) {
             return;
         }
-
-        $value = $options[$optionName];
 
         if (!($value instanceof Money)) {
             $message = sprintf(
@@ -62,5 +61,14 @@ class MoneyRange extends Constraint
 
             throw new ConstraintDefinitionException($message);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getTargets(): string|array
+    {
+        return self::PROPERTY_CONSTRAINT;
     }
 }

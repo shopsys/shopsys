@@ -15,12 +15,6 @@ class Watchdog extends Constraint
     public const MAIN_VARIANT_ERROR = 'a59f8293-2803-4571-b307-2b4ce72d39b4';
     public const PRODUCT_NOT_FOUND_ERROR = '8bbd03a5-48be-40fa-8c0f-5e3b1202adfd';
 
-    public string $notAvailableInquiry = 'Watchdog is not available for product inquiry.';
-
-    public string $notAvailableMainVariant = 'Watchdog is not available for product main variant.';
-
-    public string $productNotFound = 'Product not found.';
-
     /**
      * @var array<string, string>
      */
@@ -29,6 +23,23 @@ class Watchdog extends Constraint
         self::MAIN_VARIANT_ERROR => 'MAIN_VARIANT_ERROR',
         self::PRODUCT_NOT_FOUND_ERROR => 'PRODUCT_NOT_FOUND_ERROR',
     ];
+
+    /**
+     * @param string $notAvailableInquiry
+     * @param string $notAvailableMainVariant
+     * @param string $productNotFound
+     * @param array|null $groups
+     * @param mixed $payload
+     */
+    public function __construct(
+        public string $notAvailableInquiry = 'Watchdog is not available for product inquiry.',
+        public string $notAvailableMainVariant = 'Watchdog is not available for product main variant.',
+        public string $productNotFound = 'Product not found.',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        parent::__construct([], $groups, $payload);
+    }
 
     /**
      * {@inheritdoc}

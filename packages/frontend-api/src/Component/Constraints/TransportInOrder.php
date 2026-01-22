@@ -16,18 +16,6 @@ class TransportInOrder extends Constraint
     public const WEIGHT_LIMIT_EXCEEDED_ERROR = 'b1eb2af1-2e7a-4463-aa5e-fb2bf82a30ef';
     public const MISSING_PICKUP_PLACE_IDENTIFIER_ERROR = '72cfdb60-9779-4903-a845-57e14b730795';
 
-    public string $transportNotSetMessage = 'Transport must be set in cart before sending the order';
-
-    public string $transportUnavailableMessage = 'Selected transport is not available';
-
-    public string $changedTransportPriceMessage = 'Selected transport price has changed';
-
-    public string $pickupPlaceUnavailableMessage = 'Selected pickup place is not available';
-
-    public string $weightLimitExceeded = 'Selected transport weight limit has been exceeded';
-
-    public string $missingPickupPlaceIdentifierMessage = 'Selected transport needs to have pickup place identifier set';
-
     /**
      * @var array<string, string>
      */
@@ -39,6 +27,29 @@ class TransportInOrder extends Constraint
         self::WEIGHT_LIMIT_EXCEEDED_ERROR => 'WEIGHT_LIMIT_EXCEEDED_ERROR',
         self::MISSING_PICKUP_PLACE_IDENTIFIER_ERROR => 'MISSING_PICKUP_PLACE_IDENTIFIER_ERROR',
     ];
+
+    /**
+     * @param string $transportNotSetMessage
+     * @param string $transportUnavailableMessage
+     * @param string $changedTransportPriceMessage
+     * @param string $pickupPlaceUnavailableMessage
+     * @param string $weightLimitExceeded
+     * @param string $missingPickupPlaceIdentifierMessage
+     * @param array|null $groups
+     * @param mixed $payload
+     */
+    public function __construct(
+        public string $transportNotSetMessage = 'Transport must be set in cart before sending the order',
+        public string $transportUnavailableMessage = 'Selected transport is not available',
+        public string $changedTransportPriceMessage = 'Selected transport price has changed',
+        public string $pickupPlaceUnavailableMessage = 'Selected pickup place is not available',
+        public string $weightLimitExceeded = 'Selected transport weight limit has been exceeded',
+        public string $missingPickupPlaceIdentifierMessage = 'Selected transport needs to have pickup place identifier set',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        parent::__construct([], $groups, $payload);
+    }
 
     /**
      * {@inheritdoc}

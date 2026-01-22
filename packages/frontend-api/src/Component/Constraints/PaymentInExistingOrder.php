@@ -13,12 +13,6 @@ class PaymentInExistingOrder extends Constraint
     public const UNCHANGEABLE_PAYMENT_ERROR = '80144e07-46ed-46a2-8437-7399319856fa';
     public const INVALID_PAYMENT_SWIFT_ERROR = 'c0d72eae-593e-4b8b-946a-41ca67057c39';
 
-    public string $unavailablePaymentMessage = 'Payment {{ paymentUuid }} is not available for order {{ orderUuid }}';
-
-    public string $unchangeablePaymentMessage = 'Payment cannot be changed';
-
-    public string $invalidPaymentSwiftMessage = 'Payment {{ paymentUuid }} cannot be used with SWIFT {{ swift }}';
-
     /**
      * @var array<string, string>
      */
@@ -27,6 +21,23 @@ class PaymentInExistingOrder extends Constraint
         self::UNCHANGEABLE_PAYMENT_ERROR => 'UNCHANGEABLE_PAYMENT_ERROR',
         self::INVALID_PAYMENT_SWIFT_ERROR => 'INVALID_PAYMENT_SWIFT_ERROR',
     ];
+
+    /**
+     * @param string $unavailablePaymentMessage
+     * @param string $unchangeablePaymentMessage
+     * @param string $invalidPaymentSwiftMessage
+     * @param array|null $groups
+     * @param mixed $payload
+     */
+    public function __construct(
+        public string $unavailablePaymentMessage = 'Payment {{ paymentUuid }} is not available for order {{ orderUuid }}',
+        public string $unchangeablePaymentMessage = 'Payment cannot be changed',
+        public string $invalidPaymentSwiftMessage = 'Payment {{ paymentUuid }} cannot be used with SWIFT {{ swift }}',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        parent::__construct([], $groups, $payload);
+    }
 
     /**
      * {@inheritdoc}

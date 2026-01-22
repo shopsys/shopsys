@@ -11,18 +11,27 @@ use Traversable;
 
 class NotInArray extends Constraint
 {
-    public string $message = 'Value must not be neither of following: {{ array }}';
-
-    public array|Traversable|ArrayAccess $array = [];
+    /**
+     * @param array|\Traversable|\ArrayAccess $array
+     * @param string $message
+     * @param array|null $groups
+     * @param mixed $payload
+     */
+    public function __construct(
+        public array|Traversable|ArrayAccess $array,
+        public string $message = 'Value must not be neither of following: {{ array }}',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        parent::__construct([], $groups, $payload);
+    }
 
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getRequiredOptions(): array
+    public function getTargets(): string|array
     {
-        return [
-            'array',
-        ];
+        return self::PROPERTY_CONSTRAINT;
     }
 }

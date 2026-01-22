@@ -13,14 +13,25 @@ class PaymentTransportRelation extends Constraint
 {
     public const INVALID_COMBINATION_ERROR = '46ccd6d3-61e7-4a34-a42a-b13b92291e28';
 
-    public string $invalidCombinationMessage = 'Please choose a valid combination of transport and payment';
-
     /**
      * @var array<string, string>
      */
     protected const array ERROR_NAMES = [
         self::INVALID_COMBINATION_ERROR => 'INVALID_COMBINATION_ERROR',
     ];
+
+    /**
+     * @param string $invalidCombinationMessage
+     * @param array|null $groups
+     * @param mixed $payload
+     */
+    public function __construct(
+        public string $invalidCombinationMessage = 'Please choose a valid combination of transport and payment',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        parent::__construct([], $groups, $payload);
+    }
 
     /**
      * {@inheritdoc}

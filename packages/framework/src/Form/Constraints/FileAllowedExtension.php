@@ -9,30 +9,27 @@ use Symfony\Component\Validator\Constraint;
 
 class FileAllowedExtension extends Constraint
 {
-    public string $message = 'File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}.';
-
     /**
-     * @var string[]
+     * @param array<string> $extensions
+     * @param string $message
+     * @param array|null $groups
+     * @param mixed $payload
      */
-    public array $extensions;
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getRequiredOptions(): array
-    {
-        return [
-            'extensions',
-        ];
+    public function __construct(
+        public array $extensions,
+        public string $message = 'File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}.',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        parent::__construct([], $groups, $payload);
     }
 
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getDefaultOption(): ?string
+    public function getTargets(): string|array
     {
-        return 'extensions';
+        return self::PROPERTY_CONSTRAINT;
     }
 }

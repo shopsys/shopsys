@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
+use Override;
 use Symfony\Component\Validator\Constraint;
 
 class FileUpload extends Constraint
@@ -21,13 +22,33 @@ class FileUpload extends Constraint
         self::MIMETYPE_ERROR => 'MIMETYPE_ERROR',
     ];
 
-    public array|string $mimeTypes = 'image/*';
+    /**
+     * @param array|string $mimeTypes
+     * @param int|null $maxSize
+     * @param string $mimeTypesMessage
+     * @param string $maxSizeMessage
+     * @param string $uploadErrorMessage
+     * @param array|null $groups
+     * @param mixed $payload
+     */
+    public function __construct(
+        public array|string $mimeTypes = 'image/*',
+        public ?int $maxSize = null,
+        public string $mimeTypesMessage = 'Type of file {{ fileName }} is unsupported.',
+        public string $maxSizeMessage = 'The file {{ fileName }} is too big.',
+        public string $uploadErrorMessage = 'Error occurred while uploading file.',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        parent::__construct([], $groups, $payload);
+    }
 
-    public int|null $maxSize = null;
-
-    public string $mimeTypesMessage = 'Type of file {{ fileName }} is unsupported.';
-
-    public string $maxSizeMessage = 'The file {{ fileName }} is too big.';
-
-    public string $uploadErrorMessage = 'Error occurred while uploading file.';
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getTargets(): string|array
+    {
+        return self::PROPERTY_CONSTRAINT;
+    }
 }
