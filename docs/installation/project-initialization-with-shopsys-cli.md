@@ -9,18 +9,24 @@ It simplifies multi-domain setup by providing interactive configuration prompts 
 
 > **Windows Users:** The Shopsys CLI must be run inside WSL2 (Windows Subsystem for Linux). Open your WSL2 terminal before running these commands.
 
-Download the PHAR file from the [shopsys/cli releases](https://github.com/shopsys/cli/releases):
+### Automatic Installation (Recommended)
+
+When you create a new Shopsys Platform project using `composer create-project`, the CLI is **automatically downloaded** and the configuration wizard is launched:
+
+```bash
+composer create-project shopsys/project-base --no-install --keep-vcs --ignore-platform-reqs
+```
+
+The `post-create-project-cmd` hook downloads `shopsys.phar` and runs `php shopsys.phar configure .` automatically.
+
+### Manual Installation
+
+If you need to download the CLI manually (e.g., to use with an existing project), download the PHAR file from the [shopsys/cli releases](https://github.com/shopsys/cli/releases):
 
 ```bash
 # Download the latest release
 curl -L https://github.com/shopsys/cli/releases/latest/download/shopsys.phar -o shopsys
 chmod +x shopsys
-```
-
-You can also install it globally:
-
-```bash
-sudo mv shopsys /usr/local/bin/shopsys
 ```
 
 ## Commands

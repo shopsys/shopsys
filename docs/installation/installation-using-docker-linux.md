@@ -33,6 +33,11 @@ cd project-base
     - The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`
     - The `--ignore-platform-reqs` option ensures your local PHP setup is not verified (it is not needed, everything is installed in Docker later)
 
+!!! info "Automatic CLI Download"
+
+    During project creation, the [Shopsys CLI](./project-initialization-with-shopsys-cli.md) (`shopsys.phar`) is automatically downloaded and the configuration wizard is launched.
+    This allows you to configure your domains, locales, and other project settings interactively before proceeding with the installation.
+
 ### 2. Installation
 
 Now, you have two options:

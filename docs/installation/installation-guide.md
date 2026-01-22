@@ -4,12 +4,20 @@ This document will provide you with information about ways of developing and run
 
 ## Quick Start with Shopsys CLI
 
-For new projects, we recommend using **Shopsys CLI** - a command-line tool that automates project initialization and configuration:
+For new projects, the **Shopsys CLI** is automatically downloaded when you create a project using Composer:
 
 > **Windows Users:** Run these commands inside WSL2 (Windows Subsystem for Linux).
 
 ```bash
-# Download Shopsys CLI
+composer create-project shopsys/project-base --no-install --keep-vcs --ignore-platform-reqs
+```
+
+The CLI (`shopsys.phar`) is automatically downloaded and the configuration wizard launches, guiding you through domain configuration, locale settings, and more.
+
+Alternatively, you can download the CLI manually and initialize a project:
+
+```bash
+# Download Shopsys CLI manually
 curl -L https://github.com/shopsys/cli/releases/latest/download/shopsys.phar -o shopsys
 chmod +x shopsys
 
@@ -17,7 +25,6 @@ chmod +x shopsys
 ./shopsys init my-project
 ```
 
-The CLI will guide you through domain configuration, locale settings, and more.
 See [Project Initialization with Shopsys CLI](./project-initialization-with-shopsys-cli.md) for detailed documentation.
 
 ## Installation using Docker
