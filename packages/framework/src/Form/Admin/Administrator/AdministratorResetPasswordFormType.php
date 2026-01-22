@@ -36,8 +36,8 @@ final class AdministratorResetPasswordFormType extends AbstractType
                 'first_options' => [
                     'label' => 'Password',
                     'constraints' => [
-                        new Constraints\Regex(['pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$/', 'message' => '']),
-                        new Constraints\NotBlank(['message' => '']),
+                        new Constraints\Regex(pattern: '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$/', message: ''),
+                        new Constraints\NotBlank(message: ''),
                     ],
                     'attr' => [
                         'data-js-set-password-input' => null,

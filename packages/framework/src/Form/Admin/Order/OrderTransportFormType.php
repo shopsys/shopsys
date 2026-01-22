@@ -37,22 +37,22 @@ final class OrderTransportFormType extends AbstractType
             ->add('unitPriceWithVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter unit price without VAT']),
+                    new Constraints\NotBlank(message: 'Please enter unit price without VAT'),
                 ],
             ])
             ->add('vatPercent', NumberType::class, [
                 'input' => 'string',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
+                    new Constraints\NotBlank(message: 'Please enter VAT rate'),
                 ],
             ])
             ->add('unitPriceWithoutVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter price',
-                        'groups' => [OrderItemFormType::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter price',
+                        groups: [OrderItemFormType::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
+                    ),
                 ],
             ])
             ->add(

@@ -89,9 +89,10 @@ final class BrandFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name']),
+                    new Constraints\NotBlank(message: 'Please enter name'),
                     new Constraints\Length(
-                        ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                        max: 255,
+                        maxMessage: 'Name cannot be longer than {{ limit }} characters',
                     ),
                 ],
                 'label' => 'Name',
@@ -141,13 +142,13 @@ final class BrandFormType extends AbstractType
                 'required' => false,
                 'image_entity_class' => Brand::class,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '2M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        maxSize: '2M',
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                    ),
                 ],
                 'entity' => $brand,
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),

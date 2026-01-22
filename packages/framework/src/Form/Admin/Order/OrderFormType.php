@@ -279,9 +279,7 @@ final class OrderFormType extends AbstractType
                 'label' => 'Tracking number',
                 'required' => false,
                 'constraints' => [
-                    new Length([
-                        'max' => 100,
-                    ]),
+                    new Length(max: 100),
                 ],
             ])
             ->add('deliveredAt', DateTimeType::class, [
@@ -316,42 +314,42 @@ final class OrderFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'label' => 'First name',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter first name']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter first name'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'First name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Last name',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter last name']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter last name'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Last name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter email']),
-                    new Email(['message' => 'Please enter valid email']),
-                    new Constraints\Length([
-                        'max' => 255,
-                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter email'),
+                    new Email(message: 'Please enter valid email'),
+                    new Constraints\Length(
+                        max: 255,
+                        maxMessage: 'Email cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('telephone', TextType::class, [
                 'label' => 'Telephone',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter telephone number']),
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter telephone number'),
+                    new Constraints\Length(
+                        max: 30,
+                        maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ]);
 
@@ -373,30 +371,30 @@ final class OrderFormType extends AbstractType
                 'label' => 'Company name',
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Company name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Company name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('companyNumber', TextType::class, [
                 'label' => 'Company number',
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 50,
-                        'maxMessage' => 'Identification number cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 50,
+                        maxMessage: 'Identification number cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('companyTaxNumber', TextType::class, [
                 'label' => 'Tax number',
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 50,
-                        'maxMessage' => 'Tax number cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 50,
+                        maxMessage: 'Tax number cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ]);
 
@@ -418,31 +416,31 @@ final class OrderFormType extends AbstractType
             ->add('street', TextType::class, [
                 'label' => 'Street',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter street']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter street'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Street name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('city', TextType::class, [
                 'label' => 'City',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter city']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter city'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'City name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('postcode', TextType::class, [
                 'label' => 'Postcode',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter zip code']),
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter zip code'),
+                    new Constraints\Length(
+                        max: 30,
+                        maxMessage: 'Zip code cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('country', ChoiceType::class, [
@@ -451,7 +449,7 @@ final class OrderFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please choose country']),
+                    new Constraints\NotBlank(message: 'Please choose country'),
                 ],
             ]);
 
@@ -491,96 +489,97 @@ final class OrderFormType extends AbstractType
                         'label' => 'First name',
                         'required' => true,
                         'constraints' => [
-                            new Constraints\NotBlank([
-                                'message' => 'Please enter first name of contact person',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
-                            new Constraints\Length([
-                                'max' => 100,
-                                'maxMessage' => 'First name of contact person cannot be longer than {{ limit }} characters',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
+                            new Constraints\NotBlank(
+                                message: 'Please enter first name of contact person',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
+                            new Constraints\Length(
+                                max: 100,
+                                maxMessage: 'First name of contact person cannot be longer than {{ limit }} characters',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
                         ],
                     ])
                     ->add('deliveryLastName', TextType::class, [
                         'label' => 'Last name',
                         'required' => true,
                         'constraints' => [
-                            new Constraints\NotBlank([
-                                'message' => 'Please enter last name of contact person',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
-                            new Constraints\Length([
-                                'max' => 100,
-                                'maxMessage' => 'Last name of contact person cannot be longer than {{ limit }} characters',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
+                            new Constraints\NotBlank(
+                                message: 'Please enter last name of contact person',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
+                            new Constraints\Length(
+                                max: 100,
+                                maxMessage: 'Last name of contact person cannot be longer than {{ limit }} characters',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
                         ],
                     ])
                     ->add('deliveryCompanyName', TextType::class, [
                         'label' => 'Company',
                         'required' => false,
                         'constraints' => [
-                            new Constraints\Length([
-                                'max' => 100,
-                                'maxMessage' => 'Name cannot be longer than {{ limit }} characters',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
+                            new Constraints\Length(
+                                max: 100,
+                                maxMessage: 'Name cannot be longer than {{ limit }} characters',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
                         ],
                     ])
                     ->add('deliveryTelephone', TextType::class, [
                         'label' => 'Telephone',
                         'required' => false,
                         'constraints' => [
-                            new Constraints\Length([
-                                'max' => 30,
-                                'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
+                            new Constraints\Length(
+                                max: 30,
+                                maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
                         ],
                     ])
                     ->add('deliveryStreet', TextType::class, [
                         'label' => 'Street',
                         'required' => true,
                         'constraints' => [
-                            new Constraints\NotBlank([
-                                'message' => 'Please enter street',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
-                            new Constraints\Length([
-                                'max' => 100,
-                                'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
+                            new Constraints\NotBlank(
+                                message: 'Please enter street',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
+                            new Constraints\Length(
+                                max: 100,
+                                maxMessage: 'Street name cannot be longer than {{ limit }} characters',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
                         ],
                     ])
                     ->add('deliveryCity', TextType::class, [
                         'label' => 'City',
                         'required' => true,
                         'constraints' => [
-                            new Constraints\NotBlank([
-                                'message' => 'Please enter city',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
-                            new Constraints\Length(['max' => 100,
-                                'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
+                            new Constraints\NotBlank(
+                                message: 'Please enter city',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
+                            new Constraints\Length(
+                                max: 100,
+                                maxMessage: 'City name cannot be longer than {{ limit }} characters',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
                         ],
                     ])
                     ->add('deliveryPostcode', TextType::class, [
                         'label' => 'Postcode',
                         'required' => true,
                         'constraints' => [
-                            new Constraints\NotBlank([
-                                'message' => 'Please enter zip code',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
-                            new Constraints\Length([
-                                'max' => 30,
-                                'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
-                                'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ]),
+                            new Constraints\NotBlank(
+                                message: 'Please enter zip code',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
+                            new Constraints\Length(
+                                max: 30,
+                                maxMessage: 'Zip code cannot be longer than {{ limit }} characters',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
                         ],
                     ])
                     ->add('deliveryCountry', ChoiceType::class, [
@@ -590,7 +589,7 @@ final class OrderFormType extends AbstractType
                         'choice_label' => 'name',
                         'choice_value' => 'id',
                         'constraints' => [
-                            new Constraints\NotBlank(['message' => 'Please choose country']),
+                            new Constraints\NotBlank(message: 'Please choose country'),
                         ],
                     ]),
             );

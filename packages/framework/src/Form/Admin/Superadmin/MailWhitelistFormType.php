@@ -62,7 +62,7 @@ final class MailWhitelistFormType extends AbstractType
                 'error_bubbling' => false,
                 'allow_delete' => true,
                 'constraints' => [
-                    new Constraints\All([
+                    new Constraints\All(constraints: [
                         new WhitelistPattern(),
                     ]),
                 ],

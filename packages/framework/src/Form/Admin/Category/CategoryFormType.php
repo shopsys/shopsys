@@ -124,7 +124,8 @@ final class CategoryFormType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                            max: 255,
+                            maxMessage: 'Name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],
@@ -186,7 +187,8 @@ final class CategoryFormType extends AbstractType
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Heading (H1) cannot be longer than {{ limit }} characters'],
+                            max: 255,
+                            maxMessage: 'Heading (H1) cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],
@@ -222,13 +224,13 @@ final class CategoryFormType extends AbstractType
                 'required' => false,
                 'image_entity_class' => Category::class,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '2M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                        maxSize: '2M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'label' => 'Upload image',
                 'entity' => $options['category'],

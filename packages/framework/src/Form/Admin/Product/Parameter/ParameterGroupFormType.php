@@ -43,9 +43,10 @@ final class ParameterGroupFormType extends AbstractType
                 'required' => true,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter parameter group name']),
+                        new Constraints\NotBlank(message: 'Please enter parameter group name'),
                         new Constraints\Length(
-                            ['max' => 100, 'maxMessage' => 'Parameter group name cannot be longer than {{ limit }} characters'],
+                            max: 100,
+                            maxMessage: 'Parameter group name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],
@@ -67,7 +68,7 @@ final class ParameterGroupFormType extends AbstractType
                 'data_class' => ParameterGroupData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                    new Constraints\Callback([$this, 'validateUniqueParameterGroupName']),
+                    new Constraints\Callback(callback: [$this, 'validateUniqueParameterGroupName']),
                 ],
             ])
             ->setRequired(['parameterGroup'])

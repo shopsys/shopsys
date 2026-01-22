@@ -88,10 +88,10 @@ final class SeoPageFormType extends AbstractType
         foreach ($this->domain->getAll() as $domain) {
             $optionsByDomainId[$domain->getId()] = [
                 'constraints' => [
-                    new UniqueSeoPageSlug([
-                        'ignoredSeoPage' => $seoPage,
-                        'domainId' => $domain->getId(),
-                    ]),
+                    new UniqueSeoPageSlug(
+                        ignoredSeoPage: $seoPage,
+                        domainId: $domain->getId(),
+                    ),
                 ],
             ];
         }
@@ -102,7 +102,7 @@ final class SeoPageFormType extends AbstractType
                 'required' => true,
                 'disabled' => $seoPage !== null,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter page name']),
+                    new Constraints\NotBlank(message: 'Please enter page name'),
                 ],
             ])
             ->add('pageSlugsIndexedByDomainId', MultidomainType::class, [
@@ -113,11 +113,11 @@ final class SeoPageFormType extends AbstractType
                 'options_by_domain_id' => $optionsByDomainId,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter page URL']),
-                        new Constraints\Regex([
-                            'pattern' => '/^[\w_\-\/]+$/',
-                            'message' => 'Slug can contain only letters, numbers, hyphens, underscores and slashes',
-                        ]),
+                        new Constraints\NotBlank(message: 'Please enter page URL'),
+                        new Constraints\Regex(
+                            pattern: '/^[\w_\-\/]+$/',
+                            message: 'Slug can contain only letters, numbers, hyphens, underscores and slashes',
+                        ),
                     ],
                 ],
             ]);
@@ -156,7 +156,7 @@ final class SeoPageFormType extends AbstractType
                 'entry_type' => UrlType::class,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\Url(['message' => 'Link must be valid URL address']),
+                        new Constraints\Url(message: 'Link must be valid URL address'),
                     ],
                 ],
                 'required' => false,
@@ -199,13 +199,13 @@ final class SeoPageFormType extends AbstractType
                 'image_entity_class' => SeoPage::class,
                 'image_type' => SeoPageFacade::IMAGE_TYPE_OG,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '15M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                        maxSize: '15M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'entity' => $seoPage,
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),

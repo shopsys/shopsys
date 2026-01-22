@@ -95,9 +95,10 @@ final class FileUploadType extends AbstractType
                     'entry_type' => TextType::class,
                     'entry_options' => [
                         'constraints' => [
-                            new Constraints\NotBlank(['message' => 'Please enter the filename']),
+                            new Constraints\NotBlank(message: 'Please enter the filename'),
                             new Constraints\Length(
-                                ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters'],
+                                max: 245,
+                                maxMessage: 'File name cannot be longer than {{ limit }} characters',
                             ),
                         ],
                     ],
@@ -131,9 +132,10 @@ final class FileUploadType extends AbstractType
                     'allow_add' => true,
                     'entry_options' => [
                         'constraints' => [
-                            new Constraints\NotBlank(['message' => 'Please enter the filename']),
+                            new Constraints\NotBlank(message: 'Please enter the filename'),
                             new Constraints\Length(
-                                ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                                max: 255,
+                                maxMessage: 'Name cannot be longer than {{ limit }} characters',
                             ),
                         ],
                     ],

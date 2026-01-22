@@ -152,33 +152,33 @@ final class CustomerUserFormType extends AbstractType
         $builderPersonalDataGroup
             ->add('firstName', TextType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter first name']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter first name'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'First name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'First name',
             ])
             ->add('lastName', TextType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter last name']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter last name'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Last name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Last name',
             ])
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter email']),
-                    new Constraints\Length([
-                        'max' => 255,
-                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
-                    ]),
-                    new Email(['message' => 'Please enter valid email']),
-                    new Constraints\Callback([$this, 'validateUniqueEmail']),
+                    new Constraints\NotBlank(message: 'Please enter email'),
+                    new Constraints\Length(
+                        max: 255,
+                        maxMessage: 'Email cannot be longer than {{ limit }} characters',
+                    ),
+                    new Email(message: 'Please enter valid email'),
+                    new Constraints\Callback(callback: [$this, 'validateUniqueEmail']),
                 ],
                 'label' => 'Email',
             ]);
@@ -194,10 +194,10 @@ final class CustomerUserFormType extends AbstractType
             ->add('telephone', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 30,
+                        maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Telephone',
             ]);
@@ -286,18 +286,18 @@ final class CustomerUserFormType extends AbstractType
                 'attr' => ['novalidate' => 'novalidate'],
                 'renders_in_own_card' => true,
                 'constraints' => [
-                    new FieldsAreNotIdentical([
-                        'field1' => 'email',
-                        'field2' => 'password',
-                        'errorPath' => 'password',
-                        'message' => 'Password cannot be same as email',
-                    ]),
-                    new NotIdenticalToEmailLocalPart([
-                        'password' => 'password',
-                        'email' => 'email',
-                        'errorPath' => 'password',
-                        'message' => 'Password cannot be same as part of email before at sign',
-                    ]),
+                    new FieldsAreNotIdentical(
+                        field1: 'email',
+                        field2: 'password',
+                        errorPath: 'password',
+                        message: 'Password cannot be same as email',
+                    ),
+                    new NotIdenticalToEmailLocalPart(
+                        password: 'password',
+                        email: 'email',
+                        errorPath: 'password',
+                        message: 'Password cannot be same as part of email before at sign',
+                    ),
                 ],
                 'renderSaveButton' => false,
                 'allowEditSystemData' => true,

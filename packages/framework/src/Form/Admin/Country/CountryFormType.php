@@ -54,9 +54,10 @@ final class CountryFormType extends AbstractType
                 'entry_options' => [
                     'required' => true,
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter country name']),
+                        new Constraints\NotBlank(message: 'Please enter country name'),
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Country name cannot be longer than {{ limit }} characters'],
+                            max: 255,
+                            maxMessage: 'Country name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],
@@ -65,14 +66,15 @@ final class CountryFormType extends AbstractType
             ->add('code', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter country code']),
+                    new Constraints\NotBlank(message: 'Please enter country code'),
                     new Constraints\Length(
-                        ['max' => 2, 'maxMessage' => 'Country code cannot be longer than {{ limit }} characters'],
+                        max: 2,
+                        maxMessage: 'Country code cannot be longer than {{ limit }} characters',
                     ),
-                    new NotInArray([
-                        'array' => $this->getOtherCountryCodes(),
-                        'message' => 'Country code with this code already exists',
-                    ]),
+                    new NotInArray(
+                        array: $this->getOtherCountryCodes(),
+                        message: 'Country code with this code already exists',
+                    ),
                 ],
                 'label' => 'Code',
                 'help_html' => true,
@@ -92,8 +94,8 @@ final class CountryFormType extends AbstractType
                     ),
                     'required' => false,
                     'constraints' => [
-                        new Constraints\Type(['type' => 'numeric']),
-                        new Constraints\GreaterThanOrEqual(['value' => 0]),
+                        new Constraints\Type(type: 'numeric'),
+                        new Constraints\GreaterThanOrEqual(value: 0),
                     ],
                 ],
                 'required' => false,

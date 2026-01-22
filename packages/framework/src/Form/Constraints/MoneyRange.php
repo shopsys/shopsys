@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\MissingOptionsException;
@@ -13,14 +15,17 @@ use Symfony\Component\Validator\Exception\MissingOptionsException;
 class MoneyRange extends Constraint
 {
     /**
+     * @param array<string, mixed>|null $options
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $min
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $max
      * @param string $minMessage
      * @param string $maxMessage
-     * @param array|null $groups
+     * @param array<string>|null $groups
      * @param mixed $payload
      */
+    #[HasNamedArguments]
     public function __construct(
+        ?array $options = null,
         public ?Money $min = null,
         public ?Money $max = null,
         public string $minMessage = 'The amount of money should be {{ limit }} or more.',
@@ -28,10 +33,17 @@ class MoneyRange extends Constraint
         ?array $groups = null,
         mixed $payload = null,
     ) {
+        if (is_array($options)) {
+            DeprecationHelper::trigger(
+                'Passing an array of options to configure the "%s" constraint is deprecated, use named arguments instead.',
+                static::class,
+            );
+        }
+
         $this->validateMoneyOrNullOption('min', $min);
         $this->validateMoneyOrNullOption('max', $max);
 
-        parent::__construct([], $groups, $payload);
+        parent::__construct($options, $groups, $payload);
 
         if ($this->min === null && $this->max === null) {
             $message = sprintf('Either option "min" or "max" must be given for constraint "%s".', self::class);

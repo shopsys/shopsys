@@ -38,7 +38,7 @@ final class PricingGroupSettingsFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter default pricing group']),
+                    new Constraints\NotBlank(message: 'Please enter default pricing group'),
                 ],
             ])
             ->add('save', SubmitType::class, [

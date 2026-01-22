@@ -67,10 +67,10 @@ final class FriendlyUrlFormType extends AbstractType
             )
             ->add('redirectTo', TextType::class, [
                 'constraints' => [
-                    new Regex([
-                        'pattern' => '/^(\/)|(https?:\/\/).*$/',
-                        'message' => 'Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)',
-                    ]),
+                    new Regex(
+                        pattern: '/^(\/)|(https?:\/\/).*$/',
+                        message: 'Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)',
+                    ),
                 ],
             ])
             ->add(
@@ -107,7 +107,7 @@ final class FriendlyUrlFormType extends AbstractType
             'data_class' => FriendlyUrlData::class,
             'attr' => ['novalidate' => 'novalidate'],
             'constraints' => [
-                new Callback([$this, 'checkRedirectValidity']),
+                new Callback(callback: [$this, 'checkRedirectValidity']),
             ],
         ]);
     }

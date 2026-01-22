@@ -25,7 +25,7 @@ final class PricingGroupFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter pricing group name']),
+                    new Constraints\NotBlank(message: 'Please enter pricing group name'),
                 ],
             ]);
     }

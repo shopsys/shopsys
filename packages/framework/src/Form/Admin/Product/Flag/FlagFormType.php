@@ -33,9 +33,10 @@ final class FlagFormType extends AbstractType
                 'required' => true,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter flag name in all languages']),
+                        new Constraints\NotBlank(message: 'Please enter flag name in all languages'),
                         new Constraints\Length(
-                            ['max' => 100, 'maxMessage' => 'Flag name cannot be longer than {{ limit }} characters'],
+                            max: 100,
+                            maxMessage: 'Flag name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],
@@ -49,7 +50,7 @@ final class FlagFormType extends AbstractType
             ->add('rgbColor', ColorPickerType::class, [
                 'label' => 'Color',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter flag color']),
+                    new Constraints\NotBlank(message: 'Please enter flag color'),
                 ],
             ])
             ->add('visible', YesNoType::class, [

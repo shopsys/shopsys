@@ -61,9 +61,9 @@ final class BillingAddressAndRelatedInfoFormType extends AbstractType
             ->setDefaults([
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                    new UniqueBillingAddress([
-                        'errorPath' => 'companyNumber',
-                    ]),
+                    new UniqueBillingAddress(
+                        errorPath: 'companyNumber',
+                    ),
                 ],
             ]);
     }

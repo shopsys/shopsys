@@ -195,7 +195,7 @@ final class ProductFormTypeExtension extends AbstractTypeExtension
         $basicInformationGroup->add('extId', IntegerType::class, [
             'required' => true,
             'constraints' => [
-                new Constraints\NotBlank(['message' => 'Please enter external ID']),
+                new Constraints\NotBlank(message: 'Please enter external ID'),
             ],
             'label' => 'External ID',
         ]);

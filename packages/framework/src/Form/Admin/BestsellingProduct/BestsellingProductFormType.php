@@ -28,11 +28,11 @@ final class BestsellingProductFormType extends AbstractType
                 'label' => 'Bestselling products',
                 'error_bubbling' => true,
                 'constraints' => [
-                    new Constraints\UniqueCollection([
-                        'allowEmpty' => true,
-                        'message' => 'You entered same product twice. In list of bestsellers can be product only once. '
+                    new Constraints\UniqueCollection(
+                        allowEmpty: true,
+                        message: 'You entered same product twice. In list of bestsellers can be product only once. '
                             . 'Please correct it and then save form again.',
-                    ]),
+                    ),
                 ],
             ])
             ->add('actionBar', ActionBarType::class, [

@@ -85,7 +85,8 @@ final class PaymentFormType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                            max: 255,
+                            maxMessage: 'Name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],
@@ -212,13 +213,13 @@ final class PaymentFormType extends AbstractType
                 'label' => 'Upload image',
                 'image_entity_class' => Payment::class,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '2M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                        maxSize: '2M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'entity' => $payment,
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
@@ -278,8 +279,8 @@ final class PaymentFormType extends AbstractType
                 'data_class' => PaymentData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                    new Callback([$this, 'validateGopayPaymentMethod']),
-                    new Callback([$this, 'validateBankTransferType']),
+                    new Callback(callback: [$this, 'validateGopayPaymentMethod']),
+                    new Callback(callback: [$this, 'validateBankTransferType']),
                 ],
             ]);
     }
@@ -317,10 +318,10 @@ final class PaymentFormType extends AbstractType
                     ->atPath('accountNumberByDomainId[' . $domainId . ']')
                     ->validate(
                         $accountNumber,
-                        new Constraints\Length([
-                            'max' => 50,
-                            'maxMessage' => 'Account number cannot be longer than {{ limit }} characters.',
-                        ]),
+                        new Constraints\Length(
+                            max: 50,
+                            maxMessage: 'Account number cannot be longer than {{ limit }} characters.',
+                        ),
                     );
             }
 
@@ -340,15 +341,13 @@ final class PaymentFormType extends AbstractType
                 $context->getValidator()
                     ->inContext($context)
                     ->atPath('ibanByDomainId[' . $domainId . ']')
-                    ->validate($iban, new Constraints\Iban([
-                        'message' => 'Please enter a valid IBAN.',
-                    ]))
+                    ->validate($iban, new Constraints\Iban(message: 'Please enter a valid IBAN.'))
                     ->validate(
                         $iban,
-                        new Constraints\Length([
-                            'max' => 50,
-                            'maxMessage' => 'IBAN cannot be longer than {{ limit }} characters',
-                        ]),
+                        new Constraints\Length(
+                            max: 50,
+                            maxMessage: 'IBAN cannot be longer than {{ limit }} characters',
+                        ),
                     );
             }
 
@@ -370,10 +369,10 @@ final class PaymentFormType extends AbstractType
                     ->atPath('bicSwiftByDomainId[' . $domainId . ']')
                     ->validate(
                         $bicSwift,
-                        new Constraints\Length([
-                            'max' => 50,
-                            'maxMessage' => 'BIC/Swift cannot be longer than {{ limit }} characters.',
-                        ]),
+                        new Constraints\Length(
+                            max: 50,
+                            maxMessage: 'BIC/Swift cannot be longer than {{ limit }} characters.',
+                        ),
                     );
             }
         }

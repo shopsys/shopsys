@@ -78,7 +78,8 @@ final class TransportFormType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                            max: 255,
+                            maxMessage: 'Name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],
@@ -115,12 +116,8 @@ final class TransportFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
-                    new Constraints\GreaterThanOrEqual([
-                        'value' => 0,
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => '/^\d+$/',
-                    ]),
+                    new Constraints\GreaterThanOrEqual(value: 0),
+                    new Constraints\Regex(pattern: '/^\d+$/'),
                 ],
                 'label' => 'Days until delivery',
             ]);
@@ -176,13 +173,13 @@ final class TransportFormType extends AbstractType
                 'label' => 'Upload image',
                 'image_entity_class' => Transport::class,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '2M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                        maxSize: '2M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'entity' => $transport,
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
@@ -197,9 +194,7 @@ final class TransportFormType extends AbstractType
                 'label' => 'Tracking URL',
                 'required' => false,
                 'constraints' => [
-                    new Length([
-                        'max' => 255,
-                    ]),
+                    new Length(max: 255),
                 ],
             ])
             ->add('trackingUrlVariables', DisplayVariablesType::class, [
@@ -256,7 +251,7 @@ final class TransportFormType extends AbstractType
                 'data_class' => TransportData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                    new Constraints\Callback([$this, 'validateTransportPricesOnDomain']),
+                    new Constraints\Callback(callback: [$this, 'validateTransportPricesOnDomain']),
                 ],
             ]);
     }

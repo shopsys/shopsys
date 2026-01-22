@@ -79,7 +79,7 @@ final class PriceAndVatTableByDomainsType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
+                    new Constraints\NotBlank(message: 'Please enter VAT rate'),
                 ],
                 'label' => 'VAT',
             ]);
@@ -89,8 +89,8 @@ final class PriceAndVatTableByDomainsType extends AbstractType
                 'required' => true,
                 'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter price']),
-                    new NotNegativeMoneyAmount(['message' => 'Price must be greater or equal to zero']),
+                    new Constraints\NotBlank(message: 'Please enter price'),
+                    new NotNegativeMoneyAmount(message: 'Price must be greater or equal to zero'),
                 ],
                 'label' => 'Price',
             ]);

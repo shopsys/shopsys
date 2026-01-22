@@ -61,25 +61,25 @@ final class PriceListFormType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Name',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter product list name']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Product list name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter product list name'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Product list name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('validFrom', DateTimeType::class, [
                 'label' => 'Valid from',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter valid from date']),
+                    new Constraints\NotBlank(message: 'Please enter valid from date'),
                 ],
             ])
             ->add('validTo', DateTimeType::class, [
                 'label' => 'Valid to',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter valid to date']),
+                    new Constraints\NotBlank(message: 'Please enter valid to date'),
                 ],
             ])
             ->add('priceListProductPricesData', PriceListProductsPickerType::class, [
@@ -106,7 +106,7 @@ final class PriceListFormType extends AbstractType
                 'data_class' => PriceListData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                    new Constraints\Callback([$this, 'checkDateValidity']),
+                    new Constraints\Callback(callback: [$this, 'checkDateValidity']),
                 ],
             ]);
     }

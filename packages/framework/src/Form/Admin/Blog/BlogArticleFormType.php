@@ -130,7 +130,7 @@ final class BlogArticleFormType extends AbstractType
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Heading (H1) cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(max: 255, maxMessage: 'Heading (H1) cannot be longer than {{ limit }} characters'),
                     ],
                 ],
                 'options_by_domain_id' => $seoH1OptionsByDomainId,
@@ -176,7 +176,7 @@ final class BlogArticleFormType extends AbstractType
                 'entry_options' => [
                     'required' => false,
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(max: 255, maxMessage: 'Name cannot be longer than {{ limit }} characters'),
                     ],
                 ],
                 'label' => 'Name',
@@ -196,7 +196,7 @@ final class BlogArticleFormType extends AbstractType
             ->add('publishDate', DatePickerType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter date of creation']),
+                    new Constraints\NotBlank(message: 'Please enter date of creation'),
                 ],
                 'label' => 'Date of publication',
                 'data' => $blogArticle === null ? $this->clock->now() : $blogArticle->getPublishDate(),
@@ -268,13 +268,13 @@ final class BlogArticleFormType extends AbstractType
                 'image_entity_class' => BlogArticle::class,
                 'image_type' => null,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '15M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                        maxSize: '15M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'label' => 'Upload image',
                 'entity' => $options['blogArticle'],

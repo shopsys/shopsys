@@ -79,9 +79,9 @@ final class CustomerUserUpdateFormType extends AbstractType
                 'empty_data' => $this->customerUserUpdateDataFactory->create(),
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                    new UniqueBillingAddress([
-                        'errorPath' => 'billingAddressData.companyNumber',
-                    ]),
+                    new UniqueBillingAddress(
+                        errorPath: 'billingAddressData.companyNumber',
+                    ),
                 ],
             ]);
     }

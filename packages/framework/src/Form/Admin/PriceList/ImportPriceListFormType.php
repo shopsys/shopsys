@@ -73,11 +73,11 @@ final class ImportPriceListFormType extends AbstractType
                 'label' => 'Name',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter product list name']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Product list name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter product list name'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Product list name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'attr' => [
                     'class' => 'js-import-price-list-name',
@@ -87,7 +87,7 @@ final class ImportPriceListFormType extends AbstractType
                 'label' => 'Valid from',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter valid from date']),
+                    new Constraints\NotBlank(message: 'Please enter valid from date'),
                 ],
                 'attr' => [
                     'class' => 'js-import-price-list-valid-from',
@@ -97,7 +97,7 @@ final class ImportPriceListFormType extends AbstractType
                 'label' => 'Valid to',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter valid to date']),
+                    new Constraints\NotBlank(message: 'Please enter valid to date'),
                 ],
                 'attr' => [
                     'class' => 'js-import-price-list-valid-to',
@@ -106,18 +106,18 @@ final class ImportPriceListFormType extends AbstractType
             ->add('csvFile', BasicFileUploadType::class, [
                 'required' => true,
                 'constraints' => [
-                    new MustUploadFile(['message' => 'Please upload a CSV file']),
+                    new MustUploadFile(message: 'Please upload a CSV file'),
                 ],
                 'info_text' => t('CSV file must be in UTF-8 encoding with columns "{{ columns }}". A comma is recommended as a column delimiter and a dot (.) as a decimal separator.', [
                     '{{ columns }}' => implode('", "', $this->priceListCsvColumnsEnum->getAllCases()),
                 ]),
                 'file_constraints' => [
-                    new Constraints\File([
-                        'maxSize' => '2M',
-                        'extensions' => ['csv' => ['text/csv', 'text/plain']],
-                        'maxSizeMessage' => 'Uploaded file is too large ({{ size }} {{ suffix }}). '
+                    new Constraints\File(
+                        maxSize: '2M',
+                        extensions: ['csv' => ['text/csv', 'text/plain']],
+                        maxSizeMessage: 'Uploaded file is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'label' => 'CSV file',
             ]);
@@ -138,7 +138,7 @@ final class ImportPriceListFormType extends AbstractType
             ->setDefaults([
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                    new Constraints\Callback([$this, 'checkDateValidity']),
+                    new Constraints\Callback(callback: [$this, 'checkDateValidity']),
                 ],
             ]);
     }

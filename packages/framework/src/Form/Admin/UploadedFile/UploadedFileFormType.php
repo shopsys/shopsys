@@ -32,9 +32,10 @@ final class UploadedFileFormType extends AbstractType
             $builder->add('name', TextType::class, [
                 'label' => 'Filename',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter the filename']),
+                    new Constraints\NotBlank(message: 'Please enter the filename'),
                     new Constraints\Length(
-                        ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters'],
+                        max: 245,
+                        maxMessage: 'File name cannot be longer than {{ limit }} characters',
                     ),
                 ],
             ]);
@@ -47,7 +48,8 @@ final class UploadedFileFormType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                            max: 255,
+                            maxMessage: 'Name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],
@@ -65,11 +67,11 @@ final class UploadedFileFormType extends AbstractType
             'multiple' => $isNew,
             'with_names_inputs' => $isNew,
             'file_constraints' => [
-                new Constraints\File([
-                    'maxSize' => '2M',
-                    'maxSizeMessage' => 'Uploaded file is too large ({{ size }} {{ suffix }}). '
+                new Constraints\File(
+                    maxSize: '2M',
+                    maxSizeMessage: 'Uploaded file is too large ({{ size }} {{ suffix }}). '
                         . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
-                ]),
+                ),
             ],
             'label' => $isNew ? false : t('Replace file'),
         ]);

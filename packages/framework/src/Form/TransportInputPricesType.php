@@ -39,7 +39,7 @@ final class TransportInputPricesType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
-                    new NotBlank(['message' => 'Please enter VAT rate']),
+                    new NotBlank(message: 'Please enter VAT rate'),
                 ],
                 'label' => 'VAT',
             ])

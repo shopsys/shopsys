@@ -80,10 +80,10 @@ t('Offer in feed');
 $executionContextInterface->addViolation('This message will be extracted into "validators" translation domain');
 
 // see Shopsys\FrameworkBundle\Component\Translation\ConstraintMessageExtractor
-new Constraint\Length([
-    'message' => 'This message will be extracted into "validators" translation domain',
-    'minMessage' => 'Actually, every option ending with "message" will be extracted',
-]);
+new Constraint\Length(
+    message: 'This message will be extracted into "validators" translation domain',
+    minMessage: 'Actually, every option ending with "message" will be extracted',
+);
 
 // see Shopsys\FrameworkBundle\Component\Translation\ConstraintMessagePropertyExtractor
 class MyConstraint extends \Symfony\Component\Validator\Constraint

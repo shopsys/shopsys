@@ -40,9 +40,9 @@ final class YesNoType extends AbstractType
             'required' => true,
             'placeholder' => false,
             'constraints' => [
-                new Constraints\NotNull([
-                    'message' => 'Please choose at least one option',
-                ]),
+                new Constraints\NotNull(
+                    message: 'Please choose at least one option',
+                ),
             ],
         ]);
     }

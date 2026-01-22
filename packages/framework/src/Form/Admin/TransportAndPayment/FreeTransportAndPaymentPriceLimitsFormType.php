@@ -73,14 +73,14 @@ final class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
                 ->add(self::FIELD_PRICE_LIMIT, MoneyType::class, [
                     'required' => true,
                     'constraints' => [
-                        new NotNegativeMoneyAmount([
-                            'message' => 'Price must be greater or equal to zero',
-                            'groups' => [static::VALIDATION_GROUP_PRICE_LIMIT_ENABLED],
-                        ]),
-                        new Constraints\NotBlank([
-                            'message' => 'Please enter price',
-                            'groups' => [static::VALIDATION_GROUP_PRICE_LIMIT_ENABLED],
-                        ]),
+                        new NotNegativeMoneyAmount(
+                            message: 'Price must be greater or equal to zero',
+                            groups: [static::VALIDATION_GROUP_PRICE_LIMIT_ENABLED],
+                        ),
+                        new Constraints\NotBlank(
+                            message: 'Please enter price',
+                            groups: [static::VALIDATION_GROUP_PRICE_LIMIT_ENABLED],
+                        ),
                     ],
                     'scale' => 6,
                 ]);

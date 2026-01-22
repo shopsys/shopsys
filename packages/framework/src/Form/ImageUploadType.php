@@ -63,7 +63,7 @@ final class ImageUploadType extends AbstractType
 
                 return array_merge(
                     [
-                        new FileAllowedExtension(['extensions' => $options['extensions']]),
+                        new FileAllowedExtension(extensions: $options['extensions']),
                     ],
                     $fileConstraints,
                 );
@@ -125,10 +125,10 @@ final class ImageUploadType extends AbstractType
                     'label' => '',
                     'entry_options' => [
                         'constraints' => [
-                            new Assert\Length([
-                                'max' => 245,
-                                'maxMessage' => 'File name cannot be longer than {{ limit }} characters',
-                            ]),
+                            new Assert\Length(
+                                max: 245,
+                                maxMessage: 'File name cannot be longer than {{ limit }} characters',
+                            ),
                         ],
                     ],
                 ],
@@ -141,10 +141,10 @@ final class ImageUploadType extends AbstractType
                         'label' => false,
                         'entry_options' => [
                             'constraints' => [
-                                new Assert\Length([
-                                    'max' => 245,
-                                    'maxMessage' => 'File name cannot be longer than {{ limit }} characters',
-                                ]),
+                                new Assert\Length(
+                                    max: 245,
+                                    maxMessage: 'File name cannot be longer than {{ limit }} characters',
+                                ),
                             ],
                         ],
                     ],

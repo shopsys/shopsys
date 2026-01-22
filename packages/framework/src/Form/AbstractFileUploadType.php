@@ -92,7 +92,7 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
     {
         $fileConstraints = array_merge(
             [
-                new FileExtensionMaxLength(['limit' => 5]),
+                new FileExtensionMaxLength(limit: 5),
             ],
             $options['file_constraints'],
         );
@@ -104,7 +104,8 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
                 'allow_add' => true,
                 'constraints' => [
                     new Constraints\Callback(
-                        ['callback' => [$this, 'validateUploadedFiles'], 'payload' => $fileConstraints],
+                        callback: [$this, 'validateUploadedFiles'],
+                        payload: $fileConstraints,
                     ),
                 ],
             ])
@@ -113,9 +114,10 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
                 'allow_add' => true,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter the filename']),
+                        new Constraints\NotBlank(message: 'Please enter the filename'),
                         new Constraints\Length(
-                            ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters'],
+                            max: 245,
+                            maxMessage: 'File name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],

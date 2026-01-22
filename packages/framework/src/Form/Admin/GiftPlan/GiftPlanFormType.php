@@ -71,8 +71,8 @@ final class GiftPlanFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name of gift plan']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
+                    new Constraints\NotBlank(message: 'Please enter name of gift plan'),
+                    new Constraints\Length(max: 255, maxMessage: 'Name cannot be longer than {{ limit }} characters'),
                 ],
                 'label' => 'Name',
                 'help' => t('Name serves only for internal use within the administration.'),
@@ -80,7 +80,7 @@ final class GiftPlanFormType extends AbstractType
             ->add('giftProduct', ProductType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please choose gift product']),
+                    new Constraints\NotBlank(message: 'Please choose gift product'),
                 ],
                 'label' => 'Gift product',
             ])

@@ -53,41 +53,41 @@ final class SalesRepresentativeFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'First name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'First name',
             ])
             ->add('lastName', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Last name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Last name',
             ])
             ->add('email', EmailType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 255,
-                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
-                    ]),
-                    new Email(['message' => 'Please enter valid email']),
+                    new Constraints\Length(
+                        max: 255,
+                        maxMessage: 'Email cannot be longer than {{ limit }} characters',
+                    ),
+                    new Email(message: 'Please enter valid email'),
                 ],
                 'label' => 'Email',
             ])
             ->add('telephone', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 30,
+                        maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Telephone',
             ]);
@@ -101,13 +101,13 @@ final class SalesRepresentativeFormType extends AbstractType
                 'required' => false,
                 'image_entity_class' => SalesRepresentative::class,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
-                        'mimeTypesMessage' => 'Image can be only in JPG or PNG format',
-                        'maxSize' => '2M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
+                        mimeTypesMessage: 'Image can be only in JPG or PNG format',
+                        maxSize: '2M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'label' => 'Upload image',
                 'entity' => $options['salesRepresentative'],

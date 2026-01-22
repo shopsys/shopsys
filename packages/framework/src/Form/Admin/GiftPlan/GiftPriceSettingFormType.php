@@ -27,8 +27,8 @@ final class GiftPriceSettingFormType extends AbstractType
             'scale' => 6,
             'currency' => $options['currency_code'],
             'constraints' => [
-                new NotBlank(['message' => 'Please enter price']),
-                new NotNegativeMoneyAmount(['message' => 'Price must be greater or equal to zero']),
+                new NotBlank(message: 'Please enter price'),
+                new NotNegativeMoneyAmount(message: 'Price must be greater or equal to zero'),
             ],
             'label' => 'Gift price (with VAT)',
         ]);

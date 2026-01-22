@@ -29,10 +29,10 @@ final class ColorPickerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $mandatoryConstraints = [
-            new Regex([
-                'pattern' => '/^#[a-fA-F0-9]{6}$/',
-                'message' => 'Color must be a valid hexadecimal code (e.g., #3333ff)',
-            ]),
+            new Regex(
+                pattern: '/^#[a-fA-F0-9]{6}$/',
+                message: 'Color must be a valid hexadecimal code (e.g., #3333ff)',
+            ),
         ];
 
         $resolver->setNormalizer(

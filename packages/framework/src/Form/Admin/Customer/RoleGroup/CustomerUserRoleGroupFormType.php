@@ -38,9 +38,10 @@ final class CustomerUserRoleGroupFormType extends AbstractType
             'label' => 'Role group name',
             'entry_options' => [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter role name']),
+                    new Constraints\NotBlank(message: 'Please enter role name'),
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                        max: 100,
+                        maxMessage: 'Name cannot be longer than {{ limit }} characters',
                     ),
                 ],
             ],

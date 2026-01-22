@@ -59,12 +59,12 @@ final class TermsAndConditionsSettingFormType extends AbstractType
                 'required' => true,
                 'label' => 'Withdrawal deadline (days)',
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter withdrawal deadline.',
-                    ]),
-                    new Constraints\Positive([
-                        'message' => 'Withdrawal deadline must be a positive number.',
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter withdrawal deadline.',
+                    ),
+                    new Constraints\Positive(
+                        message: 'Withdrawal deadline must be a positive number.',
+                    ),
                 ],
             ])
             ->add('withdrawalInstructions', CKEditorType::class, [
@@ -76,9 +76,9 @@ final class TermsAndConditionsSettingFormType extends AbstractType
                     WithdrawalSettingFacade::VARIABLE_ORDER_DETAIL_URL => t('Order detail URL address'),
                 ],
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter withdrawal instructions.',
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter withdrawal instructions.',
+                    ),
                 ],
             ]);
 

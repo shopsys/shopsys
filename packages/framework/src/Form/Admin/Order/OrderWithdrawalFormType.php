@@ -31,59 +31,59 @@ final class OrderWithdrawalFormType extends AbstractType
                 'label' => 'First name',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter first name',
-                        'groups' => [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
-                    ]),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
-                        'groups' => [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter first name',
+                        groups: [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
+                    ),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'First name cannot be longer than {{ limit }} characters',
+                        groups: [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
+                    ),
                 ],
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Last name',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter last name',
-                        'groups' => [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
-                    ]),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
-                        'groups' => [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter last name',
+                        groups: [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
+                    ),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Last name cannot be longer than {{ limit }} characters',
+                        groups: [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
+                    ),
                 ],
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter email',
-                        'groups' => [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
-                    ]),
-                    new Email([
-                        'message' => 'Please enter valid email',
-                        'groups' => [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
-                    ]),
-                    new Constraints\Length([
-                        'max' => 255,
-                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
-                        'groups' => [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter email',
+                        groups: [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
+                    ),
+                    new Email(
+                        message: 'Please enter valid email',
+                        groups: [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
+                    ),
+                    new Constraints\Length(
+                        max: 255,
+                        maxMessage: 'Email cannot be longer than {{ limit }} characters',
+                        groups: [self::VALIDATION_GROUP_WITHDRAWAL_REQUIRED],
+                    ),
                 ],
             ])
             ->add('telephone', TextType::class, [
                 'label' => 'Phone',
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Phone number cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 30,
+                        maxMessage: 'Phone number cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('note', TextareaType::class, [

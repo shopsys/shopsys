@@ -30,7 +30,7 @@ final class InputPriceTypeFormType extends AbstractType
                     t('Including VAT') => PricingSetting::PRICE_TYPE_WITH_VAT,
                 ],
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter entry price type']),
+                    new Constraints\NotBlank(message: 'Please enter entry price type'),
                 ],
             ])
             ->add('sellingPriceType', ChoiceType::class, [
@@ -40,7 +40,7 @@ final class InputPriceTypeFormType extends AbstractType
                     t('Including VAT') => PricingSetting::PRICE_TYPE_WITH_VAT,
                 ],
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter selling price type']),
+                    new Constraints\NotBlank(message: 'Please enter selling price type'),
                 ],
             ])
             ->add('actionBar', ActionBarType::class, [

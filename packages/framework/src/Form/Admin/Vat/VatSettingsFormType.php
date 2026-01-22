@@ -40,7 +40,7 @@ final class VatSettingsFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter default VAT']),
+                    new Constraints\NotBlank(message: 'Please enter default VAT'),
                 ],
                 'label' => 'Default VAT rate',
             ])

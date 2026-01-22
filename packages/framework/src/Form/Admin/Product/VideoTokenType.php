@@ -25,9 +25,9 @@ final class VideoTokenType extends AbstractType
         $builder->add('videoToken', TextType::class, [
             'required' => true,
             'constraints' => [
-                new Constraints\NotBlank([
-                    'message' => 'Please enter video ID',
-                ]),
+                new Constraints\NotBlank(
+                    message: 'Please enter video ID',
+                ),
             ],
             'label' => 'Youtube ID',
         ]);
@@ -38,7 +38,8 @@ final class VideoTokenType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\Length(
-                        ['max' => 245, 'maxMessage' => 'Description cannot be longer than {{ limit }} characters'],
+                        max: 245,
+                        maxMessage: 'Description cannot be longer than {{ limit }} characters',
                     ),
                 ],
             ],

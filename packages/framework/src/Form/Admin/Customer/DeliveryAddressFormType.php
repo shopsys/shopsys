@@ -38,65 +38,65 @@ final class DeliveryAddressFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter first name']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter first name'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'First name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'First name',
             ])
             ->add('lastName', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter last name']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter last name'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Last name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Last name',
             ])
             ->add('companyName', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Company name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Company name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Company',
             ])
             ->add('street', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter street']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter street'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Street name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Street',
             ])
             ->add('city', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter city']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter city'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'City name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'City',
             ])
             ->add('postcode', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter postcode']),
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter postcode'),
+                    new Constraints\Length(
+                        max: 30,
+                        maxMessage: 'Zip code cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Postcode',
             ])
@@ -110,10 +110,10 @@ final class DeliveryAddressFormType extends AbstractType
             ->add('telephone', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 30,
+                        maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Telephone',
             ])

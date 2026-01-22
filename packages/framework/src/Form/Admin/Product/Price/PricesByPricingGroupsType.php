@@ -40,7 +40,7 @@ final class PricesByPricingGroupsType extends AbstractType
                 'required' => false,
                 'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
                 'constraints' => [
-                    new NotNegativeMoneyAmount(['message' => 'Price must be greater or equal to zero']),
+                    new NotNegativeMoneyAmount(message: 'Price must be greater or equal to zero'),
                 ],
                 'label' => $pricingGroup->getName(),
             ]);

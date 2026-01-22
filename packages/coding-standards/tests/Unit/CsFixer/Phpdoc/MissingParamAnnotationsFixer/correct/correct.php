@@ -57,10 +57,10 @@ final class ZboziProductFormType extends AbstractType
                 'entry_options' => [
                     'currency' => 'CZK',
                     'constraints' => [
-                        new MoneyRange([
-                            'min' => Money::create(1),
-                            'max' => Money::create(500),
-                        ]),
+                        new MoneyRange(
+                            min: Money::create(1),
+                            max: Money::create(500),
+                        ),
                     ],
                 ],
             ])
@@ -71,10 +71,10 @@ final class ZboziProductFormType extends AbstractType
                 'entry_options' => [
                     'currency' => 'CZK',
                     'constraints' => [
-                        new MoneyRange([
-                            'min' => Money::create(1),
-                            'max' => Money::create(500),
-                        ]),
+                        new MoneyRange(
+                            min: Money::create(1),
+                            max: Money::create(500),
+                        ),
                     ],
                 ],
             ])

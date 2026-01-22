@@ -60,8 +60,8 @@ final class StockFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter warehouse name']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Warehouse name cannot be longer than {{ limit }} characters']),
+                    new Constraints\NotBlank(message: 'Please enter warehouse name'),
+                    new Constraints\Length(max: 255, maxMessage: 'Warehouse name cannot be longer than {{ limit }} characters'),
                 ],
                 'label' => 'Name',
             ])
@@ -73,8 +73,8 @@ final class StockFormType extends AbstractType
                 'required' => false,
                 'label' => 'External bridge ID',
                 'constraints' => [
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'External bridge ID cannot be longer than {{ limit }} characters']),
-                    new Constraints\Callback([$this, 'sameStockExternalIdValidation']),
+                    new Constraints\Length(max: 255, maxMessage: 'External bridge ID cannot be longer than {{ limit }} characters'),
+                    new Constraints\Callback(callback: [$this, 'sameStockExternalIdValidation']),
                 ],
             ])
             ->add('note', TextType::class, [
