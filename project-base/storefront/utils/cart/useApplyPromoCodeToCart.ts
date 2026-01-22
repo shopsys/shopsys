@@ -8,7 +8,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
-export type ApplyPromoCodeToCart = (newPromoCode: string) => Promise<TypeCartFragment | undefined | null>;
+type ApplyPromoCodeToCart = (newPromoCode: string) => Promise<TypeCartFragment | undefined | null>;
 
 export const useApplyPromoCodeToCart = (messages: { success: string; error: string }) => {
     const [, applyPromoCodeToCartMutation] = useApplyPromoCodeToCartMutation();

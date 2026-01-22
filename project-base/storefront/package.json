@@ -21,7 +21,8 @@
         "typecheck": "tsc --pretty --noEmit --project tsconfig.json",
         "test": "vitest",
         "test--update": "vitest -u",
-        "test--no-watch": "vitest run"
+        "test--no-watch": "vitest run",
+        "knip": "knip"
     },
     "dependencies": {
         "@hookform/resolvers": "~2.6.1",
@@ -66,9 +67,11 @@
         "@eslint/compat": "^1.4.1",
         "@eslint/eslintrc": "^3.3.3",
         "@eslint/js": "^9.39.2",
+        "@graphql-codegen/add": "^6.0.0",
         "@graphql-codegen/cli": "~5.0.7",
         "@graphql-codegen/introspection": "~4.0.3",
         "@graphql-codegen/near-operation-file-preset": "^3.1.0",
+        "@graphql-codegen/typescript": "^5.0.7",
         "@graphql-codegen/typescript-operations": "~4.0.1",
         "@graphql-codegen/typescript-urql": "~4.0.1",
         "@mswjs/interceptors": "0.19.0",
@@ -101,6 +104,7 @@
         "graphql-markdown": "~7.3.0",
         "i18next-parser": "~9.3.0",
         "jsdom": "~24.0.0",
+        "knip": "^5.81.0",
         "license-checker": "^25.0.1",
         "postcss": "~8.5.6",
         "prettier": "~3.2.5",

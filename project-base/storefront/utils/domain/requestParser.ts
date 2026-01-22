@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 
-export type ParsedRequest = {
+type ParsedRequest = {
     requestBaseUrl: string;
     requestPath: string;
     acceptLanguage: string;

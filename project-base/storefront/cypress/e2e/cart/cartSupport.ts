@@ -11,14 +11,6 @@ export const decreaseCartItemQuantityWithSpinbox = (catnum: string) => {
     cy.getByTID([[TIDs.pages_cart_list_item_, catnum], TIDs.forms_spinbox_decrease]).click();
 };
 
-export const increaseProductListQuantityWithSpinbox = (catnum: string) => {
-    cy.getByTID([[TIDs.blocks_product_list_listeditem_, catnum], TIDs.forms_spinbox_increase]).click();
-};
-
-export const decreaseProductListQuantityWithSpinbox = (catnum: string) => {
-    cy.getByTID([[TIDs.blocks_product_list_listeditem_, catnum], TIDs.forms_spinbox_decrease]).click();
-};
-
 export const goToNextOrderStep = () => {
     cy.getByTID([TIDs.blocks_orderaction_next]).click();
     cy.waitForStableAndInteractiveDOM();

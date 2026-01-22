@@ -1,5 +1,0 @@
-fragment CustomerUserRoleGroupFragment on CustomerUserRoleGroup {
-    __typename
-    uuid
-    name
-}

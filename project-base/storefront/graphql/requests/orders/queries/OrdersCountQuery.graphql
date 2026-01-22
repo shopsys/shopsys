@@ -1,5 +1,0 @@
-query OrdersCountQuery($after: String, $first: Int) {
-    orders(after: $after, first: $first) {
-        totalCount
-    }
-}

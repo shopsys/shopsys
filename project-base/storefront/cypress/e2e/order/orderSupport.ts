@@ -9,10 +9,6 @@ export const fillEmailInThirdStep = (email: string) => {
         .type(email);
 };
 
-export const clearEmailInThirdStep = () => {
-    cy.get('#contact-information-form-email').clear();
-};
-
 export const fillCustomerInformationInThirdStep = (phone: string, firstName: string, lastName: string) => {
     cy.get('#contact-information-form-telephone')
         .should('have.attr', 'placeholder', translations.placeholder.phone)

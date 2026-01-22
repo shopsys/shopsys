@@ -370,6 +370,8 @@ jobs:
                     docker compose exec storefront sh check-code-gen.sh
             -   name: Check standards
                 run: docker compose exec storefront pnpm run check
+            -   name: Check unused code with Knip
+                run: docker compose exec storefront pnpm run knip
             -   name: Check tailwind-for-admin styles are up to date
                 run: |
                     docker compose exec storefront pnpm compile-tailwind-for-admin
@@ -1063,6 +1065,8 @@ jobs:
                     docker compose exec storefront sh check-code-gen.sh
             -   name: Check Storefront standards
                 run: docker compose exec storefront pnpm run check
+            -   name: Check unused code with Knip
+                run: docker compose exec storefront pnpm run knip
             -   name: Run storefront unit tests
                 run: docker compose exec storefront pnpm test--no-watch
             -   name: Storefront container logs

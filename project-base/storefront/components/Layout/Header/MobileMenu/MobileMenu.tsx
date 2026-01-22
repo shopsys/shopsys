@@ -7,13 +7,6 @@ import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
-export type MenuItem = {
-    name: string;
-    link: string;
-    parentItem?: string;
-    children?: MenuItem[];
-};
-
 export const MobileMenu: FC = () => {
     const { t } = useTranslation();
     const [{ data: navigationData }] = useNavigationQuery();
