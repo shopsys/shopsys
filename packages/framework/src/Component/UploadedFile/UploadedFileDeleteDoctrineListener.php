@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 
 class UploadedFileDeleteDoctrineListener
@@ -15,9 +15,9 @@ class UploadedFileDeleteDoctrineListener
     ) {
     }
 
-    public function preRemove(LifecycleEventArgs $args): void
+    public function preRemove(PreRemoveEventArgs $args): void
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
 
         if ($entity instanceof UploadedFile) {
             $this->uploadedFileFacade->deleteFileFromFilesystem($entity);
