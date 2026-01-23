@@ -122,10 +122,32 @@
             "name": {
                 "type": "text",
                 "analyzer": "edge_ngram_without_diacritic",
-                "search_analyzer": "full_without_diacritic"
+                "search_analyzer": "full_without_diacritic",
+                "fields": {
+                    "full_with_diacritic": {
+                        "type": "text",
+                        "analyzer": "full_with_diacritic"
+                    },
+                    "full_without_diacritic": {
+                        "type": "text",
+                        "analyzer": "full_without_diacritic"
+                    },
+                    "edge_ngram_with_diacritic": {
+                        "type": "text",
+                        "analyzer": "edge_ngram_with_diacritic",
+                        "search_analyzer": "full_with_diacritic"
+                    },
+                    "edge_ngram_without_diacritic": {
+                        "type": "text",
+                        "analyzer": "edge_ngram_without_diacritic",
+                        "search_analyzer": "full_without_diacritic"
+                    }
+                }
             },
             "text": {
-                "type": "text"
+                "type": "text",
+                "analyzer": "edge_ngram_without_diacritic_html",
+                "search_analyzer": "full_without_diacritic_html"
             },
             "url": {
                 "type": "text"
@@ -137,13 +159,59 @@
                 "type": "keyword"
             },
             "seoH1": {
-                "type": "text"
+                "type": "text",
+                "analyzer": "edge_ngram_without_diacritic",
+                "search_analyzer": "full_without_diacritic",
+                "fields": {
+                    "full_with_diacritic": {
+                        "type": "text",
+                        "analyzer": "full_with_diacritic"
+                    },
+                    "full_without_diacritic": {
+                        "type": "text",
+                        "analyzer": "full_without_diacritic"
+                    },
+                    "edge_ngram_with_diacritic": {
+                        "type": "text",
+                        "analyzer": "edge_ngram_with_diacritic",
+                        "search_analyzer": "full_with_diacritic"
+                    },
+                    "edge_ngram_without_diacritic": {
+                        "type": "text",
+                        "analyzer": "edge_ngram_without_diacritic",
+                        "search_analyzer": "full_without_diacritic"
+                    }
+                }
             },
             "seoTitle": {
-                "type": "text"
+                "type": "text",
+                "analyzer": "edge_ngram_without_diacritic",
+                "search_analyzer": "full_without_diacritic",
+                "fields": {
+                    "full_with_diacritic": {
+                        "type": "text",
+                        "analyzer": "full_with_diacritic"
+                    },
+                    "full_without_diacritic": {
+                        "type": "text",
+                        "analyzer": "full_without_diacritic"
+                    },
+                    "edge_ngram_with_diacritic": {
+                        "type": "text",
+                        "analyzer": "edge_ngram_with_diacritic",
+                        "search_analyzer": "full_with_diacritic"
+                    },
+                    "edge_ngram_without_diacritic": {
+                        "type": "text",
+                        "analyzer": "edge_ngram_without_diacritic",
+                        "search_analyzer": "full_without_diacritic"
+                    }
+                }
             },
             "seoMetaDescription": {
-                "type": "text"
+                "type": "text",
+                "analyzer": "edge_ngram_without_diacritic",
+                "search_analyzer": "full_without_diacritic"
             },
             "slug": {
                 "type": "keyword"

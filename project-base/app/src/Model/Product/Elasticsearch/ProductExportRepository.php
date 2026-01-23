@@ -54,6 +54,9 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method array getVariantPrices(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
  * @method string extractVat(\App\Model\Product\Product $product, int $domainId)
  * @method int[] extractRelatedProductsIds(\App\Model\Product\Product $product)
+ * @method string extractSearchingSeoTitles(\App\Model\Product\Product $product, int $domainId)
+ * @method string extractSearchingSeoH1s(\App\Model\Product\Product $product, int $domainId)
+ * @method string extractSearchingSeoMetaDescriptions(\App\Model\Product\Product $product, int $domainId)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -198,7 +201,7 @@ class ProductExportRepository extends BaseProductExportRepository
                 $variantFullName = $variant->getFullName($locale);
 
                 if ($variantFullName !== '' && strpos($variantNames, $variantFullName) === false) {
-                    $variantNames .= ' ' . $variantFullName;
+                    $variantNames .= self::VALUE_SEPARATOR . $variantFullName;
                 }
             }
 
@@ -218,7 +221,7 @@ class ProductExportRepository extends BaseProductExportRepository
                 $variantDescription = $variant->getDescription($domainId);
 
                 if ($variantDescription !== null && $variantDescription !== '' && strpos($variantDescriptions, $variantDescription) === false) {
-                    $variantDescriptions .= ' ' . $variantDescription;
+                    $variantDescriptions .= self::VALUE_SEPARATOR . $variantDescription;
                 }
             }
 
@@ -238,7 +241,7 @@ class ProductExportRepository extends BaseProductExportRepository
                 $variantDescription = $variant->getShortDescription($domainId);
 
                 if ($variantDescription !== null && $variantDescription !== '' && strpos($variantDescriptions, $variantDescription) === false) {
-                    $variantDescriptions .= ' ' . $variantDescription;
+                    $variantDescriptions .= self::VALUE_SEPARATOR . $variantDescription;
                 }
             }
 

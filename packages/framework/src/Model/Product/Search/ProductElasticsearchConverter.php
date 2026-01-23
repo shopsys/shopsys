@@ -76,6 +76,10 @@ class ProductElasticsearchConverter
             $product[ProductExportFieldProvider::PROMOTION] ?? null,
         );
 
+        $result[ProductExportFieldProvider::SEARCHING_SEO_TITLES] = $product[ProductExportFieldProvider::SEARCHING_SEO_TITLES] ?? '';
+        $result[ProductExportFieldProvider::SEARCHING_SEO_H1S] = $product[ProductExportFieldProvider::SEARCHING_SEO_H1S] ?? '';
+        $result[ProductExportFieldProvider::SEARCHING_SEO_META_DESCRIPTIONS] = $product[ProductExportFieldProvider::SEARCHING_SEO_META_DESCRIPTIONS] ?? '';
+
         return $result;
     }
 

@@ -102,10 +102,13 @@ class BrandRepository
     public function getBrandsBySearchText(string $searchText): array
     {
         $queryBuilder = $this->getBrandRepository()
-            ->createQueryBuilder('b')
-            ->andWhere(
-                'NORMALIZED(b.name) LIKE NORMALIZED(:searchText)',
-            );
+            ->createQueryBuilder('b');
+
+        $this->addDomain($queryBuilder, $this->domain->getId());
+
+        $queryBuilder->andWhere(
+            'NORMALIZED(b.name) LIKE NORMALIZED(:searchText) OR NORMALIZED(bd.seoH1) LIKE NORMALIZED(:searchText) OR NORMALIZED(bd.seoTitle) LIKE NORMALIZED(:searchText) OR NORMALIZED(bd.seoMetaDescription) LIKE NORMALIZED(:searchText)',
+        );
 
         if (mb_strlen($searchText) < SearchSetting::SIMPLE_SEARCH_THRESHOLD) {
             $queryBuilder->setParameter('searchText', $searchText . '%');
@@ -119,6 +122,19 @@ class BrandRepository
     }
 
     /**
+     * @param \Doctrine\ORM\QueryBuilder $brandsQueryBuilder
+     * @param int $domainId
+     */
+    public function addDomain(QueryBuilder $brandsQueryBuilder, int $domainId): void
+    {
+        $brandsQueryBuilder
+            ->addSelect('bd')
+            ->join('b.domains', 'bd', Join::WITH, 'bd.domainId = :domainId')
+            ->setParameter('domainId', $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function getAllWithDomainsAndTranslations(DomainConfig $domainConfig): array
