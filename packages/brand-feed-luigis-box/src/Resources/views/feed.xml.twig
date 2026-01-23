@@ -11,6 +11,15 @@
         {% if item.imageUrl is not null -%}
             <image_url>{{ item.imageUrl }}</image_url>
         {% endif %}
+        {% if item.seoTitle is not null %}
+            <seo_title>{{ item.seoTitle }}</seo_title>
+        {% endif %}
+        {% if item.seoMetaDescription is not null %}
+            <seo_meta_description>{{ item.seoMetaDescription }}</seo_meta_description>
+        {% endif %}
+        {% if item.seoH1 is not null %}
+            <seo_h1>{{ item.seoH1 }}</seo_h1>
+        {% endif %}
     </brand>
 {% endblock %}
 

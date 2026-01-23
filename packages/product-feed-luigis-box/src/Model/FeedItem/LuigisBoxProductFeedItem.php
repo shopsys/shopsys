@@ -43,6 +43,9 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
         protected readonly ?string $imageUrlS = null,
         protected readonly ?string $imageUrlM = null,
         protected readonly ?string $imageUrlL = null,
+        protected readonly ?string $seoTitle = null,
+        protected readonly ?string $seoMetaDescription = null,
+        protected readonly ?string $seoH1 = null,
     ) {
     }
 
@@ -181,5 +184,20 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
     public function getMainCategoryId(): int
     {
         return $this->mainCategoryId;
+    }
+
+    public function getSeoTitle(): ?string
+    {
+        return $this->seoTitle;
+    }
+
+    public function getSeoMetaDescription(): ?string
+    {
+        return $this->seoMetaDescription;
+    }
+
+    public function getSeoH1(): ?string
+    {
+        return $this->seoH1;
     }
 }

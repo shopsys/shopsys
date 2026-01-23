@@ -17,6 +17,9 @@ class LuigisBoxCategoryFeedItem implements FeedItemInterface
         protected readonly string $url,
         protected readonly array $hierarchyNames,
         protected readonly ?string $imageUrl = null,
+        protected readonly ?string $seoTitle = null,
+        protected readonly ?string $seoMetaDescription = null,
+        protected readonly ?string $seoH1 = null,
     ) {
     }
 
@@ -53,5 +56,20 @@ class LuigisBoxCategoryFeedItem implements FeedItemInterface
         }
 
         return null;
+    }
+
+    public function getSeoTitle(): ?string
+    {
+        return $this->seoTitle;
+    }
+
+    public function getSeoMetaDescription(): ?string
+    {
+        return $this->seoMetaDescription;
+    }
+
+    public function getSeoH1(): ?string
+    {
+        return $this->seoH1;
     }
 }

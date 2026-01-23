@@ -58,6 +58,11 @@ By default, these facets are used:
 Parametric filter uses Luigi's Box AI for suggesting the best filter options for the user based on filtered products.
 You can read more about this in Luigi's Box [docs](https://docs.luigisbox.com/search/api.html#best-practices-use-dynamic-facets).
 
+## SEO attributes in search
+
+Luigi's Box feeds include SEO attributes (`seoTitle`, `seoMetaDescription`, `seoH1`) for products, categories, brands, and articles.
+To leverage these attributes for search, contact Luigi's Box support and ask them to include these elements in search with partial matching enabled if desired.
+
 ## Recommended products
 
 Luigi's Box uses data provided by searching and GTM to analyze user behavior and thanks to that provides personalized product recommendations.

@@ -121,10 +121,6 @@ class BrandRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $brandsQueryBuilder
-     * @param int $domainId
-     */
     public function addDomain(QueryBuilder $brandsQueryBuilder, int $domainId): void
     {
         $brandsQueryBuilder
@@ -134,7 +130,6 @@ class BrandRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function getAllWithDomainsAndTranslations(DomainConfig $domainConfig): array

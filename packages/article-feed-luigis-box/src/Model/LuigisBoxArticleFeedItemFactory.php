@@ -32,6 +32,9 @@ class LuigisBoxArticleFeedItemFactory
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, static::SMALL_IMAGE_SIZE, static::SMALL_IMAGE_SIZE) : null,
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, static::MEDIUM_IMAGE_SIZE, static::MEDIUM_IMAGE_SIZE) : null,
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, static::LARGE_IMAGE_SIZE, static::LARGE_IMAGE_SIZE) : null,
+            $articleData['seoTitle'] ?? null,
+            $articleData['seoMetaDescription'] ?? null,
+            $articleData['seoH1'] ?? null,
         );
     }
 }

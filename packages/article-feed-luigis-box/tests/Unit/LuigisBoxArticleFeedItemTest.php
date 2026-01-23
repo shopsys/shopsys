@@ -16,6 +16,9 @@ class LuigisBoxArticleFeedItemTest extends TestCase
     private const string ARTICLE_URL = 'https://www.example.com/test-article';
     private const string ARTICLE_TEXT = 'Test article text';
     private const string ARTICLE_IMAGE_URL = 'https://www.example.com/test-article.jpg';
+    private const string ARTICLE_SEO_TITLE = 'Test article SEO title';
+    private const string ARTICLE_SEO_META_DESCRIPTION = 'Test article SEO meta description';
+    private const string ARTICLE_SEO_H1 = 'Test article heading';
 
     private LuigisBoxArticleFeedItemFactory $luigisBoxArticleFeedItemFactory;
 
@@ -36,6 +39,9 @@ class LuigisBoxArticleFeedItemTest extends TestCase
         $this->assertSame($articleData['name'], $luigisBoxArticleFeedItem->getName());
         $this->assertSame($articleData['url'], $luigisBoxArticleFeedItem->getUrl());
         $this->assertSame($articleData['text'], $luigisBoxArticleFeedItem->getText());
+        $this->assertSame($articleData['seoTitle'] ?? null, $luigisBoxArticleFeedItem->getSeoTitle());
+        $this->assertSame($articleData['seoMetaDescription'] ?? null, $luigisBoxArticleFeedItem->getSeoMetaDescription());
+        $this->assertSame($articleData['seoH1'] ?? null, $luigisBoxArticleFeedItem->getSeoH1());
 
         $this->assertLuigisBoxCategoryFeedItemWithImageLink($articleData);
     }
@@ -64,6 +70,9 @@ class LuigisBoxArticleFeedItemTest extends TestCase
                 'id' => 1,
                 'index' => 'article',
                 'imageUrl' => self::ARTICLE_IMAGE_URL,
+                'seoTitle' => self::ARTICLE_SEO_TITLE,
+                'seoMetaDescription' => self::ARTICLE_SEO_META_DESCRIPTION,
+                'seoH1' => self::ARTICLE_SEO_H1,
                 ...$commonArticleData,
             ],
         ];
@@ -73,6 +82,9 @@ class LuigisBoxArticleFeedItemTest extends TestCase
                 'id' => 2,
                 'index' => 'article',
                 'imageUrl' => null,
+                'seoTitle' => self::ARTICLE_SEO_TITLE,
+                'seoMetaDescription' => self::ARTICLE_SEO_META_DESCRIPTION,
+                'seoH1' => null,
                 ...$commonArticleData,
             ],
         ];
@@ -82,6 +94,9 @@ class LuigisBoxArticleFeedItemTest extends TestCase
                 'id' => 1,
                 'index' => 'blog_article',
                 'imageUrl' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+                'seoH1' => null,
                 ...$commonArticleData,
             ],
         ];

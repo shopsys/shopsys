@@ -72,6 +72,9 @@ class CombinedArticleElasticsearchRepository
         $result['name'] = $article['name'] ?? '';
         $result['text'] = $article['text'] ?? '';
         $result['url'] = $article['url'] ?? '';
+        $result['seoTitle'] = $article['seoTitle'] ?? null;
+        $result['seoMetaDescription'] = $article['seoMetaDescription'] ?? null;
+        $result['seoH1'] = $article['seoH1'] ?? null;
 
         return $result;
     }

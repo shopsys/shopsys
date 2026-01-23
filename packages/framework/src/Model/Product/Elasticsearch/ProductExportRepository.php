@@ -497,11 +497,6 @@ class ProductExportRepository
         return $product->getVatForDomain($domainId)->getPercent();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     protected function extractSearchingSeoTitles(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
@@ -518,11 +513,6 @@ class ProductExportRepository
         return $product->getSeoTitle($domainId) ?? '';
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     protected function extractSearchingSeoH1s(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
@@ -539,11 +529,6 @@ class ProductExportRepository
         return $product->getSeoH1($domainId) ?? '';
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     protected function extractSearchingSeoMetaDescriptions(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
