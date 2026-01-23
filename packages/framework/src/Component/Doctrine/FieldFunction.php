@@ -6,9 +6,9 @@ namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
 use Doctrine\ORM\Query\AST\Node;
-use Doctrine\ORM\Query\Lexer;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
+use Doctrine\ORM\Query\TokenType;
 use Override;
 
 class FieldFunction extends FunctionNode
@@ -23,18 +23,18 @@ class FieldFunction extends FunctionNode
     #[Override]
     public function parse(Parser $parser): void
     {
-        $parser->match(Lexer::T_IDENTIFIER);
-        $parser->match(Lexer::T_OPEN_PARENTHESIS);
+        $parser->match(TokenType::T_IDENTIFIER);
+        $parser->match(TokenType::T_OPEN_PARENTHESIS);
         $this->firstArgumentExpression = $parser->ArithmeticExpression();
 
         $lexer = $parser->getLexer();
         $this->nextArgumentExpressions = [];
 
-        while ($lexer->lookahead['type'] === Lexer::T_COMMA) {
-            $parser->match(Lexer::T_COMMA);
+        while ($lexer->lookahead->type === TokenType::T_COMMA) {
+            $parser->match(TokenType::T_COMMA);
             $this->nextArgumentExpressions[] = $parser->ArithmeticPrimary();
         }
-        $parser->match(Lexer::T_CLOSE_PARENTHESIS);
+        $parser->match(TokenType::T_CLOSE_PARENTHESIS);
     }
 
     #[Override]
