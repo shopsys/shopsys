@@ -114,7 +114,7 @@ RUN chmod +x /usr/local/bin/docker-php-entrypoint
 
 # Cachetool for opcache management
 RUN curl -sL https://github.com/gordalina/cachetool/releases/latest/download/cachetool.phar -o /usr/local/bin/cachetool \
-    && chmod +x /usr/local/bin/cachetool \
+    && chmod +x /usr/local/bin/cachetool
 
 RUN chown -R www-data:www-data /var/www/html
 
