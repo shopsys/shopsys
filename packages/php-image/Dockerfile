@@ -111,6 +111,11 @@ RUN if [ -e "/usr/local/bin/npm" ]; then rm /usr/local/bin/npm; fi && ln -s /usr
 
 COPY ./docker-php-entrypoint /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
+
+# Cachetool for opcache management
+RUN curl -sL https://github.com/gordalina/cachetool/releases/latest/download/cachetool.phar -o /usr/local/bin/cachetool \
+    && chmod +x /usr/local/bin/cachetool \
+
 RUN chown -R www-data:www-data /var/www/html
 
 COPY ./phing-completion /etc/bash_completion.d/phing
