@@ -61,9 +61,10 @@ final class UpdateVersionInDocsReleaseWorker extends AbstractShopsysReleaseWorke
      */
     private function replaceCurrentVersionInMkdocsConfig(string $fileContent): string
     {
+        // the "current_version" is under the "extra" key in mkdocs.yml, so it has indentation
         $updatedFileContent = preg_replace(
-            '/current_version: .+$/m',
-            'current_version: ' . $this->currentBranchName,
+            '/^(\s*)current_version: .+$/m',
+            '$1current_version: ' . $this->currentBranchName,
             $fileContent,
         );
 
