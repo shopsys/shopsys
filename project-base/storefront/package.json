@@ -63,7 +63,6 @@
         "zustand": "~4.4.7"
     },
     "devDependencies": {
-        "@eslint/compat": "^1.4.1",
         "@eslint/eslintrc": "^3.3.3",
         "@eslint/js": "^9.39.2",
         "@graphql-codegen/add": "^6.0.0",
