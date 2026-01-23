@@ -82,7 +82,7 @@ class CartWithModificationsResult
     protected ?PriceInterface $roundingPrice = null;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
+     * @var \Shopsys\FrontendApiBundle\Model\Cart\PromoCodeQueryDto[]
      */
     protected array $promoCodes = [];
 
@@ -263,7 +263,7 @@ class CartWithModificationsResult
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
+     * @return \Shopsys\FrontendApiBundle\Model\Cart\PromoCodeQueryDto[]
      */
     public function getPromoCodes(): array
     {
