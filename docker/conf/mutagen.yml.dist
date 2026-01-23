@@ -18,10 +18,10 @@ sync:
                 - ".DS_Store"
                 - ".idea"
                 - ".npm-global"
+                - "/project-base/app/var/postgres-data"
+                - "/project-base/storefront"
                 - "elasticsearch-data"
                 - "nbproject"
-                - "postgres-data"
-                - "/storefront"
         mode: "two-way-resolved"
 
     storefront:
