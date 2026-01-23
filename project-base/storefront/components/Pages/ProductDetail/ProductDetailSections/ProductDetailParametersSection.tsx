@@ -60,7 +60,7 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
                                             <span className="h6 leading-5">{parameter.name}</span>
                                         </Cell>
 
-                                        <Cell className="px-5 py-2.5 text-sm">
+                                        <Cell className="flex flex-col gap-1 px-5 py-2.5 text-sm lg:block">
                                             <span className="h6 leading-5 lg:hidden">{parameter.name}</span>
 
                                             {parameter.values.map((value, index) =>
@@ -91,7 +91,7 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
                                             <span className="h6 leading-5">{parameter.name}</span>
                                         </Cell>
 
-                                        <Cell className="px-5 py-2.5 text-sm">
+                                        <Cell className="flex flex-col gap-1 px-5 py-2.5 text-sm lg:block">
                                             <span className="h6 leading-5 lg:hidden">{parameter.name}</span>
 
                                             {parameter.values.map((value, index) =>
