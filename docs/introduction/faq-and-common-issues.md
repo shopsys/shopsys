@@ -62,7 +62,7 @@ See how to install Shopsys Platform in production and how to proceed when deploy
 
 Every administrator can switch the administration locale to any of the locales defined by the `shopsys.allowed_admin_locales` parameter in your `config/parameters_common.yaml` configuration.
 The first locale in the list is the default one.
-This scenario is described in more detail in the tutorial [How to Set Up Domains and Locales (Languages)](./how-to-set-up-domains-and-locales.md#36-locale-in-administration).
+This scenario is described in more detail in the tutorial [How to Set Up Domains and Locales (Languages)](./how-to-set-up-domains-and-locales.md#37-locale-in-administration).
 
 ## What are the differences between "listable", "sellable", "offered" and "visible" products?
 

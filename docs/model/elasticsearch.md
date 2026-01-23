@@ -75,7 +75,7 @@ If you need to change the data that are exported into Elasticsearch, overwrite a
 ## Use of Elasticsearch
 
 You can learn more about [Product searching](../model/front-end-product-searching.md) in a separate article.
-[Sorting](../introduction/how-to-set-up-domains-and-locales.md#37-sorting-in-different-locales) is done with the help of [ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
+[Sorting](../introduction/how-to-set-up-domains-and-locales.md#38-sorting-in-different-locales) is done with the help of [ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
 which ensures that alphabetical sorting is correct for every language and its set of rules.
 
 ### Adding new index

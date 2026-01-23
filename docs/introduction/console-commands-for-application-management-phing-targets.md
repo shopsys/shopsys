@@ -84,7 +84,7 @@ Most important build command for production. Cleans cache, installs composer dep
 
 !!! tip
 
-    More about how to install and deploy your application in production can be found in [Installation Using Docker on Production Server](../installation/installation-using-docker-on-production-server.md)
+    More about how to install and deploy your application in production can be found in [Installation Using Kubernetes on Production Server](../installation/installation-using-kubernetes-on-production-server.md)
 
 #### build-demo-ci
 

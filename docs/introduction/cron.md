@@ -19,11 +19,11 @@ If you want to show Cron overview table for non-superadmin users you need add pa
 
 ## Default Cron Commands
 
-There is some prepared configuration in a file [`app/config/cron.yaml`]({github.link}}/project-base/app/config/cron.yaml) in `project-base`.
+There is some prepared configuration in a file [`app/config/cron.yaml`]({{github.link}}/project-base/app/config/cron.yaml) in `project-base`.
 
 !!! note
 
-    Hours set in [`app/config/cron.yaml`]({github.link}}/project-base/app/config/cron.yaml) are consider to be in timezone set in `shopsys.cron_timezone` parameter in [`config/parameters_common.yaml`]({{github.link}}/project-base/app/config/parameters_common.yaml) file.
+    Hours set in [`app/config/cron.yaml`]({{github.link}}/project-base/app/config/cron.yaml) are consider to be in timezone set in `shopsys.cron_timezone` parameter in [`config/parameters_common.yaml`]({{github.link}}/project-base/app/config/parameters_common.yaml) file.
 
 ## Running Cron Jobs
 

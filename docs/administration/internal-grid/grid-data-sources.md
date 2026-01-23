@@ -10,6 +10,8 @@ As a data source, the [Grid Component](index.md) requires an implementation of [
 - [`ArrayWithPaginationDataSourceFactory`]({{github.link}}/packages/framework/src/Component/Grid/ArrayWithPaginationDataSourceFactory.php)
 - [`MoneyConvertingDataSourceDecoratorFactory`]({{github.link}}/packages/framework/src/Component/Grid/MoneyConvertingDataSourceDecoratorFactory.php)
 
+## [`QueryBuilderDataSource`]({{github.link}}/packages/framework/src/Component/Grid/QueryBuilderDataSource.php)
+
 The most commonly used data source is created from Doctrine Query Builder.
 
 ### Example of usage
@@ -29,7 +31,7 @@ $queryBuilder->select('p')
 $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'p.id');
 ```
 
-QueryBuilderDataSource contains a third default parameter $hint which is pre-set to SortableNullsWalker::class as a way to sort null values to the beginning in the case of ASC sorting, or to the end in the case of DESC sorting.
+QueryBuilderDataSource contains a third default parameter `$hint` which is pre-set to `SortableNullsWalker::class` as a way to sort null values to the beginning in the case of ASC sorting, or to the end in the case of DESC sorting.
 This default setting overrides the default behavior of postgreSQL and in the case of large tables can cause the query to slow down.
 For this case and after considering all options, it is possible to set the hint to NULL and thus keep the default behavior of postgreSQL to speed up the query.
 
@@ -70,7 +72,7 @@ $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
 );
 ```
 
-As in the case of QueryBuilderDataSource, it is possible to change the setting of the $hint parameter, see [`QueryBuilderDataSource`](#querybuilderdatasource).
+As in the case of `QueryBuilderDataSource`, it is possible to change the setting of the `$hint` parameter, see [`QueryBuilderDataSource`](#querybuilderdatasource).
 
 ### Tips for optimal usage QueryBuilderDataSource or QueryBuilderWithRowManipulatorDataSource
 
