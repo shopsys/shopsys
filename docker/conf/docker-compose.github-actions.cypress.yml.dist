@@ -3,17 +3,17 @@ services:
         image: postgres:18-alpine
         container_name: shopsys-framework-postgres
         volumes:
-            - postgres-data:/var/lib/postgresql/data:rw
-            - ./project-base/app/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
+            - postgres-data:/var/lib/postgresql:rw
+            - ./project-base/app/docker/postgres/postgres.conf:/etc/postgresql/postgresql.conf
         environment:
-            - PGDATA=/var/lib/postgresql/data/pgdata
+            - PGDATA=/var/lib/postgresql/18/docker
             - POSTGRES_USER=root
             - POSTGRES_PASSWORD=root
             - POSTGRES_DB=shopsys
         command:
             - postgres
             - -c
-            - config_file=/var/lib/postgresql/data/postgresql.conf
+            - config_file=/etc/postgresql/postgresql.conf
         healthcheck:
             test: ["CMD", "pg_isready"]
             start_period: 10s
