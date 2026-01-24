@@ -22,6 +22,9 @@ abstract class AbstractAdvancedSearchFormFactory
     ) {
     }
 
+    /**
+     * @param array<int|string, array{subject: string, operator: string|null, value: mixed}> $rulesViewData
+     */
     public function createRulesForm(string $name, array $rulesViewData): FormInterface
     {
         $options = [
@@ -45,7 +48,7 @@ abstract class AbstractAdvancedSearchFormFactory
     }
 
     protected function createRuleFormBuilder(
-        string $name,
+        int|string $name,
         AdvancedSearchFilterInterface $ruleFilter,
     ): FormBuilderInterface {
         return $this->formFactory->createNamedBuilder((string)$name, FormType::class, null, [

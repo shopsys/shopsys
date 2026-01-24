@@ -56,7 +56,7 @@ class DateTimeFormatterTest extends TestCase
             $inputDateTime,
             IntlDateFormatter::MEDIUM,
             IntlDateFormatter::MEDIUM,
-            null,
+            'en',
         );
 
         $this->assertEquals($result, $formattedDate);

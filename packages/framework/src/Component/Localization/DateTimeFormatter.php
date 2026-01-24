@@ -19,10 +19,9 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     /**
      * @param int $dateType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param int $timeType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
-     * @param string|null $locale
      */
     #[Override]
-    public function format(DateTimeInterface $value, $dateType, $timeType, $locale): string|false
+    public function format(DateTimeInterface $value, int $dateType, int $timeType, string $locale): string|false
     {
         $intlDateFormatter = new IntlDateFormatter(
             $locale,

@@ -6,9 +6,9 @@ namespace Tests\FrameworkBundle\Unit\Component\Money;
 
 use DomainException;
 use Iterator;
-use Litipk\BigNumbers\DecimalConstants;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Money\Exception\InvalidNumericArgumentException;
 use Shopsys\FrameworkBundle\Component\Money\Exception\MoneyException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
@@ -66,7 +66,7 @@ final class MoneyTest extends TestCase
     #[DataProvider('invalidValuesCreateProvider')]
     public function testInvalidValuesInCreate(int|string $value): void
     {
-        $this->expectException(MoneyException::class);
+        $this->expectException(InvalidNumericArgumentException::class);
 
         Money::create($value);
     }
@@ -100,16 +100,6 @@ final class MoneyTest extends TestCase
         yield ['++1'];
 
         yield ['--1'];
-
-        yield [0.0];
-
-        yield [1.0];
-
-        yield [-1.0];
-
-        yield [DecimalConstants::zero()];
-
-        yield [Money::zero()];
     }
 
     #[DataProvider('invalidValuesCreateFromFloatProvider')]

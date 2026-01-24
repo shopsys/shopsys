@@ -46,7 +46,7 @@ class ProductsIdsToProductsTransformer implements DataTransformerInterface
         if (is_array($productsIds)) {
             foreach ($productsIds as $key => $productId) {
                 try {
-                    $products[$key] = $this->productRepository->getById($productId);
+                    $products[$key] = $this->productRepository->getById((int)$productId);
                 } catch (ProductNotFoundException $e) {
                     throw new TransformationFailedException('Product not found', 0, $e);
                 }

@@ -15,12 +15,12 @@ class HeurekaSetting
     {
     }
 
-    public function getApiKeyByDomainId(int $domainId): string
+    public function getApiKeyByDomainId(int $domainId): ?string
     {
         return $this->setting->getForDomain(static::HEUREKA_API_KEY, $domainId);
     }
 
-    public function getHeurekaShopCertificationWidgetByDomainId(int $domainId): string
+    public function getHeurekaShopCertificationWidgetByDomainId(int $domainId): ?string
     {
         return $this->setting->getForDomain(static::HEUREKA_WIDGET_CODE, $domainId);
     }

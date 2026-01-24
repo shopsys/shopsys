@@ -225,7 +225,7 @@ class ProductFacade
         $this->em->remove($product);
         $this->em->flush();
 
-        $this->pluginCrudExtensionFacade->removeAllData('product', $product->getId());
+        $this->pluginCrudExtensionFacade->removeAllData('product', $productId);
     }
 
     /**
