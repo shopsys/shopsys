@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\AdministratorNotFoundException;
@@ -16,28 +17,17 @@ class AdministratorRepository
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getAdministratorRepository()
+    protected function getAdministratorRepository(): EntityRepository
     {
         return $this->em->getRepository(Administrator::class);
     }
 
-    /**
-     * @param int $administratorId
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
-     */
-    public function findById($administratorId)
+    public function findById(int $administratorId): ?Administrator
     {
         return $this->getAdministratorRepository()->find($administratorId);
     }
 
-    /**
-     * @param int $administratorId
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
-    public function getById($administratorId)
+    public function getById(int $administratorId): Administrator
     {
         $administrator = $this->getAdministratorRepository()->find($administratorId);
 
@@ -50,12 +40,9 @@ class AdministratorRepository
         return $administrator;
     }
 
-    /**
-     * @param string $administratorUserName
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
-     */
-    public function findByUserName($administratorUserName)
-    {
+    public function findByUserName(
+        string $administratorUserName,
+    ): ?Administrator {
         return $this->getAdministratorRepository()->findOneBy(['username' => $administratorUserName]);
     }
 
@@ -69,12 +56,9 @@ class AdministratorRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * @param string $administratorUserName
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
-    public function getByUserName($administratorUserName)
-    {
+    public function getByUserName(
+        string $administratorUserName,
+    ): Administrator {
         $administrator = $this->findByUserName($administratorUserName);
 
         if ($administrator === null) {

@@ -33,18 +33,14 @@ class ElasticsearchRequestCollection
         return $totalRequestsTime;
     }
 
-    /**
-     * @param mixed $requestData
-     * @param mixed $response
-     */
     public function addRequest(
         string $requestCurl,
         ?string $requestJson,
-        $requestData,
+        mixed $requestData,
         string $method,
         string $uri,
         ?int $statusCode,
-        $response,
+        mixed $response,
         float $duration,
     ): void {
         $this->collectedData[] = [

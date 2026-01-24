@@ -33,21 +33,15 @@ class SettingValueTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $value
-     */
     #[DataProvider('editProvider')]
-    public function testEdit($value): void
+    public function testEdit(mixed $value): void
     {
         $settingValue = new SettingValue('name', $value, 1);
         $this->assertSame($value, $settingValue->getValue());
     }
 
-    /**
-     * @param mixed $value
-     */
     #[DataProvider('editExceptionProvider')]
-    public function testEditException($value): void
+    public function testEditException(mixed $value): void
     {
         $this->expectException(InvalidArgumentException::class);
         new SettingValue('name', $value, 1);

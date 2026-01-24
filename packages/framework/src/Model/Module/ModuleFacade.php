@@ -15,22 +15,14 @@ class ModuleFacade
     ) {
     }
 
-    /**
-     * @param string $moduleName
-     * @return bool
-     */
-    public function isEnabled($moduleName)
+    public function isEnabled(string $moduleName): bool
     {
         $enabledModule = $this->enabledModuleRepository->findByName($moduleName);
 
         return $enabledModule !== null;
     }
 
-    /**
-     * @param string $moduleName
-     * @param bool $isEnabled
-     */
-    public function setEnabled($moduleName, $isEnabled): void
+    public function setEnabled(string $moduleName, bool $isEnabled): void
     {
         $enabledModule = $this->enabledModuleRepository->findByName($moduleName);
 

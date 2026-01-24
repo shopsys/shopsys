@@ -170,7 +170,7 @@ EOF,
     {
         $errors = 0;
 
-        array_walk($filesInfo, function (&$v) use (&$errors) {
+        array_walk($filesInfo, function (&$v) use (&$errors): void {
             $v['file'] = (string)$v['file'];
 
             if (!$v['valid']) {

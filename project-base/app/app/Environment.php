@@ -39,10 +39,7 @@ class Environment
         $io->write("\nEnvironment is <info>" . self::getEnvironment() . "</info>\n");
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting
-     */
-    private static function getEnvironmentFileSetting()
+    private static function getEnvironmentFileSetting(): EnvironmentFileSetting
     {
         if (self::$environmentFileSetting === null) {
             self::$environmentFileSetting = new EnvironmentFileSetting(__DIR__ . '/..');

@@ -111,10 +111,9 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
     }
 
     /**
-     * @param mixed ...$blogArticlesData
      * @return array[]
      */
-    private function getMockedHits(...$blogArticlesData): array
+    private function getMockedHits(mixed ...$blogArticlesData): array
     {
         $mockedHits = [];
 

@@ -240,9 +240,6 @@ class PriceListFacade
         return array_diff($this->priceListExportColumnsEnum->getAllCases(), $columnNames) === [];
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraints\Collection
-     */
     protected function createConstraints(): Constraints\Collection
     {
         return new Constraints\Collection(

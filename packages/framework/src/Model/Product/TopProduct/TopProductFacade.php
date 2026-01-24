@@ -17,10 +17,9 @@ class TopProductFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProduct[]
      */
-    public function getAll($domainId)
+    public function getAll(int $domainId): array
     {
         return $this->topProductRepository->getAll($domainId);
     }
@@ -34,10 +33,9 @@ class TopProductFacade
     }
 
     /**
-     * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      */
-    public function saveTopProductsForDomain($domainId, array $products): void
+    public function saveTopProductsForDomain(int $domainId, array $products): void
     {
         $oldTopProducts = $this->topProductRepository->getAll($domainId);
 

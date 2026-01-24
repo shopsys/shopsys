@@ -63,10 +63,7 @@ class HeurekaCategoryFacade
         }
     }
 
-    /**
-     * @param int $categoryId
-     */
-    public function changeHeurekaCategoryForCategoryId($categoryId, HeurekaCategory $heurekaCategory): void
+    public function changeHeurekaCategoryForCategoryId(int $categoryId, HeurekaCategory $heurekaCategory): void
     {
         $oldHeurekaCategoryByCategoryId = $this->heurekaCategoryRepository->findByCategoryId($categoryId);
 
@@ -82,19 +79,13 @@ class HeurekaCategoryFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $categoryId
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory|null
-     */
-    public function findByCategoryId($categoryId)
-    {
+    public function findByCategoryId(
+        int $categoryId,
+    ): ?HeurekaCategory {
         return $this->heurekaCategoryRepository->findByCategoryId($categoryId);
     }
 
-    /**
-     * @param int $categoryId
-     */
-    public function removeHeurekaCategoryForCategoryId($categoryId): void
+    public function removeHeurekaCategoryForCategoryId(int $categoryId): void
     {
         $heurekaCategory = $this->heurekaCategoryRepository->findByCategoryId($categoryId);
 
@@ -108,11 +99,7 @@ class HeurekaCategoryFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory
-     */
-    public function getOneById($id)
+    public function getOneById(int $id): HeurekaCategory
     {
         return $this->heurekaCategoryRepository->getOneById($id);
     }
@@ -120,7 +107,7 @@ class HeurekaCategoryFacade
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory[]
      */
-    public function getAllIndexedById()
+    public function getAllIndexedById(): array
     {
         return $this->heurekaCategoryRepository->getAllIndexedById();
     }

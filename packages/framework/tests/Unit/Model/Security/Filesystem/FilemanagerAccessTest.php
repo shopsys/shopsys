@@ -61,14 +61,8 @@ class FilemanagerAccessTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $fileuploadDir
-     * @param mixed $testPath
-     * @param mixed $attr
-     * @param mixed $isAccessible
-     */
     #[DataProvider('isPathAccessibleProvider')]
-    public function testIsPathAccessible($fileuploadDir, $testPath, $attr, $isAccessible): void
+    public function testIsPathAccessible(mixed $fileuploadDir, mixed $testPath, mixed $attr, mixed $isAccessible): void
     {
         $elFinderConfigurationReaderMock = $this->getMockBuilder(ElFinderConfigurationReader::class)
             ->onlyMethods([])
@@ -83,15 +77,13 @@ class FilemanagerAccessTest extends TestCase
         $this->assertSame($filemanagerAccess->isPathAccessible($attr, $testPath, null, null), $isAccessible);
     }
 
-    /**
-     * @param mixed $fileuploadDir
-     * @param mixed $testPath
-     * @param mixed $attr
-     * @param mixed $isAccessible
-     */
     #[DataProvider('isPathAccessibleProvider')]
-    public function testIsPathAccessibleStatic($fileuploadDir, $testPath, $attr, $isAccessible): void
-    {
+    public function testIsPathAccessibleStatic(
+        mixed $fileuploadDir,
+        mixed $testPath,
+        mixed $attr,
+        mixed $isAccessible,
+    ): void {
         $elFinderConfigurationReaderMock = $this->getMockBuilder(ElFinderConfigurationReader::class)
             ->onlyMethods([])
             ->disableOriginalConstructor()

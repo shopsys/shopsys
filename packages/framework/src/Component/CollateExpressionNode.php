@@ -17,11 +17,7 @@ class CollateExpressionNode extends FunctionNode
 
     protected readonly string $collation;
 
-    /**
-     * @param \Doctrine\ORM\Query\AST\PathExpression $expression
-     * @param string $collation
-     */
-    public function __construct($expression = null, $collation = null)
+    public function __construct(?PathExpression $expression = null, ?string $collation = null)
     {
         parent::__construct('COLLATE');
 

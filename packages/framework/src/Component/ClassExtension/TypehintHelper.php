@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
+use Roave\BetterReflection\Reflection\ReflectionIntersectionType;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
 use Roave\BetterReflection\Reflection\ReflectionNamedType;
 use Roave\BetterReflection\Reflection\ReflectionParameter;
@@ -31,11 +32,9 @@ class TypehintHelper
         return $this->formatReflectionType($type);
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionNamedType|\Roave\BetterReflection\Reflection\ReflectionUnionType|\Roave\BetterReflection\Reflection\ReflectionIntersectionType|null $type
-     */
-    protected function formatReflectionType($type): ?string
-    {
+    protected function formatReflectionType(
+        ReflectionNamedType|ReflectionUnionType|ReflectionIntersectionType|null $type,
+    ): ?string {
         if ($type === null) {
             return null;
         }

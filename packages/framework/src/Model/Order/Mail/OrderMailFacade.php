@@ -32,12 +32,10 @@ class OrderMailFacade
         $this->sendMailTemplate($mailTemplate, $order);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
-    public function getMailTemplateByStatusAndDomainId(OrderStatus $orderStatus, $domainId)
-    {
+    public function getMailTemplateByStatusAndDomainId(
+        OrderStatus $orderStatus,
+        int $domainId,
+    ): MailTemplate {
         $templateName = OrderMail::getMailTemplateNameByStatus($orderStatus);
 
         return $this->mailTemplateFacade->getWrappedWithGrapesJsBody($templateName, $domainId);

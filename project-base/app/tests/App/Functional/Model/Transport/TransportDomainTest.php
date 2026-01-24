@@ -72,10 +72,7 @@ class TransportDomainTest extends TransactionFunctionalTestCase
         $this->assertFalse($refreshedTransport->isEnabled(self::SECOND_DOMAIN_ID));
     }
 
-    /**
-     * @return \App\Model\Transport\Transport
-     */
-    private function getRefreshedTransportFromDatabase(Transport $transport)
+    private function getRefreshedTransportFromDatabase(Transport $transport): Transport
     {
         $this->em->persist($transport);
         $this->em->flush();

@@ -17,10 +17,7 @@ class CountryFacade
     ) {
     }
 
-    /**
-     * @param int $countryId
-     */
-    public function getById($countryId): Country
+    public function getById(int $countryId): Country
     {
         return $this->countryRepository->getById($countryId);
     }
@@ -34,10 +31,7 @@ class CountryFacade
         return $country;
     }
 
-    /**
-     * @param int $countryId
-     */
-    public function edit($countryId, CountryData $countryData): Country
+    public function edit(int $countryId, CountryData $countryData): Country
     {
         $country = $this->countryRepository->getById($countryId);
         $country->edit($countryData);

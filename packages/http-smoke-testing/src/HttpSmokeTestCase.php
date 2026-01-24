@@ -7,6 +7,7 @@ namespace Shopsys\HttpSmokeTesting;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
+use Shopsys\HttpSmokeTesting\RouterAdapter\RouterAdapterInterface;
 use Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,7 +73,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      *
      * @return \Shopsys\HttpSmokeTesting\RequestDataSet[][]
      */
-    public static function httpResponseTestDataProvider()
+    public static function httpResponseTestDataProvider(): array
     {
         static::boot();
 
@@ -104,10 +105,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         );
     }
 
-    /**
-     * @return \Shopsys\HttpSmokeTesting\RouterAdapter\RouterAdapterInterface
-     */
-    protected static function getRouterAdapter()
+    protected static function getRouterAdapter(): RouterAdapterInterface
     {
         $router = static::$kernel->getContainer()->get('test.service_container')->get(AdministrationRouter::class);
 
@@ -119,10 +117,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      */
     abstract protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void;
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    protected static function createRequest(RequestDataSet $requestDataSet)
+    protected static function createRequest(RequestDataSet $requestDataSet): Request
     {
         $uri = static::getRouterAdapter()->generateUri($requestDataSet);
 
@@ -143,10 +138,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         return $request;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function handleRequest(Request $request)
+    protected function handleRequest(Request $request): Response
     {
         return static::$kernel->handle($request);
     }
@@ -166,11 +158,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         );
     }
 
-    /**
-     * @param string $message
-     * @return string
-     */
-    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, $message)
+    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, string $message): string
     {
         if (count($requestDataSet->getDebugNotes()) > 0) {
             $indentedDebugNotes = array_map(function ($debugNote) {

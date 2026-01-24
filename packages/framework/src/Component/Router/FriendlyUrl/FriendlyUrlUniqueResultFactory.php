@@ -14,15 +14,12 @@ class FriendlyUrlUniqueResultFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult
-     */
     public function create(
         int $attempt,
         FriendlyUrl $friendlyUrl,
         string $entityName,
         ?array $matchedRouteData = null,
-    ) {
+    ): FriendlyUrlUniqueResult {
         if ($matchedRouteData === null && !$this->isSlugConflictingWithAnotherDomainPostfix($friendlyUrl)) {
             return new FriendlyUrlUniqueResult(true, $friendlyUrl);
         }

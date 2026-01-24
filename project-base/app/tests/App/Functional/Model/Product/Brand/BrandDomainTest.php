@@ -63,10 +63,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
         $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedBrand->getSeoH1(self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @return \App\Model\Product\Brand\Brand
-     */
-    private function getRefreshedBrandFromDatabase(Brand $brand)
+    private function getRefreshedBrandFromDatabase(Brand $brand): Brand
     {
         $this->em->persist($brand);
         $this->em->flush();

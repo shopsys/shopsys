@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Cron;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cron\CronModule;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFactory;
@@ -25,21 +26,16 @@ class CronModuleRepositoryTest extends TestCase
         $this->assertInstanceOf(CronModule::class, $cronModule);
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Doctrine\ORM\EntityManagerInterface
-     */
-    private function createEntityManagerMockWithRepository(EntityRepository $entityRepository)
-    {
+    private function createEntityManagerMockWithRepository(
+        EntityRepository $entityRepository,
+    ): MockObject|EntityManagerInterface {
         $em = $this->createMock(EntityManagerInterface::class);
         $em->method('getRepository')->willReturn($entityRepository);
 
         return $em;
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Doctrine\ORM\EntityRepository
-     */
-    private function createNullDoctrineRepositoryMock()
+    private function createNullDoctrineRepositoryMock(): MockObject|EntityRepository
     {
         $repository = $this->createMock(EntityRepository::class);
         $repository->method('find')->willReturn(null);

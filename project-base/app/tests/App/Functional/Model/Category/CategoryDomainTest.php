@@ -120,10 +120,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
         $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedCategory->getSeoH1(self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @return \App\Model\Category\Category
-     */
-    private function getRefreshedCategoryFromDatabase(Category $category)
+    private function getRefreshedCategoryFromDatabase(Category $category): Category
     {
         $this->em->persist($category);
         $this->em->flush();

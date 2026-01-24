@@ -10,10 +10,7 @@ use Shopsys\FrameworkBundle\Component\Utils\Debug;
 
 class ObjectRequiredException extends InvalidArgumentException
 {
-    /**
-     * @param mixed $given
-     */
-    public function __construct($given, ?Exception $previous = null)
+    public function __construct(mixed $given, ?Exception $previous = null)
     {
         parent::__construct('Object required, but given "' . Debug::export($given) . '"', 0, $previous);
     }

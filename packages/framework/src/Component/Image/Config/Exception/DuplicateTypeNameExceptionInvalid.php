@@ -8,15 +8,8 @@ use Exception;
 
 class DuplicateTypeNameExceptionInvalid extends InvalidImageConfigException
 {
-    protected ?string $typeName = null;
-
-    /**
-     * @param string|null $typeName
-     */
-    public function __construct($typeName = null, ?Exception $previous = null)
+    public function __construct(protected ?string $typeName = null, ?Exception $previous = null)
     {
-        $this->typeName = $typeName;
-
         if ($this->typeName === null) {
             $message = 'Image type NULL is not unique.';
         } else {
@@ -26,10 +19,7 @@ class DuplicateTypeNameExceptionInvalid extends InvalidImageConfigException
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTypeName()
+    public function getTypeName(): ?string
     {
         return $this->typeName;
     }

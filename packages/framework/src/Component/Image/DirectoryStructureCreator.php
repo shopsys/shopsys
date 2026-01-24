@@ -11,23 +11,13 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class DirectoryStructureCreator
 {
-    protected string $imageDir;
-
-    protected string $domainImageDir;
-
-    /**
-     * @param string $imageDir
-     * @param string $domainImageDir
-     */
     public function __construct(
-        $imageDir,
-        $domainImageDir,
+        protected string $imageDir,
+        protected string $domainImageDir,
         protected readonly ImageConfig $imageConfig,
         protected readonly ImageLocator $imageLocator,
         protected readonly FilesystemOperator $filesystem,
     ) {
-        $this->imageDir = $imageDir;
-        $this->domainImageDir = $domainImageDir;
     }
 
     public function makeImageDirectories(): void

@@ -49,7 +49,7 @@ class CustomerUploadedFileController
             $uploadedFile = $this->getCustomerUploadedFile($uploadedFilename, $uploadedFileId, $hash);
             $filePath = $this->customerUploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
 
-            return new StreamedResponse(function () use ($filePath) {
+            return new StreamedResponse(function () use ($filePath): void {
                 $stream = $this->filesystem->readStream($filePath);
                 fpassthru($stream);
                 fclose($stream);

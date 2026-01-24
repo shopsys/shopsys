@@ -19,10 +19,7 @@ class Money implements JsonSerializable
     {
     }
 
-    /**
-     * @param int|string $value
-     */
-    public static function create($value): static
+    public static function create(int|string $value): static
     {
         $decimal = static::createDecimal($value);
 
@@ -80,10 +77,7 @@ class Money implements JsonSerializable
         return new static($resultDecimal);
     }
 
-    /**
-     * @param int|string $multiplier
-     */
-    public function multiply($multiplier): static
+    public function multiply(int|string $multiplier): static
     {
         $decimalMultiplier = self::createDecimal($multiplier);
         $resultDecimal = $this->decimal->mul($decimalMultiplier);
@@ -91,10 +85,7 @@ class Money implements JsonSerializable
         return new static($resultDecimal);
     }
 
-    /**
-     * @param int|string $divisor
-     */
-    public function divide($divisor, int $scale): static
+    public function divide(int|string $divisor, int $scale): static
     {
         $decimalDivisor = self::createDecimal($divisor);
 
@@ -163,10 +154,7 @@ class Money implements JsonSerializable
         return $this->decimal->isZero();
     }
 
-    /**
-     * @param int|string $value
-     */
-    protected static function createDecimal($value, ?int $scale = null): Decimal
+    protected static function createDecimal(int|string $value, ?int $scale = null): Decimal
     {
         if (is_int($value)) {
             return Decimal::fromInteger($value);

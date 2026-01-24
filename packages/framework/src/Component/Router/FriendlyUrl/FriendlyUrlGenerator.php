@@ -28,18 +28,13 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         parent::__construct(new RouteCollection(), $context, null);
     }
 
-    /**
-     * @param string $routeName
-     * @param int $referenceType
-     * @return string
-     */
     public function generateFromRouteCollection(
         RouteCollection $routeCollection,
         DomainConfig $domainConfig,
-        $routeName,
+        string $routeName,
         array $parameters = [],
-        $referenceType = self::ABSOLUTE_PATH,
-    ) {
+        int $referenceType = self::ABSOLUTE_PATH,
+    ): string {
         $route = $routeCollection->get($routeName);
 
         if ($route === null) {
@@ -72,18 +67,13 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         return $this->getGeneratedUrlBySlug($routeName, $route, $slug, $parameters, $referenceType);
     }
 
-    /**
-     * @param string $routeName
-     * @param int $referenceType
-     * @return string
-     */
     public function getGeneratedUrl(
-        $routeName,
+        string $routeName,
         Route $route,
         FriendlyUrl $friendlyUrl,
         array $parameters,
-        $referenceType,
-    ) {
+        int $referenceType,
+    ): string {
         $compiledRoute = RouteCompiler::compile($route);
 
         $tokens = [
@@ -148,10 +138,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         throw new MethodGenerateIsNotSupportedException();
     }
 
-    /**
-     * @param int $entityId
-     */
-    protected function getSlug(int $domainId, string $routeName, $entityId): string
+    protected function getSlug(int $domainId, string $routeName, int $entityId): string
     {
         try {
             $friendlyUrl = $this->friendlyUrlRepository->getMainFriendlyUrl(

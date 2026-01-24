@@ -70,10 +70,9 @@ class OrderMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     #[Override]
-    public function createMessage(MailTemplate $mailTemplate, $order)
+    public function createMessage(MailTemplate $mailTemplate, $order): MessageData
     {
         $toEmail = $order->getEmail();
         $bccMail = $mailTemplate->getBccEmail();
@@ -99,20 +98,18 @@ class OrderMail implements MessageFactoryInterface
         );
     }
 
-    /**
-     * @return string
-     */
-    public static function getMailTemplateNameByStatus(OrderStatus $orderStatus)
+    public static function getMailTemplateNameByStatus(OrderStatus $orderStatus): string
     {
         return static::MAIL_TEMPLATE_NAME_PREFIX . $orderStatus->getId();
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[] $mailTemplates
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate|null
      */
-    public static function findMailTemplateForOrderStatus(array $mailTemplates, OrderStatus $orderStatus)
-    {
+    public static function findMailTemplateForOrderStatus(
+        array $mailTemplates,
+        OrderStatus $orderStatus,
+    ): ?MailTemplate {
         foreach ($mailTemplates as $mailTemplate) {
             if ($mailTemplate->getName() === self::getMailTemplateNameByStatus($orderStatus)) {
                 return $mailTemplate;
@@ -122,10 +119,7 @@ class OrderMail implements MessageFactoryInterface
         return null;
     }
 
-    /**
-     * @return array
-     */
-    protected function getVariablesReplacementsForBody(Order $order)
+    protected function getVariablesReplacementsForBody(Order $order): array
     {
         $router = $this->domainRouterFactory->getRouter($order->getDomainId());
 
@@ -156,10 +150,7 @@ class OrderMail implements MessageFactoryInterface
         ];
     }
 
-    /**
-     * @return array
-     */
-    protected function getVariablesReplacementsForSubject(Order $order)
+    protected function getVariablesReplacementsForSubject(Order $order): array
     {
         return [
             self::VARIABLE_NUMBER => $order->getNumber(),
@@ -189,10 +180,7 @@ class OrderMail implements MessageFactoryInterface
         return $this->hiddenPriceExtension->hidePriceFilter($price, $order->getCustomerUser());
     }
 
-    /**
-     * @return string
-     */
-    protected function getFormattedDateTime(Order $order)
+    protected function getFormattedDateTime(Order $order): string
     {
         return $this->dateTimeFormatterExtension->formatDateTime(
             $order->getCreatedAt(),
@@ -200,10 +188,7 @@ class OrderMail implements MessageFactoryInterface
         );
     }
 
-    /**
-     * @return string
-     */
-    protected function getBillingAddressHtmlTable(Order $order)
+    protected function getBillingAddressHtmlTable(Order $order): string
     {
         return $this->twig->render('@ShopsysFramework/Mail/Order/billingAddress.html.twig', [
             'order' => $order,
@@ -211,10 +196,7 @@ class OrderMail implements MessageFactoryInterface
         ]);
     }
 
-    /**
-     * @return string
-     */
-    protected function getDeliveryAddressHtmlTable(Order $order)
+    protected function getDeliveryAddressHtmlTable(Order $order): string
     {
         return $this->twig->render('@ShopsysFramework/Mail/Order/deliveryAddress.html.twig', [
             'order' => $order,
@@ -273,10 +255,7 @@ class OrderMail implements MessageFactoryInterface
         ]);
     }
 
-    /**
-     * @return string
-     */
-    protected function getDomainLocaleByOrder(Order $order)
+    protected function getDomainLocaleByOrder(Order $order): string
     {
         return $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
     }

@@ -18,11 +18,10 @@ class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * @param string $routeName
      * @return array|\Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     #[Override]
-    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         $breadcrumbItems[] = new BreadcrumbItem(
             t('Department stores', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN),

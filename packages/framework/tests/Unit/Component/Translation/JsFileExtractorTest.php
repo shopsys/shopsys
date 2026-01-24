@@ -48,10 +48,7 @@ class JsFileExtractorTest extends TestCase
         $this->assertEquals($expected, $catalogue);
     }
 
-    /**
-     * @param mixed $filename
-     */
-    private function extract($filename): MessageCatalogue
+    private function extract(mixed $filename): MessageCatalogue
     {
         if (!is_file($filename)) {
             throw new RuntimeException(sprintf('The file "%s" does not exist.', $filename));

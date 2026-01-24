@@ -65,18 +65,12 @@ class MailTemplateFacade
         $this->em->flush();
     }
 
-    /**
-     * @return string
-     */
-    public function getMailTemplateAttachmentFilepath(UploadedFile $attachment)
+    public function getMailTemplateAttachmentFilepath(UploadedFile $attachment): string
     {
         return $this->mailTemplateAttachmentFilepathProvider->getTemporaryFilepath($attachment);
     }
 
-    /**
-     * @return bool
-     */
-    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()
+    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject(): bool
     {
         return $this->mailTemplateRepository->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject();
     }

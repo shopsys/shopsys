@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Listing;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class OrderListAdminRepository
@@ -14,11 +15,7 @@ class OrderListAdminRepository
     {
     }
 
-    /**
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getOrderListQueryBuilder($locale)
+    public function getOrderListQueryBuilder(string $locale): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('

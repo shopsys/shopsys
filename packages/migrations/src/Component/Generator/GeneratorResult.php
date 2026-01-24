@@ -6,40 +6,21 @@ namespace Shopsys\MigrationBundle\Component\Generator;
 
 class GeneratorResult
 {
-    protected string $migrationFilePath;
-
-    protected int|false $writtenBytes;
-
-    /**
-     * @param string $migrationFilePath
-     * @param int|false $writtenBytes
-     */
-    public function __construct($migrationFilePath, $writtenBytes)
+    public function __construct(protected string $migrationFilePath, protected int|false $writtenBytes)
     {
-        $this->migrationFilePath = $migrationFilePath;
-        $this->writtenBytes = $writtenBytes;
     }
 
-    /**
-     * @return string
-     */
-    public function getMigrationFilePath()
+    public function getMigrationFilePath(): string
     {
         return $this->migrationFilePath;
     }
 
-    /**
-     * @return false|int
-     */
-    public function getWrittenBytes()
+    public function getWrittenBytes(): false|int
     {
         return $this->writtenBytes;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasError()
+    public function hasError(): bool
     {
         return $this->writtenBytes === false || $this->writtenBytes === 0;
     }

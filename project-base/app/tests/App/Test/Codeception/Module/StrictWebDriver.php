@@ -87,11 +87,10 @@ class StrictWebDriver extends WebDriver
         usleep(self::WAIT_AFTER_CLICK_MICROSECONDS);
     }
 
-    /**
-     * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
-     */
-    public function clickByText(string $text, $contextSelector = null): void
-    {
+    public function clickByText(
+        string $text,
+        WebDriverBy|WebDriverElement|null $contextSelector = null,
+    ): void {
         $locateBy = $this->getWebDriverByText($text);
         $clickable = $this->getElementBySelectorAndContext($locateBy, $contextSelector);
         $clickable->click();
@@ -114,11 +113,12 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      * @return \Facebook\WebDriver\Remote\RemoteWebElement|\Facebook\WebDriver\WebDriverElement
      */
-    private function getElementBySelectorAndContext(WebDriverBy $locateBy, $contextSelector = null): WebDriverElement
-    {
+    private function getElementBySelectorAndContext(
+        WebDriverBy $locateBy,
+        WebDriverBy|WebDriverElement|null $contextSelector = null,
+    ): WebDriverElement {
         if ($contextSelector instanceof WebDriverBy) {
             return $this->webDriver->findElement($contextSelector)->findElement($locateBy);
         }
@@ -130,21 +130,19 @@ class StrictWebDriver extends WebDriver
         return $this->webDriver->findElement($locateBy);
     }
 
-    /**
-     * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
-     */
-    public function clickByName(string $name, $contextSelector = null): void
-    {
+    public function clickByName(
+        string $name,
+        WebDriverBy|WebDriverElement|null $contextSelector = null,
+    ): void {
         $element = $this->getElementBySelectorAndContext(WebDriverBy::name($name), $contextSelector);
 
         $this->clickAndWaitByElement($element);
     }
 
-    /**
-     * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
-     */
-    public function clickByCss(string $css, $contextSelector = null): void
-    {
+    public function clickByCss(
+        string $css,
+        WebDriverBy|WebDriverElement|null $contextSelector = null,
+    ): void {
         $element = $this->getElementBySelectorAndContext(WebDriverBy::cssSelector($css), $contextSelector);
 
         $this->clickAndWaitByElement($element);
@@ -440,7 +438,7 @@ class StrictWebDriver extends WebDriver
      * @see \Facebook\WebDriver\WebDriverKeys
      * @param string|string[] $keys
      */
-    public function pressKeysByElement(WebDriverElement $element, $keys): void
+    public function pressKeysByElement(WebDriverElement $element, string|array $keys): void
     {
         $element->sendKeys($keys);
     }

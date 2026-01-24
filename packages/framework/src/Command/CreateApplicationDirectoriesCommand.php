@@ -23,48 +23,17 @@ use Symfony\Component\Filesystem\Filesystem;
 )]
 class CreateApplicationDirectoriesCommand extends Command
 {
-    /**
-     * @var string[]
-     */
-    private array $defaultInternalDirectories;
-
-    /**
-     * @var string[]
-     */
-    private array $defaultPublicDirectories;
-
-    /**
-     * @var string[]|null
-     */
-    private ?array $internalDirectories = null;
-
-    /**
-     * @var string[]|null
-     */
-    private ?array $publicDirectories = null;
-
-    /**
-     * @param array $defaultInternalDirectories
-     * @param array $defaultPublicDirectories
-     * @param array|null $internalDirectories
-     * @param array|null $publicDirectories
-     */
     public function __construct(
-        $defaultInternalDirectories,
-        $defaultPublicDirectories,
-        $internalDirectories,
-        $publicDirectories,
+        private array $defaultInternalDirectories,
+        private array $defaultPublicDirectories,
+        private ?array $internalDirectories = null,
+        private ?array $publicDirectories = null,
         private readonly FilesystemOperator $filesystem,
         private readonly Filesystem $localFilesystem,
         private readonly ImageDirectoryStructureCreator $imageDirectoryStructureCreator,
         private readonly UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator,
         private readonly CustomerUploadedFileDirectoryStructureCreator $customerUploadedFileDirectoryStructureCreator,
     ) {
-        $this->defaultInternalDirectories = $defaultInternalDirectories;
-        $this->defaultPublicDirectories = $defaultPublicDirectories;
-        $this->internalDirectories = $internalDirectories;
-        $this->publicDirectories = $publicDirectories;
-
         parent::__construct();
     }
 
@@ -124,10 +93,7 @@ class CreateApplicationDirectoriesCommand extends Command
         return $directories;
     }
 
-    /**
-     * @return array
-     */
-    private function getInternalDirectories()
+    private function getInternalDirectories(): array
     {
         $directories = $this->defaultInternalDirectories;
 

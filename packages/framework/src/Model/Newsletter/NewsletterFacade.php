@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Newsletter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Internal\Hydration\IterableResult;
+use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -34,29 +36,17 @@ class NewsletterFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\Internal\Hydration\IterableResult
-     */
-    public function getAllEmailsDataIteratorByDomainId($domainId)
+    public function getAllEmailsDataIteratorByDomainId(int $domainId): IterableResult
     {
         return $this->newsletterRepository->getAllEmailsDataIteratorByDomainId($domainId);
     }
 
-    /**
-     * @param string $email
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber|null
-     */
-    public function findNewsletterSubscriberByEmailAndDomainId($email, $domainId)
+    public function findNewsletterSubscriberByEmailAndDomainId(string $email, int $domainId): ?NewsletterSubscriber
     {
         return $this->newsletterRepository->findNewsletterSubscribeByEmailAndDomainId($email, $domainId);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getQueryBuilderForQuickSearch(int $selectedDomainId, QuickSearchFormData $searchData)
+    public function getQueryBuilderForQuickSearch(int $selectedDomainId, QuickSearchFormData $searchData): QueryBuilder
     {
         return $this->newsletterRepository->getQueryBuilderForQuickSearch($selectedDomainId, $searchData);
     }

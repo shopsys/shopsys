@@ -14,11 +14,8 @@ class FilemanagerAccess
 
     protected string $filemanagerUploadDir;
 
-    /**
-     * @param mixed $filemanagerUploadDir
-     */
     public function __construct(
-        $filemanagerUploadDir,
+        mixed $filemanagerUploadDir,
         protected readonly ElFinderConfigurationReader $elFinderConfigurationReader,
         protected readonly FilepathComparator $filepathComparator,
     ) {
@@ -31,13 +28,8 @@ class FilemanagerAccess
 
     /**
      * @see \FM\ElfinderBundle\Configuration\ElFinderConfigurationReader::access()
-     * @param string $attr
-     * @param string $path
-     * @param string|null $data
-     * @param string|null $volume
-     * @return bool|null
      */
-    public function isPathAccessible($attr, $path, $data, $volume)
+    public function isPathAccessible(string $attr, string $path, ?string $data, ?string $volume): ?bool
     {
         if (!$this->filepathComparator->isPathWithinDirectory($path, $this->filemanagerUploadDir)) {
             return false;
@@ -58,13 +50,8 @@ class FilemanagerAccess
 
     /**
      * @see \FM\ElfinderBundle\Configuration\ElFinderConfigurationReader::access()
-     * @param string $attr
-     * @param string $path
-     * @param string|null $data
-     * @param string|null $volume
-     * @return bool|null
      */
-    public static function isPathAccessibleStatic($attr, $path, $data, $volume)
+    public static function isPathAccessibleStatic(string $attr, string $path, ?string $data, ?string $volume): ?bool
     {
         if (self::$self === null) {
             throw new InstanceNotInjectedException();

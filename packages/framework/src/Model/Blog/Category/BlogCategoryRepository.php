@@ -254,7 +254,7 @@ class BlogCategoryRepository extends NestedTreeRepository
      * @param int[] $blogCategoryIds
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
-    public function getByIds(array $blogCategoryIds)
+    public function getByIds(array $blogCategoryIds): array
     {
         return $this->getBlogCategoryRepository()->findBy(['id' => $blogCategoryIds]);
     }

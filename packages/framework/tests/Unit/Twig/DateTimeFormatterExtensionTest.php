@@ -30,13 +30,8 @@ class DateTimeFormatterExtensionTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $input
-     * @param mixed $locale
-     * @param mixed $result
-     */
     #[DataProvider('formatDateDataProvider')]
-    public function testFormatDate($input, $locale, $result): void
+    public function testFormatDate(mixed $input, mixed $locale, mixed $result): void
     {
         $localizationMock = $this->createLocalizationMock($locale);
         $dateTimeFormatter = $this->createDateTimeFormatter();
@@ -46,10 +41,7 @@ class DateTimeFormatterExtensionTest extends TestCase
         $this->assertSame($result, $dateTimeFormatterExtension->formatDate($input));
     }
 
-    /**
-     * @param string $locale
-     */
-    protected function createLocalizationMock($locale): Localization
+    protected function createLocalizationMock(string $locale): Localization
     {
         $localizationMock = $this->getMockBuilder(Localization::class)
             ->disableOriginalConstructor()

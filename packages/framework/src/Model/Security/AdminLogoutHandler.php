@@ -16,10 +16,7 @@ class AdminLogoutHandler
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function onLogoutSuccess(Request $request)
+    public function onLogoutSuccess(Request $request): RedirectResponse
     {
         $this->administratorLoginFacade->invalidateCurrentAdministratorLoginToken();
         $url = $this->router->generate('admin_login');

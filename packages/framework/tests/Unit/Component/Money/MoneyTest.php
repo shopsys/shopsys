@@ -14,11 +14,8 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 final class MoneyTest extends TestCase
 {
-    /**
-     * @param int|string $value
-     */
     #[DataProvider('createProvider')]
-    public function testCreate($value, string $expectedAmount): void
+    public function testCreate(int|string $value, string $expectedAmount): void
     {
         $money = Money::create($value);
 
@@ -66,11 +63,8 @@ final class MoneyTest extends TestCase
         yield [PHP_INT_MAX, (string)PHP_INT_MAX];
     }
 
-    /**
-     * @param int|string $value
-     */
     #[DataProvider('invalidValuesCreateProvider')]
-    public function testInvalidValuesInCreate($value): void
+    public function testInvalidValuesInCreate(int|string $value): void
     {
         $this->expectException(MoneyException::class);
 
@@ -283,11 +277,8 @@ final class MoneyTest extends TestCase
         $this->assertSame('1', $money->getAmount());
     }
 
-    /**
-     * @param int|string $b
-     */
     #[DataProvider('multiplyProvider')]
-    public function testMultiply(string $a, $b, string $expectedAmount): void
+    public function testMultiply(string $a, int|string $b, string $expectedAmount): void
     {
         $moneyA = Money::create($a);
 
@@ -329,11 +320,8 @@ final class MoneyTest extends TestCase
         yield ['0.5', 2, '1.0'];
     }
 
-    /**
-     * @param int|string $multiplier
-     */
     #[DataProvider('invalidMultipliersProvider')]
-    public function testInvalidMultipliers($multiplier): void
+    public function testInvalidMultipliers(int|string $multiplier): void
     {
         $money = Money::create(1);
 
@@ -357,11 +345,8 @@ final class MoneyTest extends TestCase
         $this->assertSame('1', $money->getAmount());
     }
 
-    /**
-     * @param int|string $b
-     */
     #[DataProvider('divideProvider')]
-    public function testDivide(string $a, $b, int $scale, string $expectedAmount): void
+    public function testDivide(string $a, int|string $b, int $scale, string $expectedAmount): void
     {
         $moneyA = Money::create($a);
 
@@ -407,11 +392,8 @@ final class MoneyTest extends TestCase
         yield ['0.5', 2, 1, '0.3'];
     }
 
-    /**
-     * @param int|string $divisor
-     */
     #[DataProvider('invalidDivisorProvider')]
-    public function testInvalidDivisors($divisor): void
+    public function testInvalidDivisors(int|string $divisor): void
     {
         $money = Money::create(1);
 
@@ -425,11 +407,8 @@ final class MoneyTest extends TestCase
         yield from self::invalidValuesCreateProvider();
     }
 
-    /**
-     * @param int|string $divisor
-     */
     #[DataProvider('cannotDivideByZeroProvider')]
-    public function testCannotDivideByZero($divisor): void
+    public function testCannotDivideByZero(int|string $divisor): void
     {
         $money = Money::create(1);
 

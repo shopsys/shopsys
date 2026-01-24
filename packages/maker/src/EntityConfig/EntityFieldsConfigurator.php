@@ -185,7 +185,7 @@ class EntityFieldsConfigurator
             ],
         ];
 
-        $printSection = static function (array $sectionTypes) use ($io, &$allTypes) {
+        $printSection = static function (array $sectionTypes) use ($io, &$allTypes): void {
             foreach ($sectionTypes as $mainType => $subTypes) {
                 if (!array_key_exists($mainType, $allTypes)) {
                     // The type is not a valid DBAL Type - don't show it as an option
@@ -223,7 +223,7 @@ class EntityFieldsConfigurator
             $io->writeln('');
         };
 
-        $printRelationsSection = static function () use ($io) {
+        $printRelationsSection = static function () use ($io): void {
             if (getenv('TERM_PROGRAM') === 'Hyper') {
                 $wizard = 'wizard 🧙';
             } else {

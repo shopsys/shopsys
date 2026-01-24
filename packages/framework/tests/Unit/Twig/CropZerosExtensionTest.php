@@ -22,12 +22,8 @@ class CropZerosExtensionTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $input
-     * @param mixed $return
-     */
     #[DataProvider('returnValuesProvider')]
-    public function testReturnValues($input, $return): void
+    public function testReturnValues(mixed $input, mixed $return): void
     {
         $this->assertSame($return, (new CropZerosExtension())->cropZeros($input));
     }

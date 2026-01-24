@@ -384,7 +384,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
 
     protected function resolveReferenceDataAccessors(array $data): array
     {
-        array_walk_recursive($data, function (&$value) {
+        array_walk_recursive($data, function (&$value): void {
             if ($value instanceof ReferenceDataAccessor) {
                 $refName = $value->reference;
                 $domainId = $value->domainId;

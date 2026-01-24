@@ -8,12 +8,7 @@ use Shopsys\FrameworkBundle\Component\Filesystem\Exception\DirectoryDoesNotExist
 
 class FilepathComparator
 {
-    /**
-     * @param string $path
-     * @param string $directoryPath
-     * @return bool
-     */
-    public function isPathWithinDirectory($path, $directoryPath)
+    public function isPathWithinDirectory(string $path, string $directoryPath): bool
     {
         $directoryPathRealpath = realpath($directoryPath);
 
@@ -26,12 +21,7 @@ class FilepathComparator
         return $this->isPathWithinDirectoryRealpathRecursive($path, $directoryPathRealpath);
     }
 
-    /**
-     * @param string $path
-     * @param string $directoryRealpath
-     * @return bool
-     */
-    protected function isPathWithinDirectoryRealpathRecursive($path, $directoryRealpath)
+    protected function isPathWithinDirectoryRealpathRecursive(string $path, string $directoryRealpath): bool
     {
         if (realpath($path) === $directoryRealpath) {
             return true;
@@ -44,11 +34,7 @@ class FilepathComparator
         return false;
     }
 
-    /**
-     * @param string $path
-     * @return bool
-     */
-    protected function hasAncestorPath($path)
+    protected function hasAncestorPath(string $path): bool
     {
         return dirname($path) !== $path;
     }

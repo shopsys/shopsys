@@ -15,7 +15,7 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         if (in_array($routeName, $this->getPersonalDataRouteNames(), true)) {
             $breadcrumbItem = new BreadcrumbItem(t('Personal information overview', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN));
@@ -30,7 +30,7 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return [
             'front_personal_data',
@@ -40,10 +40,7 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
         ];
     }
 
-    /**
-     * @return array
-     */
-    protected function getPersonalDataRouteNames()
+    protected function getPersonalDataRouteNames(): array
     {
         return [
             'front_personal_data',

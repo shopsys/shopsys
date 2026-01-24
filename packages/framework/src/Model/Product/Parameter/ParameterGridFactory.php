@@ -10,6 +10,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
@@ -76,10 +77,7 @@ class ParameterGridFactory implements GridFactoryInterface
         return $grid;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource
-     */
-    protected function getParametersDataSource()
+    protected function getParametersDataSource(): QueryBuilderDataSource
     {
         $locales = $this->localization->getLocalesOfAllDomains();
         $queryBuilder = $this->em->createQueryBuilder();

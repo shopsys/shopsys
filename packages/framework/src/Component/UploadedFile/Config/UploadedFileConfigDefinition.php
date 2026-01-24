@@ -31,11 +31,9 @@ class UploadedFileConfigDefinition implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
-     */
-    protected function buildItemsNode(ArrayNodeDefinition $node)
-    {
+    protected function buildItemsNode(
+        ArrayNodeDefinition $node,
+    ): ArrayNodeDefinition {
         return $node
             ->addDefaultsIfNotSet()
             ->children()

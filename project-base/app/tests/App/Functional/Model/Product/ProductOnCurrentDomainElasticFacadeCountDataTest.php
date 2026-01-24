@@ -470,11 +470,10 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
-     */
-    private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales)
-    {
+    private function createParameterFilterData(
+        array $namesByLocale,
+        array $valuesTextsByLocales,
+    ): ParameterFilterData {
         $parameter = $this->parameterRepository->findParameterByNames($namesByLocale);
         $parameterValues = $this->getParameterValuesByLocalesAndTexts($valuesTextsByLocales);
 
@@ -489,7 +488,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
      * @param array[] $valuesTextsByLocales
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales)
+    private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales): array
     {
         $parameterValues = [];
 

@@ -52,10 +52,7 @@ class CachedBestsellingProductFacade
         );
     }
 
-    /**
-     * @param int $domainId
-     */
-    public function invalidateCacheByDomainIdAndCategory($domainId, Category $category): void
+    public function invalidateCacheByDomainIdAndCategory(int $domainId, Category $category): void
     {
         $pricingGroups = $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);
 
@@ -65,11 +62,7 @@ class CachedBestsellingProductFacade
         }
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    protected function getCacheId($domainId, Category $category, PricingGroup $pricingGroup)
+    protected function getCacheId(int $domainId, Category $category, PricingGroup $pricingGroup): string
     {
         return $domainId . '_' . $category->getId() . '_' . $pricingGroup->getId();
     }

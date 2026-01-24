@@ -9,11 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProgressBarFactory
 {
-    /**
-     * @param int $max
-     * @return \Symfony\Component\Console\Helper\ProgressBar
-     */
-    public function create(OutputInterface $output, $max)
+    public function create(OutputInterface $output, int $max): ProgressBar
     {
         $bar = new ProgressBar($output, $max);
         $this->initializeCustomPlaceholderFormatters();
@@ -46,11 +42,7 @@ class ProgressBarFactory
         });
     }
 
-    /**
-     * @param int $timeInSeconds
-     * @return string
-     */
-    protected function formatTimeHms($timeInSeconds)
+    protected function formatTimeHms(int $timeInSeconds): string
     {
         return sprintf(
             '%dh %02dm %02ds',

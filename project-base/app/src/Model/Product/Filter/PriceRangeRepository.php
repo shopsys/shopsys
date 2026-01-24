@@ -9,6 +9,7 @@ use App\Model\Product\ProductRepository;
 use Override;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository as BasePriceRangeRepository;
 
 /**
@@ -28,11 +29,13 @@ class PriceRangeRepository extends BasePriceRangeRepository
     /**
      * @param int $domainId
      * @param \App\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
     #[Override]
-    public function getPriceRangeInCategory($domainId, PricingGroup $pricingGroup, Category $category)
-    {
+    public function getPriceRangeInCategory(
+        $domainId,
+        PricingGroup $pricingGroup,
+        Category $category,
+    ): PriceRange {
         $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -46,11 +49,14 @@ class PriceRangeRepository extends BasePriceRangeRepository
      * @param int $domainId
      * @param string $locale
      * @param string|null $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
     #[Override]
-    public function getPriceRangeForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText)
-    {
+    public function getPriceRangeForSearch(
+        $domainId,
+        PricingGroup $pricingGroup,
+        $locale,
+        $searchText,
+    ): PriceRange {
         $productsQueryBuilder = $this->productRepository
             ->getSellableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
 

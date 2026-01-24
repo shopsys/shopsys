@@ -18,10 +18,9 @@ class ZboziProductDomainFacade
     }
 
     /**
-     * @param int $productId
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]|null
      */
-    public function findByProductId($productId)
+    public function findByProductId(int $productId): ?array
     {
         return $this->zboziProductDomainRepository->findByProductId($productId);
     }
@@ -30,8 +29,10 @@ class ZboziProductDomainFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]
      */
-    public function getZboziProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
-    {
+    public function getZboziProductDomainsByProductsAndDomainIndexedByProductId(
+        array $products,
+        DomainConfig $domain,
+    ): array {
         $productIds = [];
 
         foreach ($products as $product) {
@@ -45,10 +46,9 @@ class ZboziProductDomainFacade
     }
 
     /**
-     * @param int $productId
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData[] $zboziProductDomainsData
      */
-    public function saveZboziProductDomainsForProductId($productId, array $zboziProductDomainsData): void
+    public function saveZboziProductDomainsForProductId(int $productId, array $zboziProductDomainsData): void
     {
         $existingZboziProductDomains = $this->zboziProductDomainRepository->findByProductId($productId);
 
@@ -82,10 +82,7 @@ class ZboziProductDomainFacade
         }
     }
 
-    /**
-     * @param int $productId
-     */
-    protected function saveZboziProductDomain($productId, ZboziProductDomainData $zboziProductDomainData): void
+    protected function saveZboziProductDomain(int $productId, ZboziProductDomainData $zboziProductDomainData): void
     {
         $product = $this->productRepository->getById($productId);
         $zboziProductDomainData->product = $product;
@@ -103,10 +100,7 @@ class ZboziProductDomainFacade
         }
     }
 
-    /**
-     * @param int $productId
-     */
-    public function delete($productId): void
+    public function delete(int $productId): void
     {
         $zboziProductDomains = $this->zboziProductDomainRepository->findByProductId($productId);
 

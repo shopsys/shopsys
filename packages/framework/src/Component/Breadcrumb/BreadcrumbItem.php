@@ -6,40 +6,24 @@ namespace Shopsys\FrameworkBundle\Component\Breadcrumb;
 
 class BreadcrumbItem
 {
-    protected string $name;
-
-    protected ?string $routeName = null;
-
-    /**
-     * @param string $name
-     * @param string|null $routeName
-     */
-    public function __construct($name, $routeName = null, protected readonly array $routeParameters = [])
-    {
-        $this->name = $name;
-        $this->routeName = $routeName;
+    public function __construct(
+        protected string $name,
+        protected ?string $routeName = null,
+        protected readonly array $routeParameters = [],
+    ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRouteName()
+    public function getRouteName(): ?string
     {
         return $this->routeName;
     }
 
-    /**
-     * @return array
-     */
-    public function getRouteParameters()
+    public function getRouteParameters(): array
     {
         return $this->routeParameters;
     }

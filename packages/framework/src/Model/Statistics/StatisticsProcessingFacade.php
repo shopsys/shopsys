@@ -15,7 +15,7 @@ class StatisticsProcessingFacade
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
      * @return string[]
      */
-    public function getDateTimesFormattedToLocaleFormat(array $valueByDateTimeDataPoints)
+    public function getDateTimesFormattedToLocaleFormat(array $valueByDateTimeDataPoints): array
     {
         return $this->valueByDateTimeDataPointFormatter->getDateTimesFormattedToLocaleFormat(
             $valueByDateTimeDataPoints,
@@ -26,7 +26,7 @@ class StatisticsProcessingFacade
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
      * @return int[]
      */
-    public function getCounts(array $valueByDateTimeDataPoints)
+    public function getCounts(array $valueByDateTimeDataPoints): array
     {
         return $this->valueByDateTimeDataPointFormatter->getCounts($valueByDateTimeDataPoints);
     }

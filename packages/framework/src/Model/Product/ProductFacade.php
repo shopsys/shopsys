@@ -61,11 +61,7 @@ class ProductFacade
     ) {
     }
 
-    /**
-     * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getById($productId)
+    public function getById(int $productId): Product
     {
         return $this->productRepository->getById($productId);
     }
@@ -286,7 +282,7 @@ class ProductFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface[][]
      */
-    public function getAllProductPricesIndexedByDomainId(Product $product)
+    public function getAllProductPricesIndexedByDomainId(Product $product): array
     {
         $productSellingPrices = [];
 
@@ -376,12 +372,9 @@ class ProductFacade
         }
     }
 
-    /**
-     * @param string $productCatnum
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getOneByCatnumExcludeMainVariants($productCatnum)
-    {
+    public function getOneByCatnumExcludeMainVariants(
+        string $productCatnum,
+    ): Product {
         return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
     }
 

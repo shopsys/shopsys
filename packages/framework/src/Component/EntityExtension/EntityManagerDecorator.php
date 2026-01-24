@@ -7,8 +7,10 @@ namespace Shopsys\FrameworkBundle\Component\EntityExtension;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Decorator\EntityManagerDecorator as BaseEntityManagerDecorator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Repository\RepositoryFactory;
+use Doctrine\Persistence\ObjectRepository;
 use Override;
 
 class EntityManagerDecorator extends BaseEntityManagerDecorator
@@ -95,10 +97,9 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
 
     /**
      * @param string $className
-     * @return \Doctrine\Persistence\ObjectRepository
      */
     #[Override]
-    public function getRepository($className)
+    public function getRepository($className): ObjectRepository
     {
         $resolvedClassName = $this->entityNameResolver->resolve($className);
 
@@ -107,10 +108,9 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
 
     /**
      * @param string $className
-     * @return \Doctrine\ORM\Mapping\ClassMetadata
      */
     #[Override]
-    public function getClassMetadata($className)
+    public function getClassMetadata($className): ClassMetadata
     {
         $resolvedClassName = $this->entityNameResolver->resolve($className);
 

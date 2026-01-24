@@ -21,7 +21,7 @@ class ProductAccessoryFacade
         int $domainId,
         PricingGroup $pricingGroup,
         ?int $limit = null,
-    ) {
+    ): array {
         return $this->productAccessoryRepository->getOfferedAccessories($product, $domainId, $pricingGroup, $limit);
     }
 

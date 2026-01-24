@@ -13,11 +13,7 @@ class ProductAdvancedSearchPage extends AbstractPage
 {
     public const SEARCH_SUBJECT_CATNUM = 'productCatnum';
 
-    /**
-     * @param string $searchSubject
-     * @param string $value
-     */
-    public function search($searchSubject, $value): void
+    public function search(string $searchSubject, string $value): void
     {
         $this->tester->amOnPage('/admin/product/list/');
 
@@ -34,19 +30,13 @@ class ProductAdvancedSearchPage extends AbstractPage
         );
     }
 
-    /**
-     * @param string $productName
-     */
-    public function assertFoundProductByName($productName): void
+    public function assertFoundProductByName(string $productName): void
     {
         $translatedProductName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getAdminLocale());
         $this->tester->seeTranslationAdminInCss($translatedProductName, '.test-grid-column-name');
     }
 
-    /**
-     * @param int $expectedCount
-     */
-    public function assertFoundProductCount($expectedCount): void
+    public function assertFoundProductCount(int $expectedCount): void
     {
         $foundProductCount = $this->tester->countVisibleByCss('tbody .test-grid-row');
 

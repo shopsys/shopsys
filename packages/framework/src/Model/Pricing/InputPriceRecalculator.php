@@ -36,26 +36,20 @@ class InputPriceRecalculator
         $this->recalculateInputPriceForNewType(PricingSetting::PRICE_TYPE_WITH_VAT);
     }
 
-    /**
-     * @param int $newInputPriceType
-     */
-    protected function recalculateInputPriceForNewType($newInputPriceType): void
+    protected function recalculateInputPriceForNewType(int $newInputPriceType): void
     {
         $this->recalculateTransportsInputPriceForNewType($newInputPriceType);
         $this->recalculatePaymentsInputPriceForNewType($newInputPriceType);
     }
 
-    /**
-     * @param int $toInputPriceType
-     */
-    protected function recalculatePaymentsInputPriceForNewType($toInputPriceType): void
+    protected function recalculatePaymentsInputPriceForNewType(int $toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()
             ->select('p')
             ->from(Payment::class, 'p')
             ->getQuery();
 
-        $this->batchProcessQuery($query, function (Payment $payment) use ($toInputPriceType) {
+        $this->batchProcessQuery($query, function (Payment $payment) use ($toInputPriceType): void {
             foreach ($payment->getPrices() as $paymentInputPrice) {
                 $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice(
                     $payment,
@@ -74,17 +68,14 @@ class InputPriceRecalculator
         });
     }
 
-    /**
-     * @param int $toInputPriceType
-     */
-    protected function recalculateTransportsInputPriceForNewType($toInputPriceType): void
+    protected function recalculateTransportsInputPriceForNewType(int $toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()
             ->select('t')
             ->from(Transport::class, 't')
             ->getQuery();
 
-        $this->batchProcessQuery($query, function (Transport $transport) use ($toInputPriceType) {
+        $this->batchProcessQuery($query, function (Transport $transport) use ($toInputPriceType): void {
             foreach ($transport->getPrices() as $transportInputPrice) {
                 $transportPrice = $this->transportPriceCalculation->calculateIndependentPrice(
                     $transportInputPrice,

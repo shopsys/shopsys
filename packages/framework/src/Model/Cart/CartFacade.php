@@ -108,11 +108,7 @@ class CartFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $cartItemId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getProductByCartItemId($cartItemId)
+    public function getProductByCartItemId(int $cartItemId): Product
     {
         $cart = $this->findCartOfCurrentCustomerUser();
 
@@ -125,29 +121,22 @@ class CartFacade
         return $cart->getItemById($cartItemId)->getProduct();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
-    public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
-    {
+    public function findCartByCustomerUserIdentifier(
+        CustomerUserIdentifier $customerUserIdentifier,
+    ): ?Cart {
         return $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
-    public function findCartOfCurrentCustomerUser()
+    public function findCartOfCurrentCustomerUser(): ?Cart
     {
         $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
 
         return $this->findCartByCustomerUserIdentifier($customerUserIdentifier);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
-     */
-    public function getCartByCustomerUserIdentifierCreateIfNotExists(CustomerUserIdentifier $customerUserIdentifier)
-    {
+    public function getCartByCustomerUserIdentifierCreateIfNotExists(
+        CustomerUserIdentifier $customerUserIdentifier,
+    ): Cart {
         $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
 
         if ($cart === null) {

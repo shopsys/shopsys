@@ -38,7 +38,7 @@ class RolesCommandDetailSubscriber implements EventSubscriberInterface
         $routes = $this->getRoutesUsingRole($event->getRole()->getConstant());
 
         if (count($routes) > 0) {
-            $event->addRenderCallback(function ($io, $output) use ($routes) {
+            $event->addRenderCallback(function ($io, $output) use ($routes): void {
                 $io->text('Routes using this role:');
 
                 $table = new Table($output);

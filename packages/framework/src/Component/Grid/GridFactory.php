@@ -23,10 +23,12 @@ class GridFactory
 
     /**
      * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(string $gridId, DataSourceInterface $dataSource, string $roleConstant)
-    {
+    public function create(
+        string $gridId,
+        DataSourceInterface $dataSource,
+        string $roleConstant,
+    ): Grid {
         return new Grid(
             $gridId,
             $roleConstant,

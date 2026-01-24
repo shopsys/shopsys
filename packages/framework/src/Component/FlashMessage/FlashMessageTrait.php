@@ -77,7 +77,7 @@ trait FlashMessageTrait
     /**
      * @return string[]
      */
-    public function getErrorMessages()
+    public function getErrorMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_ERROR);
     }
@@ -85,7 +85,7 @@ trait FlashMessageTrait
     /**
      * @return string[]
      */
-    public function getInfoMessages()
+    public function getInfoMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_INFO);
     }
@@ -93,7 +93,7 @@ trait FlashMessageTrait
     /**
      * @return string[]
      */
-    public function getSuccessMessages()
+    public function getSuccessMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_SUCCESS);
     }
@@ -107,10 +107,9 @@ trait FlashMessageTrait
     }
 
     /**
-     * @param string $key
      * @return string[]
      */
-    protected function getMessages($key)
+    protected function getMessages(string $key): array
     {
         $flashBag = $this->getSession()->getFlashBag();
         $messages = $flashBag->get($key);

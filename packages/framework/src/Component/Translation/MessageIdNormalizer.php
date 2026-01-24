@@ -9,19 +9,12 @@ use JMS\TranslationBundle\Model\MessageCatalogue;
 
 class MessageIdNormalizer
 {
-    /**
-     * @param string $messageId
-     * @return string
-     */
-    public function normalizeMessageId($messageId)
+    public function normalizeMessageId(string $messageId): string
     {
         return trim(preg_replace('~\s+~u', ' ', $messageId));
     }
 
-    /**
-     * @return \JMS\TranslationBundle\Model\MessageCatalogue
-     */
-    public function getNormalizedCatalogue(MessageCatalogue $catalogue)
+    public function getNormalizedCatalogue(MessageCatalogue $catalogue): MessageCatalogue
     {
         $normalizedCatalogue = new MessageCatalogue();
         $normalizedCatalogue->setLocale($catalogue->getLocale());
@@ -41,11 +34,7 @@ class MessageIdNormalizer
         return $normalizedCatalogue;
     }
 
-    /**
-     * @param string $domain
-     * @return \JMS\TranslationBundle\Model\Message
-     */
-    protected function getNormalizedMessage(Message $message, $domain)
+    protected function getNormalizedMessage(Message $message, string $domain): Message
     {
         $normalizedMessageId = $this->normalizeMessageId($message->getId());
 

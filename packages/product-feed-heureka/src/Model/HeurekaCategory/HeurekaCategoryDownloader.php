@@ -9,32 +9,23 @@ use SimpleXMLElement;
 
 class HeurekaCategoryDownloader
 {
-    protected string $heurekaCategoryFeedUrl;
-
-    /**
-     * @param string $heurekaCategoryFeedUrl
-     */
     public function __construct(
-        $heurekaCategoryFeedUrl,
+        protected string $heurekaCategoryFeedUrl,
         protected readonly HeurekaCategoryDataFactory $heurekaCategoryDataFactory,
     ) {
-        $this->heurekaCategoryFeedUrl = $heurekaCategoryFeedUrl;
     }
 
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData[]
      */
-    public function getHeurekaCategories()
+    public function getHeurekaCategories(): array
     {
         $xmlCategoryDataObjects = $this->loadXml()->xpath('/HEUREKA//CATEGORY[CATEGORY_FULLNAME]');
 
         return $this->convertToHeurekaCategoriesData($xmlCategoryDataObjects);
     }
 
-    /**
-     * @return \SimpleXMLElement
-     */
-    protected function loadXml()
+    protected function loadXml(): SimpleXMLElement
     {
         try {
             return new SimpleXMLElement($this->heurekaCategoryFeedUrl, LIBXML_NOERROR | LIBXML_NOWARNING, true);
@@ -47,7 +38,7 @@ class HeurekaCategoryDownloader
      * @param \SimpleXMLElement[] $xmlCategoryDataObjects
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData[]
      */
-    protected function convertToHeurekaCategoriesData(array $xmlCategoryDataObjects)
+    protected function convertToHeurekaCategoriesData(array $xmlCategoryDataObjects): array
     {
         $heurekaCategoriesData = [];
 

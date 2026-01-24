@@ -30,10 +30,7 @@ class TransportFacade
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    public function create(TransportData $transportData)
+    public function create(TransportData $transportData): Transport
     {
         $transport = $this->transportFactory->create($transportData);
         $this->em->persist($transport);
@@ -55,19 +52,12 @@ class TransportFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    public function getById($id)
+    public function getById(int $id): Transport
     {
         return $this->transportRepository->getById($id);
     }
 
-    /**
-     * @param int $id
-     */
-    public function deleteById($id): void
+    public function deleteById(int $id): void
     {
         $transport = $this->getById($id);
         $transport->markAsDeleted();
@@ -83,17 +73,16 @@ class TransportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $visiblePayments
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getVisibleOnCurrentDomain(array $visiblePayments)
+    public function getVisibleOnCurrentDomain(array $visiblePayments): array
     {
         return $this->getVisibleByDomainId($this->domain->getId(), $visiblePayments);
     }
 
     /**
-     * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $visiblePaymentsOnDomain
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getVisibleByDomainId($domainId, $visiblePaymentsOnDomain)
+    public function getVisibleByDomainId(int $domainId, array $visiblePaymentsOnDomain): array
     {
         $transports = $this->transportRepository->getAllByDomainId($domainId);
 
@@ -130,7 +119,7 @@ class TransportFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getAllIncludingDeleted()
+    public function getAllIncludingDeleted(): array
     {
         return $this->transportRepository->getAllIncludingDeleted();
     }

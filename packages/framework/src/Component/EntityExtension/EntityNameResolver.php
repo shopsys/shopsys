@@ -21,11 +21,7 @@ class EntityNameResolver
         return $this->entityExtensionMap[$entityName] ?? $entityName;
     }
 
-    /**
-     * @param mixed $subject
-     * @return mixed
-     */
-    public function resolveIn($subject)
+    public function resolveIn(mixed $subject): mixed
     {
         if (is_string($subject)) {
             return $this->resolveInString($subject);
@@ -62,10 +58,8 @@ class EntityNameResolver
 
     /**
      * Resolve entity names recursively in all properties of the subject (even private ones)
-     *
-     * @param object $object
      */
-    protected function resolveInObjectProperties($object): void
+    protected function resolveInObjectProperties(object $object): void
     {
         $reflection = new ReflectionObject($object);
 

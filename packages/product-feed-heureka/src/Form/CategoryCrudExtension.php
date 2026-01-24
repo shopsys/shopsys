@@ -18,30 +18,23 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return CategoryFormType::class;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Heureka.cz product feed');
     }
 
     /**
      * @param int $categoryId
-     * @return array
      */
     #[Override]
-    public function getData($categoryId)
+    public function getData($categoryId): array
     {
         $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryId($categoryId);
 

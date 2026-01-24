@@ -19,9 +19,8 @@ class ProductMassActionRepository
 
     /**
      * @param int[] $selectedProductIds
-     * @param bool $hidden
      */
-    public function setHidden(array $selectedProductIds, $hidden): void
+    public function setHidden(array $selectedProductIds, bool $hidden): void
     {
         $updateQueryBuilder = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')

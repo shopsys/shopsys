@@ -14,11 +14,10 @@ class PerformanceResultsCsvExporter
 
     /**
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
-     * @param string $outputFilename
      */
     public function exportJmeterCsvReport(
         array $performanceTestSamples,
-        $outputFilename,
+        string $outputFilename,
     ): void {
         $handle = fopen($outputFilename, 'w');
 

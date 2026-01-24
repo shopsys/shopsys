@@ -9,18 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BasicHttpAuth implements AuthInterface
 {
-    private string $username;
-
-    private ?string $password = null;
-
-    /**
-     * @param string $username
-     * @param string|null $password
-     */
-    public function __construct($username, $password = null)
+    public function __construct(private string $username, private ?string $password = null)
     {
-        $this->username = $username;
-        $this->password = $password;
     }
 
     #[Override]

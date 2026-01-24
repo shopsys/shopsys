@@ -37,11 +37,7 @@ class PersistentReferenceFacade
         return $entity;
     }
 
-    /**
-     * @param string $name
-     * @param object $object
-     */
-    public function persistReference($name, $object): void
+    public function persistReference(string $name, object $object): void
     {
         if (!is_object($object)) {
             throw new ObjectRequiredException($object);
@@ -71,10 +67,7 @@ class PersistentReferenceFacade
         $this->em->flush();
     }
 
-    /**
-     * @param object $object
-     */
-    public function persistReferenceForDomain(string $name, $object, int $domainId): void
+    public function persistReferenceForDomain(string $name, object $object, int $domainId): void
     {
         $referenceName = $this->createDomainReferenceName($name, $domainId);
         $this->persistReference($referenceName, $object);

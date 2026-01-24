@@ -29,7 +29,7 @@ class BestsellingProductFacade
         Category $category,
         PricingGroup $pricingGroup,
         int $limit,
-    ) {
+    ): array {
         $manualBestsellingProducts = $this->manualBestsellingProductRepository->getOfferedByCategory(
             $domainId,
             $category,

@@ -75,7 +75,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     }
 
     #[Override]
-    public function generateUri(RequestDataSet $requestDataSet): ?string
+    public function generateUri(RequestDataSet $requestDataSet): string
     {
         return $this->router->generate($requestDataSet->getRouteName(), $requestDataSet->getParameters(), UrlGeneratorInterface::ABSOLUTE_URL);
     }

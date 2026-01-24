@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Override;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
@@ -24,7 +25,7 @@ class ProductExtension extends AbstractExtension
      * @return \Twig\TwigFilter[]
      */
     #[Override]
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('productDisplayName', $this->getProductDisplayName(...)),
@@ -35,7 +36,7 @@ class ProductExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -53,18 +54,12 @@ class ProductExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'product';
     }
 
-    /**
-     * @return string
-     */
-    public function getProductDisplayName(Product $product)
+    public function getProductDisplayName(Product $product): string
     {
         if ($product->getName() === null) {
             return t('ID %productId%', [
@@ -75,28 +70,22 @@ class ProductExtension extends AbstractExtension
         return $product->getName();
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    public function getProductMainCategory(Product $product, $domainId)
+    public function getProductMainCategory(Product $product, int $domainId): Category
     {
         return $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
-     */
-    public function findProductMainCategory(Product $product, $domainId)
-    {
+    public function findProductMainCategory(
+        Product $product,
+        int $domainId,
+    ): ?Category {
         return $this->categoryFacade->findProductMainCategoryByDomainId($product, $domainId);
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
-    public function getProductParameterValues(Product $product)
+    public function getProductParameterValues(Product $product): array
     {
         return $this->productCachedAttributesFacade->getProductParameterValues($product);
     }

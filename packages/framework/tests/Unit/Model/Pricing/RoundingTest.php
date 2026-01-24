@@ -56,18 +56,12 @@ class RoundingTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $unroundedPrice
-     * @param mixed $expectedAsPriceWithVat
-     * @param mixed $expectedAsPriceWithoutVat
-     * @param mixed $expectedAsVatAmount
-     */
     #[DataProvider('roundingProvider')]
     public function testRoundingByCurrency(
-        $unroundedPrice,
-        $expectedAsPriceWithVat,
-        $expectedAsPriceWithoutVat,
-        $expectedAsVatAmount,
+        mixed $unroundedPrice,
+        mixed $expectedAsPriceWithVat,
+        mixed $expectedAsPriceWithoutVat,
+        mixed $expectedAsVatAmount,
     ): void {
         $rounding = new Rounding();
 

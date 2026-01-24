@@ -154,10 +154,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         return new CustomerUser($customerUserData);
     }
 
-    /**
-     * @return \App\Model\Order\Order
-     */
-    private function createOrder(Currency $currency, OrderStatus $status, Country $country)
+    private function createOrder(Currency $currency, OrderStatus $status, Country $country): Order
     {
         $orderData = TestOrderProvider::getTestOrderData();
         $orderData->currency = $currency;

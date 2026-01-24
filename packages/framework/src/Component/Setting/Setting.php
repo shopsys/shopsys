@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Setting;
 
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 
@@ -43,12 +45,9 @@ class Setting
         $this->clearCache();
     }
 
-    /**
-     * @param string $key
-     * @return \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null
-     */
-    public function get($key)
-    {
+    public function get(
+        string $key,
+    ): DateTimeInterface|Money|string|int|float|bool|null {
         $this->loadDomainValues(SettingValue::DOMAIN_ID_COMMON);
 
         if (array_key_exists($key, $this->values[SettingValue::DOMAIN_ID_COMMON])) {
@@ -62,12 +61,7 @@ class Setting
         throw new SettingValueNotFoundException($message);
     }
 
-    /**
-     * @param string $key
-     * @param int $domainId
-     * @return \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null
-     */
-    public function getForDomain($key, $domainId)
+    public function getForDomain(string $key, int $domainId): DateTimeInterface|Money|string|int|float|bool|null
     {
         $this->loadDomainValues($domainId);
 
@@ -82,11 +76,7 @@ class Setting
         throw new SettingValueNotFoundException($message);
     }
 
-    /**
-     * @param string $key
-     * @param \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
-     */
-    public function set($key, $value): void
+    public function set(string $key, DateTimeInterface|Money|string|int|float|bool|null $value): void
     {
         $this->clearCache();
 
@@ -104,13 +94,11 @@ class Setting
         $this->em->flush();
     }
 
-    /**
-     * @param string $key
-     * @param \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
-     * @param int $domainId
-     */
-    public function setForDomain($key, $value, $domainId): void
-    {
+    public function setForDomain(
+        string $key,
+        DateTimeInterface|Money|string|int|float|bool|null $value,
+        int $domainId,
+    ): void {
         $this->clearCache();
 
         $this->loadDomainValues($domainId);
@@ -145,10 +133,7 @@ class Setting
         $this->allValuesLoaded = true;
     }
 
-    /**
-     * @param int|null $domainId
-     */
-    protected function loadDomainValues($domainId): void
+    protected function loadDomainValues(?int $domainId): void
     {
         if ($domainId === null) {
             $message = 'Cannot load setting value for null domain ID';

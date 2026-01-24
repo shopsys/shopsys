@@ -38,13 +38,8 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
         ];
     }
 
-    /**
-     * @param mixed $input
-     * @param mixed $locale
-     * @param mixed $result
-     */
     #[DataProvider('formatNumberDataProvider')]
-    public function testFormatNumber($input, $locale, $result): void
+    public function testFormatNumber(mixed $input, mixed $locale, mixed $result): void
     {
         $localizationMock = $this->getMockBuilder(Localization::class)
             ->disableOriginalConstructor()

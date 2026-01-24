@@ -78,12 +78,9 @@ class UploadedFileLocatorTest extends TestCase
         );
     }
 
-    /**
-     * @param bool $has
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
-     */
-    private function createUploadedFileLocator($has = true)
-    {
+    private function createUploadedFileLocator(
+        bool $has = true,
+    ): UploadedFileLocator {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
 
         $filesystemMock = $this->createMock(FilesystemOperator::class);

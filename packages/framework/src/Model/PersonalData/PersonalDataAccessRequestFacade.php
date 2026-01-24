@@ -19,14 +19,10 @@ class PersonalDataAccessRequestFacade
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest
-     */
     public function createPersonalDataAccessRequest(
         PersonalDataAccessRequestData $personalDataAccessRequestData,
-        $domainId,
-    ) {
+        int $domainId,
+    ): PersonalDataAccessRequest {
         $hash = $this->getUniqueHash();
 
         $personalDataAccessRequestData->hash = $hash;
@@ -41,20 +37,12 @@ class PersonalDataAccessRequestFacade
         return $dataAccessRequest;
     }
 
-    /**
-     * @param string $hash
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest|null
-     */
-    public function findByHashAndDomainId($hash, $domainId)
+    public function findByHashAndDomainId(string $hash, int $domainId): ?PersonalDataAccessRequest
     {
         return $this->personalDataAccessRequestRepository->findByHashAndDomainId($hash, $domainId);
     }
 
-    /**
-     * @return string
-     */
-    protected function getUniqueHash()
+    protected function getUniqueHash(): string
     {
         do {
             $hash = $this->hashGenerator->generateHash(20);

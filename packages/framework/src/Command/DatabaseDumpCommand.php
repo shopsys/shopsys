@@ -98,10 +98,7 @@ class DatabaseDumpCommand extends Command
         return proc_close($process);
     }
 
-    /**
-     * @return array
-     */
-    private function getDescriptorSpec()
+    private function getDescriptorSpec(): array
     {
         return [
             0 => ['pipe', 'r'], // stdin

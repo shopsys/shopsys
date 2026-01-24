@@ -24,11 +24,8 @@ class TestTranslatableListener extends TranslatableListener
         parent::__construct($domain, $factory);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getCurrentLocale()
+    public function getCurrentLocale(): string
     {
         if ($this->contextResolver->isCurrentContext(AdminContext::class)) {
             return $this->localization->getCurrentLocaleForTranslatableEntities();

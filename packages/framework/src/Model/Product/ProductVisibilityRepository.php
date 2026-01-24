@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\EntityRepository;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
@@ -37,10 +38,7 @@ class ProductVisibilityRepository
         $this->em->refreshLoadedEntitiesByClassName(ProductVisibility::class);
     }
 
-    /**
-     * @param int $domainId
-     */
-    public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, $domainId): void
+    public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, int $domainId): void
     {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO product_visibilities (product_id, pricing_group_id, domain_id, visible)
@@ -57,23 +55,16 @@ class ProductVisibilityRepository
         $this->refreshProductsVisibility();
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getProductVisibilityRepository()
+    protected function getProductVisibilityRepository(): EntityRepository
     {
         return $this->em->getRepository(ProductVisibility::class);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
-     */
     public function getProductVisibility(
         Product $product,
         PricingGroup $pricingGroup,
-        $domainId,
-    ) {
+        int $domainId,
+    ): ProductVisibility {
         $productVisibility = $this->getProductVisibilityRepository()->find([
             'product' => $product->getId(),
             'pricingGroup' => $pricingGroup->getId(),
@@ -88,10 +79,9 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility[]
      */
-    public function findProductVisibilitiesByDomainIdAndProduct($domainId, Product $product): array
+    public function findProductVisibilitiesByDomainIdAndProduct(int $domainId, Product $product): array
     {
         return $this->getProductVisibilityRepository()->findBy([
             'product' => $product->getId(),

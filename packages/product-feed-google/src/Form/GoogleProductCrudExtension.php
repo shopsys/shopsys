@@ -20,30 +20,23 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return GoogleProductFormType::class;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Google Shopping product feed');
     }
 
     /**
      * @param int $productId
-     * @return array
      */
     #[Override]
-    public function getData($productId)
+    public function getData($productId): array
     {
         $googleProductDomains = $this->googleProductDomainFacade->findByProductId($productId);
 
@@ -90,14 +83,10 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         );
     }
 
-    /**
-     * @param string $propertyName
-     * @param bool $propertyValue
-     */
     private function setGoogleProductDomainDataProperty(
         GoogleProductDomainData $googleProductDomainData,
-        $propertyName,
-        $propertyValue,
+        string $propertyName,
+        bool $propertyValue,
     ): void {
         switch ($propertyName) {
             case 'show':

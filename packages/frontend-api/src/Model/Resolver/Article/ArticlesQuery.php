@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
+use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Relay\Connection\Output\Connection;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchFacade;
@@ -20,10 +22,11 @@ class ArticlesQuery extends AbstractQuery
 
     /**
      * @param string[] $placements
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function articlesQuery(Argument $argument, array $placements)
-    {
+    public function articlesQuery(
+        Argument $argument,
+        array $placements,
+    ): Connection|Promise {
         $this->pageSizeValidator->checkMaxPageSize($argument);
         $this->setDefaultFirstOffsetIfNecessary($argument);
 

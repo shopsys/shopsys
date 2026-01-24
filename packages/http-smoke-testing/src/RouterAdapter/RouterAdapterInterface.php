@@ -11,10 +11,7 @@ interface RouterAdapterInterface
     /**
      * @return \Shopsys\HttpSmokeTesting\RouteInfo[]
      */
-    public function getAllRouteInfo();
+    public function getAllRouteInfo(): array;
 
-    /**
-     * @return string
-     */
-    public function generateUri(RequestDataSet $requestDataSet);
+    public function generateUri(RequestDataSet $requestDataSet): string;
 }

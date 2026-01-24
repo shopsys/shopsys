@@ -82,7 +82,7 @@ class CategorySeoFacade
             $categorySeoMixes = $this->getNewSeoCategoryMixes(
                 $categorySeoMixes,
                 $parameterValues,
-                function (CategorySeoMix $categorySeoMix, ParameterValue $parameterValue) {
+                function (CategorySeoMix $categorySeoMix, ParameterValue $parameterValue): void {
                     $categorySeoMix->addParameterValue($parameterValue);
                 },
             );
@@ -103,7 +103,7 @@ class CategorySeoFacade
             $categorySeoMixes = $this->getNewSeoCategoryMixes(
                 $categorySeoMixes,
                 $this->flagFacade->getAll(),
-                function (CategorySeoMix $categorySeoMix, Flag $flag) {
+                function (CategorySeoMix $categorySeoMix, Flag $flag): void {
                     $categorySeoMix->setFlag($flag);
                 },
             );
@@ -128,7 +128,7 @@ class CategorySeoFacade
             $categorySeoMixes = $this->getNewSeoCategoryMixes(
                 $categorySeoMixes,
                 $orderings,
-                function (CategorySeoMix $categorySeoMix, string $ordering) {
+                function (CategorySeoMix $categorySeoMix, string $ordering): void {
                     $categorySeoMix->setOrdering($ordering);
                 },
             );

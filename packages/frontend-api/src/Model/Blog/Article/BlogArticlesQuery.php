@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Blog\Article;
 
+use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Relay\Connection\Output\Connection;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
@@ -17,11 +19,9 @@ class BlogArticlesQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @return object|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
-     */
-    public function blogArticlesQuery(Argument $argument)
-    {
+    public function blogArticlesQuery(
+        Argument $argument,
+    ): Connection|Promise {
         $this->pageSizeValidator->checkMaxPageSize($argument);
         $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
 
@@ -33,11 +33,10 @@ class BlogArticlesQuery extends AbstractQuery
         return $paginator->auto($argument, $this->blogArticleElasticsearchFacade->getAllBlogArticlesTotalCount());
     }
 
-    /**
-     * @return object|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
-     */
-    public function blogArticleByCategoryQuery(Argument $argument, BlogCategory $blogCategory)
-    {
+    public function blogArticleByCategoryQuery(
+        Argument $argument,
+        BlogCategory $blogCategory,
+    ): Connection|Promise {
         $this->pageSizeValidator->checkMaxPageSize($argument);
         $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
 
