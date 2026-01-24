@@ -42,14 +42,11 @@ class BasePriceCalculationTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $vatPercent
-     */
     #[DataProvider('calculateBasePriceProvider')]
     public function testCalculateBasePriceRoundedByCurrency(
         int $inputPriceType,
         Money $inputPrice,
-        $vatPercent,
+        mixed $vatPercent,
         Money $basePriceWithoutVat,
         Money $basePriceWithVat,
         Money $basePriceVatAmount,

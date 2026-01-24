@@ -24,11 +24,8 @@ class CronConfig
         $this->cronModuleConfigs = [];
     }
 
-    /**
-     * @param \Shopsys\Plugin\Cron\SimpleCronModuleInterface|\Shopsys\Plugin\Cron\IteratedCronModuleInterface|mixed $service
-     */
     public function registerCronModuleInstance(
-        $service,
+        mixed $service,
         string $serviceId,
         string $timeHours,
         string $timeMinutes,

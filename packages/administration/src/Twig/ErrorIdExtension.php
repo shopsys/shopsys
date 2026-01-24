@@ -20,7 +20,7 @@ final class ErrorIdExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('error_id', $this->getErrorId(...)),

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\TopProduct;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -20,19 +21,15 @@ class TopProductRepository
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getTopProductRepository()
+    protected function getTopProductRepository(): EntityRepository
     {
         return $this->em->getRepository(TopProduct::class);
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProduct[]
      */
-    public function getAll($domainId)
+    public function getAll(int $domainId): array
     {
         return $this->getTopProductRepository()->findBy(['domainId' => $domainId], ['position' => 'ASC']);
     }

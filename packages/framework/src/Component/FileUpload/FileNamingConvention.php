@@ -11,14 +11,11 @@ class FileNamingConvention
     public const TYPE_ID = 1;
     protected const TYPE_ORIGINAL_NAME = 2;
 
-    /**
-     * @param int $namingConventionType
-     * @param string $originalFilename
-     * @param int|null $entityId
-     * @return string
-     */
-    public function getFilenameByNamingConvention($namingConventionType, $originalFilename, $entityId = null)
-    {
+    public function getFilenameByNamingConvention(
+        int $namingConventionType,
+        string $originalFilename,
+        ?int $entityId = null,
+    ): string {
         if ($namingConventionType === self::TYPE_ID && is_int($entityId)) {
             return $entityId . '.' . pathinfo($originalFilename, PATHINFO_EXTENSION);
         }

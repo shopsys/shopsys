@@ -62,18 +62,12 @@ class UserTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $resetPasswordHash
-     * @param mixed $resetPasswordHashValidThrough
-     * @param mixed $sentHash
-     * @param mixed $isExpectedValid
-     */
     #[DataProvider('isResetPasswordHashValidProvider')]
     public function testIsResetPasswordHashValid(
-        $resetPasswordHash,
-        $resetPasswordHashValidThrough,
-        $sentHash,
-        $isExpectedValid,
+        mixed $resetPasswordHash,
+        mixed $resetPasswordHashValidThrough,
+        mixed $sentHash,
+        mixed $isExpectedValid,
     ): void {
         $customerUser = TestCustomerProvider::getTestCustomerUser();
 

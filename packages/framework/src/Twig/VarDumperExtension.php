@@ -14,7 +14,7 @@ class VarDumperExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -24,10 +24,7 @@ class VarDumperExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param mixed $var
-     */
-    public function d($var): void
+    public function d(mixed $var): void
     {
         d($var);
     }

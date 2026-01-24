@@ -20,7 +20,7 @@ class CustomerExtensionTwig extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getLoginAsUserUrl', $this->getLoginAsUserUrl(...)),

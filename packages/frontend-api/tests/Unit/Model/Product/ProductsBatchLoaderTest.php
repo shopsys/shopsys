@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Unit\Model\Product;
 
 use GraphQL\Executor\Promise\Adapter\SyncPromise;
 use GraphQL\Executor\Promise\Adapter\SyncPromiseAdapter;
+use GraphQL\Executor\Promise\Promise;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -188,10 +189,7 @@ class ProductsBatchLoaderTest extends TestCase
         );
     }
 
-    /**
-     * @param \GraphQL\Executor\Promise\Promise $promise
-     */
-    private function resolvePromise($promise): mixed
+    private function resolvePromise(Promise $promise): mixed
     {
         $resolved = null;
 

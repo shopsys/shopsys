@@ -57,10 +57,7 @@ class ParameterGroupFacade
         return $this->parameterRepository->getOrderedParameterGroupsQueryBuilder($locale);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
-     */
-    public function getById(int $parameterGroupId)
+    public function getById(int $parameterGroupId): ParameterGroup
     {
         return $this->parameterRepository->getParameterGroupById($parameterGroupId);
     }
@@ -73,10 +70,7 @@ class ParameterGroupFacade
         return $this->parameterRepository->existsParameterGroupByName($name, $locale, $excludeParameterGroup);
     }
 
-    /**
-     * @param int $parameterGroupId
-     */
-    public function deleteById($parameterGroupId): void
+    public function deleteById(int $parameterGroupId): void
     {
         $parameterGroup = $this->parameterRepository->getParameterGroupById($parameterGroupId);
 

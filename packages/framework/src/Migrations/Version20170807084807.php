@@ -48,10 +48,7 @@ class Version20170807084807 extends AbstractMigration
         );
     }
 
-    /**
-     * @param string $pluginName
-     */
-    private function insertPluginDataValues(array $valuesByKey, $pluginName): void
+    private function insertPluginDataValues(array $valuesByKey, string $pluginName): void
     {
         foreach ($valuesByKey as $key => $value) {
             $this->sql(

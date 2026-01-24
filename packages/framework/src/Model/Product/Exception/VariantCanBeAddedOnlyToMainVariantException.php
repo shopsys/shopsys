@@ -8,11 +8,7 @@ use Exception;
 
 class VariantCanBeAddedOnlyToMainVariantException extends VariantException
 {
-    /**
-     * @param int $productId
-     * @param int $variantId
-     */
-    public function __construct($productId, $variantId, ?Exception $previous = null)
+    public function __construct(int $productId, int $variantId, ?Exception $previous = null)
     {
         $message = 'Product with ID ' . $productId . ' is not main variant for add variant ID ' . $variantId . '.';
 

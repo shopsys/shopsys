@@ -12,18 +12,12 @@ class PriceRange
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function getMinimalPrice()
+    public function getMinimalPrice(): Money
     {
         return $this->minimalPrice;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function getMaximalPrice()
+    public function getMaximalPrice(): Money
     {
         return $this->maximalPrice;
     }

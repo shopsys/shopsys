@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Status;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException;
 
@@ -17,28 +18,17 @@ class OrderStatusRepository
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getOrderStatusRepository()
+    protected function getOrderStatusRepository(): EntityRepository
     {
         return $this->em->getRepository(OrderStatus::class);
     }
 
-    /**
-     * @param int $orderStatusId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
-     */
-    public function findById($orderStatusId)
+    public function findById(int $orderStatusId): ?OrderStatus
     {
         return $this->getOrderStatusRepository()->find($orderStatusId);
     }
 
-    /**
-     * @param int $orderStatusId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     */
-    public function getById($orderStatusId)
+    public function getById(int $orderStatusId): OrderStatus
     {
         $orderStatus = $this->findById($orderStatusId);
 
@@ -72,10 +62,7 @@ class OrderStatusRepository
         return $orderStatus;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     */
-    public function getDefault()
+    public function getDefault(): OrderStatus
     {
         $orderStatus = $this->getOrderStatusRepository()->findOneBy(['type' => OrderStatusTypeEnum::TYPE_NEW]);
 
@@ -91,16 +78,15 @@ class OrderStatusRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getOrderStatusRepository()->findBy([], ['id' => 'asc']);
     }
 
     /**
-     * @param int $orderStatusId
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAllExceptId($orderStatusId)
+    public function getAllExceptId(int $orderStatusId): array
     {
         $qb = $this->getOrderStatusRepository()->createQueryBuilder('os')
             ->where('os.id != :id')

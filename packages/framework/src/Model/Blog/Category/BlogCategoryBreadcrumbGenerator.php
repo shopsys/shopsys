@@ -19,7 +19,7 @@ class BlogCategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         $blogCategory = $this->blogCategoryRepository->getById($routeParameters['id']);
 

@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\HttpSmokeTesting\Attribute\DataSet;
 use Shopsys\HttpSmokeTesting\Attribute\Parameter;
+use Shopsys\HttpSmokeTesting\RequestDataSetGenerator;
 use Shopsys\HttpSmokeTesting\RequestDataSetGeneratorFactory;
 use Shopsys\HttpSmokeTesting\RouteInfo;
 use Symfony\Component\Routing\Route;
@@ -45,13 +46,11 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertNotSame($firstRequestDataSets[0], $secondRequestDataSets[0]);
     }
 
-    /**
-     * @param string $routePath
-     * @param string $routeName
-     * @return \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
-     */
-    private function createRequestDataSetGenerator($routePath, $routeName, array $annotations = [])
-    {
+    private function createRequestDataSetGenerator(
+        string $routePath,
+        string $routeName,
+        array $annotations = [],
+    ): RequestDataSetGenerator {
         $route = new Route($routePath);
         $routeInfo = new RouteInfo($routeName, $route, $annotations);
         $requestDataSetGeneratorFactory = new RequestDataSetGeneratorFactory();

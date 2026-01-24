@@ -25,11 +25,12 @@ class TwoFactorAuthenticationMail implements MessageFactoryInterface
 
     /**
      * @param \Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface $administrator
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     #[Override]
-    public function createMessage(MailTemplate $template, $administrator)
-    {
+    public function createMessage(
+        MailTemplate $template,
+        $administrator,
+    ): MessageData {
         return new MessageData(
             $administrator->getEmailAuthRecipient(),
             $template->getBccEmail(),

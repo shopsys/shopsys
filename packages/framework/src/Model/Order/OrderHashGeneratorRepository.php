@@ -18,10 +18,7 @@ class OrderHashGeneratorRepository
     ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getUniqueHash()
+    public function getUniqueHash(): string
     {
         $triesCount = 0;
 

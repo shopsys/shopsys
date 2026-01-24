@@ -11,11 +11,8 @@ class ImageLocator
 {
     protected string $imageDir;
 
-    /**
-     * @param mixed $imageDir
-     */
     public function __construct(
-        $imageDir,
+        mixed $imageDir,
         protected readonly ImageConfig $imageConfig,
         protected readonly FilesystemOperator $filesystem,
     ) {
@@ -49,10 +46,7 @@ class ImageLocator
         return $this->imageDir . $relativePath;
     }
 
-    /**
-     * @return bool
-     */
-    public function imageExists(Image $image)
+    public function imageExists(Image $image): bool
     {
         $imageFilepath = $this->getAbsoluteImageFilepath($image);
 

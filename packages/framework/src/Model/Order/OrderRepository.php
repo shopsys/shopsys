@@ -193,7 +193,7 @@ class OrderRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getOrderListForEmailByDomainId(string $email, int $domainId)
+    public function getOrderListForEmailByDomainId(string $email, int $domainId): array
     {
         return $this->getOrderListQueryBuilder()
             ->andWhere('o.domainId = :domain')

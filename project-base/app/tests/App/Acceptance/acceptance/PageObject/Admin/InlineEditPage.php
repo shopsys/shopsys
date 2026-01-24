@@ -9,10 +9,7 @@ use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class InlineEditPage extends AbstractPage
 {
-    /**
-     * @param int|null $rowId
-     */
-    public function startInlineEdit($rowId): void
+    public function startInlineEdit(?int $rowId): void
     {
         $class = $this->getRowCssLocator($rowId) . ' .test-inline-edit-edit';
         $element = $this->webDriver->findElement(WebDriverBy::cssSelector($class));
@@ -27,10 +24,7 @@ class InlineEditPage extends AbstractPage
         $this->tester->waitForAjax();
     }
 
-    /**
-     * @param int $rowId
-     */
-    public function delete($rowId): void
+    public function delete(int $rowId): void
     {
         $class = $this->getRowCssLocator($rowId) . ' .test-type-delete';
         $this->tester->scrollTo(['css' => $class]);
@@ -41,12 +35,7 @@ class InlineEditPage extends AbstractPage
         $this->tester->waitForAjax();
     }
 
-    /**
-     * @param int|null $rowId
-     * @param string $columnName
-     * @param string $value
-     */
-    public function changeInputValue($rowId, $columnName, $value): void
+    public function changeInputValue(?int $rowId, string $columnName, string $value): void
     {
         $class = $this->getRowCssLocator($rowId) . ' .test-grid-column-' . $columnName . ' input';
         $this->tester->scrollTo(['css' => $class]);
@@ -56,10 +45,7 @@ class InlineEditPage extends AbstractPage
         );
     }
 
-    /**
-     * @param int|null $rowId
-     */
-    public function save($rowId): void
+    public function save(?int $rowId): void
     {
         $class = $this->getRowCssLocator($rowId) . ' .test-inline-edit-save';
         $this->tester->scrollTo(['css' => $class]);
@@ -67,10 +53,7 @@ class InlineEditPage extends AbstractPage
         $this->tester->waitForAjax();
     }
 
-    /**
-     * @return int|null
-     */
-    public function getHighestRowId()
+    public function getHighestRowId(): ?int
     {
         $highestId = $this->webDriver->executeScript(
             'var highestId = null;
@@ -86,12 +69,7 @@ class InlineEditPage extends AbstractPage
         return is_numeric($highestId) ? (int)$highestId : null;
     }
 
-    /**
-     * @param int|null $rowId
-     * @param string $columnName
-     * @param string $text
-     */
-    public function assertSeeInColumn($rowId, $columnName, $text): void
+    public function assertSeeInColumn(?int $rowId, string $columnName, string $text): void
     {
         $this->tester->seeInCss($text, $this->getRowCssLocator($rowId) . ' .test-grid-column-' . $columnName);
     }
@@ -102,19 +80,12 @@ class InlineEditPage extends AbstractPage
         $this->assertSeeInColumn($rowId, 'percent', $formattedPercent);
     }
 
-    /**
-     * @param int $rowId
-     */
-    public function assertDontSeeRow($rowId): void
+    public function assertDontSeeRow(int $rowId): void
     {
         $this->tester->dontSeeElement(['css' => $this->getRowCssLocator($rowId)]);
     }
 
-    /**
-     * @param int|null $rowId
-     * @return string
-     */
-    private function getRowCssLocator($rowId)
+    private function getRowCssLocator(?int $rowId): string
     {
         if ($rowId === null) {
             return '.test-grid-row:not([data-inline-edit-row-id])';

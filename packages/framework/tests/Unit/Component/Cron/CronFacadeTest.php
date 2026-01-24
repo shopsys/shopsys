@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Cron;
 
 use Monolog\Logger;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Bytes\BytesHelper;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
@@ -112,11 +113,10 @@ class CronFacadeTest extends TestCase
         );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Cron\CronFacade
-     */
-    private function createCronFacade(CronConfig $cronConfig, CronModuleFacade $cronModuleFacade)
-    {
+    private function createCronFacade(
+        CronConfig $cronConfig,
+        CronModuleFacade $cronModuleFacade,
+    ): CronFacade {
         $loggerMock = $this->createMock(Logger::class);
         $bytesHelper = new BytesHelper();
 
@@ -125,20 +125,15 @@ class CronFacadeTest extends TestCase
         return new CronFacade($loggerMock, $cronConfig, $cronModuleFacade, $cronModuleExecutor);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private function mockCronModuleFacade()
+    private function mockCronModuleFacade(): CronModuleFacade|MockObject
     {
         return $this->createMock(CronModuleFacade::class);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver|null $cronTimeResolverMock
-     * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig
-     */
-    private function createCronConfigWithRegisteredServices(array $servicesIndexedById, $cronTimeResolverMock = null)
-    {
+    private function createCronConfigWithRegisteredServices(
+        array $servicesIndexedById,
+        ?CronTimeResolver $cronTimeResolverMock = null,
+    ): CronConfig {
         $cronTimeResolver = $cronTimeResolverMock !== null ? $cronTimeResolverMock : new CronTimeResolver();
         $cronConfig = new CronConfig($cronTimeResolver);
 

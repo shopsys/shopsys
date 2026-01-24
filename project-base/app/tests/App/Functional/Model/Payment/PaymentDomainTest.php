@@ -75,10 +75,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
         $this->assertFalse($refreshedPayment->isEnabled(self::SECOND_DOMAIN_ID));
     }
 
-    /**
-     * @return \App\Model\Payment\Payment
-     */
-    private function getRefreshedPaymentFromDatabase(Payment $payment)
+    private function getRefreshedPaymentFromDatabase(Payment $payment): Payment
     {
         $this->em->persist($payment);
         $this->em->flush();

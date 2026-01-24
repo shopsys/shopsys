@@ -113,10 +113,7 @@ final class ProxyQuery
         );
     }
 
-    /**
-     * @param mixed $part
-     */
-    private function getAlias($part): string
+    private function getAlias(mixed $part): string
     {
         return strtr($part, ['.' => '__']);
     }

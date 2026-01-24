@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
-return static function () {
+return static function (): void {
     if (file_exists(__DIR__ . '/../../../parameters_monorepo.yaml')) {
         $vendorDir = __DIR__ . '/../../../vendor';
     } else {

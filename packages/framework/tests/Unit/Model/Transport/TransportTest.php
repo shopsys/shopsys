@@ -12,10 +12,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 
 class TransportTest extends TestCase
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    private function createTransport()
+    private function createTransport(): Transport
     {
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
@@ -24,10 +21,7 @@ class TransportTest extends TestCase
         return new Transport($transportData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    private function createPayment()
+    private function createPayment(): Payment
     {
         $paymentData = new PaymentData();
         $paymentData->name = ['cs' => 'paymentName', 'en' => 'paymentName'];

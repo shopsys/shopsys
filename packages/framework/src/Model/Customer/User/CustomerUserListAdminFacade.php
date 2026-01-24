@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class CustomerUserListAdminFacade
@@ -12,14 +13,10 @@ class CustomerUserListAdminFacade
     {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getCustomerUserListQueryBuilderByQuickSearchData(
-        $domainId,
+        int $domainId,
         QuickSearchFormData $quickSearchData,
-    ) {
+    ): QueryBuilder {
         return $this->customerUserRepository->getCustomerUserListQueryBuilderByQuickSearchData(
             $domainId,
             $quickSearchData,

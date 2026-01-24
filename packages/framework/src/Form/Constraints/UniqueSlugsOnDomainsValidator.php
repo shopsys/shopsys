@@ -55,10 +55,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param array $values
-     */
-    protected function validateExists($values, UniqueSlugsOnDomains $constraint): void
+    protected function validateExists(array $values, UniqueSlugsOnDomains $constraint): void
     {
         foreach ($values as $urlData) {
             $domainId = $urlData[UrlListData::FIELD_DOMAIN];
@@ -85,7 +82,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     /**
      * @return int[][]
      */
-    protected function getSlugsCountIndexedByDomainId(array $values)
+    protected function getSlugsCountIndexedByDomainId(array $values): array
     {
         $slugsCountByDomainId = [];
 

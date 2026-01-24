@@ -25,16 +25,14 @@ class PaginationResultTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $page
-     * @param mixed $pageSize
-     * @param mixed $totalCount
-     * @param mixed $results
-     * @param mixed $expectedPageCount
-     */
     #[DataProvider('getTestPageCountData')]
-    public function testGetPageCount($page, $pageSize, $totalCount, $results, $expectedPageCount): void
-    {
+    public function testGetPageCount(
+        mixed $page,
+        mixed $pageSize,
+        mixed $totalCount,
+        mixed $results,
+        mixed $expectedPageCount,
+    ): void {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, $results);
 
         $this->assertSame($expectedPageCount, $paginationResult->getPageCount());

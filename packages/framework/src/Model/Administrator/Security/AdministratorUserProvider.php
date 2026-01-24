@@ -29,9 +29,8 @@ class AdministratorUserProvider implements UserProviderInterface
 
     /**
      * @param string $username The username
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername(string $username): Administrator
     {
         $administrator = $this->administratorRepository->findByUserNameWithPasswordFilled($username);
 

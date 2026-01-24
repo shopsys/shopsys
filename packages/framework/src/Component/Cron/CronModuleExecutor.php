@@ -31,13 +31,10 @@ class CronModuleExecutor
         $this->startedAt = $this->clock->now();
     }
 
-    /**
-     * @param \Shopsys\Plugin\Cron\SimpleCronModuleInterface|\Shopsys\Plugin\Cron\IteratedCronModuleInterface $cronModuleService
-     * @param bool $suspended
-     * @return string
-     */
-    public function runModule($cronModuleService, $suspended)
-    {
+    public function runModule(
+        SimpleCronModuleInterface|IteratedCronModuleInterface $cronModuleService,
+        bool $suspended,
+    ): string {
         $cronConfig = $this->cronConfig->getCronModuleConfigByServiceId(get_class($cronModuleService));
 
         if (!$this->canRun($cronConfig)) {

@@ -73,10 +73,7 @@ class CronFacade
         $this->logger->popProcessor();
     }
 
-    /**
-     * @param string $serviceId
-     */
-    public function runModuleByServiceId($serviceId): void
+    public function runModuleByServiceId(string $serviceId): void
     {
         $cronModuleConfig = $this->cronConfig->getCronModuleConfigByServiceId($serviceId);
 
@@ -133,7 +130,7 @@ class CronFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->cronConfig->getAllCronModuleConfigs();
     }

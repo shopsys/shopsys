@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 class HeurekaCategoryRepository
 {
@@ -12,10 +13,7 @@ class HeurekaCategoryRepository
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getHeurekaCategoryRepository()
+    protected function getHeurekaCategoryRepository(): EntityRepository
     {
         return $this->em->getRepository(HeurekaCategory::class);
     }
@@ -23,7 +21,7 @@ class HeurekaCategoryRepository
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory[]
      */
-    public function getAllIndexedById()
+    public function getAllIndexedById(): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('hc')
@@ -33,11 +31,7 @@ class HeurekaCategoryRepository
             ->execute();
     }
 
-    /**
-     * @param int $categoryId
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory|null
-     */
-    public function findByCategoryId($categoryId)
+    public function findByCategoryId(int $categoryId): ?HeurekaCategory
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('hc')
@@ -50,11 +44,7 @@ class HeurekaCategoryRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory
-     */
-    public function getOneById($id)
+    public function getOneById(int $id): HeurekaCategory
     {
         $queryBuilder = $this->getHeurekaCategoryRepository()
             ->createQueryBuilder('hc')

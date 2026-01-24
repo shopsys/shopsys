@@ -23,13 +23,13 @@ class GrapesJsParser
 
         $crawler = new Crawler($text);
 
-        $crawler->filter('.gjs-product')->each(function (Crawler $node) {
+        $crawler->filter('.gjs-product')->each(function (Crawler $node): void {
             foreach ($node as $domElement) {
                 $domElement->parentNode->removeChild($domElement);
             }
         });
 
-        $crawler->filter('.gjs-products')->each(function (Crawler $node) {
+        $crawler->filter('.gjs-products')->each(function (Crawler $node): void {
             $dataProducts = $node->attr('data-products');
 
             if ($dataProducts === null) {

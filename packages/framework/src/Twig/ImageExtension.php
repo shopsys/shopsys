@@ -139,10 +139,7 @@ class ImageExtension extends AbstractExtension
         return implode('-', $classParts);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'image_extension';
     }

@@ -27,10 +27,9 @@ class CustomerActivationMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     #[Override]
-    public function createMessage(MailTemplate $template, $customerUser)
+    public function createMessage(MailTemplate $template, $customerUser): MessageData
     {
         $domainId = $template->getDomainId();
 

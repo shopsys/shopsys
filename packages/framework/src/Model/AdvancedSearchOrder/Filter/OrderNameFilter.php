@@ -81,11 +81,7 @@ class OrderNameFilter implements AdvancedSearchFilterInterface
         }
     }
 
-    /**
-     * @param string $operator
-     * @return string
-     */
-    protected function getContainsDqlOperator($operator)
+    protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {
             case self::OPERATOR_CONTAINS:

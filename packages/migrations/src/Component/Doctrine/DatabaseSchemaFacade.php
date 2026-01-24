@@ -21,7 +21,7 @@ class DatabaseSchemaFacade
     /**
      * @return string[]
      */
-    public function getFilteredSchemaDiffSqlCommands()
+    public function getFilteredSchemaDiffSqlCommands(): array
     {
         $allMetadata = $this->em->getMetadataFactory()->getAllMetadata();
 

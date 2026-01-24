@@ -14,10 +14,7 @@ final class PhpToDocTypeTransformer
     {
     }
 
-    /**
-     * @param mixed $default
-     */
-    public function transform(Tokens $tokens, ?TypeAnalysis $typeAnalysis, $default = null): string
+    public function transform(Tokens $tokens, ?TypeAnalysis $typeAnalysis, mixed $default = null): string
     {
         if ($typeAnalysis === null) {
             $type = 'mixed';

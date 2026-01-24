@@ -8,10 +8,7 @@ use const E_USER_DEPRECATED;
 
 final class DeprecationHelper
 {
-    /**
-     * @param mixed $arguments
-     */
-    public static function trigger(string $message, ...$arguments): void
+    public static function trigger(string $message, mixed ...$arguments): void
     {
         @trigger_error(
             vsprintf($message, $arguments),

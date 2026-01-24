@@ -11,28 +11,19 @@ class DatabaseSchemaFacade
 {
     protected string $defaultSchemaFilepath;
 
-    /**
-     * @param mixed $defaultSchemaFilepath
-     */
     public function __construct(
-        $defaultSchemaFilepath,
+        string $defaultSchemaFilepath,
         protected readonly EntityManagerInterface $em,
     ) {
         $this->defaultSchemaFilepath = $defaultSchemaFilepath;
     }
 
-    /**
-     * @param string $schemaName
-     */
-    public function createSchema($schemaName): void
+    public function createSchema(string $schemaName): void
     {
         $this->em->getConnection()->executeQuery('CREATE SCHEMA ' . $schemaName);
     }
 
-    /**
-     * @param string $schemaName
-     */
-    public function dropSchemaIfExists($schemaName): void
+    public function dropSchemaIfExists(string $schemaName): void
     {
         $this->em->getConnection()->executeQuery('DROP SCHEMA IF EXISTS ' . $schemaName . ' CASCADE');
     }

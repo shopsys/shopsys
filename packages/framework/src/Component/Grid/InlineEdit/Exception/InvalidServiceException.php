@@ -8,10 +8,7 @@ use Exception;
 
 class InvalidServiceException extends Exception
 {
-    /**
-     * @param string $serviceName
-     */
-    public function __construct($serviceName, ?Exception $previous = null)
+    public function __construct(string $serviceName, ?Exception $previous = null)
     {
         $message = 'Service with name "' . $serviceName . '" does not exist or not implement necessary interface.';
 

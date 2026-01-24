@@ -22,12 +22,8 @@ class RemoveWhitespacesTransformerTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $value
-     * @param mixed $expected
-     */
     #[DataProvider('transformValuesProvider')]
-    public function testReverseTransform($value, $expected): void
+    public function testReverseTransform(mixed $value, mixed $expected): void
     {
         $transformer = new RemoveWhitespacesTransformer();
         $this->assertSame($expected, $transformer->reverseTransform($value));

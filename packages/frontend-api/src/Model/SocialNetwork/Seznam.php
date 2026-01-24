@@ -41,9 +41,6 @@ class Seznam extends BaseSeznam
         return $userProfile;
     }
 
-    /**
-     * @param \Hybridauth\Data\Collection $data
-     */
     protected function getEmailFromCollection(Data\Collection $data): ?string
     {
         $email = $data->get('email');

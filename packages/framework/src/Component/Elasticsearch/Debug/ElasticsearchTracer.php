@@ -23,10 +23,7 @@ class ElasticsearchTracer extends AbstractLogger
     {
     }
 
-    /**
-     * @return mixed
-     */
-    protected function extractData(string $requestMessage)
+    protected function extractData(string $requestMessage): mixed
     {
         $matches = null;
 
@@ -37,10 +34,7 @@ class ElasticsearchTracer extends AbstractLogger
         return json_decode($matches['json'], true);
     }
 
-    /**
-     * @param mixed $requestData
-     */
-    protected function formatData($requestData): string
+    protected function formatData(mixed $requestData): string
     {
         return json_encode($requestData, JSON_PRETTY_PRINT);
     }
@@ -69,10 +63,7 @@ class ElasticsearchTracer extends AbstractLogger
         throw new NotSupportedException($exceptionMessage);
     }
 
-    /**
-     * @param string $message
-     */
-    protected function logRequest($message, array $context = []): void
+    protected function logRequest(string $message, array $context = []): void
     {
         if ($message !== 'Response:') {
             $exceptionMessage = sprintf('Not supported message `%s`, It supports only exactly `Response:`', $message);

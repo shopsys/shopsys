@@ -37,11 +37,8 @@ class FieldFunction extends FunctionNode
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getSql(SqlWalker $sqlWalker)
+    public function getSql(SqlWalker $sqlWalker): string
     {
         $values = array_map(function (Node $argumentExpression) use ($sqlWalker) {
             return $argumentExpression->dispatch($sqlWalker);

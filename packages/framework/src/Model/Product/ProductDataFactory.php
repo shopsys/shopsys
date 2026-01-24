@@ -174,7 +174,7 @@ class ProductDataFactory
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    protected function getAccessoriesData(Product $product)
+    protected function getAccessoriesData(Product $product): array
     {
         $productAccessoriesByPosition = [];
 
@@ -188,7 +188,7 @@ class ProductDataFactory
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
      */
-    protected function getParametersData(Product $product)
+    protected function getParametersData(Product $product): array
     {
         $productParameterValuesData = [];
         $productParameterValues = $this->parameterRepository->getProductParameterValuesByProduct($product);
@@ -202,10 +202,7 @@ class ProductDataFactory
         return $productParameterValuesData;
     }
 
-    /**
-     * @return array
-     */
-    protected function getNullForAllDomains()
+    protected function getNullForAllDomains(): array
     {
         $nullForAllDomains = [];
 

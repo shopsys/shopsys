@@ -19,11 +19,8 @@ class HashGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $length
-     */
     #[DataProvider('hashLengthProvider')]
-    public function testGenerateHash($length): void
+    public function testGenerateHash(mixed $length): void
     {
         $hashGererator = new HashGenerator();
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 
 class PersonalDataAccessRequestRepository
@@ -15,13 +16,10 @@ class PersonalDataAccessRequestRepository
     ) {
     }
 
-    /**
-     * @param string $hash
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest|null
-     */
-    public function findByHashAndDomainId($hash, $domainId)
-    {
+    public function findByHashAndDomainId(
+        string $hash,
+        int $domainId,
+    ): ?PersonalDataAccessRequest {
         $dateTime = $this->clock->now()->modify('-1 day');
 
         return $this->getQueryBuilder()
@@ -36,11 +34,7 @@ class PersonalDataAccessRequestRepository
             ->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @param string $hash
-     * @return bool
-     */
-    public function isHashUsed($hash)
+    public function isHashUsed(string $hash): bool
     {
         return (bool)$this->getQueryBuilder()
             ->select('count(pdar)')
@@ -50,10 +44,7 @@ class PersonalDataAccessRequestRepository
             ->getSingleScalarResult();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function getQueryBuilder()
+    protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('pdar')

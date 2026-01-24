@@ -8,10 +8,7 @@ use Exception;
 
 class DirectoryDoesNotExistException extends Exception
 {
-    /**
-     * @param string $path
-     */
-    public function __construct($path, ?Exception $previous = null)
+    public function __construct(string $path, ?Exception $previous = null)
     {
         $message = sprintf('Path "%s" must exist.', $path);
 

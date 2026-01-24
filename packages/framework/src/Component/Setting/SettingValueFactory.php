@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Setting;
 
+use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class SettingValueFactory
@@ -12,12 +13,9 @@ class SettingValueFactory
     {
     }
 
-    /**
-     * @param \DateTimeInterface|string|int|float|bool|null $value
-     */
     public function create(
         string $name,
-        $value,
+        DateTimeInterface|string|int|float|bool|null $value,
         int $domainId,
     ): SettingValue {
         $entityClassName = $this->entityNameResolver->resolve(SettingValue::class);

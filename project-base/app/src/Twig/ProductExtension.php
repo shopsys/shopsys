@@ -43,7 +43,7 @@ class ProductExtension extends BaseProductExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         $functions = parent::getFunctions();
         $functions[] = new TwigFunction(

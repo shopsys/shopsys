@@ -19,10 +19,7 @@ class TokenUserMessageException extends CustomUserMessageAuthenticationException
         return true;
     }
 
-    /**
-     * @return string
-     */
-    public function getCategory()
+    public function getCategory(): string
     {
         return 'token';
     }

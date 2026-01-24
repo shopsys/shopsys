@@ -32,10 +32,7 @@ class PaymentFacade
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    public function create(PaymentData $paymentData)
+    public function create(PaymentData $paymentData): Payment
     {
         $payment = $this->paymentFactory->create($paymentData);
         $this->em->persist($payment);
@@ -61,19 +58,12 @@ class PaymentFacade
         $this->setAdditionalDataAndFlush($payment, $paymentData);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    public function getById($id)
+    public function getById(int $id): Payment
     {
         return $this->paymentRepository->getById($id);
     }
 
-    /**
-     * @param int $id
-     */
-    public function deleteById($id): void
+    public function deleteById(int $id): void
     {
         $payment = $this->getById($id);
         $payment->markAsDeleted();
@@ -91,7 +81,7 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getVisibleOnCurrentDomain()
+    public function getVisibleOnCurrentDomain(): array
     {
         $allPayments = $this->paymentRepository->getAllWithEagerLoadedDomainsAndTranslations($this->domain->getCurrentDomainConfig());
 
@@ -99,10 +89,9 @@ class PaymentFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getVisibleByDomainId($domainId)
+    public function getVisibleByDomainId(int $domainId): array
     {
         $allPayments = $this->paymentRepository->getAll();
 
@@ -135,7 +124,7 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getAllIncludingDeleted()
+    public function getAllIncludingDeleted(): array
     {
         return $this->paymentRepository->getAllIncludingDeleted();
     }
@@ -178,7 +167,7 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->paymentRepository->getAll();
     }

@@ -29,9 +29,6 @@ class CollationOrderByWalker extends TreeWalkerAdapter
         ];
     }
 
-    /**
-     * @param \Doctrine\ORM\Query\AST\PathExpression|mixed $expression
-     */
     protected function shouldApplyCollation(mixed $expression): bool
     {
         if (!$expression instanceof PathExpression && !is_string($expression)) {

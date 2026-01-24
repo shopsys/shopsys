@@ -6,45 +6,28 @@ namespace Shopsys\FrameworkBundle\Component\Translation;
 
 class TranslationSourceReplacement
 {
-    protected string $oldSource;
-
-    protected string $newSource;
-
-    protected string $domain;
-
     /**
-     * @param string $oldSource
-     * @param string $newSource
-     * @param string $domain
      * @param string[] $sourceFileReferences
      */
-    public function __construct($oldSource, $newSource, $domain, protected readonly array $sourceFileReferences)
-    {
-        $this->oldSource = $oldSource;
-        $this->newSource = $newSource;
-        $this->domain = $domain;
+    public function __construct(
+        protected string $oldSource,
+        protected string $newSource,
+        protected string $domain,
+        protected readonly array $sourceFileReferences,
+    ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getOldSource()
+    public function getOldSource(): string
     {
         return $this->oldSource;
     }
 
-    /**
-     * @return string
-     */
-    public function getNewSource()
+    public function getNewSource(): string
     {
         return $this->newSource;
     }
 
-    /**
-     * @return string
-     */
-    public function getDomain()
+    public function getDomain(): string
     {
         return $this->domain;
     }
@@ -54,7 +37,7 @@ class TranslationSourceReplacement
      *
      * @return string[]
      */
-    public function getSourceFilePaths()
+    public function getSourceFilePaths(): array
     {
         $sourceFilePaths = [];
 
@@ -65,11 +48,7 @@ class TranslationSourceReplacement
         return array_unique($sourceFilePaths);
     }
 
-    /**
-     * @param string $sourceFilePath
-     * @return int
-     */
-    public function getExpectedReplacementsCountForSourceFilePath($sourceFilePath)
+    public function getExpectedReplacementsCountForSourceFilePath(string $sourceFilePath): int
     {
         $expectedReplacementsCount = 0;
 
@@ -82,11 +61,7 @@ class TranslationSourceReplacement
         return $expectedReplacementsCount;
     }
 
-    /**
-     * @param string $sourceFilePath
-     * @return bool
-     */
-    public function isExpectedReplacementsCountExact($sourceFilePath)
+    public function isExpectedReplacementsCountExact(string $sourceFilePath): bool
     {
         foreach ($this->sourceFileReferences as $sourceFileReference) {
             if ($this->extractSourceFilePathFromReference($sourceFileReference) === $sourceFilePath) {
@@ -99,20 +74,12 @@ class TranslationSourceReplacement
         return true;
     }
 
-    /**
-     * @param string $sourceFileReference
-     * @return string
-     */
-    protected function extractSourceFilePathFromReference($sourceFileReference)
+    protected function extractSourceFilePathFromReference(string $sourceFileReference): string
     {
         return explode(':', $sourceFileReference)[0];
     }
 
-    /**
-     * @param string $sourceFileReference
-     * @return int|null
-     */
-    protected function extractSourceFileLineFromReference($sourceFileReference)
+    protected function extractSourceFileLineFromReference(string $sourceFileReference): ?int
     {
         $parts = explode(':', $sourceFileReference);
 

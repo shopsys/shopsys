@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeNotFoundException;
 
@@ -14,19 +15,12 @@ class PromoCodeRepository
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getPromoCodeRepository()
+    protected function getPromoCodeRepository(): EntityRepository
     {
         return $this->em->getRepository(PromoCode::class);
     }
 
-    /**
-     * @param int $promoCodeId
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
-     */
-    public function findById($promoCodeId)
+    public function findById(int $promoCodeId): ?PromoCode
     {
         return $this->getPromoCodeRepository()->find($promoCodeId);
     }
@@ -39,11 +33,7 @@ class PromoCodeRepository
         ]);
     }
 
-    /**
-     * @param int $promoCodeId
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     */
-    public function getById($promoCodeId)
+    public function getById(int $promoCodeId): PromoCode
     {
         $promoCode = $this->findById($promoCodeId);
 
@@ -59,7 +49,7 @@ class PromoCodeRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         $queryBuilder = $this->getAllQueryBuilder();
         $queryBuilder

@@ -25,12 +25,8 @@ class MessageIdNormalizerTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $messageId
-     * @param mixed $expectedMesssageId
-     */
     #[DataProvider('normalizeMessageIdProvider')]
-    public function testNormalizeMessageId($messageId, $expectedMesssageId): void
+    public function testNormalizeMessageId(mixed $messageId, mixed $expectedMesssageId): void
     {
         $messageIdNormalizer = new MessageIdNormalizer();
         $normalizedMessageId = $messageIdNormalizer->normalizeMessageId($messageId);

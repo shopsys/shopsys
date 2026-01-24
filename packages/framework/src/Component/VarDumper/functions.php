@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 use Symfony\Component\VarDumper\VarDumper;
 
-/**
- * @param mixed $var
- */
-function d($var): void
+function d(mixed $var): void
 {
     foreach (func_get_args() as $var) {
         VarDumper::dump($var);

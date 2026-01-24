@@ -41,10 +41,9 @@ class VolumeDriver extends Driver
 
     /**
      * @param string $hash
-     * @return false|string
      */
     #[Override]
-    public function tmb($hash)
+    public function tmb($hash): false|string
     {
         $thumbnailPath = $this->decode($hash);
         $stat = $this->stat($thumbnailPath);
@@ -81,10 +80,9 @@ class VolumeDriver extends Driver
     /**
      * @param string $thumbnailPath
      * @param mixed[] $stat
-     * @return false|string
      */
     #[Override]
-    protected function gettmb($thumbnailPath, $stat)
+    protected function gettmb($thumbnailPath, $stat): false|string
     {
         if ($this->tmbURL && $this->tmbPath) {
             // file itself thumnbnail
@@ -103,11 +101,7 @@ class VolumeDriver extends Driver
         return false;
     }
 
-    /**
-     * @param string $name
-     * @return string
-     */
-    public function createThumbnailPath($name)
+    public function createThumbnailPath(string $name): string
     {
         return $this->tmbPath . DIRECTORY_SEPARATOR . $name;
     }
@@ -115,10 +109,9 @@ class VolumeDriver extends Driver
     /**
      * @param string $thumbnailPath
      * @param mixed[] $stat
-     * @return false|string
      */
     #[Override]
-    protected function createTmb($thumbnailPath, $stat)
+    protected function createTmb($thumbnailPath, $stat): false|string
     {
         @mkdir($this->tmbPath, 0777, true);
 
@@ -181,7 +174,7 @@ class VolumeDriver extends Driver
      * @return false|mixed[]
      */
     #[Override]
-    protected function _stat($path, $hash = '')
+    protected function _stat($path, $hash = ''): false|array
     {
         $stat = parent::_stat($path);
 

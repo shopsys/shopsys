@@ -56,7 +56,7 @@ class ProductCollectionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]|null[]
      */
-    protected function getMainImagesIndexedByProductId(array $products)
+    protected function getMainImagesIndexedByProductId(array $products): array
     {
         $productEntityName = $this->imageConfig->getImageEntityConfigByClass(Product::class)->getEntityName();
         $imagesByProductId = $this->imageRepository->getMainImagesByEntitiesIndexedByEntityId(
@@ -81,7 +81,7 @@ class ProductCollectionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|int[] $productsOrProductIds
      * @return string[]
      */
-    public function getAbsoluteUrlsIndexedByProductId(array $productsOrProductIds, DomainConfig $domainConfig)
+    public function getAbsoluteUrlsIndexedByProductId(array $productsOrProductIds, DomainConfig $domainConfig): array
     {
         $mainFriendlyUrlsByProductId = $this->friendlyUrlRepository->getMainFriendlyUrlsByEntitiesIndexedByEntityId(
             $productsOrProductIds,
@@ -105,7 +105,7 @@ class ProductCollectionFacade
     public function getProductParameterValuesIndexedByProductIdAndParameterName(
         array $products,
         DomainConfig $domainConfig,
-    ) {
+    ): array {
         $locale = $domainConfig->getLocale();
 
         return $this->parameterRepository->getParameterValuesIndexedByProductIdAndParameterNameForProducts(

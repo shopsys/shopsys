@@ -21,38 +21,22 @@ class HeurekaFacade
         $heurekaShopCertification->logOrder();
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isHeurekaShopCertificationActivated($domainId)
+    public function isHeurekaShopCertificationActivated(int $domainId): bool
     {
         return $this->heurekaSetting->isHeurekaShopCertificationActivated($domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isHeurekaWidgetActivated($domainId)
+    public function isHeurekaWidgetActivated(int $domainId): bool
     {
         return $this->heurekaSetting->isHeurekaWidgetActivated($domainId);
     }
 
-    /**
-     * @param string $locale
-     * @return bool
-     */
-    public function isDomainLocaleSupported($locale)
+    public function isDomainLocaleSupported(string $locale): bool
     {
         return $this->heurekaShopCertificationLocaleHelper->isDomainLocaleSupported($locale);
     }
 
-    /**
-     * @param string $locale
-     * @return string|null
-     */
-    public function getServerNameByLocale($locale)
+    public function getServerNameByLocale(string $locale): ?string
     {
         return $this->heurekaShopCertificationLocaleHelper->getServerNameByLocale($locale);
     }

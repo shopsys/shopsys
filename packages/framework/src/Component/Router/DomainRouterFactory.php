@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\Router\Exception\RouterNotResolvedException;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
@@ -71,11 +72,9 @@ class DomainRouterFactory extends AbstractRouterFactory
         );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
-     */
-    public function getFriendlyUrlRouter(DomainConfig $domainConfig)
-    {
+    public function getFriendlyUrlRouter(
+        DomainConfig $domainConfig,
+    ): FriendlyUrlRouter {
         $context = $this->getRequestContextByDomainConfig($domainConfig);
 
         return $this->friendlyUrlRouterFactory->createRouter($domainConfig, $context);

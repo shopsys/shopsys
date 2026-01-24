@@ -25,7 +25,7 @@ class LocalizationExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('localeFlag', $this->getLocaleFlagHtml(...), ['is_safe' => ['html']]),
@@ -82,10 +82,7 @@ class LocalizationExtension extends AbstractExtension
         return $this->localization->getLanguageName($locale, $displayLocale);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'localization';
     }

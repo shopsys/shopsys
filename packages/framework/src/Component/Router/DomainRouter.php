@@ -45,15 +45,11 @@ class DomainRouter extends ChainRouter
         $this->add($friendlyUrlRouter, 10);
     }
 
-    /**
-     * @param int $referenceType
-     * @return string
-     */
     public function generateByFriendlyUrl(
         FriendlyUrl $friendlyUrl,
         array $parameters = [],
-        $referenceType = self::ABSOLUTE_PATH,
-    ) {
+        int $referenceType = self::ABSOLUTE_PATH,
+    ): string {
         return $this->friendlyUrlRouter->generateByFriendlyUrl($friendlyUrl, $parameters, $referenceType);
     }
 

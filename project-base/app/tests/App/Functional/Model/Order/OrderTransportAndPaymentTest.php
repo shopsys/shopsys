@@ -296,10 +296,8 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     /**
      * @param bool[] $enabledForDomains
-     * @param bool $hidden
-     * @return \App\Model\Payment\Payment
      */
-    public function getDefaultPayment($enabledForDomains, $hidden)
+    public function getDefaultPayment(array $enabledForDomains, bool $hidden): Payment
     {
         $paymentDataFactory = $this->paymentDataFactory;
 
@@ -318,10 +316,8 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     /**
      * @param bool[] $enabledForDomains
-     * @param bool $hidden
-     * @return \App\Model\Transport\Transport
      */
-    public function getDefaultTransport($enabledForDomains, $hidden)
+    public function getDefaultTransport(array $enabledForDomains, bool $hidden): Transport
     {
         $transportDataFactory = $this->transportDataFactory;
 

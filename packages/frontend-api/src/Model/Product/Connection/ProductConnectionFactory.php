@@ -159,7 +159,7 @@ class ProductConnectionFactory
         /** @var \GraphQL\Executor\Promise\Promise $promise */
         $promise = $paginator->auto($argument, 0); // actual total count is set after the promise is fulfilled
 
-        $promise->then(function (ProductConnection $productConnection) use ($batchLoadDataId) {
+        $promise->then(function (ProductConnection $productConnection) use ($batchLoadDataId): void {
             $productConnection->setTotalCount(ProductsBatchLoader::getTotalByBatchLoadDataId($batchLoadDataId));
         });
 

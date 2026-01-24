@@ -8,10 +8,7 @@ use Exception;
 
 class EntityNotFoundException extends Exception
 {
-    /**
-     * @param string $referenceName
-     */
-    public function __construct($referenceName, ?Exception $previous = null)
+    public function __construct(string $referenceName, ?Exception $previous = null)
     {
         parent::__construct('Entity from reference  "' . $referenceName . '" not found.', 0, $previous);
     }

@@ -23,11 +23,7 @@ class PricingGroupSettingFacade
             || $this->isPricingGroupDefaultOnDomain($pricingGroup, $domainConfig);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    public function getDefaultPricingGroupByDomainId($domainId)
+    public function getDefaultPricingGroupByDomainId(int $domainId): PricingGroup
     {
         $defaultPricingGroupId = $this->setting->getForDomain(Setting::DEFAULT_PRICING_GROUP, $domainId);
 

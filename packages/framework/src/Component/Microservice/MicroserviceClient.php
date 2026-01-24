@@ -13,10 +13,7 @@ class MicroserviceClient
     {
     }
 
-    /**
-     * @return mixed
-     */
-    public function get(string $resource, array $parameters = [])
+    public function get(string $resource, array $parameters = []): mixed
     {
         $options = array_merge(
             $this->createDefaultOptions(),
@@ -28,10 +25,7 @@ class MicroserviceClient
         return json_decode($response->getBody()->getContents());
     }
 
-    /**
-     * @return mixed
-     */
-    public function post(string $resource, array $parameters = [])
+    public function post(string $resource, array $parameters = []): mixed
     {
         $options = $this->createJsonOptions($parameters);
         $response = $this->guzzleClient->post($resource, $options);
@@ -39,10 +33,7 @@ class MicroserviceClient
         return json_decode($response->getBody()->getContents());
     }
 
-    /**
-     * @return mixed
-     */
-    public function delete(string $resource, array $parameters = [])
+    public function delete(string $resource, array $parameters = []): mixed
     {
         $options = $this->createJsonOptions($parameters);
         $response = $this->guzzleClient->delete($resource, $options);
@@ -50,10 +41,7 @@ class MicroserviceClient
         return json_decode($response->getBody()->getContents());
     }
 
-    /**
-     * @return mixed
-     */
-    public function patch(string $resource, array $parameters = [])
+    public function patch(string $resource, array $parameters = []): mixed
     {
         $options = $this->createJsonOptions($parameters);
         $response = $this->guzzleClient->patch($resource, $options);

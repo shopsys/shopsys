@@ -9,24 +9,14 @@ use Throwable;
 
 class EntityParseException extends Exception
 {
-    protected string $entityClass;
-
-    /**
-     * @param string $entityClass
-     */
-    public function __construct($entityClass, ?Throwable $previous = null)
+    public function __construct(protected string $entityClass, ?Throwable $previous = null)
     {
-        $this->entityClass = $entityClass;
-
         $message = sprintf('Parsing of config entity class "%s" failed.', $this->entityClass);
 
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * @return string
-     */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }

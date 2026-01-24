@@ -24,7 +24,7 @@ class DomainExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getDomain', $this->getDomain(...)),
@@ -36,35 +36,22 @@ class DomainExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    public function getDomain()
+    public function getDomain(): Domain
     {
         return $this->domain;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'domain';
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getDomainNameById($domainId)
+    public function getDomainNameById(int $domainId): string
     {
         return $this->getDomain()->getDomainConfigById($domainId)->getName();
     }
 
-    /**
-     * @return bool
-     */
-    public function isMultidomain()
+    public function isMultidomain(): bool
     {
         return $this->getDomain()->isMultidomain();
     }

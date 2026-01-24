@@ -20,11 +20,8 @@ class ProductFilesQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
-     */
     public function filesByProductPromiseQuery(
-        $data,
+        Product|array $data,
         string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
     ): Promise {
         $productId = $data instanceof Product ? $data->getId() : $data['id'];

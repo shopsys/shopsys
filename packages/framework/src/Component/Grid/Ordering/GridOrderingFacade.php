@@ -13,10 +13,7 @@ class GridOrderingFacade
     {
     }
 
-    /**
-     * @param string $entityClass
-     */
-    public function saveOrdering($entityClass, array $rowIds): void
+    public function saveOrdering(string $entityClass, array $rowIds): void
     {
         $entityRepository = $this->getEntityRepository($entityClass);
         $position = 0;
@@ -29,11 +26,7 @@ class GridOrderingFacade
         $this->em->flush();
     }
 
-    /**
-     * @param string $entityClass
-     * @return mixed
-     */
-    protected function getEntityRepository($entityClass)
+    protected function getEntityRepository(string $entityClass): mixed
     {
         $interfaces = class_implements($entityClass);
 

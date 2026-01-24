@@ -20,10 +20,7 @@ class OrderRepository
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function createOrderQueryBuilder()
+    protected function createOrderQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('o')
@@ -31,11 +28,10 @@ class OrderRepository
             ->where('o.deleted = FALSE');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
-     */
-    protected function findByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser)
-    {
+    protected function findByUuidAndCustomerUser(
+        string $uuid,
+        CustomerUser $customerUser,
+    ): ?Order {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)
             ->andWhere('o.customerUser = :customerUser')->setParameter(':customerUser', $customerUser)
@@ -43,10 +39,7 @@ class OrderRepository
             ->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
-     */
-    protected function findByUuidAndUrlHash(string $uuid, string $urlHash)
+    protected function findByUuidAndUrlHash(string $uuid, string $urlHash): ?Order
     {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)

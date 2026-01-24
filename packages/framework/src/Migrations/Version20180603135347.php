@@ -21,11 +21,7 @@ class Version20180603135347 extends AbstractMigration
         $this->createMailTemplateIfNotExist('reset_password', 'true');
     }
 
-    /**
-     * @param string $mailTemplateName
-     * @param string $sendMail
-     */
-    private function createMailTemplateIfNotExist($mailTemplateName, $sendMail): void
+    private function createMailTemplateIfNotExist(string $mailTemplateName, string $sendMail): void
     {
         $mailTemplateCount = $this->sql('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName', [
             'mailTemplateName' => $mailTemplateName,

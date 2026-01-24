@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearchOrder;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchFormFactory;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderPriceFilterWithVatFilter;
 use Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminFacade;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdvancedSearchOrderFacade
@@ -23,10 +25,7 @@ class AdvancedSearchOrderFacade
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createAdvancedSearchOrderForm(Request $request)
+    public function createAdvancedSearchOrderForm(Request $request): FormInterface
     {
         $rulesData = $request->query->all(static::RULES_FORM_NAME);
         $rulesFormData = $this->ruleFormViewDataFactory->createFromRequestData(
@@ -37,12 +36,7 @@ class AdvancedSearchOrderFacade
         return $this->orderAdvancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesFormData);
     }
 
-    /**
-     * @param string $filterName
-     * @param string|int $index
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createRuleForm($filterName, $index)
+    public function createRuleForm(string $filterName, string|int $index): FormInterface
     {
         $rulesData = [
             $index => $this->ruleFormViewDataFactory->createDefault($filterName),
@@ -51,22 +45,16 @@ class AdvancedSearchOrderFacade
         return $this->orderAdvancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesData);
     }
 
-    /**
-     * @param array $advancedSearchOrderData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getQueryBuilderByAdvancedSearchOrderData($advancedSearchOrderData)
-    {
+    public function getQueryBuilderByAdvancedSearchOrderData(
+        array $advancedSearchOrderData,
+    ): QueryBuilder {
         $queryBuilder = $this->orderListAdminFacade->getOrderListQueryBuilder();
         $this->advancedSearchQueryBuilderExtender->extendByAdvancedSearchData($queryBuilder, $advancedSearchOrderData);
 
         return $queryBuilder;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAdvancedSearchOrderFormSubmitted(Request $request)
+    public function isAdvancedSearchOrderFormSubmitted(Request $request): bool
     {
         return $request->query->has(static::RULES_FORM_NAME);
     }

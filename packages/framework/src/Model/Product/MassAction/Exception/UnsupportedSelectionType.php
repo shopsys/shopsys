@@ -8,10 +8,7 @@ use Exception;
 
 class UnsupportedSelectionType extends Exception
 {
-    /**
-     * @param string $selectionType
-     */
-    public function __construct($selectionType, ?Exception $previous = null)
+    public function __construct(string $selectionType, ?Exception $previous = null)
     {
         parent::__construct(sprintf('Selection type "%s" is not supported', $selectionType), 0, $previous);
     }

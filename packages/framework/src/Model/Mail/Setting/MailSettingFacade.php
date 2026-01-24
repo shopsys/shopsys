@@ -13,20 +13,12 @@ class MailSettingFacade
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getMainAdminMail($domainId)
+    public function getMainAdminMail(int $domainId): string
     {
         return $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getMainAdminMailName($domainId)
+    public function getMainAdminMailName(int $domainId): string
     {
         return $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $domainId);
     }
@@ -41,20 +33,12 @@ class MailSettingFacade
         return (bool)$this->setting->getForDomain(MailSetting::MAIL_WHITELIST_ENABLED, $domainId);
     }
 
-    /**
-     * @param string $mainAdminMail
-     * @param int $domainId
-     */
-    public function setMainAdminMail($mainAdminMail, $domainId): void
+    public function setMainAdminMail(string $mainAdminMail, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIN_ADMIN_MAIL, $mainAdminMail, $domainId);
     }
 
-    /**
-     * @param string $mainAdminMailName
-     * @param int $domainId
-     */
-    public function setMainAdminMailName($mainAdminMailName, $domainId): void
+    public function setMainAdminMailName(string $mainAdminMailName, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $mainAdminMailName, $domainId);
     }

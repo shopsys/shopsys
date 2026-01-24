@@ -25,11 +25,7 @@ class CurrencyFacade
     ) {
     }
 
-    /**
-     * @param int $currencyId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
-    public function getById($currencyId)
+    public function getById(int $currencyId): Currency
     {
         return $this->currencyRepository->getById($currencyId);
     }
@@ -39,10 +35,7 @@ class CurrencyFacade
         return $this->currencyRepository->getByCode($currencyCode);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
-    public function create(CurrencyData $currencyData)
+    public function create(CurrencyData $currencyData): Currency
     {
         $currency = $this->currencyFactory->create($currencyData);
         $this->em->persist($currency);
@@ -53,12 +46,10 @@ class CurrencyFacade
         return $currency;
     }
 
-    /**
-     * @param int $currencyId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
-    public function edit($currencyId, CurrencyData $currencyData)
-    {
+    public function edit(
+        int $currencyId,
+        CurrencyData $currencyData,
+    ): Currency {
         $currency = $this->currencyRepository->getById($currencyId);
         $currency->edit($currencyData);
 
@@ -74,10 +65,7 @@ class CurrencyFacade
         return $currency;
     }
 
-    /**
-     * @param int $currencyId
-     */
-    public function deleteById($currencyId): void
+    public function deleteById(int $currencyId): void
     {
         $currency = $this->currencyRepository->getById($currencyId);
 
@@ -94,25 +82,19 @@ class CurrencyFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->currencyRepository->getAll();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
-    public function getDefaultCurrency()
+    public function getDefaultCurrency(): Currency
     {
         return $this->getById($this->pricingSetting->getDefaultCurrencyId());
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
-    public function getDomainDefaultCurrencyByDomainId($domainId)
-    {
+    public function getDomainDefaultCurrencyByDomainId(
+        int $domainId,
+    ): Currency {
         return $this->getById($this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId));
     }
 
@@ -124,10 +106,7 @@ class CurrencyFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $domainId
-     */
-    public function setDomainDefaultCurrency(Currency $currency, $domainId): void
+    public function setDomainDefaultCurrency(Currency $currency, int $domainId): void
     {
         $this->pricingSetting->setDomainDefaultCurrency($currency, $domainId);
         $this->dispatchCurrencyEvent($currency, CurrencyEvent::UPDATE);
@@ -152,7 +131,7 @@ class CurrencyFacade
     /**
      * @return int[]
      */
-    public function getNotAllowedToDeleteCurrencyIds()
+    public function getNotAllowedToDeleteCurrencyIds(): array
     {
         $notAllowedToDeleteCurrencyIds = [$this->getDefaultCurrency()->getId()];
 
@@ -169,10 +148,7 @@ class CurrencyFacade
         return array_unique($notAllowedToDeleteCurrencyIds);
     }
 
-    /**
-     * @return bool
-     */
-    public function isDefaultCurrency(Currency $currency)
+    public function isDefaultCurrency(Currency $currency): bool
     {
         return $currency === $this->getDefaultCurrency();
     }
@@ -180,7 +156,7 @@ class CurrencyFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[]
      */
-    public function getCurrenciesUsedInOrders()
+    public function getCurrenciesUsedInOrders(): array
     {
         return $this->orderRepository->getCurrenciesUsedInOrders();
     }
@@ -188,7 +164,7 @@ class CurrencyFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[]
      */
-    public function getAllIndexedById()
+    public function getAllIndexedById(): array
     {
         $currenciesIndexedById = [];
 

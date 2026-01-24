@@ -10,26 +10,17 @@ class ValueByDateTimeDataPoint
 {
     protected int $value;
 
-    /**
-     * @param mixed $count
-     */
-    public function __construct($count, protected readonly DateTimeInterface $dateTime)
+    public function __construct(mixed $count, protected readonly DateTimeInterface $dateTime)
     {
         $this->value = (int)$count;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
-    public function getDateTime()
+    public function getDateTime(): DateTimeInterface
     {
         return $this->dateTime;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }

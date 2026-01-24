@@ -56,10 +56,7 @@ class CategoryVisibilityRepository
         );
     }
 
-    /**
-     * @return int
-     */
-    protected function getMaxLevelOnDomain(DomainConfig $domainConfig)
+    protected function getMaxLevelOnDomain(DomainConfig $domainConfig): int
     {
         return $this->em->getConnection()->fetchOne(
             'SELECT MAX(c.level)
@@ -72,10 +69,7 @@ class CategoryVisibilityRepository
         );
     }
 
-    /**
-     * @param int $level
-     */
-    protected function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, $level): void
+    protected function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, int $level): void
     {
         $this->em->getConnection()->executeStatement(
             'UPDATE category_domains AS cd

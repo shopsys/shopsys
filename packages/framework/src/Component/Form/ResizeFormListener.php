@@ -20,29 +20,14 @@ class ResizeFormListener implements EventSubscriberInterface
 {
     protected string $type;
 
-    protected bool $allowAdd;
-
-    protected bool $allowDelete;
-
-    protected bool $deleteEmpty;
-
-    /**
-     * @param string|null $type
-     * @param bool $allowAdd
-     * @param bool $allowDelete
-     * @param bool $deleteEmpty
-     */
     public function __construct(
-        $type,
+        ?string $type,
         protected readonly array $options = [],
-        $allowAdd = false,
-        $allowDelete = false,
-        $deleteEmpty = false,
+        protected bool $allowAdd = false,
+        protected bool $allowDelete = false,
+        protected bool $deleteEmpty = false,
     ) {
         $this->type = $type;
-        $this->allowAdd = $allowAdd;
-        $this->allowDelete = $allowDelete;
-        $this->deleteEmpty = $deleteEmpty;
     }
 
     /**
@@ -221,13 +206,11 @@ class ResizeFormListener implements EventSubscriberInterface
         $event->setData($newNormData);
     }
 
-    /**
-     * @param mixed $viewData
-     * @param mixed $previousViewData
-     * @return mixed
-     */
-    protected function removeEmptyChildrenFromFormAndData(FormInterface $form, $viewData, $previousViewData)
-    {
+    protected function removeEmptyChildrenFromFormAndData(
+        FormInterface $form,
+        mixed $viewData,
+        mixed $previousViewData,
+    ): mixed {
         foreach ($form as $name => $child) {
             $isNew = !isset($previousViewData[$name]);
 
@@ -244,11 +227,7 @@ class ResizeFormListener implements EventSubscriberInterface
         return $viewData;
     }
 
-    /**
-     * @param mixed $viewData
-     * @return mixed
-     */
-    protected function removeDataItemsNotPresentInForm($viewData, FormInterface $form)
+    protected function removeDataItemsNotPresentInForm(mixed $viewData, FormInterface $form): mixed
     {
         $toDelete = [];
 
@@ -269,11 +248,8 @@ class ResizeFormListener implements EventSubscriberInterface
 
     /**
      * Copy-pasted from Form::normToView()
-     *
-     * @param mixed $value
-     * @return mixed
      */
-    protected function normToView(FormInterface $form, $value)
+    protected function normToView(FormInterface $form, mixed $value): mixed
     {
         // Scalar values should  be converted to strings to
         // facilitate differentiation between empty ("") and zero (0).
@@ -293,11 +269,8 @@ class ResizeFormListener implements EventSubscriberInterface
 
     /**
      * Copy-pasted from Form::viewToNorm()
-     *
-     * @param string $value
-     * @return mixed
      */
-    protected function viewToNorm(FormInterface $form, $value)
+    protected function viewToNorm(FormInterface $form, string $value): mixed
     {
         $transformers = $form->getConfig()->getViewTransformers();
 

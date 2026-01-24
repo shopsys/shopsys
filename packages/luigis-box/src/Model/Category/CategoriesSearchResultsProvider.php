@@ -47,7 +47,7 @@ class CategoriesSearchResultsProvider extends SearchResultsProvider implements C
         /** @var \GraphQL\Executor\Promise\Promise $promise */
         $promise = $paginator->auto($argument, 0);
 
-        $promise->then(function (ConnectionInterface $connection) {
+        $promise->then(function (ConnectionInterface $connection): void {
             $connection->setTotalCount(LuigisBoxBatchLoader::getTotalByType(TypeInLuigisBoxEnum::CATEGORY));
         });
 

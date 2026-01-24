@@ -117,10 +117,7 @@ class CreateDatabaseCommand extends Command
         }
     }
 
-    /**
-     * @return bool
-     */
-    private function isConnectedAsSuperuser()
+    private function isConnectedAsSuperuser(): bool
     {
         $stmt = $this->createDatabaselessConnection()
             ->executeQuery('SELECT rolsuper FROM pg_roles WHERE rolname = current_user');
@@ -128,10 +125,7 @@ class CreateDatabaseCommand extends Command
         return $stmt->fetchOne();
     }
 
-    /**
-     * @return \Doctrine\DBAL\Connection
-     */
-    private function getDefaultConnection()
+    private function getDefaultConnection(): Connection
     {
         $defaultConnectionName = $this->doctrineRegistry->getDefaultConnectionName();
 
@@ -141,10 +135,7 @@ class CreateDatabaseCommand extends Command
         return $connection;
     }
 
-    /**
-     * @return \Doctrine\DBAL\Connection
-     */
-    private function getConnection()
+    private function getConnection(): Connection
     {
         if ($this->connection === null) {
             $this->connection = $this->getDefaultConnection();
@@ -153,10 +144,7 @@ class CreateDatabaseCommand extends Command
         return $this->connection;
     }
 
-    /**
-     * @return \Doctrine\DBAL\Connection
-     */
-    private function createDatabaselessConnection()
+    private function createDatabaselessConnection(): Connection
     {
         $connection = $this->getConnection();
 

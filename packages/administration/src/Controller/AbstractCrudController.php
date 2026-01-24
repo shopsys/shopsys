@@ -44,7 +44,7 @@ abstract class AbstractCrudController extends AbstractController
 
     public function listAction(): Response
     {
-        $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder) {
+        $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder): void {
             $this->configureQuery($queryBuilder);
 
             foreach ($this->definition->getExtensions() as $extension) {

@@ -19,11 +19,9 @@ class AbstractRouterFactory
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\Routing\RequestContext
-     */
-    protected function getRequestContextByDomainConfig(DomainConfig $domainConfig)
-    {
+    protected function getRequestContextByDomainConfig(
+        DomainConfig $domainConfig,
+    ): RequestContext {
         $urlComponents = parse_url($domainConfig->getUrl());
         $requestContext = new RequestContext();
         $request = $this->requestStack->getCurrentRequest();

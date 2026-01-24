@@ -26,11 +26,8 @@ class BoolAndFunction extends FunctionNode
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getSql(SqlWalker $sqlWalker)
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return static::FUNCTION_BOOL_AND . '(' . $this->stringExpression->dispatch($sqlWalker) . ')';
     }

@@ -58,7 +58,7 @@ class ProductConnectionFactory
         /** @var \GraphQL\Executor\Promise\Promise $promise */
         $promise = $paginator->auto($argument, 0);
 
-        $promise->then(function (ProductConnection $productConnection) {
+        $promise->then(function (ProductConnection $productConnection): void {
             $productConnection->setTotalCount(LuigisBoxBatchLoader::getTotalByType(TypeInLuigisBoxEnum::PRODUCT));
         });
 

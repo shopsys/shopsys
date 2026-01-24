@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
@@ -62,10 +63,7 @@ class PaymentGridFactory implements GridFactoryInterface
         return $grid;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    protected function getDisplayPrice(Payment $payment)
+    protected function getDisplayPrice(Payment $payment): Money
     {
         $transportBasePricesIndexedByDomainId = $this->paymentFacade->getIndependentBasePricesIndexedByDomainId(
             $payment,

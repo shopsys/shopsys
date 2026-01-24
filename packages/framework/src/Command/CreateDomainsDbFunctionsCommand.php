@@ -31,7 +31,7 @@ class CreateDomainsDbFunctionsCommand extends Command
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->em->wrapInTransaction(function () use ($output) {
+        $this->em->wrapInTransaction(function () use ($output): void {
             $this->doExecute($output);
         });
 

@@ -40,10 +40,7 @@ class AdministratorFacade
         return $administrator;
     }
 
-    /**
-     * @param int $administratorId
-     */
-    public function edit($administratorId, AdministratorData $administratorData): Administrator
+    public function edit(int $administratorId, AdministratorData $administratorData): Administrator
     {
         $administrator = $this->administratorRepository->getById($administratorId);
         $administrator->edit($administratorData);

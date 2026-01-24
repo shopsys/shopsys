@@ -18,11 +18,7 @@ abstract class LegalConditionsFacade
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
-     */
-    public function findTermsAndConditions($domainId)
+    public function findTermsAndConditions(int $domainId): ?Article
     {
         return $this->findArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainId);
     }
@@ -32,16 +28,9 @@ abstract class LegalConditionsFacade
         $this->setArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainId, $termsAndConditions);
     }
 
-    /**
-     * @return string
-     */
-    abstract public function getTermsAndConditionsDownloadFilename();
+    abstract public function getTermsAndConditionsDownloadFilename(): string;
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
-     */
-    public function findPrivacyPolicy($domainId)
+    public function findPrivacyPolicy(int $domainId): ?Article
     {
         return $this->findArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainId);
     }
@@ -51,10 +40,7 @@ abstract class LegalConditionsFacade
         $this->setArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainId, $privacyPolicy);
     }
 
-    /**
-     * @return bool
-     */
-    public function isArticleUsedAsLegalConditions(Article $article)
+    public function isArticleUsedAsLegalConditions(Article $article): bool
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $legalConditionsArticles = [
@@ -70,12 +56,7 @@ abstract class LegalConditionsFacade
         return false;
     }
 
-    /**
-     * @param string $settingKey
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
-     */
-    protected function findArticle($settingKey, $domainId)
+    protected function findArticle(string $settingKey, int $domainId): ?Article
     {
         $articleId = $this->setting->getForDomain($settingKey, $domainId);
 

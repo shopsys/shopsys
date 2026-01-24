@@ -27,7 +27,7 @@ class ProductVisibilityExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('isVisibleForDefaultPricingGroup', $this->isVisibleForDefaultPricingGroupOnDomain(...)),
@@ -46,19 +46,12 @@ class ProductVisibilityExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'product_visibility';
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isVisibleForDefaultPricingGroupOnDomain(Product $product, $domainId)
+    public function isVisibleForDefaultPricingGroupOnDomain(Product $product, int $domainId): bool
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
         $productVisibility = $this->productVisibilityFacade->getProductVisibility(

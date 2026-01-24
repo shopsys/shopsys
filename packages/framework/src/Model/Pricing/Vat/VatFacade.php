@@ -23,11 +23,7 @@ class VatFacade
     ) {
     }
 
-    /**
-     * @param int $vatId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    public function getById($vatId)
+    public function getById(int $vatId): Vat
     {
         return $this->vatRepository->getById($vatId);
     }
@@ -57,11 +53,7 @@ class VatFacade
         return $vat;
     }
 
-    /**
-     * @param int $vatId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    public function edit($vatId, VatData $vatData)
+    public function edit(int $vatId, VatData $vatData): Vat
     {
         $vat = $this->vatRepository->getById($vatId);
         $vat->edit($vatData);
@@ -72,11 +64,7 @@ class VatFacade
         return $vat;
     }
 
-    /**
-     * @param int $vatId
-     * @param int|null $newVatId
-     */
-    public function deleteById($vatId, $newVatId = null): void
+    public function deleteById(int $vatId, ?int $newVatId = null): void
     {
         $oldVat = $this->vatRepository->getById($vatId);
         $newVat = $newVatId ? $this->vatRepository->getById($newVatId) : null;
@@ -107,10 +95,7 @@ class VatFacade
         $this->em->flush();
     }
 
-    /**
-     * @return int
-     */
-    public function deleteAllReplacedVats()
+    public function deleteAllReplacedVats(): int
     {
         $vatsForDelete = $this->vatRepository->getVatsWithoutProductsMarkedForDeletion();
 
@@ -134,10 +119,7 @@ class VatFacade
         $this->setting->setForDomain(Vat::SETTING_DEFAULT_VAT, $vat->getId(), $domainId);
     }
 
-    /**
-     * @return bool
-     */
-    public function isVatUsed(Vat $vat)
+    public function isVatUsed(Vat $vat): bool
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $defaultVatForDomain = $this->getDefaultVatForDomain($domainId);

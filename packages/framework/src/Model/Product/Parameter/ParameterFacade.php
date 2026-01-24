@@ -31,11 +31,7 @@ class ParameterFacade
     ) {
     }
 
-    /**
-     * @param int $parameterId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
-    public function getById($parameterId)
+    public function getById(int $parameterId): Parameter
     {
         return $this->parameterRepository->getById($parameterId);
     }
@@ -53,7 +49,7 @@ class ParameterFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->parameterRepository->getAll();
     }
@@ -66,10 +62,7 @@ class ParameterFacade
         return $this->parameterRepository->getAllWithTranslations($locale);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
-    public function create(ParameterData $parameterData)
+    public function create(ParameterData $parameterData): Parameter
     {
         $parameter = $this->parameterFactory->create($parameterData);
         $this->em->persist($parameter);
@@ -82,10 +75,10 @@ class ParameterFacade
 
     /**
      * @param string[] $namesByLocale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null
      */
-    public function findParameterByNames(array $namesByLocale)
-    {
+    public function findParameterByNames(
+        array $namesByLocale,
+    ): ?Parameter {
         return $this->parameterRepository->findParameterByNames($namesByLocale);
     }
 
@@ -94,12 +87,10 @@ class ParameterFacade
         return $this->parameterRepository->existsParameterByName($name, $locale, $excludeParameter);
     }
 
-    /**
-     * @param int $parameterId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
-    public function edit($parameterId, ParameterData $parameterData)
-    {
+    public function edit(
+        int $parameterId,
+        ParameterData $parameterData,
+    ): Parameter {
         $parameter = $this->parameterRepository->getById($parameterId);
         $parameter->edit($parameterData);
         $this->em->flush();
@@ -109,10 +100,7 @@ class ParameterFacade
         return $parameter;
     }
 
-    /**
-     * @param int $parameterId
-     */
-    public function deleteById($parameterId): void
+    public function deleteById(int $parameterId): void
     {
         $parameter = $this->parameterRepository->getById($parameterId);
 

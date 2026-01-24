@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Category\TopCategory;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
@@ -19,28 +20,23 @@ class TopCategoryRepository
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getTopCategoryRepository()
+    protected function getTopCategoryRepository(): EntityRepository
     {
         return $this->em->getRepository(TopCategory::class);
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategory[]
      */
-    public function getAllByDomainId($domainId)
+    public function getAllByDomainId(int $domainId): array
     {
         return $this->getTopCategoryRepository()->findBy(['domainId' => $domainId], ['position' => 'ASC']);
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategory[]
      */
-    public function getVisibleByDomainId($domainId)
+    public function getVisibleByDomainId(int $domainId): array
     {
         return $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainId)
             ->select('tc')

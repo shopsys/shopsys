@@ -27,7 +27,7 @@ class CartWatcher
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
-    public function getModifiedPriceItemsAndUpdatePrices(Cart $cart)
+    public function getModifiedPriceItemsAndUpdatePrices(Cart $cart): array
     {
         $modifiedItems = [];
 
@@ -58,7 +58,7 @@ class CartWatcher
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
-    public function getNotListableItems(Cart $cart, CurrentCustomerUser $currentCustomerUser)
+    public function getNotListableItems(Cart $cart, CurrentCustomerUser $currentCustomerUser): array
     {
         $notListableItems = [];
 

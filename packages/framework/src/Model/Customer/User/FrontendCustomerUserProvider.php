@@ -23,11 +23,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
     ) {
     }
 
-    /**
-     * @param string $email
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
-    public function loadUserByUsername($email)
+    public function loadUserByUsername(string $email): CustomerUser
     {
         $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
             mb_strtolower($email),

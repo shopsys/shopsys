@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 
 use Doctrine\DBAL\Cache\QueryCacheProfile;
+use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration as DoctrineAbstractMigration;
 use Doctrine\Migrations\Query\Query;
@@ -30,12 +31,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         throw new MethodIsNotAllowedException($message);
     }
 
-    /**
-     * @param string $query
-     * @param array $types
-     * @return \Doctrine\DBAL\Result
-     */
-    public function sql($query, array $params = [], $types = [], ?QueryCacheProfile $qcp = null)
+    public function sql(string $query, array $params = [], array $types = [], ?QueryCacheProfile $qcp = null): Result
     {
         $this->sqlQueries[] = new Query($query, $params, $types);
 

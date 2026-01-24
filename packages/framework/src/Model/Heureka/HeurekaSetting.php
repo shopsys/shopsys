@@ -15,56 +15,32 @@ class HeurekaSetting
     {
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getApiKeyByDomainId($domainId)
+    public function getApiKeyByDomainId(int $domainId): string
     {
         return $this->setting->getForDomain(static::HEUREKA_API_KEY, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getHeurekaShopCertificationWidgetByDomainId($domainId)
+    public function getHeurekaShopCertificationWidgetByDomainId(int $domainId): string
     {
         return $this->setting->getForDomain(static::HEUREKA_WIDGET_CODE, $domainId);
     }
 
-    /**
-     * @param string $apiKey
-     * @param int $domainId
-     */
-    public function setApiKeyForDomain($apiKey, $domainId): void
+    public function setApiKeyForDomain(string $apiKey, int $domainId): void
     {
         $this->setting->setForDomain(static::HEUREKA_API_KEY, $apiKey, $domainId);
     }
 
-    /**
-     * @param string $heurekaWidgetCode
-     * @param int $domainId
-     */
-    public function setHeurekaShopCertificationWidgetForDomain($heurekaWidgetCode, $domainId): void
+    public function setHeurekaShopCertificationWidgetForDomain(string $heurekaWidgetCode, int $domainId): void
     {
         $this->setting->setForDomain(static::HEUREKA_WIDGET_CODE, $heurekaWidgetCode, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isHeurekaShopCertificationActivated($domainId)
+    public function isHeurekaShopCertificationActivated(int $domainId): bool
     {
         return $this->setting->getForDomain(static::HEUREKA_API_KEY, $domainId) !== null;
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isHeurekaWidgetActivated($domainId)
+    public function isHeurekaWidgetActivated(int $domainId): bool
     {
         return $this->setting->getForDomain(static::HEUREKA_WIDGET_CODE, $domainId) !== null;
     }

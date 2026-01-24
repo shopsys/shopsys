@@ -22,7 +22,7 @@ class SeoExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getSeoTitleAddOn', $this->getSeoTitleAddOn(...)),
@@ -30,28 +30,19 @@ class SeoExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'seo';
     }
 
-    /**
-     * @return string
-     */
-    public function getSeoTitleAddOn()
+    public function getSeoTitleAddOn(): string
     {
         $currentDomainId = $this->domain->getId();
 
         return $this->seoSettingFacade->getTitleAddOn($currentDomainId);
     }
 
-    /**
-     * @return string
-     */
-    public function getSeoMetaDescription()
+    public function getSeoMetaDescription(): string
     {
         $currentDomainId = $this->domain->getId();
 

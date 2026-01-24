@@ -105,10 +105,8 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
 
     /**
      * @param bool[] $enabledForDomains
-     * @param bool $hidden
-     * @return \App\Model\Payment\Payment
      */
-    public function getDefaultPayment($enabledForDomains, $hidden)
+    public function getDefaultPayment(array $enabledForDomains, bool $hidden): Payment
     {
         $paymentData = $this->paymentDataFactory->create();
         $names = [];

@@ -17,34 +17,22 @@ class FeedPathProvider
     ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $domainConfig->getBaseUrl() . $this->feedUrlPrefix . $this->getFeedFilename($feedInfo, $domainConfig);
     }
 
-    /**
-     * @return string
-     */
-    public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $this->feedDir . $this->getFeedFilename($feedInfo, $domainConfig);
     }
 
-    /**
-     * @return string
-     */
-    public function getFeedLocalFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    public function getFeedLocalFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $this->projectDir . $this->feedDir . $this->getFeedFilename($feedInfo, $domainConfig);
     }
 
-    /**
-     * @return string
-     */
-    protected function getFeedFilename(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    protected function getFeedFilename(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         $feedHash = $this->setting->get(Setting::FEED_HASH);
 

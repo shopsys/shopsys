@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Form;
 
+use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -15,11 +16,7 @@ class FormTimeProvider
     ) {
     }
 
-    /**
-     * @param string $name
-     * @return \DateTimeImmutable
-     */
-    public function generateFormTime($name)
+    public function generateFormTime(string $name): DateTimeImmutable
     {
         $startTime = $this->clock->now();
         $key = $this->getSessionKey($name);
@@ -28,11 +25,7 @@ class FormTimeProvider
         return $startTime;
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function isFormTimeValid($name, array $options)
+    public function isFormTimeValid(string $name, array $options): bool
     {
         $startTime = $this->findFormTime($name);
 
@@ -49,22 +42,14 @@ class FormTimeProvider
         return true;
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function hasFormTime($name)
+    public function hasFormTime(string $name): bool
     {
         $key = $this->getSessionKey($name);
 
         return $this->requestStack->getSession()->has($key);
     }
 
-    /**
-     * @param string $name
-     * @return \DateTimeImmutable|null
-     */
-    public function findFormTime($name)
+    public function findFormTime(string $name): ?DateTimeImmutable
     {
         $key = $this->getSessionKey($name);
 
@@ -75,20 +60,13 @@ class FormTimeProvider
         return null;
     }
 
-    /**
-     * @param string $name
-     */
-    public function removeFormTime($name): void
+    public function removeFormTime(string $name): void
     {
         $key = $this->getSessionKey($name);
         $this->requestStack->getSession()->remove($key);
     }
 
-    /**
-     * @param string $name
-     * @return string
-     */
-    protected function getSessionKey($name)
+    protected function getSessionKey(string $name): string
     {
         return 'timedSpam-' . $name;
     }

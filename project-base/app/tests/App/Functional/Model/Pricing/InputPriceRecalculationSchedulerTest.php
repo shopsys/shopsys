@@ -103,14 +103,11 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         ];
     }
 
-    /**
-     * @param mixed $vatPercent
-     */
     #[DataProvider('inputPricesTestDataProvider')]
     public function testOnKernelResponseRecalculateInputPricesWithoutVat(
         Money $inputPriceWithoutVat,
         Money $inputPriceWithVat,
-        $vatPercent,
+        mixed $vatPercent,
     ): void {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::PRICE_TYPE_WITH_VAT);
 
@@ -122,14 +119,11 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         );
     }
 
-    /**
-     * @param mixed $vatPercent
-     */
     #[DataProvider('inputPricesTestDataProvider')]
     public function testOnKernelResponseRecalculateInputPricesWithVat(
         Money $inputPriceWithoutVat,
         Money $inputPriceWithVat,
-        $vatPercent,
+        mixed $vatPercent,
     ): void {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::PRICE_TYPE_WITHOUT_VAT);
 
@@ -141,13 +135,10 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         );
     }
 
-    /**
-     * @param mixed $vatPercent
-     */
     private function doTestOnKernelResponseRecalculateInputPrices(
         Money $inputPrice,
         Money $expectedPrice,
-        $vatPercent,
+        mixed $vatPercent,
         string $scheduleSetInputPricesMethod,
     ): void {
         $paymentData = $this->paymentDataFactory->create();

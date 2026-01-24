@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -16,10 +17,7 @@ class CustomerUserRoleGroupRepository
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getCustomerUserRoleGroupRepository()
+    protected function getCustomerUserRoleGroupRepository(): EntityRepository
     {
         return $this->em->getRepository(CustomerUserRoleGroup::class);
     }

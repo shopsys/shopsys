@@ -37,11 +37,7 @@ class SymfonyHelper extends Module
         $this->kernel->boot();
     }
 
-    /**
-     * @param string $serviceId
-     * @return object
-     */
-    public function grabServiceFromContainer($serviceId)
+    public function grabServiceFromContainer(string $serviceId): object
     {
         return $this->kernel->getContainer()->get('test.service_container')->get($serviceId);
     }

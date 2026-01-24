@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Slider;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
@@ -17,19 +18,12 @@ class SliderItemRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getSliderItemRepository()
+    protected function getSliderItemRepository(): EntityRepository
     {
         return $this->em->getRepository(SliderItem::class);
     }
 
-    /**
-     * @param int $sliderItemId
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
-     */
-    public function getById($sliderItemId)
+    public function getById(int $sliderItemId): SliderItem
     {
         /** @var \Shopsys\FrameworkBundle\Model\Slider\SliderItem|null $sliderItem */
         $sliderItem = $this->getSliderItemRepository()->find($sliderItemId);
@@ -43,11 +37,7 @@ class SliderItemRepository
         return $sliderItem;
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem|null
-     */
-    public function findById($id)
+    public function findById(int $id): ?SliderItem
     {
         /** @var \Shopsys\FrameworkBundle\Model\Slider\SliderItem $sliderItem */
         $sliderItem = $this->getSliderItemRepository()->find($id);
@@ -58,7 +48,7 @@ class SliderItemRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getSliderItemRepository()->findAll();
     }

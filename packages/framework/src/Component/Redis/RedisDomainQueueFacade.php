@@ -18,10 +18,7 @@ abstract class RedisDomainQueueFacade
         return $this->redisQueue->sCard($this->createDomainRedisKey($domainId));
     }
 
-    /**
-     * @param mixed $value
-     */
-    protected function add($value, int $domainId): void
+    protected function add(mixed $value, int $domainId): void
     {
         $this->redisQueue->sAdd($this->createDomainRedisKey($domainId), $value);
     }

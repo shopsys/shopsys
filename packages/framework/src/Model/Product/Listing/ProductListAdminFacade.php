@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Listing;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -16,10 +17,7 @@ class ProductListAdminFacade
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getProductListQueryBuilder()
+    public function getProductListQueryBuilder(): QueryBuilder
     {
         /**
          * temporary solution -
@@ -32,10 +30,7 @@ class ProductListAdminFacade
         return $this->productListAdminRepository->getProductListQueryBuilder($defaultPricingGroupId);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData)
+    public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): QueryBuilder
     {
         $queryBuilder = $this->getProductListQueryBuilder();
         $this->productListAdminRepository->extendQueryBuilderByQuickSearchData($queryBuilder, $quickSearchData);

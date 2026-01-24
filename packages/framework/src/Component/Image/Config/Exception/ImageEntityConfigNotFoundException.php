@@ -8,22 +8,12 @@ use Exception;
 
 class ImageEntityConfigNotFoundException extends Exception
 {
-    protected string $entityClassOrName;
-
-    /**
-     * @param string $entityClassOrName
-     */
-    public function __construct($entityClassOrName, ?Exception $previous = null)
+    public function __construct(protected string $entityClassOrName, ?Exception $previous = null)
     {
-        $this->entityClassOrName = $entityClassOrName;
-
         parent::__construct('Not found image config for entity "' . $entityClassOrName . '".', 0, $previous);
     }
 
-    /**
-     * @return string
-     */
-    public function getEntityClassOrName()
+    public function getEntityClassOrName(): string
     {
         return $this->entityClassOrName;
     }
