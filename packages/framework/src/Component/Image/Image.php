@@ -149,8 +149,8 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
                 $this->temporaryFilename,
                 self::class,
                 $this->entityName,
-                $this->type . '/',
                 FileNamingConvention::TYPE_ID,
+                $this->type . '/',
             );
         }
 

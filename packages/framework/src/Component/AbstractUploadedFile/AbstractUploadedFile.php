@@ -169,7 +169,6 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
                 $this->temporaryFilename,
                 static::class,
                 $this->getFileForUploadCategory(),
-                null,
                 FileNamingConvention::TYPE_ID,
             );
         }

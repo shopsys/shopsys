@@ -47,23 +47,19 @@ class CronModuleExecutor
             return self::RUN_STATUS_OK;
         }
 
-        if ($cronModuleService instanceof IteratedCronModuleInterface) {
-            if ($suspended) {
-                $cronModuleService->wakeUp();
-            }
-            $inProgress = true;
+        if ($suspended) {
+            $cronModuleService->wakeUp();
+        }
+        $inProgress = true;
 
-            while ($inProgress === true && $this->canRun($cronConfig)) {
-                $inProgress = $cronModuleService->iterate();
-            }
+        while ($inProgress === true && $this->canRun($cronConfig)) {
+            $inProgress = $cronModuleService->iterate();
+        }
 
-            if ($inProgress === true) {
-                $cronModuleService->sleep();
+        if ($inProgress === true) {
+            $cronModuleService->sleep();
 
-                return self::RUN_STATUS_SUSPENDED;
-            }
-
-            return self::RUN_STATUS_OK;
+            return self::RUN_STATUS_SUSPENDED;
         }
 
         return self::RUN_STATUS_OK;

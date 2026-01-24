@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityIdIsNotSetException;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityNotFoundException;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\MethodGetIdDoesNotExistException;
-use Shopsys\FrameworkBundle\Component\DataFixture\Exception\ObjectRequiredException;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException;
 
 class PersistentReferenceFacade
@@ -39,10 +38,6 @@ class PersistentReferenceFacade
 
     public function persistReference(string $name, object $object): void
     {
-        if (!is_object($object)) {
-            throw new ObjectRequiredException($object);
-        }
-
         $entityName = get_class($object);
 
         if (!method_exists($object, 'getId')) {

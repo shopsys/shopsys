@@ -92,9 +92,7 @@ class AdministratorUserProvider implements UserProviderInterface
             throw new UserNotFoundException('Unable to find an active admin');
         }
 
-        if ($freshAdministrator instanceof Administrator) {
-            $this->administratorActivityFacade->updateCurrentActivityLastActionTime($freshAdministrator);
-        }
+        $this->administratorActivityFacade->updateCurrentActivityLastActionTime($freshAdministrator);
 
         if ($freshAdministrator->getRolesChangedAt() > $administrator->getRolesChangedAt()) {
             //In this step token does not exist, so we are not able to update user roles.

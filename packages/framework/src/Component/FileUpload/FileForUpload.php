@@ -10,8 +10,8 @@ class FileForUpload
         protected string $temporaryFilename,
         protected string $fileClass,
         protected string $category,
-        protected ?string $targetDirectory = null,
         protected int $nameConventionType,
+        protected ?string $targetDirectory = null,
     ) {
     }
 
