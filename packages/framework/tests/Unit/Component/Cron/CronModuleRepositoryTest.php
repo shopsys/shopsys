@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Cron\CronModule;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFactory;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleRepository;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
@@ -22,8 +21,9 @@ class CronModuleRepositoryTest extends TestCase
         $em = $this->createEntityManagerMockWithRepository($doctrineRepositoryMock);
 
         $repository = new CronModuleRepository($em, new CronModuleFactory(new EntityNameResolver([])), Clock::get());
-        $cronModule = $repository->getCronModuleByServiceId('serviceId');
-        $this->assertInstanceOf(CronModule::class, $cronModule);
+        $expectedServiceId = 'serviceId';
+        $cronModule = $repository->getCronModuleByServiceId($expectedServiceId);
+        $this->assertSame($expectedServiceId, $cronModule->getServiceId());
     }
 
     private function createEntityManagerMockWithRepository(

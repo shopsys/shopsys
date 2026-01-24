@@ -24,15 +24,15 @@ use Symfony\Component\Filesystem\Filesystem;
 class CreateApplicationDirectoriesCommand extends Command
 {
     public function __construct(
-        private array $defaultInternalDirectories,
-        private array $defaultPublicDirectories,
-        private ?array $internalDirectories = null,
-        private ?array $publicDirectories = null,
         private readonly FilesystemOperator $filesystem,
         private readonly Filesystem $localFilesystem,
         private readonly ImageDirectoryStructureCreator $imageDirectoryStructureCreator,
         private readonly UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator,
         private readonly CustomerUploadedFileDirectoryStructureCreator $customerUploadedFileDirectoryStructureCreator,
+        private readonly array $defaultInternalDirectories,
+        private readonly array $defaultPublicDirectories,
+        private readonly ?array $internalDirectories = null,
+        private readonly ?array $publicDirectories = null,
     ) {
         parent::__construct();
     }

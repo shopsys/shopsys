@@ -17,7 +17,7 @@ class CollateExpressionNode extends FunctionNode
 
     protected readonly string $collation;
 
-    public function __construct(?PathExpression $expression = null, ?string $collation = null)
+    public function __construct(mixed $expression = null, ?string $collation = null)
     {
         parent::__construct('COLLATE');
 
