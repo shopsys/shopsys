@@ -12,9 +12,6 @@ class MissingComplaintItemsUserError extends UserError implements UserErrorWithC
 {
     protected const CODE = 'missing-complaint-items';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

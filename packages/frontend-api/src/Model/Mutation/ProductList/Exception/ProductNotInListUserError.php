@@ -19,9 +19,6 @@ class ProductNotInListUserError extends UserError implements UserErrorWithCodeIn
         parent::__construct($message);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

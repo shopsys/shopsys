@@ -17,45 +17,30 @@ final class Price implements PriceInterface
         $this->vatAmount = $priceWithVat->subtract($priceWithoutVat);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function zero(): static
     {
         return new self(Money::zero(), Money::zero());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPriceWithoutVat(): Money
     {
         return $this->priceWithoutVat;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPriceWithVat(): Money
     {
         return $this->priceWithVat;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getVatAmount(): Money
     {
         return $this->vatAmount;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function add(PriceInterface $priceToAdd): static
     {
@@ -65,9 +50,6 @@ final class Price implements PriceInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function subtract(PriceInterface $priceToSubtract): static
     {
@@ -77,9 +59,6 @@ final class Price implements PriceInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function multiply(int|string $multiplier): static
     {
@@ -89,18 +68,12 @@ final class Price implements PriceInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function inverse(): static
     {
         return $this->multiply(-1);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function equals(PriceInterface $price): bool
     {
@@ -108,18 +81,12 @@ final class Price implements PriceInterface
             && $this->priceWithVat->equals($price->getPriceWithVat());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isZero(): bool
     {
         return $this->priceWithoutVat->isZero() && $this->priceWithVat->isZero();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function createHiddenPrice(): static
     {

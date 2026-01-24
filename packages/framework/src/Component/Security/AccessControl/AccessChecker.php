@@ -22,45 +22,30 @@ final readonly class AccessChecker implements AccessCheckerInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function canView(string $roleConstant): bool
     {
         return $this->hasPermission($roleConstant, Permission::VIEW);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function canEdit(string $roleConstant): bool
     {
         return $this->hasPermission($roleConstant, Permission::EDIT);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function canCreate(string $roleConstant): bool
     {
         return $this->hasPermission($roleConstant, Permission::CREATE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function canDelete(string $roleConstant): bool
     {
         return $this->hasPermission($roleConstant, Permission::DELETE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function hasPermission(string $roleConstant, Permission $permission): bool
     {
@@ -75,9 +60,6 @@ final readonly class AccessChecker implements AccessCheckerInterface
         return $this->authorizationChecker->isGranted($roleWithPermission);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function hasAnyRole(array $roles): bool
     {
@@ -90,45 +72,30 @@ final readonly class AccessChecker implements AccessCheckerInterface
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function denyUnlessCanView(string $roleConstant): void
     {
         $this->denyUnlessHasPermission($roleConstant, Permission::VIEW);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function denyUnlessCanEdit(string $roleConstant): void
     {
         $this->denyUnlessHasPermission($roleConstant, Permission::EDIT);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function denyUnlessCanCreate(string $roleConstant): void
     {
         $this->denyUnlessHasPermission($roleConstant, Permission::CREATE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function denyUnlessCanDelete(string $roleConstant): void
     {
         $this->denyUnlessHasPermission($roleConstant, Permission::DELETE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function denyUnlessHasPermission(string $roleConstant, Permission $permission): void
     {
@@ -139,9 +106,6 @@ final readonly class AccessChecker implements AccessCheckerInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function denyUnlessHasAnyRole(array $roles): void
     {
@@ -152,9 +116,6 @@ final readonly class AccessChecker implements AccessCheckerInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function hasAccessToRoute(string $route, HttpMethod|string $method): bool
     {

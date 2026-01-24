@@ -11,9 +11,6 @@ final class DatagridHydrator extends AbstractHydrator
 {
     public const HYDRATION_MODE = 'DatagridHydrator';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function hydrateAllData(): array
     {

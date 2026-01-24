@@ -14,9 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class PricingGroupPriceType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -26,18 +23,12 @@ final class PricingGroupPriceType extends AbstractType
         $resolver->setAllowedTypes('product_price', [ProductPriceInterface::class, 'null']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['product_price'] = $options['product_price'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

@@ -12,9 +12,6 @@ class OrderAlreadyPaidUserError extends UserError implements UserErrorWithCodeIn
 {
     protected const CODE = 'order-already-paid';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

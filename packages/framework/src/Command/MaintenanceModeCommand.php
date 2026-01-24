@@ -30,9 +30,6 @@ class MaintenanceModeCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function configure(): void
     {
@@ -43,9 +40,6 @@ class MaintenanceModeCommand extends Command
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

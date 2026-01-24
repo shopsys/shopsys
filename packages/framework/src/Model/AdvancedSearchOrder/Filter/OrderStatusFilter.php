@@ -20,18 +20,12 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return self::NAME;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAllowedOperators(): array
     {
@@ -41,18 +35,12 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
         return ChoiceType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getValueFormOptions(): array
     {
@@ -65,9 +53,6 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {

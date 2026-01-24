@@ -16,9 +16,6 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function transform($value): ?array
     {
@@ -29,9 +26,6 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
         return $this->getInvertedValues($value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function reverseTransform($value): ?array
     {

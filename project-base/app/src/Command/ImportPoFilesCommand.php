@@ -42,9 +42,6 @@ class ImportPoFilesCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function configure(): void
     {

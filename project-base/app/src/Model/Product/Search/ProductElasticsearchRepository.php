@@ -19,9 +19,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository 
  */
 class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function extractTotalCount(array $result): int
     {

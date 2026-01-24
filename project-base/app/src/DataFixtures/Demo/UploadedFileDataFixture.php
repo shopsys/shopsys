@@ -49,9 +49,6 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
         $this->loadFilesForParameterValues();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

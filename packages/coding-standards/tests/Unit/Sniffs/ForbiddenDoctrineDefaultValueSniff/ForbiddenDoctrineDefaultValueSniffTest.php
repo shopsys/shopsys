@@ -11,18 +11,12 @@ use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 class ForbiddenDoctrineDefaultValueSniffTest extends AbstractSniffTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getSniffClassName(): string
     {
         return ForbiddenDoctrineDefaultValueSniff::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getWrongFiles(): iterable
     {
         yield [__DIR__ . '/wrong/default_value_annotation.php'];
@@ -36,9 +30,6 @@ class ForbiddenDoctrineDefaultValueSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/wrong/split_annotation.php'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getCorrectFiles(): iterable
     {
         yield [__DIR__ . '/correct/missing_default_value_annotation.php'];

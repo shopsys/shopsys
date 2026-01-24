@@ -22,9 +22,6 @@ class ResetPasswordHash extends Constraint
         self::INVALID_HASH_ERROR => 'INVALID_HASH_ERROR',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTargets(): string|array
     {

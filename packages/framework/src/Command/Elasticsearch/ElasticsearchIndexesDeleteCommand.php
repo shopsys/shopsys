@@ -15,18 +15,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexCommand
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $this->indexFacade->delete($indexDefinition, $output);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getArgumentNameDescription(): string
     {
@@ -36,18 +30,12 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getActionStartedMessage(): string
     {
         return 'Deleting indexes';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getActionFinishedMessage(): string
     {

@@ -18,18 +18,12 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function run(): void
     {

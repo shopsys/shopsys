@@ -18,18 +18,12 @@ class CustomerUserLoginInformationProvider extends BaseCustomerUserLoginInformat
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getLastLogin(CustomerUser $customerUser): ?DateTimeImmutable
     {
         return $this->customerUserLoginTypeFacade->findMostRecentLoginType($customerUser, LoginTypeEnum::ADMIN)?->getLastLoggedInAt();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAdditionalLoginInfo(CustomerUser $customerUser): ?string
     {

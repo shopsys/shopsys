@@ -12,9 +12,6 @@ class CustomerUserNotFoundUserError extends EntityNotFoundUserError implements U
 {
     protected const CODE = 'customer-user-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

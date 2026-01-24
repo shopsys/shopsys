@@ -18,27 +18,18 @@ final class TestContextB extends AbstractContext
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function matches(): bool
     {
         return $this->shouldMatch;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRequiredContexts(): array
     {
         return $this->requiredContexts;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDescription(): string
     {

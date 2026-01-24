@@ -12,9 +12,6 @@ class UnableToGenerateBreadcrumbItemsUserError extends UserError implements User
 {
     protected const string CODE = 'unable-to-generate-breadcrumb-items';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

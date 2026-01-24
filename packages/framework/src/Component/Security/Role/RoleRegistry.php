@@ -43,9 +43,6 @@ final class RoleRegistry implements RoleRegistryInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRole(string $roleIdentifier, string $context): Role
     {
@@ -87,9 +84,6 @@ final class RoleRegistry implements RoleRegistryInterface
         return $role;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRoles(string $context): array
     {

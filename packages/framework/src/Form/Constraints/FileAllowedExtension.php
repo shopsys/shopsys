@@ -16,9 +16,6 @@ class FileAllowedExtension extends Constraint
      */
     public array $extensions;
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRequiredOptions(): array
     {
@@ -27,9 +24,6 @@ class FileAllowedExtension extends Constraint
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDefaultOption(): ?string
     {

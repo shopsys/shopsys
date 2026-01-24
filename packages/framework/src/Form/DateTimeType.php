@@ -31,9 +31,6 @@ final class DateTimeType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

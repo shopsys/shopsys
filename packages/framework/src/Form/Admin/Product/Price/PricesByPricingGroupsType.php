@@ -20,9 +20,6 @@ final class PricesByPricingGroupsType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -44,9 +41,6 @@ final class PricesByPricingGroupsType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -59,9 +53,6 @@ final class PricesByPricingGroupsType extends AbstractType
             ->setAllowedTypes('product_prices', ['array', 'null']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {

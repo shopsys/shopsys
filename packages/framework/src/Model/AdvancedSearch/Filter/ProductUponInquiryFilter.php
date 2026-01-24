@@ -14,18 +14,12 @@ class ProductUponInquiryFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'productUponInquiryFilter';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return self::NAME;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAllowedOperators(): array
     {
@@ -35,27 +29,18 @@ class ProductUponInquiryFilter implements AdvancedSearchFilterInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getValueFormType(): string
     {
         return HiddenType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getValueFormOptions(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {

@@ -24,9 +24,6 @@ class CustomTransFiltersVisitor implements NodeVisitorInterface
     ];
     protected const int PRIORITY = -1;
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function enterNode(Node $node, Environment $env): Node
     {
@@ -54,18 +51,12 @@ class CustomTransFiltersVisitor implements NodeVisitorInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function leaveNode(Node $node, Environment $env): ?Node
     {
         return $node;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPriority(): int
     {

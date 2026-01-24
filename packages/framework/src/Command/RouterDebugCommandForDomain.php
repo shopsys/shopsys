@@ -33,9 +33,6 @@ class RouterDebugCommandForDomain extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function configure(): void
     {
@@ -57,18 +54,12 @@ EOF,
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
     {
         $this->routerDebugCommand->complete($input, $suggestions);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

@@ -14,9 +14,6 @@ class ProductFactoryTest extends TestCase
 {
     protected ProductFactory $productFactory;
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function setUp(): void
     {

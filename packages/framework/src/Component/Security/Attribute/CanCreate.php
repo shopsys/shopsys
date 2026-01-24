@@ -32,9 +32,6 @@ use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 #[Attribute(Attribute::TARGET_METHOD)]
 final readonly class CanCreate extends AbstractCanPermissionAttribute
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPermission(): Permission
     {

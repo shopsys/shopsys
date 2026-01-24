@@ -26,9 +26,6 @@ final class MailWhitelistFormType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -70,9 +67,6 @@ final class MailWhitelistFormType extends AbstractType
         $builder->addModelTransformer($this->mailWhitelistTransformer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

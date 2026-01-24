@@ -12,9 +12,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class ShopsysMigrationExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {

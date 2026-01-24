@@ -184,9 +184,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->addReference($referenceName, $payment);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

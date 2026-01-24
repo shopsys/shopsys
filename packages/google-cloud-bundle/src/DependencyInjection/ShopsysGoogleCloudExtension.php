@@ -12,9 +12,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class ShopsysGoogleCloudExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(array $configs, ContainerBuilder $container)
     {

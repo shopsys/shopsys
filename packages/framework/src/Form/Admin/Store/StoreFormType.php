@@ -44,9 +44,6 @@ final class StoreFormType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -237,9 +234,6 @@ final class StoreFormType extends AbstractType
         return $builderAddressGroup;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

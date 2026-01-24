@@ -17,36 +17,24 @@ class SpecialPricesCategoryAutomatedFilter implements CategoryAutomatedFilterInt
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getLabel(): string
     {
         return t('Display products with special prices only');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getNote(): ?string
     {
         return t('Only products with active special price from a price list be displayed');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDatabaseValue(): string
     {
         return self::DATABASE_VALUE;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function applyFilter(FilterQuery $filterQuery): FilterQuery
     {

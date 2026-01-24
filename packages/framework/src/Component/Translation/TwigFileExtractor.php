@@ -34,27 +34,18 @@ class TwigFileExtractor implements FileVisitorInterface
         $traverser->addVisitor(new CustomTransFiltersVisitor());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
         $this->originalTwigFileExtractor->visitFile($file, $catalogue);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {
         $this->originalTwigFileExtractor->visitPhpFile($file, $catalogue, $ast);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast)
     {

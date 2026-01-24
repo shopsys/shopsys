@@ -357,9 +357,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $this->articleCounter++;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

@@ -489,9 +489,6 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->inquiryFacade->create($inquiryData);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

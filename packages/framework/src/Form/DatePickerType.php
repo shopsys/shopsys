@@ -35,9 +35,6 @@ final class DatePickerType extends AbstractType
         $resolver->setDefaults($defaults);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

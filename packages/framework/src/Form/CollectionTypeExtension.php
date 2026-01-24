@@ -33,9 +33,6 @@ final class CollectionTypeExtension extends AbstractTypeExtension
         $builder->addEventSubscriber($resizeListener);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getExtendedTypes(): iterable
     {

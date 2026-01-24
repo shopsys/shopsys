@@ -15,18 +15,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ElasticsearchIndexesMigrateCommand extends AbstractElasticsearchIndexCommand
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $this->indexFacade->migrate($indexDefinition, $output);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getArgumentNameDescription(): string
     {
@@ -36,18 +30,12 @@ class ElasticsearchIndexesMigrateCommand extends AbstractElasticsearchIndexComma
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getActionStartedMessage(): string
     {
         return 'Migrating indexes';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getActionFinishedMessage(): string
     {

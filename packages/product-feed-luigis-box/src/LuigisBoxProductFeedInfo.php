@@ -9,27 +9,18 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 
 class LuigisBoxProductFeedInfo implements FeedInfoInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getLabel(): string
     {
         return 'Luigi\'s Box Product';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return 'luigis-box-product';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAdditionalInformation(): ?string
     {

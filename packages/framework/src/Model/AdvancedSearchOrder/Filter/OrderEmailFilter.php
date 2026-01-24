@@ -21,18 +21,12 @@ class OrderEmailFilter implements AdvancedSearchFilterInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return self::NAME;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAllowedOperators(): array
     {
@@ -42,9 +36,6 @@ class OrderEmailFilter implements AdvancedSearchFilterInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
@@ -57,9 +48,6 @@ class OrderEmailFilter implements AdvancedSearchFilterInterface
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {

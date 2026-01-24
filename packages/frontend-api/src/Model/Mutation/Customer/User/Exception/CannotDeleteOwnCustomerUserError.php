@@ -12,9 +12,6 @@ class CannotDeleteOwnCustomerUserError extends EntityNotFoundUserError implement
 {
     protected const CODE = 'cannot-remove-own-customer-user';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

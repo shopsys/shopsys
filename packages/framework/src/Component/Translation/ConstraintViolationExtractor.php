@@ -60,9 +60,6 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
         $this->currentExecutionContextVariableNames = [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {
@@ -71,9 +68,6 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
         $this->traverser->traverse($ast);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function enterNode(Node $node): int|Node|null
     {
@@ -135,18 +129,12 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
         $this->catalogue->add($message);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function beforeTraverse(array $nodes): ?array
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function leaveNode(Node $node): int|Node|null
     {
@@ -157,27 +145,18 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function afterTraverse(array $nodes): ?array
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast)
     {

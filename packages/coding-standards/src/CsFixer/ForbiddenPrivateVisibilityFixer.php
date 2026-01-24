@@ -28,9 +28,6 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
      */
     private array $analyzedNamespaces = [];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configure(?array $configuration = null): void
     {
@@ -66,9 +63,6 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
         return $configuration[self::OPTION_ANALYZED_NAMESPACE];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -98,9 +92,6 @@ private function method()
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
@@ -163,9 +154,6 @@ private function method()
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
@@ -178,36 +166,24 @@ private function method()
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isRisky(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return 'Shopsys/forbidden_private_visibility';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPriority(): int
     {
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function supports(SplFileInfo $file): bool
     {

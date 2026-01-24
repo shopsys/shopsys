@@ -12,9 +12,6 @@ class OrderItemNotFoundUserError extends UserError implements UserErrorWithCodeI
 {
     protected const CODE = 'order-item-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

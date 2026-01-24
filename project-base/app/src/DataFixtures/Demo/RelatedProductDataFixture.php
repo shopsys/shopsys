@@ -41,9 +41,6 @@ class RelatedProductDataFixture extends AbstractReferenceFixture implements Depe
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

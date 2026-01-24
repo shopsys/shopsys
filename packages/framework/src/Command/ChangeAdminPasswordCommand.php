@@ -31,9 +31,6 @@ class ChangeAdminPasswordCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function configure(): void
     {
@@ -41,9 +38,6 @@ class ChangeAdminPasswordCommand extends Command
             ->addArgument(self::ARG_USERNAME, InputArgument::REQUIRED, 'Existing administrator username');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

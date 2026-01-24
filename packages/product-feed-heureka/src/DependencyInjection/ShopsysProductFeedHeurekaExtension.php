@@ -13,9 +13,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class ShopsysProductFeedHeurekaExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -24,9 +21,6 @@ class ShopsysProductFeedHeurekaExtension extends Extension implements PrependExt
         $loader->load('paths.yaml');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function prepend(ContainerBuilder $container): void
     {

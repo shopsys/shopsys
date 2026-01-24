@@ -37,18 +37,12 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         parent::__construct($currentPromoCodeFacade, $promoCodeFacade);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getSupportedTypes(): array
     {
         return [PromoCodeTypeEnum::DISCOUNT_TYPE_NOMINAL];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function createAndAddOrderItemData(
         OrderData $orderData,

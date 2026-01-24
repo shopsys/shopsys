@@ -79,18 +79,12 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
         return $domain ?? static::DEFAULT_TRANSLATION_DOMAIN;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getLocale(): string
     {
         return $this->originalTranslator->getLocale();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function setLocale(string $locale): void
     {
@@ -98,9 +92,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
         $this->identityTranslator->setLocale($locale);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getCatalogue($locale = null): MessageCatalogueInterface
     {
@@ -125,9 +116,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
         return self::$self->trans($id, $parameters, $domain, $locale);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getCatalogues(): array
     {

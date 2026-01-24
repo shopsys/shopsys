@@ -24,9 +24,6 @@ class TokenUserMessageException extends CustomUserMessageAuthenticationException
         return 'token';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

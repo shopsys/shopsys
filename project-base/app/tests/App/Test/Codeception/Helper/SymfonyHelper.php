@@ -16,9 +16,6 @@ class SymfonyHelper extends Module
 {
     private Kernel $kernel;
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function _initialize()
     {
@@ -28,9 +25,6 @@ class SymfonyHelper extends Module
         $this->kernel->boot();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function _before(TestInterface $test)
     {

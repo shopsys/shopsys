@@ -17,18 +17,12 @@ use const T_SELF;
 
 class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function register(): array
     {
         return [T_CLASS];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function process(File $file, $classPosition)
     {

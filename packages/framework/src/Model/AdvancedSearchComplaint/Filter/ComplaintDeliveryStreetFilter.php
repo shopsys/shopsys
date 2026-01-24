@@ -10,18 +10,12 @@ class ComplaintDeliveryStreetFilter extends AbstractComplaintContainsFilter
 {
     public const string NAME = 'deliveryStreet';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return self::NAME;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getFieldName(): string
     {

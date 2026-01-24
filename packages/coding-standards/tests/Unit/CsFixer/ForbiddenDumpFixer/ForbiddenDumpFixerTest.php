@@ -16,9 +16,6 @@ final class ForbiddenDumpFixerTest extends AbstractFixerTestCase
         return new ForbiddenDumpFixer();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getTestingFiles(): iterable
     {

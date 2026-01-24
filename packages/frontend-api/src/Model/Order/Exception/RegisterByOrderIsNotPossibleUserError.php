@@ -12,9 +12,6 @@ class RegisterByOrderIsNotPossibleUserError extends UserError implements UserErr
 {
     protected const string CODE = 'register-by-order-is-not-possible';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

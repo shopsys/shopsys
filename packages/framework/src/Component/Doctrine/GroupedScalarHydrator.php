@@ -11,9 +11,6 @@ class GroupedScalarHydrator extends AbstractHydrator
 {
     public const HYDRATION_MODE = 'GroupedScalarHydrator';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function hydrateAllData(): array
     {
@@ -32,9 +29,6 @@ class GroupedScalarHydrator extends AbstractHydrator
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function hydrateRowData(array $data, array &$result): void
     {

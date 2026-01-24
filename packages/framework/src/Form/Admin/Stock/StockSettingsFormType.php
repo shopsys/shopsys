@@ -26,9 +26,6 @@ final class StockSettingsFormType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -75,9 +72,6 @@ final class StockSettingsFormType extends AbstractType
         $this->pluginCrudExtensionFacade->extendForm($builder, 'stockSettings', 'pluginData');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

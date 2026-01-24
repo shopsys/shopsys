@@ -18,9 +18,6 @@ class ProductRecalculationCronModule implements SimpleCronModuleInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function setLogger(Logger $logger): void
     {

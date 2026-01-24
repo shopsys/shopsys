@@ -12,9 +12,6 @@ class OrderSentPageNotAvailableUserError extends UserError implements UserErrorW
 {
     protected const CODE = 'order-sent-page-not-available';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

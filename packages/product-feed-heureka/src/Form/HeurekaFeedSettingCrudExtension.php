@@ -19,27 +19,18 @@ class HeurekaFeedSettingCrudExtension implements PluginCrudExtensionInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getFormTypeClass(): string
     {
         return HeurekaFeedSettingFormType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getFormLabel(): string
     {
         return t('Heureka XML feed settings');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getData($id): array
     {
@@ -52,9 +43,6 @@ class HeurekaFeedSettingCrudExtension implements PluginCrudExtensionInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function saveData($id, $data): void
     {
@@ -63,9 +51,6 @@ class HeurekaFeedSettingCrudExtension implements PluginCrudExtensionInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function removeData($id): void
     {

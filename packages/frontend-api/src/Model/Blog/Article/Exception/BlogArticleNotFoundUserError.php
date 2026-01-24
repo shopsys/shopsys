@@ -12,9 +12,6 @@ class BlogArticleNotFoundUserError extends EntityNotFoundUserError implements Us
 {
     protected const CODE = 'blog-article-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

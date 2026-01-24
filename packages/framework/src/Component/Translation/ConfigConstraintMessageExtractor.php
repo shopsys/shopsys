@@ -34,9 +34,6 @@ use Twig\Node\Node;
  */
 class ConfigConstraintMessageExtractor implements FileVisitorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue): void
     {
@@ -77,17 +74,11 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
         return $elements;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast): void
     {

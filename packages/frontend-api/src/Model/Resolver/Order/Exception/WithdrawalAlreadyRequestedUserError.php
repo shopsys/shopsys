@@ -12,9 +12,6 @@ class WithdrawalAlreadyRequestedUserError extends UserError implements UserError
 {
     protected const string CODE = 'order-withdrawal-already-requested';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

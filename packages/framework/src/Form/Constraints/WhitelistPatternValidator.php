@@ -11,9 +11,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class WhitelistPatternValidator extends ConstraintValidator
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {

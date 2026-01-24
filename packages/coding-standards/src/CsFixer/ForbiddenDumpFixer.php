@@ -14,9 +14,6 @@ use SplFileInfo;
 
 final class ForbiddenDumpFixer implements FixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -29,27 +26,18 @@ final class ForbiddenDumpFixer implements FixerInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isRisky(): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
@@ -64,27 +52,18 @@ final class ForbiddenDumpFixer implements FixerInterface
         $tokens->setCode($code);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return 'Shopsys/forbidden_dump';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPriority(): int
     {
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function supports(SplFileInfo $file): bool
     {

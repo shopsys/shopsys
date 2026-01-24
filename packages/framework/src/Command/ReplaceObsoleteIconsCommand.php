@@ -22,9 +22,6 @@ final class ReplaceObsoleteIconsCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function configure(): void
     {
@@ -36,9 +33,6 @@ final class ReplaceObsoleteIconsCommand extends Command
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

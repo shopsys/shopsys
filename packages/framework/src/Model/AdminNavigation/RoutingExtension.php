@@ -52,9 +52,6 @@ class RoutingExtension implements ExtensionInterface
         return $options;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildItem(ItemInterface $item, array $options): void
     {

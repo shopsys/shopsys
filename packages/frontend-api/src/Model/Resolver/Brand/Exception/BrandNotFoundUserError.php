@@ -12,9 +12,6 @@ class BrandNotFoundUserError extends EntityNotFoundUserError implements UserErro
 {
     protected const CODE = 'brand-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

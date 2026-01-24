@@ -17,9 +17,6 @@ class ArticleNotFoundUserError extends EntityNotFoundUserError implements UserEr
         parent::__construct($message);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

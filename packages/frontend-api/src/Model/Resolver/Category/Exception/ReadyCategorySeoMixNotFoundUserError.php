@@ -12,9 +12,6 @@ class ReadyCategorySeoMixNotFoundUserError extends EntityNotFoundUserError imple
 {
     protected const CODE = 'ready-category-seo-mix-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

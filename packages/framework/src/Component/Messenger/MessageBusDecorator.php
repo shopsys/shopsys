@@ -19,9 +19,6 @@ class MessageBusDecorator implements MessageBusInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function dispatch(object $message, array $stamps = []): Envelope
     {

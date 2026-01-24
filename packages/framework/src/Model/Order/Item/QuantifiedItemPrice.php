@@ -17,27 +17,18 @@ final class QuantifiedItemPrice implements QuantifiedItemPriceInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUnitPrice(): PriceInterface
     {
         return $this->unitPrice;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTotalPrice(): PriceInterface
     {
         return $this->totalPrice;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getVat(): Vat
     {

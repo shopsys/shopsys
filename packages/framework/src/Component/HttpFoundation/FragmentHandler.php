@@ -14,8 +14,6 @@ class FragmentHandler extends LazyLoadingFragmentHandler
     /**
      * Support redirect responses in fragments (eg. subrequests). Fragments can only return 2xx HTTP codes by default.
      * Redirect is handled in @see \Shopsys\FrameworkBundle\Component\HttpFoundation\SubRequestListener::onKernelResponse().
-     *
-     * {@inheritdoc}
      */
     #[Override]
     protected function deliver(Response $response): ?string

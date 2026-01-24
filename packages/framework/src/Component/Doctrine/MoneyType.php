@@ -13,27 +13,18 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class MoneyType extends Type
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return 'money';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return $platform->getDecimalTypeDeclarationSQL($fieldDeclaration);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
@@ -48,9 +39,6 @@ class MoneyType extends Type
         throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', Money::class]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function convertToPHPValue($value, AbstractPlatform $platform): ?Money
     {

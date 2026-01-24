@@ -11,18 +11,12 @@ use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ForbiddenDoctrineInheritanceSniffTest extends AbstractSniffTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getSniffClassName(): string
     {
         return ForbiddenDoctrineInheritanceSniff::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getWrongFiles(): iterable
     {
         yield [__DIR__ . '/Wrong/ClassWithFullNamespaceInheritanceMapping.php'];
@@ -30,9 +24,6 @@ final class ForbiddenDoctrineInheritanceSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/Wrong/EntityWithOrmInheritanceMapping.php'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getCorrectFiles(): iterable
     {
         yield [__DIR__ . '/Correct/fileWithoutClass.php'];

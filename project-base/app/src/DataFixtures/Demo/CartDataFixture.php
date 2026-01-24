@@ -36,9 +36,6 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $this->createCartForCustomerUser();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

@@ -12,9 +12,6 @@ class MaxAllowedLimitUserError extends EntityNotFoundUserError implements UserEr
 {
     protected const CODE = 'max-allowed-limit';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

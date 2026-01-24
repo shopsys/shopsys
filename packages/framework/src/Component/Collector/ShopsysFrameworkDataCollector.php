@@ -27,9 +27,6 @@ class ShopsysFrameworkDataCollector extends DataCollector
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
@@ -54,9 +51,6 @@ class ShopsysFrameworkDataCollector extends DataCollector
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function reset(): void
     {
@@ -101,9 +95,6 @@ class ShopsysFrameworkDataCollector extends DataCollector
         return $this->data['adminLocale'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {

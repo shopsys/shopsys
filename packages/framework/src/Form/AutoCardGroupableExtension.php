@@ -26,9 +26,6 @@ final class AutoCardGroupableExtension extends AbstractTypeExtension
         HiddenType::class,
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
@@ -78,9 +75,6 @@ final class AutoCardGroupableExtension extends AbstractTypeExtension
         return in_array($typeClass, $this->invisibleTypes, true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -91,9 +85,6 @@ final class AutoCardGroupableExtension extends AbstractTypeExtension
         $resolver->setAllowedTypes('renders_in_own_card', 'bool');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getExtendedTypes(): iterable
     {

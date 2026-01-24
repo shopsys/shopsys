@@ -162,9 +162,6 @@ final class ImageUploadType extends AbstractType
         return $imageEntityConfig->isMultiple($options['image_type']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

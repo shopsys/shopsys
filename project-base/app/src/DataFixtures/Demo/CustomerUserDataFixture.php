@@ -477,9 +477,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         return $customerUsersData;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

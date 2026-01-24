@@ -11,9 +11,6 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
@@ -26,9 +23,6 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
         return [$breadcrumbItem];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRouteNames(): array
     {

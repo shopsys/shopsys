@@ -12,9 +12,6 @@ class WithdrawalDeadlinePassedUserError extends UserError implements UserErrorWi
 {
     protected const string CODE = 'order-withdrawal-deadline-passed';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

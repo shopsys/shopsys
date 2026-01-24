@@ -13,9 +13,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class ShopsysProductFeedMergadoExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -23,9 +20,6 @@ class ShopsysProductFeedMergadoExtension extends Extension implements PrependExt
         $loader->load('services.yaml');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function prepend(ContainerBuilder $container)
     {

@@ -11,18 +11,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ComplaintItemsType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {
         return CollectionType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

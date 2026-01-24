@@ -16,9 +16,6 @@ use SplFileInfo;
 
 final class OrmJoinColumnRequireNullableFixer implements FixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -44,27 +41,18 @@ SAMPLE,
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_ATTRIBUTE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isRisky(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
@@ -87,27 +75,18 @@ SAMPLE,
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return 'Shopsys/orm_join_column_require_nullable';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPriority(): int
     {
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function supports(SplFileInfo $file): bool
     {

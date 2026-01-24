@@ -22,9 +22,6 @@ final class MultidomainType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -63,9 +60,6 @@ final class MultidomainType extends AbstractType
         $resolver->setAllowedValues('display_mode', ['stacked', 'columns']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {

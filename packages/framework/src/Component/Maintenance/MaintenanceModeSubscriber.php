@@ -43,9 +43,6 @@ class MaintenanceModeSubscriber implements EventSubscriberInterface
         $requestEvent->stopPropagation();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {

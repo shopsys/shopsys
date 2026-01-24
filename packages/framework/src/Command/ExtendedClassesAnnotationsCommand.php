@@ -29,9 +29,6 @@ class ExtendedClassesAnnotationsCommand extends Command
 {
     protected const DRY_RUN = 'dry-run';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function configure(): void
     {
@@ -60,9 +57,6 @@ class ExtendedClassesAnnotationsCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

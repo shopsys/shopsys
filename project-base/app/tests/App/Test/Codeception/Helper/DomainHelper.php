@@ -12,9 +12,6 @@ use Tests\App\Test\Codeception\Module\StrictWebDriver;
 
 class DomainHelper extends Module
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function _before(TestInterface $test)
     {

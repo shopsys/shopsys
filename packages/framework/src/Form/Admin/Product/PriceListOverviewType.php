@@ -12,9 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class PriceListOverviewType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -23,9 +20,6 @@ final class PriceListOverviewType extends AbstractType
         $view->vars['specialPrices'] = $options['specialPrices'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

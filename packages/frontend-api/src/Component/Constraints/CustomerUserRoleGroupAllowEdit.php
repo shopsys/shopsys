@@ -26,9 +26,6 @@ class CustomerUserRoleGroupAllowEdit extends Constraint
         self::LAST_CUSTOMER_USER_ROLE_GROUP_CANNOT_BE_CHANGED => 'LAST_CUSTOMER_USER_ROLE_GROUP_CANNOT_BE_CHANGED',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTargets(): string|array
     {

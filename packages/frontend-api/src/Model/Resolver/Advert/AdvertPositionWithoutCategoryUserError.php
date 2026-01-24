@@ -12,9 +12,6 @@ class AdvertPositionWithoutCategoryUserError extends UserError implements UserEr
 {
     protected const CODE = 'advert-position-without-category';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

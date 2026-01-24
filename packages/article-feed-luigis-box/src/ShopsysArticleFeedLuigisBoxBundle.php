@@ -11,9 +11,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ShopsysArticleFeedLuigisBoxBundle extends Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function build(ContainerBuilder $container): void
     {

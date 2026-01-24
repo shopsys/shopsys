@@ -17,9 +17,6 @@ class DeliveryAddressUuidValidator extends ConstraintValidator
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {

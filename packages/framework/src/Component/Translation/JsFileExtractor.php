@@ -55,9 +55,6 @@ class JsFileExtractor implements FileVisitorInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast)
     {

@@ -31,9 +31,6 @@ final class EmptyMessageChoiceTypeExtension extends AbstractTypeExtension
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getExtendedTypes(): iterable
     {

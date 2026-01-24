@@ -15,9 +15,6 @@ class NotInArray extends Constraint
 
     public array|Traversable|ArrayAccess $array = [];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRequiredOptions(): array
     {

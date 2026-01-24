@@ -17,9 +17,6 @@ class FlagBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
@@ -39,9 +36,6 @@ class FlagBreadcrumbGenerator implements BreadcrumbGeneratorInterface
         return $breadcrumbItems;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRouteNames(): array
     {

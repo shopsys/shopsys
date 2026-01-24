@@ -16,9 +16,6 @@ class MoneyDataTypeResolver extends AbstractDataTypeResolver
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function isResolvedDataType(mixed $value): bool
     {

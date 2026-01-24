@@ -12,9 +12,6 @@ class OrderWaitingForProcessPaymentUserError extends UserError implements UserEr
 {
     protected const CODE = 'order-process-payment';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

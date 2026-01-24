@@ -28,9 +28,6 @@ class ChangeEnvironmentCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function configure(): void
     {
@@ -38,9 +35,6 @@ class ChangeEnvironmentCommand extends Command
             ->addArgument(self::ARG_ENVIRONMENT, InputArgument::OPTIONAL, 'The target environment');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

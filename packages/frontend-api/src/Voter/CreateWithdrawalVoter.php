@@ -26,18 +26,12 @@ class CreateWithdrawalVoter extends Voter
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function supports(string $attribute, mixed $subject): bool
     {
         return $attribute === 'create_withdrawal_voter';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {

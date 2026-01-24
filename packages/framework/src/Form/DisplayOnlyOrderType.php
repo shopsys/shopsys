@@ -30,9 +30,6 @@ final class DisplayOnlyOrderType extends AbstractType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {

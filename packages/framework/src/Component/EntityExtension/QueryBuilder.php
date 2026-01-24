@@ -17,9 +17,6 @@ class QueryBuilder extends BaseQueryBuilder
         parent::__construct($em);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDQL(): string
     {

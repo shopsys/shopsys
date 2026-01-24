@@ -18,9 +18,6 @@ final class InheritDocFormatFixerTest extends AbstractFixerTestCase
         return new InheritDocFormatFixer();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getTestingFiles(): iterable
     {

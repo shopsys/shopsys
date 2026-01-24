@@ -19,9 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class CleanOpcacheCommand extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

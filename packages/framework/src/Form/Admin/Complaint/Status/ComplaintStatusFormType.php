@@ -14,9 +14,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class ComplaintStatusFormType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -33,9 +30,6 @@ final class ComplaintStatusFormType extends AbstractType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

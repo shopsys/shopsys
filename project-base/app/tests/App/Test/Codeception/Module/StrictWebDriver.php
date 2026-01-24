@@ -31,9 +31,6 @@ class StrictWebDriver extends WebDriver
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function match($page, $selector, $throwMalformed = true): array
     {
@@ -47,9 +44,6 @@ class StrictWebDriver extends WebDriver
         return parent::match($page, $selector, $throwMalformed);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function findFields($selector): array
     {

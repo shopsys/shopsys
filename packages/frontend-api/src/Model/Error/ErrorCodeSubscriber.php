@@ -52,9 +52,6 @@ class ErrorCodeSubscriber implements EventSubscriberInterface
         $formattedError->offsetSet('extensions', $extensions);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {

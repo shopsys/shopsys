@@ -15,9 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class InitializeControllersCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function process(ContainerBuilder $container)
     {

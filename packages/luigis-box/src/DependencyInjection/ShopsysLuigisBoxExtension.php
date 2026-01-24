@@ -32,9 +32,6 @@ class ShopsysLuigisBoxExtension extends Extension implements PrependExtensionInt
         $container->prependExtensionConfig('overblog_graphql', $config);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {

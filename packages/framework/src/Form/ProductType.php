@@ -44,9 +44,6 @@ final class ProductType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

@@ -26,9 +26,6 @@ class CompanyComplaintDataFixture extends AbstractReferenceFixture implements De
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -87,9 +84,6 @@ class CompanyComplaintDataFixture extends AbstractReferenceFixture implements De
         return $complaint;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

@@ -12,9 +12,6 @@ class MaxTransactionCountReachedUserError extends UserError implements UserError
 {
     protected const CODE = 'max-transaction-count-reached';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

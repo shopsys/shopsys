@@ -19,9 +19,6 @@ use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function createValidator()
     {

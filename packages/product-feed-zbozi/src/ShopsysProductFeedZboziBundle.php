@@ -11,9 +11,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ShopsysProductFeedZboziBundle extends Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function build(ContainerBuilder $container)
     {

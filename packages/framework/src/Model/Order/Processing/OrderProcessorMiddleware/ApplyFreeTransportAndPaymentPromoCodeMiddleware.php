@@ -19,9 +19,6 @@ class ApplyFreeTransportAndPaymentPromoCodeMiddleware implements OrderProcessorM
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,

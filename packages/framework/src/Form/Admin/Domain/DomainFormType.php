@@ -18,9 +18,6 @@ final class DomainFormType extends AbstractType
 {
     public const string FIELD_ICON = 'icon';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -49,9 +46,6 @@ final class DomainFormType extends AbstractType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

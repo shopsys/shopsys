@@ -12,9 +12,6 @@ class InvalidCredentialsUserError extends EntityNotFoundUserError implements Use
 {
     protected const CODE = 'invalid-credentials';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

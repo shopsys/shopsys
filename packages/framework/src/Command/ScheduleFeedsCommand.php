@@ -28,9 +28,6 @@ class ScheduleFeedsCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function configure(): void
     {
@@ -39,9 +36,6 @@ class ScheduleFeedsCommand extends Command
             ->addOption(self::OPTION_ALL, null, InputOption::VALUE_NONE, 'schedule all feeds');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

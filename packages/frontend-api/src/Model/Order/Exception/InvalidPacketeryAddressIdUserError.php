@@ -12,9 +12,6 @@ class InvalidPacketeryAddressIdUserError extends EntityNotFoundUserError impleme
 {
     protected const CODE = 'packetery-address-id-invalid';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

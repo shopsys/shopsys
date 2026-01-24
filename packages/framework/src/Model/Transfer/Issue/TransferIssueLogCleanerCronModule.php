@@ -23,9 +23,6 @@ class TransferIssueLogCleanerCronModule implements SimpleCronModuleInterface
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function run(): void
     {

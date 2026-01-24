@@ -64,9 +64,6 @@ final class BasicFileUploadType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

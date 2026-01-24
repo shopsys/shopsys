@@ -20,9 +20,6 @@ class NormalizingExtractorManager extends ExtractorManager
         parent::__construct($extractor, $logger);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function extract(): MessageCatalogue
     {

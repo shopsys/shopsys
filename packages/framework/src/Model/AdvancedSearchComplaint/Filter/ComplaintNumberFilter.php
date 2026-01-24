@@ -10,18 +10,12 @@ class ComplaintNumberFilter extends AbstractComplaintContainsFilter
 {
     public const string NAME = 'number';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return self::NAME;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getFieldName(): string
     {

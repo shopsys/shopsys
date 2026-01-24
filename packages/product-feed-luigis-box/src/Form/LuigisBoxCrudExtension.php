@@ -19,27 +19,18 @@ class LuigisBoxCrudExtension implements PluginCrudExtensionInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getFormTypeClass(): string
     {
         return LuigisBoxSettingFormType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getFormLabel(): string
     {
         return t('Luigi\'s Box settings');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getData($id): array
     {
@@ -52,9 +43,6 @@ class LuigisBoxCrudExtension implements PluginCrudExtensionInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function saveData($id, $data): void
     {
@@ -63,9 +51,6 @@ class LuigisBoxCrudExtension implements PluginCrudExtensionInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function removeData($id): void
     {

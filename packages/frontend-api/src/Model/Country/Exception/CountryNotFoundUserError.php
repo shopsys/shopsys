@@ -12,9 +12,6 @@ class CountryNotFoundUserError extends EntityNotFoundUserError implements UserEr
 {
     protected const string CODE = 'country-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

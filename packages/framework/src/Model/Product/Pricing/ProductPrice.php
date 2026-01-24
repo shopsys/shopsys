@@ -18,18 +18,12 @@ final class ProductPrice implements ProductPriceInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isPriceFrom(): bool
     {
         return $this->priceFrom;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function createHiddenProductPrice(PricingGroup $pricingGroup): static
     {
@@ -40,18 +34,12 @@ final class ProductPrice implements ProductPriceInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPrice(): PriceInterface
     {
         return $this->price;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPricingGroup(): PricingGroup
     {

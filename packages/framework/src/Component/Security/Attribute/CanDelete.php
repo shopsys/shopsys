@@ -32,9 +32,6 @@ use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 #[Attribute(Attribute::TARGET_METHOD)]
 final readonly class CanDelete extends AbstractCanPermissionAttribute
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPermission(): Permission
     {

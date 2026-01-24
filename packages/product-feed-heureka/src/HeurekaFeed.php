@@ -18,27 +18,18 @@ class HeurekaFeed implements FeedInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getInfo(): FeedInfoInterface
     {
         return $this->feedInfo;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTemplateFilepath(): string
     {
         return '@ShopsysProductFeedHeureka/feed.xml.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {
