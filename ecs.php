@@ -203,7 +203,10 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Component/HttpFoundation/Exception/NotFoundRedirectToStorefrontException.php',
             ],
             PropertyTypeHintSniff::class => $pathsExcludedFromStrictTyping,
-            ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT => $pathsExcludedFromStrictTyping,
+            ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT => [
+                ...$pathsExcludedFromStrictTyping,
+                __DIR__ . '/packages/frontend-api/src/Model/Product/Connection/ProductConnection.php',
+            ],
             ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_USELESS_ANNOTATION => $pathsExcludedFromStrictTyping,
             ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT => $pathsExcludedFromStrictTyping,
             ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_USELESS_ANNOTATION => $pathsExcludedFromStrictTyping,
