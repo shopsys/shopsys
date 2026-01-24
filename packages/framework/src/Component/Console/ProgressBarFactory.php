@@ -29,7 +29,7 @@ class ProgressBarFactory
                 $secondsPerStep = (time() - $bar->getStartTime()) / $bar->getProgress();
                 $remainingSteps = $bar->getMaxSteps() - $bar->getProgress();
 
-                $remainingSeconds = round($secondsPerStep * $remainingSteps);
+                $remainingSeconds = (int)round($secondsPerStep * $remainingSteps);
             } else {
                 $remainingSeconds = 0;
             }
@@ -46,9 +46,9 @@ class ProgressBarFactory
     {
         return sprintf(
             '%dh %02dm %02ds',
-            floor($timeInSeconds / 3600),
-            floor(intdiv((int)$timeInSeconds, 60) % 60),
-            floor($timeInSeconds % 60),
+            intdiv($timeInSeconds, 3600),
+            intdiv($timeInSeconds, 60) % 60,
+            $timeInSeconds % 60,
         );
     }
 }
