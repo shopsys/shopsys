@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Component\Setting;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 
 class Setting
@@ -133,14 +132,8 @@ class Setting
         $this->allValuesLoaded = true;
     }
 
-    protected function loadDomainValues(?int $domainId): void
+    protected function loadDomainValues(int $domainId): void
     {
-        if ($domainId === null) {
-            $message = 'Cannot load setting value for null domain ID';
-
-            throw new InvalidArgumentException($message);
-        }
-
         if (array_key_exists($domainId, $this->values)) {
             return;
         }

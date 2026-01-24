@@ -30,7 +30,7 @@ class AdvancedSearchProductFacade
         return $this->advancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesFormData);
     }
 
-    public function createRuleForm(string $filterName, string|int $index): FormInterface
+    public function createRuleForm(string $filterName, string $index): FormInterface
     {
         $rulesData = [
             $index => $this->ruleFormViewDataFactory->createDefault($filterName),

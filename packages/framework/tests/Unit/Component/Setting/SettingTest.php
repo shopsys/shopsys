@@ -6,7 +6,6 @@ namespace Tests\FrameworkBundle\Unit\Component\Setting;
 
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValue;
@@ -71,26 +70,6 @@ class SettingTest extends TestCase
 
         $this->expectException(SettingValueNotFoundException::class);
         $setting->setForDomain('key2', 'value', 1);
-    }
-
-    public function testSetInvalidArgumentException(): void
-    {
-        $entityManagerMock = $this->getMockBuilder(EntityManager::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['flush', 'persist'])
-            ->getMock();
-        $entityManagerMock->expects($this->never())->method('flush');
-        $entityManagerMock->expects($this->never())->method('persist');
-
-        $settingValueRepositoryMock = $this->getMockBuilder(SettingValueRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $setting = new Setting($entityManagerMock, $settingValueRepositoryMock);
-
-        $this->expectException(InvalidArgumentException::class);
-        /** @phpstan-ignore-next-line */
-        $setting->setForDomain('key2', 'value', null);
     }
 
     public function testGetNotFoundException(): void

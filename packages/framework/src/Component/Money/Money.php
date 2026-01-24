@@ -10,7 +10,6 @@ use Litipk\BigNumbers\Decimal;
 use Litipk\BigNumbers\Errors\BigNumbersError;
 use Override;
 use Shopsys\FrameworkBundle\Component\Money\Exception\InvalidNumericArgumentException;
-use Shopsys\FrameworkBundle\Component\Money\Exception\UnsupportedTypeException;
 use function substr;
 
 class Money implements JsonSerializable
@@ -160,14 +159,10 @@ class Money implements JsonSerializable
             return Decimal::fromInteger($value);
         }
 
-        if (is_string($value)) {
-            try {
-                return Decimal::fromString($value, $scale);
-            } catch (BigNumbersError | InvalidArgumentException $e) {
-                throw new InvalidNumericArgumentException($value, $e);
-            }
+        try {
+            return Decimal::fromString($value, $scale);
+        } catch (BigNumbersError | InvalidArgumentException $e) {
+            throw new InvalidNumericArgumentException($value, $e);
         }
-
-        throw new UnsupportedTypeException($value, ['string', 'int']);
     }
 }

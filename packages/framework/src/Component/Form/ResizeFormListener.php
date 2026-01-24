@@ -270,7 +270,7 @@ class ResizeFormListener implements EventSubscriberInterface
     /**
      * Copy-pasted from Form::viewToNorm()
      */
-    protected function viewToNorm(FormInterface $form, string $value): mixed
+    protected function viewToNorm(FormInterface $form, mixed $value): mixed
     {
         $transformers = $form->getConfig()->getViewTransformers();
 

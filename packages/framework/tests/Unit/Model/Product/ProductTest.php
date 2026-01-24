@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Product;
 
-use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsNotVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Tests\FrameworkBundle\Unit\TestCase;
 
 class ProductTest extends TestCase
 {
@@ -65,6 +65,7 @@ class ProductTest extends TestCase
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
         $variant2 = Product::create($productData);
+        $this->setValueOfProtectedProperty($variant2, 'id', 2);
         $mainVariant = Product::createMainVariant($productData, [$variant]);
         Product::createMainVariant($productData, [$variant2]);
 
@@ -79,6 +80,7 @@ class ProductTest extends TestCase
         $variant2 = Product::create($productData);
         $mainVariant = Product::createMainVariant($productData, [$variant]);
         $mainVariant2 = Product::createMainVariant($productData, [$variant2]);
+        $this->setValueOfProtectedProperty($mainVariant2, 'id', 2);
 
         $this->expectException(MainVariantCannotBeVariantException::class);
         $mainVariant->addVariant($mainVariant2);
@@ -89,7 +91,9 @@ class ProductTest extends TestCase
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
         $variant2 = Product::create($productData);
+        $this->setValueOfProtectedProperty($variant2, 'id', 2);
         $variant3 = Product::create($productData);
+        $this->setValueOfProtectedProperty($variant3, 'id', 3);
         Product::createMainVariant($productData, [$variant]);
         Product::createMainVariant($productData, [$variant2]);
 
@@ -102,6 +106,7 @@ class ProductTest extends TestCase
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
         $mainVariant = Product::createMainVariant($productData, [$variant]);
+        $this->setValueOfProtectedProperty($mainVariant, 'id', 1);
 
         $this->expectException(MainVariantCannotBeVariantException::class);
         $mainVariant->addVariant($mainVariant);

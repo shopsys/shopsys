@@ -81,9 +81,9 @@ interface ActorInterface
     public function canSeeCookie($cookie, array $params = [], bool $showDebug = true): void;
 
     /**
-     * @param mixed $page
+     * @param string $page
      */
-    public function canSeeCurrentPageEquals($page);
+    public function canSeeCurrentPageEquals(string $page): void;
 
     /**
      * @param string $uri
@@ -848,9 +848,9 @@ interface ActorInterface
     public function seeCookie($cookie, array $params = [], bool $showDebug = true): void;
 
     /**
-     * @param mixed $page
+     * @param string $page
      */
-    public function seeCurrentPageEquals($page);
+    public function seeCurrentPageEquals(string $page): void;
 
     /**
      * @param string $uri

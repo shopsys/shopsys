@@ -14,10 +14,10 @@ use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouterInterface;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DomainRouterFactoryTest extends TestCase
@@ -38,7 +38,9 @@ class DomainRouterFactoryTest extends TestCase
             $currentAdministratorMock,
         );
 
-        $localizedRouterMock = $this->getMockBuilder(RouterInterface::class)->getMock();
+        $localizedRouterMock = $this->getMockBuilder(Router::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $friendlyUrlRouterMock = $this->getMockBuilder(FriendlyUrlRouter::class)
             ->disableOriginalConstructor()
             ->getMock();
