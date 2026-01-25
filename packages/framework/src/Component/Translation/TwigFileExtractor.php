@@ -35,19 +35,19 @@ class TwigFileExtractor implements FileVisitorInterface
     }
 
     #[Override]
-    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
+    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue): void
     {
         $this->originalTwigFileExtractor->visitFile($file, $catalogue);
     }
 
     #[Override]
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
         $this->originalTwigFileExtractor->visitPhpFile($file, $catalogue, $ast);
     }
 
     #[Override]
-    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast)
+    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast): void
     {
         $this->originalTwigFileExtractor->visitTwigFile($file, $catalogue, $ast);
     }

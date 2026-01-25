@@ -49,7 +49,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
     }
 
     #[Override]
-    public function setResolver(LoaderResolverInterface $resolver)
+    public function setResolver(LoaderResolverInterface $resolver): void
     {
         // No implementation needed
     }

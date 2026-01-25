@@ -14,7 +14,7 @@ use Tests\App\Test\Codeception\Module\StrictWebDriver;
 class CloseNewlyOpenedWindowsHelper extends Module
 {
     #[Override]
-    public function _after(TestInterface $test)
+    public function _after(TestInterface $test): void
     {
         /** @var \Tests\App\Test\Codeception\Module\StrictWebDriver $webDriver */
         $webDriver = $this->getModule(StrictWebDriver::class);

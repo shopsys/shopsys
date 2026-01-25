@@ -65,7 +65,7 @@ class EntityMaker extends BaseMaker
     }
 
     #[Override]
-    public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
+    public function interact(InputInterface $input, ConsoleStyle $io, Command $command): void
     {
         $this->entityConfig = $this->entityConfigFactory->create($input, $io);
         $this->entityFieldsConfigurator->configureEntityFields($this->entityConfig, $io);
@@ -252,7 +252,7 @@ class EntityMaker extends BaseMaker
     }
 
     #[Override]
-    protected function writeSuccessMessage(ConsoleStyle $io)
+    protected function writeSuccessMessage(ConsoleStyle $io): void
     {
         parent::writeSuccessMessage($io);
 

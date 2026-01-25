@@ -24,7 +24,7 @@ class RequestStack extends BaseRequestStack
     }
 
     #[Override]
-    public function push(Request $request)
+    public function push(Request $request): void
     {
         $this->requestStack->push($request);
     }

@@ -17,7 +17,7 @@ class SymfonyHelper extends Module
     private Kernel $kernel;
 
     #[Override]
-    public function _initialize()
+    public function _initialize(): void
     {
         require_once Configuration::projectDir() . '/../app/autoload.php';
 
@@ -26,7 +26,7 @@ class SymfonyHelper extends Module
     }
 
     #[Override]
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->kernel->boot();
     }

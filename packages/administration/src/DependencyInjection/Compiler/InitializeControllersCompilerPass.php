@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class InitializeControllersCompilerPass implements CompilerPassInterface
 {
     #[Override]
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $services = $container->findTaggedServiceIds('controller.service_arguments');
         $crudControllers = [];

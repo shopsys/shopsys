@@ -54,7 +54,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     }
 
     #[Override]
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
         $this->file = $file;
         $this->catalogue = $catalogue;
