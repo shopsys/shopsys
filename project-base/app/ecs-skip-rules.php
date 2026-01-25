@@ -62,14 +62,9 @@ return [
         __DIR__ . '/src/Model/Product/Search/ProductElasticsearchConverter.php',
         __DIR__ . '/src/DataFixtures/Demo/UnitDataFixture.php',
     ],
-    CamelCapsFunctionNameSniff::class => [
-        __DIR__ . '/tests/App/Test/Codeception/ActorInterface.php',
-    ],
     ValidVariableNameSniff::class => [
         __DIR__ . '/tests/App/Functional/Controller/CdnTest.php',
         __DIR__ . '/tests/App/Functional/EntityExtension/EntityExtensionTest.php',
-        __DIR__ . '/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php',
-        __DIR__ . '/tests/App/Test/Codeception/ActorInterface.php',
     ],
     ObjectIsCreatedByFactorySniff::class => [
         __DIR__ . '/tests/*',
