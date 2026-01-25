@@ -14,7 +14,6 @@ class ImageTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Image
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translatable(targetEntity: Image::class)]
     protected $translatable;

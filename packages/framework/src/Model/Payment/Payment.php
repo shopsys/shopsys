@@ -30,7 +30,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
     /**
      * @var int
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -39,7 +38,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translations(targetEntity: PaymentTranslation::class)]
     protected $translations;
