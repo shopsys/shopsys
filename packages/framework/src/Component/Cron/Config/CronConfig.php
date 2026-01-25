@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Component\Cron\Config;
 use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\CronModuleConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
-use Shopsys\FrameworkBundle\Component\Cron\Exception\InvalidCronModuleException;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
@@ -25,7 +24,7 @@ class CronConfig
     }
 
     public function registerCronModuleInstance(
-        mixed $service,
+        SimpleCronModuleInterface|IteratedCronModuleInterface $service,
         string $serviceId,
         string $timeHours,
         string $timeMinutes,
@@ -35,9 +34,6 @@ class CronConfig
         int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
         int $timeoutIteratedCronSec = CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
     ): void {
-        if (!$service instanceof SimpleCronModuleInterface && !$service instanceof IteratedCronModuleInterface) {
-            throw new InvalidCronModuleException($serviceId);
-        }
         $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);
         $this->cronTimeResolver->validateTimeString($timeMinutes, 55, 1);
 
