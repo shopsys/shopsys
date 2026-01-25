@@ -21,7 +21,6 @@ class OrderStatus extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -30,7 +29,6 @@ class OrderStatus extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translations(targetEntity: OrderStatusTranslation::class)]
     protected $translations;

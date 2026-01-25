@@ -15,7 +15,6 @@ class TransportTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translatable(targetEntity: Transport::class)]
     protected $translatable;

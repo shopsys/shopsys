@@ -30,7 +30,6 @@ class Parameter extends AbstractTranslatableEntity
 
     /**
      * @var int
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -45,7 +44,6 @@ class Parameter extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translations(targetEntity: ParameterTranslation::class)]
     protected $translations;

@@ -21,7 +21,6 @@ class Brand extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -42,7 +41,6 @@ class Brand extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translations(targetEntity: BrandTranslation::class)]
     protected $translations;

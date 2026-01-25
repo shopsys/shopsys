@@ -30,7 +30,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
     /**
      * @var int
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -39,7 +38,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translations(targetEntity: TransportTranslation::class)]
     protected $translations;
