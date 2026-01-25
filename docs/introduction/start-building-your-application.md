@@ -48,7 +48,7 @@ When you install new project, locales are set like this
 - `B2B - SK` _(3rd domain)_: `sk`
 - administration: `en`
 
-In case you want to change domain locale read [locale settings](./how-to-set-up-domains-and-locales.md#3-locale-settings) or in case you want to change default administration locale read [locale in administration](./how-to-set-up-domains-and-locales.md#36-locale-in-administration).
+In case you want to change domain locale read [locale settings](./how-to-set-up-domains-and-locales.md#3-locale-settings) or in case you want to change default administration locale read [locale in administration](./how-to-set-up-domains-and-locales.md#37-locale-in-administration).
 
 ## Set up domain type
 

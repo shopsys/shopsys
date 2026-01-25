@@ -2,7 +2,7 @@
 
 The Datagrid is a component that allows you to display a list of records as a table.
 
-This component is built on top of the [Grid](./internal-grid/index.md) component and provides easier configuration. It can also be used as a standalone component outside of the Crud Controller.
+This component is built on top of the [Grid](../internal-grid/index.md) component and provides easier configuration. It can also be used as a standalone component outside of the Crud Controller.
 
 - [Configuration](./configuration.md)
   - [Fields](./fields.md)

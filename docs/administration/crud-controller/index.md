@@ -4,7 +4,7 @@ The Crud Controller is a powerful tool that allows you to easily design a UI for
 
 It's designed to speed up the development of the administration interface and provide a consistent user experience. At the same time, it's flexible enough to allow for customizations.
 
-Crud controller is built using known Shopsys components like [Grid](../grid.md) and Symfony components.
+Crud controller is built using known Shopsys components like [Grid](../internal-grid/index.md) and Symfony components.
 
 ## Getting started
 - [Creating a new Crud Controller](getting-started/creating-a-new-crud-controller.md)

@@ -278,7 +278,7 @@ The value is then used for setting [`default_locale` Symfony parameter](https://
 
 !!! note
 
-    Default application locale in test environment is set to first domain locale except administration where is respected [`admin_locale` setting](#36-locale-in-administration)
+    Default application locale in test environment is set to first domain locale except administration where is respected [`admin_locale` setting](#37-locale-in-administration)
 
 ### 4. Change the url address for an existing domain
 
