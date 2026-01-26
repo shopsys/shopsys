@@ -8,52 +8,29 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigDefinition;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader;
-use stdClass;
-use Symfony\Component\Filesystem\Filesystem;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityWithImage;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityWithTypes;
 
 class ImageConfigTest extends TestCase
 {
     private function getBaseImageConfig(): ImageConfig
     {
-        $inputConfig = [
-            [
-                ImageConfigDefinition::CONFIG_CLASS => stdClass::class,
-                ImageConfigDefinition::CONFIG_ENTITY_NAME => 'Name_1',
-                ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                ImageConfigDefinition::CONFIG_TYPES => [
-                    [
-                        ImageConfigDefinition::CONFIG_TYPE_NAME => 'TypeName_1',
-                        ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                    ],
-                    [
-                        ImageConfigDefinition::CONFIG_TYPE_NAME => 'TypeName_2',
-                        ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                    ],
-                ],
-                [
-                    ImageConfigDefinition::CONFIG_CLASS => 'Class_1',
-                    ImageConfigDefinition::CONFIG_ENTITY_NAME => 'Name_2',
-                    ImageConfigDefinition::CONFIG_TYPES => [],
-                ],
-            ],
-        ];
-
-        $filesystem = new Filesystem();
         $entityNameResolver = new EntityNameResolver([]);
-        $imageConfigLoader = new ImageConfigLoader($filesystem, $entityNameResolver);
-        $imageEntityConfigByClass = $imageConfigLoader->loadFromArray($inputConfig);
+        $imageConfigLoader = new ImageConfigLoader($entityNameResolver);
 
-        return new ImageConfig($imageEntityConfigByClass, $entityNameResolver);
+        return $imageConfigLoader->loadFromEntityClasses([
+            TestEntityWithImage::class,
+            TestEntityWithTypes::class,
+        ]);
     }
 
     public function testGetEntityName(): void
     {
         $imageConfig = $this->getBaseImageConfig();
-        $entity = new stdClass();
+        $entity = new TestEntityWithImage();
 
-        $this->assertSame('Name_1', $imageConfig->getEntityName($entity));
+        $this->assertSame('testEntity', $imageConfig->getEntityName($entity));
     }
 
     public function testGetEntityNameNotFound(): void
@@ -61,23 +38,26 @@ class ImageConfigTest extends TestCase
         $imageConfig = $this->getBaseImageConfig();
 
         $this->expectException(ImageEntityConfigNotFoundException::class);
+
         $imageConfig->getEntityName($this);
     }
 
-    public function tesGetImageEntityConfig(): void
+    public function testGetImageEntityConfig(): void
     {
         $imageConfig = $this->getBaseImageConfig();
-        $entity = new stdClass();
+        $entity = new TestEntityWithImage();
 
         $imageEntityConfig = $imageConfig->getImageEntityConfig($entity);
-        $this->assertSame('Name_1', $imageEntityConfig->getEntityName());
+
+        $this->assertSame('testEntity', $imageEntityConfig->getEntityName());
     }
 
-    public function tesGetImageEntityConfigNotFound(): void
+    public function testGetImageEntityConfigNotFound(): void
     {
         $imageConfig = $this->getBaseImageConfig();
 
         $this->expectException(ImageEntityConfigNotFoundException::class);
+
         $imageConfig->getImageEntityConfig($this);
     }
 }

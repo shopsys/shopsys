@@ -11,12 +11,12 @@ use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundEx
 class ImageConfig
 {
     /**
-     * @var array<class-string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig>
+     * @var array<string,\Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig>
      */
     protected array $imageEntityConfigsByClass;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[] $imageEntityConfigsByClass
+     * @param array<string,\Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig> $imageEntityConfigsByClass
      */
     public function __construct(
         array $imageEntityConfigsByClass,
@@ -26,7 +26,7 @@ class ImageConfig
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[] $imageEntityConfigsByClass
+     * @param array<string,\Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig> $imageEntityConfigsByClass
      */
     protected function setUpImageEntityConfigsByClass(array $imageEntityConfigsByClass): void
     {

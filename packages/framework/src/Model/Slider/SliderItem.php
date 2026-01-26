@@ -8,12 +8,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 
 /**
  * SliderItem
  */
 #[ORM\Table(name: 'slider_items')]
 #[ORM\Entity]
+#[EntityImage]
+#[EntityImage('web')]
+#[EntityImage('mobile')]
 class SliderItem implements OrderableEntityInterface
 {
     /**

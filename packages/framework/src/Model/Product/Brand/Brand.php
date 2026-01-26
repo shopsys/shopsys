@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandDomainNotFoundException;
 
@@ -17,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandDomainNotFoundExc
  */
 #[ORM\Table(name: 'brands')]
 #[ORM\Entity]
+#[EntityImage]
 class Brand extends AbstractTranslatableEntity
 {
     /**

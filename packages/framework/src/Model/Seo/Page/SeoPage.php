@@ -6,10 +6,13 @@ namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageDomainNotFoundException;
 
 #[ORM\Table(name: 'seo_pages')]
 #[ORM\Entity]
+#[EntityImage]
+#[EntityImage('og')]
 class SeoPage
 {
     public const string SEO_PAGE_HOMEPAGE_SLUG = '/';

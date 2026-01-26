@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\AddConstraintValidators
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterContextsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterCronModulesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterExtendedEntitiesCompilerPass;
+use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterImageEntitiesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginCrudExtensionsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginDataFixturesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
@@ -41,6 +42,7 @@ class ShopsysFrameworkBundle extends Bundle
         $container->addCompilerPass(new AddConstraintValidatorsPass());
         $container->addCompilerPass(new RegisterContextsCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 150);
         $container->addCompilerPass(new RegisterRoleProviderCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 140);
+        $container->addCompilerPass(new RegisterImageEntitiesCompilerPass());
 
         $container->registerForAutoconfiguration(AbstractIndex::class)->addTag('elasticsearch.index');
 

@@ -6,9 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 
 #[ORM\Table(name: 'notification_bars')]
 #[ORM\Entity]
+#[EntityImage]
 class NotificationBar
 {
     /**
