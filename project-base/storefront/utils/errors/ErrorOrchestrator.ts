@@ -45,6 +45,9 @@ class ErrorOrchestratorImpl {
         if (parsed.userError?.validation) {
             for (const fieldName in parsed.userError.validation) {
                 const error = parsed.userError.validation[fieldName];
+                if (!error) {
+                    continue;
+                }
 
                 if (context.formFieldNames?.includes(fieldName)) {
                     decisions.push({ action: 'form-field', fieldName, message: error.message });

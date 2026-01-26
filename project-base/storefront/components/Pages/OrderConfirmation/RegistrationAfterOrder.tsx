@@ -56,8 +56,12 @@ export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
         if (registrationError) {
             const validationErrors = getUserFriendlyErrors(registrationError, t).userError?.validation;
             for (const fieldName in validationErrors) {
+                const fieldError = validationErrors[fieldName];
                 if (fieldName === 'password' || fieldName === 'input') {
-                    showErrorMessage(validationErrors[fieldName].message, GtmMessageOriginType.order_confirmation_page);
+                    const errorMessage = fieldError?.message;
+                    if (errorMessage) {
+                        showErrorMessage(errorMessage, GtmMessageOriginType.order_confirmation_page);
+                    }
                 } else {
                     isInvalidRegistrationRef.current = true;
                     showErrorMessage(t('There was an error with your registration. Please try again later.'));

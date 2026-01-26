@@ -34,11 +34,15 @@ export const handleFormErrors = <T extends FieldValues>(
                 : Object.keys(formProviderMethods.getValues());
 
         for (const fieldName in userError.validation) {
-            if (formFieldNames.includes(fieldName)) {
-                formProviderMethods.setError(fieldName as Path<T>, userError.validation[fieldName]);
+            const fieldError = userError.validation[fieldName];
+            if (!fieldError) {
                 continue;
             }
-            showErrorMessage(userError.validation[fieldName].message, origin);
+            if (formFieldNames.includes(fieldName)) {
+                formProviderMethods.setError(fieldName as Path<T>, fieldError);
+                continue;
+            }
+            showErrorMessage(fieldError.message, origin);
         }
     }
 };

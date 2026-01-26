@@ -4,11 +4,11 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
 import { ParsedErrors } from 'types/error';
-import { FlashMessageKeys } from 'utils/errors/applicationErrors';
 import { CombinedError, Exchange, Operation } from 'urql';
 import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { ErrorOrchestrator } from 'utils/errors/ErrorOrchestrator';
+import { FlashMessageKeys } from 'utils/errors/applicationErrors';
 import { isNoLogError } from 'utils/errors/applicationErrors';
 import { getErrorMessage } from 'utils/errors/errorMessageMapper';
 import { isExpectedPriceFilterError } from 'utils/errors/expectedErrors';
@@ -26,7 +26,7 @@ type MutationErrorConfig = {
     validationFields?: string[];
 };
 
-const MUTATION_ERROR_CONFIG: Record<string, MutationErrorConfig> = {
+const MUTATION_ERROR_CONFIG: Partial<Record<string, MutationErrorConfig>> = {
     AddToCartMutation: {
         errorType: 'add-to-cart-error',
         gtmOrigin: GtmMessageOriginType.product_detail_page,
@@ -167,8 +167,9 @@ const handleErrorMessagesForMutation = (error: CombinedError, t: Translate, oper
     // Handle validation errors for configured fields
     if (userError?.validation && config.validationFields) {
         for (const fieldName of config.validationFields) {
-            if (userError.validation[fieldName]) {
-                showErrorMessage(userError.validation[fieldName].message, config.gtmOrigin, {
+            const fieldError = userError.validation[fieldName];
+            if (fieldError) {
+                showErrorMessage(fieldError.message, config.gtmOrigin, {
                     errorType: config.errorType,
                     fieldName,
                 });
@@ -257,9 +258,12 @@ const handleCartErrorMessages = ({ userError, applicationError }: ParsedErrors) 
 
     if (userError?.validation) {
         for (const invalidFieldName in userError.validation) {
-            showErrorMessage(userError.validation[invalidFieldName].message, GtmMessageOriginType.cart, {
-                fieldName: invalidFieldName,
-            });
+            const fieldError = userError.validation[invalidFieldName];
+            if (fieldError) {
+                showErrorMessage(fieldError.message, GtmMessageOriginType.cart, {
+                    fieldName: invalidFieldName,
+                });
+            }
         }
     }
 };

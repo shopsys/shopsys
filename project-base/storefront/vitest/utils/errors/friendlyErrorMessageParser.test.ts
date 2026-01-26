@@ -285,7 +285,7 @@ describe('getUserFriendlyErrors', () => {
 
         const result = getUserFriendlyErrors(error, mockT);
 
-        expect(result.userError?.validation?.email.message).toBe('Invalid email format');
-        expect(result.userError?.validation?.password.message).toBe('Password too short');
+        expect(result.userError?.validation?.email?.message).toBe('Invalid email format');
+        expect(result.userError?.validation?.password?.message).toBe('Password too short');
     });
 });
