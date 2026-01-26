@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
@@ -77,12 +77,12 @@ class DateTimeTypeTest extends TypeTestCase
         $domainConfig = DomainConfigHelper::getDomainConfig(
             dateTimeZoneString: $dateTimeZoneString,
         );
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         return new Domain(
             [$domainConfig],
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
     }
 }

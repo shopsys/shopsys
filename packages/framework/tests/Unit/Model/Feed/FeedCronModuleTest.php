@@ -7,7 +7,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Feed;
 use Monolog\Handler\NullHandler;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Shopsys\FrameworkBundle\Model\Feed\FeedCronModule;
 use Shopsys\FrameworkBundle\Model\Feed\FeedExport;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
@@ -41,12 +41,12 @@ class FeedCronModuleTest extends TestCase
         $feedModuleRepositoryMock->expects($this->any())->method('getFeedModuleByNameAndDomainId')->willReturn($feedModule1);
 
         $domainConfig = DomainConfigHelper::getDomainConfig();
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             [$domainConfig],
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $feedExportMock = $this->getMockBuilder(FeedExport::class)

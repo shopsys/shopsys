@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundExce
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository;
 use Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
@@ -39,12 +39,12 @@ class DomainDataCreatorTest extends TestCase
             ->method('getForDomain')
             ->with($this->equalTo(Setting::DOMAIN_DATA_CREATED), $this->equalTo(1))
             ->willReturn(true);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);
@@ -100,12 +100,12 @@ class DomainDataCreatorTest extends TestCase
 
                 throw new SettingValueNotFoundException();
             });
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);

@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPatternReposito
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Symfony\Component\Clock\DatePoint;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
@@ -83,12 +83,12 @@ class DateTimeFormatterTest extends TestCase
             dateTimeZoneString: $dateTimeZoneString,
         );
 
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         return new Domain(
             [$domainConfig],
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
     }
 }

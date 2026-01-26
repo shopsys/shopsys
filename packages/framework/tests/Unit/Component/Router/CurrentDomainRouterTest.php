@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
@@ -21,12 +21,12 @@ class CurrentDomainRouterTest extends TestCase
     public function testDelegateRouter(): void
     {
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             [DomainConfigHelper::getDomainConfig()],
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $domain->switchDomainById(Domain::FIRST_DOMAIN_ID);

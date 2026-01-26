@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlIs
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class FriendlyUrlFactoryTest extends TestCase
@@ -76,12 +76,12 @@ class FriendlyUrlFactoryTest extends TestCase
             ),
         ];
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);

@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainExce
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Symfony\Component\HttpFoundation\Request;
 
 class Domain implements DomainIdsProviderInterface
@@ -28,12 +28,12 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator $currentAdministrator
      */
     public function __construct(
         protected readonly array $domainConfigs,
         protected readonly Setting $setting,
-        protected readonly AdministratorFacade $administratorFacade,
+        protected readonly CurrentAdministrator $currentAdministrator,
     ) {
     }
 
@@ -279,7 +279,7 @@ class Domain implements DomainIdsProviderInterface
     #[Override]
     public function getAdminEnabledDomainIds(array $limitDomainsByIds = []): array
     {
-        $selectedDomainIds = $this->administratorFacade->getCurrentlyLoggedAdministrator()->getDisplayOnlyDomainIds();
+        $selectedDomainIds = $this->currentAdministrator->getCurrentlyLoggedAdministrator()->getDisplayOnlyDomainIds();
 
         $domainIds = count($selectedDomainIds) > 0 ? $selectedDomainIds : $this->getAllIds();
 
