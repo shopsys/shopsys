@@ -31,11 +31,12 @@ class AnnotationsAdder
         }
 
         if ($projectClassDocComment === '' || $projectClassDocComment === null) {
-            $classKeywordWithName = 'class ' . $betterReflectionClass->getShortName();
+            $classDeclaration = $this->getClassDeclarationString($betterReflectionClass);
+
             $this->fileContentReplacer->replaceInFile(
                 $projectClassFileName,
-                $classKeywordWithName,
-                "/**\n" . $propertyAndMethodAnnotationsLines . " */\n" . $classKeywordWithName,
+                $classDeclaration,
+                "/**\n" . $propertyAndMethodAnnotationsLines . " */\n" . $classDeclaration,
             );
         } else {
             $replacedClassDocBlock = $this->replaceInClassDocBlock(
@@ -93,5 +94,31 @@ class AnnotationsAdder
         }
 
         return $annotationLine;
+    }
+
+    /**
+     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionClass
+     * @return string
+     */
+    protected function getClassDeclarationString(ReflectionClass $reflectionClass): string
+    {
+        $parts = [];
+
+        if ($reflectionClass->isFinal()) {
+            $parts[] = 'final';
+        }
+
+        if ($reflectionClass->isAbstract()) {
+            $parts[] = 'abstract';
+        }
+
+        if ($reflectionClass->isReadOnly()) {
+            $parts[] = 'readonly';
+        }
+
+        $parts[] = 'class';
+        $parts[] = $reflectionClass->getShortName();
+
+        return implode(' ', $parts);
     }
 }
