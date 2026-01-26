@@ -16,6 +16,15 @@ msgstr "%name% súhlasí so zásadami ochrany osobných údajov."
 msgid "(minutes:seconds)"
 msgstr "(minúty:sekundy)"
 
+msgid "-- Choose a flag --"
+msgstr "-- Vyberte značku --"
+
+msgid "-- Choose a value --"
+msgstr "-- Vyberte hodnotu --"
+
+msgid "-- Choose an ordering --"
+msgstr "-- Vyberte zoradenie --"
+
 msgid "-- Choose area --"
 msgstr "-- Vyberte oblasť --"
 
@@ -336,6 +345,9 @@ msgstr "Späť k zákazníkovi {{ name }}"
 
 msgid "Back to overview of available combinations"
 msgstr "Späť na prehľad dostupných kombinácií"
+
+msgid "Back to parameter selection"
+msgstr "Späť na výber parametrov"
 
 msgid "Background color"
 msgstr "Farba pozadia"

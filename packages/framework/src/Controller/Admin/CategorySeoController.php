@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\CategorySeo\CategorySeoFilterFormType;
 use Shopsys\FrameworkBundle\Form\Admin\CategorySeo\ReadyCategorySeoCombinationFormType;
+use Shopsys\FrameworkBundle\Form\Admin\CategorySeo\ReadyCategorySeoCombinationSelectorFormType;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFacade;
@@ -31,6 +32,7 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixGridFactory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination;
 use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,6 +55,7 @@ class CategorySeoController extends AdminBaseController
         protected readonly Domain $domain,
         protected readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly ProductListOrderingModeForListFacade $productListOrderingModeForListFacade,
     ) {
     }
 
@@ -124,53 +127,52 @@ class CategorySeoController extends AdminBaseController
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
 
         $category = $this->categoryFacade->getById($categoryId);
+
+        $urlQuery = $request->query->all();
+
         $categorySeoFiltersData = new CategorySeoFiltersData();
+        $filterForm = $this->createCategorySeoFilterForm($category, $categorySeoFiltersData);
 
-        $form = $this->createCategorySeoFilterForm($category, $categorySeoFiltersData);
-        $form->handleRequest($request);
+        $filterForm->submit($urlQuery[$filterForm->getName()] ?? []);
 
-        $categorySeoMixes = $this->categorySeoFacade->getCategorySeoMixes(
-            $category,
+        $combinationSelectorForm = $this->createReadyCategorySeoCombinationSelectorForm(
             $categorySeoFiltersData,
-            $this->adminDomainTabsFacade->getSelectedDomainId(),
-            $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale(),
+            $categoryId,
+            $locale,
+            $urlQuery,
         );
 
-        $selectedCategorySeoMixCombinations = [];
+        $combinationSelectorForm->handleRequest($request);
 
-        foreach ($categorySeoMixes as $key => $categorySeoMix) {
+        if ($combinationSelectorForm->isSubmitted() && $combinationSelectorForm->isValid()) {
+            $formData = $combinationSelectorForm->getData();
+
             $parameterValueIdsByParameterIds = [];
 
-            foreach ($categorySeoMix->getParameterValues() as $index => $parameterValue) {
-                $parameterValueIdsByParameterIds[$categorySeoFiltersData->parameters[$index]->getId()] = $parameterValue->getId();
+            foreach ($categorySeoFiltersData->parameters as $parameter) {
+                $parameterValueIdsByParameterIds[$parameter->getId()] = $formData['parameter_' . $parameter->getId()];
             }
 
-            $selectedCategorySeoMixCombinationArray = $this->selectedCategorySeoMixCombinationFactory->createArray(
-                $categorySeoMix->getDomainId(),
-                $categorySeoMix->getCategory()->getId(),
-                $categorySeoMix->getFlag()?->getId(),
-                $categorySeoMix->getOrdering(),
+            $selectedCategorySeoMixCombination = $this->selectedCategorySeoMixCombinationFactory->create(
+                $this->adminDomainTabsFacade->getSelectedDomainId(),
+                $categoryId,
+                $formData['flagId'] ?? null,
+                $formData['ordering'] ?? null,
                 $parameterValueIdsByParameterIds,
             );
 
-            $selectedCategorySeoMixCombinations[$key] = $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray);
+            return $this->redirectToRoute('admin_categoryseo_readycombination', [
+                'categoryId' => $categoryId,
+                'categorySeoFilterFormTypeAllQueries' => $urlQuery,
+                'selectedCategorySeoMixCombinationJson' => $this->selectedCategorySeoMixCombinationFactory
+                    ->createJsonFromSelectedCategorySeoMixCombination($selectedCategorySeoMixCombination),
+            ]);
         }
 
         return $this->render('@ShopsysAdministration/content/categorySeo/newCombinations.html.twig', [
             'category' => $category,
-            'form' => $form->createView(),
-            'categorySeoMixes' => $categorySeoMixes,
-            'categorySeoFiltersData' => $categorySeoFiltersData,
             'locale' => $locale,
-            'backLink' => $this->getUrlWithCategoryIdAndAllQueryParameters(
-                'admin_categoryseo_newfilters',
-                $categoryId,
-                $request->query->all(),
-                true,
-            ),
-            'categorySeoFilterFormTypeAllQueries' => $request->query->all(),
-            'categoryId' => $categoryId,
-            'selectedCategorySeoMixCombinations' => $selectedCategorySeoMixCombinations,
+            'combinationSelectorForm' => $combinationSelectorForm->createView(),
         ]);
     }
 
@@ -274,22 +276,6 @@ class CategorySeoController extends AdminBaseController
         ]);
     }
 
-    #[CanEdit(methods: [HttpMethod::POST])]
-    #[CanView(methods: [HttpMethod::GET])]
-    public function readyCombinationButtonAction(
-        int $categoryId,
-        array $categorySeoFilterFormTypeAllQueries,
-        SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
-    ): Response {
-        return $this->render('@ShopsysAdministration/content/categorySeo/readyCombinationEditButton.html.twig', [
-            'existsReadyCategorySeoMix' => $this->readyCategorySeoMixFacade->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination) !== null,
-            'categoryId' => $categoryId,
-            'categorySeoFilterFormTypeAllQueries' => $categorySeoFilterFormTypeAllQueries,
-            'selectedCategorySeoMixCombination' => $selectedCategorySeoMixCombination,
-            'selectedCategorySeoMixCombinationJson' => $this->selectedCategorySeoMixCombinationFactory->createJsonFromSelectedCategorySeoMixCombination($selectedCategorySeoMixCombination),
-        ]);
-    }
-
     #[Route(path: '/seo/category/ready-combination/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -322,6 +308,61 @@ class CategorySeoController extends AdminBaseController
             'category' => $category,
             'domainId' => $this->adminDomainTabsFacade->getSelectedDomainId(),
             'method' => 'GET',
+        ]);
+    }
+
+    protected function createReadyCategorySeoCombinationSelectorForm(
+        CategorySeoFiltersData $categorySeoFiltersData,
+        int $categoryId,
+        string $locale,
+        array $urlQuery,
+    ): FormInterface {
+        $parameterValueChoices = [];
+
+        foreach ($categorySeoFiltersData->parameters as $parameter) {
+            $parameterValues = $this->parameterFacade->getParameterValuesByParameterAndLocale($parameter, $locale);
+
+            $choices = [];
+
+            foreach ($parameterValues as $parameterValue) {
+                $choices[$parameterValue->getText()] = $parameterValue->getId();
+            }
+
+            $parameterValueChoices[$parameter->getId()] = $choices;
+        }
+
+        $flagChoices = [];
+
+        if ($categorySeoFiltersData->useFlags) {
+            $flags = $this->flagFacade->getAllVisibleFlags($locale);
+
+            foreach ($flags as $flag) {
+                $flagChoices[$flag->getName($locale)] = $flag->getId();
+            }
+        }
+
+        $orderingChoices = [];
+
+        if ($categorySeoFiltersData->useOrdering) {
+            $orderingChoices = array_flip(
+                $this->productListOrderingModeForListFacade->getProductListOrderingConfig()
+                    ->getSupportedOrderingModesNamesIndexedById(),
+            );
+        }
+
+        $backLinkUrl = $this->getUrlWithCategoryIdAndAllQueryParameters(
+            'admin_categoryseo_newfilters',
+            $categoryId,
+            $urlQuery,
+            true,
+        );
+
+        return $this->createForm(ReadyCategorySeoCombinationSelectorFormType::class, null, [
+            'categorySeoFiltersData' => $categorySeoFiltersData,
+            'parameterValueChoices' => $parameterValueChoices,
+            'flagChoices' => $flagChoices,
+            'orderingChoices' => $orderingChoices,
+            'backLink' => $backLinkUrl,
         ]);
     }
 

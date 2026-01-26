@@ -263,6 +263,14 @@ class ParameterFacade
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getParameterValuesByParameterAndLocale(Parameter $parameter, string $locale): array
+    {
+        return $this->parameterRepository->getParameterValuesByParameterAndLocale($parameter, $locale);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionData[] $parameterValuesConversionDataIndexedByParameterValueId
      */
     public function updateParameterValuesByConversion(

@@ -16,6 +16,15 @@ msgstr ""
 msgid "(minutes:seconds)"
 msgstr ""
 
+msgid "-- Choose a flag --"
+msgstr ""
+
+msgid "-- Choose a value --"
+msgstr ""
+
+msgid "-- Choose an ordering --"
+msgstr ""
+
 msgid "-- Choose area --"
 msgstr ""
 
@@ -335,6 +344,9 @@ msgid "Back to customer {{ name }}"
 msgstr ""
 
 msgid "Back to overview of available combinations"
+msgstr ""
+
+msgid "Back to parameter selection"
 msgstr ""
 
 msgid "Background color"
