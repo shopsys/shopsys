@@ -1,11 +1,14 @@
 import { ApplicationErrorsType } from 'utils/errors/applicationErrors';
 
-export type ValidationErrors = {
-    [fieldName: string]: {
-        message: string;
-        code: string;
-    };
-};
+export type ValidationErrors = Partial<
+    Record<
+        string,
+        {
+            message: string;
+            code: string;
+        }
+    >
+>;
 
 export type ParsedErrors = {
     networkError?: string;

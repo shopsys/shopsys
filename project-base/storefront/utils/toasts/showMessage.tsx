@@ -19,8 +19,17 @@ const getErrorIdentifierFromMessage = (message: string): string => {
     return getErrorIdentifier(parsed.userCode, parsed.message);
 };
 
-export const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
+type ShowMessageOptions = {
+    toastId?: string;
+};
+
+export const showMessage = (
+    message: string,
+    type: 'info' | 'error' | 'success',
+    options?: ShowMessageOptions,
+): void => {
     const { restoreStoredFocus } = useSessionStore.getState();
+    const toastId = options?.toastId ?? message;
 
     if (type === 'error') {
         if (isWithToastAndConsoleErrorDebugging) {
@@ -31,8 +40,6 @@ export const showMessage = (message: string, type: 'info' | 'error' | 'success')
                 console.debug(`[Ignored Error] ${errorIdentifier}:`, message);
                 return;
             }
-
-            const toastId = message;
 
             toast.error(
                 () => (
@@ -53,7 +60,7 @@ export const showMessage = (message: string, type: 'info' | 'error' | 'success')
             );
         } else {
             toast.error(() => <span dangerouslySetInnerHTML={{ __html: message }} data-tid={TIDs.toast_error} />, {
-                toastId: message,
+                toastId,
                 closeOnClick: true,
                 icon: <CloseIcon className="p-1" />,
                 onClose: () => restoreStoredFocus(),
@@ -61,14 +68,14 @@ export const showMessage = (message: string, type: 'info' | 'error' | 'success')
         }
     } else if (type === 'info') {
         toast.info(() => <span dangerouslySetInnerHTML={{ __html: message }} data-tid={TIDs.toast_info} />, {
-            toastId: message,
+            toastId,
             closeOnClick: true,
             icon: <InfoInTriangleIcon />,
             onClose: () => restoreStoredFocus(),
         });
     } else {
         toast.success(() => <span dangerouslySetInnerHTML={{ __html: message }} data-tid={TIDs.toast_success} />, {
-            toastId: message,
+            toastId,
             closeOnClick: true,
             icon: <CheckmarkIcon />,
             onClose: () => restoreStoredFocus(),

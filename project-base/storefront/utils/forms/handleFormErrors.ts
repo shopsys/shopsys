@@ -2,6 +2,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { Translate } from 'next-translate';
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 import { CombinedError } from 'urql';
+import { isFlashMessageError } from 'utils/errors/applicationErrors';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
@@ -19,8 +20,11 @@ export const handleFormErrors = <T extends FieldValues>(
 
     const { userError, applicationError } = getUserFriendlyErrors(error, t);
 
-    if (applicationError !== undefined) {
-        showErrorMessage(errorMessage !== undefined ? errorMessage : applicationError.message, origin);
+    // Only show toast for flash-message errors, respecting verbosity levels
+    if (applicationError !== undefined && isFlashMessageError(applicationError.type)) {
+        showErrorMessage(errorMessage !== undefined ? errorMessage : applicationError.message, origin, {
+            errorType: applicationError.type,
+        });
     }
 
     if (userError?.validation !== undefined) {
@@ -30,11 +34,15 @@ export const handleFormErrors = <T extends FieldValues>(
                 : Object.keys(formProviderMethods.getValues());
 
         for (const fieldName in userError.validation) {
-            if (formFieldNames.includes(fieldName)) {
-                formProviderMethods.setError(fieldName as Path<T>, userError.validation[fieldName]);
+            const fieldError = userError.validation[fieldName];
+            if (!fieldError) {
                 continue;
             }
-            showErrorMessage(userError.validation[fieldName].message, origin);
+            if (formFieldNames.includes(fieldName)) {
+                formProviderMethods.setError(fieldName as Path<T>, fieldError);
+                continue;
+            }
+            showErrorMessage(fieldError.message, origin);
         }
     }
 };

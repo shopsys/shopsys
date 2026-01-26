@@ -14,9 +14,9 @@ import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandle
 import { useCallback, useState } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ResetPasswordContent: FC = () => {
@@ -25,6 +25,10 @@ export const ResetPasswordContent: FC = () => {
     const [formProviderMethods, defaultValues] = usePasswordResetForm();
     const formMeta = usePasswordResetFormMeta(formProviderMethods);
     const [isSuccess, setIsSuccess] = useState(false);
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        customMessage: formMeta.messages.error,
+    });
 
     const {
         fieldState: { error },
@@ -41,10 +45,10 @@ export const ResetPasswordContent: FC = () => {
                 onGtmSendFormEventHandler(GtmFormType.forgotten_password);
             }
 
-            handleFormErrors(resetPasswordResult.error, formProviderMethods, t, formMeta.messages.error);
+            handleError(resetPasswordResult.error);
             clearForm(resetPasswordResult.error, formProviderMethods, defaultValues);
         },
-        [formMeta.messages, formProviderMethods, resetPassword, t, defaultValues],
+        [formMeta.messages, formProviderMethods, resetPassword, defaultValues, handleError],
     );
 
     return (

@@ -23,12 +23,11 @@ import { ComplaintFormType } from 'types/form';
 import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
 import { useComplaintResolutionsAsSelectOptions } from 'utils/complaints/useComplaintResolutionsAsSelectOptions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
-import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type CreateComplaintPopupProps = {
@@ -54,6 +53,11 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
     const isSubmitting = formProviderMethods.formState.isSubmitting;
     const { setValue } = formProviderMethods;
     const formMeta = useComplaintFormMeta(formProviderMethods);
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        gtmOrigin: GtmMessageOriginType.other,
+        customMessage: t('There was an error while creating your complaint'),
+    });
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
     const complaintResolutionsAsOptions = useComplaintResolutionsAsSelectOptions();
     const [showNewAddressForm, setShowNewAddressForm] = useState(false);
@@ -144,13 +148,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
         });
 
         if (createComplaintResult.error !== undefined) {
-            const { applicationError } = getUserFriendlyErrors(createComplaintResult.error, t);
-
-            if (applicationError !== undefined) {
-                showErrorMessage(applicationError.message, GtmMessageOriginType.other);
-            } else {
-                showErrorMessage(t('There was an error while creating your complaint'), GtmMessageOriginType.other);
-            }
+            handleError(createComplaintResult.error);
 
             return;
         }

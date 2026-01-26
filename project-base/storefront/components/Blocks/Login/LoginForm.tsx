@@ -14,8 +14,8 @@ import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { LoginFormType } from 'types/form';
 import { useLogin } from 'utils/auth/useLogin';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -43,6 +43,10 @@ export const LoginForm: FC<LoginFormProps> = ({
     const formMeta = useLoginFormMeta(formProviderMethods);
     const login = useLogin();
     const [{ data: settingsData }] = useSettingsQuery();
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        gtmOrigin: GtmMessageOriginType.login_popup,
+    });
 
     const onLoginHandler: SubmitHandler<LoginFormType> = async (data) => {
         blurInput();
@@ -54,14 +58,7 @@ export const LoginForm: FC<LoginFormProps> = ({
             shouldOverwriteCustomerUserCart,
         });
 
-        handleFormErrors(
-            loginResponse.error,
-            formProviderMethods,
-            t,
-            undefined,
-            undefined,
-            GtmMessageOriginType.login_popup,
-        );
+        handleError(loginResponse.error);
     };
 
     return (

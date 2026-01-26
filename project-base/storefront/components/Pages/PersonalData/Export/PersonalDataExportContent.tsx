@@ -13,9 +13,9 @@ import { TypePersonalDataAccessRequestTypeEnum } from 'graphql/types';
 import { useCallback, useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PersonalDataExportFormType } from 'types/form';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type PersonalDataExportContentProps = {
@@ -28,6 +28,10 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
     const [, personalDataExport] = usePersonalDataRequestMutation();
     const [formProviderMethods] = usePersonalDataExportForm();
     const formMeta = usePersonalDataExportFormMeta(formProviderMethods);
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        customMessage: formMeta.messages.error,
+    });
 
     const onPersonalDataExportHandler = useCallback<SubmitHandler<PersonalDataExportFormType>>(
         async (personalDataExportFormData) => {
@@ -41,10 +45,10 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                 setIsSuccess(true);
             }
 
-            handleFormErrors(personalDataExportResult.error, formProviderMethods, t, formMeta.messages.error);
+            handleError(personalDataExportResult.error);
             clearForm(personalDataExportResult.error, formProviderMethods, { email: '' });
         },
-        [personalDataExport, formMeta.messages, formProviderMethods, t],
+        [personalDataExport, formMeta.messages, formProviderMethods, handleError],
     );
 
     return (

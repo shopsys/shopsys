@@ -1,13 +1,9 @@
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useChangeTransportInCartMutation } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
 import { usePersistStore } from 'store/usePersistStore';
-import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { useLatest } from 'utils/ui/useLatest';
 
 export type ChangeTransportInCart = (
@@ -18,7 +14,6 @@ export type ChangeTransportInCart = (
 export const useChangeTransportInCart = () => {
     const [{ fetching: isChangingTransportInCart }, changeTransportInCartMutation] = useChangeTransportInCartMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const { t } = useTranslation();
     const { gtmCartInfo } = useGtmCartInfo();
     const { canSeePrices } = useAuthorization();
 
@@ -39,20 +34,6 @@ export const useChangeTransportInCart = () => {
         // EXTEND TRANSPORT MODIFICATIONS HERE
 
         if (changeTransportResult.error !== undefined) {
-            const { userError } = getUserFriendlyErrors(changeTransportResult.error, t);
-            if (userError?.validation?.transport !== undefined) {
-                showErrorMessage(
-                    userError.validation.transport.message,
-                    GtmMessageOriginType.transport_and_payment_page,
-                );
-            }
-            if (userError?.validation?.pickupPlaceIdentifier !== undefined) {
-                showErrorMessage(
-                    userError.validation.pickupPlaceIdentifier.message,
-                    GtmMessageOriginType.transport_and_payment_page,
-                );
-            }
-
             return null;
         }
 

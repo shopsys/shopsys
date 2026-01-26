@@ -21,7 +21,6 @@ export const PromoCode: FC = () => {
     const { t } = useTranslation();
     const { applyPromoCodeToCart } = useApplyPromoCodeToCart({
         success: t('Promo code was added to the order.'),
-        error: t('There was an error while adding a promo code to the order.'),
     });
 
     const [isContentVisible, setIsContentVisible] = useState(!!defaultValues.promoCode);

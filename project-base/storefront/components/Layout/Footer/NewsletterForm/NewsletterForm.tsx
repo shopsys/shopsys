@@ -10,9 +10,9 @@ import { useNewsletterSubscribeMutation } from 'graphql/requests/newsletterSubsc
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -21,6 +21,10 @@ export const NewsletterForm: FC = () => {
     const [, subscribeToNewsletter] = useNewsletterSubscribeMutation();
     const [formProviderMethods, defaultValues] = useNewsletterForm();
     const formMeta = useNewsletterFormMeta(formProviderMethods);
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        customMessage: formMeta.messages.error,
+    });
 
     const onSubscribeToNewsletterHandler = useCallback<SubmitHandler<NewsletterFormType>>(
         async (newsletterFormData) => {
@@ -31,11 +35,11 @@ export const NewsletterForm: FC = () => {
                 showSuccessMessage(formMeta.messages.success);
             }
 
-            handleFormErrors(subscribeToNewsletterResult.error, formProviderMethods, t, formMeta.messages.error);
+            handleError(subscribeToNewsletterResult.error);
 
             clearForm(subscribeToNewsletterResult.error, formProviderMethods, defaultValues);
         },
-        [formMeta.messages, formProviderMethods, subscribeToNewsletter, t, defaultValues],
+        [formMeta.messages, formProviderMethods, subscribeToNewsletter, defaultValues, handleError],
     );
 
     return (

@@ -34,7 +34,7 @@ import { CurrentCustomerType } from 'types/customer';
 import { OperationResult } from 'urql';
 import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
 import { isPacketeryTransport } from 'utils/packetery';
@@ -66,7 +66,7 @@ export const useCreateOrder = (
     const currentCart = useCurrentCart(false);
     const user = useCurrentCustomerData();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
-    const handleCreateOrderResult = useHandleCreateOrderResult();
+    const handleCreateOrderResult = useHandleCreateOrderResult(formProviderMethods, formMeta);
 
     const createOrder: SubmitHandler<ContactInformation> = async (formValues) => {
         updatePageLoadingState({ isPageLoading: true, redirectPageType: 'order-confirmation' });
@@ -81,7 +81,7 @@ export const useCreateOrder = (
             ),
         );
 
-        handleCreateOrderResult(formProviderMethods, formMeta, createOrderResult, formValues);
+        handleCreateOrderResult(createOrderResult, formValues);
     };
 
     return { createOrder };
@@ -131,7 +131,10 @@ const getCreateOrderMutationVariables = (
     };
 };
 
-const useHandleCreateOrderResult = () => {
+const useHandleCreateOrderResult = (
+    formProviderMethods: UseFormReturn<ContactInformation>,
+    formMeta: ContactInformationFormMetaType,
+) => {
     const { t } = useTranslation();
     const user = useCurrentCustomerData();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
@@ -139,10 +142,13 @@ const useHandleCreateOrderResult = () => {
     const { changePaymentInCart } = useChangePaymentInCart();
     const router = useRouter();
     const handleEventsAfterOrderCreation = useHandleEventsAfterOrderCreation();
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        gtmOrigin: GtmMessageOriginType.contact_information_page,
+        customMessage: formMeta.messages.error,
+    });
 
     const handleCreateOrderResult = (
-        formProviderMethods: UseFormReturn<ContactInformation>,
-        formMeta: ContactInformationFormMetaType,
         createOrderResult: OperationResult<TypeCreateOrderMutation, TypeCreateOrderMutationVariables>,
         formValues: ContactInformation,
     ) => {
@@ -185,14 +191,7 @@ const useHandleCreateOrderResult = () => {
             handleCartModifications(modifiedCartAfterUnsuccessfulOrderCreation.modifications, t, changePaymentInCart);
         }
 
-        handleFormErrors(
-            createOrderResult.error,
-            formProviderMethods,
-            t,
-            formMeta.messages.error,
-            undefined,
-            GtmMessageOriginType.contact_information_page,
-        );
+        handleError(createOrderResult.error);
     };
 
     return handleCreateOrderResult;

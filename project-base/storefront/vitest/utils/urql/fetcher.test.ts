@@ -1,7 +1,7 @@
 import { captureException } from '@sentry/nextjs';
 import { RedisClientType } from 'redis';
 import { fetcher } from 'urql/fetcher';
-import { Mock, describe, expect, test, vi } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 
 const isClientGetter = vi.fn();
 vi.mock('utils/isClient', () => ({
@@ -17,7 +17,7 @@ vi.mock('@sentry/nextjs', () => ({
 const mockFetch = vi.fn();
 global.fetch = mockFetch;
 
-const mockRedisClientGet: Mock<[], null | string> = vi.fn(() => null);
+const mockRedisClientGet = vi.fn((): string | null => null);
 const mockRedisClient = {
     get: mockRedisClientGet,
     set: vi.fn(() => null),
@@ -58,7 +58,7 @@ const TEST_RESPONSE_BODY = { testBody: 'test data' };
 
 describe('fetcher test', () => {
     test('using fetcher on the server without Redis should capture an exception in Sentry but still make a request', () => {
-        (isClientGetter as Mock).mockImplementation(() => false);
+        isClientGetter.mockImplementation(() => false);
 
         const testFetcher = fetcher(undefined);
         testFetcher(TEST_URL, REQUEST_WITH_DIRECTIVE);
@@ -70,7 +70,7 @@ describe('fetcher test', () => {
     });
 
     test('using fetcher on the client should filter out the cache directive even if used with a Redis client', () => {
-        (isClientGetter as Mock).mockImplementation(() => true);
+        isClientGetter.mockImplementation(() => true);
 
         const testFetcher = fetcher(mockRedisClient);
         testFetcher(TEST_URL, REQUEST_WITH_DIRECTIVE);
@@ -79,7 +79,7 @@ describe('fetcher test', () => {
     });
 
     test('using fetcher without the Redis cache should filter out the cache directive', () => {
-        (isClientGetter as Mock).mockImplementation(() => false);
+        isClientGetter.mockImplementation(() => false);
         vi.stubEnv('GRAPHQL_REDIS_CACHE', '0');
 
         const testFetcher = fetcher(mockRedisClient);
@@ -90,7 +90,7 @@ describe('fetcher test', () => {
     });
 
     test('using fetcher without the Redis client should filter out the cache directive', () => {
-        (isClientGetter as Mock).mockImplementation(() => false);
+        isClientGetter.mockImplementation(() => false);
 
         const testFetcher = fetcher(undefined);
         testFetcher(TEST_URL, REQUEST_WITH_DIRECTIVE);
@@ -99,7 +99,7 @@ describe('fetcher test', () => {
     });
 
     test('using fetcher on a non-cached query should not call Redis', () => {
-        (isClientGetter as Mock).mockImplementation(() => false);
+        isClientGetter.mockImplementation(() => false);
 
         const testFetcher = fetcher(mockRedisClient);
         testFetcher(TEST_URL, REQUEST_WITHOUT_DIRECTIVE);
@@ -110,7 +110,7 @@ describe('fetcher test', () => {
     });
 
     test('using fetcher on a not-yet cached query for the first time should set it in Redis', async () => {
-        (isClientGetter as Mock).mockImplementation(() => false);
+        isClientGetter.mockImplementation(() => false);
         vi.stubEnv('REDIS_PREFIX', 'TEST_PREFIX');
         mockFetch.mockImplementation(() =>
             Promise.resolve({
@@ -135,7 +135,7 @@ describe('fetcher test', () => {
     });
 
     test('should handle non-JSON content-type responses', async () => {
-        (isClientGetter as Mock).mockImplementation(() => false);
+        isClientGetter.mockImplementation(() => false);
         mockFetch.mockImplementation(() =>
             Promise.resolve({
                 headers: new Headers({
@@ -154,7 +154,7 @@ describe('fetcher test', () => {
 
     test('using fetcher on an already cached query should get it from Redis', async () => {
         mockRedisClientGet.mockImplementation(() => JSON.stringify(TEST_RESPONSE_BODY));
-        (isClientGetter as Mock).mockImplementation(() => false);
+        isClientGetter.mockImplementation(() => false);
 
         const testFetcher = fetcher(mockRedisClient);
         const responseBodyFromRedis = await (await testFetcher(TEST_URL, REQUEST_WITH_DIRECTIVE)).json();
@@ -164,7 +164,7 @@ describe('fetcher test', () => {
 
     describe('URL directive cleaning', () => {
         test('should clean @redisCache directive from URL string', () => {
-            (isClientGetter as Mock).mockImplementation(() => true);
+            isClientGetter.mockImplementation(() => true);
 
             const testFetcher = fetcher(mockRedisClient);
             testFetcher(TEST_URL_WITH_DIRECTIVE, REQUEST_WITHOUT_DIRECTIVE);
@@ -174,7 +174,7 @@ describe('fetcher test', () => {
         });
 
         test('should clean encoded @redisCache directive from URL string', () => {
-            (isClientGetter as Mock).mockImplementation(() => true);
+            isClientGetter.mockImplementation(() => true);
 
             const testFetcher = fetcher(mockRedisClient);
             testFetcher(TEST_URL_WITH_ENCODED_DIRECTIVE, REQUEST_WITHOUT_DIRECTIVE);
@@ -184,7 +184,7 @@ describe('fetcher test', () => {
         });
 
         test('should clean @friendlyUrl directive from URL string', () => {
-            (isClientGetter as Mock).mockImplementation(() => true);
+            isClientGetter.mockImplementation(() => true);
 
             const testFetcher = fetcher(mockRedisClient);
             testFetcher(TEST_URL_WITH_FRIENDLY_URL, REQUEST_WITHOUT_DIRECTIVE);
@@ -194,7 +194,7 @@ describe('fetcher test', () => {
         });
 
         test('should clean directives from URL object', () => {
-            (isClientGetter as Mock).mockImplementation(() => true);
+            isClientGetter.mockImplementation(() => true);
 
             const testFetcher = fetcher(mockRedisClient);
             const urlObject = new URL(TEST_URL_WITH_DIRECTIVE);
@@ -207,7 +207,7 @@ describe('fetcher test', () => {
         });
 
         test('should handle server-side URL cleaning with Redis cache enabled', async () => {
-            (isClientGetter as Mock).mockImplementation(() => false);
+            isClientGetter.mockImplementation(() => false);
             vi.stubEnv('REDIS_PREFIX', 'TEST_PREFIX');
             mockFetch.mockImplementation(() =>
                 Promise.resolve({
@@ -227,7 +227,7 @@ describe('fetcher test', () => {
         });
 
         test('should handle URLs without directives', () => {
-            (isClientGetter as Mock).mockImplementation(() => true);
+            isClientGetter.mockImplementation(() => true);
 
             const testFetcher = fetcher(mockRedisClient);
             testFetcher(TEST_URL, REQUEST_WITHOUT_DIRECTIVE);
@@ -236,7 +236,7 @@ describe('fetcher test', () => {
         });
 
         test('should clean multiple query parameters correctly', () => {
-            (isClientGetter as Mock).mockImplementation(() => true);
+            isClientGetter.mockImplementation(() => true);
 
             const urlWithMultipleParams =
                 'https://test.ts/graphql/?param1=value1&query=test@redisCache(ttl:3600)&param2=value2';
@@ -249,7 +249,7 @@ describe('fetcher test', () => {
         });
 
         test('should handle error scenarios with URL cleaning', async () => {
-            (isClientGetter as Mock).mockImplementation(() => false);
+            isClientGetter.mockImplementation(() => false);
             mockFetch.mockImplementation(() => Promise.reject(new Error('Network error')));
 
             const testFetcher = fetcher(mockRedisClient);

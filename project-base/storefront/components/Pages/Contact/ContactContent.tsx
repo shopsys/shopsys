@@ -16,8 +16,8 @@ import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuer
 import React, { useCallback, useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { clearForm } from 'utils/forms/clearForm';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ContactContent: FC = () => {
@@ -27,6 +27,10 @@ export const ContactContent: FC = () => {
     const formMeta = useContactFormMeta(formProviderMethods);
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const [, contactForm] = useContactFormMutation();
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        customMessage: formMeta.messages.error,
+    });
 
     const onSubmitHandler = useCallback<SubmitHandler<ContactFormType>>(
         async (values) => {
@@ -43,10 +47,10 @@ export const ContactContent: FC = () => {
                 setIsSuccess(true);
             }
 
-            handleFormErrors(contactFormResult.error, formProviderMethods, t, formMeta.messages.error);
+            handleError(contactFormResult.error);
             clearForm(contactFormResult.error, formProviderMethods, defaultValues);
         },
-        [contactForm, formMeta.messages, formProviderMethods, t, defaultValues],
+        [contactForm, formMeta.messages, formProviderMethods, defaultValues, handleError],
     );
 
     return (

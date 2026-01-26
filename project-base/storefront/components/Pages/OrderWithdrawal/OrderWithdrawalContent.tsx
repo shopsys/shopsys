@@ -17,7 +17,6 @@ import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { OrderWithdrawalFormType } from 'types/form';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -59,19 +58,8 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                 updatePageLoadingState({ isPageLoading: true, redirectPageType: 'order-withdrawal-success' });
                 router.replace(orderWithdrawalSuccessUrl);
             }
-
-            handleFormErrors(result.error, formProviderMethods, t, formMeta.messages.error);
         },
-        [
-            orderWithdrawalRequest,
-            order.urlHash,
-            formProviderMethods,
-            t,
-            formMeta.messages.error,
-            router,
-            url,
-            updatePageLoadingState,
-        ],
+        [orderWithdrawalRequest, order.urlHash, router, url, updatePageLoadingState],
     );
 
     return (

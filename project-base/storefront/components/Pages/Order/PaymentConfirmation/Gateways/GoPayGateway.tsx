@@ -7,6 +7,7 @@ import { TypeGoPayCreatePaymentSetup } from 'graphql/types';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
@@ -62,16 +63,18 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
 
         const payOrderResult = await payOrder({ orderUuid });
 
-        if (payOrderResult.error?.graphQLErrors) {
-            for (const error of payOrderResult.error.graphQLErrors) {
-                if (error.message.includes('Max transaction count reached')) {
-                    setIsMaxTransactionCountReached(true);
-                    setInitiatedPaymentGate(false);
-                    showErrorMessage(t('Max transaction count reached'));
-                    onMaxTransactionCountReached?.();
-                    return;
-                }
-                showErrorMessage(error.message);
+        if (payOrderResult.error) {
+            const parsedErrors = getUserFriendlyErrors(payOrderResult.error, t);
+
+            if (parsedErrors.applicationError?.type === 'max-transaction-count-reached') {
+                setIsMaxTransactionCountReached(true);
+                setInitiatedPaymentGate(false);
+                onMaxTransactionCountReached?.();
+                return;
+            }
+
+            if (parsedErrors.applicationError) {
+                showErrorMessage(parsedErrors.applicationError.message);
             }
             setInitiatedPaymentGate(false);
             return;
