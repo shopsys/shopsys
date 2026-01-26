@@ -126,6 +126,14 @@ class StoreFacade
     }
 
     /**
+     * @return int[]
+     */
+    public function getStoreCountsByDomainIdIndexedByStockId(int $domainId): array
+    {
+        return $this->storeRepository->getStoreCountsByDomainIdIndexedByStockId($domainId);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[] $openingHoursDataArray
      * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours[]
      */
