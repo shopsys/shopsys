@@ -45,13 +45,13 @@ class ComplaintController extends AdminBaseController
 
         $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);
 
-        $advancedSearchForm = $this->complaintAdvancedSearchFacade->createAdvancedSearchComplaintForm($request);
+        $advancedSearchForm = $this->complaintAdvancedSearchFacade->createAdvancedSearchForm($request);
         $advancedSearchData = $advancedSearchForm->getData();
 
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $isAdvancedSearchFormSubmitted = $this->complaintAdvancedSearchFacade->isAdvancedSearchComplaintFormSubmitted(
+        $isAdvancedSearchFormSubmitted = $this->complaintAdvancedSearchFacade->isAdvancedSearchFormSubmitted(
             $request,
         );
 

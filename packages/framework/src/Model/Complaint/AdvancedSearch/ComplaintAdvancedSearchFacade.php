@@ -5,52 +5,28 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch;
 
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\Filter\ComplaintNumberFilter;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintRepository;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 
-class ComplaintAdvancedSearchFacade
+class ComplaintAdvancedSearchFacade extends AbstractAdvancedSearchFacade
 {
-    public const string RULES_FORM_NAME = 'as';
-
     public function __construct(
-        protected readonly ComplaintAdvancedSearchFormFactory $complaintAdvancedSearchFormFactory,
+        ComplaintAdvancedSearchFormFactory $complaintAdvancedSearchFormFactory,
+        RuleFormViewDataFactory $ruleFormViewDataFactory,
         protected readonly AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
-        protected readonly RuleFormViewDataFactory $ruleFormViewDataFactory,
         protected readonly ComplaintRepository $complaintRepository,
         protected readonly Localization $localization,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
-    }
-
-    public function createAdvancedSearchComplaintForm(Request $request): FormInterface
-    {
-        $rulesData = $request->query->all(static::RULES_FORM_NAME);
-        $rulesFormData = $this->ruleFormViewDataFactory->createFromRequestData(
-            ComplaintNumberFilter::NAME,
-            $rulesData,
-        );
-
-        return $this->complaintAdvancedSearchFormFactory->createRulesForm(
-            static::RULES_FORM_NAME,
-            $rulesFormData,
-        );
-    }
-
-    public function createRuleForm(string $filterName, string $index): FormInterface
-    {
-        $rulesData = [
-            $index => $this->ruleFormViewDataFactory->createDefault($filterName),
-        ];
-
-        return $this->complaintAdvancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesData);
+        parent::__construct($complaintAdvancedSearchFormFactory, $ruleFormViewDataFactory);
     }
 
     public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): QueryBuilder
@@ -105,8 +81,12 @@ class ComplaintAdvancedSearchFacade
         return $queryBuilder;
     }
 
-    public function isAdvancedSearchComplaintFormSubmitted(Request $request): bool
+    /**
+     * @return string
+     */
+    #[Override]
+    protected function getDefaultFilterName(): string
     {
-        return $request->query->has(static::RULES_FORM_NAME);
+        return ComplaintNumberFilter::NAME;
     }
 }

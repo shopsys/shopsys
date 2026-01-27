@@ -146,13 +146,13 @@ class OrderController extends AdminBaseController
     {
         $domainFilterNamespace = 'orders';
 
-        $advancedSearchForm = $this->orderAdvancedSearchFacade->createAdvancedSearchOrderForm($request);
+        $advancedSearchForm = $this->orderAdvancedSearchFacade->createAdvancedSearchForm($request);
         $advancedSearchData = $advancedSearchForm->getData();
 
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $isAdvancedSearchFormSubmitted = $this->orderAdvancedSearchFacade->isAdvancedSearchOrderFormSubmitted(
+        $isAdvancedSearchFormSubmitted = $this->orderAdvancedSearchFacade->isAdvancedSearchFormSubmitted(
             $request,
         );
 
@@ -183,7 +183,7 @@ class OrderController extends AdminBaseController
             'domainFilterNamespace' => $domainFilterNamespace,
             'quickSearchForm' => $quickSearchForm->createView(),
             'advancedSearchForm' => $advancedSearchForm->createView(),
-            'isAdvancedSearchFormSubmitted' => $this->orderAdvancedSearchFacade->isAdvancedSearchOrderFormSubmitted(
+            'isAdvancedSearchFormSubmitted' => $this->orderAdvancedSearchFacade->isAdvancedSearchFormSubmitted(
                 $request,
             ),
         ]);
