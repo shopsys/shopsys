@@ -2755,6 +2755,9 @@ msgstr "Typ presmerovvania"
 msgid "Registration confirmation"
 msgstr "Potvrdenie registrácie"
 
+msgid "Related products"
+msgstr "Súvisiace produkty"
+
 msgid "Remaining number of uses"
 msgstr "Zbývajúci počet použití"
 

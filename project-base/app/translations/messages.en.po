@@ -31,9 +31,6 @@ msgstr ""
 msgid "Optional variables"
 msgstr ""
 
-msgid "Related products"
-msgstr ""
-
 msgid "Save"
 msgstr ""
 
