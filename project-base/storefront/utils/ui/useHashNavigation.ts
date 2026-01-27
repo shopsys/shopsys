@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 type SectionRef = {
@@ -14,18 +13,14 @@ type UseHashNavigationReturn = {
 const SCROLL_OFFSET = 150;
 
 export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationReturn => {
-    const router = useRouter();
     const [activeSection, setActiveSection] = useState<string | null>(null);
     const isUserScrollingRef = useRef(true);
 
-    const updateHash = useCallback(
-        (sectionId: string | null) => {
-            const basePath = router.asPath.split('#')[0];
-            const newUrl = sectionId ? `${basePath}#${sectionId}` : basePath;
-            window.history.replaceState(null, '', newUrl);
-        },
-        [router.asPath],
-    );
+    const updateHash = useCallback((sectionId: string | null) => {
+        const url = new URL(window.location.href);
+        url.hash = sectionId ?? '';
+        window.history.replaceState(null, '', url);
+    }, []);
 
     const scrollToSection = useCallback(
         (sectionId: string) => {
