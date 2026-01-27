@@ -104,6 +104,10 @@ class UploadedFileController extends AdminBaseController
             return $this->redirectToRoute('admin_uploadedfile_list');
         }
 
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
         $this->breadcrumbOverrider->overrideLastItem(
             sprintf('%s - %s', t('Editing file'), $uploadedFile->getNameWithExtension()),
         );
@@ -152,6 +156,10 @@ class UploadedFileController extends AdminBaseController
             )));
 
             return $this->redirectToRoute('admin_uploadedfile_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysAdministration/content/uploadedFile/new.html.twig', [
