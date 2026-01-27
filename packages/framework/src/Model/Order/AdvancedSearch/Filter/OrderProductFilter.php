@@ -30,6 +30,15 @@ class OrderProductFilter extends AbstractAdvancedSearchFilter
      * {@inheritdoc}
      */
     #[Override]
+    public function getLabel(): string
+    {
+        return t('Product in order');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
         return ProductType::class;
@@ -52,7 +61,7 @@ class OrderProductFilter extends AbstractAdvancedSearchFilter
                 if ($searchValue === null) {
                     continue;
                 }
-                $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
+                $dqlOperator = $this->getDqlOperator($ruleData->operator);
                 $parameterName = 'orderProduct_' . $index;
                 $tableAlias = 'oi_' . $index;
                 $queryBuilder->andWhere(
@@ -64,16 +73,18 @@ class OrderProductFilter extends AbstractAdvancedSearchFilter
         }
     }
 
-    protected function getContainsDqlOperator(string $operator): string
+    /**
+     * @param string $operator
+     * @return string
+     */
+    #[Override]
+    protected function getDqlOperator(string $operator): string
     {
-        switch ($operator) {
-            case self::OPERATOR_CONTAINS:
-                return 'EXISTS';
-            case self::OPERATOR_NOT_CONTAINS:
-                return 'NOT EXISTS';
-        }
-
-        throw new AdvancedSearchFilterOperatorNotFoundException($operator);
+        return match ($operator) {
+            self::OPERATOR_CONTAINS => 'EXISTS',
+            self::OPERATOR_NOT_CONTAINS => 'NOT EXISTS',
+            default => throw new AdvancedSearchFilterOperatorNotFoundException($operator),
+        };
     }
 
     /**

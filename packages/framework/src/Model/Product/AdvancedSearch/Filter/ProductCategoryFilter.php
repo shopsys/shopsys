@@ -45,6 +45,15 @@ class ProductCategoryFilter extends AbstractAdvancedSearchFilter
      * {@inheritdoc}
      */
     #[Override]
+    public function getLabel(): string
+    {
+        return t('Category');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     public function getAllowedOperators(): array
     {
         return [

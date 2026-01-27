@@ -23,6 +23,15 @@ class ComplaintNumberFilter extends AbstractComplaintContainsFilter
      * {@inheritdoc}
      */
     #[Override]
+    public function getLabel(): string
+    {
+        return t('Complaint number');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     protected function getFieldName(): string
     {
         return 'number';

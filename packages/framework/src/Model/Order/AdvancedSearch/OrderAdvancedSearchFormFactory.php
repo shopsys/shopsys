@@ -13,13 +13,11 @@ class OrderAdvancedSearchFormFactory extends AbstractAdvancedSearchFormFactory
 {
     public function __construct(
         AdvancedSearchFilterRegistry $advancedSearchFilterRegistry,
-        OrderAdvancedSearchFilterTranslation $orderAdvancedSearchFilterTranslation,
         FormFactoryInterface $formFactory,
         AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation,
     ) {
         parent::__construct(
             $advancedSearchFilterRegistry,
-            $orderAdvancedSearchFilterTranslation,
             $formFactory,
             $advancedSearchOperatorTranslation,
         );

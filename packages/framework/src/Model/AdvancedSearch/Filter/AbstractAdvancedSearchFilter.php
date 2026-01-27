@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 use Override;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotAllowedException;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormTypeInterface;
@@ -28,6 +29,12 @@ abstract class AbstractAdvancedSearchFilter implements AdvancedSearchFilterInter
      */
     #[Override]
     abstract public function getName(): string;
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    abstract public function getLabel(): string;
 
     /**
      * {@inheritdoc}
@@ -65,6 +72,10 @@ abstract class AbstractAdvancedSearchFilter implements AdvancedSearchFilterInter
      */
     protected function getDqlOperator(string $operator): string
     {
+        if (!in_array($operator, $this->getAllowedOperators(), true)) {
+            throw new AdvancedSearchFilterOperatorNotAllowedException($operator, $this->getAllowedOperators());
+        }
+
         return match ($operator) {
             self::OPERATOR_CONTAINS => 'LIKE',
             self::OPERATOR_NOT_CONTAINS => 'NOT LIKE',

@@ -13,13 +13,11 @@ class ProductAdvancedSearchFormFactory extends AbstractAdvancedSearchFormFactory
 {
     public function __construct(
         AdvancedSearchFilterRegistry $advancedSearchFilterRegistry,
-        ProductAdvancedSearchFilterTranslation $productAdvancedSearchFilterTranslation,
         FormFactoryInterface $formFactory,
         AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation,
     ) {
         parent::__construct(
             $advancedSearchFilterRegistry,
-            $productAdvancedSearchFilterTranslation,
             $formFactory,
             $advancedSearchOperatorTranslation,
         );

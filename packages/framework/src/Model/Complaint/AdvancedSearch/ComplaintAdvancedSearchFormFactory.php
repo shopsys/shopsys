@@ -13,13 +13,11 @@ class ComplaintAdvancedSearchFormFactory extends AbstractAdvancedSearchFormFacto
 {
     public function __construct(
         AdvancedSearchFilterRegistry $advancedSearchFilterRegistry,
-        ComplaintAdvancedSearchFilterTranslation $complaintAdvancedSearchFilterTranslation,
         FormFactoryInterface $formFactory,
         AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation,
     ) {
         parent::__construct(
             $advancedSearchFilterRegistry,
-            $complaintAdvancedSearchFilterTranslation,
             $formFactory,
             $advancedSearchOperatorTranslation,
         );

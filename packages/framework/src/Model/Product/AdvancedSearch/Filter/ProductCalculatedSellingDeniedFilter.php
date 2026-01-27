@@ -38,6 +38,15 @@ class ProductCalculatedSellingDeniedFilter extends AbstractAdvancedSearchFilter
      * {@inheritdoc}
      */
     #[Override]
+    public function getLabel(): string
+    {
+        return t('Excluded from sale');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     public function getAllowedOperators(): array
     {
         return [

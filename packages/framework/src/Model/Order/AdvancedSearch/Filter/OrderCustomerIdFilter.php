@@ -31,6 +31,15 @@ class OrderCustomerIdFilter extends AbstractAdvancedSearchFilter
     }
 
     /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getLabel(): string
+    {
+        return t('Customer ID');
+    }
+
+    /**
      * @return string[]
      */
     #[Override]

@@ -28,6 +28,15 @@ class OrderCreateDateFilter extends AbstractAdvancedSearchFilter
      * {@inheritdoc}
      */
     #[Override]
+    public function getLabel(): string
+    {
+        return t('Created on');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     public function getAllowedOperators(): array
     {
         return [

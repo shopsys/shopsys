@@ -27,6 +27,15 @@ class ProductNameFilter extends AbstractAdvancedSearchFilter
      * {@inheritdoc}
      */
     #[Override]
+    public function getLabel(): string
+    {
+        return t('Product name');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
@@ -38,6 +47,11 @@ class ProductNameFilter extends AbstractAdvancedSearchFilter
         }
     }
 
+    /**
+     * @param string $operator
+     * @return string
+     */
+    #[Override]
     protected function getDqlOperator(string $operator): string
     {
         switch ($operator) {

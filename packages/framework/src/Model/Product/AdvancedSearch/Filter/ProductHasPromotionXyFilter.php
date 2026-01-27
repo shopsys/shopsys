@@ -35,6 +35,18 @@ class ProductHasPromotionXyFilter extends AbstractAdvancedSearchFilter
         return self::NAME;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getLabel(): string
+    {
+        return t('Has X+Y promotion');
+    }
+
+    /**
+     * @return array
+     */
     #[Override]
     public function getAllowedOperators(): array
     {

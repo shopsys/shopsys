@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -23,6 +22,15 @@ class OrderEmailFilter extends AbstractAdvancedSearchFilter
     public function getName(): string
     {
         return self::NAME;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getLabel(): string
+    {
+        return t('Customer email address');
     }
 
     /**
@@ -47,18 +55,6 @@ class OrderEmailFilter extends AbstractAdvancedSearchFilter
             $queryBuilder->andWhere('NORMALIZED(o.email) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
-    }
-
-    protected function getContainsDqlOperator(string $operator): string
-    {
-        switch ($operator) {
-            case self::OPERATOR_CONTAINS:
-                return 'LIKE';
-            case self::OPERATOR_NOT_CONTAINS:
-                return 'NOT LIKE';
-        }
-
-        throw new AdvancedSearchFilterOperatorNotFoundException($operator);
     }
 
     /**

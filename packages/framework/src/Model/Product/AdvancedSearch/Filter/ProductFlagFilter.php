@@ -38,6 +38,15 @@ class ProductFlagFilter extends AbstractAdvancedSearchFilter
      * {@inheritdoc}
      */
     #[Override]
+    public function getLabel(): string
+    {
+        return t('Flag');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     public function getAllowedOperators(): array
     {
         return [

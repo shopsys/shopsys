@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -22,6 +23,15 @@ class OrderPriceFilterWithVatFilter extends AbstractAdvancedSearchFilter
     public function getName(): string
     {
         return self::NAME;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getLabel(): string
+    {
+        return t('Price including VAT');
     }
 
     /**
@@ -55,9 +65,13 @@ class OrderPriceFilterWithVatFilter extends AbstractAdvancedSearchFilter
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
-            $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
+            try {
+                $dqlOperator = $this->getDqlOperator($ruleData->operator);
+            } catch (AdvancedSearchFilterOperatorNotFoundException) {
+                continue;
+            }
 
-            if ($dqlOperator === null || $ruleData->value === '' || $ruleData->value === null) {
+            if ($ruleData->value === '' || $ruleData->value === null) {
                 continue;
             }
             $searchValue = $ruleData->value;
@@ -65,24 +79,6 @@ class OrderPriceFilterWithVatFilter extends AbstractAdvancedSearchFilter
             $queryBuilder->andWhere('o.totalPriceWithVat ' . $dqlOperator . ' :' . $parameterName);
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
-    }
-
-    protected function getContainsDqlOperator(string $operator): ?string
-    {
-        switch ($operator) {
-            case self::OPERATOR_GT:
-                return '>';
-            case self::OPERATOR_LT:
-                return '<';
-            case self::OPERATOR_GTE:
-                return '>=';
-            case self::OPERATOR_LTE:
-                return '<=';
-            case self::OPERATOR_IS:
-                return '=';
-        }
-
-        return null;
     }
 
     /**

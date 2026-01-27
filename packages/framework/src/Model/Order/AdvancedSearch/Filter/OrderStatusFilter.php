@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
@@ -32,6 +31,15 @@ class OrderStatusFilter extends AbstractAdvancedSearchFilter
     public function getName(): string
     {
         return self::NAME;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getLabel(): string
+    {
+        return t('Status of order');
     }
 
     /**
@@ -77,24 +85,12 @@ class OrderStatusFilter extends AbstractAdvancedSearchFilter
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
-            $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
+            $dqlOperator = $this->getDqlOperator($ruleData->operator);
             $searchValue = $ruleData->value;
             $parameterName = 'orderStatusId_' . $index;
             $queryBuilder->andWhere('o.status ' . $dqlOperator . ' :' . $parameterName);
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
-    }
-
-    protected function getContainsDqlOperator(string $operator): string
-    {
-        switch ($operator) {
-            case self::OPERATOR_IS:
-                return '=';
-            case self::OPERATOR_IS_NOT:
-                return '!=';
-        }
-
-        throw new AdvancedSearchFilterOperatorNotFoundException($operator);
     }
 
     /**

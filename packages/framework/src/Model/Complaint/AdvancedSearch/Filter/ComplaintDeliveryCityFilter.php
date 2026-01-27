@@ -23,6 +23,15 @@ class ComplaintDeliveryCityFilter extends AbstractComplaintContainsFilter
      * {@inheritdoc}
      */
     #[Override]
+    public function getLabel(): string
+    {
+        return t('Delivery city');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     protected function getFieldName(): string
     {
         return 'deliveryCity';

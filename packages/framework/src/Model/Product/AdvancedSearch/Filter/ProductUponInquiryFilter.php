@@ -28,6 +28,15 @@ class ProductUponInquiryFilter extends AbstractAdvancedSearchFilter
      * {@inheritdoc}
      */
     #[Override]
+    public function getLabel(): string
+    {
+        return t('Upon inquiry');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     public function getAllowedOperators(): array
     {
         return [

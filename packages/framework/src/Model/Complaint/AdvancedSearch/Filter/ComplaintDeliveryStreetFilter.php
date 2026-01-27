@@ -23,6 +23,15 @@ class ComplaintDeliveryStreetFilter extends AbstractComplaintContainsFilter
      * {@inheritdoc}
      */
     #[Override]
+    public function getLabel(): string
+    {
+        return t('Delivery street');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     protected function getFieldName(): string
     {
         return 'deliveryStreet';

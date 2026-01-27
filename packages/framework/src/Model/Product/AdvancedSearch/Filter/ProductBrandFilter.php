@@ -52,6 +52,15 @@ class ProductBrandFilter extends AbstractAdvancedSearchFilter
      * {@inheritdoc}
      */
     #[Override]
+    public function getLabel(): string
+    {
+        return t('Brand');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     public function getValueFormOptions(): array
     {
         return [

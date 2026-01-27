@@ -4,21 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch;
 
-use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchFilterTranslation;
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation;
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchRulesFormType;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterRegistry;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 
 abstract class AbstractAdvancedSearchFormFactory
 {
     public function __construct(
         protected readonly AdvancedSearchFilterRegistry $advancedSearchFilterRegistry,
-        protected readonly AdvancedSearchFilterTranslation $advancedSearchFilterTranslation,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation,
     ) {
@@ -101,9 +98,7 @@ abstract class AbstractAdvancedSearchFormFactory
         $choices = [];
 
         foreach ($this->advancedSearchFilterRegistry->getFiltersForEntity($entityType) as $filter) {
-            $choices[$this->advancedSearchFilterTranslation->translateFilterName(
-                $filter->getName(),
-            )] = $filter->getName();
+            $choices[$filter->getLabel()] = $filter->getName();
         }
 
         return $choices;

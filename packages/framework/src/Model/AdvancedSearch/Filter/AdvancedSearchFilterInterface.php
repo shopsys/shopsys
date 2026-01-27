@@ -30,6 +30,13 @@ interface AdvancedSearchFilterInterface
     public function getName(): string;
 
     /**
+     * Returns a translation key for filter label
+     *
+     * @return string
+     */
+    public function getLabel(): string;
+
+    /**
      * Returns an array of OPERATOR_* constants specifying which operators can be used with this filter
      *
      * @return string[]

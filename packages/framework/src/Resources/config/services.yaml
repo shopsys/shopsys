@@ -738,8 +738,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender: ~
 
-    Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchFilterTranslation: ~
-
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator: ~
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
