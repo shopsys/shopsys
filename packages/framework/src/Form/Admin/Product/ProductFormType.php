@@ -159,6 +159,10 @@ final class ProductFormType extends AbstractType
         $builder->add($this->createImagesGroup($builder, $options));
         $builder->add($this->createFilesGroup($builder, $options));
         $builder->add($this->createAccessoriesGroup($builder, $product));
+
+        if (!$this->isProductVariant($product)) {
+            $builder->add($this->createRelatedProductsGroup($builder, $product));
+        }
         $builder->add($this->createVideosGroup($builder));
         $actionBarOptions = [
             'back_route' => 'admin_product_list',
@@ -839,6 +843,22 @@ final class ProductFormType extends AbstractType
                 'main_product' => $product,
                 'sortable' => true,
                 'label' => 'Accessories',
+            ])
+            ->addViewTransformer($this->removeDuplicatesTransformer);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createRelatedProductsGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
+    {
+        return $builder
+            ->create('relatedProducts', ProductsType::class, [
+                'required' => false,
+                'main_product' => $product,
+                'label' => t('Related products'),
             ])
             ->addViewTransformer($this->removeDuplicatesTransformer);
     }

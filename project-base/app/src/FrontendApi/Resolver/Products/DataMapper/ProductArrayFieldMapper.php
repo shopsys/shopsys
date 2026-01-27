@@ -98,18 +98,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 
     /**
      * @param array $data
-     * @return int[]
-     */
-    public function getRelatedProducts(array $data): array
-    {
-        return $this->productElasticsearchProvider->getSellableProductArrayByIds(
-            $data['related_products'],
-            $this->productFrontendLimitProvider->getProductsFrontendLimit(),
-        );
-    }
-
-    /**
-     * @param array $data
      * @return array
      */
     public function getBreadcrumb(array $data): array
@@ -133,15 +121,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     public function getFlagsPromise(array $data): Promise
     {
         return $this->flagsBatchLoader->load($data['flags']);
-    }
-
-    /**
-     * @param array $data
-     * @return \GraphQL\Executor\Promise\Promise
-     */
-    public function getRelatedProductsPromise(array $data): Promise
-    {
-        return $this->productsSellableByIdsBatchLoader->load($data['related_products']);
     }
 
     /**

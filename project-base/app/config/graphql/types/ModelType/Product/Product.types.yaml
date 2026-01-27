@@ -25,9 +25,6 @@ Product:
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
-            relatedProducts:
-                type: "[Product!]!"
-                description: "List of related products"
             availability:
                 type: "Availability!"
             images:

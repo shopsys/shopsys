@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
 /**
  * @property \App\Model\Product\Brand\Brand|null $brand
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\Product> $variants
  * @property \App\Model\Product\Product|null $mainVariant
+ * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\Product> $relatedProducts
  * @method static \App\Model\Product\Product create(\App\Model\Product\ProductData $productData)
  * @method static \App\Model\Product\Product createMainVariant(\App\Model\Product\ProductData $productData, \App\Model\Product\Product[] $variants)
  * @method \App\Model\Category\Category[][] getCategoriesIndexedByDomainId()
@@ -43,6 +42,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method \App\Model\Transport\Transport[] getExcludedTransports()
  * @method setTranslations(\App\Model\Product\ProductData $productData)
  * @method setFlags(array<int,\App\Model\Product\Flag\Flag[]> $flagsByDomainId)
+ * @method \App\Model\Product\Product[] getRelatedProducts()
+ * @method __construct(\App\Model\Product\ProductData $productData, \App\Model\Product\Product[]|null $variants = null)
+ * @method edit(\Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains, \App\Model\Product\ProductData $productData)
+ * @method setData(\App\Model\Product\ProductData $productData)
+ * @method editRelatedProducts(\App\Model\Product\Product[] $relatedProducts)
  */
 #[ORM\Table(name: 'products')]
 #[ORM\Entity]
@@ -55,49 +59,6 @@ class Product extends BaseProduct
      */
     #[ORM\Column(type: 'string', length: 100, unique: true, nullable: false)]
     protected $catnum;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\Product\Product>
-     */
-    #[ORM\JoinTable(name: 'related_products')]
-    #[ORM\JoinColumn(name: 'main_product', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'related_product', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: self::class)]
-    protected $relatedProducts;
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product[]|null $variants
-     */
-    protected function __construct(ProductData $productData, ?array $variants = null)
-    {
-        parent::__construct($productData, $variants);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
-     * @param \App\Model\Product\ProductData $productData
-     */
-    #[Override]
-    public function edit(
-        array $productCategoryDomains,
-        BaseProductData $productData,
-    ) {
-        $this->editRelatedProducts($productData->relatedProducts);
-
-        parent::edit($productCategoryDomains, $productData);
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    #[Override]
-    protected function setData(BaseProductData $productData): void
-    {
-        parent::setData($productData);
-
-        $this->relatedProducts = new ArrayCollection($productData->relatedProducts);
-    }
 
     /**
      * @return \App\Model\Product\ProductTranslation
@@ -210,25 +171,5 @@ class Product extends BaseProduct
     public function getCatnum(): string
     {
         return $this->catnum;
-    }
-
-    /**
-     * @return \App\Model\Product\Product[]
-     */
-    public function getRelatedProducts(): array
-    {
-        return $this->relatedProducts->getValues();
-    }
-
-    /**
-     * @param \App\Model\Product\Product[] $relatedProducts
-     */
-    protected function editRelatedProducts(array $relatedProducts)
-    {
-        $this->relatedProducts->clear();
-
-        foreach ($relatedProducts as $relatedProduct) {
-            $this->relatedProducts->add($relatedProduct);
-        }
     }
 }

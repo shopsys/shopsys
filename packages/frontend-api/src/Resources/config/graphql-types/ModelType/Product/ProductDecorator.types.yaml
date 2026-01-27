@@ -74,6 +74,9 @@ ProductDecorator:
                 type: "String"
             accessories:
                 type: "[Product]"
+            relatedProducts:
+                type: "[Product!]!"
+                description: "List of related products"
             parameters:
                 type: "[Parameter]!"
             seoH1:

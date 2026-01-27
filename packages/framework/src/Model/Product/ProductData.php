@@ -131,6 +131,11 @@ class ProductData
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
+    public $relatedProducts;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
     public $variants;
 
     /**
@@ -248,6 +253,7 @@ class ProductData
         $this->shortDescriptions = [];
         $this->urls = new UrlListData();
         $this->accessories = [];
+        $this->relatedProducts = [];
         $this->variants = [];
         $this->seoH1s = [];
         $this->pluginData = [];

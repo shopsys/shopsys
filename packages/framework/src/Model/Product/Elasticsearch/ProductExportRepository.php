@@ -201,6 +201,7 @@ class ProductExportRepository
             ProductExportFieldProvider::SEO_TITLE => $product->getSeoTitle($domainId),
             ProductExportFieldProvider::SEO_META_DESCRIPTION => $product->getSeoMetaDescription($domainId),
             ProductExportFieldProvider::ACCESSORIES => $this->extractAccessoriesIds($product),
+            ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractRelatedProductsIds($product),
             ProductExportFieldProvider::HREFLANG_LINKS => $this->hreflangLinksFacade->getForProduct($product, $domainId, false),
             ProductExportFieldProvider::PRODUCT_TYPE => $this->extractProductType($product, $domainId),
             ProductExportFieldProvider::PRIORITY_BY_PRODUCT_TYPE => $this->extractPriorityByProductType($product, $domainId),
@@ -492,6 +493,21 @@ class ProductExportRepository
         }
 
         return $accessoriesIds;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return int[]
+     */
+    protected function extractRelatedProductsIds(Product $product): array
+    {
+        $relatedProductsIds = [];
+
+        foreach ($product->getRelatedProducts() as $relatedProduct) {
+            $relatedProductsIds[] = $relatedProduct->getId();
+        }
+
+        return $relatedProductsIds;
     }
 
     /**

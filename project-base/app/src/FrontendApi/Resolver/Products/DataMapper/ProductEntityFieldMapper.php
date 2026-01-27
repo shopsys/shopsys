@@ -64,6 +64,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @method \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues[] getParameters(\App\Model\Product\Product $product)
+ * @method \GraphQL\Executor\Promise\Promise getRelatedProductsPromise(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -233,18 +234,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $categoryIds = array_map(fn (Category $category) => $category->getId(), $categories);
 
         return $this->categoriesBatchLoader->load($categoryIds);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return \GraphQL\Executor\Promise\Promise
-     */
-    public function getRelatedProductsPromise(Product $product): Promise
-    {
-        $relatedProducts = $product->getRelatedProducts();
-        $relatedProductsIds = array_map(fn (Product $relatedProduct) => $relatedProduct->getId(), $relatedProducts);
-
-        return $this->productsSellableByIdsBatchLoader->load($relatedProductsIds);
     }
 
     /**

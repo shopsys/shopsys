@@ -16,6 +16,5 @@ class ProductExportFieldProvider extends BaseProductExportFieldProvider
     public const string SEARCHING_EANS = 'searching_eans';
     public const string SEARCHING_PARTNOS = 'searching_partnos';
     public const string SEARCHING_SHORT_DESCRIPTIONS = 'searching_short_descriptions';
-    public const string RELATED_PRODUCTS = 'related_products';
     public const string BREADCRUMB = 'breadcrumb';
 }

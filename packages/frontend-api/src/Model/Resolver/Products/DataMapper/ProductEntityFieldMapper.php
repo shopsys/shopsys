@@ -169,6 +169,18 @@ class ProductEntityFieldMapper
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getRelatedProductsPromise(Product $product): Promise
+    {
+        $relatedProducts = $product->getRelatedProducts();
+        $relatedProductsIds = array_map(fn (Product $relatedProduct) => $relatedProduct->getId(), $relatedProducts);
+
+        return $this->productsSellableByIdsBatchLoader->load($relatedProductsIds);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return string|null
      */
     public function getDescription(Product $product): ?string

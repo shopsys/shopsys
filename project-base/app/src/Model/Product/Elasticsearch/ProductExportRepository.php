@@ -53,6 +53,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method array extractStoreAvailabilitiesInformation(\App\Model\Product\Product $product, int $domainId)
  * @method array getVariantPrices(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
  * @method string extractVat(\App\Model\Product\Product $product, int $domainId)
+ * @method int[] extractRelatedProductsIds(\App\Model\Product\Product $product)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -143,7 +144,6 @@ class ProductExportRepository extends BaseProductExportRepository
             ProductExportFieldProvider::SEARCHING_EANS => $this->extractSearchingEans($product, $domainId),
             ProductExportFieldProvider::SEARCHING_PARTNOS => $this->extractSearchingPartnos($product, $domainId),
             ProductExportFieldProvider::SEARCHING_SHORT_DESCRIPTIONS => $this->extractSearchingShortDescriptions($product, $domainId),
-            ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractRelatedProductsId($product),
             ProductExportFieldProvider::BREADCRUMB => $this->extractBreadcrumb($product, $domainId, $locale),
             default => parent::getExportedFieldValue($domainId, $product, $locale, $field),
         };
@@ -314,21 +314,6 @@ class ProductExportRepository extends BaseProductExportRepository
         ksort($resultArray);
 
         return array_values($resultArray);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return int[]
-     */
-    private function extractRelatedProductsId(Product $product): array
-    {
-        $relatedProductsId = [];
-
-        foreach ($product->getRelatedProducts() as $relatedProduct) {
-            $relatedProductsId[] = $relatedProduct->getId();
-        }
-
-        return $relatedProductsId;
     }
 
     /**
