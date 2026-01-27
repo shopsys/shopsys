@@ -271,20 +271,10 @@ class OrderController extends AdminBaseController
         return $this->redirectToRoute('admin_order_list');
     }
 
-    #[Route(path: '/order/get-advanced-search-rule-form/', methods: ['post'])]
-    #[CanView]
-    public function getRuleFormAction(Request $request): Response
-    {
-        $ruleForm = $this->orderAdvancedSearchFacade->createRuleForm(
-            $request->request->getString('filterName'),
-            $request->request->getString('newIndex'),
-        );
-
-        return $this->render('@ShopsysAdministration/content/order/advancedSearch/ruleForm.html.twig', [
-            'rulesForm' => $ruleForm->createView(),
-        ]);
-    }
-
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/order/preview/{id}', requirements: ['id' => '\d+'])]
     #[CanView]
     public function previewAction(int $id): Response

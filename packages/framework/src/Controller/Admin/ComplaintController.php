@@ -123,18 +123,4 @@ class ComplaintController extends AdminBaseController
             'domains' => $this->domain->getAll(),
         ]);
     }
-
-    #[Route(path: '/complaint/get-advanced-search-rule-form/', methods: ['post'])]
-    #[CanView]
-    public function getRuleFormAction(Request $request): Response
-    {
-        $ruleForm = $this->complaintAdvancedSearchFacade->createRuleForm(
-            $request->request->getString('filterName'),
-            $request->request->getString('newIndex'),
-        );
-
-        return $this->render('@ShopsysAdministration/content/complaint/advancedSearch/ruleForm.html.twig', [
-            'rulesForm' => $ruleForm->createView(),
-        ]);
-    }
 }

@@ -85,6 +85,15 @@ class ComplaintAdvancedSearchFacade extends AbstractAdvancedSearchFacade
      * @return string
      */
     #[Override]
+    public static function getEntityType(): string
+    {
+        return 'complaint';
+    }
+
+    /**
+     * @return string
+     */
+    #[Override]
     protected function getDefaultFilterName(): string
     {
         return ComplaintNumberFilter::NAME;

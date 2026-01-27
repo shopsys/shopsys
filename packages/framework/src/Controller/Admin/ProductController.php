@@ -232,20 +232,10 @@ class ProductController extends AdminBaseController
         return $this->redirectToRoute('admin_product_list');
     }
 
-    #[Route(path: '/product/get-advanced-search-rule-form/', methods: ['post'])]
-    #[CanView]
-    public function getRuleFormAction(Request $request): Response
-    {
-        $ruleForm = $this->productAdvancedSearchFacade->createRuleForm(
-            $request->request->getString('filterName'),
-            $request->request->getString('newIndex'),
-        );
-
-        return $this->render('@ShopsysAdministration/content/product/advancedSearch/ruleForm.html.twig', [
-            'rulesForm' => $ruleForm->createView(),
-        ]);
-    }
-
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/product/create-variant/')]
     #[CanCreate]
     public function createVariantAction(Request $request): Response

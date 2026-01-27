@@ -39,4 +39,13 @@ class ProductAdvancedSearchFacade extends AbstractAdvancedSearchFacade
     {
         return ProductNameFilter::NAME;
     }
+
+    /**
+     * @return string
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return 'product';
+    }
 }

@@ -27,6 +27,11 @@ abstract class AbstractAdvancedSearchFacade
     abstract protected function getDefaultFilterName(): string;
 
     /**
+     * @return string
+     */
+    abstract public static function getEntityType(): string;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -39,7 +44,7 @@ abstract class AbstractAdvancedSearchFacade
             $rawRulesData,
         );
 
-        return $this->advancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesFormData);
+        return $this->advancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesFormData, static::getEntityType());
     }
 
     /**
@@ -62,6 +67,14 @@ abstract class AbstractAdvancedSearchFacade
             $index => $this->ruleFormViewDataFactory->createDefault($filterName),
         ];
 
-        return $this->advancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesData);
+        return $this->advancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesData, static::getEntityType());
+    }
+
+    /**
+     * @return string
+     */
+    public function getRuleFormTemplatePath(): string
+    {
+        return '@ShopsysAdministration/content/advancedSearch/ruleForm.html.twig';
     }
 }

@@ -6,11 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearch;
 
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchFilterTranslation;
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation;
+use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchRulesFormType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 
 abstract class AbstractAdvancedSearchFormFactory
 {
@@ -23,17 +23,21 @@ abstract class AbstractAdvancedSearchFormFactory
     }
 
     /**
+     * @param string $name
      * @param array<int|string, array{subject: string, operator: string|null, value: mixed}> $rulesViewData
+     * @param string $entityType
+     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createRulesForm(string $name, array $rulesViewData): FormInterface
+    public function createRulesForm($name, $rulesViewData, $entityType)
     {
         $options = [
             'csrf_protection' => false,
             'attr' => [
                 'novalidate' => 'novalidate',
             ],
+            'entity_type' => $entityType,
         ];
-        $formBuilder = $this->formFactory->createNamedBuilder($name, FormType::class, null, $options);
+        $formBuilder = $this->formFactory->createNamedBuilder($name, AdvancedSearchRulesFormType::class, null, $options);
         $formBuilder->setMethod('GET');
 
         foreach ($rulesViewData as $ruleKey => $ruleViewData) {

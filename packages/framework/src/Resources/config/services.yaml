@@ -19,6 +19,10 @@ services:
         resource: '../../Controller/'
         tags: ['controller.service_arguments']
 
+    _instanceof:
+        Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFacade:
+            tags: ['shopsys.advanced_search_facade']
+
     CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
         class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
 

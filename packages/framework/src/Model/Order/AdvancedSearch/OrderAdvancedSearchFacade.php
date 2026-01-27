@@ -40,4 +40,22 @@ class OrderAdvancedSearchFacade extends AbstractAdvancedSearchFacade
     {
         return OrderPriceFilterWithVatFilter::NAME;
     }
+
+    /**
+     * @return string
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return 'order';
+    }
+
+    /**
+     * @return string
+     */
+    #[Override]
+    public function getRuleFormTemplatePath(): string
+    {
+        return '@ShopsysAdministration/content/order/advancedSearch/ruleForm.html.twig';
+    }
 }
