@@ -9,8 +9,8 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchConfig;
 
 class AdvancedSearchQueryBuilderExtenderTest extends TestCase
 {

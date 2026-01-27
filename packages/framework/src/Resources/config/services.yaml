@@ -562,35 +562,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~
 
-    Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\AdvancedSearchComplaintFacade:
-        arguments:
-            $advancedSearchQueryBuilderExtender: '@shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.complaint'
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\AdvancedSearchComplaintFilterTranslation: ~
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\ComplaintAdvancedSearchConfig: ~
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter\:
-        resource: '../../Model/AdvancedSearchComplaint/Filter/*Filter.php'
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade:
-        arguments:
-            $advancedSearchQueryBuilderExtender: '@shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.order'
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\:
-        resource: '../../Model/AdvancedSearchOrder/Filter/*Filter.php'
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade:
-        arguments:
-            $advancedSearchQueryBuilderExtender: '@shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.product'
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\:
-        resource: '../../Model/AdvancedSearch/Filter/*Filter.php'
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig: ~
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
-
     Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex: ~
 
     Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessageHandler:
@@ -619,6 +590,9 @@ services:
     Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
+
+    Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\Filter\:
+        resource: '../../Model/Complaint/AdvancedSearch/Filter/*Filter.php'
 
     Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail: ~
 
@@ -701,6 +675,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Module\ModuleList: ~
 
+    Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter\:
+        resource: '../../Model/Order/AdvancedSearch/Filter/*Filter.php'
+
     Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail: ~
 
     Shopsys\FrameworkBundle\Model\Order\Messenger\HeurekaPlacedOrderMessageHandler:
@@ -748,6 +725,13 @@ services:
     Shopsys\FrameworkBundle\Model\Pricing\PricingSetting: ~
 
     Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
+
+    Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter\:
+        resource: '../../Model/Product/AdvancedSearch/Filter/*Filter.php'
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender: ~
+
+    Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchFilterTranslation: ~
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator: ~
 
@@ -934,17 +918,17 @@ services:
 
     shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.complaint:
         arguments:
-            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\ComplaintAdvancedSearchConfig'
+            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\ComplaintAdvancedSearchConfig'
         class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
 
     shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.order:
         arguments:
-            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig'
+            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchConfig'
         class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
 
     shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.product:
         arguments:
-            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig'
+            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchConfig'
         class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
 
     translation.loader.po:

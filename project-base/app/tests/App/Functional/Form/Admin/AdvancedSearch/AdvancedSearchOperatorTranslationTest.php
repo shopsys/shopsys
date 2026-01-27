@@ -6,8 +6,8 @@ namespace Tests\App\Functional\Form\Admin\AdvancedSearch;
 
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchTranslationNotFoundException;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig;
+use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchConfig;
+use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchConfig;
 use Tests\App\Test\FunctionalTestCase;
 
 class AdvancedSearchOperatorTranslationTest extends FunctionalTestCase

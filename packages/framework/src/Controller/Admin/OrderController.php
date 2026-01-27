@@ -26,8 +26,8 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
+use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
@@ -45,7 +45,7 @@ class OrderController extends AdminBaseController
 
     public function __construct(
         protected readonly OrderFacade $orderFacade,
-        protected readonly AdvancedSearchOrderFacade $advancedSearchOrderFacade,
+        protected readonly OrderAdvancedSearchFacade $orderAdvancedSearchFacade,
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly GridFactory $gridFactory,
@@ -146,18 +146,18 @@ class OrderController extends AdminBaseController
     {
         $domainFilterNamespace = 'orders';
 
-        $advancedSearchForm = $this->advancedSearchOrderFacade->createAdvancedSearchOrderForm($request);
+        $advancedSearchForm = $this->orderAdvancedSearchFacade->createAdvancedSearchOrderForm($request);
         $advancedSearchData = $advancedSearchForm->getData();
 
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $isAdvancedSearchFormSubmitted = $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(
+        $isAdvancedSearchFormSubmitted = $this->orderAdvancedSearchFacade->isAdvancedSearchOrderFormSubmitted(
             $request,
         );
 
         if ($isAdvancedSearchFormSubmitted) {
-            $queryBuilder = $this->advancedSearchOrderFacade->getQueryBuilderByAdvancedSearchOrderData(
+            $queryBuilder = $this->orderAdvancedSearchFacade->getQueryBuilderByAdvancedSearchOrderData(
                 $advancedSearchData,
             );
         } else {
@@ -183,7 +183,7 @@ class OrderController extends AdminBaseController
             'domainFilterNamespace' => $domainFilterNamespace,
             'quickSearchForm' => $quickSearchForm->createView(),
             'advancedSearchForm' => $advancedSearchForm->createView(),
-            'isAdvancedSearchFormSubmitted' => $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(
+            'isAdvancedSearchFormSubmitted' => $this->orderAdvancedSearchFacade->isAdvancedSearchOrderFormSubmitted(
                 $request,
             ),
         ]);
@@ -275,7 +275,7 @@ class OrderController extends AdminBaseController
     #[CanView]
     public function getRuleFormAction(Request $request): Response
     {
-        $ruleForm = $this->advancedSearchOrderFacade->createRuleForm(
+        $ruleForm = $this->orderAdvancedSearchFacade->createRuleForm(
             $request->request->getString('filterName'),
             $request->request->getString('newIndex'),
         );
