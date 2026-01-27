@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 
 #[ORM\Table(name: 'ready_category_seo_mixes')]
 #[ORM\UniqueConstraint(name: 'selected_category_seo_mix_combination_json', columns: ['selected_category_seo_mix_combination_json'])]
@@ -189,6 +190,17 @@ class ReadyCategorySeoMix
     public function setOrdering($ordering)
     {
         $this->ordering = $ordering;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPriceBasedOrdering(): bool
+    {
+        return in_array($this->ordering, [
+            ProductListOrderingConfig::ORDER_BY_PRICE_ASC,
+            ProductListOrderingConfig::ORDER_BY_PRICE_DESC,
+        ], true);
     }
 
     /**
