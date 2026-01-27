@@ -7,12 +7,13 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Form\ProductType;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Symfony\Component\Form\FormTypeInterface;
 
-class OrderProductFilter implements AdvancedSearchFilterInterface
+class OrderProductFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'orderProduct';
 
@@ -29,30 +30,9 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getAllowedOperators(): array
-    {
-        return [
-            self::OPERATOR_CONTAINS,
-            self::OPERATOR_NOT_CONTAINS,
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
         return ProductType::class;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getValueFormOptions(): array
-    {
-        return [];
     }
 
     /**
@@ -94,5 +74,14 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
         }
 
         throw new AdvancedSearchFilterOperatorNotFoundException($operator);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return OrderAdvancedSearchFacade::getEntityType();
     }
 }

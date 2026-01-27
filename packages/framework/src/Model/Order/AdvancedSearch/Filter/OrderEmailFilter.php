@@ -6,20 +6,15 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormTypeInterface;
 
-class OrderEmailFilter implements AdvancedSearchFilterInterface
+class OrderEmailFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'customerEmail';
-
-    public function __construct(
-        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
-    ) {
-    }
 
     /**
      * {@inheritdoc}
@@ -34,27 +29,9 @@ class OrderEmailFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getAllowedOperators(): array
-    {
-        return [
-            self::OPERATOR_CONTAINS,
-            self::OPERATOR_NOT_CONTAINS,
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
         return EmailType::class;
-    }
-
-    #[Override]
-    public function getValueFormOptions(): array
-    {
-        return [];
     }
 
     /**
@@ -64,12 +41,8 @@ class OrderEmailFilter implements AdvancedSearchFilterInterface
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
-            if ($ruleData->value === null || $ruleData->value === '') {
-                $searchValue = '%';
-            } else {
-                $searchValue = $this->databaseSearchingHelper->getFullTextLikeSearchString($ruleData->value);
-            }
-            $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
+            $searchValue = $this->getSearchValue($ruleData);
+            $dqlOperator = $this->getDqlOperator($ruleData->operator);
             $parameterName = 'email_' . $index;
             $queryBuilder->andWhere('NORMALIZED(o.email) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
             $queryBuilder->setParameter($parameterName, $searchValue);
@@ -86,5 +59,14 @@ class OrderEmailFilter implements AdvancedSearchFilterInterface
         }
 
         throw new AdvancedSearchFilterOperatorNotFoundException($operator);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return OrderAdvancedSearchFacade::getEntityType();
     }
 }

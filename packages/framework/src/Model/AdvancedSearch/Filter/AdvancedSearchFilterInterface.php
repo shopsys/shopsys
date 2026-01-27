@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\AdvancedSearch;
+namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\FormTypeInterface;
@@ -45,6 +45,13 @@ interface AdvancedSearchFilterInterface
      * Returns options that will be passed to the form type used for value selection
      */
     public function getValueFormOptions(): array;
+
+    /**
+     * Returns advanced search facade entity type supporting this filter
+     *
+     * @return string
+     */
+    public static function getEntityType(): string;
 
     /**
      * Method that applies the filtering conditions specified by $rulesData to the provided query builder

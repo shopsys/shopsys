@@ -6,15 +6,17 @@ namespace Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormTypeInterface;
 
-class ProductCategoryFilter implements AdvancedSearchFilterInterface
+class ProductCategoryFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'productCategory';
 
@@ -23,8 +25,11 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
         Localization $localization,
+        DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
         $this->localization = $localization;
+
+        parent::__construct($databaseSearchingHelper);
     }
 
     /**
@@ -110,5 +115,14 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
 
         $queryBuilder->andWhere($queryBuilder->expr()->notIn('p.id', sprintf($subQuery, 'pcd_not', 'isNotCategory')));
         $queryBuilder->setParameter('isNotCategory', $isNotCategory);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return ProductAdvancedSearchFacade::getEntityType();
     }
 }

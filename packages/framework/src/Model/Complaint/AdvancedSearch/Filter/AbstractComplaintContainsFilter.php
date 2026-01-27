@@ -6,55 +6,16 @@ namespace Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\ComplaintAdvancedSearchFacade;
 
-abstract class AbstractComplaintContainsFilter implements AdvancedSearchFilterInterface
+abstract class AbstractComplaintContainsFilter extends AbstractAdvancedSearchFilter
 {
-    public function __construct(
-        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
-    ) {
-    }
-
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    #[Override]
-    abstract public function getName(): string;
-
     abstract protected function getFieldName(): string;
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getAllowedOperators(): array
-    {
-        return [
-            self::OPERATOR_CONTAINS,
-            self::OPERATOR_NOT_CONTAINS,
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getValueFormType(): string
-    {
-        return TextType::class;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getValueFormOptions(): array
-    {
-        return [];
-    }
 
     /**
      * {@inheritdoc}
@@ -63,12 +24,8 @@ abstract class AbstractComplaintContainsFilter implements AdvancedSearchFilterIn
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
-            if ($ruleData->value === null || $ruleData->value === '') {
-                $searchValue = '%';
-            } else {
-                $searchValue = $this->databaseSearchingHelper->getFullTextLikeSearchString($ruleData->value);
-            }
-            $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
+            $searchValue = $this->getSearchValue($ruleData);
+            $dqlOperator = $this->getDqlOperator($ruleData->operator);
             $parameterName = $this->getFieldName() . '_' . $index;
             $queryBuilder->andWhere(
                 'NORMALIZED(cmp.' . $this->getFieldName() . ') ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')',
@@ -87,5 +44,14 @@ abstract class AbstractComplaintContainsFilter implements AdvancedSearchFilterIn
         }
 
         throw new AdvancedSearchFilterOperatorNotFoundException($operator);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return ComplaintAdvancedSearchFacade::getEntityType();
     }
 }

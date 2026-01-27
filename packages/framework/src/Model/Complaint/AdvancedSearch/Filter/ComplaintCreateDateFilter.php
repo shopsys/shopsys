@@ -7,9 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\ComplaintAdvancedSearchFacade;
 
-class ComplaintCreateDateFilter implements AdvancedSearchFilterInterface
+class ComplaintCreateDateFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'complaintCreatedAt';
 
@@ -48,15 +49,6 @@ class ComplaintCreateDateFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormOptions(): array
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
@@ -84,5 +76,14 @@ class ComplaintCreateDateFilter implements AdvancedSearchFilterInterface
                     ->setParameter($parameterName2, $dateDayAfter);
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return ComplaintAdvancedSearchFacade::getEntityType();
     }
 }

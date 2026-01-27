@@ -6,18 +6,19 @@ namespace Shopsys\FrameworkBundle\Model\Product\AdvancedSearch;
 
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFormFactory;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterRegistry;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class ProductAdvancedSearchFormFactory extends AbstractAdvancedSearchFormFactory
 {
     public function __construct(
-        ProductAdvancedSearchConfig $productAdvancedSearchConfig,
+        AdvancedSearchFilterRegistry $advancedSearchFilterRegistry,
         ProductAdvancedSearchFilterTranslation $productAdvancedSearchFilterTranslation,
         FormFactoryInterface $formFactory,
         AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation,
     ) {
         parent::__construct(
-            $productAdvancedSearchConfig,
+            $advancedSearchFilterRegistry,
             $productAdvancedSearchFilterTranslation,
             $formFactory,
             $advancedSearchOperatorTranslation,

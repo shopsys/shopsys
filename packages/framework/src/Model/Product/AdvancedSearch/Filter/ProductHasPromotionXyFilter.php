@@ -7,18 +7,26 @@ namespace Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormTypeInterface;
 
-class ProductHasPromotionXyFilter implements AdvancedSearchFilterInterface
+class ProductHasPromotionXyFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'productHasPromotionXy';
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     */
     public function __construct(
+        DatabaseSearchingHelper $databaseSearchingHelper,
         protected readonly EntityManagerInterface $em,
     ) {
+        parent::__construct($databaseSearchingHelper);
     }
 
     #[Override]
@@ -39,13 +47,8 @@ class ProductHasPromotionXyFilter implements AdvancedSearchFilterInterface
         return HiddenType::class;
     }
 
-    #[Override]
-    public function getValueFormOptions(): array
-    {
-        return [];
-    }
-
     /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
     #[Override]
@@ -71,5 +74,14 @@ class ProductHasPromotionXyFilter implements AdvancedSearchFilterInterface
 
             $queryBuilder->andWhere('NOT EXISTS (' . $existsDql . ')');
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return ProductAdvancedSearchFacade::getEntityType();
     }
 }

@@ -6,18 +6,23 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormTypeInterface;
 
-class OrderStatusFilter implements AdvancedSearchFilterInterface
+class OrderStatusFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'orderStatus';
 
-    public function __construct(protected readonly OrderStatusFacade $orderStatusFacade)
-    {
+    public function __construct(
+        DatabaseSearchingHelper $databaseSearchingHelper,
+        protected readonly OrderStatusFacade $orderStatusFacade,
+    ) {
+        parent::__construct($databaseSearchingHelper);
     }
 
     /**
@@ -90,5 +95,14 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
         }
 
         throw new AdvancedSearchFilterOperatorNotFoundException($operator);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return OrderAdvancedSearchFacade::getEntityType();
     }
 }

@@ -7,10 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Symfony\Component\Form\FormTypeInterface;
 
-class OrderCreateDateFilter implements AdvancedSearchFilterInterface
+class OrderCreateDateFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'orderCreatedAt';
 
@@ -49,15 +50,6 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormOptions(): array
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
@@ -85,5 +77,14 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
                     ->setParameter($parameterName2, $dateDayAfter);
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return OrderAdvancedSearchFacade::getEntityType();
     }
 }

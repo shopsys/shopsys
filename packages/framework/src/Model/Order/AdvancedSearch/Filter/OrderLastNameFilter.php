@@ -6,20 +6,13 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormTypeInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 
-class OrderLastNameFilter implements AdvancedSearchFilterInterface
+class OrderLastNameFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'customerLastName';
-
-    public function __construct(
-        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
-    ) {
-    }
 
     /**
      * {@inheritdoc}
@@ -28,36 +21,6 @@ class OrderLastNameFilter implements AdvancedSearchFilterInterface
     public function getName(): string
     {
         return self::NAME;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getAllowedOperators(): array
-    {
-        return [
-            self::OPERATOR_CONTAINS,
-            self::OPERATOR_NOT_CONTAINS,
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getValueFormType(): FormTypeInterface|string
-    {
-        return TextType::class;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getValueFormOptions(): array
-    {
-        return [];
     }
 
     /**
@@ -91,5 +54,14 @@ class OrderLastNameFilter implements AdvancedSearchFilterInterface
         }
 
         throw new AdvancedSearchFilterOperatorNotFoundException($operator);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return OrderAdvancedSearchFacade::getEntityType();
     }
 }

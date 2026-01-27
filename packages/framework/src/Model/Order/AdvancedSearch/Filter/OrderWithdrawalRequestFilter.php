@@ -7,18 +7,22 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormTypeInterface;
 
-class OrderWithdrawalRequestFilter implements AdvancedSearchFilterInterface
+class OrderWithdrawalRequestFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'orderWithdrawalRequest';
 
     public function __construct(
+        DatabaseSearchingHelper $databaseSearchingHelper,
         protected readonly EntityManagerInterface $em,
     ) {
+        parent::__construct($databaseSearchingHelper);
     }
 
     /**
@@ -55,15 +59,6 @@ class OrderWithdrawalRequestFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormOptions(): array
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $ruleData) {
@@ -80,5 +75,14 @@ class OrderWithdrawalRequestFilter implements AdvancedSearchFilterInterface
                 $queryBuilder->andWhere($queryBuilder->expr()->not($queryBuilder->expr()->exists($subQuery->getDQL())));
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return OrderAdvancedSearchFacade::getEntityType();
     }
 }

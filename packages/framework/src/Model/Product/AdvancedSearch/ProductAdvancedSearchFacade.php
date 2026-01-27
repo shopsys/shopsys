@@ -26,7 +26,7 @@ class ProductAdvancedSearchFacade extends AbstractAdvancedSearchFacade
     public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): QueryBuilder
     {
         $queryBuilder = $this->productListAdminFacade->getProductListQueryBuilder();
-        $this->advancedSearchQueryBuilderExtender->extendByAdvancedSearchData($queryBuilder, $advancedSearchData);
+        $this->advancedSearchQueryBuilderExtender->extendByAdvancedSearchData($queryBuilder, $advancedSearchData, static::getEntityType());
 
         return $queryBuilder;
     }

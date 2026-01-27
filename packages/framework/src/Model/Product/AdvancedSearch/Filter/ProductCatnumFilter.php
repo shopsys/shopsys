@@ -6,20 +6,13 @@ namespace Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormTypeInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchFacade;
 
-class ProductCatnumFilter implements AdvancedSearchFilterInterface
+class ProductCatnumFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'productCatnum';
-
-    public function __construct(
-        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
-    ) {
-    }
 
     /**
      * {@inheritdoc}
@@ -47,24 +40,6 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormType(): FormTypeInterface|string
-    {
-        return TextType::class;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getValueFormOptions(): array
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
@@ -74,13 +49,8 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
                 $ruleData->operator === self::OPERATOR_CONTAINS
                 || $ruleData->operator === self::OPERATOR_NOT_CONTAINS
             ) {
-                if ($ruleData->value === null) {
-                    $searchValue = '%';
-                } else {
-                    $searchValue = $this->databaseSearchingHelper->getFullTextLikeSearchString($ruleData->value);
-                }
-
-                $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
+                $searchValue = $this->getSearchValue($ruleData);
+                $dqlOperator = $this->getDqlOperator($ruleData->operator);
                 $parameterName = 'productCatnum_' . $index;
                 $queryBuilder->andWhere('NORMALIZED(p.catnum) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
                 $queryBuilder->setParameter($parameterName, $searchValue);
@@ -98,5 +68,14 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
         }
 
         throw new AdvancedSearchFilterOperatorNotFoundException($operator);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return ProductAdvancedSearchFacade::getEntityType();
     }
 }

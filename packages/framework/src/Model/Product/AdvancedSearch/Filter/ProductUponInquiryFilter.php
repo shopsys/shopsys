@@ -6,11 +6,12 @@ namespace Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class ProductUponInquiryFilter implements AdvancedSearchFilterInterface
+class ProductUponInquiryFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'productUponInquiryFilter';
 
@@ -48,15 +49,6 @@ class ProductUponInquiryFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormOptions(): array
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
@@ -67,5 +59,14 @@ class ProductUponInquiryFilter implements AdvancedSearchFilterInterface
                 ->andWhere('p.productType ' . $operator . ' :' . $parameterName)
                 ->setParameter($parameterName, ProductTypeEnum::TYPE_INQUIRY);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return ProductAdvancedSearchFacade::getEntityType();
     }
 }

@@ -7,13 +7,14 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerNotFoundException;
+use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
-class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
+class OrderCustomerIdFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'customerId';
 
@@ -47,13 +48,8 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
         return NumberType::class;
     }
 
-    #[Override]
-    public function getValueFormOptions(): array
-    {
-        return [];
-    }
-
     /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
     #[Override]
@@ -61,7 +57,7 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
     {
         $customerIds = [];
 
-        foreach ($rulesData as $index => $ruleData) {
+        foreach ($rulesData as $ruleData) {
             if ($ruleData->operator === self::OPERATOR_NOT_REGISTERED) {
                 $queryBuilder->andWhere('o.customer IS NULL');
 
@@ -88,5 +84,14 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
 
         $queryBuilder->andWhere('o.customer IN(:customer_id_filter)');
         $queryBuilder->setParameter('customer_id_filter', $customerIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return OrderAdvancedSearchFacade::getEntityType();
     }
 }

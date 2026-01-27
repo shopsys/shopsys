@@ -6,18 +6,23 @@ namespace Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormTypeInterface;
 
-class ProductFlagFilter implements AdvancedSearchFilterInterface
+class ProductFlagFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'productFlag';
 
-    public function __construct(protected readonly FlagFacade $flagFacade)
-    {
+    public function __construct(
+        DatabaseSearchingHelper $databaseSearchingHelper,
+        protected readonly FlagFacade $flagFacade,
+    ) {
+        parent::__construct($databaseSearchingHelper);
     }
 
     /**
@@ -99,5 +104,14 @@ class ProductFlagFilter implements AdvancedSearchFilterInterface
         $subQuery = 'SELECT IDENTITY(pdSubNot.product) FROM ' . ProductDomain::class . ' pdSubNot JOIN pdSubNot.flags AS fSubNot WHERE fSubNot.id IN (:isNotFlags)';
         $queryBuilder->andWhere($queryBuilder->expr()->notIn('p.id', $subQuery));
         $queryBuilder->setParameter('isNotFlags', $isNotFlags);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return ProductAdvancedSearchFacade::getEntityType();
     }
 }

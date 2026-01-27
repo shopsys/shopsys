@@ -23,6 +23,9 @@ services:
         Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFacade:
             tags: ['shopsys.advanced_search_facade']
 
+        Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface:
+            tags: ['shopsys.advanced_search_filter']
+
     CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
         class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
 
@@ -921,18 +924,12 @@ services:
         class: Psr\Log\NullLogger
 
     shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.complaint:
-        arguments:
-            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\ComplaintAdvancedSearchConfig'
         class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
 
     shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.order:
-        arguments:
-            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchConfig'
         class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
 
     shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.product:
-        arguments:
-            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchConfig'
         class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
 
     translation.loader.po:

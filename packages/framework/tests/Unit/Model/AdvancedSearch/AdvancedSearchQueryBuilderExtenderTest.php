@@ -6,11 +6,11 @@ namespace Tests\FrameworkBundle\Unit\Model\AdvancedSearch;
 
 use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterRegistry;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
-use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchConfig;
 
 class AdvancedSearchQueryBuilderExtenderTest extends TestCase
 {
@@ -21,28 +21,30 @@ class AdvancedSearchQueryBuilderExtenderTest extends TestCase
         $ruleData->operator = 'testOperator';
         $ruleData->value = 'testValue';
 
-        /** @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $advancedSearchData */
         $advancedSearchData = [
             RuleFormViewDataFactory::TEMPLATE_RULE_FORM_KEY => null,
             0 => $ruleData,
         ];
 
-        $advancedSearchFilterStub = $this->createStub(AdvancedSearchFilterInterface::class);
+        $filterMock = $this->createMock(AdvancedSearchFilterInterface::class);
+        $filterMock
+            ->expects($this->once())
+            ->method('extendQueryBuilder')
+            ->with(
+                $this->isInstanceOf(QueryBuilder::class),
+                $this->equalTo([$ruleData]),
+            );
 
-        $advancedSearchConfigMock = $this->getMockBuilder(ProductAdvancedSearchConfig::class)
-            ->onlyMethods(['getFilter'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $advancedSearchConfigMock
+        $registryMock = $this->createMock(AdvancedSearchFilterRegistry::class);
+        $registryMock
             ->expects($this->once())
             ->method('getFilter')
-            ->with($this->equalTo($ruleData->subject))
-            ->willReturn($advancedSearchFilterStub);
+            ->with('product', 'testSubject')
+            ->willReturn($filterMock);
 
-        $queryBuilderStub = $this->createStub(QueryBuilder::class);
+        $queryBuilderMock = $this->createMock(QueryBuilder::class);
 
-        $advancedSearchQueryBuilderExtender = new AdvancedSearchQueryBuilderExtender($advancedSearchConfigMock);
-
-        $advancedSearchQueryBuilderExtender->extendByAdvancedSearchData($queryBuilderStub, $advancedSearchData);
+        $extender = new AdvancedSearchQueryBuilderExtender($registryMock);
+        $extender->extendByAdvancedSearchData($queryBuilderMock, $advancedSearchData, 'product');
     }
 }

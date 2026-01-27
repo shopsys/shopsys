@@ -27,7 +27,7 @@ class OrderAdvancedSearchFacade extends AbstractAdvancedSearchFacade
         array $advancedSearchOrderData,
     ): QueryBuilder {
         $queryBuilder = $this->orderListAdminFacade->getOrderListQueryBuilder();
-        $this->advancedSearchQueryBuilderExtender->extendByAdvancedSearchData($queryBuilder, $advancedSearchOrderData);
+        $this->advancedSearchQueryBuilderExtender->extendByAdvancedSearchData($queryBuilder, $advancedSearchOrderData, static::getEntityType());
 
         return $queryBuilder;
     }

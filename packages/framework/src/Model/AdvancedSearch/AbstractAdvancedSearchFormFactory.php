@@ -7,6 +7,8 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearch;
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchFilterTranslation;
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation;
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchRulesFormType;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterRegistry;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,7 +17,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 abstract class AbstractAdvancedSearchFormFactory
 {
     public function __construct(
-        protected readonly AdvancedSearchConfig $advancedSearchConfig,
+        protected readonly AdvancedSearchFilterRegistry $advancedSearchFilterRegistry,
         protected readonly AdvancedSearchFilterTranslation $advancedSearchFilterTranslation,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation,
@@ -28,7 +30,7 @@ abstract class AbstractAdvancedSearchFormFactory
      * @param string $entityType
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createRulesForm($name, $rulesViewData, $entityType)
+    public function createRulesForm($name, $rulesViewData, string $entityType)
     {
         $options = [
             'csrf_protection' => false,
@@ -41,8 +43,8 @@ abstract class AbstractAdvancedSearchFormFactory
         $formBuilder->setMethod('GET');
 
         foreach ($rulesViewData as $ruleKey => $ruleViewData) {
-            $ruleFilter = $this->advancedSearchConfig->getFilter($ruleViewData['subject']);
-            $formBuilder->add($this->createRuleFormBuilder($ruleKey, $ruleFilter));
+            $ruleFilter = $this->advancedSearchFilterRegistry->getFilter($entityType, $ruleViewData['subject']);
+            $formBuilder->add($this->createRuleFormBuilder($ruleKey, $ruleFilter, $entityType));
         }
 
         $form = $formBuilder->getForm();
@@ -51,15 +53,19 @@ abstract class AbstractAdvancedSearchFormFactory
         return $form;
     }
 
-    protected function createRuleFormBuilder(
-        int|string $name,
-        AdvancedSearchFilterInterface $ruleFilter,
-    ): FormBuilderInterface {
+    /**
+     * @param string $name
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface $ruleFilter
+     * @param string $entityType
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    protected function createRuleFormBuilder($name, AdvancedSearchFilterInterface $ruleFilter, string $entityType)
+    {
         return $this->formFactory->createNamedBuilder((string)$name, FormType::class, null, [
             'data_class' => AdvancedSearchRuleData::class,
         ])
             ->add('subject', ChoiceType::class, [
-                'choices' => $this->getSubjectChoices(),
+                'choices' => $this->getSubjectChoices($entityType),
                 'expanded' => false,
                 'multiple' => false,
             ])
@@ -72,6 +78,7 @@ abstract class AbstractAdvancedSearchFormFactory
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface $filter
      * @return string[]
      */
     protected function getFilterOperatorChoices(AdvancedSearchFilterInterface $filter): array
@@ -86,13 +93,14 @@ abstract class AbstractAdvancedSearchFormFactory
     }
 
     /**
+     * @param string $entityType
      * @return string[]
      */
-    protected function getSubjectChoices(): array
+    protected function getSubjectChoices(string $entityType)
     {
         $choices = [];
 
-        foreach ($this->advancedSearchConfig->getAllFilters() as $filter) {
+        foreach ($this->advancedSearchFilterRegistry->getFiltersForEntity($entityType) as $filter) {
             $choices[$this->advancedSearchFilterTranslation->translateFilterName(
                 $filter->getName(),
             )] = $filter->getName();

@@ -7,18 +7,23 @@ namespace Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormTypeInterface;
 
-class ProductBrandFilter implements AdvancedSearchFilterInterface
+class ProductBrandFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'productBrand';
 
-    public function __construct(protected readonly BrandFacade $brandFacade)
-    {
+    public function __construct(
+        DatabaseSearchingHelper $databaseSearchingHelper,
+        protected readonly BrandFacade $brandFacade,
+    ) {
+        parent::__construct($databaseSearchingHelper);
     }
 
     /**
@@ -96,5 +101,14 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
             JOIN brand_p.brand _f WITH _f.id IN (:isNotBrand)';
         $queryBuilder->andWhere('p.id NOT IN (' . $subQuery . ')');
         $queryBuilder->setParameter('isNotBrand', $isNotBrand);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return ProductAdvancedSearchFacade::getEntityType();
     }
 }
