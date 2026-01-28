@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\AdvancedSearch;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFacade;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFormFactory;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter\ProductNameFilter;
@@ -15,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
 class ProductAdvancedSearchFacade extends AbstractAdvancedSearchFacade
 {
     public function __construct(
-        ProductAdvancedSearchFormFactory $advancedSearchFormFactory,
+        AdvancedSearchFormFactory $advancedSearchFormFactory,
         RuleFormViewDataFactory $ruleFormViewDataFactory,
         protected readonly AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
         protected readonly ProductListAdminFacade $productListAdminFacade,

@@ -10,6 +10,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFacade;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFormFactory;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\Filter\ComplaintNumberFilter;
@@ -19,14 +20,14 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 class ComplaintAdvancedSearchFacade extends AbstractAdvancedSearchFacade
 {
     public function __construct(
-        ComplaintAdvancedSearchFormFactory $complaintAdvancedSearchFormFactory,
+        AdvancedSearchFormFactory $advancedSearchFormFactory,
         RuleFormViewDataFactory $ruleFormViewDataFactory,
         protected readonly AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
         protected readonly ComplaintRepository $complaintRepository,
         protected readonly Localization $localization,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
-        parent::__construct($complaintAdvancedSearchFormFactory, $ruleFormViewDataFactory);
+        parent::__construct($advancedSearchFormFactory, $ruleFormViewDataFactory);
     }
 
     public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): QueryBuilder

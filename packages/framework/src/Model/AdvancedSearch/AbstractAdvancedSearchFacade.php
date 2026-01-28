@@ -12,11 +12,11 @@ abstract class AbstractAdvancedSearchFacade
     public const string RULES_FORM_NAME = 'as';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFormFactory $advancedSearchFormFactory
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFormFactory $advancedSearchFormFactory
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory $ruleFormViewDataFactory
      */
     public function __construct(
-        protected readonly AbstractAdvancedSearchFormFactory $advancedSearchFormFactory,
+        protected readonly AdvancedSearchFormFactory $advancedSearchFormFactory,
         protected readonly RuleFormViewDataFactory $ruleFormViewDataFactory,
     ) {
     }

@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
 
-abstract class AbstractAdvancedSearchFormFactory
+class AdvancedSearchFormFactory
 {
     public function __construct(
         protected readonly AdvancedSearchFilterRegistry $advancedSearchFilterRegistry,

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFacade;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFormFactory;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter\OrderPriceFilterWithVatFilter;
@@ -15,12 +16,12 @@ use Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminFacade;
 class OrderAdvancedSearchFacade extends AbstractAdvancedSearchFacade
 {
     public function __construct(
-        OrderAdvancedSearchFormFactory $orderAdvancedSearchFormFactory,
+        AdvancedSearchFormFactory $advancedSearchFormFactory,
         RuleFormViewDataFactory $ruleFormViewDataFactory,
         protected readonly AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
         protected readonly OrderListAdminFacade $orderListAdminFacade,
     ) {
-        parent::__construct($orderAdvancedSearchFormFactory, $ruleFormViewDataFactory);
+        parent::__construct($advancedSearchFormFactory, $ruleFormViewDataFactory);
     }
 
     public function getQueryBuilderByAdvancedSearchOrderData(
