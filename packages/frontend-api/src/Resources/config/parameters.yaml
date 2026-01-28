@@ -1,3 +1,2 @@
 parameters:
-    shopsys.frontend_api.domains: []
     shopsys.frontend_api.validation_logged_as_error: false

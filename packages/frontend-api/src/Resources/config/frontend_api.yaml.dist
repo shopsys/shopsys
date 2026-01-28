@@ -1,6 +1,2 @@
 parameters:
-    shopsys.frontend_api.domains:
-        - 1
-        - 2
-        - 3
     shopsys.frontend_api.keys_filepath: '%kernel.project_dir%/config/frontend-api'

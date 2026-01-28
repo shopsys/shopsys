@@ -15,9 +15,6 @@ The Frontend API package is installed by default in `shopsys/project-base`.
 
 ## Configuration
 
-Frontend API is enabled by default for all domains.  
-If you want to disable the frontend API for a special domain, delete its id from the `shopsys.frontend_api.domains` array.
-
 You have to create a pair of private and public keys for signing access tokens with the command `./phing frontend-api-generate-new-keys`.
 Note that when you regenerate the keys in the future, you invalidate all issued access and refresh tokens.
 You can read more about tokens in part [authentication](./authentication.md).

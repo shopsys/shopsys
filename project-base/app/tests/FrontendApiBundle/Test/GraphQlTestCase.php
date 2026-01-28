@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,20 +63,9 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     {
         parent::setUp();
 
-        $this->runCheckTestEnabledOnCurrentDomain();
-
         $this->configureCurrentClient(null, null, ['CONTENT_TYPE' => 'application/graphql']);
 
         $this->currentBaseDomainUrl = $this->domain->getCurrentDomainConfig()->getBaseUrl();
-    }
-
-    protected function runCheckTestEnabledOnCurrentDomain(): void
-    {
-        $enabledOnCurrentDomainChecker = self::getContainer()->get(EnabledOnDomainChecker::class);
-
-        if (!$enabledOnCurrentDomainChecker->isEnabledOnCurrentDomain()) {
-            $this->markTestSkipped('Frontend API disabled on domain');
-        }
     }
 
     /**
