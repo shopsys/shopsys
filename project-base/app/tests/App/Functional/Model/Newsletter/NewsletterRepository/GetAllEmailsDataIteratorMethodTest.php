@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Newsletter\NewsletterRepository;
 
-use Doctrine\ORM\Internal\Hydration\IterableResult;
 use PHPUnit\Framework\Assert;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository;
@@ -31,10 +30,13 @@ class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
         $this->assertNotContainsNewsletterSubscriber($iterator, self::FIRST_DOMAIN_SUBSCRIBER_EMAIL);
     }
 
-    private function assertContainsNewsletterSubscriber(IterableResult $iterator, string $email): void
+    /**
+     * @param iterable<array{email: string, createdAt: \DateTimeInterface}> $iterator
+     */
+    private function assertContainsNewsletterSubscriber(iterable $iterator, string $email): void
     {
         foreach ($iterator as $row) {
-            if ($row[0]['email'] === $email) {
+            if ($row['email'] === $email) {
                 return;
             }
         }
@@ -42,10 +44,13 @@ class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
         Assert::fail('Newsletter subscriber was not found, but was expected');
     }
 
-    private function assertNotContainsNewsletterSubscriber(IterableResult $iterator, string $email): void
+    /**
+     * @param iterable<array{email: string, createdAt: \DateTimeInterface}> $iterator
+     */
+    private function assertNotContainsNewsletterSubscriber(iterable $iterator, string $email): void
     {
         foreach ($iterator as $row) {
-            if ($row[0]['email'] === $email) {
+            if ($row['email'] === $email) {
                 Assert::fail('Newsletter subscriber was found, but was not expected');
             }
         }

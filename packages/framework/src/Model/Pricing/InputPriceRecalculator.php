@@ -96,9 +96,8 @@ class InputPriceRecalculator
     {
         $iteration = 0;
 
-        foreach ($query->iterate() as $row) {
+        foreach ($query->toIterable() as $object) {
             $iteration++;
-            $object = $row[0];
 
             $callback($object);
 
