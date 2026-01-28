@@ -73,10 +73,6 @@ class OrderProductFilter extends AbstractAdvancedSearchFilter
         }
     }
 
-    /**
-     * @param string $operator
-     * @return string
-     */
     #[Override]
     protected function getDqlOperator(string $operator): string
     {

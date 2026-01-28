@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\Filter;
+namespace Shopsys\FrameworkBundle\Model\Customer\User\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
-use Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\ComplaintAdvancedSearchFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\AdvancedSearch\CustomerUserAdvancedSearchFacade;
 
-abstract class AbstractComplaintContainsFilter extends AbstractAdvancedSearchFilter
+abstract class AbstractCustomerUserContainsFilter extends AbstractAdvancedSearchFilter
 {
     abstract protected function getFieldName(): string;
 
@@ -24,7 +24,7 @@ abstract class AbstractComplaintContainsFilter extends AbstractAdvancedSearchFil
             $dqlOperator = $this->getDqlOperator($ruleData->operator);
             $parameterName = $this->getFieldName() . '_' . $index;
             $queryBuilder->andWhere(
-                'NORMALIZED(cmp.' . $this->getFieldName() . ') ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')',
+                'NORMALIZED(cu.' . $this->getFieldName() . ') ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')',
             );
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
@@ -36,6 +36,6 @@ abstract class AbstractComplaintContainsFilter extends AbstractAdvancedSearchFil
     #[Override]
     public static function getEntityType(): string
     {
-        return ComplaintAdvancedSearchFacade::getEntityType();
+        return CustomerUserAdvancedSearchFacade::getEntityType();
     }
 }

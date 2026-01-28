@@ -24,6 +24,9 @@ class OrderAdvancedSearchFacade extends AbstractAdvancedSearchFacade
         parent::__construct($advancedSearchFormFactory, $ruleFormViewDataFactory);
     }
 
+    /**
+     * @param array<\Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData|null> $advancedSearchOrderData
+     */
     public function getQueryBuilderByAdvancedSearchOrderData(
         array $advancedSearchOrderData,
     ): QueryBuilder {
@@ -33,27 +36,18 @@ class OrderAdvancedSearchFacade extends AbstractAdvancedSearchFacade
         return $queryBuilder;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getDefaultFilterName(): string
     {
         return OrderPriceFilterWithVatFilter::NAME;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public static function getEntityType(): string
     {
         return 'order';
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getRuleFormTemplatePath(): string
     {

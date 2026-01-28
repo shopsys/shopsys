@@ -30,6 +30,9 @@ class ComplaintAdvancedSearchFacade extends AbstractAdvancedSearchFacade
         parent::__construct($advancedSearchFormFactory, $ruleFormViewDataFactory);
     }
 
+    /**
+     * @param array<\Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData|null> $advancedSearchData
+     */
     public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): QueryBuilder
     {
         $queryBuilder = $this->complaintRepository->getComplaintsQueryBuilder($this->localization->getCurrentLocaleForTranslatableEntities());
@@ -82,18 +85,12 @@ class ComplaintAdvancedSearchFacade extends AbstractAdvancedSearchFacade
         return $queryBuilder;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public static function getEntityType(): string
     {
         return 'complaint';
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getDefaultFilterName(): string
     {

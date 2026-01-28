@@ -592,6 +592,9 @@ msgstr "Spoločnosť (IČO)"
 msgid "Company Tax number"
 msgstr "DIČ spoločnosti"
 
+msgid "Company customer"
+msgstr "Firemný zákazník"
+
 msgid "Company data"
 msgstr "Údaje spoločnosti"
 

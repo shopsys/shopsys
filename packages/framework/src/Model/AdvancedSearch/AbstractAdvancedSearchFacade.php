@@ -11,33 +11,21 @@ abstract class AbstractAdvancedSearchFacade
 {
     public const string RULES_FORM_NAME = 'as';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFormFactory $advancedSearchFormFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory $ruleFormViewDataFactory
-     */
     public function __construct(
         protected readonly AdvancedSearchFormFactory $advancedSearchFormFactory,
         protected readonly RuleFormViewDataFactory $ruleFormViewDataFactory,
     ) {
     }
 
-    /**
-     * @return string
-     */
     abstract protected function getDefaultFilterName(): string;
 
-    /**
-     * @return string
-     */
     abstract public static function getEntityType(): string;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createAdvancedSearchForm(Request $request): FormInterface
     {
-        $rawRulesData = $request->query->all(static::RULES_FORM_NAME);
+        $rawRulesData = is_array($request->query->all()[static::RULES_FORM_NAME] ?? null)
+            ? $request->query->all(static::RULES_FORM_NAME)
+            : [];
 
         $rulesFormData = $this->ruleFormViewDataFactory->createFromRequestData(
             $this->getDefaultFilterName(),
@@ -47,20 +35,11 @@ abstract class AbstractAdvancedSearchFacade
         return $this->advancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesFormData, static::getEntityType());
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
-     */
     public function isAdvancedSearchFormSubmitted(Request $request): bool
     {
         return $request->query->has(static::RULES_FORM_NAME);
     }
 
-    /**
-     * @param string $filterName
-     * @param string $index
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createRuleForm(string $filterName, string $index): FormInterface
     {
         $rulesData = [
@@ -70,9 +49,6 @@ abstract class AbstractAdvancedSearchFacade
         return $this->advancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesData, static::getEntityType());
     }
 
-    /**
-     * @return string
-     */
     public function getRuleFormTemplatePath(): string
     {
         return '@ShopsysAdministration/content/advancedSearch/ruleForm.html.twig';

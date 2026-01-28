@@ -31,8 +31,6 @@ interface AdvancedSearchFilterInterface
 
     /**
      * Returns a translation key for filter label
-     *
-     * @return string
      */
     public function getLabel(): string;
 
@@ -55,8 +53,6 @@ interface AdvancedSearchFilterInterface
 
     /**
      * Returns advanced search facade entity type supporting this filter
-     *
-     * @return string
      */
     public static function getEntityType(): string;
 

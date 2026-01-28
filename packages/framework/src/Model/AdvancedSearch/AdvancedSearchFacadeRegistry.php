@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch;
 
-use InvalidArgumentException;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFacadeNotFoundException;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class AdvancedSearchFacadeRegistry
 {
@@ -18,7 +18,7 @@ class AdvancedSearchFacadeRegistry
      * @param iterable<\Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFacade> $facades
      */
     public function __construct(
-        #[TaggedIterator('shopsys.advanced_search_facade')]
+        #[AutowireIterator('shopsys.advanced_search_facade')]
         iterable $facades,
     ) {
         foreach ($facades as $facade) {
@@ -26,12 +26,8 @@ class AdvancedSearchFacadeRegistry
         }
     }
 
-    /**
-     * @param string $type
-     * @return \Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFacade
-     */
     public function get(string $type): AbstractAdvancedSearchFacade
     {
-        return $this->facades[$type] ?? throw new InvalidArgumentException('Unknown type: ' . $type);
+        return $this->facades[$type] ?? throw new AdvancedSearchFacadeNotFoundException($type);
     }
 }

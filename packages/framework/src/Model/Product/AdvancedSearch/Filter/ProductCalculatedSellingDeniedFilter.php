@@ -65,7 +65,6 @@ class ProductCalculatedSellingDeniedFilter extends AbstractAdvancedSearchFilter
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
     #[Override]

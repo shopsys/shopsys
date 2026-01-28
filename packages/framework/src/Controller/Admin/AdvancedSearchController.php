@@ -15,19 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_ADMINISTRATOR)]
 class AdvancedSearchController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFacadeRegistry $advancedSearchFacadeRegistry
-     */
     public function __construct(
         protected readonly AdvancedSearchFacadeRegistry $advancedSearchFacadeRegistry,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $entityType
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/advanced-search/{entityType}/get-rule-form/', methods: ['post'])]
     #[CanView]
     public function getRuleFormAction(Request $request, string $entityType): Response

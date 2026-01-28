@@ -38,11 +38,7 @@ class OrderNameFilter extends AbstractAdvancedSearchFilter
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
-            if ($ruleData->value === null || $ruleData->value === '') {
-                $searchValue = '%';
-            } else {
-                $searchValue = $this->databaseSearchingHelper->getLikeSearchString($ruleData->value) . '%';
-            }
+            $searchValue = $this->getSearchValue($ruleData);
             $dqlOperator = $this->getDqlOperator($ruleData->operator);
             $parameterName = 'name_' . $index;
             $queryBuilder->andWhere(

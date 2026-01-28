@@ -271,10 +271,6 @@ class OrderController extends AdminBaseController
         return $this->redirectToRoute('admin_order_list');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/order/preview/{id}', requirements: ['id' => '\d+'])]
     #[CanView]
     public function previewAction(int $id): Response

@@ -18,10 +18,6 @@ class ProductHasPromotionXyFilter extends AbstractAdvancedSearchFilter
 {
     public const string NAME = 'productHasPromotionXy';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         DatabaseSearchingHelper $databaseSearchingHelper,
         protected readonly EntityManagerInterface $em,
@@ -44,9 +40,6 @@ class ProductHasPromotionXyFilter extends AbstractAdvancedSearchFilter
         return t('Has X+Y promotion');
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getAllowedOperators(): array
     {
@@ -60,7 +53,6 @@ class ProductHasPromotionXyFilter extends AbstractAdvancedSearchFilter
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
     #[Override]

@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade
 
 class OrderNumberFilter extends AbstractAdvancedSearchFilter
 {
-    public const NAME = 'orderNumber';
+    public const string NAME = 'orderNumber';
 
     /**
      * {@inheritdoc}

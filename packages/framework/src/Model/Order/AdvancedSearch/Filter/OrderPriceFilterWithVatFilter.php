@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -65,15 +64,12 @@ class OrderPriceFilterWithVatFilter extends AbstractAdvancedSearchFilter
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
-            try {
-                $dqlOperator = $this->getDqlOperator($ruleData->operator);
-            } catch (AdvancedSearchFilterOperatorNotFoundException) {
-                continue;
-            }
-
             if ($ruleData->value === '' || $ruleData->value === null) {
                 continue;
             }
+
+            $dqlOperator = $this->getDqlOperator($ruleData->operator);
+
             $searchValue = $ruleData->value;
             $parameterName = 'totalPriceWithVat_' . $index;
             $queryBuilder->andWhere('o.totalPriceWithVat ' . $dqlOperator . ' :' . $parameterName);

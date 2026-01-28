@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
 use InvalidArgumentException;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class AdvancedSearchFilterRegistry
 {
@@ -18,7 +18,7 @@ class AdvancedSearchFilterRegistry
      * @param iterable<\Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface> $filters
      */
     public function __construct(
-        #[TaggedIterator('shopsys.advanced_search_filter')]
+        #[AutowireIterator('shopsys.advanced_search_filter')]
         iterable $filters,
     ) {
         foreach ($filters as $filter) {
@@ -27,7 +27,7 @@ class AdvancedSearchFilterRegistry
     }
 
     /**
-     * @return array
+     * @return array<\Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface>
      */
     public function getAllFilters(): array
     {
@@ -35,7 +35,7 @@ class AdvancedSearchFilterRegistry
 
         foreach ($this->filtersByEntity as $filters) {
             foreach ($filters as $filter) {
-                if (!in_array($filters, $flattenedFilters, true)) {
+                if (!in_array($filter, $flattenedFilters, true)) {
                     $flattenedFilters[] = $filter;
                 }
             }
@@ -45,7 +45,6 @@ class AdvancedSearchFilterRegistry
     }
 
     /**
-     * @param string $entityType
      * @return array<string,\Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface>
      */
     public function getFiltersForEntity(string $entityType): array
@@ -53,11 +52,6 @@ class AdvancedSearchFilterRegistry
         return $this->filtersByEntity[$entityType] ?? [];
     }
 
-    /**
-     * @param string $entityType
-     * @param string $name
-     * @return \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface
-     */
     public function getFilter(string $entityType, string $name): AdvancedSearchFilterInterface
     {
         return $this->filtersByEntity[$entityType][$name]

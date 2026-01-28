@@ -16,9 +16,6 @@ abstract class AbstractAdvancedSearchFilter implements AdvancedSearchFilterInter
 {
     protected const string DEFAULT_EMPTY_SEARCH_VALUE = '%';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
@@ -66,10 +63,6 @@ abstract class AbstractAdvancedSearchFilter implements AdvancedSearchFilterInter
         return [];
     }
 
-    /**
-     * @param string $operator
-     * @return string
-     */
     protected function getDqlOperator(string $operator): string
     {
         if (!in_array($operator, $this->getAllowedOperators(), true)) {
@@ -89,10 +82,6 @@ abstract class AbstractAdvancedSearchFilter implements AdvancedSearchFilterInter
         };
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData $ruleData
-     * @return string
-     */
     protected function getSearchValue(AdvancedSearchRuleData $ruleData): string
     {
         if ($ruleData->value === null || $ruleData->value === '') {

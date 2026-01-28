@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerNotFoundException;
@@ -21,7 +22,9 @@ class OrderCustomerIdFilter extends AbstractAdvancedSearchFilter
     public function __construct(
         protected readonly CustomerFacade $customerFacade,
         protected readonly FlashBagInterface $flashBag,
+        DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
+        parent::__construct($databaseSearchingHelper);
     }
 
     #[Override]
@@ -58,7 +61,6 @@ class OrderCustomerIdFilter extends AbstractAdvancedSearchFilter
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
     #[Override]

@@ -10,7 +10,9 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInte
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterRegistry;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class AdvancedSearchFormFactory
 {
@@ -22,13 +24,13 @@ class AdvancedSearchFormFactory
     }
 
     /**
-     * @param string $name
      * @param array<int|string, array{subject: string, operator: string|null, value: mixed}> $rulesViewData
-     * @param string $entityType
-     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createRulesForm($name, $rulesViewData, string $entityType)
-    {
+    public function createRulesForm(
+        string $name,
+        array $rulesViewData,
+        string $entityType,
+    ): FormInterface {
         $options = [
             'csrf_protection' => false,
             'attr' => [
@@ -50,14 +52,11 @@ class AdvancedSearchFormFactory
         return $form;
     }
 
-    /**
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface $ruleFilter
-     * @param string $entityType
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    protected function createRuleFormBuilder($name, AdvancedSearchFilterInterface $ruleFilter, string $entityType)
-    {
+    protected function createRuleFormBuilder(
+        int|string $name,
+        AdvancedSearchFilterInterface $ruleFilter,
+        string $entityType,
+    ): FormBuilderInterface {
         return $this->formFactory->createNamedBuilder((string)$name, FormType::class, null, [
             'data_class' => AdvancedSearchRuleData::class,
         ])
@@ -75,7 +74,6 @@ class AdvancedSearchFormFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterInterface $filter
      * @return string[]
      */
     protected function getFilterOperatorChoices(AdvancedSearchFilterInterface $filter): array
@@ -90,10 +88,9 @@ class AdvancedSearchFormFactory
     }
 
     /**
-     * @param string $entityType
      * @return string[]
      */
-    protected function getSubjectChoices(string $entityType)
+    protected function getSubjectChoices(string $entityType): array
     {
         $choices = [];
 

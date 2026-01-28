@@ -42,7 +42,7 @@ class AdvancedSearchQueryBuilderExtenderTest extends TestCase
             ->with('product', 'testSubject')
             ->willReturn($filterMock);
 
-        $queryBuilderMock = $this->createMock(QueryBuilder::class);
+        $queryBuilderMock = $this->createStub(QueryBuilder::class);
 
         $extender = new AdvancedSearchQueryBuilderExtender($registryMock);
         $extender->extendByAdvancedSearchData($queryBuilderMock, $advancedSearchData, 'product');

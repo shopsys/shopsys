@@ -232,10 +232,6 @@ class ProductController extends AdminBaseController
         return $this->redirectToRoute('admin_product_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/create-variant/')]
     #[CanCreate]
     public function createVariantAction(Request $request): Response

@@ -9,23 +9,18 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterRegi
 
 class AdvancedSearchQueryBuilderExtender
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AdvancedSearchFilterRegistry $advancedSearchFilterRegistry
-     */
     public function __construct(protected readonly AdvancedSearchFilterRegistry $advancedSearchFilterRegistry)
     {
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param array<\Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData|null> $advancedSearchData
-     * @param string $entityType
      */
     public function extendByAdvancedSearchData(
         QueryBuilder $queryBuilder,
         array $advancedSearchData,
         string $entityType,
-    ) {
+    ): void {
         $rulesDataByFilterName = [];
 
         foreach ($advancedSearchData as $key => $ruleData) {

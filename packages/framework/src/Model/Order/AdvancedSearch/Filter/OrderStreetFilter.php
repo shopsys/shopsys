@@ -40,7 +40,7 @@ class OrderStreetFilter extends AbstractAdvancedSearchFilter
         foreach ($rulesData as $index => $ruleData) {
             $searchValue = $this->getSearchValue($ruleData);
             $dqlOperator = $this->getDqlOperator($ruleData->operator);
-            $parameterName = 'city_' . $index;
+            $parameterName = 'street_' . $index;
             $queryBuilder->andWhere(
                 'NORMALIZED(o.street) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ') OR NORMALIZED(o.deliveryStreet) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')',
             );

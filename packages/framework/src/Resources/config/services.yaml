@@ -569,6 +569,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~
 
+    Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender: ~
+
     Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex: ~
 
     Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessageHandler:
@@ -610,6 +612,9 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail: ~
 
     Shopsys\FrameworkBundle\Model\Customer\UniqueBillingAddressChecker: ~
+
+    Shopsys\FrameworkBundle\Model\Customer\User\AdvancedSearch\Filter\:
+        resource: '../../Model/Customer/User/AdvancedSearch/Filter/*Filter.php'
 
     Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser: ~
 
@@ -735,8 +740,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter\:
         resource: '../../Model/Product/AdvancedSearch/Filter/*Filter.php'
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender: ~
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator: ~
 
@@ -920,15 +923,6 @@ services:
 
     shopsys.component.elasticsearch.tracer:
         class: Psr\Log\NullLogger
-
-    shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.complaint:
-        class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
-
-    shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.order:
-        class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
-
-    shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.product:
-        class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
 
     translation.loader.po:
         class: Shopsys\FrameworkBundle\Component\Translation\PoFileLoader
