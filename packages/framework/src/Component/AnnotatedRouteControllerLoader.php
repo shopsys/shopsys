@@ -20,10 +20,19 @@ class AnnotatedRouteControllerLoader extends BaseAnnotatedRouteControllerLoader
      * @param \ReflectionMethod $method
      * @return string The default route name
      */
-    protected function getDefaultRouteName(ReflectionClass $class, ReflectionMethod $method)
+    protected function getDefaultRouteName(ReflectionClass $class, ReflectionMethod $method): string
     {
         $routeName = parent::getDefaultRouteName($class, $method);
 
+        return preg_replace('/^(app_|shopsys_framework_)/', '', $routeName);
+    }
+
+    /**
+     * @param string $routeName
+     * @return string
+     */
+    public static function replacePartOfTheRouteName(string $routeName): string
+    {
         return preg_replace('/^(app_|shopsys_framework_)/', '', $routeName);
     }
 }

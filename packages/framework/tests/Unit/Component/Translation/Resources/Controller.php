@@ -10,10 +10,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class Controller extends AbstractController
 {
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Translation\Translator $translator
+     */
+    public function __construct(
+        private readonly Translator $translator,
+    ) {
+    }
+
     public function indexAction()
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Translation\Translator $translator */
-        $translator = $this->get(Translator::class);
+        $translator = $this->translator;
 
         $translator->trans('trans test');
         $translator->trans('trans test with domain', [], 'testDomain');

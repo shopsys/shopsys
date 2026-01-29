@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Category\Transfer\Akeneo;
 
+use Psr\Log\LoggerInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class AkeneoImportCategoryCronModule implements SimpleCronModuleInterface
 {
@@ -20,7 +20,7 @@ class AkeneoImportCategoryCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(LoggerInterface $logger)
     {
     }
 

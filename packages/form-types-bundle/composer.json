@@ -22,12 +22,12 @@
     },
     "require": {
         "php": "^8.3",
-        "symfony/config": "^5.4",
-        "symfony/dependency-injection": "^5.4",
-        "symfony/form": "^5.4",
-        "symfony/framework-bundle": "^5.4",
-        "symfony/http-kernel": "^5.4",
-        "symfony/options-resolver": "^5.4",
-        "symfony/translation": "^5.4"
+        "symfony/config": "^6.4",
+        "symfony/dependency-injection": "^6.4",
+        "symfony/form": "^6.4",
+        "symfony/framework-bundle": "^6.4",
+        "symfony/http-kernel": "^6.4",
+        "symfony/options-resolver": "^6.4",
+        "symfony/translation": "^6.4"
     }
 }

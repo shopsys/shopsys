@@ -6,20 +6,20 @@ namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use Exception;
 use League\Flysystem\FilesystemOperator;
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToFolderFailedException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
-use Symfony\Bridge\Monolog\Logger;
 
 class DomainIconProcessor
 {
     /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
+     * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        protected readonly Logger $logger,
+        protected readonly LoggerInterface $logger,
         protected readonly ImageProcessor $imageProcessor,
         protected readonly FilesystemOperator $filesystem,
     ) {

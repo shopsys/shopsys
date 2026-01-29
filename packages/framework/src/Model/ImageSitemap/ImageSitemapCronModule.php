@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\ImageSitemap;
 
+use Psr\Log\LoggerInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class ImageSitemapCronModule implements SimpleCronModuleInterface
 {
@@ -20,7 +20,7 @@ class ImageSitemapCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(LoggerInterface $logger)
     {
     }
 

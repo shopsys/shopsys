@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Session\Session as Session;
 
 /**
  * @property \Psr\Container\ContainerInterface $container
+ * @property \Twig\Environment $twigEnvironment
  */
 trait FlashMessageTrait
 {
@@ -82,9 +83,7 @@ trait FlashMessageTrait
      */
     protected function renderStringTwigTemplate(string $template, array $parameters = []): string
     {
-        /** @var \Twig\Environment $twigEnvironment */
-        $twigEnvironment = $this->container->get('twig');
-        $twigTemplate = $twigEnvironment->createTemplate($template);
+        $twigTemplate = $this->twigEnvironment->createTemplate($template);
 
         return $twigTemplate->render($parameters);
     }

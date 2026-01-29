@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
+use Psr\Log\LoggerInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class DeleteOldCronModuleRunsCronModule implements SimpleCronModuleInterface
 {
@@ -22,7 +22,7 @@ class DeleteOldCronModuleRunsCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger): void
+    public function setLogger(LoggerInterface $logger): void
     {
     }
 

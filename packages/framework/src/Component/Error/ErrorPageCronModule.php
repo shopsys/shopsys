@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Error;
 
+use Psr\Log\LoggerInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class ErrorPageCronModule implements SimpleCronModuleInterface
 {
@@ -19,7 +19,7 @@ class ErrorPageCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(LoggerInterface $logger)
     {
     }
 

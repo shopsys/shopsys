@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\LuigisBoxBundle\Component\LuigisBox;
 
+use Psr\Log\LoggerInterface;
 use Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItem;
 use Shopsys\BrandFeed\LuigisBoxBundle\Model\LuigisBoxBrandFeedItem;
 use Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedItem;
@@ -16,7 +17,6 @@ use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxSearchBatchLoadData;
 use Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum;
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
-use Symfony\Bridge\Monolog\Logger;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Throwable;
 
@@ -28,7 +28,7 @@ class LuigisBoxClient
      * @param string $luigisBoxApiUrl
      * @param array $trackerIdsByDomainIds
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Bridge\Monolog\Logger $logger
+     * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum $luigisBoxEndpointEnum
      * @param \Symfony\Component\HttpClient\TraceableHttpClient $httpClient
      */
@@ -36,7 +36,7 @@ class LuigisBoxClient
         protected readonly string $luigisBoxApiUrl,
         protected readonly array $trackerIdsByDomainIds,
         protected readonly Domain $domain,
-        protected readonly Logger $logger,
+        protected readonly LoggerInterface $logger,
         protected readonly LuigisBoxEndpointEnum $luigisBoxEndpointEnum,
         protected readonly HttpClientInterface $httpClient,
     ) {

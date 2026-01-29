@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class ProductRecalculationCronModule implements SimpleCronModuleInterface
 {
-    protected Logger $logger;
+    protected LoggerInterface $logger;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
@@ -23,7 +23,7 @@ class ProductRecalculationCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger): void
+    public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
     }

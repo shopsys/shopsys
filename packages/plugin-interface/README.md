@@ -194,11 +194,11 @@ acme.data_download_cron_module:
 class AcmeDataDownloadCronModule implements SimpleCronModuleInterface
 {
     /**
-     * @var \Symfony\Bridge\Monolog\Logger
+     * @var \Psr\Log\LoggerInterface
      */
     private $logger;
 
-    public function setLogger(Logger $logger)
+    public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }

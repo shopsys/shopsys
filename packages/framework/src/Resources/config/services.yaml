@@ -501,7 +501,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Security\LoginListener:
         tags:
-            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+            - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\LoginSuccessEvent, method: onSecurityInteractiveLogin }
 
     translation.loader.po:
         class: Shopsys\FrameworkBundle\Component\Translation\PoFileLoader
@@ -1006,6 +1006,12 @@ services:
         arguments:
             $environment: '%kernel.environment%'
             $forceElasticLimit: '%env(FORCE_ELASTIC_LIMITS)%'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@Redis'
+            - { 'prefix': '%env(REDIS_PREFIX)%session:', ttl: 604800 }
+        lazy: true
 
     Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector: ~
 

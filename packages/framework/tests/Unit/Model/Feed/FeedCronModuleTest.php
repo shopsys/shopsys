@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Feed;
 
 use DateTimeZone;
 use Monolog\Handler\NullHandler;
+use Monolog\Logger;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -16,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModule;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository;
-use Symfony\Bridge\Monolog\Logger;
 use Tests\FrameworkBundle\Unit\TestCase;
 
 class FeedCronModuleTest extends TestCase

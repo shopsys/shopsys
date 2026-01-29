@@ -58,6 +58,7 @@ class FileProfilerStorage extends BaseFileProfilerStorage
                 $profile->getTime(),
                 $profile->getParentToken(),
                 $profile->getStatusCode(),
+                $profile->getVirtualType(),
             ]);
             fclose($file);
         }
@@ -120,6 +121,7 @@ class FileProfilerStorage extends BaseFileProfilerStorage
             'url' => $profile->getUrl(),
             'time' => $profile->getTime(),
             'status_code' => $profile->getStatusCode(),
+            'virtual_type' => $profile->getVirtualType(),
         ];
 
         $data = serialize($data);

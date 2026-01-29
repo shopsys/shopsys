@@ -7,8 +7,8 @@ namespace App\Component\Packetery;
 use App\Model\Order\OrderFacade;
 use App\Model\Transport\Type\TransportTypeEnum;
 use App\Model\Transport\Type\TransportTypeFacade;
+use Psr\Log\LoggerInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class PacketeryCronModule implements SimpleCronModuleInterface
 {
@@ -27,7 +27,7 @@ class PacketeryCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(LoggerInterface $logger)
     {
     }
 

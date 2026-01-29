@@ -8,6 +8,13 @@ parameters:
         constantHassers: false
 
     ignoreErrors:
+        # shopsys/http-smoke-testing
+        -
+            message: '#^Service "test.service_container" is not registered in the container.#'
+            path: %currentWorkingDirectory%/packages/http-smoke-testing/src/HttpSmokeTestCase.php
+        -
+            message: '#^Service "Symfony\\Component\\HttpFoundation\\RequestStack" is private.#'
+            path: %currentWorkingDirectory%/packages/http-smoke-testing/src/HttpSmokeTestCase.php
         # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
         -
             message: '#^Argument of an invalid type Symfony\\Component\\Validator\\Constraint supplied for foreach, only iterables are supported\.$#'

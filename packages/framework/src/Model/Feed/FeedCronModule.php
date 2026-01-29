@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class FeedCronModule implements IteratedCronModuleInterface
 {
-    protected Logger $logger;
+    protected LoggerInterface $logger;
 
     protected ?FeedExportCreationDataQueue $feedExportCreationDataQueue = null;
 
@@ -39,7 +39,7 @@ class FeedCronModule implements IteratedCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger): void
+    public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
     }

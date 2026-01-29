@@ -97,11 +97,6 @@ services:
             -   connect:
                     - '%env(REDIS_HOST)%'
 
-    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
-        arguments:
-            - '@Redis'
-            - { 'prefix': '%env(REDIS_PREFIX)%session:', ttl: 604800 }
-
     Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener:
         class: App\Component\HttpFoundation\TransactionalMasterRequestListener
         tags:
@@ -788,9 +783,6 @@ services:
         alias: App\Model\Customer\User\CurrentCustomerUser
 
     Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory: ~
-
-    sensio_framework_extra.psr7.http_message_factory:
-        class: Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory
 
     Psr\Http\Message\ServerRequestInterface:
         factory: ['@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory', 'createRequest']

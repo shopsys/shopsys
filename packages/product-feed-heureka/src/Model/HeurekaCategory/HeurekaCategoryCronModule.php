@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory;
 
+use Psr\Log\LoggerInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class HeurekaCategoryCronModule implements SimpleCronModuleInterface
 {
-    protected Logger $logger;
+    protected LoggerInterface $logger;
 
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDownloader $heurekaCategoryDownloader
@@ -24,7 +24,7 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }

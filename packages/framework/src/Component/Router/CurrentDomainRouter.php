@@ -26,7 +26,7 @@ class CurrentDomainRouter implements ChainRouterInterface
     /**
      * @return \Symfony\Component\Routing\RequestContext
      */
-    public function getContext()
+    public function getContext(): RequestContext
     {
         return $this->context;
     }
@@ -53,7 +53,7 @@ class CurrentDomainRouter implements ChainRouterInterface
      * @param int $referenceType
      * @return string
      */
-    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->getDomainRouter()->generate($routeName, $parameters, $referenceType);
     }
@@ -62,7 +62,7 @@ class CurrentDomainRouter implements ChainRouterInterface
      * @param string $pathinfo
      * @return array
      */
-    public function match($pathinfo)
+    public function match($pathinfo): array
     {
         return $this->getDomainRouter()->match($pathinfo);
     }
@@ -79,15 +79,15 @@ class CurrentDomainRouter implements ChainRouterInterface
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param int $priority
      */
-    public function add($router, $priority = 0)
+    public function add($router, $priority = 0): void
     {
         $this->getDomainRouter()->add($router, $priority);
     }
 
     /**
-     * @return \Symfony\Component\Routing\RouterInterface[]
+     * @return array<\Symfony\Component\Routing\Generator\UrlGeneratorInterface|\Symfony\Component\Routing\Matcher\RequestMatcherInterface>
      */
-    public function all()
+    public function all(): array
     {
         return $this->getDomainRouter()->all();
     }
@@ -96,7 +96,7 @@ class CurrentDomainRouter implements ChainRouterInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array
      */
-    public function matchRequest(Request $request)
+    public function matchRequest(Request $request): array
     {
         return $this->getDomainRouter()->matchRequest($request);
     }

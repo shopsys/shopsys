@@ -20,6 +20,7 @@ class SymfonyRouterAdapterTest extends TestCase
     public function testGetAllRouteInfoExtractsInformationFromRouteCollection()
     {
         $router = new Router(
+            /** @phpstan-ignore argument.type */
             new AnnotatedRouteControllerLoader(new AnnotationReader()),
             TestController::class,
         );

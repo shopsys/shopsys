@@ -62,23 +62,28 @@ class UrlListType extends AbstractType
         );
 
         foreach ($friendlyUrlsByDomain as $domainId => $friendlyUrls) {
-            $builder->get('toDelete')->add($domainId, ChoiceType::class, [
-                'required' => false,
-                'multiple' => true,
-                'expanded' => true,
-                'choices' => $friendlyUrls,
-                'choice_label' => 'slug',
-                'choice_value' => 'slug',
-            ]);
-            $builder->get('mainFriendlyUrlsByDomainId')->add($domainId, ChoiceType::class, [
-                'required' => true,
-                'multiple' => false,
-                'expanded' => true,
-                'choices' => $friendlyUrls,
-                'choice_label' => 'slug',
-                'choice_value' => 'slug',
-                'invalid_message' => 'Previously selected main URL dos not exist any more',
-            ]);
+            $builder->get('toDelete')->add(
+                $builder->create((string)$domainId, ChoiceType::class, [
+                    'required' => false,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'choices' => $friendlyUrls,
+                    'choice_label' => 'slug',
+                    'choice_value' => 'slug',
+                ]),
+            );
+
+            $builder->get('mainFriendlyUrlsByDomainId')->add(
+                $builder->create((string)$domainId, ChoiceType::class, [
+                    'required' => true,
+                    'multiple' => false,
+                    'expanded' => true,
+                    'choices' => $friendlyUrls,
+                    'choice_label' => 'slug',
+                    'choice_value' => 'slug',
+                    'invalid_message' => 'Previously selected main URL dos not exist any more',
+                ]),
+            );
         }
     }
 

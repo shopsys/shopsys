@@ -4,7 +4,7 @@ security:
         administration:
             http_basic: ~
     # quicker password encryption in test data fixtures
-    encoders:
+    password_hashers:
         Symfony\Component\Security\Core\User\UserInterface:
             algorithm: bcrypt
             cost: 4

@@ -33,7 +33,7 @@ class AllPagesTest extends KernelTestCase
             'debug' => EnvironmentType::isDebug(EnvironmentType::TEST),
         ]);
 
-        static::$container->get(Domain::class)
+        self::getContainer()->get(Domain::class)
             ->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
 
@@ -61,7 +61,7 @@ class AllPagesTest extends KernelTestCase
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^admin_~'),
-            static::$container->getParameter('kernel.project_dir') . '/build/stats/performance-tests-admin.csv',
+            self::getContainer()->getParameter('kernel.project_dir') . '/build/stats/performance-tests-admin.csv',
         );
     }
 
@@ -69,7 +69,7 @@ class AllPagesTest extends KernelTestCase
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^front~'),
-            static::$container->getParameter('kernel.project_dir') . '/build/stats/performance-tests-front.csv',
+            self::getContainer()->getParameter('kernel.project_dir') . '/build/stats/performance-tests-front.csv',
         );
     }
 
@@ -88,7 +88,7 @@ class AllPagesTest extends KernelTestCase
         }
 
         $routeConfigCustomizer = new RouteConfigCustomizer($requestDataSetGenerators);
-        $routeConfigCustomization = new RouteConfigCustomization(static::$container);
+        $routeConfigCustomization = new RouteConfigCustomization(self::getContainer());
         $routeConfigCustomization->customizeRouteConfigs($routeConfigCustomizer);
 
         $routeConfigCustomizer->customize(function (RouteConfig $config, RouteInfo $info) use ($routeNamePattern) {
@@ -183,7 +183,7 @@ class AllPagesTest extends KernelTestCase
     {
         $this->setUp();
 
-        $requestDataSet->executeCallsDuringTestExecution(static::$container);
+        $requestDataSet->executeCallsDuringTestExecution(self::getContainer());
 
         $uri = $this->getRouterAdapter()->generateUri($requestDataSet);
 
@@ -191,7 +191,7 @@ class AllPagesTest extends KernelTestCase
         $requestDataSet->getAuth()->authenticateRequest($request);
 
         /** @var \Doctrine\ORM\EntityManager $entityManager */
-        $entityManager = static::$container->get('doctrine.orm.entity_manager');
+        $entityManager = self::getContainer()->get('doctrine.orm.entity_manager');
 
         $startTime = microtime(true);
         $entityManager->beginTransaction();
@@ -275,7 +275,7 @@ class AllPagesTest extends KernelTestCase
      */
     private function getRouterAdapter()
     {
-        $router = static::$container->get('router');
+        $router = self::getContainer()->get('router');
 
         return new SymfonyRouterAdapter($router);
     }
@@ -309,7 +309,7 @@ class AllPagesTest extends KernelTestCase
      */
     private function createPerformanceTestSampleQualifier()
     {
-        $container = static::$container;
+        $container = self::getContainer();
 
         return new PerformanceTestSampleQualifier(
             $container->getParameter('shopsys.performance_test.page.duration_milliseconds.warning'),

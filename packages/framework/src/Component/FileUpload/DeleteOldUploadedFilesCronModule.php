@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
+use Psr\Log\LoggerInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class DeleteOldUploadedFilesCronModule implements SimpleCronModuleInterface
 {
-    protected Logger $logger;
+    protected LoggerInterface $logger;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
@@ -19,9 +19,9 @@ class DeleteOldUploadedFilesCronModule implements SimpleCronModuleInterface
     }
 
     /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
+     * @param \Psr\Log\LoggerInterface $logger
      */
-    public function setLogger(Logger $logger): void
+    public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
     }

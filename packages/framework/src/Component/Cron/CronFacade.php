@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use DateTimeInterface;
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
-use Symfony\Bridge\Monolog\Logger;
 use Throwable;
 
 class CronFacade
 {
     /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
+     * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor $cronModuleExecutor
      */
     public function __construct(
-        protected readonly Logger $logger,
+        protected readonly LoggerInterface $logger,
         protected readonly CronConfig $cronConfig,
         protected readonly CronModuleFacade $cronModuleFacade,
         protected readonly CronModuleExecutor $cronModuleExecutor,

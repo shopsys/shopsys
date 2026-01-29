@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\Plugin\Cron;
 
-use Symfony\Bridge\Monolog\Logger;
+use Psr\Log\LoggerInterface;
 
 /**
  * SimpleCronModuleInterface is the interface that all simple CRON modules must implement.
@@ -19,9 +19,9 @@ use Symfony\Bridge\Monolog\Logger;
 interface SimpleCronModuleInterface
 {
     /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
+     * @param \Psr\Log\LoggerInterface $logger
      */
-    public function setLogger(Logger $logger);
+    public function setLogger(LoggerInterface $logger);
 
     /**
      * This method is called to run the CRON module.

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Cart\Item;
 
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class DeleteOldCartsCronModule implements SimpleCronModuleInterface
 {
@@ -20,7 +20,7 @@ class DeleteOldCartsCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(LoggerInterface $logger)
     {
     }
 
