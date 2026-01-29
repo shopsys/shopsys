@@ -6,19 +6,19 @@ namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 
 class DomainFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader $domainsConfigLoader
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator $currentAdministrator
      */
     public function __construct(
         protected readonly DomainsConfigLoader $domainsConfigLoader,
         protected readonly Setting $setting,
-        protected readonly AdministratorFacade $administratorFacade,
+        protected readonly CurrentAdministrator $currentAdministrator,
     ) {
     }
 
@@ -36,7 +36,7 @@ class DomainFactory
         $domain = new Domain(
             $domainConfigs,
             $this->setting,
-            $this->administratorFacade,
+            $this->currentAdministrator,
         );
 
         $domainId = getenv('DOMAIN');

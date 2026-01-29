@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class FriendlyUrlUniqueResultFactoryTest extends TestCase
@@ -21,12 +21,12 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
     public function testCreateNewUnique(): void
     {
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             [DomainConfigHelper::getDomainConfig()],
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
@@ -53,12 +53,12 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
     public function testCreateOldUnique(): void
     {
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             [DomainConfigHelper::getDomainConfig()],
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
@@ -88,12 +88,12 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
     public function testCreateNotUnique(): void
     {
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             [DomainConfigHelper::getDomainConfig()],
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
@@ -127,7 +127,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
     public function testCreateNotUniqueWhenSlugConflictsWithAnotherDomainPostfix(): void
     {
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             [
@@ -141,7 +141,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
                 ),
             ],
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);

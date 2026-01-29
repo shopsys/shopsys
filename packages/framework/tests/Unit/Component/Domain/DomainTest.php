@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Symfony\Component\HttpFoundation\Request;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
@@ -101,12 +101,12 @@ class DomainTest extends TestCase
     public function testGetIdNotSet(): void
     {
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             self::getDomainConfigs(),
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $this->expectException(NoDomainSelectedException::class);
@@ -131,12 +131,12 @@ class DomainTest extends TestCase
         string $description = '',
     ): void {
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $requestMock = $this->createMock(Request::class);
@@ -258,12 +258,12 @@ class DomainTest extends TestCase
     {
         $domainConfigs = self::getDomainConfigs();
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $this->assertSame($domainConfigs, $domain->getAllIncludingDomainConfigsWithoutDataCreated());
@@ -291,12 +291,12 @@ class DomainTest extends TestCase
                 throw new SettingValueNotFoundException();
             });
 
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $this->assertSame([1 => $domainConfigWithDataCreated], $domain->getAll());
@@ -306,12 +306,12 @@ class DomainTest extends TestCase
     {
         $domainConfigs = self::getDomainConfigs();
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $this->assertSame($domainConfigs[0], $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
@@ -335,12 +335,12 @@ class DomainTest extends TestCase
             ),
         ];
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $expectedLocales = [
@@ -353,12 +353,12 @@ class DomainTest extends TestCase
     public function testSwitchDomainByRequestThrowsExceptionWhenNoDomainMatches(): void
     {
         $settingMock = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             self::getDomainConfigs(),
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $requestMock = $this->createMock(Request::class);

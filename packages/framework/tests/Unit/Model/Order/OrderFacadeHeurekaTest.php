@@ -9,7 +9,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -155,12 +155,12 @@ class OrderFacadeHeurekaTest extends TestCase
     private function createDomain(): Domain
     {
         $domainConfig = DomainConfigHelper::getDomainConfig();
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         return new Domain(
             [$domainConfig],
             $this->createMock(Setting::class),
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
     }
 

@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\ExpiredTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
@@ -166,12 +166,12 @@ class TokenFacadeTest extends TestCase
     {
         $domainConfig = DomainConfigHelper::getDomainConfig();
         $setting = $this->createMock(Setting::class);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         $domain = new Domain(
             [$domainConfig],
             $setting,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
 
         $domain->switchDomainById(1);

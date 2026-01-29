@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Localization\CustomDateTimeFormatPatternRe
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Clock\DatePoint;
@@ -86,12 +86,12 @@ class DateTimeFormatterExtensionTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $domainConfig = DomainConfigHelper::getDomainConfig();
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
 
         return new Domain(
             [$domainConfig],
             $settingMock,
-            $administratorFacadeMock,
+            $currentAdministratorMock,
         );
     }
 }

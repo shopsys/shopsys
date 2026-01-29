@@ -555,6 +555,8 @@ services:
         arguments:
             $allowedAdminLocales: '%shopsys.allowed_admin_locales%'
 
+    Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator: ~
+
     Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMail: ~
 
     Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Mail;
 
 use Override;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderFacade;
 use Symfony\Component\Form\AbstractType;
@@ -20,11 +20,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 final class MailTemplateSendFormType extends AbstractType
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator $currentAdministrator
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderFacade $mailTemplateSenderFacade
      */
     public function __construct(
-        protected readonly AdministratorFacade $administratorFacade,
+        protected readonly CurrentAdministrator $currentAdministrator,
         protected readonly MailTemplateSenderFacade $mailTemplateSenderFacade,
     ) {
     }
@@ -36,7 +36,7 @@ final class MailTemplateSendFormType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $currentAdministrator = $this->administratorFacade->getCurrentlyLoggedAdministrator();
+        $currentAdministrator = $this->currentAdministrator->getCurrentlyLoggedAdministrator();
         $labelForEntityIdentifier = $this->mailTemplateSenderFacade->getFormLabelForEntityIdentifier($options['mailTemplate']);
         $builder
             ->add('mailTo', TextType::class, [

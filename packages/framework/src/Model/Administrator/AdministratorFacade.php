@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministra
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSuperadminException;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade;
-use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -25,6 +24,7 @@ class AdministratorFacade
      * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Psr\Clock\ClockInterface $clock
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator $currentAdministrator
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -34,6 +34,7 @@ class AdministratorFacade
         protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
         protected readonly TokenStorageInterface $tokenStorage,
         protected readonly ClockInterface $clock,
+        protected readonly CurrentAdministrator $currentAdministrator,
     ) {
     }
 
@@ -185,12 +186,6 @@ class AdministratorFacade
      */
     public function getCurrentlyLoggedAdministrator(): Administrator
     {
-        $administrator = $this->tokenStorage->getToken()?->getUser();
-
-        if (!$administrator instanceof Administrator) {
-            throw new AdministratorIsNotLoggedException('Administrator is not logged.');
-        }
-
-        return $administrator;
+        return $this->currentAdministrator->getCurrentlyLoggedAdministrator();
     }
 }
