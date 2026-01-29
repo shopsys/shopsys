@@ -1026,7 +1026,7 @@ jobs:
                     fi
             -   name: Check all not previously used commands are passing
                 run: |
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y frontend-api-enable cron-list cron-run-all-serially cron-watch maintenance-on maintenance-off elasticsearch-export-changed
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y cron-list cron-run-all-serially cron-watch maintenance-on maintenance-off elasticsearch-export-changed
                     docker compose exec -T php-fpm php bin/console shopsys:categories:recalculate
                     docker compose exec -T php-fpm php bin/console shopsys:cdn-domain-url:replace
                     docker compose exec -T php-fpm php bin/console shopsys:list:export-scopes
