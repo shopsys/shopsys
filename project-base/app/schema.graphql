@@ -1897,6 +1897,10 @@ type ParameterSliderFilterOption implements ParameterFilterOptionInterface {
 
 "Represents a parameter value"
 type ParameterValue {
+  "Uploaded file for color parameter value"
+  colorIcon: File
+  "Parameter value RGB value if set (for color parameters only)"
+  rgbHex: String
   "Parameter value"
   text: String!
   "UUID"

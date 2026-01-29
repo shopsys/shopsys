@@ -31,9 +31,6 @@ msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastave
 msgid "Optional variables"
 msgstr "Volitelné proměnné"
 
-msgid "Related products"
-msgstr "Související produkty"
-
 msgid "Save"
 msgstr "Uložit"
 

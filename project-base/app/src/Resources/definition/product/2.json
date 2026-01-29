@@ -255,9 +255,6 @@
                     "parameter_id": {
                         "type": "integer"
                     },
-                    "ordering_priority": {
-                        "type": "integer"
-                    },
                     "parameter_type": {
                         "type": "text"
                     },
@@ -276,8 +273,14 @@
                     "parameter_value_text": {
                         "type": "text"
                     },
-                    "parameter_is_dimensional": {
-                        "type": "boolean"
+                    "parameter_value_rgbHex": {
+                        "type": "text"
+                    },
+                    "parameter_value_icon_anchor_text": {
+                        "type": "text"
+                    },
+                    "parameter_value_icon_url": {
+                        "type": "text"
                     },
                     "parameter_group": {
                         "type": "text"

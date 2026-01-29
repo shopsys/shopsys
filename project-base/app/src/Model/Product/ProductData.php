@@ -11,21 +11,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\Brand\Brand|null $brand
  * @property \App\Model\Product\Product[] $variants
  * @property \App\Model\Product\Product[] $accessories
+ * @property \App\Model\Product\Product[] $relatedProducts
  * @property \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null $unit
  * @property \App\Model\Product\Flag\Flag[][]|null[][] $flagsByDomainId
  * @property \App\Model\Transport\Transport[] $excludedTransports
  */
 class ProductData extends BaseProductData
 {
-    /**
-     * @var \App\Model\Product\Product[]
-     */
-    public array $relatedProducts;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->relatedProducts = [];
-    }
 }

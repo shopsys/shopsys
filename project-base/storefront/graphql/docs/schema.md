@@ -7701,6 +7701,24 @@ Represents a parameter value
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="parametervalue.coloricon">colorIcon</strong></td>
+<td valign="top"><a href="#file">File</a></td>
+<td>
+
+Uploaded file for color parameter value
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="parametervalue.rgbhex">rgbHex</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Parameter value RGB value if set (for color parameters only)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="parametervalue.text">text</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>

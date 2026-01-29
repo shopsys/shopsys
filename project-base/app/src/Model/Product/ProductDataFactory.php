@@ -71,6 +71,5 @@ class ProductDataFactory extends BaseProductDataFactory
         parent::fillFromProduct($productData, $product);
 
         $productData->files = $this->uploadedFileDataFactory->createByEntity($product);
-        $productData->relatedProducts = $product->getRelatedProducts();
     }
 }

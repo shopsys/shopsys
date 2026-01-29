@@ -12,8 +12,11 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
@@ -40,6 +43,9 @@ class ProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver $parameterValueFileResolver
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -57,6 +63,9 @@ class ProductEntityFieldMapper
         protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ProductStockFacade $productStockFacade,
+        protected readonly ProductRepository $productRepository,
+        protected readonly ParameterRepository $parameterRepository,
+        protected readonly ParameterValueFileResolver $parameterValueFileResolver,
     ) {
     }
 
@@ -160,6 +169,18 @@ class ProductEntityFieldMapper
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getRelatedProductsPromise(Product $product): Promise
+    {
+        $relatedProducts = $product->getRelatedProducts();
+        $relatedProductsIds = array_map(fn (Product $relatedProduct) => $relatedProduct->getId(), $relatedProducts);
+
+        return $this->productsSellableByIdsBatchLoader->load($relatedProductsIds);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return string|null
      */
     public function getDescription(Product $product): ?string
@@ -173,7 +194,23 @@ class ProductEntityFieldMapper
      */
     public function getParameters(Product $product): array
     {
-        return $this->parameterWithValuesFactory->createMultipleForProduct($product);
+        $products = [];
+
+        if ($product->isMainVariant() === true) {
+            $products = $this->productRepository->getAllSellableVariantsByMainVariant(
+                $product,
+                $this->domain->getId(),
+                $this->currentCustomerUser->getPricingGroup(),
+            );
+        }
+        $products[] = $product;
+
+        $parameterValuesData = $this->parameterRepository->getProductParameterValuesDataByProducts($products, $this->domain->getLocale());
+
+        $domainConfig = $this->domain->getCurrentDomainConfig();
+        $parameterValuesDataWithIcons = $this->parameterValueFileResolver->addIconDataToParameterValuesData($parameterValuesData, $domainConfig);
+
+        return $this->parameterWithValuesFactory->createParametersArrayFromProductArray(['parameters' => $parameterValuesDataWithIcons]);
     }
 
     /**

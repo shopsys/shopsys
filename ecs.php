@@ -115,6 +115,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Product/Product.php',
                 __DIR__ . '/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php',
                 __DIR__ . '/packages/framework/src/Model/Security/Roles.php',
+                __DIR__ . '/packages/framework/src/Model/Product/Parameter/ParameterRepository.php',
                 __DIR__ . '/project-base/app/tests/App/Functional/Model/Product/ProductOnCurrentDomainElasticFacadeCountDataTest.php',
             ],
             CyclomaticComplexitySniff::class => [

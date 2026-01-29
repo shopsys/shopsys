@@ -1,5 +1,5 @@
+import { ColorPreview } from 'components/Basic/ColorPreview/ColorPreview';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
-import { Image } from 'components/Basic/Image/Image';
 import { LabelHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import { getYIQContrastTextColor } from 'utils/colors/colors';
@@ -38,29 +38,22 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
                 'rounded-sm outline-none peer-focus-visible:bg-orange-500',
             )}
         >
-            <div
-                style={{ backgroundColor: imageUrl ? undefined : bgColor }}
+            <ColorPreview
+                colorIcon={imageUrl ? { url: imageUrl, anchorText: imageName || label } : null}
+                imageClassName="p-0.5"
+                rgbHex={bgColor}
                 className={twMergeCustom(
-                    'border-icon-default bg-input-bg-default relative flex size-7 shrink-0 justify-center overflow-hidden rounded-sm border transition',
-                    disabled && 'border-icon-default outline-0 group-active:outline-0 active:scale-100',
+                    'border-icon-default bg-input-bg-default size-7 border transition',
+                    disabled && 'outline-0 group-active:outline-0 active:scale-100',
                 )}
             >
                 {imageUrl && (
-                    <>
-                        <Image
-                            alt={imageName || label || 'Color option'}
-                            className="size-full object-cover p-0.5"
-                            height={28}
-                            src={imageUrl}
-                            width={28}
-                        />
-                        <div
-                            className={twMergeCustom(
-                                'absolute inset-0 bg-black/50 opacity-0 transition',
-                                checked && 'opacity-100',
-                            )}
-                        />
-                    </>
+                    <div
+                        className={twMergeCustom(
+                            'absolute inset-0 bg-black/50 opacity-0 transition',
+                            checked && 'opacity-100',
+                        )}
+                    />
                 )}
                 <CheckmarkIcon
                     className={twMergeCustom(
@@ -69,7 +62,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
                         imageUrl ? 'text-white' : getYIQContrastTextColor(bgColor),
                     )}
                 />
-            </div>
+            </ColorPreview>
             <div className="flex w-full justify-between">
                 <div className="w-full">{label}</div>
                 {!!count && !checked && (

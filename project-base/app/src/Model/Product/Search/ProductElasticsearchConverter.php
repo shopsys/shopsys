@@ -32,33 +32,4 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
 
         return $result;
     }
-
-    /**
-     * @param array $parameters
-     * @return array
-     */
-    #[Override]
-    protected function fillEmptyParameters(array $parameters): array
-    {
-        $results = [];
-
-        foreach ($parameters as $parameter) {
-            $filledParameter = $parameter;
-            $filledParameter['parameter_id'] = $parameter['parameter_id'] ?? '';
-            $filledParameter['parameter_uuid'] = $parameter['parameter_uuid'] ?? '';
-            $filledParameter['parameter_name'] = $parameter['parameter_name'] ?? '';
-            $filledParameter['parameter_value_id'] = $parameter['parameter_value_id'] ?? '';
-            $filledParameter['parameter_value_uuid'] = $parameter['parameter_value_uuid'] ?? '';
-            $filledParameter['parameter_value_text'] = $parameter['parameter_value_text'] ?? '';
-            $filledParameter['parameter_is_dimensional'] = $parameter['parameter_is_dimensional'] ?? '';
-            $filledParameter['parameter_group'] = $parameter['parameter_group'] ?? null;
-            $filledParameter['parameter_unit'] = $parameter['parameter_unit'] ?? null;
-            $filledParameter['parameter_value_for_slider_filter'] = $parameter['parameter_value_for_slider_filter'] ?? null;
-            $filledParameter['ordering_priority'] = $parameter['ordering_priority'] ?? null;
-            $filledParameter['parameter_type'] = $parameter['parameter_type'] ?? null;
-            $results[] = $filledParameter;
-        }
-
-        return $results;
-    }
 }

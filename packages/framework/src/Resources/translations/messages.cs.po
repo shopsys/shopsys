@@ -2755,6 +2755,9 @@ msgstr "Typ přesměrování"
 msgid "Registration confirmation"
 msgstr "Potvrzení registrace"
 
+msgid "Related products"
+msgstr "Související produkty"
+
 msgid "Remaining number of uses"
 msgstr "Zbývající počet použití"
 

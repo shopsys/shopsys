@@ -15,3 +15,6 @@ ParameterDecorator:
             unit:
                 type: "Unit"
                 description: "Unit of the parameter"
+            group:
+                type: "String"
+                description: "Parameter group to which the parameter is assigned"

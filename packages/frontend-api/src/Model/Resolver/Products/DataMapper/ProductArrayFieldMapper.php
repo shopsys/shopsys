@@ -180,6 +180,15 @@ class ProductArrayFieldMapper
 
     /**
      * @param array $data
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getRelatedProductsPromise(array $data): Promise
+    {
+        return $this->productsSellableByIdsBatchLoader->load($data['related_products']);
+    }
+
+    /**
+     * @param array $data
      * @return string|null
      */
     public function getDescription(array $data): ?string

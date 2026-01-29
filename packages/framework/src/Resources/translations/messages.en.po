@@ -2755,6 +2755,9 @@ msgstr ""
 msgid "Registration confirmation"
 msgstr ""
 
+msgid "Related products"
+msgstr ""
+
 msgid "Remaining number of uses"
 msgstr ""
 

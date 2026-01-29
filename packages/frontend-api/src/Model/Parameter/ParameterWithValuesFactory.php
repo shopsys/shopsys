@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Parameter;
 
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 
 class ParameterWithValuesFactory
@@ -29,36 +28,6 @@ class ParameterWithValuesFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues[]
-     */
-    public function createMultipleForProduct(Product $product): array
-    {
-        $productParameterValues = $this->productCachedAttributesFacade->getProductParameterValues($product);
-
-        $valuesByParameterId = [];
-        $parameters = [];
-        $parametersWithValues = [];
-
-        foreach ($productParameterValues as $productParameterValue) {
-            $parameterId = $productParameterValue->getParameter()->getId();
-
-            if (!array_key_exists($parameterId, $valuesByParameterId)) {
-                $valuesByParameterId[$parameterId] = [];
-            }
-
-            array_push($valuesByParameterId[$parameterId], $productParameterValue->getValue());
-            $parameters[$parameterId] = $productParameterValue->getParameter();
-        }
-
-        foreach ($parameters as $parameter) {
-            $parametersWithValues[] = $this->create($parameter, $valuesByParameterId[$parameter->getId()]);
-        }
-
-        return $parametersWithValues;
-    }
-
-    /**
      * @param array $productData
      * @return array
      */
@@ -67,7 +36,18 @@ class ParameterWithValuesFactory
         $parametersWithValues = [];
 
         foreach ($productData['parameters'] as $parameterArray) {
-            $parametersWithValues[] = $this->mapParameterArray($parameterArray);
+            $parameterUuid = $parameterArray['parameter_uuid'];
+
+            if (!array_key_exists($parameterUuid, $parametersWithValues)) {
+                $parametersWithValues[$parameterUuid] = $this->mapParameterArray($parameterArray);
+            }
+
+            $parametersWithValues[$parameterUuid]['values'][] = [
+                'uuid' => $parameterArray['parameter_value_uuid'],
+                'text' => $parameterArray['parameter_value_text'],
+                'rgbHex' => $parameterArray['parameter_value_rgbHex'],
+                'colorIcon' => $this->mapColorIcon($parameterArray),
+            ];
         }
 
         return $parametersWithValues;
@@ -82,11 +62,28 @@ class ParameterWithValuesFactory
         return [
             'uuid' => $product['parameter_uuid'],
             'name' => $product['parameter_name'],
+            'group' => $product['parameter_group'],
             'unit' => $product['parameter_unit'] ? ['name' => $product['parameter_unit']] : null,
-            'values' => [[
-                'uuid' => $product['parameter_value_uuid'],
-                'text' => $product['parameter_value_text'],
-            ]],
+            'values' => [],
+        ];
+    }
+
+    /**
+     * @param array $parameterArray
+     * @return array|null
+     */
+    protected function mapColorIcon(array $parameterArray): ?array
+    {
+        $anchorText = $parameterArray['parameter_value_icon_anchor_text'];
+        $url = $parameterArray['parameter_value_icon_url'];
+
+        if ($anchorText === null || $url === null) {
+            return null;
+        }
+
+        return [
+            'anchorText' => $anchorText,
+            'url' => $url,
         ];
     }
 }

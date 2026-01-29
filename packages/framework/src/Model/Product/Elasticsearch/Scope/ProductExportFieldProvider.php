@@ -42,6 +42,7 @@ class ProductExportFieldProvider
     public const string SEO_TITLE = 'seo_title';
     public const string SEO_META_DESCRIPTION = 'seo_meta_description';
     public const string ACCESSORIES = 'accessories';
+    public const string RELATED_PRODUCTS = 'related_products';
     public const string HREFLANG_LINKS = 'hreflang_links';
     public const string PRODUCT_TYPE = 'product_type';
     public const string PRIORITY_BY_PRODUCT_TYPE = 'priority_by_product_type';

@@ -74,4 +74,13 @@ class AffectedProductsFacade
     {
         return $this->affectedProductsRepository->getProductIdsWithUnit($unit);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
+     * @return int[]
+     */
+    public function getProductIdsWithParameterValues(array $parameterValues): array
+    {
+        return $this->affectedProductsRepository->getProductIdsWithParameterValues($parameterValues);
+    }
 }

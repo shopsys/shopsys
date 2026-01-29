@@ -9,6 +9,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
@@ -19,7 +20,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -53,6 +56,8 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver $parameterValueFileResolver
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -72,6 +77,8 @@ class ProductExportRepository
         protected readonly SpecialPriceFacade $specialPriceFacade,
         protected readonly ProductPriceCalculation $productPriceCalculation,
         protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
+        protected readonly ParameterValueFileResolver $parameterValueFileResolver,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -176,7 +183,7 @@ class ProductExportRepository
             ProductExportFieldProvider::IN_STOCK => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
             ProductExportFieldProvider::PRICES => $this->extractPrices($domainId, $product),
             ProductExportFieldProvider::SPECIAL_PRICES => $this->extractSpecialPrices($domainId, $product),
-            ProductExportFieldProvider::PARAMETERS => $this->extractParameters($locale, $product),
+            ProductExportFieldProvider::PARAMETERS => $this->extractParametersIncludedVariants($product, $locale, $domainId),
             ProductExportFieldProvider::ORDERING_PRIORITY => $product->getOrderingPriority($domainId),
             ProductExportFieldProvider::SELLING_DENIED => $product->isCalculatedSellingDenied($domainId),
             ProductExportFieldProvider::AVAILABILITY => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
@@ -194,6 +201,7 @@ class ProductExportRepository
             ProductExportFieldProvider::SEO_TITLE => $product->getSeoTitle($domainId),
             ProductExportFieldProvider::SEO_META_DESCRIPTION => $product->getSeoMetaDescription($domainId),
             ProductExportFieldProvider::ACCESSORIES => $this->extractAccessoriesIds($product),
+            ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractRelatedProductsIds($product),
             ProductExportFieldProvider::HREFLANG_LINKS => $this->hreflangLinksFacade->getForProduct($product, $domainId, false),
             ProductExportFieldProvider::PRODUCT_TYPE => $this->extractProductType($product, $domainId),
             ProductExportFieldProvider::PRIORITY_BY_PRODUCT_TYPE => $this->extractPriorityByProductType($product, $domainId),
@@ -312,37 +320,31 @@ class ProductExportRepository
     }
 
     /**
-     * @param string $locale
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param string $locale
+     * @param int $domainId
      * @return array
      */
-    protected function extractParameters(string $locale, Product $product): array
+    protected function extractParametersIncludedVariants(Product $product, string $locale, int $domainId): array
     {
-        $parameters = [];
-        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
-            $product,
-            $locale,
-        );
+        $products = [];
 
-        foreach ($productParameterValues as $productParameterValue) {
-            $parameter = $productParameterValue->getParameter();
-            $parameterValue = $productParameterValue->getValue();
+        if ($product->isMainVariant() === true) {
+            $products = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+        }
+        $products[] = $product;
 
-            if ($parameter->getName($locale) === null || $parameterValue->getLocale() !== $locale) {
-                continue;
+        $parameterValuesData = $this->parameterRepository->getProductParameterValuesDataByProducts($products, $locale);
+
+        foreach ($parameterValuesData as $key => $parameterValueData) {
+            $parameterValuesData[$key]['parameter_value_for_slider_filter'] = null;
+
+            if ($parameterValueData['parameter_type'] === Parameter::PARAMETER_TYPE_SLIDER) {
+                $parameterValuesData[$key]['parameter_value_for_slider_filter'] = $parameterValueData['parameter_value_numeric_value'];
             }
-
-            $parameters[] = [
-                'parameter_id' => $parameter->getId(),
-                'parameter_uuid' => $parameter->getUuid(),
-                'parameter_name' => $parameter->getName($locale),
-                'parameter_value_id' => $parameterValue->getId(),
-                'parameter_value_uuid' => $parameterValue->getUuid(),
-                'parameter_value_text' => $parameterValue->getText(),
-            ];
         }
 
-        return $parameters;
+        return $this->parameterValueFileResolver->addIconDataToParameterValuesData($parameterValuesData, $this->domain->getDomainConfigById($domainId));
     }
 
     /**
@@ -491,6 +493,21 @@ class ProductExportRepository
         }
 
         return $accessoriesIds;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return int[]
+     */
+    protected function extractRelatedProductsIds(Product $product): array
+    {
+        $relatedProductsIds = [];
+
+        foreach ($product->getRelatedProducts() as $relatedProduct) {
+            $relatedProductsIds[] = $relatedProduct->getId();
+        }
+
+        return $relatedProductsIds;
     }
 
     /**

@@ -11,7 +11,6 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
-use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -20,7 +19,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
-use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
@@ -62,6 +61,10 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method bool isAllowedNegativeStock(\App\Model\Product\Product $product)
  * @method bool isSellingDenied(\App\Model\Product\Product $product)
  * @method bool isCurrentlyOutOfStock(\App\Model\Product\Product $product)
+ * @property \App\Model\Product\ProductRepository $productRepository
+ * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+ * @method \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues[] getParameters(\App\Model\Product\Product $product)
+ * @method \GraphQL\Executor\Promise\Promise getRelatedProductsPromise(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -82,8 +85,9 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver $parameterValueFileResolver
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
@@ -104,9 +108,10 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductVideoTranslationsRepository $productVideoTranslationsRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
         ProductStockFacade $productStockFacade,
-        protected readonly ProductRepository $productRepository,
+        ProductRepository $productRepository,
+        ParameterRepository $parameterRepository,
+        ParameterValueFileResolver $parameterValueFileResolver,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
-        protected readonly ParameterRepository $parameterRepository,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
         protected readonly DataLoaderInterface $brandsBatchLoader,
@@ -127,6 +132,9 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productVideoTranslationsRepository,
             $friendlyUrlFacade,
             $productStockFacade,
+            $productRepository,
+            $parameterRepository,
+            $parameterValueFileResolver,
         );
     }
 
@@ -194,31 +202,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     }
 
     /**
-     * Method is overridden, so it returns parameters for the variants too.
-     *
-     * @param \App\Model\Product\Product $product
-     * @return array
-     */
-    #[Override]
-    public function getParameters(BaseProduct $product): array
-    {
-        $products = [];
-
-        if ($product->isMainVariant() === true) {
-            $products = $this->productRepository->getAllSellableVariantsByMainVariant(
-                $product,
-                $this->domain->getId(),
-                $this->currentCustomerUser->getPricingGroup(),
-            );
-        }
-        $products[] = $product;
-
-        $productParameterValuesData = $this->parameterRepository->getProductParameterValuesDataByProducts($products, $this->domain->getLocale());
-
-        return $this->parameterWithValuesFactory->createParametersArrayFromProductArray(['parameters' => $productParameterValuesData]);
-    }
-
-    /**
      * @param \App\Model\Product\Product $product
      * @return string[]
      */
@@ -251,18 +234,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $categoryIds = array_map(fn (Category $category) => $category->getId(), $categories);
 
         return $this->categoriesBatchLoader->load($categoryIds);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return \GraphQL\Executor\Promise\Promise
-     */
-    public function getRelatedProductsPromise(Product $product): Promise
-    {
-        $relatedProducts = $product->getRelatedProducts();
-        $relatedProductsIds = array_map(fn (Product $relatedProduct) => $relatedProduct->getId(), $relatedProducts);
-
-        return $this->productsSellableByIdsBatchLoader->load($relatedProductsIds);
     }
 
     /**

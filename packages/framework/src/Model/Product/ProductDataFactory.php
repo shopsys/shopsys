@@ -193,6 +193,7 @@ class ProductDataFactory
         $productData->brand = $product->getBrand();
         $productData->parameters = $this->getParametersData($product);
         $productData->accessories = $this->getAccessoriesData($product);
+        $productData->relatedProducts = $product->getRelatedProducts();
         $productData->images = $this->imageUploadDataFactory->createFromEntityAndType($product);
         $productData->variants = $product->getVariants();
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());

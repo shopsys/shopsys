@@ -99,6 +99,13 @@ class ProductElasticsearchConverter
             $filledParameter['parameter_value_id'] = $parameter['parameter_value_id'] ?? '';
             $filledParameter['parameter_value_uuid'] = $parameter['parameter_value_uuid'] ?? '';
             $filledParameter['parameter_value_text'] = $parameter['parameter_value_text'] ?? '';
+            $filledParameter['parameter_group'] = $parameter['parameter_group'] ?? null;
+            $filledParameter['parameter_unit'] = $parameter['parameter_unit'] ?? null;
+            $filledParameter['parameter_value_for_slider_filter'] = $parameter['parameter_value_for_slider_filter'] ?? null;
+            $filledParameter['parameter_type'] = $parameter['parameter_type'] ?? null;
+            $filledParameter['parameter_value_rgbHex'] = $parameter['parameter_value_rgbHex'] ?? null;
+            $filledParameter['parameter_value_icon_anchor_text'] = $parameter['parameter_value_icon_anchor_text'] ?? null;
+            $filledParameter['parameter_value_icon_url'] = $parameter['parameter_value_icon_url'] ?? null;
             $results[] = $filledParameter;
         }
 

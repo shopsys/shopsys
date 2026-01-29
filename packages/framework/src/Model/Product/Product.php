@@ -162,6 +162,15 @@ class Product extends AbstractTranslatableEntity
     protected $excludedTransports;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Product>
+     */
+    #[ORM\JoinTable(name: 'related_products')]
+    #[ORM\JoinColumn(name: 'main_product', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'related_product', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: self::class)]
+    protected $relatedProducts;
+
+    /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 32, nullable: false)]
@@ -188,6 +197,7 @@ class Product extends AbstractTranslatableEntity
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
         $this->excludedTransports = new ArrayCollection();
+        $this->relatedProducts = new ArrayCollection();
         $this->productVideos = new ArrayCollection();
         $this->catnum = $productData->catnum;
         $this->partno = $productData->partno;
@@ -246,6 +256,7 @@ class Product extends AbstractTranslatableEntity
         $this->isAllowedNegativeStock = $productData->isAllowedNegativeStock;
         $this->setTranslations($productData);
         $this->setExcludedTransports($productData->excludedTransports);
+        $this->editRelatedProducts($productData->relatedProducts);
     }
 
     /**
@@ -1009,6 +1020,26 @@ class Product extends AbstractTranslatableEntity
     public function getExcludedTransports()
     {
         return $this->excludedTransports->getValues();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function getRelatedProducts()
+    {
+        return $this->relatedProducts->getValues();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $relatedProducts
+     */
+    protected function editRelatedProducts($relatedProducts)
+    {
+        $this->relatedProducts->clear();
+
+        foreach ($relatedProducts as $relatedProduct) {
+            $this->relatedProducts->add($relatedProduct);
+        }
     }
 
     /**
