@@ -172,7 +172,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $productData->descriptions[$domain->getId()] = t('<h2>47 "LG 47LA790V</h2>> Luxury TV from the South Korean company LG bears <strong> 47LA790S </strong>. At first glance its <strong> beautiful design </strong> That pleases the eye of every lover of pure and precise shapes. Inside the TV is hidden except <strong> M13 dual-core processor </strong> number of extra features. I so belong to the energy class <strong> A + </strong> . Micro Pixel Control function is performed local dimming backlight and thus significantly <strong> reduces </strong> up to 64 W. This is so gigantic screen with really great. <br> <br> This TV is considerate to your eyes because of the image <strong> eliminates the annoying flicker </strong> caused by conventional 3D glasses, and you so you can enjoy long evenings of film <strong> without fatigue and eye pain </strong> . User-friendly environment allows <strong> adjust the 3D depth effect </strong> and yourself, you can choose whether you prefer comfort or deeper experience when watching 3D content. You could very well happen that while watching a football match <strong> flips the ball right into your living room </strong> Because special functions for image conversion<strong> improve any broadcasting the third dimension </strong> . <br> <br> Avid gamers will appreciate the <strong> Dual Play </strong> When television broadcasts two separate 2D images and each player using glasses to see their part to the full screen area. No more worry when a split screen. <strong> Intel WiDi </strong> (Wireless Display), respectively. wireless transmission of video and audio, allows quick and easy connection of TVs and laptops without cables or an Internet connection. It is very convenient and fast you\'ll love this feature.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->descriptions[$domain->getId()] = t(
+                '<h2>47 "LG 47LA790V</h2> <p>Luxury TV from the South Korean company LG bears <strong> 47LA790S </strong>. At first glance its <strong> beautiful design </strong> That pleases the eye of every lover of pure and precise shapes. Inside the TV is hidden except <strong> M13 dual-core processor </strong> number of extra features. I so belong to the energy class <strong> A + </strong> . Micro Pixel Control function is performed local dimming backlight and thus significantly <strong> reduces </strong> up to 64 W. This is so gigantic screen with really great.</p><p>{{ productImageUrl }}</p><p>This TV is considerate to your eyes because of the image <strong> eliminates the annoying flicker </strong> caused by conventional 3D glasses, and you so you can enjoy long evenings of film <strong> without fatigue and eye pain </strong> . User-friendly environment allows <strong> adjust the 3D depth effect </strong> and yourself, you can choose whether you prefer comfort or deeper experience when watching 3D content. You could very well happen that while watching a football match <strong> flips the ball right into your living room </strong> Because special functions for image conversion<strong> improve any broadcasting the third dimension </strong>.</p><p>Avid gamers will appreciate the <strong> Dual Play </strong> When television broadcasts two separate 2D images and each player using glasses to see their part to the full screen area. No more worry when a split screen. <strong> Intel WiDi </strong> (Wireless Display), respectively. wireless transmission of video and audio, allows quick and easy connection of TVs and laptops without cables or an Internet connection. It is very convenient and fast you\'ll love this feature.</p>',
+                ['{{ productImageUrl }}' => '<img src="/content/wysiwyg/test-image.jpg" alt="LG 47LA790V" />'],
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                $domain->getLocale(),
+            );
             $productData->shortDescriptions[$domain->getId()] = t('47 "LG 47LA790V Luxury TV from the South Korean company LG bears 47LA790S. At first glance its beautiful design that pleases the eye of every lover of pure and precise shapes.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
@@ -206,8 +211,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->descriptions[$domain->getId()] = t('<h2>A4tech X710BK</h2>Playing computer mouse has five buttons and scrolovacím button for easier browsing documents or Internet pages. News is a key 3XFire that in one pressing regulating a triple clicks. The mouse has five options to set up the sensor sensitivity and in steps 400, 600, 1200, 1600 and 2000 DPI. The mouse has an ergonomic design, it connects via high-speed USB interface and is equipped with 16 Kb internal memory that is possible with the Oscar Mouse Editor to record scripts to control your favorite games. It is fully compatible with all modern operating systems including Windows Vista. <br><br><strong> Specifications: </strong><br><br><strong> Interface: </strong><br> USB 2.0 <br> Reduction in PS/2 <br><br><strong> OS Compatibility: </strong><br> Microsoft Windows 2000/XP/2003/Vista', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
-            $productData->shortDescriptions[$domain->getId()] = t('A4tech X710BK Playing computer mouse has five buttons and scrolovacím button for easier browsing documents or Internet pages.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->descriptions[$domain->getId()] = t(
+                '<h2>A4tech X710BK</h2><p>This gaming mouse features five buttons and a scroll wheel for comfortable navigation of documents and web pages. A dedicated <strong>3XFire</strong> button enables triple-click actions with a single press.</p><p>The optical sensor offers five selectable sensitivity levels: <strong>400, 600, 1200, 1600, and 2000 DPI</strong>, allowing you to adjust precision to your preference. The mouse has an ergonomic design, connects via a high-speed USB interface, and includes <strong>16 KB of internal memory</strong> for storing macros and scripts using the Oscar Mouse Editor.</p><p>{{ productImageUrl }}</p><p>The mouse is fully compatible with modern operating systems, including Windows Vista.</p><br><br><strong>Specifications:</strong><br><br><strong>Interface:</strong><br>USB 2.0<br>PS/2 (via adapter)<br><br><strong>OS Compatibility:</strong><br>Microsoft Windows 2000 / XP / 2003 / Vista',
+                ['{{ productImageUrl }}' => '<img src="/content/wysiwyg/test-image.jpg" alt="A4tech X710BK" />'],
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                $domain->getLocale(),
+            );
+            $productData->shortDescriptions[$domain->getId()] = t('A4tech X710BK Playing computer mouse has five buttons and scroll button for easier browsing documents or Internet pages.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->name[$locale] = t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $this->addParameterValues($parameterValues, $locale, [
@@ -638,7 +648,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('Genius repro SP-M120 black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $productData->descriptions[$domain->getId()] = t('<h2>GENIUS SP-M120 black</h2><p align="justify"> Sleek and compact stereo speakers in combination of black and metallic surface. Speakers provide basic computer sound system with an output of 2 W RMS. On the front is virtually placed in a large volume control, but not forgotten even the popular headphone jack. <br><strong> Specifications: <br> Performance: <br></strong> 2 x 1 W RMS <br><strong> Frequency Range: </strong> 100 Hz - 20KHz <br><strong> Signal/noise ratio: </strong> 75 db <br><strong> Dimensions: </strong> 50 x 90 mm </p>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->descriptions[$domain->getId()] = t('<h2>GENIUS SP-M120 black</h2><p> Sleek and compact stereo speakers in combination of black and metallic surface. Speakers provide basic computer sound system with an output of 2 W RMS. On the front is virtually placed in a large volume control, but not forgotten even the popular headphone jack. <br><strong> Specifications: <br> Performance: <br></strong> 2 x 1 W RMS <br><strong> Frequency Range: </strong> 100 Hz - 20KHz <br><strong> Signal/noise ratio: </strong> 75 db <br><strong> Dimensions: </strong> 50 x 90 mm </p>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Sleek and compact stereo speakers in combination of black and metallic surface.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
@@ -2496,7 +2506,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('Nikon ND-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $productData->descriptions[$domain->getId()] = t('<h2>Nikon EH-22L</h2> High quality, elegant, soft, and yet reliably protecting brand case for your Nikon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->descriptions[$domain->getId()] = t('<h2>Nikon EH-22L</h2>High quality, elegant, soft, and yet reliably protecting brand case for your Nikon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
@@ -2626,7 +2636,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('Canon EH-22M', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $productData->descriptions[$domain->getId()] = t('<h2>Canon EH-22L</h2> High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->descriptions[$domain->getId()] = t('<h2>Canon EH-22L</h2>High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
@@ -4139,7 +4149,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @param \App\Model\Product\Product $product
      */
-    public function addProductReference(Product $product)
+    public function addProductReference(Product $product): void
     {
         $this->addReference(self::PRODUCT_PREFIX . $this->productNo, $product);
         $this->productNo++;
@@ -4161,7 +4171,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($productCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantCatnums) {
             $catnums[] = $mainVariantCatnum;
-            $catnums = array_merge($catnums, $variantCatnums);
+            array_push($catnums, ...$variantCatnums);
         }
 
         return array_unique($catnums);
@@ -4181,10 +4191,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function getProductFromCacheByCatnum(string $catnum): Product
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->productFacade->getById($this->productIdsByCatnum[$catnum]);
-
-        return $product;
+        return $this->productFacade->getById($this->productIdsByCatnum[$catnum]);
     }
 
     /**

@@ -36,9 +36,10 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     * @param string $dataFixturesImagesDirectory
+     * @param string $dataFixturesResourcesDirectory
      * @param string $targetImagesDirectory
      * @param string $targetDomainImagesDirectory
+     * @param string $targetFileManagerUploadDirectory
      */
     public function __construct(
         FilesystemOperator $filesystem,
@@ -46,9 +47,10 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         MountManager $mountManager,
         EntityManagerInterface $em,
         TransformStringHelper $transformStringHelper,
-        private readonly string $dataFixturesImagesDirectory,
+        private readonly string $dataFixturesResourcesDirectory,
         private readonly string $targetImagesDirectory,
         private readonly string $targetDomainImagesDirectory,
+        private readonly string $targetFileManagerUploadDirectory,
     ) {
         parent::__construct($filesystem, $localFilesystem, $mountManager, $em, $transformStringHelper);
     }
@@ -61,17 +63,21 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     {
         $this->truncateDatabaseTables([self::IMAGES_TABLE_NAME, self::IMAGES_TRANSLATIONS_TABLE_NAME]);
 
-        if (!file_exists($this->dataFixturesImagesDirectory)) {
+        if (!file_exists($this->dataFixturesResourcesDirectory)) {
             return;
         }
 
         $this->moveFilesFromLocalFilesystemToFilesystem(
-            $this->dataFixturesImagesDirectory . 'domain/',
+            $this->dataFixturesResourcesDirectory . '/domain/',
             $this->targetDomainImagesDirectory . '/',
         );
         $this->moveFilesFromLocalFilesystemToFilesystem(
-            $this->dataFixturesImagesDirectory,
+            $this->dataFixturesResourcesDirectory . '/images/',
             $this->targetImagesDirectory,
+        );
+        $this->moveFilesFromLocalFilesystemToFilesystem(
+            $this->dataFixturesResourcesDirectory . '/wysiwyg/',
+            $this->targetFileManagerUploadDirectory . '/',
         );
         $this->processDbImagesChanges();
     }
