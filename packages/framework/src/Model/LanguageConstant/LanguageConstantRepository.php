@@ -95,7 +95,7 @@ class LanguageConstantRepository
         return $this->getRepository()
             ->createQueryBuilder('c')
             ->select($selectFields)
-            ->join(LanguageConstantTranslation::class, 'ct', Join::WITH, 'ct.translatable = c AND ct.locale = :locale')
+            ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
             ->setParameter('locale', $locale);
     }
 }

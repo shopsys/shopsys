@@ -29,8 +29,8 @@ class CountryRepository
     public function createSortedJoinedQueryBuilder(string $locale, int $domainId): QueryBuilder
     {
         return $this->getCountryRepository()->createQueryBuilder('c')
-            ->join(CountryDomain::class, 'cd', Join::WITH, 'c.id = cd.country AND cd.domainId = :domainId')
-            ->join(CountryTranslation::class, 'ct', Join::WITH, 'c.id = ct.translatable AND ct.locale = :locale')
+            ->join('c.domains', 'cd', Join::WITH, 'cd.domainId = :domainId')
+            ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
             ->orderBy('cd.priority', 'desc')
             ->addOrderBy($this->orderByCollationHelper->createOrderByForLocale('ct.name', $locale), 'asc')
             ->setParameter('locale', $locale)

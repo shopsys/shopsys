@@ -122,14 +122,20 @@ class BlogCategoryRepository extends NestedTreeRepository
      */
     public function getPreOrderTreeTraversalForVisibleBlogCategoriesOnDomain(int $domainId, string $locale): array
     {
-        $queryBuilder = $this->getPreOrderTreeTraversalForAllBlogCategoriesQueryBuilder($locale);
+        return $this->getPreOrderTreeTraversalForVisibleBlogCategoriesOnDomainQueryBuilder($domainId, $locale)
+            ->getQuery()
+            ->execute();
+    }
 
-        $queryBuilder->join(BlogCategoryDomain::class, 'bcd', Join::WITH, 'bcd.blogCategory = bc')
+    protected function getPreOrderTreeTraversalForVisibleBlogCategoriesOnDomainQueryBuilder(
+        int $domainId,
+        string $locale,
+    ): QueryBuilder {
+        return $this->getPreOrderTreeTraversalForAllBlogCategoriesQueryBuilder($locale)
+            ->join('bc.domains', 'bcd')
             ->andWhere('bcd.visible = TRUE')
             ->andWhere('bcd.domainId = :domainId')
             ->setParameter('domainId', $domainId);
-
-        return $queryBuilder->getQuery()->execute();
     }
 
     protected function getPreOrderTreeTraversalForAllBlogCategoriesQueryBuilder(string $locale): QueryBuilder
@@ -154,7 +160,7 @@ class BlogCategoryRepository extends NestedTreeRepository
     public function getAllVisibleByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         $queryBuilder = $this->getAllQueryBuilder()
-            ->join(BlogCategoryDomain::class, 'bcd', Join::WITH, 'bcd.blogCategory = bc.id')
+            ->join('bc.domains', 'bcd')
             ->andWhere('bcd.domainId = :domainId')
             ->andWhere('bcd.visible = TRUE');
 

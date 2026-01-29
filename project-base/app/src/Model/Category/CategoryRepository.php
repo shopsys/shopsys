@@ -33,6 +33,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method \App\Model\Category\Category[] getCategoriesByIds(int[] $categoryIds)
  * @method \App\Model\Category\Category[] getCategoriesWithVisibleChildren(\App\Model\Category\Category[] $categories, int $domainId)
  * @method \App\Model\Category\Category[] getAllTranslated(string $locale)
+ * @method \Doctrine\ORM\QueryBuilder getCategoriesWithVisibleChildrenQueryBuilder(\App\Model\Category\Category[] $categories, int $domainId)
  */
 class CategoryRepository extends BaseCategoryRepository
 {
@@ -103,7 +104,6 @@ class CategoryRepository extends BaseCategoryRepository
         DomainConfig $domainConfig,
     ): array {
         $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId())
-            ->addSelect('cd')
             ->andWhere('c.parent = :category')
             ->setParameter('category', $category);
         $this->addTranslation($queryBuilder, $domainConfig->getLocale());

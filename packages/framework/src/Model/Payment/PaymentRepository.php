@@ -95,7 +95,7 @@ class PaymentRepository
     public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Payment
     {
         $queryBuilder = $this->getPaymentRepository()->createQueryBuilder('p')
-            ->join(PaymentDomain::class, 'pd', Join::WITH, 'p.id = pd.payment AND pd.domainId = :domainId')
+            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->where('p.uuid = :uuid')
             ->setParameter('uuid', $uuid)
@@ -120,7 +120,7 @@ class PaymentRepository
     {
         return $this->getPaymentRepository()
             ->createQueryBuilder('p')
-            ->join(PaymentDomain::class, 'pd', Join::WITH, 'p.id = pd.payment AND pd.domainId = :domainId')
+            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
             ->where('pd.goPayPaymentMethod = :goPayPaymentMethod')
             ->setParameter('domainId', $domainId)
             ->setParameter('goPayPaymentMethod', $goPayPaymentMethod)
@@ -151,7 +151,7 @@ class PaymentRepository
         return $this->getQueryBuilderForAll()
             ->join('p.transports', 't', Join::WITH)
             ->andWhere('t = :transport')->setParameter('transport', $transport)
-            ->join(PaymentDomain::class, 'pd', Join::WITH, 'pd.payment = p AND pd.domainId = :domainId')
+            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->join('pd.goPayPaymentMethod', 'gppm', Join::WITH, 'gppm.identifier = :goPayPaymentMethod AND gppm.domainId = :domainId')
             ->setParameter('goPayPaymentMethod', $externalPaymentMethod)
