@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\Messenger\Batch\BatchHandlerWithTimeLimitTrait;
 use Symfony\Component\Messenger\Handler\Acknowledger;
 use Symfony\Component\Messenger\Handler\BatchHandlerInterface;
-use Symfony\Component\Messenger\Handler\BatchHandlerTrait;
 use Throwable;
 
 class ProductRecalculationMessageHandler implements BatchHandlerInterface
 {
-    use BatchHandlerTrait;
+    use BatchHandlerWithTimeLimitTrait;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationFacade $productRecalculationFacade
@@ -35,7 +35,10 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
     }
 
     /**
-     * @param array $jobs
+     * @param array<int, array{
+     *     0: \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage,
+     *     1: \Symfony\Component\Messenger\Handler\Acknowledger,
+     * }> $jobs
      */
     protected function process(array $jobs): void
     {
