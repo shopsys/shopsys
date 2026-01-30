@@ -100,7 +100,7 @@
         "symfony/flex": "^1.17",
         "symfony/form": "^6.4",
         "symfony/http-client": "^6.4",
-        "symfony/mailer": "^5.0",
+        "symfony/mailer": "^6.4",
         "symfony/messenger": "^6.4",
         "symfony/monolog-bridge": "^6.4",
         "symfony/monolog-bundle": "^3.5.0",
