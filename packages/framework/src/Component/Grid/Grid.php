@@ -88,9 +88,6 @@ class Grid
 
     protected ?string $title = null;
 
-    /**
-     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException
-     */
     public function __construct(
         protected readonly string $id,
         protected readonly string $roleConstant,
