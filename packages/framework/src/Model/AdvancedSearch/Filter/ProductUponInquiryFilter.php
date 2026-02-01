@@ -57,7 +57,7 @@ class ProductUponInquiryFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             $operator = $ruleData->operator === self::OPERATOR_IS ? '=' : '!=';

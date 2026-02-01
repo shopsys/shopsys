@@ -75,10 +75,10 @@ class RequestDataSetGenerator implements RouteConfig
     }
 
     /**
-     * @param string|null $debugNote
+     * {@inheritdoc}
      */
     #[Override]
-    public function skipRoute($debugNote = null): self
+    public function skipRoute(?string $debugNote = null): self
     {
         $this->defaultRequestDataSet->skip();
 
@@ -90,10 +90,10 @@ class RequestDataSetGenerator implements RouteConfig
     }
 
     /**
-     * @param string|null $debugNote
+     * {@inheritdoc}
      */
     #[Override]
-    public function changeDefaultRequestDataSet($debugNote = null): RequestDataSet
+    public function changeDefaultRequestDataSet(?string $debugNote = null): RequestDataSet
     {
         $requestDataSet = $this->defaultRequestDataSet;
 
@@ -105,10 +105,10 @@ class RequestDataSetGenerator implements RouteConfig
     }
 
     /**
-     * @param string|null $debugNote
+     * {@inheritdoc}
      */
     #[Override]
-    public function addExtraRequestDataSet($debugNote = null): RequestDataSet
+    public function addExtraRequestDataSet(?string $debugNote = null): RequestDataSet
     {
         $requestDataSet = new RequestDataSet($this->routeInfo->getRouteName());
         $this->extraRequestDataSets[] = $requestDataSet;

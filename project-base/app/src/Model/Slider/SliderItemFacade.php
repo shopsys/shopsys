@@ -46,11 +46,10 @@ class SliderItemFacade extends BaseSliderItemFacade
     }
 
     /**
-     * @param int $sliderItemId
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      */
     #[Override]
-    public function edit($sliderItemId, SliderItemData $sliderItemData): SliderItem
+    public function edit(int $sliderItemId, SliderItemData $sliderItemData): SliderItem
     {
         /** @var \App\Model\Slider\SliderItem $sliderItem */
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);

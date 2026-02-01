@@ -27,12 +27,11 @@ class PriceRangeRepository extends BasePriceRangeRepository
     }
 
     /**
-     * @param int $domainId
      * @param \App\Model\Category\Category $category
      */
     #[Override]
     public function getPriceRangeInCategory(
-        $domainId,
+        int $domainId,
         PricingGroup $pricingGroup,
         Category $category,
     ): PriceRange {
@@ -45,17 +44,12 @@ class PriceRangeRepository extends BasePriceRangeRepository
         return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @param string|null $searchText
-     */
     #[Override]
     public function getPriceRangeForSearch(
-        $domainId,
+        int $domainId,
         PricingGroup $pricingGroup,
-        $locale,
-        $searchText,
+        string $locale,
+        ?string $searchText,
     ): PriceRange {
         $productsQueryBuilder = $this->productRepository
             ->getSellableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);

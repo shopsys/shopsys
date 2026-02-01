@@ -68,10 +68,10 @@ class ImageFacade extends BaseImageFacade
     }
 
     /**
-     * @param mixed $entity
+     * {@inheritdoc}
      */
     #[Override]
-    public function deleteImages($entity, array $images): void
+    public function deleteImages(object $entity, array $images): void
     {
         $entityName = $this->imageConfig->getEntityName($entity);
         $entityId = $this->getEntityId($entity);
@@ -92,10 +92,10 @@ class ImageFacade extends BaseImageFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
+     * {@inheritdoc}
      */
     #[Override]
-    protected function saveImageOrdering($orderedImages): void
+    protected function saveImageOrdering(array $orderedImages): void
     {
         // Image entity can be cached, and It caused no persisted entity -> fatal on flush
         $persistedImages = [];

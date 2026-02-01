@@ -117,11 +117,10 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param int $code
-     * @return $this
+     * {@inheritdoc}
      */
     #[Override]
-    public function setExpectedStatusCode($code)
+    public function setExpectedStatusCode(int $code)
     {
         $this->expectedStatusCode = $code;
 
@@ -129,12 +128,10 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param string $name
-     * @param mixed $value
-     * @return $this
+     * {@inheritdoc}
      */
     #[Override]
-    public function setParameter($name, $value)
+    public function setParameter(string $name, mixed $value)
     {
         $this->parameters[$name] = $value;
 
@@ -142,11 +139,10 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param string $debugNote
-     * @return $this
+     * {@inheritdoc}
      */
     #[Override]
-    public function addDebugNote($debugNote)
+    public function addDebugNote(string $debugNote)
     {
         $this->debugNotes[] = $debugNote;
 
@@ -154,15 +150,10 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * Provided $callback will be called with instance of this and ContainerInterface as arguments
-     *
-     * Useful for code that needs to access the same instance of container as the test method.
-     *
-     * @param callable $callback
-     * @return $this
+     * {@inheritdoc}
      */
     #[Override]
-    public function addCallDuringTestExecution($callback)
+    public function addCallDuringTestExecution(callable $callback)
     {
         $this->callsDuringTestExecution[] = $callback;
 

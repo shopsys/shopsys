@@ -23,11 +23,8 @@ class CompanyOwnerVoter extends AbstractB2bVoter
         parent::__construct($domain);
     }
 
-    /**
-     * @param mixed $subject
-     */
     #[Override]
-    protected function supports(string $attribute, $subject): bool
+    protected function supports(string $attribute, mixed $subject): bool
     {
         return $attribute === 'is_company_owner_voter';
     }

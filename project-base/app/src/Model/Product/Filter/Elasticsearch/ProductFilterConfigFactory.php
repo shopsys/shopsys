@@ -23,13 +23,8 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory as B
  */
 class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
 {
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @param string $searchText
-     */
     #[Override]
-    public function createForSearch($domainId, $locale, $searchText = ''): ProductFilterConfig
+    public function createForSearch(int $domainId, string $locale, ?string $searchText = ''): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForSearch(
             $searchText,

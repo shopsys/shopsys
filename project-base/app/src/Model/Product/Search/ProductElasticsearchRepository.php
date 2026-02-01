@@ -28,11 +28,8 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
         return (int)$result['hits']['total']['value'];
     }
 
-    /**
-     * @param string|null $searchText
-     */
     #[Override]
-    public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText): void
+    public function filterBySearchText(QueryBuilder $productQueryBuilder, ?string $searchText): void
     {
         $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
 

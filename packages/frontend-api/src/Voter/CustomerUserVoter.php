@@ -24,11 +24,8 @@ class CustomerUserVoter extends AbstractB2bVoter
         parent::__construct($domain);
     }
 
-    /**
-     * @param array $subject
-     */
     #[Override]
-    protected function supports(string $attribute, $subject): bool
+    protected function supports(string $attribute, mixed $subject): bool
     {
         return $attribute === 'can_manage_customer_user_voter';
     }
