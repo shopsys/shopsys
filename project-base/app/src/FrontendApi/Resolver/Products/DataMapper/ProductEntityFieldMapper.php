@@ -54,7 +54,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method array getStoreAvailabilities(\App\Model\Product\Product $product)
  * @method int|null getAvailableStoresCount(\App\Model\Product\Product $product)
  * @method array getProductVideos(\App\Model\Product\Product $product)
- * @method \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat getVat(\App\Model\Product\Product $product)
  * @method string getSlug(\App\Model\Product\Product $product)
  * @method string getVatPercent(\App\Model\Product\Product $product)
  * @method int|null getPromotionBuyQuantity(\App\Model\Product\Product $product)
