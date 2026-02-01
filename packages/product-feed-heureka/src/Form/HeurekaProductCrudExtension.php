@@ -32,10 +32,10 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param int $productId
+     * {@inheritdoc}
      */
     #[Override]
-    public function getData($productId): array
+    public function getData(int $productId): array
     {
         $heurekaProductDomains = $this->heurekaProductDomainFacade->findByProductId($productId);
 
@@ -51,11 +51,10 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param int $productId
-     * @param array $data
+     * {@inheritdoc}
      */
     #[Override]
-    public function saveData($productId, $data): void
+    public function saveData(int $productId, mixed $data): void
     {
         $heurekaProductDomainsData = [];
 
@@ -75,10 +74,10 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param int $productId
+     * {@inheritdoc}
      */
     #[Override]
-    public function removeData($productId): void
+    public function removeData(int $productId): void
     {
         $this->heurekaProductDomainFacade->delete($productId);
     }

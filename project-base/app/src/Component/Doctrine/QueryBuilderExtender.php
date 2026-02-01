@@ -11,14 +11,13 @@ use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender as BaseQuery
 
 class QueryBuilderExtender extends BaseQueryBuilderExtender
 {
-    /**
-     * @param string $class
-     * @param string $alias
-     * @param string $condition
-     */
     #[Override]
-    public function addOrExtendJoin(QueryBuilder $queryBuilder, $class, $alias, $condition): QueryBuilder
-    {
+    public function addOrExtendJoin(
+        QueryBuilder $queryBuilder,
+        string $class,
+        string $alias,
+        string $condition,
+    ): QueryBuilder {
         $joins = $this->getJoinsFromQueryBuilder($queryBuilder);
 
         $joinAlreadyUsed = false;

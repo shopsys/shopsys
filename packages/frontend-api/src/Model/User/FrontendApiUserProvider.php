@@ -42,12 +42,9 @@ class FrontendApiUserProvider implements UserProviderInterface
         throw new NotImplementedException('Method "refreshUser" is not implement.');
     }
 
-    /**
-     * @param mixed $frontendApiUser
-     */
     #[Override]
-    public function supportsClass($frontendApiUser): bool
+    public function supportsClass(string $class): bool
     {
-        return $frontendApiUser instanceof FrontendApiUser;
+        return $class === FrontendApiUser::class || is_subclass_of($class, FrontendApiUser::class);
     }
 }

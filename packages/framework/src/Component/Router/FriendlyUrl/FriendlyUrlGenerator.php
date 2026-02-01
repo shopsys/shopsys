@@ -127,13 +127,9 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
     /**
      * Not supported method
-     *
-     * @param mixed $routeName
-     * @param mixed $parameters
-     * @param mixed $referenceType
      */
     #[Override]
-    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
+    public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         throw new MethodGenerateIsNotSupportedException();
     }

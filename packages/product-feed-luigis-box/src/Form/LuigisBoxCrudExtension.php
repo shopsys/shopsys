@@ -41,7 +41,7 @@ class LuigisBoxCrudExtension implements PluginCrudExtensionInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getData($id): array
+    public function getData(int $id): array
     {
         $data = [];
 
@@ -56,7 +56,7 @@ class LuigisBoxCrudExtension implements PluginCrudExtensionInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function saveData($id, $data): void
+    public function saveData(int $id, mixed $data): void
     {
         foreach ($data as $name => $value) {
             $this->setting->setForDomain($name, $value, $this->adminDomainTabsFacade->getSelectedDomainId());
@@ -67,7 +67,7 @@ class LuigisBoxCrudExtension implements PluginCrudExtensionInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function removeData($id): void
+    public function removeData(int $id): void
     {
         foreach ($this->luigisBoxFeedSettingEnum->getAllCases() as $settingName) {
             $this->setting->deleteByName($settingName);

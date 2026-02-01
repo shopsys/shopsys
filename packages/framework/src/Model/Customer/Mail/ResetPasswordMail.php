@@ -28,7 +28,7 @@ class ResetPasswordMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $customerUser
      */
     #[Override]
-    public function createMessage(MailTemplate $template, $customerUser): MessageData
+    public function createMessage(MailTemplate $template, mixed $customerUser): MessageData
     {
         $domainId = $template->getDomainId();
 

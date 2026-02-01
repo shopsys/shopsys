@@ -41,7 +41,7 @@ class ComplaintMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
      */
     #[Override]
-    public function createMessage(MailTemplate $mailTemplate, $complaint): MessageData
+    public function createMessage(MailTemplate $mailTemplate, mixed $complaint): MessageData
     {
         $complaintDomainId = $complaint->getDomainId();
 

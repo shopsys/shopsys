@@ -9,6 +9,7 @@ use Override;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\Exception\NotSupportedException;
+use Stringable;
 use function GuzzleHttp\json_decode;
 use function GuzzleHttp\json_encode;
 
@@ -40,11 +41,10 @@ class ElasticsearchTracer extends AbstractLogger
     }
 
     /**
-     * @param mixed $level
-     * @param string $message
+     * {@inheritdoc}
      */
     #[Override]
-    public function log($level, $message, array $context = []): void
+    public function log($level, string|Stringable $message, array $context = []): void
     {
         if ($level === LogLevel::INFO) {
             $this->lastRequestCurl = $message;

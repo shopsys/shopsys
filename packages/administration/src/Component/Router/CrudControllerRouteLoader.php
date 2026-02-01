@@ -27,7 +27,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function load($resource, ?string $type = null)
+    public function load(mixed $resource, ?string $type = null)
     {
         $routes = new RouteCollection();
 
@@ -42,7 +42,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function supports($resource, ?string $type = null)
+    public function supports(mixed $resource, ?string $type = null)
     {
         return $type === 'crud_controller';
     }

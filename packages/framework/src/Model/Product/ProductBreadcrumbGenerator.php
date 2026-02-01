@@ -24,7 +24,7 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         $product = $this->productRepository->getById($routeParameters['id']);
 

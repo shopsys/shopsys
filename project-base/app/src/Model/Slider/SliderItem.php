@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem as BaseSliderItem;
+use Shopsys\FrameworkBundle\Model\Slider\SliderItemData as BaseSliderItemData;
 
 /**
  * SliderItem
@@ -36,7 +37,7 @@ class SliderItem extends BaseSliderItem
     /**
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      */
-    public function __construct($sliderItemData)
+    public function __construct(BaseSliderItemData $sliderItemData)
     {
         parent::__construct($sliderItemData);
 
@@ -49,7 +50,7 @@ class SliderItem extends BaseSliderItem
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      */
     #[Override]
-    public function edit($sliderItemData): void
+    public function edit(BaseSliderItemData $sliderItemData): void
     {
         parent::edit($sliderItemData);
 

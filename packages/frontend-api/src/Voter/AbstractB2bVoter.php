@@ -17,19 +17,13 @@ abstract class AbstractB2bVoter extends Voter
     {
     }
 
-    /**
-     * @param array $subject
-     */
     #[Override]
-    abstract protected function supports(string $attribute, $subject): bool;
+    abstract protected function supports(string $attribute, mixed $subject): bool;
 
     abstract protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token): bool;
 
-    /**
-     * @param mixed $subject
-     */
     #[Override]
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         if ($this->domain->isB2b() === false) {
             return false;

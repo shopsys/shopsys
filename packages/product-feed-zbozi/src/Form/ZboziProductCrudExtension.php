@@ -33,10 +33,10 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param int $productId
+     * {@inheritdoc}
      */
     #[Override]
-    public function getData($productId): array
+    public function getData(int $productId): array
     {
         $zboziProductDomains = $this->zboziProductDomainFacade->findByProductId($productId);
 
@@ -48,11 +48,10 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param int $productId
-     * @param array $data
+     * {@inheritdoc}
      */
     #[Override]
-    public function saveData($productId, $data): void
+    public function saveData(int $productId, mixed $data): void
     {
         $zboziProductDomainsDataIndexedByDomainId = [];
 
@@ -121,10 +120,10 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param int $productId
+     * {@inheritdoc}
      */
     #[Override]
-    public function removeData($productId): void
+    public function removeData(int $productId): void
     {
         $this->zboziProductDomainFacade->delete($productId);
     }

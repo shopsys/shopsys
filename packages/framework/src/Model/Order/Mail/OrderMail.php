@@ -72,7 +72,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
     #[Override]
-    public function createMessage(MailTemplate $mailTemplate, $order): MessageData
+    public function createMessage(MailTemplate $mailTemplate, mixed $order): MessageData
     {
         $toEmail = $order->getEmail();
         $bccMail = $mailTemplate->getBccEmail();
