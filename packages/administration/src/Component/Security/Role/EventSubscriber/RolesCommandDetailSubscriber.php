@@ -9,6 +9,8 @@ use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlD
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Event\RolesCommandDetailEvent;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RolesCommandDetailSubscriber implements EventSubscriberInterface
@@ -38,7 +40,7 @@ class RolesCommandDetailSubscriber implements EventSubscriberInterface
         $routes = $this->getRoutesUsingRole($event->getRole()->getConstant());
 
         if (count($routes) > 0) {
-            $event->addRenderCallback(function ($io, $output) use ($routes): void {
+            $event->addRenderCallback(function (SymfonyStyle $io, OutputInterface $output) use ($routes): void {
                 $io->text('Routes using this role:');
 
                 $table = new Table($output);
