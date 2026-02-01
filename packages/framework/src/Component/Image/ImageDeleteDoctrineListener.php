@@ -16,14 +16,6 @@ class ImageDeleteDoctrineListener
     ) {
     }
 
-    /**
-     * Prevent ServiceCircularReferenceException (DoctrineListener cannot be dependent on the EntityManager)
-     */
-    protected function getImageFacade(): ImageFacade
-    {
-        return $this->imageFacade;
-    }
-
     public function preRemove(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
@@ -31,13 +23,13 @@ class ImageDeleteDoctrineListener
         if ($this->imageConfig->hasImageConfig($entity)) {
             $this->deleteEntityImages($entity, $args->getEntityManager());
         } elseif ($entity instanceof Image) {
-            $this->getImageFacade()->deleteImageFiles($entity);
+            $this->imageFacade->deleteImageFiles($entity);
         }
     }
 
     protected function deleteEntityImages(object $entity, EntityManagerInterface $em): void
     {
-        $images = $this->getImageFacade()->getAllImagesByEntity($entity);
+        $images = $this->imageFacade->getAllImagesByEntity($entity);
 
         foreach ($images as $image) {
             $em->remove($image);
