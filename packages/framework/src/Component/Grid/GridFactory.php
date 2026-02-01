@@ -21,9 +21,6 @@ class GridFactory
     ) {
     }
 
-    /**
-     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException
-     */
     public function create(
         string $gridId,
         DataSourceInterface $dataSource,
