@@ -34,7 +34,7 @@ final class ParameterValueFormType extends AbstractType
             'file_constraints' => [
                 new Constraints\File([
                     'maxSize' => '2M',
-                    'maxSizeMessage' => 'Uploaded file is to large ({{ size }} {{ suffix }}). '
+                    'maxSizeMessage' => 'Uploaded file is too large ({{ size }} {{ suffix }}). '
                         . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
                     'extensions' => [
                         'png' => 'image/png',

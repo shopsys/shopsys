@@ -1,3 +1,7 @@
+{% block attributes %}
+    {{ block('attributes', 'form_div_layout.html.twig') }}
+{% endblock %}
+
 {% block abstract_file_upload_widget %}
     {% import _self as self %}
 
@@ -5,7 +9,7 @@
     {% set attr = attr|merge({'data-fileupload-url': url('admin_fileupload_upload')}) %}
     {% set attr = attr|merge({'data-fileupload-delete-url': url('admin_fileupload_deletetemporaryfile')}) %}
 
-    <div {{ block('widget_attributes') }}>
+    <div{{ block('attributes') }}>
         <div class="js-file-upload-item">
             {% block abstract_file_upload_widget_uploaded_files %}
                 <div class="file-upload-card-container js-file-upload-uploaded-files"
@@ -99,6 +103,9 @@
                 {% for additionalType in additionalTypesToRender %}
                     {{ form_widget(additionalType) }}
                     {{ form_errors(additionalType) }}
+                    <div class="mb-3">
+                        {{ form_help(additionalType) }}
+                    </div>
                 {% endfor %}
             {% endif %}
         </div>

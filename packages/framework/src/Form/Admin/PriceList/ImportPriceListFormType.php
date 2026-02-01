@@ -115,7 +115,7 @@ final class ImportPriceListFormType extends AbstractType
                     new Constraints\File([
                         'maxSize' => '2M',
                         'extensions' => ['csv' => ['text/csv', 'text/plain']],
-                        'maxSizeMessage' => 'Uploaded file is to large ({{ size }} {{ suffix }}). '
+                        'maxSizeMessage' => 'Uploaded file is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
                     ]),
                 ],

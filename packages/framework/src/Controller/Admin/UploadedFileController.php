@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
@@ -17,12 +16,10 @@ use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Grid\UploadedFileGridFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Form\Admin\UploadedFile\UploadedFileFormType;
-use Shopsys\FrameworkBundle\Form\MultiLocaleBasicFileUploadType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormDataFactory;
@@ -39,7 +36,6 @@ class UploadedFileController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormDataFactory $uploadedFileFormDataFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Grid\UploadedFileGridFactory $uploadedFileGridFactory
      */
     public function __construct(
@@ -48,7 +44,6 @@ class UploadedFileController extends AdminBaseController
         protected readonly UploadedFileFormDataFactory $uploadedFileFormDataFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
-        protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
         protected readonly UploadedFileGridFactory $uploadedFileGridFactory,
     ) {
     }
@@ -87,7 +82,7 @@ class UploadedFileController extends AdminBaseController
     public function editAction(Request $request, int $id): Response
     {
         $uploadedFile = $this->uploadedFileFacade->getById($id);
-        $uploadedFileFormData = $this->uploadedFileFormDataFactory->create($uploadedFile);
+        $uploadedFileFormData = $this->uploadedFileFormDataFactory->createFromUploadedFile($uploadedFile);
 
         $form = $this->createForm(UploadedFileFormType::class, $uploadedFileFormData, [
             'uploaded_file' => $uploadedFile,
@@ -107,6 +102,10 @@ class UploadedFileController extends AdminBaseController
             );
 
             return $this->redirectToRoute('admin_uploadedfile_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
@@ -133,27 +132,16 @@ class UploadedFileController extends AdminBaseController
     #[CanCreate]
     public function newAction(Request $request): Response
     {
-        $uploadedFileData = $this->uploadedFileDataFactory->create();
-        $form = $this->createForm(MultiLocaleBasicFileUploadType::class, $uploadedFileData, [
-            'required' => false,
-            'multiple' => true,
-            'label' => false,
-        ])->add('actionBar', ActionBarType::class, [
-            'back_route' => 'admin_uploadedfile_list',
-            'save_label' => t('Upload'),
-        ]);
+        $uploadedFileFormData = $this->uploadedFileFormDataFactory->create();
 
+        $form = $this->createForm(UploadedFileFormType::class, $uploadedFileFormData);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileFormData */
+            /** @var \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData $uploadedFileFormData */
             $uploadedFileFormData = $form->getData();
 
-            $uploadedFiles = $this->uploadedFileFacade->uploadFilesWithoutRelations(
-                $uploadedFileFormData->uploadedFiles,
-                $uploadedFileFormData->uploadedFilenames,
-                $uploadedFileFormData->names,
-            );
+            $uploadedFiles = $this->uploadedFileFacade->create($uploadedFileFormData);
 
             $this->addSuccessFlashTwig(sprintf('%s<br /><br />%s', t('Files uploaded:'), implode(
                 '<br />',
@@ -168,6 +156,10 @@ class UploadedFileController extends AdminBaseController
             )));
 
             return $this->redirectToRoute('admin_uploadedfile_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysAdministration/content/uploadedFile/new.html.twig', [

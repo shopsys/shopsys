@@ -195,10 +195,6 @@ Required option that needs to be string or null and is a text that is shown unde
 
 Defines which entity should the files be assigned to.
 
-### [MultiLocaleFileUploadType]({{github.link}}/packages/framework/src/Form/MultiLocaleFileUploadType.php)
-
-Extends `FileUploadType` with additional support for translated file names.
-
 ### [BasicFileUploadType]({{github.link}}/packages/framework/src/Form/BasicFileUploadType.php)
 
 Uses `AbstractFileUploadType` to display a widget for file uploads and manage them without associating them with any entity.
@@ -207,13 +203,9 @@ Uses `AbstractFileUploadType` to display a widget for file uploads and manage th
 
 Allows multiple files to be uploaded.
 
-#### allow_filenames_input
+#### with_names_inputs
 
-Allows to input custom filenames for uploaded files.
-
-### [MultiLocaleBasicFileUploadType]({{github.link}}/packages/framework/src/Form/MultiLocaleBasicFileUploadType.php)
-
-Extends `BasicFileUploadType` with additional support for translated file names.
+Allows to input custom filenames and translated names for uploaded files.
 
 ### [FriendlyUrlType]({{github.link}}/packages/framework/src/Form/FriendlyUrlType.php)
 

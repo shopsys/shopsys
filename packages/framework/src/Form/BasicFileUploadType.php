@@ -9,14 +9,17 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
+use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 
 final class BasicFileUploadType extends AbstractType
 {
@@ -41,8 +44,7 @@ final class BasicFileUploadType extends AbstractType
         $resolver->setDefaults([
             'data_class' => UploadedFileData::class,
             'multiple' => false,
-            'allow_filenames_input' => false,
-            'allow_localized_names' => false,
+            'with_names_inputs' => false,
         ]);
     }
 
@@ -57,6 +59,7 @@ final class BasicFileUploadType extends AbstractType
         parent::buildView($view, $form, $options);
 
         $view->vars['multiple'] = $options['multiple'];
+        $view->vars['with_names_inputs'] = $options['with_names_inputs'];
     }
 
     /**
@@ -68,10 +71,28 @@ final class BasicFileUploadType extends AbstractType
     {
         $builder->resetModelTransformers();
 
-        if (!$options['allow_filenames_input']) {
-            $builder->add('uploadedFilenames', CollectionType::class, [
-                'entry_type' => HiddenType::class,
+        $builder->add('uploadedFilenames', CollectionType::class, [
+            'entry_type' => $options['with_names_inputs'] ? TextType::class : HiddenType::class,
+            'allow_add' => true,
+        ]);
+
+        if ($options['with_names_inputs']) {
+            $builder->add('names', CollectionType::class, [
+                'required' => false,
+                'entry_type' => LocalizedType::class,
                 'allow_add' => true,
+                'entry_options' => [
+                    'help' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
+                    'label' => '',
+                    'entry_options' => [
+                        'constraints' => [
+                            new Constraints\Length([
+                                'max' => 255,
+                                'maxMessage' => 'Name cannot be longer than {{ limit }} characters',
+                            ]),
+                        ],
+                    ],
+                ],
             ]);
         }
 

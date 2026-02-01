@@ -9,6 +9,8 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator;
+use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,8 +21,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class FileUploadType extends AbstractType
 {
@@ -28,11 +32,13 @@ final class FileUploadType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer $filesIdsToFilesTransformer
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
      */
     public function __construct(
         private readonly UploadedFileFacade $uploadedFileFacade,
         private readonly FilesIdsToFilesTransformer $filesIdsToFilesTransformer,
         private readonly UploadedFileConfig $uploadedFileConfig,
+        private readonly UploadedFileLocator $uploadedFileLocator,
     ) {
     }
 
@@ -64,6 +70,7 @@ final class FileUploadType extends AbstractType
         $view->vars['files_by_id'] = $this->getFilesIndexedById($options);
         $view->vars['entity'] = $options['entity'];
         $view->vars['multiple'] = $this->isMultiple($options);
+        $view->vars['requires_friendly_name'] = $this->isRequiredFriendlyName($options);
     }
 
     /**
@@ -111,6 +118,11 @@ final class FileUploadType extends AbstractType
             ->add(
                 $builder->create('relations', FilesType::class, [
                     'multiple' => $this->isMultiple($options),
+                    'constraints' => [
+                        new Constraints\Callback(
+                            ['callback' => [$this, 'validateSelectedFiles'], 'payload' => $options['file_constraints']],
+                        ),
+                    ],
                 ]),
             )
             ->add(
@@ -127,6 +139,8 @@ final class FileUploadType extends AbstractType
                     ],
                 ]),
             );
+
+        $this->buildLocalizedNamesFieldsIfNecessary($options, $builder);
     }
 
     /**
@@ -172,11 +186,89 @@ final class FileUploadType extends AbstractType
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]|null $selectedFiles
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     * @param \Symfony\Component\Validator\Constraint[] $fileConstraints
+     */
+    public function validateSelectedFiles(
+        ?array $selectedFiles,
+        ExecutionContextInterface $context,
+        array $fileConstraints,
+    ): void {
+        if ($selectedFiles === null || $fileConstraints === []) {
+            return;
+        }
+
+        foreach ($selectedFiles as $selectedFile) {
+            $filepath = $this->uploadedFileLocator->getAbsoluteUploadedFileFilepath($selectedFile);
+            $file = new File($filepath, false);
+
+            $validator = $context->getValidator();
+            $violations = $validator->validate($file, $fileConstraints);
+
+            foreach ($violations as $violation) {
+                $context->addViolation($violation->getMessageTemplate(), $violation->getParameters());
+            }
+        }
+    }
+
+    /**
+     * @param array $options
+     * @return bool
+     */
+    private function isRequiredFriendlyName(array $options): bool
+    {
+        if ($options['file_entity_class'] === null) {
+            return false;
+        }
+
+        $fileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfigByClass(
+            $options['file_entity_class'],
+        );
+
+        return $fileEntityConfig->getTypeByName($options['file_type'])->isRequiredFriendlyName();
+    }
+
+    /**
      * {@inheritdoc}
      */
     #[Override]
     public function getParent(): string
     {
         return AbstractFileUploadType::class;
+    }
+
+    /**
+     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildLocalizedNamesFieldsIfNecessary(array $options, FormBuilderInterface $builder): void
+    {
+        if (!$this->isRequiredFriendlyName($options)) {
+            return;
+        }
+
+        $namesOptions = [
+            'required' => false,
+            'entry_type' => LocalizedType::class,
+            'allow_add' => true,
+            'entry_options' => [
+                'label' => '',
+                'help' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
+                'entry_options' => [
+                    'constraints' => [
+                        new Constraints\Length([
+                            'max' => 255,
+                            'maxMessage' => 'Name cannot be longer than {{ limit }} characters',
+                        ]),
+                    ],
+                ],
+            ],
+        ];
+
+        $builder
+            ->add('namesIndexedById', CollectionType::class, $namesOptions)
+            ->add('names', CollectionType::class, $namesOptions)
+            ->add('relationsNames', CollectionType::class, $namesOptions);
     }
 }

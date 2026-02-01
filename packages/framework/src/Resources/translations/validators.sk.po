@@ -673,7 +673,7 @@ msgstr "Táto hodnota nie je platná e-mailová adresa."
 msgid "Unit name cannot be longer than {{ limit }} characters"
 msgstr "Názov jednotky nemôže byť dlhší ako {{ limit }} znakov"
 
-msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."
+msgid "Uploaded file is too large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."
 msgstr "Nahraný súbor je príliš veľký ({{ size }} {{ suffix }}). Maximálna veľkosť súboru je {{ limit }} {{ suffix }}."
 
 msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."

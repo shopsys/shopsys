@@ -29,7 +29,7 @@ class UploadedFileFormDataFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData
      */
-    public function create(UploadedFile $uploadedFile): UploadedFileFormData
+    public function createFromUploadedFile(UploadedFile $uploadedFile): UploadedFileFormData
     {
         $uploadedFileData = $this->uploadedFileDataFactory->create();
         $uploadedFileData->orderedFiles = [$uploadedFile];
@@ -41,6 +41,17 @@ class UploadedFileFormDataFactory
 
         $entityIds = $this->uploadedFileFacade->getEntityIdsForUploadedFile($uploadedFile, Product::class, UploadedFileTypeConfig::DEFAULT_TYPE_NAME);
         $uploadedFileFormData->products = $this->productFacade->getAllByIds($entityIds);
+
+        return $uploadedFileFormData;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData
+     */
+    public function create(): UploadedFileFormData
+    {
+        $uploadedFileFormData = $this->createInstance();
+        $uploadedFileFormData->files = $this->uploadedFileDataFactory->create();
 
         return $uploadedFileFormData;
     }
