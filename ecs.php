@@ -107,6 +107,7 @@ return ECSConfig::configure()
     ->withSkip(array_merge_recursive(
         include __DIR__ . '/project-base/app/ecs-skip-rules.php',
         [
+            __DIR__ . '/packages/framework/src/Component/Filesystem/Flysystem/VolumeDriver.php',
             __DIR__ . '/packages/coding-standards/tests/Unit/**/wrong/*',
             __DIR__ . '/packages/coding-standards/tests/Unit/**/Wrong/*',
             __DIR__ . '/packages/coding-standards/tests/Unit/**/correct/*',

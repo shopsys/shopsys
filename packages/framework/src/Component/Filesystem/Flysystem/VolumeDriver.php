@@ -11,7 +11,7 @@ use Override;
 class VolumeDriver extends Driver
 {
     #[Override]
-    protected function configure(): void
+    protected function configure()
     {
         @parent::configure();
 
@@ -41,9 +41,10 @@ class VolumeDriver extends Driver
 
     /**
      * @param string $hash
+     * @return false|string
      */
     #[Override]
-    public function tmb($hash): false|string
+    public function tmb($hash)
     {
         $thumbnailPath = $this->decode($hash);
         $stat = $this->stat($thumbnailPath);
@@ -80,9 +81,10 @@ class VolumeDriver extends Driver
     /**
      * @param string $thumbnailPath
      * @param mixed[] $stat
+     * @return false|string
      */
     #[Override]
-    protected function gettmb($thumbnailPath, $stat): false|string
+    protected function gettmb($thumbnailPath, $stat)
     {
         if ($this->tmbURL && $this->tmbPath) {
             // file itself thumnbnail
@@ -101,7 +103,11 @@ class VolumeDriver extends Driver
         return false;
     }
 
-    public function createThumbnailPath(string $name): string
+    /**
+     * @param string $name
+     * @return string
+     */
+    public function createThumbnailPath($name)
     {
         return $this->tmbPath . DIRECTORY_SEPARATOR . $name;
     }
@@ -109,9 +115,10 @@ class VolumeDriver extends Driver
     /**
      * @param string $thumbnailPath
      * @param mixed[] $stat
+     * @return false|string
      */
     #[Override]
-    protected function createTmb($thumbnailPath, $stat): false|string
+    protected function createTmb($thumbnailPath, $stat)
     {
         @mkdir($this->tmbPath, 0777, true);
 
@@ -135,7 +142,7 @@ class VolumeDriver extends Driver
      * @param mixed[] $stat
      */
     #[Override]
-    protected function rmTmb($stat): void
+    protected function rmTmb($stat)
     {
         $path = $this->tmbPath . DIRECTORY_SEPARATOR . $this->tmbname($stat);
 
@@ -174,7 +181,7 @@ class VolumeDriver extends Driver
      * @return false|mixed[]
      */
     #[Override]
-    protected function _stat($path, $hash = ''): false|array
+    protected function _stat($path, $hash = '')
     {
         $stat = parent::_stat($path);
 
