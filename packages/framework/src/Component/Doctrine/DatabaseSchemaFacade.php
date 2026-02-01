@@ -12,7 +12,7 @@ class DatabaseSchemaFacade
     protected string $defaultSchemaFilepath;
 
     public function __construct(
-        mixed $defaultSchemaFilepath,
+        string $defaultSchemaFilepath,
         protected readonly EntityManagerInterface $em,
     ) {
         $this->defaultSchemaFilepath = $defaultSchemaFilepath;
