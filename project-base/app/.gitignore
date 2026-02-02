@@ -32,3 +32,4 @@ yarn-error.log
 /.phpunit.cache
 
 /phing.phar
+/shopsys.phar

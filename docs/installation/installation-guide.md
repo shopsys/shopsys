@@ -1,8 +1,31 @@
 # Installation Guide
 
-This document will provide you with information about 2 ways of developing and running Shopsys Platform project and the services that it depends on.  
-The first option [using docker](#installation-using-docker) is **highly recommended** since it is the easiest and fastest way to start Shopsys Platform.
-In the case the operating system does not support docker, or you are not able to use Docker (e.g., due to the performance problems with Docker-sync), we prepared also second section with document about project [installation without docker](#installation-without-docker), however this way is slower and harder to configure and maintain because of different operating systems and their versions.
+This document will provide you with information about ways of developing and running Shopsys Platform project and the services that it depends on.
+
+## Quick Start with Shopsys CLI
+
+For new projects, the **Shopsys CLI** is automatically downloaded when you create a project using Composer:
+
+> **Windows Users:** Run these commands inside WSL2 (Windows Subsystem for Linux).
+
+```bash
+composer create-project shopsys/project-base --no-install --keep-vcs --ignore-platform-reqs
+```
+
+The CLI (`shopsys.phar`) is automatically downloaded and the configuration wizard launches, guiding you through domain configuration, locale settings, and more.
+
+Alternatively, you can download the CLI manually and initialize a project:
+
+```bash
+# Download Shopsys CLI manually
+curl -L https://github.com/shopsys/cli/releases/latest/download/shopsys.phar -o shopsys
+chmod +x shopsys
+
+# Initialize a new project
+./shopsys init my-project
+```
+
+See [Project Initialization with Shopsys CLI](./project-initialization-with-shopsys-cli.md) for detailed documentation.
 
 ## Installation using Docker
 

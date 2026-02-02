@@ -21,6 +21,7 @@ get_all_packages() {
         biome-config \
         framework \
         frontend-api \
+        cli \
         google-cloud-bundle \
         s3-bridge \
         category-feed-luigis-box \

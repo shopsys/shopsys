@@ -30,6 +30,7 @@ There is a list of all the repositories maintained by the monorepo:
 - [shopsys/luigis-box](https://github.com/shopsys/luigis-box)
 - [shopsys/administration](https://github.com/shopsys/administration)
 - [shopsys/maker](https://github.com/shopsys/maker)
+- [shopsys/cli](https://github.com/shopsys/cli)
 
 Packages are formatted by release version.
 You can see all the changes done to the package that you carry about with this tree.

@@ -1,0 +1,125 @@
+# Locale-specific Elasticsearch configuration
+# This file contains settings for stemming and stopwords per locale
+#
+# Available fields per locale:
+#   prefix: string - prefix for filter names (e.g., 'english' -> 'english_stop', 'english_stemmer')
+#   stemmer: string|null - stemmer language (null = no stemming)
+#   stopwords: string|array - stopwords language ('_english_') or custom array
+#   builtin_filters: array - plugin-provided token filters to use directly (e.g., ['polish_stem', 'polish_stop'])
+#                           When set, stemmer/stopwords are ignored and these filters are used in analyzer
+#   plugins: array - list of required Elasticsearch plugins (e.g., ['analysis-stempel'])
+
+locales:
+
+    bg:
+        prefix: bulgarian
+        stemmer: bulgarian
+        stopwords: _bulgarian_
+
+    cs:
+        prefix: czech
+        stemmer: czech
+        stopwords: _czech_
+
+    da:
+        prefix: danish
+        stemmer: danish
+        stopwords: _danish_
+
+    de:
+        prefix: german
+        stemmer: german
+        stopwords: _german_
+
+    el:
+        prefix: greek
+        stemmer: greek
+        stopwords: _greek_
+    en:
+        prefix: english
+        stemmer: english
+        stopwords: _english_
+
+    es:
+        prefix: spanish
+        stemmer: spanish
+        stopwords: _spanish_
+
+    fi:
+        prefix: finnish
+        stemmer: finnish
+        stopwords: _finnish_
+
+    fr:
+        prefix: french
+        stemmer: light_french
+        stopwords: _french_
+
+    hr:
+        prefix: croatian
+        stemmer: english # fallback to English stemmer
+        stopwords: [ ]
+
+    hu:
+        prefix: hungarian
+        stemmer: hungarian
+        stopwords: _hungarian_
+
+    it:
+        prefix: italian
+        stemmer: italian
+        stopwords: _italian_
+
+    nl:
+        prefix: dutch
+        stemmer: dutch
+        stopwords: _dutch_
+
+    no:
+        prefix: norwegian
+        stemmer: norwegian
+        stopwords: _norwegian_
+
+    pl:
+        builtin_filters:
+            - polish_stem
+            - polish_stop
+        plugins:
+            - analysis-stempel
+        prefix: polish
+
+    pt:
+        prefix: portuguese
+        stemmer: portuguese
+        stopwords: _portuguese_
+
+    ro:
+        prefix: romanian
+        stemmer: romanian
+        stopwords: _romanian_
+
+    sk:
+        prefix: slovak
+        stemmer: ~
+        stopwords: [ 'a','aby','aj','ak','ako','ale','alebo','and','ani','áno','asi','až','bez','bude','budem','budeš','budeme','budete','budú','by','bol','bola','boli','bolo','byť','cez','čo','či','ďalší','ďalšia','ďalšie','dnes','do','ho','ešte','for','i','ja','je','jeho','jej','ich','iba','iné','iný','som','si','sme','sú','k','kam','každý','každá','každé','každí','kde','keď','kto','ktorá','ktoré','ktorou','ktorý','ktorí','ku','lebo','len','ma','mať','má','máte','medzi','mi','mna','mne','mnou','musieť','môcť','môj','môže','my','na','nad','nám','náš','naši','nie','nech','než','nič','niektorý','nové','nový','nová','noví','o','od','odo','of','on','ona','ono','oni','ony','po','pod','podľa','pokiaľ','potom','práve','pre','prečo','preto','pretože','prvý','prvá','prvé','prví','pred','predo','pri','pýta','s','sa','so','svoje','svoj','svojich','svojím','svojími','ta','tak','takže','táto','teda','te','tě','ten','tento','the','tieto','tým','týmto','tiež','to','toto','toho','tohoto','tom','tomto','tomuto','tu','tú','túto','tvoj','ty','tvojími','už','v','vám','váš','vaše','vo','viac','však','všetok','vy','z','za','zo','že' ]
+
+
+    sl:
+        prefix: slovenian
+        stemmer: english # fallback to English stemmer
+        stopwords: [ ]
+
+    sv:
+        prefix: swedish
+        stemmer: swedish
+        stopwords: _swedish_
+
+    tr:
+        prefix: turkish
+        stemmer: turkish
+        stopwords: _turkish_
+
+    uk:
+        prefix: ukrainian
+        stemmer: english # fallback to English stemmer
+        stopwords: [ ]

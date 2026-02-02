@@ -1,5 +1,6 @@
 # Installation
 
+- [Project Initialization with Shopsys CLI](./project-initialization-with-shopsys-cli.md)
 - [Application Configuration](./application-configuration.md)
 - [Application Requirements](./application-requirements.md)
 - [Installation Guide](./installation-guide.md)

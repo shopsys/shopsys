@@ -7,6 +7,10 @@ Take a look at the article about [Monorepo](../introduction/monorepo.md) for mor
 
 This solution uses [_Mutagen_](https://mutagen.io) (for relatively fast two-way synchronization of the application files between the host machine and Docker volume).
 
+!!! tip "Automate with Shopsys CLI"
+
+    Instead of manual project setup, you can use [Shopsys CLI](./project-initialization-with-shopsys-cli.md) to automate project initialization, domain configuration, and locale settings with a single command.
+
 ## Requirements
 
 - [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
@@ -32,6 +36,11 @@ cd project-base
     - The `--no-install` option disables installation of the vendors - this will be done later in the Docker container
     - The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`
     - The `--ignore-platform-reqs` option ensures your local PHP setup is not verified (it is not needed, everything is installed in Docker later)
+
+!!! info "Automatic CLI Download"
+
+    During project creation, the [Shopsys CLI](./project-initialization-with-shopsys-cli.md) (`shopsys.phar`) is automatically downloaded and the configuration wizard is launched.
+    This allows you to configure your domains, locales, and other project settings interactively before proceeding with the installation.
 
 ### 2. Installation
 
