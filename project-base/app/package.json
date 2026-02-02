@@ -69,6 +69,7 @@
         "grapesjs-preset-newsletter": "^0.2.21",
         "grapesjs-preset-webpage": "^1.0.2",
         "intersection-observer": "^0.11.0",
+        "jquery": "^3.7.1",
         "jquery-hoverintent": "^1.10.1",
         "jquery-ui": "1.12.1",
         "jquery-ui-touch-punch": "^0.2.3",

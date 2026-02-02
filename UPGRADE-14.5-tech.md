@@ -220,3 +220,7 @@ For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use 
     -   remove the service definition from your `config/services.yaml` if you have it defined there
     -   the service is now marked as lazy to prevent calling Redis during builds on CI
 -   see #project-base-diff to update your project
+
+#### pin jQuery version to 3.x major ([#4428](https://github.com/shopsys/shopsys/pull/4428))
+
+-   see #project-base-diff to update your project
