@@ -47,30 +47,21 @@ abstract class BaseMaker extends AbstractMaker
         $this->entityConfigFactory = $baseMakerDependency->entityConfigFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
-    public function configureCommand(Command $command, InputConfiguration $inputConfig)
+    public function configureCommand(Command $command, InputConfiguration $inputConfig): void
     {
         $command
             ->addArgument(self::ENTITY_NAME_ARGUMENT, InputArgument::REQUIRED, 'The entity name (e.g. <fg=yellow>Kitty</>)');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
-    public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
+    public function interact(InputInterface $input, ConsoleStyle $io, Command $command): void
     {
         parent::interact($input, $io, $command);
 
         $this->entityConfig = $this->entityConfigFactory->createWithEntityNameOnly($input);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
@@ -159,11 +150,8 @@ abstract class BaseMaker extends AbstractMaker
 
     abstract protected function getGeneratedClassSuffix(): string;
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
-    public function configureDependencies(DependencyBuilder $dependencies)
+    public function configureDependencies(DependencyBuilder $dependencies): void
     {
     }
 }

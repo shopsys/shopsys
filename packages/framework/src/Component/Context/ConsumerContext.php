@@ -14,27 +14,18 @@ final class ConsumerContext extends AbstractContext
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDescription(): string
     {
         return 'Message queue consumer execution';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRequiredContexts(): array
     {
         return [ConsoleContext::class];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function matches(): bool
     {

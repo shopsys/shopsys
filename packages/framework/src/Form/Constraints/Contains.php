@@ -13,9 +13,6 @@ class Contains extends Constraint
 
     public ?string $needle = null;
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRequiredOptions(): array
     {

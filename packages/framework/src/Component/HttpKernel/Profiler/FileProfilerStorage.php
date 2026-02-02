@@ -18,8 +18,6 @@ use const LOCK_EX;
 class FileProfilerStorage extends BaseFileProfilerStorage
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws \RuntimeException
      */
     #[Override]

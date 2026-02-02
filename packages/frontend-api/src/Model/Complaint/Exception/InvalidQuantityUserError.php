@@ -12,9 +12,6 @@ class InvalidQuantityUserError extends UserError implements UserErrorWithCodeInt
 {
     protected const CODE = 'invalid-quantity';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

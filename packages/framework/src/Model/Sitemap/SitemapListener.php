@@ -26,9 +26,6 @@ class SitemapListener implements EventSubscriberInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {

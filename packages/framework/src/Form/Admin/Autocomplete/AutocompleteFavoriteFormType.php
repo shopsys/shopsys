@@ -30,9 +30,6 @@ final class AutocompleteFavoriteFormType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -99,9 +96,6 @@ final class AutocompleteFavoriteFormType extends AbstractType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

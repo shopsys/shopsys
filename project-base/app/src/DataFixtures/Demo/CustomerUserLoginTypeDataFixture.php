@@ -27,9 +27,6 @@ class CustomerUserLoginTypeDataFixture extends AbstractReferenceFixture implemen
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -42,9 +39,6 @@ class CustomerUserLoginTypeDataFixture extends AbstractReferenceFixture implemen
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

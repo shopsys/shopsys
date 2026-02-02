@@ -20,24 +20,15 @@ abstract readonly class AbstractCanPermissionAttribute implements PermissionAttr
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     abstract public function getPermission(): Permission;
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRole(): ?string
     {
         return $this->role;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getMethods(): array
     {

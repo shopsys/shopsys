@@ -17,9 +17,6 @@ use SplFileInfo;
 
 final class InheritDocFormatFixer implements FixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -36,27 +33,18 @@ SAMPLE,
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isRisky(): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
@@ -74,27 +62,18 @@ SAMPLE,
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return 'Shopsys/inherit_doc_format';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPriority(): int
     {
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function supports(SplFileInfo $file): bool
     {

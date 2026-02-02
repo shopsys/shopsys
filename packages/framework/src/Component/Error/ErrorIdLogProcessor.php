@@ -39,9 +39,6 @@ final class ErrorIdLogProcessor implements EventSubscriberInterface, ResetInterf
         $this->errorId = null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {

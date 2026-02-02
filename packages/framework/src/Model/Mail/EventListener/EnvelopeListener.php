@@ -83,9 +83,6 @@ class EnvelopeListener implements EventSubscriberInterface
         return $allowedRecipients;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {

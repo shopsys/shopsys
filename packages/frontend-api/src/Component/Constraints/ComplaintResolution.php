@@ -24,9 +24,6 @@ class ComplaintResolution extends Constraint
         self::SELECTED_COMPLAINT_RESOLUTION_REQUIRES_BANK_ACCOUNT_NUMBER_FILLED_ERROR => 'SELECTED_COMPLAINT_RESOLUTION_REQUIRES_BANK_ACCOUNT_FILLED_ERROR',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTargets(): string|array
     {

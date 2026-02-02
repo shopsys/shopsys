@@ -16,9 +16,6 @@ class ParameterFilterOptionResolverMap extends ResolverMap
     protected const string PARAMETER_SLIDER_FILTER_OPTION = 'ParameterSliderFilterOption';
     protected const string PARAMETER_COLOR_FILTER_OPTION = 'ParameterColorFilterOption';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function map(): array
     {

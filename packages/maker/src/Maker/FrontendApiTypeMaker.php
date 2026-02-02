@@ -34,18 +34,12 @@ class FrontendApiTypeMaker extends AbstractMaker
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getCommandName(): string
     {
         return 'make:shopsys:frontend-api-type';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getCommandDescription(): string
     {
         return 'Create a new frontend API types yaml definition for the selected entity';

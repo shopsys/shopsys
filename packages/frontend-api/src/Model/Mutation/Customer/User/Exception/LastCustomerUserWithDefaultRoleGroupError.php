@@ -12,9 +12,6 @@ class LastCustomerUserWithDefaultRoleGroupError extends EntityNotFoundUserError 
 {
     protected const CODE = 'last-customer-user-with-default-role-group';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

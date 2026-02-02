@@ -21,9 +21,6 @@ final class ForbiddenPrivateVisibilityFixerTest extends AbstractFixerTestCase
         return $fixer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getTestingFiles(): iterable
     {

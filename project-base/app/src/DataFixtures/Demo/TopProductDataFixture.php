@@ -67,9 +67,6 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
         $this->topProductFacade->saveTopProductsForDomain($domainId, $products);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

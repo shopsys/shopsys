@@ -11,18 +11,12 @@ use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ValidVariableNameSniffTest extends AbstractSniffTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getSniffClassName(): string
     {
         return ValidVariableNameSniff::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getWrongFiles(): iterable
     {
         yield [__DIR__ . '/wrong/wrong.inc'];

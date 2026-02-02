@@ -14,18 +14,12 @@ final class ConsoleContext extends AbstractContext
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDescription(): string
     {
         return 'Console command execution';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function matches(): bool
     {

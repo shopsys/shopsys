@@ -40,9 +40,6 @@ class TransportInOrder extends Constraint
         self::MISSING_PICKUP_PLACE_IDENTIFIER_ERROR => 'MISSING_PICKUP_PLACE_IDENTIFIER_ERROR',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTargets(): string|array
     {

@@ -13,9 +13,6 @@ class FileExtensionMaxLength extends Constraint
 
     public int $limit;
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRequiredOptions(): array
     {
@@ -24,9 +21,6 @@ class FileExtensionMaxLength extends Constraint
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDefaultOption(): ?string
     {

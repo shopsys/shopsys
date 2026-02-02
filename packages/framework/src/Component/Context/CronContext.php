@@ -14,27 +14,18 @@ final class CronContext extends AbstractContext
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDescription(): string
     {
         return 'Scheduled cron job execution';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRequiredContexts(): array
     {
         return [ConsoleContext::class];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function matches(): bool
     {

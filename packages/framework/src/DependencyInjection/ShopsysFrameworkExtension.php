@@ -28,9 +28,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class ShopsysFrameworkExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -103,9 +100,6 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
             ->addTag('twig.extension');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function prepend(ContainerBuilder $container): void
     {

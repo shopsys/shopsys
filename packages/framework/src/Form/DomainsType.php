@@ -28,9 +28,6 @@ final class DomainsType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -84,9 +84,6 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

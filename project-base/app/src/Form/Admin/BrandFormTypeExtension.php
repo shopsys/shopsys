@@ -11,17 +11,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class BrandFormTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getExtendedTypes(): iterable
     {

@@ -11,18 +11,12 @@ use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class RequireOverrideAttributeSniffTest extends AbstractSniffTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getSniffClassName(): string
     {
         return RequireOverrideAttributeSniff::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getFixableFiles(): iterable
     {
         yield [__DIR__ . '/Fixed/SimpleWithParentClass.php', __DIR__ . '/Wrong/SimpleWithParentClass.php'];

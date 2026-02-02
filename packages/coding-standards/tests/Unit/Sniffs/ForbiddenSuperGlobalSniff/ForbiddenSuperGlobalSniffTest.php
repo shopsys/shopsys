@@ -11,18 +11,12 @@ use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ForbiddenSuperGlobalSniffTest extends AbstractSniffTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getSniffClassName(): string
     {
         return ForbiddenSuperGlobalSniff::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getWrongFiles(): iterable
     {
         yield [__DIR__ . '/wrong/env.php.inc'];

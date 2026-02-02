@@ -30,9 +30,6 @@ class ResizeFormListener implements EventSubscriberInterface
         $this->type = $type;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {

@@ -33,18 +33,12 @@ class GenerateEntityAgendaCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function configure(): void
     {
         $this->addArgument(BaseMaker::ENTITY_NAME_ARGUMENT, InputArgument::REQUIRED, 'The entity name (e.g. <fg=yellow>Kitty</>)');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

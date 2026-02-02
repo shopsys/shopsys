@@ -39,9 +39,6 @@ class TimedSpamValidationListener implements EventSubscriberInterface
         $this->formTimeProvider->removeFormTime($form->getName());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {

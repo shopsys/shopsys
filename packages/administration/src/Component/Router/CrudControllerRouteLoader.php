@@ -23,9 +23,6 @@ final class CrudControllerRouteLoader implements LoaderInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(mixed $resource, ?string $type = null)
     {
@@ -38,18 +35,12 @@ final class CrudControllerRouteLoader implements LoaderInterface
         return $routes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function supports(mixed $resource, ?string $type = null)
     {
         return $type === 'crud_controller';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getResolver()
     {
@@ -57,11 +48,8 @@ final class CrudControllerRouteLoader implements LoaderInterface
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
-    public function setResolver(LoaderResolverInterface $resolver)
+    public function setResolver(LoaderResolverInterface $resolver): void
     {
         // No implementation needed
     }

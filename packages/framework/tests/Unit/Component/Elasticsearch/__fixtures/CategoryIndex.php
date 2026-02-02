@@ -16,27 +16,18 @@ class CategoryIndex extends AbstractIndex
         return 'category';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTotalCount(int $domainId): int
     {
         throw new RuntimeException(sprintf('The %s() is not implemented.', __METHOD__));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
     {
         throw new RuntimeException(sprintf('The %s() is not implemented.', __METHOD__));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getExportDataForBatch(
         int $domainId,

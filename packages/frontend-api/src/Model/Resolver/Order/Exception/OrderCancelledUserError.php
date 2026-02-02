@@ -12,9 +12,6 @@ class OrderCancelledUserError extends UserError implements UserErrorWithCodeInte
 {
     protected const string CODE = 'order-cancelled';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

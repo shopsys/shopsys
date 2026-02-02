@@ -28,9 +28,6 @@ class PaymentInOrder extends Constraint
         self::CHANGED_PAYMENT_PRICE_ERROR => 'CHANGED_PAYMENT_PRICE_ERROR',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTargets(): string|array
     {

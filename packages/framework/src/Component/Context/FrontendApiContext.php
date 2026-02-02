@@ -15,18 +15,12 @@ final class FrontendApiContext extends AbstractContext
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDescription(): string
     {
         return 'Matches requests to Frontend API endpoints (GraphQL)';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function matches(): bool
     {

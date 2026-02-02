@@ -374,17 +374,11 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->lastActivity = (new DatePoint())->setTimestamp($data['timestamp']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function eraseCredentials(): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRoles(): array
     {
@@ -406,9 +400,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         return array_unique($roles);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSalt(): ?string
     {
         return null; // bcrypt include salt in password hash

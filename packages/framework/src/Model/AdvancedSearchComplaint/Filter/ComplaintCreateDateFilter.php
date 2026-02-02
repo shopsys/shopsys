@@ -13,18 +13,12 @@ class ComplaintCreateDateFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'complaintCreatedAt';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return self::NAME;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAllowedOperators(): array
     {
@@ -35,27 +29,18 @@ class ComplaintCreateDateFilter implements AdvancedSearchFilterInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getValueFormType(): string
     {
         return DatePickerType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getValueFormOptions(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {

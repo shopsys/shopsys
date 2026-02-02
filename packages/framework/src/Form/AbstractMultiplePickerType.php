@@ -20,9 +20,6 @@ final class AbstractMultiplePickerType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -74,9 +71,6 @@ final class AbstractMultiplePickerType extends AbstractType
         $resolver->setAllowedTypes('item_route', ['null', 'callable']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

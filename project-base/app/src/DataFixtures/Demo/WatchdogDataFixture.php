@@ -127,9 +127,6 @@ class WatchdogDataFixture extends AbstractReferenceFixture implements DependentF
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

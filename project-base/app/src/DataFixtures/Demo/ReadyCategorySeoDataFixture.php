@@ -40,9 +40,6 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -312,9 +309,6 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         return $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale($parameterValueTranslation, $numericValue, $locale)->getId();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

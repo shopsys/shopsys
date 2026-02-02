@@ -35,9 +35,6 @@ final class ContextResolver implements ContextResolverInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function validateContextClass(string $fcqn): void
     {
@@ -48,9 +45,6 @@ final class ContextResolver implements ContextResolverInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isCurrentContext(string $identifier): bool
     {
@@ -62,9 +56,6 @@ final class ContextResolver implements ContextResolverInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRegisteredContexts(): array
     {

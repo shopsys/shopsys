@@ -18,17 +18,11 @@ class PacketeryCronModule implements SimpleCronModuleInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function setLogger(Logger $logger): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function run(): void
     {

@@ -16,9 +16,6 @@ class ElasticsearchCollector extends DataCollector
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
@@ -35,9 +32,6 @@ class ElasticsearchCollector extends DataCollector
         $this->data = [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {

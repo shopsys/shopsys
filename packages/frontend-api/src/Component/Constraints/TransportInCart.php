@@ -36,9 +36,6 @@ class TransportInCart extends Constraint
         self::INVALID_TRANSPORT_PAYMENT_COMBINATION_ERROR => 'INVALID_TRANSPORT_PAYMENT_COMBINATION_ERROR',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTargets(): string|array
     {

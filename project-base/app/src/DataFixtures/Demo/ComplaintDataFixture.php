@@ -24,9 +24,6 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -68,9 +65,6 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         $this->createComplaintWithoutOrder();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

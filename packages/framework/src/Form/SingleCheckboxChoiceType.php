@@ -13,9 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class SingleCheckboxChoiceType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

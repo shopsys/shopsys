@@ -28,18 +28,12 @@ class EntityMaker extends BaseMaker
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getCommandName(): string
     {
         return 'make:shopsys:entity';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getCommandDescription(): string
     {
         return 'Create a new entity class';
@@ -70,37 +64,25 @@ class EntityMaker extends BaseMaker
         $this->writeSuccessMessage($io);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
-    public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
+    public function interact(InputInterface $input, ConsoleStyle $io, Command $command): void
     {
         $this->entityConfig = $this->entityConfigFactory->create($input, $io);
         $this->entityFieldsConfigurator->configureEntityFields($this->entityConfig, $io);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getTemplateName(): string
     {
         return __DIR__ . '/../../templates/Entity.tpl.php';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getGeneratedClassSuffix(): string
     {
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getUseStatements(): array
     {
@@ -132,9 +114,6 @@ class EntityMaker extends BaseMaker
         return $useStatements;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getConstructorDependencies(): array
     {
@@ -272,11 +251,8 @@ class EntityMaker extends BaseMaker
         $generator->writeChanges();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
-    protected function writeSuccessMessage(ConsoleStyle $io)
+    protected function writeSuccessMessage(ConsoleStyle $io): void
     {
         parent::writeSuccessMessage($io);
 

@@ -23,9 +23,6 @@ class ChainedFixer implements FixerInterface
         $this->fixers[] = $fixer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
@@ -38,9 +35,6 @@ class ChainedFixer implements FixerInterface
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isRisky(): bool
     {
@@ -53,9 +47,6 @@ class ChainedFixer implements FixerInterface
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
@@ -64,27 +55,18 @@ class ChainedFixer implements FixerInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return 'chained';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPriority(): int
     {
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function supports(SplFileInfo $file): bool
     {

@@ -10,18 +10,12 @@ class ComplaintDeliveryLastNameFilter extends AbstractComplaintContainsFilter
 {
     public const string NAME = 'deliveryLastName';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return self::NAME;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getFieldName(): string
     {

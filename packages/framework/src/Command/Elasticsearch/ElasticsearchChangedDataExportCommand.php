@@ -15,9 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportCommand
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
@@ -28,18 +25,12 @@ class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportComma
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getActionStartedMessage(): string
     {
         return 'Exporting changed data';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getActionFinishedMessage(): string
     {

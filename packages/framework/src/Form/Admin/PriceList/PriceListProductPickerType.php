@@ -23,9 +23,6 @@ final class PriceListProductPickerType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -46,9 +43,6 @@ final class PriceListProductPickerType extends AbstractType
         $builder->get('basicPrice')->addModelTransformer(new NumericToMoneyTransformer(6));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

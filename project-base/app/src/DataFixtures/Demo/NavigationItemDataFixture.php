@@ -139,9 +139,6 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
         $this->navigationItemFacade->create($navigationItemData);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

@@ -20,9 +20,6 @@ final class OrderWithdrawalFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_WITHDRAWAL_REQUIRED = 'withdrawalRequired';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -96,9 +93,6 @@ final class OrderWithdrawalFormType extends AbstractType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

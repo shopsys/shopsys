@@ -363,26 +363,17 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->lastActivity = (new DatePoint())->setTimestamp($data['timestamp']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function eraseCredentials(): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRoles(): array
     {
         return $this->roleGroup->getRoles();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSalt(): ?string
     {
         return null; // bcrypt include salt in password hash

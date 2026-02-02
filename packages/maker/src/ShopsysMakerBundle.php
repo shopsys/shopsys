@@ -12,9 +12,6 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 class ShopsysMakerBundle extends AbstractBundle
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
@@ -24,9 +21,6 @@ class ShopsysMakerBundle extends AbstractBundle
             ->addTag('maker.command');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {

@@ -18,17 +18,11 @@ abstract class AbstractComplaintContainsFilter implements AdvancedSearchFilterIn
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     abstract public function getName(): string;
 
     abstract protected function getFieldName(): string;
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAllowedOperators(): array
     {
@@ -38,27 +32,18 @@ abstract class AbstractComplaintContainsFilter implements AdvancedSearchFilterIn
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getValueFormType(): string
     {
         return TextType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getValueFormOptions(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {

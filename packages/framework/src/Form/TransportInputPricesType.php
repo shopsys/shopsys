@@ -22,9 +22,6 @@ final class TransportInputPricesType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

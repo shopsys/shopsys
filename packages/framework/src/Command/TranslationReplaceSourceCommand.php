@@ -54,9 +54,6 @@ class TranslationReplaceSourceCommand extends Command
             ->addUsage('./src/Resources/translations ./src en');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

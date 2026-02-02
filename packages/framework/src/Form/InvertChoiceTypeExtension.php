@@ -16,18 +16,12 @@ final class InvertChoiceTypeExtension extends AbstractTypeExtension
 {
     protected const string INVERT_OPTION = 'invert';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getExtendedTypes(): iterable
     {
         yield ChoiceType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -44,9 +38,6 @@ final class InvertChoiceTypeExtension extends AbstractTypeExtension
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

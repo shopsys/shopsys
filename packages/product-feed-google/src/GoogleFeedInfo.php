@@ -14,27 +14,18 @@ class GoogleFeedInfo implements FeedInfoInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getLabel(): string
     {
         return 'Google';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return 'google';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAdditionalInformation(): string
     {

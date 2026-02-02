@@ -66,9 +66,6 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
         $this->productFacade->edit($product->getId(), $productData);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

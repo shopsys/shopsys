@@ -12,9 +12,6 @@ class TooManyLoginAttemptsUserError extends UserError implements UserErrorWithCo
 {
     protected const CODE = 'too-many-login-attempts';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

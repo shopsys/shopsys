@@ -25,9 +25,6 @@ final class BillingAddressFormTypeExtension extends AbstractTypeExtension
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getExtendedTypes(): iterable
     {

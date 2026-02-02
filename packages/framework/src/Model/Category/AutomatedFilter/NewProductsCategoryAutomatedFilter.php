@@ -18,36 +18,24 @@ class NewProductsCategoryAutomatedFilter implements CategoryAutomatedFilterInter
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getLabel(): string
     {
         return t('Display new products only');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDatabaseValue(): string
     {
         return self::DATABASE_VALUE;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function applyFilter(FilterQuery $filterQuery): FilterQuery
     {
         return $filterQuery->filterBySellingFrom($this->clock->now()->modify('-' . self::MAX_PRODUCT_AGE_IN_DAYS . ' days'));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getNote(): ?string
     {

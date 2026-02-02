@@ -24,9 +24,6 @@ final class ProductPricesWithVatSelectType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -67,9 +64,6 @@ final class ProductPricesWithVatSelectType extends AbstractType
             ->setAllowedTypes('product_prices', ['array', 'null']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {

@@ -231,9 +231,6 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         return $order;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

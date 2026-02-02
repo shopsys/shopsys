@@ -34,9 +34,6 @@ class TokenAuthenticator extends AbstractAuthenticator
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function authenticate(Request $request): Passport
     {

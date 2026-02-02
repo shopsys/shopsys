@@ -9,9 +9,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class IndexedBooleansToArrayOfIndexesTransformer implements DataTransformerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function transform($value): ?array
     {
@@ -22,9 +19,6 @@ class IndexedBooleansToArrayOfIndexesTransformer implements DataTransformerInter
         return array_fill_keys($value, true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function reverseTransform($value): ?array
     {

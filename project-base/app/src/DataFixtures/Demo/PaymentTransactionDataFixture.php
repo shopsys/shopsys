@@ -32,9 +32,6 @@ class PaymentTransactionDataFixture extends AbstractReferenceFixture implements 
         $this->createPaymentTransaction($order, '52467431', PaymentStatus::CREATED);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

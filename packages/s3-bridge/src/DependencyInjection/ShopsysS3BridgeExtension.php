@@ -12,9 +12,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class ShopsysS3BridgeExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {

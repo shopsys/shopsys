@@ -12,9 +12,6 @@ class ComplaintNotFoundUserError extends EntityNotFoundUserError implements User
 {
     protected const string CODE = 'complaint-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

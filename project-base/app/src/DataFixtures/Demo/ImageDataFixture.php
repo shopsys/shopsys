@@ -391,9 +391,6 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

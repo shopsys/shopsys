@@ -16,9 +16,6 @@ final class FinalFormTypeFixerTest extends AbstractFixerTestCase
         return new FinalFormTypeFixer();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getTestingFiles(): iterable
     {

@@ -19,9 +19,6 @@ class ProductAlreadyInListUserError extends UserError implements UserErrorWithCo
         parent::__construct($message);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

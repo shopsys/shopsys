@@ -45,9 +45,6 @@ class RequiredSettingExtension extends AbstractExtension
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getFunctions(): array
     {

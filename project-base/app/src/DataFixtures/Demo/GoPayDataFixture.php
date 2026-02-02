@@ -194,9 +194,6 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         return $goPayPaymentMethod;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

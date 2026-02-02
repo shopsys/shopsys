@@ -12,9 +12,6 @@ class StoreNotFoundUserError extends EntityNotFoundUserError implements UserErro
 {
     protected const CODE = 'store-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

@@ -14,9 +14,6 @@ class WysiwygCdnDataTransformer implements DataTransformerInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function transform($value): mixed
     {

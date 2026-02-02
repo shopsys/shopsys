@@ -30,18 +30,12 @@ class FeedCronModule implements IteratedCronModuleInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function iterate(): bool
     {
@@ -117,9 +111,6 @@ class FeedCronModule implements IteratedCronModuleInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function sleep(): void
     {
@@ -144,9 +135,6 @@ class FeedCronModule implements IteratedCronModuleInterface
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function wakeUp(): void
     {

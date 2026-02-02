@@ -23,54 +23,36 @@ class RequestStack extends BaseRequestStack
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
-    public function push(Request $request)
+    public function push(Request $request): void
     {
         $this->requestStack->push($request);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function pop(): ?Request
     {
         return $this->requestStack->pop();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getCurrentRequest(): ?Request
     {
         return $this->requestStack->getCurrentRequest();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getMainRequest(): ?Request
     {
         return $this->requestStack->getMainRequest();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParentRequest(): ?Request
     {
         return $this->requestStack->getParentRequest();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getSession(): SessionInterface
     {

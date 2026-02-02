@@ -27,9 +27,6 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -45,18 +42,12 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
         $resolver->setAllowedTypes('available_variables', 'array');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer($this->wysiwygCdnDataTransformer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -111,9 +102,6 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
         return $entrypointsOutput;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getExtendedTypes(): iterable
     {

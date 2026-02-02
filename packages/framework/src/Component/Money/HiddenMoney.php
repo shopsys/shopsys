@@ -20,45 +20,30 @@ class HiddenMoney extends Money
         return new static();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function createFromFloat(float $float, int $scale): static
     {
         return new static();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function zero(): static
     {
         return new static();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAmount(): string
     {
         return self::HIDDEN_FORMAT;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function add(Money $money): static
     {
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function subtract(Money $money): static
     {
@@ -89,9 +74,6 @@ class HiddenMoney extends Money
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function compare(Money $money): int
     {

@@ -20,9 +20,6 @@ class DeliveryAddressUuid extends Constraint
         self::LOGIN_REQUIRED_ERROR => 'LOGIN_REQUIRED_ERROR',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTargets(): string|array
     {

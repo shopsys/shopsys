@@ -23,9 +23,6 @@ class ContainerConstraintValidatorFactory extends SymfonyContainerConstraintVali
         parent::__construct($validatorContainer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getInstance(Constraint $constraint): ConstraintValidatorInterface
     {

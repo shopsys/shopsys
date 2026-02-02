@@ -19,9 +19,6 @@ class FrontendApiLogger implements LoggerInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function log($level, string|Stringable $message, array $context = []): void
     {
@@ -47,72 +44,48 @@ class FrontendApiLogger implements LoggerInterface
         $this->logger->log($level, $message, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function emergency(string|Stringable $message, array $context = []): void
     {
         $this->logger->emergency($message, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function alert(string|Stringable $message, array $context = []): void
     {
         $this->logger->alert($message, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function critical(string|Stringable $message, array $context = []): void
     {
         $this->logger->critical($message, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function error(string|Stringable $message, array $context = []): void
     {
         $this->logger->error($message, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function warning(string|Stringable $message, array $context = []): void
     {
         $this->logger->warning($message, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function notice(string|Stringable $message, array $context = []): void
     {
         $this->logger->notice($message, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function info(string|Stringable $message, array $context = []): void
     {
         $this->logger->info($message, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function debug(string|Stringable $message, array $context = []): void
     {

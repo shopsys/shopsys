@@ -28,9 +28,6 @@ class PaymentInExistingOrder extends Constraint
         self::INVALID_PAYMENT_SWIFT_ERROR => 'INVALID_PAYMENT_SWIFT_ERROR',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTargets(): string|array
     {

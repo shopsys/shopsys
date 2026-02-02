@@ -19,18 +19,12 @@ final class OrderTotalPrice implements OrderTotalPriceInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPrice(): PriceInterface
     {
         return new Price($this->priceWithoutVat, $this->priceWithVat);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getProductPrice(): PriceInterface
     {

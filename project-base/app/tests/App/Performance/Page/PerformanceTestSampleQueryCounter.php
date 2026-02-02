@@ -11,20 +11,14 @@ class PerformanceTestSampleQueryCounter implements SQLLogger
 {
     private int $queryCount = 0;
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
-    public function startQuery($sql, ?array $params = null, ?array $types = null)
+    public function startQuery($sql, ?array $params = null, ?array $types = null): void
     {
         $this->queryCount++;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
-    public function stopQuery()
+    public function stopQuery(): void
     {
     }
 

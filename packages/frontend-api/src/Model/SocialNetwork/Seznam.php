@@ -15,9 +15,6 @@ use Override;
  */
 class Seznam extends BaseSeznam
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserProfile()
     {

@@ -24,9 +24,6 @@ final class ForceLateStaticBindingForProtectedConstantsSniffTest extends Abstrac
         yield [__DIR__ . '/fixed/SelfWithMethodsAndVariables.php', __DIR__ . '/wrong/SelfWithMethodsAndVariables.php'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getSniffClassName(): string
     {

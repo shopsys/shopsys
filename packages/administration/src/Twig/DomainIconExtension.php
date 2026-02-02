@@ -11,9 +11,6 @@ use Twig\TwigFunction;
 
 final class DomainIconExtension extends AbstractExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getFunctions(): array
     {

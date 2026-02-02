@@ -16,9 +16,6 @@ use Symfony\Component\Finder\Finder;
 
 class ShopsysAdministrationExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -40,9 +37,6 @@ class ShopsysAdministrationExtension extends Extension implements PrependExtensi
         $loader->load('services.yaml');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAlias(): string
     {

@@ -24,9 +24,6 @@ class NormalizeAdminUrlTrailingSlashSubscriber implements EventSubscriberInterfa
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {

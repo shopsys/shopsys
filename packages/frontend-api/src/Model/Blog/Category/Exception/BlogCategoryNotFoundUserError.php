@@ -12,9 +12,6 @@ class BlogCategoryNotFoundUserError extends EntityNotFoundUserError implements U
 {
     protected const CODE = 'blog-category-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

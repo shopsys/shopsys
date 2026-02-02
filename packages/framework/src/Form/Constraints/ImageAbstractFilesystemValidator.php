@@ -22,9 +22,6 @@ class ImageAbstractFilesystemValidator extends ImageValidator
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {

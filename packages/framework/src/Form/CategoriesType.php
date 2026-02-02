@@ -68,9 +68,6 @@ final class CategoriesType extends AbstractType
         $resolver->setNormalizer('entry_options', $entryOptionsNormalizer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

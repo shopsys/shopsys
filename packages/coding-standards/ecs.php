@@ -156,7 +156,7 @@ return ECSConfig::configure()
     ])
     ->withConfiguredRule(NoSuperfluousPhpdocTagsFixer::class, [
         'allow_mixed' => true,
-        'remove_inheritdoc' => false,
+        'remove_inheritdoc' => true,
     ])
     ->withRules([
         InlineDocCommentDeclarationSniff::class,

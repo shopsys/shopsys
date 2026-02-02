@@ -12,9 +12,6 @@ class CompanyAlreadyRegisteredUserError extends UserError implements UserErrorWi
 {
     protected const string CODE = 'company-already-registered';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

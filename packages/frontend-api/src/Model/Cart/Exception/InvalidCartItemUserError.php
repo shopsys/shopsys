@@ -12,9 +12,6 @@ class InvalidCartItemUserError extends EntityNotFoundUserError implements UserEr
 {
     protected const CODE = 'cart-item-invalid';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

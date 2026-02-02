@@ -48,9 +48,6 @@ final class AccessControlCommand extends Command
             ->setHelp('Displays all admin routes categorized as Covered, Excluded, or Uncovered. Use --check for pipeline validation.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

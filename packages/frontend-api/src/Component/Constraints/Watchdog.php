@@ -30,9 +30,6 @@ class Watchdog extends Constraint
         self::PRODUCT_NOT_FOUND_ERROR => 'PRODUCT_NOT_FOUND_ERROR',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTargets(): string|array
     {

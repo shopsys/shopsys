@@ -12,9 +12,6 @@ class ProductPriceMissingUserError extends UserError implements UserErrorWithCod
 {
     protected const CODE = 'product-price-missing';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

@@ -52,9 +52,6 @@ final class PriceWithLimitType extends AbstractType
             ->setAllowedTypes('current_transport_prices_indexed_by_id', 'array');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {

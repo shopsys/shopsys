@@ -46,18 +46,12 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAll(): array
     {
         return $this->getRouteAccessControlDataIndexedByRouteName();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function findRouteByName(string $routeName): ?RouteAccessControlData
     {

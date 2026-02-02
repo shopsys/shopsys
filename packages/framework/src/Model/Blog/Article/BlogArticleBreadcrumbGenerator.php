@@ -20,9 +20,6 @@ class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterfa
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
@@ -34,9 +31,6 @@ class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterfa
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getBreadcrumbItemsOnDomain(
         int $domainId,
@@ -86,9 +80,6 @@ class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterfa
         return $breadcrumbItems;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRouteNames(): array
     {

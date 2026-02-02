@@ -70,9 +70,6 @@ final class MultiLocaleBasicFileUploadType extends AbstractType
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

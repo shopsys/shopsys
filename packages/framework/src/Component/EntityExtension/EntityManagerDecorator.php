@@ -27,18 +27,12 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
         $this->repositoryFactory = $config->getRepositoryFactory();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function createQueryBuilder(): QueryBuilder
     {
         return new QueryBuilder($this, $this->entityNameResolver);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function createQuery($dql = ''): Query
     {
@@ -47,9 +41,6 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
         return parent::createQuery($resolvedDql);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getReference($entityName, $id): ?object
     {
@@ -58,9 +49,6 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
         return parent::getReference($resolvedEntityName, $id);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPartialReference($entityName, $identifier): ?object
     {
@@ -69,9 +57,6 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
         return parent::getPartialReference($resolvedEntityName, $identifier);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function find($entityName, $id, $lockMode = null, $lockVersion = null): ?object
     {

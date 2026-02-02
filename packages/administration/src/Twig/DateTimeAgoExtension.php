@@ -11,9 +11,6 @@ use Twig\TwigFilter;
 
 class DateTimeAgoExtension extends AbstractExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getFilters(): array
     {

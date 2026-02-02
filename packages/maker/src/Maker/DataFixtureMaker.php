@@ -11,53 +11,35 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 
 class DataFixtureMaker extends BaseMaker
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getCommandName(): string
     {
         return 'make:shopsys:data-fixture';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getCommandDescription(): string
     {
         return 'Create a new data fixture class';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getTemplateName(): string
     {
         return __DIR__ . '/../../templates/DataFixture.tpl.php';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getGeneratedClassNamespace(): string
     {
         return 'DataFixtures\\Demo\\';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getGeneratedClassSuffix(): string
     {
         return 'DataFixture';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getUseStatements(): array
     {
@@ -69,9 +51,6 @@ class DataFixtureMaker extends BaseMaker
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getConstructorDependencies(): array
     {

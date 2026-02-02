@@ -16,9 +16,6 @@ final class MissingButtonTypeFixerTest extends AbstractFixerTestCase
         return new MissingButtonTypeFixer();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getTestingFiles(): iterable
     {

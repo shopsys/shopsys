@@ -12,9 +12,6 @@ class SeoPageNotFoundUserError extends EntityNotFoundUserError implements UserEr
 {
     protected const CODE = 'seo-page-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

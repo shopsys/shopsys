@@ -30,9 +30,6 @@ class Db extends BaseDb
         $databaseSchemaFacade->dropSchemaIfExists('public');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function _loadDump(?string $databaseKey = null, ?array $databaseConfig = null): void
     {

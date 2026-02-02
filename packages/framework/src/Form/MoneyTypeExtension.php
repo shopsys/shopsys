@@ -24,9 +24,6 @@ final class MoneyTypeExtension extends AbstractTypeExtension
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -34,9 +31,6 @@ final class MoneyTypeExtension extends AbstractTypeExtension
         $builder->addViewTransformer(new RemoveWhitespacesTransformer());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -52,9 +46,6 @@ final class MoneyTypeExtension extends AbstractTypeExtension
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -63,9 +54,6 @@ final class MoneyTypeExtension extends AbstractTypeExtension
         $resolver->setDefault('currency', false);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getExtendedTypes(): iterable
     {

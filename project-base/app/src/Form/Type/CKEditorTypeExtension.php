@@ -17,9 +17,6 @@ final class CKEditorTypeExtension extends AbstractTypeExtension
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -44,9 +41,6 @@ final class CKEditorTypeExtension extends AbstractTypeExtension
         return $config;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getExtendedTypes(): iterable
     {

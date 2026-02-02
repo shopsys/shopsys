@@ -12,9 +12,6 @@ class OrderNotFoundUserError extends EntityNotFoundUserError implements UserErro
 {
     protected const CODE = 'order-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

@@ -25,18 +25,12 @@ final class ActionBarType extends AbstractTypeExtension
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getExtendedTypes(): iterable
     {
         return [BaseActionBarType::class];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -48,9 +42,6 @@ final class ActionBarType extends AbstractTypeExtension
             ->setDefault('entity_identifier', null);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -58,9 +49,6 @@ final class ActionBarType extends AbstractTypeExtension
         $view->vars['entity_identifier'] = $options['entity_identifier'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

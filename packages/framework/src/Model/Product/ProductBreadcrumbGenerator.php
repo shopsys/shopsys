@@ -20,9 +20,6 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
@@ -65,9 +62,6 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
         return $breadcrumbItems;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRouteNames(): array
     {

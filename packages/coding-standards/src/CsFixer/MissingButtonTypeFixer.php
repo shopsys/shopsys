@@ -14,9 +14,6 @@ use SplFileInfo;
 
 final class MissingButtonTypeFixer implements FixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -30,27 +27,18 @@ final class MissingButtonTypeFixer implements FixerInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function isRisky(): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
@@ -73,27 +61,18 @@ final class MissingButtonTypeFixer implements FixerInterface
         $tokens->setCode($code);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return 'Shopsys/missing_button_type';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPriority(): int
     {
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function supports(SplFileInfo $file): bool
     {

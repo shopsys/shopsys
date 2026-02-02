@@ -13,9 +13,6 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 final class ColorPickerType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

@@ -14,9 +14,6 @@ class SitemapCronModule implements SimpleCronModuleInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function setLogger(Logger $logger): void
     {

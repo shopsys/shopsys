@@ -24,9 +24,6 @@ final class SeoSettingFormType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -88,9 +85,6 @@ final class SeoSettingFormType extends AbstractType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

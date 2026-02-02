@@ -9,9 +9,6 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class ArrayWithPaginationDataSource extends ArrayDataSource
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPaginatedRows(
         ?int $limit = null,

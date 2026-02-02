@@ -22,9 +22,6 @@ class OrderWithdrawalRequestDataFixture extends AbstractReferenceFixture impleme
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -44,9 +41,6 @@ class OrderWithdrawalRequestDataFixture extends AbstractReferenceFixture impleme
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

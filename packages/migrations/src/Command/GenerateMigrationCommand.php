@@ -47,9 +47,6 @@ class GenerateMigrationCommand extends Command
             ->addOption('empty', null, null, 'Generate an empty migration');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

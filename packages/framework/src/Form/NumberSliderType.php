@@ -10,9 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 final class NumberSliderType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

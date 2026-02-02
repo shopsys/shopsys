@@ -16,18 +16,12 @@ class ProductIndex extends AbstractIndex
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTotalCount(int $domainId): int
     {
         return $this->productExportRepository->getProductTotalCountForDomain($domainId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
     {
@@ -39,9 +33,6 @@ class ProductIndex extends AbstractIndex
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getExportDataForBatch(
         int $domainId,
@@ -58,9 +49,6 @@ class ProductIndex extends AbstractIndex
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getName(): string
     {

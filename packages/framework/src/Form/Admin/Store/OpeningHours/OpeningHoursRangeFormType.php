@@ -20,9 +20,6 @@ final class OpeningHoursRangeFormType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -42,9 +39,6 @@ final class OpeningHoursRangeFormType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

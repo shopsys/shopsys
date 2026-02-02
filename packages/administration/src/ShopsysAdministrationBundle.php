@@ -16,9 +16,6 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 class ShopsysAdministrationBundle extends AbstractBundle
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getContainerExtension(): ?ExtensionInterface
     {

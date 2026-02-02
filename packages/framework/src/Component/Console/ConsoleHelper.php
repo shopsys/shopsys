@@ -13,9 +13,6 @@ final class ConsoleHelper implements EventSubscriberInterface
 {
     private ?ConsoleCommandEvent $consoleCommandEvent = null;
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public static function getSubscribedEvents(): array
     {

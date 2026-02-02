@@ -31,9 +31,6 @@ class RouterMatchCommandForDomain extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function configure(): void
     {
@@ -59,9 +56,6 @@ EOF,
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

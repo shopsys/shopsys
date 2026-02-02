@@ -155,9 +155,6 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
         $this->setting->setForDomain(PricingSetting::DEFAULT_DOMAIN_CURRENCY, $defaultCurrency->getId(), $domainId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDependencies(): array
     {

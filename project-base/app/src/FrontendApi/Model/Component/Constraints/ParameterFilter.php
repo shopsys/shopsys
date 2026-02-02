@@ -26,9 +26,6 @@ class ParameterFilter extends Constraint
         self::MIN_MAX_NOT_SUPPORTED_FOR_NON_SLIDER_TYPE_ERROR => 'MIN_MAX_NOT_SUPPORTED_FOR_NON_SLIDER_TYPE_ERROR',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTargets(): string|array
     {

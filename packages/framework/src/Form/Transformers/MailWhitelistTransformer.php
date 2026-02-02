@@ -10,9 +10,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class MailWhitelistTransformer implements DataTransformerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function transform($value): mixed
     {
@@ -21,9 +18,6 @@ class MailWhitelistTransformer implements DataTransformerInterface
         return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function reverseTransform($value): mixed
     {

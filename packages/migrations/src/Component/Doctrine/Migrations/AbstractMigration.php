@@ -20,9 +20,6 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
      */
     protected array $sqlQueries = [];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function addSql(string $sql, array $params = [], array $types = []): void
     {
@@ -39,8 +36,6 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see \Shopsys\MigrationBundle\Command\MigrateCommand::execute()
      */
     #[Override]

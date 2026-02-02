@@ -11,18 +11,12 @@ use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ForbiddenDumpSniffTest extends AbstractSniffTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getSniffClassName(): string
     {
         return ForbiddenDumpSniff::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getWrongFiles(): iterable
     {
         yield [__DIR__ . '/wrong/d.php.inc'];

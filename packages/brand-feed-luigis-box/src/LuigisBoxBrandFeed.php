@@ -18,27 +18,18 @@ class LuigisBoxBrandFeed implements FeedInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getInfo(): FeedInfoInterface
     {
         return $this->luigisBoxBrandFeedInfo;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getTemplateFilepath(): string
     {
         return '@ShopsysBrandFeedLuigisBox/feed.xml.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {

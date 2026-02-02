@@ -149,9 +149,6 @@ final class FileUploadType extends AbstractType
         return $fileTypeConfig->isMultiple();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getParent(): string
     {

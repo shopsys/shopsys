@@ -27,18 +27,12 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
         $this->localization = $localization;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getName(): string
     {
         return self::NAME;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getAllowedOperators(): array
     {
@@ -48,18 +42,12 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
         return ChoiceType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getValueFormOptions(): array
     {
@@ -77,9 +65,6 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {

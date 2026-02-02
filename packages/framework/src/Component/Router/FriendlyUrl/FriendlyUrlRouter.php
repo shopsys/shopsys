@@ -28,27 +28,18 @@ class FriendlyUrlRouter implements RouterInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getContext(): RequestContext
     {
         return $this->context;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function setContext(RequestContext $context): void
     {
         $this->context = $context;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getRouteCollection(): RouteCollection
     {
@@ -59,9 +50,6 @@ class FriendlyUrlRouter implements RouterInterface
         return $this->collection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function generate(
         string $routeName,
@@ -101,9 +89,6 @@ class FriendlyUrlRouter implements RouterInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function match(string $pathinfo): array
     {

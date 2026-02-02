@@ -13,9 +13,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class ShopsysArticleFeedLuigisBoxExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -23,9 +20,6 @@ class ShopsysArticleFeedLuigisBoxExtension extends Extension implements PrependE
         $loader->load('services.yaml');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function prepend(ContainerBuilder $container): void
     {

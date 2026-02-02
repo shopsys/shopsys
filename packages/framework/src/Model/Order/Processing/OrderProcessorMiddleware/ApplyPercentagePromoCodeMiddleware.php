@@ -36,18 +36,12 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         parent::__construct($currentPromoCodeFacade, $promoCodeFacade);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getSupportedTypes(): array
     {
         return [PromoCodeTypeEnum::DISCOUNT_TYPE_PERCENT];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function createAndAddOrderItemData(
         OrderData $orderData,

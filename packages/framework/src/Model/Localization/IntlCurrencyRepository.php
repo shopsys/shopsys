@@ -171,9 +171,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'ZMW',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function get(string $currencyCode, ?string $locale = null): Currency
     {
@@ -189,8 +186,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \CommerceGuys\Intl\Currency\Currency[]
      */
     #[Override]

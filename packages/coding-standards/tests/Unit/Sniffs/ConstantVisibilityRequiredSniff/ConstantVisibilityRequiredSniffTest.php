@@ -11,18 +11,12 @@ use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function getSniffClassName(): string
     {
         return ConstantVisibilityRequiredSniff::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getWrongFiles(): iterable
     {
         yield [__DIR__ . '/wrong/SingleValue.php'];
@@ -38,9 +32,6 @@ final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/wrong/SingleValueAfterMethodWithoutNamespace.php'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getCorrectFiles(): iterable
     {
         yield [__DIR__ . '/correct/Annotation.php'];

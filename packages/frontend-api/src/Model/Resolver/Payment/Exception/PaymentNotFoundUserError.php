@@ -12,9 +12,6 @@ class PaymentNotFoundUserError extends EntityNotFoundUserError implements UserEr
 {
     protected const CODE = 'payment-not-found';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getUserErrorCode(): string
     {

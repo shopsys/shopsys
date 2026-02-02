@@ -59,9 +59,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         $this->traverser->traverse($ast);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function enterNode(Node $node): int|Node|null
     {
@@ -171,45 +168,30 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         throw new ExtractionException('Unable to resolve node name');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function beforeTraverse(array $nodes): ?array
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function leaveNode(Node $node): int|Node|null
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function afterTraverse(array $nodes): ?array
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue): null
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast): null
     {

@@ -12,9 +12,6 @@ class Configuration implements ConfigurationInterface
 {
     public const string EXTENSION_ALIAS = 'shopsys_administration';
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getConfigTreeBuilder(): TreeBuilder
     {
