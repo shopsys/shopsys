@@ -36,8 +36,6 @@ class FeedRenderer
             throw new TemplateBlockNotFoundException($name, $this->template->getTemplateName());
         }
 
-        $templateParameters = $this->twig->mergeGlobals($parameters);
-
-        return $this->template->renderBlock($name, $templateParameters);
+        return $this->template->renderBlock($name, $parameters);
     }
 }

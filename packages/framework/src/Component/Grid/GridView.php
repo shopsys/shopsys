@@ -68,15 +68,13 @@ class GridView
                     ],
                 );
 
-                $templateParameters = $this->twig->mergeGlobals($parameters);
-
                 if ($echo) {
-                    echo $template->renderBlock($name, $templateParameters);
+                    echo $template->renderBlock($name, $parameters);
 
                     return null;
                 }
 
-                return $template->renderBlock($name, $templateParameters);
+                return $template->renderBlock($name, $parameters);
             }
         }
 
@@ -101,7 +99,7 @@ class GridView
         ];
 
         if ($column->getTemplate() !== null) {
-            echo $this->twig->render($column->getTemplate(), $this->twig->mergeGlobals($blockParameters));
+            echo $this->twig->render($column->getTemplate(), $blockParameters);
 
             return;
         }
