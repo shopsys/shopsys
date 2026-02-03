@@ -7,9 +7,9 @@ namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 use Nette\Utils\Json;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-class DispatchProductIdsBatchMessageHandler implements MessageHandlerInterface
+class DispatchProductIdsBatchMessageHandler
 {
     public function __construct(
         protected readonly ProductRepository $productRepository,
@@ -18,6 +18,7 @@ class DispatchProductIdsBatchMessageHandler implements MessageHandlerInterface
     ) {
     }
 
+    #[AsMessageHandler]
     public function __invoke(DispatchProductIdsBatchMessage $message): void
     {
         $dispatchedProductIds = $this->productRecalculationDispatcherExecutor->dispatchProductIds(
