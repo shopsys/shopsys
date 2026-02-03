@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Unit\Model\Product;
 
-use GraphQL\Executor\Promise\Adapter\SyncPromise;
 use GraphQL\Executor\Promise\Adapter\SyncPromiseAdapter;
+use GraphQL\Executor\Promise\Adapter\SyncPromiseQueue;
 use GraphQL\Executor\Promise\Promise;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -198,7 +198,7 @@ class ProductsBatchLoaderTest extends TestCase
         });
 
         // Flush the queue of synchronous promises (SyncPromise)
-        SyncPromise::runQueue();
+        SyncPromiseQueue::run();
 
         return $resolved;
     }
