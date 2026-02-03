@@ -534,6 +534,11 @@ services:
         arguments:
             $useSimplePermissions: '%shopsys.administration.roles.simple_permissions%'
 
+    Shopsys\FrameworkBundle\Migrations\MigrationFactory:
+        arguments:
+            $migrationFactory: '@.inner'
+        decorates: doctrine.migrations.migrations_factory
+
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:

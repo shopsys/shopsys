@@ -9,9 +9,8 @@ use Doctrine\DBAL\Schema\Schema;
 use Override;
 use Shopsys\FrameworkBundle\Migrations\DataModifiers\CountryDataModifierVersion20190121094400;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20190121094400 extends AbstractMigration implements ContainerAwareInterface
+class Version20190121094400 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

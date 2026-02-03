@@ -70,11 +70,11 @@ namespace App\Migrations;
 
 use App\Component\Mail\PasswordChangedMail;
 use Doctrine\DBAL\Schema\Schema;
+use Shopsys\FrameworkBundle\Migrations\DomainAwareInterface;
 use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class VersionXXXXXXXXXXXXXX extends AbstractMigration implements ContainerAwareInterface
+class VersionXXXXXXXXXXXXXX extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

@@ -9,9 +9,8 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20240816221930 extends AbstractMigration implements ContainerAwareInterface
+class Version20240816221930 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

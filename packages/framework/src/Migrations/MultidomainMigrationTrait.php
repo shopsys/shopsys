@@ -5,24 +5,19 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Migrations\Exception\ContainerNotSetException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Shopsys\FrameworkBundle\Migrations\Exception\DomainNotSetException;
 
-/**
- * This trait can be used in classes
- * that extend \Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration.
- */
 trait MultidomainMigrationTrait
 {
-    protected ContainerInterface $container;
+    protected ?Domain $domain = null;
 
     protected function getDomain(): Domain
     {
-        if (!isset($this->container)) {
-            throw new ContainerNotSetException(static::class);
+        if ($this->domain !== null) {
+            return $this->domain;
         }
 
-        return $this->container->get(Domain::class);
+        throw new DomainNotSetException(static::class);
     }
 
     /**
@@ -66,8 +61,8 @@ trait MultidomainMigrationTrait
         return array_unique($domainLocales);
     }
 
-    public function setContainer(?ContainerInterface $container = null): void
+    public function setDomain(Domain $domain): void
     {
-        $this->container = $container;
+        $this->domain = $domain;
     }
 }
