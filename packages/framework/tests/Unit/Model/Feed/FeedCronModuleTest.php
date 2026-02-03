@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModule;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository;
-use Symfony\Bridge\Monolog\Logger;
+use Monolog\Logger;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 use Tests\FrameworkBundle\Unit\TestCase;
 
