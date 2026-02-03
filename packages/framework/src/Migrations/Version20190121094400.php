@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Migrations;
 
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Schema\Schema;
 use Override;
 use Shopsys\FrameworkBundle\Migrations\DataModifiers\CountryDataModifierVersion20190121094400;
@@ -116,7 +116,7 @@ class Version20190121094400 extends AbstractMigration implements DomainAwareInte
         $this->sql(
             'DELETE FROM countries WHERE id IN (:ids)',
             ['ids' => $transformer->getObsoleteCountryIds()],
-            ['ids' => Connection::PARAM_INT_ARRAY],
+            ['ids' => ArrayParameterType::INTEGER],
         );
 
         $this->sql('ALTER TABLE countries DROP COLUMN name');
