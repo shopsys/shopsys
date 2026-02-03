@@ -72,7 +72,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
             $domain = $this->getDomain($transNode);
 
             $message = new Message($messageId, $domain);
-            $message->addSource(new FileSource((string)$this->file->getFilename(), $node->getLine()));
+            $message->addSource(new FileSource((string)$this->file->getFilename(), $node->getStartLine()));
 
             $this->catalogue->add($message);
         }

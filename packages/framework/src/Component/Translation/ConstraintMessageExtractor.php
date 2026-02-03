@@ -122,7 +122,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
             }
 
             $message = new Message($messageId, $this->getTranslationDomain());
-            $message->addSource(new FileSource($this->file->getFilename(), $arg->getLine()));
+            $message->addSource(new FileSource($this->file->getFilename(), $arg->getStartLine()));
 
             $this->catalogue->add($message);
         }
