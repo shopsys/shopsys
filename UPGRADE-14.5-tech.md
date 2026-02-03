@@ -1,4 +1,4 @@
-# UPGRADING FROM 14.0.1 to 14.5.0 (Technology Update Release)
+# UPGRADING FROM 14.0.1 to 14.5.x (Technology Update Release)
 
 The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/) to make the upgrades to new versions easier and help long-term maintainability.
 
@@ -33,7 +33,7 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
 -   if any of the database migrations do not suit you, there is an option to skip it; see [our Database Migrations docs](https://docs.shopsys.com/en/latest/introduction/database-migrations/#reordering-and-skipping-migrations)
 -   we may miss something even if we care a lot about these instructions. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 
-#### Movement of features from project-base to packages
+## Movement of features from project-base to packages
 
 -   in this version, there are quite a lot of features that have been moved from `project-base` to the packages, mostly to the `framework` and the `frontend-api` package
 -   each section in the upgrade guide contains a link to the `project-base` diff and besides the particular upgrade instructions, there is also a list of the moved features you should be aware of (if there are any)
@@ -44,7 +44,7 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
 -   you should remove everything that was not modified in your project and keep just the custom changes using the recommended ways of the [framework extensibility](https://docs.shopsys.com/en/latest/extensibility/)
 -   one way or another, you should pay a special attention to the database migrations that were added with the feature movement. If they suit your needs, you should keep them and remove the original migrations from your project, otherwise, you should skip the newly added migrations.
 
-#### Introduction of strict types
+## Introduction of strict types
 
 -   with each change, we are updating most classes that have been altered by that change to use strict types
 -   this means that you will need to update your project to use strict types as well
@@ -54,7 +54,7 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
 
 ## [Upgrade from v14.0.1 to v14.5.0](https://github.com/shopsys/shopsys/compare/v14.0.1...v14.5.0)
 
-#### upgrade the necessary libraries to fix builds ([#4275](https://github.com/shopsys/shopsys/pull/4275))
+#### Upgrade the necessary libraries to fix builds ([#4275](https://github.com/shopsys/shopsys/pull/4275))
 
 -   update Twig to the latest version to prevent security issues
 -   upgrade doctrine/persistence to ^3.3.3
@@ -62,7 +62,7 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
     -   [project-base diff](https://www.github.com/shopsys/project-base/commit/03fd2b379cc580dc7728d2386718dbce2d790682)
     -   [project-base diff](https://www.github.com/shopsys/project-base/commit/a8d6b4a8dd789989356fb95e78db40fde400242e)
 
-#### upgrade PostgreSQL version to 17.4 ([#4278](https://github.com/shopsys/shopsys/pull/4278))
+#### Upgrade PostgreSQL version to 17.4 ([#4278](https://github.com/shopsys/shopsys/pull/4278))
 
 -   CAUTION: upgrade and deploy the application BEFORE upgrading the database to PostgreSQL 17.4
     -   otherwise the application will not work properly
@@ -74,34 +74,34 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
         -   if needed, compose the DSN manually using the provided credentials
 -   see [project-base diff](https://www.github.com/shopsys/project-base/commit/8ee9cee1e12c6d261debd541bd615b13f20de785) to update your project
 
-#### upgrade Nginx to the new version ([#4276](https://github.com/shopsys/shopsys/pull/4276))
+#### Upgrade Nginx to the new version ([#4276](https://github.com/shopsys/shopsys/pull/4276))
 
 -   see [project-base diff](https://www.github.com/shopsys/project-base/commit/c206ce74e123fc77b8fb6cc08fd3e7276e0d2836) to update your project
 -   remember to update your local docker-compose.yml file and rebuild the containers
 -   if necessary, update the CI configuration with the new version of the nginx image
 
-#### remove warnings from docker ([#4277](https://github.com/shopsys/shopsys/pull/4277))
+#### Remove warnings from docker ([#4277](https://github.com/shopsys/shopsys/pull/4277))
 
 -   see [project-base diff](https://www.github.com/shopsys/project-base/commit/05374b00eab69127f6fefe72bc60aa3ef1198167) to update your project
 
-#### upgrade Redis to the newest version ([#4280](https://github.com/shopsys/shopsys/pull/4280))
+#### Upgrade Redis to the newest version ([#4280](https://github.com/shopsys/shopsys/pull/4280))
 
 -   see [project-base diff](https://www.github.com/shopsys/project-base/commit/5894a434807bccf36fc32109e96e753e2976822c) to update your project
 -   upgrade `redis` package on the storefront and check your custom code for compatibility
 -   if you have installed Review server, then don't forget to update the `redis` service in `docker-compose.yml` to the `7.4-alpine`.
 
-#### upgrade RabbitMQ version ([#4279](https://github.com/shopsys/shopsys/pull/4279))
+#### Upgrade RabbitMQ version ([#4279](https://github.com/shopsys/shopsys/pull/4279))
 
 -   see [project-base diff](https://www.github.com/shopsys/project-base/commit/1d21da1a97c334a5afe3de6ecc29d9d19b9f26d7) to update your project
 
-#### upgrade Elastic and Kibana to version 7.17.2 ([#4283](https://github.com/shopsys/shopsys/pull/4283))
+#### Upgrade Elastic and Kibana to version 7.17.2 ([#4283](https://github.com/shopsys/shopsys/pull/4283))
 
 -   update Elasticsearch and Kibana to version 7.17.2 on all your environments
     -   you can use docker images `docker.elastic.co/elasticsearch/elasticsearch:7.17.2` and `docker.elastic.co/kibana/kibana:7.17.2`
 -   make the same changes in your uncommitted `docker-compose.yml` file and recreate the `elasticsearch` and `kibana` containers
 -   see [project-base diff](https://www.github.com/shopsys/project-base/commit/7b13c05b4d508c7724d04f16b706865c43439832) to update your project
 
-#### upgrade shopsys/deployment package ([#4285](https://github.com/shopsys/shopsys/pull/4285))
+#### Upgrade shopsys/deployment package ([#4285](https://github.com/shopsys/shopsys/pull/4285))
 
 -   before upgrading the deployment package, look closely at the changes in the deployment package: https://github.com/shopsys/deployment/compare/v2.1.0...v4.2.0
 -   some manifests were updated and require a newer version of Kubernetes
@@ -111,6 +111,8 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
     -   look at the changes in the deployment package and apply them to your project: https://github.com/shopsys/deployment/blob/main/UPGRADE.md
 -   use `WHITELIST_IPS` variable to define whitelist IPs for ingress. See: https://github.com/shopsys/deployment?tab=readme-ov-file#whitelist-ip-addresses
 -   see [project-base diff](https://www.github.com/shopsys/project-base/commit/192a3205ee26f54c5b62aa6703c7543509f2183d) to update your project
+
+## [Upgrade from v14.5.0 to v14.5.1](https://github.com/shopsys/shopsys/compare/v14.5.0...v14.5.1)
 
 #### Replace `mutagen-compose` with plain `mutagen` because `mutagen-compose` is no longer compatible with the latest Docker API ([#4343](https://github.com/shopsys/shopsys/pull/4343))
 
@@ -148,13 +150,13 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
 
 For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use plain `docker compose` like `docker compose exec php-fpm bash`
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://www.github.com/shopsys/project-base/commit/5efad267a1a214f209fd8188a21e9aba010870ea) to update your project
 
-#### update coding standards for YAML files ([#4361](https://github.com/shopsys/shopsys/pull/4361))
+#### Update coding standards for YAML files ([#4361](https://github.com/shopsys/shopsys/pull/4361))
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://www.github.com/shopsys/project-base/commit/565bc40f3607af3886f2f27447b0177d3eedd471) to update your project
 
-#### stop processing images by PHP to avoid decreasing quality ([#4360](https://github.com/shopsys/shopsys/pull/4360))
+#### Stop processing images by PHP to avoid decreasing quality ([#4360](https://github.com/shopsys/shopsys/pull/4360))
 
 -   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor` class was changed:
     -   `createInterventionImage()` method was removed
@@ -167,45 +169,65 @@ For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use 
 -   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework package:
     -   `imageuploadFields.html.twig` Twig template extension
     -   `Advert/listGrid.html.twig` Twig template extension
--   see #project-base-diff to update your project
+-   see [project-base diff](https://www.github.com/shopsys/project-base/commit/d3feff407bf8be6a8947b50570be9ea88b5c0a65) to update your project
 
 #### Upgrade two-factor packages to be compatible with Symfony 6 ([#4357](https://github.com/shopsys/shopsys/pull/4357))
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/e8eb93b95b4af6adccf48fb5ab453865fe461a08) to update your project
 
-#### replace shopsys/ordered-form package with becklyn/ordered-form-bundle ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+#### Replace shopsys/ordered-form package with becklyn/ordered-form-bundle ([#4357](https://github.com/shopsys/shopsys/pull/4357))
 
 -   calling `setPosition()` directly on existing form fields is not supported anymore, otherwise, ordering form fields works the same way
 -   see [becklyn/ordered-form-bundle](https://github.com/Becklyn/OrderedFormBundle) for the documentation
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/37df6bf4eda48be84f540b463bebc2db2336db2f) to update your project
 
 #### Upgrade Sentry package ([#4357](https://github.com/shopsys/shopsys/pull/4357))
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/f82e7c071988cfe5f5393dab09d4f25266d70cd5) to update your project
 
-#### update composer dependencies to newer versions ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+#### Replaced Phing as a direct composer dependency by downloading phar file ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/2f03781a1137db05c73d68a98df44178bc27c6b7) to update your project
+
+#### Replace abandoned akeneo/api-php-client-ee by akeneo/api-php-client ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/08dd747508f0578941d3614a45f466d33e7e58f9) to update your project
+
+#### Update arvenil/ninja-mutex to latest version ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/d46450dac984dff3b41919ae229ecd11be7c11b1) to update your project
+
+#### Updated several packages to update PHPUnit to version 11 ([#4357](https://github.com/shopsys/shopsys/pull/4357))
 
 -   PHPUnit has been updated to version 11 with many other dependencies
     -   many changes have been introduced since previously used version 9 e.g. configuration options, deprecated or removed methods, deprecated doc-blocks, etc.
     -   see https://github.com/sebastianbergmann/phpunit/blob/11.1/DEPRECATIONS.md and https://github.com/sebastianbergmann/phpunit/blob/10.5/DEPRECATIONS.md for deprecations in PHPUnit that you need to solve in your tests
-    -   see #project-base diff to see changes you might need to apply in your tests
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/555dd58f1cbe767e1bcd4daeec071b3063f742f5) to update your project
+
+#### Update commerceguys/intl to latest version ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+
 -   `commerceguys/intl` has been updated to the latest version
     -   `IntlCurrencyRepository` and `NumberFormatterExtension` class methods have updated their interfaces to include strict types, you will need to update your usages of such methods in your project
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/92cbdbaddf6eccf684c2a124ba5af07347c47932) to update your project
 
-#### update easy-coding-standard to version 12.2 ([#4367](https://github.com/shopsys/shopsys/pull/4367))
+#### Replace zalas/phpunit-injector with shopsys/phpunit-injector ([#4357](https://github.com/shopsys/shopsys/pull/4357))
+
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/cbca39d9c463b3b1a49a4dd570aafb8f1491f63d) to update your project
+
+#### Update easy-coding-standard to version 12.2 ([#4367](https://github.com/shopsys/shopsys/pull/4367))
 
 -   update configuration file to new version
 -   skip rules are now defined in the separate `ecs-skip-rule.php` file
 -   paths to check are now defined directly in the `ecs.php` file
 -   fixer `RedundantMarkDownTrailingSpacesFixer` was removed as markdown files are formatted by prettier
--   see #project-base-diff to update your project
+-   see [project-base diff](https://www.github.com/shopsys/project-base/commit/83c61184291e3bb14deee8525f59a0f04e7f5422) to update your project
 
-### added styles for grapesjs on localhost ([#4385](https://github.com/shopsys/shopsys/pull/4385))
+#### Added styles for grapesjs on localhost ([#4385](https://github.com/shopsys/shopsys/pull/4385))
 
 -   run `make generate-tailwind-for-admin` for genereting Tailwind styles to run GrapesJS localy
+-   see [project-base diff](https://www.github.com/shopsys/project-base/commit/0a43190e6db54dbf3273b61d0c064488ca7394f3) to update your project
 
-#### upgrade to Symfony 6.4 ([#4394](https://github.com/shopsys/shopsys/pull/4394))
+#### Upgrade to Symfony 6.4 ([#4394](https://github.com/shopsys/shopsys/pull/4394))
 
 -   see upgrade notes of Symfony:
     -   https://github.com/symfony/symfony/blob/6.4/UPGRADE-6.0.md
@@ -219,12 +241,12 @@ For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use 
 -   `Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler` service definition has been moved from project-base to framework
     -   remove the service definition from your `config/services.yaml` if you have it defined there
     -   the service is now marked as lazy to prevent calling Redis during builds on CI
--   see #project-base-diff to update your project
+-   see [project-base diff](https://www.github.com/shopsys/project-base/commit/9b1590b4ff8257a8cac8a0fcfb89dffbedd0c281) to update your project
 
-#### pin jQuery version to 3.x major ([#4428](https://github.com/shopsys/shopsys/pull/4428))
+#### Pin jQuery version to 3.x major ([#4428](https://github.com/shopsys/shopsys/pull/4428))
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://www.github.com/shopsys/project-base/commit/4945217138c82d1b5979049d11bbd71e10022bcc) to update your project
 
-#### fix tests on single domain ([#4429](https://github.com/shopsys/shopsys/pull/4429))
+#### Fix tests on single domain ([#4429](https://github.com/shopsys/shopsys/pull/4429))
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://www.github.com/shopsys/project-base/commit/96c78a2390134a14a4f19f10e3e701676f69312d) to update your project
