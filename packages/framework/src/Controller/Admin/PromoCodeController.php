@@ -239,7 +239,7 @@ class PromoCodeController extends AdminBaseController
     {
         $promoCodes = $this->promoCodeFacade->findByMassBatchId($batchId);
 
-        $csv = Writer::createFromString('');
+        $csv = Writer::fromString();
         $csv->setDelimiter(';');
 
         foreach ($promoCodes as $promoCode) {
