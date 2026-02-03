@@ -19,6 +19,7 @@ use Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\App\Performance\JmeterCsvReporter;
 use Tests\App\Smoke\Http\RouteConfigCustomization;
 
@@ -176,12 +177,20 @@ class AllPagesTest extends KernelTestCase
     {
         $this->setUp();
 
-        $requestDataSet->executeCallsDuringTestExecution(static::getContainer());
-
         $uri = $this->getRouterAdapter()->generateUri($requestDataSet);
 
         $request = Request::create($uri);
+
+        $sessionFactory = static::getContainer()->get('test.service_container')->get('session.factory');
+        $session = $sessionFactory->createSession();
+        $request->setSession($session);
+
         $requestDataSet->getAuth()->authenticateRequest($request);
+
+        $requestStack = static::getContainer()->get(RequestStack::class);
+        $requestStack->push($request);
+
+        $requestDataSet->executeCallsDuringTestExecution(static::getContainer());
 
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
