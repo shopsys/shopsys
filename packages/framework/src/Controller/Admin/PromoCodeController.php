@@ -246,6 +246,6 @@ class PromoCodeController extends AdminBaseController
             $csv->insertOne([$promoCode->getCode()]);
         }
 
-        return $csv->getContent();
+        return $csv->toString();
     }
 }
