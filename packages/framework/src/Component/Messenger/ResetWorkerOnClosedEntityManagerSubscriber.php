@@ -21,8 +21,8 @@ class ResetWorkerOnClosedEntityManagerSubscriber implements EventSubscriberInter
             return;
         }
 
-        foreach ($exception->getNestedExceptions() as $nestedException) {
-            if ($nestedException instanceof EntityManagerClosed) {
+        foreach ($exception->getWrappedExceptions() as $wrappedException) {
+            if ($wrappedException instanceof EntityManagerClosed) {
                 throw new StopWorkerException();
             }
         }
