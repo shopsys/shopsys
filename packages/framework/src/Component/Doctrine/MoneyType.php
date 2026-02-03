@@ -45,7 +45,7 @@ class MoneyType extends Type
             return $value->getAmount();
         }
 
-        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', Money::class]);
+        throw ConversionException::conversionFailedInvalidType($value, 'money', ['null', Money::class]);
     }
 
     /**
@@ -61,7 +61,7 @@ class MoneyType extends Type
         try {
             return Money::create($value);
         } catch (Exception $e) {
-            throw ConversionException::conversionFailedFormat($value, $this->getName(), 'numeric', $e);
+            throw ConversionException::conversionFailedFormat($value, 'money', 'numeric', $e);
         }
     }
 
