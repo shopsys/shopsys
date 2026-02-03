@@ -5,7 +5,7 @@ To be able to install, develop and run Shopsys Platform, the system should have 
 ## Linux / macOS / WSL
 
 - [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [PostgreSQL 17.4](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
+- [PostgreSQL 18](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
 - [PHP 8.3 or higher](http://php.net/manual/en/install.php) (configure your `php.ini` by [Required PHP Configuration](../introduction/required-php-configuration.md))
 - [Composer](https://getcomposer.org/doc/00-intro.md#globally)
 - [Node.js with npm](https://nodejs.org/en/download/) (npm is automatically installed when you install Node.js)
@@ -24,7 +24,7 @@ To be able to install, develop and run Shopsys Platform, the system should have 
         ```bash
         git config --system core.longpaths true
         ```
-- [PostgreSQL 17.4](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads#windows)
+- [PostgreSQL 18](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads#windows)
 - [PHP 8.3 or higher](http://php.net/manual/en/install.windows.php) (configure your `php.ini` by [Required PHP Configuration](../introduction/required-php-configuration.md))
 - [Composer](https://getcomposer.org/doc/00-intro.md#installation-windows)
 - [Node.js with npm](https://nodejs.org/en/download/) (npm is automatically installed when you install Node.js)

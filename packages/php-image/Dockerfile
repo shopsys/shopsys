@@ -89,7 +89,7 @@ RUN apk add --no-cache --virtual .build-deps \
         nano \
         openssl \
         patch \
-        postgresql17-client \
+        postgresql18-client \
         rabbitmq-c \
         vim
 
@@ -113,8 +113,8 @@ COPY ./docker-php-entrypoint /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
 
 # Cachetool for opcache management
-RUN curl -sL https://github.com/gordalina/cachetool/releases/latest/download/cachetool.phar -o /usr/local/bin/cachetool \
-    && chmod +x /usr/local/bin/cachetool
+RUN curl -sL https://github.com/gordalina/cachetool/releases/latest/download/cachetool.phar -o /usr/local/bin/cachetool && \
+    chmod +x /usr/local/bin/cachetool
 
 RUN chown -R www-data:www-data /var/www/html
 

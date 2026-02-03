@@ -1,7 +1,7 @@
 services:
     postgres:
         restart: always
-        image: postgres:17.4-alpine
+        image: postgres:18-alpine
         volumes:
             - postgres-conf:/var/lib/postgresql/conf
         environment:
@@ -190,6 +190,11 @@ services:
                 hard: 65536
         environment:
             - discovery.type=single-node
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        deploy:
+            resources:
+                limits:
+                    memory: 1G
         networks:
             - default
         labels:

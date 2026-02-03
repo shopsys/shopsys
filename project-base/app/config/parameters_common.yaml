@@ -4,7 +4,7 @@ parameters:
     container.autowiring.strict_mode: true
     container.dumper.inline_class_loader: true
     database_driver: pdo_pgsql
-    database_server_version: 17.4
+    database_server_version: 18
     # Symfony's FrameworkBundle sets throw_at (error_reporting) to 0 in production by default
     debug.error_handler.throw_at: -1
     env(ADMIN_URL): 'admin'
