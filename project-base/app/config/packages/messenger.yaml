@@ -5,7 +5,6 @@ framework:
                 middleware:
                     - 'Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayEnvelopeMiddleware'
         failure_transport: failed
-        reset_on_message: true
 
         routing:
             Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityRegularMessage: product_recalculation_priority_regular
