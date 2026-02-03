@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\App\Performance\Page;
 
-use Doctrine\DBAL\Logging\LoggerChain;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use PHPUnit\Framework\Attributes\Group;
+use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\HttpSmokeTesting\RequestDataSet;
 use Shopsys\HttpSmokeTesting\RequestDataSetGeneratorFactory;
 use Shopsys\HttpSmokeTesting\RouteConfig;
@@ -195,9 +196,9 @@ class AllPagesTest extends KernelTestCase
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
 
+        $queryCounter = $this->injectQueryCounter($entityManager);
         $startTime = microtime(true);
         $entityManager->beginTransaction();
-        $queryCounter = $this->injectQueryCounter($entityManager);
         $response = static::$kernel->handle($request);
         $queryCount = $queryCounter->getQueryCount();
         $entityManager->rollback();
@@ -270,29 +271,28 @@ class AllPagesTest extends KernelTestCase
 
     private function getRouterAdapter(): SymfonyRouterAdapter
     {
-        $router = static::getContainer()->get('router');
+        $router = static::getContainer()->get('test.service_container')->get(AdministrationRouter::class);
 
         return new SymfonyRouterAdapter($router);
     }
 
-    private function injectQueryCounter(EntityManagerInterface $entityManager): PerformanceTestSampleQueryCounter
+    private function injectQueryCounter(EntityManagerInterface $entityManager): QueryCountingMiddleware
     {
-        $connectionConfiguration = $entityManager->getConnection()->getConfiguration();
+        $connection = $entityManager->getConnection();
 
-        $currentLogger = $connectionConfiguration->getSQLLogger();
-        $loggers = [];
+        $queryCountingMiddleware = new QueryCountingMiddleware();
 
-        if ($currentLogger !== null) {
-            $loggers[] = $currentLogger;
-        }
+        $connectionReflection = new ReflectionClass($connection);
+        $driverProperty = $connectionReflection->getProperty('_driver');
+        $currentDriver = $driverProperty->getValue($connection);
 
-        $queryCounter = new PerformanceTestSampleQueryCounter();
-        $loggers[] = $queryCounter;
-        $loggerChain = new LoggerChain($loggers);
+        $wrappedDriver = $queryCountingMiddleware->wrap($currentDriver);
 
-        $connectionConfiguration->setSQLLogger($loggerChain);
+        $driverProperty->setValue($connection, $wrappedDriver);
 
-        return $queryCounter;
+        $connection->close();
+
+        return $queryCountingMiddleware;
     }
 
     private function createPerformanceTestSampleQualifier(): PerformanceTestSampleQualifier
