@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
 use Nette\Utils\Json;
-use Nette\Utils\Strings;
 use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider;
@@ -78,11 +77,11 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
 
     private function shouldSkipPackageNameAndVersion(string $packageName, string $version): bool
     {
-        if (Strings::startsWith($packageName, 'ext-')) {
+        if (str_starts_with($packageName, 'ext-')) {
             return true;
         }
 
-        if (Strings::startsWith($version, '^')) {
+        if (str_starts_with($version, '^')) {
             return true;
         }
 
