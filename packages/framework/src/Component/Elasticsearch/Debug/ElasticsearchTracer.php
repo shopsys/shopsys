@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch\Debug;
 
 use InvalidArgumentException;
+use Nette\Utils\Json;
 use Override;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\Exception\NotSupportedException;
 use Stringable;
-use function GuzzleHttp\json_decode;
-use function GuzzleHttp\json_encode;
 
 /**
  * Implementation of this class is close related to used hardcoded strings/keys in \Elasticsearch\Connections\Connection
@@ -32,12 +31,12 @@ class ElasticsearchTracer extends AbstractLogger
             return null;
         }
 
-        return json_decode($matches['json'], true);
+        return Json::decode($matches['json'], true);
     }
 
     protected function formatData(mixed $requestData): string
     {
-        return json_encode($requestData, JSON_PRETTY_PRINT);
+        return Json::encode($requestData, JSON_PRETTY_PRINT);
     }
 
     /**
