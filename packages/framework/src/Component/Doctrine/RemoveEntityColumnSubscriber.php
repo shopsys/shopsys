@@ -41,7 +41,6 @@ class RemoveEntityColumnSubscriber implements EventSubscriber
     {
         $classMetadata->associationMappings = $this->removeMappingByKey($propertyName, $classMetadata->associationMappings);
         $classMetadata->fieldMappings = $this->removeMappingByKey($propertyName, $classMetadata->fieldMappings);
-        $classMetadata->columnNames = $this->removeMappingByKey($propertyName, $classMetadata->columnNames);
         $classMetadata->fieldNames = $this->removeMappingByValue($propertyName, $classMetadata->fieldNames);
     }
 

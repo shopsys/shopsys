@@ -40,7 +40,6 @@ class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscr
         $meta->generatorType = ClassMetadataInfo::GENERATOR_TYPE_NONE;
         $meta->fieldMappings = [];
         $meta->fieldNames = [];
-        $meta->columnNames = [];
         $meta->associationMappings = [];
         $meta->idGenerator = new AssignedGenerator();
         $meta->embeddedClasses = [];

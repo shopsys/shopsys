@@ -120,7 +120,6 @@ class EntityExtensionSubscriber implements EventSubscriber
             $currentClassMetadata->isMappedSuperclass = true;
             $currentClassMetadata->associationMappings = [];
             $currentClassMetadata->fieldMappings = [];
-            $currentClassMetadata->columnNames = [];
             $currentClassMetadata->fieldNames = [];
         }
 
