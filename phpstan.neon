@@ -51,6 +51,14 @@ parameters:
         -
             message: '#^Service "test.service_container" is not registered in the container.#'
             path: %currentWorkingDirectory%/packages/http-smoke-testing/src/HttpSmokeTestCase.php
+        -
+            # Symfony 7 marks Router as @final but we need to extend it for admin routing
+            message: '#^Class Shopsys\\FrameworkBundle\\Component\\Router\\AdministrationRouter extends @final class Symfony\\Bundle\\FrameworkBundle\\Routing\\Router\.$#'
+            path: %currentWorkingDirectory%/packages/framework/src/Component/Router/AdministrationRouter.php
+        -
+            # PHPStan inference issue with Yaml::parse flags in Symfony 7 - runtime behavior is correct
+            message: '#^Parameter \#2 \$flags of method Symfony\\Component\\Yaml\\Parser::parse\(\) expects#'
+            path: %currentWorkingDirectory%/packages/framework/src/Command/YamlLintCommand.php
     excludePaths:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*
