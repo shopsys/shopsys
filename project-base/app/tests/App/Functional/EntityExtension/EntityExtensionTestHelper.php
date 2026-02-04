@@ -15,7 +15,7 @@ class EntityExtensionTestHelper
     public function __construct(
         private readonly EntityManagerDecorator $em,
         private readonly OverwritableEntityNameResolver $overwritableEntityNameResolver,
-        private readonly OverwritableEntityExtensionSubscriber $overwritableEntityExtensionSubscriber,
+        private readonly OverwritableEntityExtensionListener $overwritableEntityExtensionListener,
     ) {
     }
 
@@ -24,7 +24,7 @@ class EntityExtensionTestHelper
      */
     public function overwriteEntityExtensionMapInServicesInContainer(array $entityExtensionMap): void
     {
-        $this->overwritableEntityExtensionSubscriber->overwriteEntityExtensionMap($entityExtensionMap);
+        $this->overwritableEntityExtensionListener->overwriteEntityExtensionMap($entityExtensionMap);
         $this->overwritableEntityNameResolver->overwriteEntityExtensionMap($entityExtensionMap);
     }
 

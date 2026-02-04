@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityExtension;
 
-use Doctrine\Common\EventSubscriber;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use LogicException;
-use Override;
 use ReflectionClass;
 use Webmozart\Assert\Assert;
 
 /**
  * Inspired by joschi127/doctrine-entity-override-bundle (https://github.com/joschi127/doctrine-entity-override-bundle)
  */
-class EntityExtensionSubscriber implements EventSubscriber
+#[AsDoctrineListener(event: Events::loadClassMetadata, priority: -10)]
+class EntityExtensionListener
 {
     /**
      * @var array<class-string, class-string>
@@ -49,15 +49,6 @@ class EntityExtensionSubscriber implements EventSubscriber
     public function __construct(array $entityExtensionMap)
     {
         $this->setEntityExtensionMap($entityExtensionMap);
-    }
-
-    /**
-     * @return string[]
-     */
-    #[Override]
-    public function getSubscribedEvents(): array
-    {
-        return [Events::loadClassMetadata];
     }
 
     /**

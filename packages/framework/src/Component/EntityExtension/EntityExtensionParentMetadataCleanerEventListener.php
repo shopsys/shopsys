@@ -4,26 +4,17 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityExtension;
 
-use Doctrine\Common\EventSubscriber;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Id\AssignedGenerator;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Override;
 
-class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscriber
+#[AsDoctrineListener(event: Events::loadClassMetadata, priority: 10)]
+class EntityExtensionParentMetadataCleanerEventListener
 {
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
-    }
-
-    /**
-     * @return string[]
-     */
-    #[Override]
-    public function getSubscribedEvents(): array
-    {
-        return [Events::loadClassMetadata];
     }
 
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs): void

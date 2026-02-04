@@ -215,7 +215,7 @@ return ECSConfig::configure()
             ],
             ObjectIsCreatedByFactorySniff::class => [
                 __DIR__ . '/packages/framework/src/Component/Domain/DomainFactoryOverwritingDomainUrl.php',
-                __DIR__ . '/packages/framework/src/Component/EntityExtension/EntityExtensionSubscriber.php',
+                __DIR__ . '/packages/framework/src/Component/EntityExtension/EntityExtensionListener.php',
                 __DIR__ . '/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php',
                 __DIR__ . '/packages/framework/src/Model/Order/Preview/OrderPreviewCalculation.php',
                 __DIR__ . '/packages/*/tests/*',
