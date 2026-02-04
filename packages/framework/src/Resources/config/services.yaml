@@ -210,11 +210,11 @@ services:
         arguments:
             $indexes: !tagged elasticsearch.index
 
-    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionParentMetadataCleanerEventListener: ~
-
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionListener:
         arguments:
             $entityExtensionMap: '%shopsys.entity_extension.map%'
+
+    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionParentMetadataCleanerEventListener: ~
 
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator:
         arguments:
