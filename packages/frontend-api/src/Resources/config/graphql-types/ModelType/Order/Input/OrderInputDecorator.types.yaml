@@ -38,14 +38,14 @@ OrderInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Please enter email"
-                            groups: "anonymousUser"
+                            groups: ["anonymousUser"]
                     -   Email:
                             message: "Please enter valid email"
-                            groups: "anonymousUser"
+                            groups: ["anonymousUser"]
                     -   Length:
                             max: 255
                             maxMessage: "Email cannot be longer than {{ limit }} characters"
-                            groups: "anonymousUser"
+                            groups: ["anonymousUser"]
             telephone:
                 type: "String!"
                 description: "The customer's phone number"
@@ -65,26 +65,26 @@ OrderInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Please enter company name"
-                            groups: "onCompanyBehalf"
+                            groups: ["onCompanyBehalf"]
                     -   Length:
                             max: 100
                             maxMessage: "Company name cannot be longer than {{ limit }} characters"
-                            groups: "onCompanyBehalf"
+                            groups: ["onCompanyBehalf"]
             companyNumber:
                 type: "String"
                 description: "The customer’s company identification number (required when onCompanyBehalf is true)"
                 validation:
                     -   NotBlank:
                             message: "Please enter identification number"
-                            groups: "onCompanyBehalf"
+                            groups: ["onCompanyBehalf"]
                     -   Length:
                             max: 50
                             maxMessage: "Identification number cannot be longer than {{ limit }} characters"
-                            groups: "onCompanyBehalf"
+                            groups: ["onCompanyBehalf"]
                     -   Regex:
                             pattern: '/^[0-9]+$/'
                             message: "Please fill in numbers only"
-                            groups: "onCompanyBehalf"
+                            groups: ["onCompanyBehalf"]
             companyTaxNumber:
                 type: "String"
                 description: "The customer’s company tax number (required when onCompanyBehalf is true)"
@@ -92,11 +92,11 @@ OrderInputDecorator:
                     -   Length:
                             max: 50
                             maxMessage: "Tax number cannot be longer than {{ limit }} characters"
-                            groups: "onCompanyBehalf"
+                            groups: ["onCompanyBehalf"]
                     -   Regex:
                             pattern: '/^[0-9A-Z]*([0-9]+[A-Z]+|[A-Z]+[0-9]+)[0-9A-Z]*$/'
                             message: "Please check Tax number format"
-                            groups: "onCompanyBehalf"
+                            groups: ["onCompanyBehalf"]
             street:
                 type: "String!"
                 description: "Billing address street name (will be on the tax invoice)"
@@ -147,7 +147,7 @@ OrderInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Please enter first name of contact person"
-                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
+                            groups: ["isDeliveryAddressDifferentFromBillingWithoutPreselected"]
                     -   Length:
                             max: 100
                             maxMessage: "First name of contact person cannot be longer than {{ limit }} characters"
@@ -157,7 +157,7 @@ OrderInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Please enter last name of contact person"
-                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
+                            groups: ["isDeliveryAddressDifferentFromBillingWithoutPreselected"]
                     -   Length:
                             max: 100
                             maxMessage: "Last name of contact person cannot be longer than {{ limit }} characters"
@@ -181,7 +181,7 @@ OrderInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Please enter street"
-                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
+                            groups: ["isDeliveryAddressDifferentFromBillingWithoutPreselected"]
                     -   Length:
                             max: 100
                             maxMessage: "Street name cannot be longer than {{ limit }} characters"
@@ -191,7 +191,7 @@ OrderInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Please enter city"
-                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
+                            groups: ["isDeliveryAddressDifferentFromBillingWithoutPreselected"]
                     -   Length:
                             max: 100
                             maxMessage: "City name cannot be longer than {{ limit }} characters"
@@ -201,7 +201,7 @@ OrderInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Please enter zip code"
-                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
+                            groups: ["isDeliveryAddressDifferentFromBillingWithoutPreselected"]
                     -   Length:
                             max: 30
                             maxMessage: "Zip code cannot be longer than {{ limit }} characters"
@@ -211,7 +211,7 @@ OrderInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Please choose country"
-                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
+                            groups: ["isDeliveryAddressDifferentFromBillingWithoutPreselected"]
                     -   Shopsys\FrameworkBundle\Form\Constraints\Country:
 
             note:

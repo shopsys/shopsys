@@ -242,8 +242,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'name' => t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 '__typename' => 'ParameterSliderFilterOption',
                 'unit' => null,
-                'minimalValue' => 5,
-                'maximalValue' => 5,
+                'minimalValue' => 5.0,
+                'maximalValue' => 5.0,
             ],
             [
                 'isCollapsed' => false,
@@ -270,8 +270,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'unit' => [
                     'name' => t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
-                'minimalValue' => 27,
-                'maximalValue' => 55,
+                'minimalValue' => 27.0,
+                'maximalValue' => 55.0,
             ],
             [
                 'isCollapsed' => false,
@@ -319,8 +319,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'unit' => [
                     'name' => t('years', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
-                'minimalValue' => 1,
-                'maximalValue' => 5,
+                'minimalValue' => 1.0,
+                'maximalValue' => 5.0,
             ],
         ];
 
@@ -336,7 +336,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         $this->assertArrayElements($expectedFlagFilterOptions, $data['products']['productFilterOptions']['flags']);
         $this->assertArrayElements($expectedBrandFilterOptions, $data['products']['productFilterOptions']['brands']);
-        $this->assertSame($expectedParameterFilterOptions, $data['products']['productFilterOptions']['parameters']);
+        $this->assertEquals($expectedParameterFilterOptions, $data['products']['productFilterOptions']['parameters']);
     }
 
     public function testGetElectronicsBrandFilterOptionsWithAppliedFilter(): void
@@ -546,8 +546,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'name' => t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 '__typename' => 'ParameterSliderFilterOption',
                 'unit' => null,
-                'minimalValue' => 5,
-                'maximalValue' => 5,
+                'minimalValue' => 5.0,
+                'maximalValue' => 5.0,
             ],
             [
                 'isCollapsed' => false,
@@ -569,8 +569,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'unit' => [
                     'name' => t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
-                'minimalValue' => 27,
-                'maximalValue' => 55,
+                'minimalValue' => 27.0,
+                'maximalValue' => 55.0,
             ],
             [
                 'isCollapsed' => true,
@@ -653,8 +653,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'unit' => [
                     'name' => t('years', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
-                'minimalValue' => 1,
-                'maximalValue' => 5,
+                'minimalValue' => 1.0,
+                'maximalValue' => 5.0,
             ],
         ];
 
@@ -726,8 +726,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         foreach ($parameters as $parameterArray) {
             if ($parameterArray['uuid'] === $parameterSliderWarrantyUuid) {
-                $this->assertSame(1, $parameterArray['minimalValue']);
-                $this->assertSame(5, $parameterArray['maximalValue']);
+                $this->assertSame(1.0, $parameterArray['minimalValue']);
+                $this->assertSame(5.0, $parameterArray['maximalValue']);
             }
         }
     }
@@ -751,8 +751,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         foreach ($parameters as $parameterArray) {
             if ($parameterArray['uuid'] === $parameterSliderWarrantyUuid) {
-                $this->assertSame(1, $parameterArray['minimalValue']);
-                $this->assertSame(5, $parameterArray['maximalValue']);
+                $this->assertSame(1.0, $parameterArray['minimalValue']);
+                $this->assertSame(5.0, $parameterArray['maximalValue']);
             }
         }
     }

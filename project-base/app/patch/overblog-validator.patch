@@ -1,6 +1,7 @@
---- ./vendor/overblog/graphql-bundle/src/Validator/InputValidator.php
-+++ ./vendor/overblog/graphql-bundle/src/Validator/InputValidator.php
+--- a/src/Validator/InputValidator.php
++++ b/src/Validator/InputValidator.php
 @@ -118,7 +118,7 @@
+         if (null !== $this->defaultTranslator) {
              // @phpstan-ignore-next-line (only for Symfony 4.4)
              $builder
                  ->setTranslator($this->defaultTranslator)

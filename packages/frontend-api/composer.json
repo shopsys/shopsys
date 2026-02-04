@@ -30,7 +30,7 @@
         "elasticsearch/elasticsearch": "^7.6.1",
         "hybridauth/hybridauth": "^3.11",
         "lcobucci/jwt": "^5.4",
-        "overblog/graphql-bundle": "1.3.2",
+        "overblog/graphql-bundle": "^1.9",
         "overblog/graphiql-bundle": "^1.0",
         "overblog/dataloader-bundle": "^1.1",
         "shopsys/form-types-bundle": "19.0.x-dev",

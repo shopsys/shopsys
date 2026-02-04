@@ -194,7 +194,8 @@
         "public-dir": "web",
         "patches": {
             "overblog/graphql-bundle": {
-                "Change default validator domain": "patch/overblog-validator.patch"
+                "Remove kernel.reset tag from Executor to prevent schema clearing": "project-base/app/patch/overblog-executor-reset.patch",
+                "Use customerValidators translation domain in InputValidator": "project-base/app/patch/overblog-validator.patch"
             }
         },
         "symfony": {

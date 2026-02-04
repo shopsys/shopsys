@@ -1,0 +1,11 @@
+--- a/src/Resources/config/services.yaml
++++ b/src/Resources/config/services.yaml
+@@ -21,8 +21,6 @@
+         calls:
+             - ["setMaxQueryComplexity", ["%overblog_graphql.query_max_complexity%"]]
+             - ["setMaxQueryDepth", ["%overblog_graphql.query_max_depth%"]]
+-        tags:
+-            - { name: kernel.reset, method: reset }
+
+     Overblog\GraphQLBundle\Definition\Builder\SchemaBuilder:
+         arguments:
