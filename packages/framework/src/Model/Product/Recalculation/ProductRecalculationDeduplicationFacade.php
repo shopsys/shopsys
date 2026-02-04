@@ -73,6 +73,7 @@ class ProductRecalculationDeduplicationFacade
 
         $exportScopesIndexedByProductIds = $this->doGetStoredExportScopes($productIdsWithMainVariants, $priority);
         $productIdsToDispatch = [];
+        $exportScopesToWrite = [];
 
         foreach ($exportScopesIndexedByProductIds as $productId => $storedScopesJson) {
             if ($storedScopesJson === false) {
@@ -80,18 +81,23 @@ class ProductRecalculationDeduplicationFacade
             }
 
             $updatedScopesJson = $this->updateScopesByRequestedScopes($requestedExportScopes, $storedScopesJson);
-            $exportScopesIndexedByProductIds[$productId] = $updatedScopesJson;
+
+            if ($storedScopesJson === false || $storedScopesJson !== $updatedScopesJson) {
+                $exportScopesToWrite[$productId] = $updatedScopesJson;
+            }
         }
 
-        $this->redisClient->hMset($this->getCacheKey($priority), $exportScopesIndexedByProductIds);
-        $this->redisClient->rawCommand(
-            'HEXPIRE',
-            $this->redisClient->getOption(Redis::OPT_PREFIX) . $this->getCacheKey($priority),
-            self::TTL,
-            'FIELDS',
-            count($exportScopesIndexedByProductIds),
-            ...array_keys($exportScopesIndexedByProductIds),
-        );
+        if ($exportScopesToWrite !== []) {
+            $this->redisClient->hMset($this->getCacheKey($priority), $exportScopesToWrite);
+            $this->redisClient->rawCommand(
+                'HEXPIRE',
+                $this->redisClient->getOption(Redis::OPT_PREFIX) . $this->getCacheKey($priority),
+                self::TTL,
+                'FIELDS',
+                count($exportScopesToWrite),
+                ...array_keys($exportScopesToWrite),
+            );
+        }
 
         return $productIdsToDispatch;
     }
