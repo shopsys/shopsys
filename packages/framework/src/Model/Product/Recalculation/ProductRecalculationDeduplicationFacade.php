@@ -9,7 +9,7 @@ use Redis;
 
 class ProductRecalculationDeduplicationFacade
 {
-    protected const int TTL = 10800;
+    protected const int TTL = 3600;
 
     public function __construct(
         protected readonly Redis $redisClient,
