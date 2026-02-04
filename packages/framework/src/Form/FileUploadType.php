@@ -103,7 +103,8 @@ final class FileUploadType extends AbstractType
                     'multiple' => $this->isMultiple($options),
                     'constraints' => [
                         new Constraints\Callback(
-                            ['callback' => [$this, 'validateSelectedFiles'], 'payload' => $options['file_constraints']],
+                            callback: [$this, 'validateSelectedFiles'],
+                            payload: $options['file_constraints'],
                         ),
                     ],
                 ]),
