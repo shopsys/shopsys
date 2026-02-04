@@ -46,7 +46,7 @@
         "symfony/dependency-injection": "^6.4",
         "symfony/form": "^6.4",
         "symfony/http-kernel": "^6.4",
-        "symfony/service-contracts": "^2.5.2",
+        "symfony/service-contracts": "^3.5",
         "symfony/translation": "^6.4",
         "twig/twig": "^3.14.0"
     },

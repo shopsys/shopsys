@@ -45,7 +45,7 @@
         "symfony/http-kernel": "^6.4",
         "symfony/maker-bundle": "^1.62",
         "symfony/process": "^6.4",
-        "symfony/service-contracts": "^2.5.2",
+        "symfony/service-contracts": "^3.5",
         "symfony/yaml": "^6.4"
     },
     "require-dev": {
