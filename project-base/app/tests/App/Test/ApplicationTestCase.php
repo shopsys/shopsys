@@ -8,7 +8,7 @@ use Override;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 use const PHP_URL_SCHEME;
 
 abstract class ApplicationTestCase extends WebTestCase
@@ -31,7 +31,7 @@ abstract class ApplicationTestCase extends WebTestCase
     }
 
     #[Override]
-    protected static function getContainer(): ContainerInterface
+    protected static function getContainer(): Container
     {
         return self::getCurrentClient()->getContainer()->get('test.service_container');
     }

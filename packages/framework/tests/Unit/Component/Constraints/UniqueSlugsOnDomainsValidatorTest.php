@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator;
 use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
@@ -23,7 +24,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
      * {@inheritdoc}
      */
     #[Override]
-    protected function createValidator()
+    protected function createValidator(): ConstraintValidatorInterface
     {
         $domainConfigs = [
             DomainConfigHelper::getDomainConfig(
