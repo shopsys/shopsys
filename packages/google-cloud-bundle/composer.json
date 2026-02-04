@@ -27,11 +27,11 @@
         "shopsys/framework": "19.0.x-dev",
         "shopsys/migrations": "19.0.x-dev",
         "shopsys/plugin-interface": "19.0.x-dev",
-        "symfony/config": "^6.4",
-        "symfony/dependency-injection": "^6.4",
-        "symfony/framework-bundle": "^6.4",
-        "symfony/http-kernel": "^6.4",
-        "symfony/options-resolver": "^6.4"
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/options-resolver": "^7.4"
     },
     "config": {
         "allow-plugins": {

@@ -33,13 +33,13 @@
         "shopsys/framework": "19.0.x-dev",
         "shopsys/migrations": "19.0.x-dev",
         "shopsys/plugin-interface": "19.0.x-dev",
-        "symfony/config": "^6.4",
-        "symfony/dependency-injection": "^6.4",
-        "symfony/form": "^6.4",
-        "symfony/http-foundation": "^6.4",
-        "symfony/http-kernel": "^6.4",
-        "symfony/routing": "^6.4",
-        "symfony/translation": "^6.4",
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/form": "^7.4",
+        "symfony/http-foundation": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/routing": "^7.4",
+        "symfony/translation": "^7.4",
         "symfony/ux-icons": "^2.22",
         "twig/twig": "^3.14.0"
     },
@@ -54,7 +54,7 @@
     },
     "extra": {
         "symfony": {
-            "require": "^6.4",
+            "require": "^7.4",
             "docker": false
         }
     },
