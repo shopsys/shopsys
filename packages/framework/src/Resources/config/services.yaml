@@ -921,9 +921,6 @@ services:
     profiler.storage:
         alias: Shopsys\FrameworkBundle\Component\HttpKernel\Profiler\FileProfilerStorage
 
-    routing.loader.annotation:
-        class: Shopsys\FrameworkBundle\Component\AttributeRouteControllerLoader
-
     routing.loader.attribute:
         class: Shopsys\FrameworkBundle\Component\AttributeRouteControllerLoader
 
