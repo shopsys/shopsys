@@ -1,4 +1,5 @@
 framework:
+    annotations: false
     assets:
         base_urls:
             - '%env(CDN_DOMAIN)%'
