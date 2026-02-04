@@ -119,7 +119,7 @@ class CategorySeoController extends AdminBaseController
         $form = $this->createCategorySeoFilterForm($category, $categorySeoFiltersData);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $request->get('is_for_backlink', false) === false) {
+        if ($form->isSubmitted() && $form->isValid() && !$request->query->getBoolean('is_for_backlink')) {
             return $this->redirect(
                 $this->getUrlWithCategoryIdAndAllQueryParameters(
                     'admin_categoryseo_newcombinations',
@@ -209,13 +209,13 @@ class CategorySeoController extends AdminBaseController
     #[CanView(methods: [HttpMethod::GET])]
     public function readyCombinationAction(Request $request, int $categoryId): Response
     {
-        $categorySeoFilterFormTypeAllQueries = $request->get('categorySeoFilterFormTypeAllQueries');
-        $selectedCategorySeoMixCombinationJson = $request->get('selectedCategorySeoMixCombinationJson');
+        $categorySeoFilterFormTypeAllQueries = $request->query->all('categorySeoFilterFormTypeAllQueries') ?: null;
+        $selectedCategorySeoMixCombinationJson = $request->query->get('selectedCategorySeoMixCombinationJson');
 
         if ($selectedCategorySeoMixCombinationJson === null) {
             // A little hack - when you need form sent data to create that same form - need for friendly URLs
-            $sentReadyCategorySeoCombinationFormData = $request->get('ready_category_seo_combination_form');
-            $selectedCategorySeoMixCombinationJson = $sentReadyCategorySeoCombinationFormData['selectedCategorySeoMixCombinationJson'];
+            $sentReadyCategorySeoCombinationFormData = $request->request->all('ready_category_seo_combination_form');
+            $selectedCategorySeoMixCombinationJson = $sentReadyCategorySeoCombinationFormData['selectedCategorySeoMixCombinationJson'] ?? null;
 
             $selectedCategorySeoMixCombination = $selectedCategorySeoMixCombinationJson === null ? null : $this->selectedCategorySeoMixCombinationFactory->createFromJson(
                 $selectedCategorySeoMixCombinationJson,

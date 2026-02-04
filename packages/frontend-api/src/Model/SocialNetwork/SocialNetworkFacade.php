@@ -122,12 +122,12 @@ class SocialNetworkFacade
     protected function validateDataFromSocialNetwork(Profile $userProfile): void
     {
         $violations = $this->validator->validate($userProfile->email, [
-            new NotBlank(['message' => 'Email is not filled']),
-            new Length([
-                'max' => 255,
-                'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
-            ]),
-            new Email(['message' => 'Email is not valid']),
+            new NotBlank(message: 'Email is not filled'),
+            new Length(
+                max: 255,
+                maxMessage: 'Email cannot be longer than {{ limit }} characters',
+            ),
+            new Email(message: 'Email is not valid'),
         ]);
 
         if (count($violations) > 0) {

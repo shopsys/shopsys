@@ -58,14 +58,14 @@ final class HolidaysImportFormType extends AbstractType
                     '%supportedCountriesUrl%' => 'https://github.com/spatie/holidays#supported-countries',
                 ]),
                 'constraints' => [
-                    new NotBlank(['message' => 'Please select a country']),
+                    new NotBlank(message: 'Please select a country'),
                 ],
             ])
             ->add('year', IntegerType::class, [
                 'label' => 'Year',
                 'required' => true,
                 'constraints' => [
-                    new NotBlank(['message' => 'Please enter a year']),
+                    new NotBlank(message: 'Please enter a year'),
                 ],
             ])
             ->add('import', ActionBarType::class, [
@@ -77,7 +77,7 @@ final class HolidaysImportFormType extends AbstractType
                 'label' => 'Import for domain',
                 'required' => true,
                 'constraints' => [
-                    new Callback(['callback' => [$this, 'validateSelectedDomains']]),
+                    new Callback(callback: [$this, 'validateSelectedDomains']),
                 ],
             ]);
         }

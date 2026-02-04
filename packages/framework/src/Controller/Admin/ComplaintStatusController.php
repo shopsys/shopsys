@@ -57,8 +57,7 @@ class ComplaintStatusController extends AdminBaseController
     #[CsrfProtection]
     public function deleteAction(Request $request, int $id): Response
     {
-        $newId = $request->get('newId');
-        $newId = $newId !== null ? (int)$newId : null;
+        $newId = $request->query->has('newId') ? $request->query->getInt('newId') : null;
 
         try {
             $complaintStatus = $this->complaintStatusFacade->getById($id);

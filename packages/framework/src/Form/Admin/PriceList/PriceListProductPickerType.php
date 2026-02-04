@@ -40,8 +40,8 @@ final class PriceListProductPickerType extends AbstractType
             'required' => true,
             'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
             'constraints' => [
-                new Constraints\NotBlank(['message' => 'Please enter price']),
-                new PositiveMoneyAmount(['message' => 'Price must be greater to zero']),
+                new Constraints\NotBlank(message: 'Please enter price'),
+                new PositiveMoneyAmount(message: 'Price must be greater to zero'),
             ],
         ]);
 

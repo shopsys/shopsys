@@ -74,7 +74,7 @@ final class AdvertFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name of advertisement area']),
+                    new Constraints\NotBlank(message: 'Please enter name of advertisement area'),
                 ],
                 'label' => 'Name',
                 'help' => t('Name serves only for internal use within the administration.'),
@@ -88,7 +88,7 @@ final class AdvertFormType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please choose advertisement type']),
+                    new Constraints\NotBlank(message: 'Please choose advertisement type'),
                 ],
                 'label' => 'Type',
             ])
@@ -97,7 +97,7 @@ final class AdvertFormType extends AbstractType
                 'choices' => array_flip($this->advertPositionRegistry->getAllLabelsIndexedByNames()),
                 'placeholder' => '-- Choose area --',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please choose advertisement area']),
+                    new Constraints\NotBlank(message: 'Please choose advertisement area'),
                 ],
                 'label' => 'Area',
             ])
@@ -116,10 +116,10 @@ final class AdvertFormType extends AbstractType
                 'label' => 'Code',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter HTML code for advertisement area',
-                        'groups' => [self::VALIDATION_GROUP_TYPE_CODE],
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter HTML code for advertisement area',
+                        groups: [self::VALIDATION_GROUP_TYPE_CODE],
+                    ),
                 ],
                 'row_attr' => [
                     'data-js-advert-type-content' => 'code',
@@ -140,10 +140,10 @@ final class AdvertFormType extends AbstractType
             ]);
 
         $imageConstraints = [
-            new MustUploadFile([
-                'message' => 'Choose image',
-                'groups' => [self::VALIDATION_GROUP_TYPE_IMAGE],
-            ]),
+            new MustUploadFile(
+                message: 'Choose image',
+                groups: [self::VALIDATION_GROUP_TYPE_IMAGE],
+            ),
         ];
 
         $builderImageGroup
@@ -152,13 +152,13 @@ final class AdvertFormType extends AbstractType
                 'image_entity_class' => Advert::class,
                 'image_type' => AdvertFacade::IMAGE_TYPE_WEB,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '15M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                        maxSize: '15M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'constraints' => ($options['web_image_exists'] ? [] : $imageConstraints),
                 'label' => 'Upload new image',
@@ -172,13 +172,13 @@ final class AdvertFormType extends AbstractType
                 'image_entity_class' => Advert::class,
                 'image_type' => AdvertFacade::IMAGE_TYPE_MOBILE,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '15M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                        maxSize: '15M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'constraints' => ($options['mobile_image_exists'] ? [] : $imageConstraints),
                 'label' => 'Upload image for mobile devices',

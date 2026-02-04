@@ -51,9 +51,10 @@ final class ParameterFormType extends AbstractType
                 'required' => true,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter parameter name']),
+                        new Constraints\NotBlank(message: 'Please enter parameter name'),
                         new Constraints\Length(
-                            ['max' => 100, 'maxMessage' => 'Parameter name cannot be longer than {{ limit }} characters'],
+                            max: 100,
+                            maxMessage: 'Parameter name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],
@@ -75,7 +76,7 @@ final class ParameterFormType extends AbstractType
                 'label' => 'Ordering priority',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter parameter ordering priority']),
+                    new Constraints\NotBlank(message: 'Please enter parameter ordering priority'),
                 ],
                 'help' => t(
                     'This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi\'s Box. For ordering of parameters in filter use settings in the category.',
@@ -106,7 +107,7 @@ final class ParameterFormType extends AbstractType
                 'data_class' => ParameterData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                    new Constraints\Callback([$this, 'validateUniqueParameterName']),
+                    new Constraints\Callback(callback: [$this, 'validateUniqueParameterName']),
                 ],
             ])
             ->setRequired(['parameter'])

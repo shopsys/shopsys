@@ -115,9 +115,7 @@ final class PromoCodeFormType extends AbstractType
                     'label' => 'Promo code',
                     'required' => true,
                     'constraints' => [
-                        new Constraints\NotBlank([
-                            'message' => 'Please enter promo code',
-                        ]),
+                        new Constraints\NotBlank(message: 'Please enter promo code'),
                     ],
                 ]);
         }
@@ -168,15 +166,15 @@ final class PromoCodeFormType extends AbstractType
         $discountOptions = [
             'required' => true,
             'constraints' => [
-                new Constraints\NotBlank([
-                    'message' => 'Please enter discount percentage',
-                    'groups' => [self::VALIDATION_GROUP_TYPE_PERCENT, self::VALIDATION_GROUP_TYPE_NOMINAL],
-                ]),
-                new Constraints\Range([
-                    'min' => 0,
-                    'max' => 100,
-                    'groups' => [self::VALIDATION_GROUP_TYPE_PERCENT, self::VALIDATION_GROUP_TYPE_NOMINAL],
-                ]),
+                new Constraints\NotBlank(
+                    message: 'Please enter discount percentage',
+                    groups: [self::VALIDATION_GROUP_TYPE_PERCENT, self::VALIDATION_GROUP_TYPE_NOMINAL],
+                ),
+                new Constraints\Range(
+                    min: 0,
+                    max: 100,
+                    groups: [self::VALIDATION_GROUP_TYPE_PERCENT, self::VALIDATION_GROUP_TYPE_NOMINAL],
+                ),
             ],
             'invalid_message' => 'Please enter number.',
             'label' => 'Discount (%)',
@@ -199,11 +197,11 @@ final class PromoCodeFormType extends AbstractType
                 'allow_delete' => true,
                 'error_bubbling' => false,
                 'constraints' => [
-                    new Constraints\Count([
-                        'min' => 1,
-                        'minMessage' => 'Please enter at least one discount limit',
-                        'groups' => [self::VALIDATION_GROUP_TYPE_PERCENT, self::VALIDATION_GROUP_TYPE_NOMINAL],
-                    ]),
+                    new Constraints\Count(
+                        min: 1,
+                        minMessage: 'Please enter at least one discount limit',
+                        groups: [self::VALIDATION_GROUP_TYPE_PERCENT, self::VALIDATION_GROUP_TYPE_NOMINAL],
+                    ),
                 ],
             ]),
         );
@@ -345,12 +343,8 @@ final class PromoCodeFormType extends AbstractType
                 'label' => 'Number of generated promo codes',
                 'required' => true,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter the quantity.',
-                    ]),
-                    new Positive([
-                        'message' => 'Please enter the positive value.',
-                    ]),
+                    new NotBlank(message: 'Please enter the quantity.'),
+                    new Positive(message: 'Please enter the positive value.'),
                 ],
                 'invalid_message' => 'Please enter the whole number.',
             ]);
@@ -372,7 +366,7 @@ final class PromoCodeFormType extends AbstractType
                 'mass_generate' => false,
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                    new Constraints\Callback([$this, 'validateUniquePromoCodeByDomain']),
+                    new Constraints\Callback(callback: [$this, 'validateUniquePromoCodeByDomain']),
                 ],
                 'validation_groups' => static function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];

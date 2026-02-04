@@ -39,7 +39,7 @@ final class UnitSettingFormType extends AbstractType
                 'choice_value' => 'id',
                 'help' => t('Default unit will be used when creating new product'),
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please choose default unit']),
+                    new Constraints\NotBlank(message: 'Please choose default unit'),
                 ],
             ])
             ->add('save', SubmitType::class, [

@@ -46,7 +46,7 @@ final class ClosedDayFormType extends AbstractType
                 'label' => 'Date',
                 'widget' => 'single_text',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter date']),
+                    new Constraints\NotBlank(message: 'Please enter date'),
                 ],
                 'view_timezone' => null,
             ])
@@ -54,8 +54,8 @@ final class ClosedDayFormType extends AbstractType
                 'required' => true,
                 'label' => 'Name',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
+                    new Constraints\NotBlank(message: 'Please enter name'),
+                    new Constraints\Length(max: 255, maxMessage: 'Name cannot be longer than {{ limit }} characters'),
                 ],
             ])
             ->add('excludedStores', ChoiceType::class, [

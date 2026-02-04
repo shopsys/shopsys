@@ -113,7 +113,7 @@ final class ProductFormType extends AbstractType
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Product prefix name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(max: 255, maxMessage: 'Product prefix name cannot be longer than {{ limit }} characters'),
                     ],
                 ],
                 'label' => 'Name prefix',
@@ -124,7 +124,8 @@ final class ProductFormType extends AbstractType
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Product name cannot be longer than {{ limit }} characters'],
+                            max: 255,
+                            maxMessage: 'Product name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],
@@ -135,7 +136,7 @@ final class ProductFormType extends AbstractType
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Product suffix name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(max: 255, maxMessage: 'Product suffix name cannot be longer than {{ limit }} characters'),
                     ],
                 ],
                 'label' => 'Name suffix',
@@ -222,8 +223,8 @@ final class ProductFormType extends AbstractType
             'required' => true,
             'constraints' => [
                 new Constraints\NotBlank(),
-                new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalog number cannot be longer than {{ limit }} characters']),
-                new UniqueProductCatnum(['product' => $product]),
+                new Constraints\Length(max: 100, maxMessage: 'Catalog number cannot be longer than {{ limit }} characters'),
+                new UniqueProductCatnum(product: $product),
             ],
             'disabled' => $this->isProductMainVariant($product),
             'attr' => [
@@ -237,7 +238,8 @@ final class ProductFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'Part number cannot be longer than {{ limit }} characters'],
+                        max: 100,
+                        maxMessage: 'Part number cannot be longer than {{ limit }} characters',
                     ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
@@ -248,7 +250,8 @@ final class ProductFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'EAN cannot be longer than {{ limit }} characters'],
+                        max: 100,
+                        maxMessage: 'EAN cannot be longer than {{ limit }} characters',
                     ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
@@ -463,9 +466,9 @@ final class ProductFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please choose unit',
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please choose unit',
+                    ),
                 ],
                 'label' => 'Unit',
             ]);
@@ -719,7 +722,8 @@ final class ProductFormType extends AbstractType
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Variant alias cannot be longer than {{ limit }} characters'],
+                            max: 255,
+                            maxMessage: 'Variant alias cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],
@@ -787,9 +791,9 @@ final class ProductFormType extends AbstractType
                 'allow_delete' => true,
                 'entry_type' => ProductParameterValueFormType::class,
                 'constraints' => [
-                    new UniqueProductParameters([
-                        'message' => 'Parameter {{ parameterName }} is used more than once',
-                    ]),
+                    new UniqueProductParameters(
+                        message: 'Parameter {{ parameterName }} is used more than once',
+                    ),
                 ],
                 'error_bubbling' => false,
                 'label' => false,
@@ -814,13 +818,13 @@ final class ProductFormType extends AbstractType
                 'required' => false,
                 'image_entity_class' => Product::class,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '2M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        maxSize: '2M',
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                    ),
                 ],
                 'entity' => $options['product'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
@@ -927,11 +931,11 @@ final class ProductFormType extends AbstractType
                 'required' => false,
                 'file_entity_class' => Product::class,
                 'file_constraints' => [
-                    new Constraints\File([
-                        'maxSize' => '2M',
-                        'maxSizeMessage' => 'Uploaded file is too large ({{ size }} {{ suffix }}). '
+                    new Constraints\File(
+                        maxSize: '2M',
+                        maxSizeMessage: 'Uploaded file is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'entity' => $options['product'],
                 'label' => 'Files',

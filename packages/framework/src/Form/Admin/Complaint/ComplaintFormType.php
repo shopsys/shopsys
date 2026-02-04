@@ -87,7 +87,7 @@ final class ComplaintFormType extends AbstractType
                 'attr' => [
                     'novalidate' => 'novalidate',
                 ],
-                'constraints' => [new Constraints\Callback([$this, 'validateQuantityIsLessOrEqualThanOrdered'])],
+                'constraints' => [new Constraints\Callback(callback: [$this, 'validateQuantityIsLessOrEqualThanOrdered'])],
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
@@ -160,20 +160,20 @@ final class ComplaintFormType extends AbstractType
             ->add('bankAccountNumber', TextType::class, [
                 'label' => 'Bank account number',
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter bank account number',
-                        'groups' => [static::VALIDATION_GROUP_TYPE_MONEY_RETURN],
-                    ]),
-                    new Constraints\Length([
-                        'max' => 34,
-                        'maxMessage' => 'Bank account number cannot be longer than {{ limit }} characters',
-                        'groups' => [static::VALIDATION_GROUP_TYPE_MONEY_RETURN],
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => '/^[a-zA-Z0-9\/\-]+$/',
-                        'message' => 'Bank account number can contain only letters, numbers, slashes and dashes',
-                        'groups' => [static::VALIDATION_GROUP_TYPE_MONEY_RETURN],
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter bank account number',
+                        groups: [static::VALIDATION_GROUP_TYPE_MONEY_RETURN],
+                    ),
+                    new Constraints\Length(
+                        max: 34,
+                        maxMessage: 'Bank account number cannot be longer than {{ limit }} characters',
+                        groups: [static::VALIDATION_GROUP_TYPE_MONEY_RETURN],
+                    ),
+                    new Constraints\Regex(
+                        pattern: '/^[a-zA-Z0-9\/\-]+$/',
+                        message: 'Bank account number can contain only letters, numbers, slashes and dashes',
+                        groups: [static::VALIDATION_GROUP_TYPE_MONEY_RETURN],
+                    ),
                 ],
                 'row_attr' => [
                     'data-js-complaint-bank-account-number' => null,
@@ -191,12 +191,12 @@ final class ComplaintFormType extends AbstractType
             ->add('email', TextType::class, [
                 'label' => 'Email',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter email']),
-                    new Email(['message' => 'Please enter valid email']),
-                    new Constraints\Length([
-                        'max' => 255,
-                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter email'),
+                    new Email(message: 'Please enter valid email'),
+                    new Constraints\Length(
+                        max: 255,
+                        maxMessage: 'Email cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ]);
 
@@ -218,84 +218,75 @@ final class ComplaintFormType extends AbstractType
                 'label' => 'First name',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter first name of contact person',
-                    ]),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'First name of contact person cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter first name of contact person'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'First name of contact person cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('deliveryLastName', TextType::class, [
                 'label' => 'Last name',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter last name of contact person',
-                    ]),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Last name of contact person cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter last name of contact person'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Last name of contact person cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('deliveryCompanyName', TextType::class, [
                 'label' => 'Company',
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('deliveryTelephone', TextType::class, [
                 'label' => 'Telephone',
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        max: 30,
+                        maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('deliveryStreet', TextType::class, [
                 'label' => 'Street',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter street',
-                    ]),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter street'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Street name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('deliveryCity', TextType::class, [
                 'label' => 'City',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter city',
-                    ]),
-                    new Constraints\Length(['max' => 100,
-                        'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter city'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'City name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('deliveryPostcode', TextType::class, [
                 'label' => 'Postcode',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter zip code',
-                    ]),
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter zip code'),
+                    new Constraints\Length(
+                        max: 30,
+                        maxMessage: 'Zip code cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('deliveryCountry', ChoiceType::class, [
@@ -305,7 +296,7 @@ final class ComplaintFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please choose country']),
+                    new Constraints\NotBlank(message: 'Please choose country'),
                 ],
             ]);
 

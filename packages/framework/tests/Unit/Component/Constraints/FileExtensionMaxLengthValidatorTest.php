@@ -25,10 +25,10 @@ class FileExtensionMaxLengthValidatorTest extends ConstraintValidatorTestCase
     {
         $file = new File(__DIR__ . '/' . 'non-existent.file', false);
 
-        $constraint = new FileExtensionMaxLength([
-            'limit' => 4,
-            'message' => 'myMessage',
-        ]);
+        $constraint = new FileExtensionMaxLength(
+            limit: 4,
+            message: 'myMessage',
+        );
 
         $this->validator->validate($file, $constraint);
         $this->assertNoViolation();
@@ -38,10 +38,10 @@ class FileExtensionMaxLengthValidatorTest extends ConstraintValidatorTestCase
     {
         $file = new File(__DIR__ . '/' . 'non-existent.file', false);
 
-        $constraint = new FileExtensionMaxLength([
-            'limit' => 3,
-            'message' => 'myMessage',
-        ]);
+        $constraint = new FileExtensionMaxLength(
+            limit: 3,
+            message: 'myMessage',
+        );
 
         $this->validator->validate($file, $constraint);
 

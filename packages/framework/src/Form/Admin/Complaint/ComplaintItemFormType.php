@@ -31,14 +31,15 @@ final class ComplaintItemFormType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter description']),
+                    new Constraints\NotBlank(message: 'Please enter description'),
                 ],
             ])
             ->add('quantity', IntegerType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter quantity']),
+                    new Constraints\NotBlank(message: 'Please enter quantity'),
                     new Constraints\GreaterThan(
-                        ['value' => 0, 'message' => 'Quantity must be greater than {{ compared_value }}'],
+                        value: 0,
+                        message: 'Quantity must be greater than {{ compared_value }}',
                     ),
                 ],
             ]);

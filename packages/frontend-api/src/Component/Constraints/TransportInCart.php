@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
 
 class TransportInCart extends Constraint
@@ -14,16 +16,6 @@ class TransportInCart extends Constraint
     public const WEIGHT_LIMIT_EXCEEDED_ERROR = 'f53edb6a-f227-473c-b89e-5b17bfd8b787';
     public const MISSING_PICKUP_PLACE_IDENTIFIER_ERROR = '7c12df56-2fb7-4782-b8d7-5755cf53fd3a';
     public const INVALID_TRANSPORT_PAYMENT_COMBINATION_ERROR = 'd96b9e7d-f532-4249-8d50-c77e3a67a4cf';
-
-    public string $unavailableTransportMessage = 'Transport with provided UUID is not available';
-
-    public string $unavailablePickupPlaceMessage = 'Pickup place with provided UUID is not available';
-
-    public string $weightLimitExceededMessage = 'Selected transport weight limit has been exceeded';
-
-    public string $missingPickupPlaceIdentifierMessage = 'Selected transport needs to have pickup place identifier set';
-
-    public string $invalidTransportPaymentCombinationMessage = 'The transport is not allowed in combination with already selected payment';
 
     /**
      * @var array<string, string>
@@ -35,6 +27,37 @@ class TransportInCart extends Constraint
         self::MISSING_PICKUP_PLACE_IDENTIFIER_ERROR => 'MISSING_PICKUP_PLACE_IDENTIFIER_ERROR',
         self::INVALID_TRANSPORT_PAYMENT_COMBINATION_ERROR => 'INVALID_TRANSPORT_PAYMENT_COMBINATION_ERROR',
     ];
+
+    /**
+     * @param array<string, mixed>|null $options
+     * @param string $unavailableTransportMessage
+     * @param string $unavailablePickupPlaceMessage
+     * @param string $weightLimitExceededMessage
+     * @param string $missingPickupPlaceIdentifierMessage
+     * @param string $invalidTransportPaymentCombinationMessage
+     * @param array<string>|null $groups
+     * @param mixed $payload
+     */
+    #[HasNamedArguments]
+    public function __construct(
+        ?array $options = null,
+        public string $unavailableTransportMessage = 'Transport with provided UUID is not available',
+        public string $unavailablePickupPlaceMessage = 'Pickup place with provided UUID is not available',
+        public string $weightLimitExceededMessage = 'Selected transport weight limit has been exceeded',
+        public string $missingPickupPlaceIdentifierMessage = 'Selected transport needs to have pickup place identifier set',
+        public string $invalidTransportPaymentCombinationMessage = 'The transport is not allowed in combination with already selected payment',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        if (is_array($options)) {
+            DeprecationHelper::trigger(
+                'Passing an array of options to configure the "%s" constraint is deprecated, use named arguments instead.',
+                static::class,
+            );
+        }
+
+        parent::__construct($options, $groups, $payload);
+    }
 
     /**
      * {@inheritdoc}

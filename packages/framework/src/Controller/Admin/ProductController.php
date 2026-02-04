@@ -189,7 +189,7 @@ class ProductController extends AdminBaseController
 
         // Cannot call $form->handleRequest() because the GET forms are not handled in POST request.
         // See: https://github.com/symfony/symfony/issues/12244
-        $quickSearchForm->submit($request->get($quickSearchForm->getName()));
+        $quickSearchForm->submit($request->query->get($quickSearchForm->getName()));
 
         $massActionForm = $this->createForm(ProductMassActionFormType::class);
         $massActionForm->handleRequest($request);
@@ -273,8 +273,8 @@ class ProductController extends AdminBaseController
     public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchProductFacade->createRuleForm(
-            $request->get('filterName'),
-            $request->get('newIndex'),
+            $request->request->getString('filterName'),
+            $request->request->getString('newIndex'),
         );
 
         return $this->render('@ShopsysAdministration/content/product/advancedSearch/ruleForm.html.twig', [
@@ -359,8 +359,8 @@ class ProductController extends AdminBaseController
     #[RequireRole(SystemRole::ADMIN)]
     public function catnumExistsAction(Request $request): Response
     {
-        $catnum = $request->get('catnum');
-        $currentProductCatnum = $request->get('currentProductCatnum');
+        $catnum = $request->query->has('catnum') ? $request->query->getString('catnum') : null;
+        $currentProductCatnum = $request->query->getString('currentProductCatnum');
 
         if ($catnum === null || $catnum === $currentProductCatnum) {
             return new JsonResponse(false);
@@ -381,7 +381,7 @@ class ProductController extends AdminBaseController
     #[RequireRole(SystemRole::ADMIN)]
     public function productNamesByCatnumsAction(Request $request): JsonResponse
     {
-        $catnums = $request->get('catnums');
+        $catnums = $request->request->all('catnums');
 
         $response = [];
         $products = $this->productFacade->findAllByCatnums($catnums);

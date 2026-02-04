@@ -39,7 +39,7 @@ final class SliderItemFormType extends AbstractType
         $imageConstraints = [];
 
         if ($options['scenario'] === self::SCENARIO_CREATE) {
-            $imageConstraints[] = new Constraints\NotBlank(['message' => 'Please choose image']);
+            $imageConstraints[] = new Constraints\NotBlank(message: 'Please choose image');
         }
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
@@ -70,7 +70,7 @@ final class SliderItemFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name']),
+                    new Constraints\NotBlank(message: 'Please enter name'),
                 ],
                 'label' => 'Name',
                 'help' => t('Name serves only for internal use within the administration'),
@@ -78,7 +78,7 @@ final class SliderItemFormType extends AbstractType
             ->add('link', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter link']),
+                    new Constraints\NotBlank(message: 'Please enter link'),
                 ],
                 'label' => 'Link',
             ])
@@ -89,7 +89,7 @@ final class SliderItemFormType extends AbstractType
             ->add('rgbBackgroundColor', ColorPickerType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter description box background color']),
+                    new Constraints\NotBlank(message: 'Please enter description box background color'),
                 ],
                 'label' => 'Description background color',
             ])
@@ -97,12 +97,12 @@ final class SliderItemFormType extends AbstractType
                 'required' => true,
                 'scale' => 2,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter description box opacity']),
-                    new Constraints\Range([
-                        'min' => 0,
-                        'max' => 1,
-                        'notInRangeMessage' => 'Opacity must be between {{ min }} and {{ max }}',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter description box opacity'),
+                    new Constraints\Range(
+                        min: 0,
+                        max: 1,
+                        notInRangeMessage: 'Opacity must be between {{ min }} and {{ max }}',
+                    ),
                 ],
                 'label' => 'Description opacity',
             ])
@@ -120,13 +120,13 @@ final class SliderItemFormType extends AbstractType
                 'constraints' => $imageConstraints,
                 'image_entity_class' => SliderItem::class,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
-                        'mimeTypesMessage' => 'Image can be only in JPG or PNG format',
-                        'maxSize' => '2M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
+                        mimeTypesMessage: 'Image can be only in JPG or PNG format',
+                        maxSize: '2M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'label' => 'Upload image',
                 'entity' => $options['slider_item'],

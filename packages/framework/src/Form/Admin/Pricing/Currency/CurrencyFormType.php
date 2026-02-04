@@ -46,20 +46,21 @@ final class CurrencyFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name']),
+                    new Constraints\NotBlank(message: 'Please enter name'),
                     new Constraints\Length(
-                        ['max' => 50, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                        max: 50,
+                        maxMessage: 'Name cannot be longer than {{ limit }} characters',
                     ),
                 ],
             ])
             ->add('code', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter currency code']),
-                    new Constraints\Choice([
-                        'choices' => $possibleCurrencyCodes,
-                        'message' => 'Please enter valid 3-digit currency code according to ISO 4217 standard (uppercase)',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter currency code'),
+                    new Constraints\Choice(
+                        choices: $possibleCurrencyCodes,
+                        message: 'Please enter valid 3-digit currency code according to ISO 4217 standard (uppercase)',
+                    ),
                 ],
             ])
             ->add('exchangeRate', NumberType::class, [
@@ -69,14 +70,14 @@ final class CurrencyFormType extends AbstractType
                     'readonly' => $options['is_default_currency'],
                 ],
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter currency exchange rate']),
+                    new Constraints\NotBlank(message: 'Please enter currency exchange rate'),
                     new Constraints\GreaterThan(0),
                 ],
             ])
             ->add('minFractionDigits', NumberType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter currency minimum fraction digits']),
+                    new Constraints\NotBlank(message: 'Please enter currency minimum fraction digits'),
                     new Constraints\GreaterThanOrEqual(0),
                     new Constraints\LessThanOrEqual(CurrencyFormatterFactory::MAXIMUM_FRACTION_DIGITS),
                 ],
@@ -93,7 +94,7 @@ final class CurrencyFormType extends AbstractType
             ->add('roundingPlacesPriceWithoutVat', NumberType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter number of rounding places for price without VAT']),
+                    new Constraints\NotBlank(message: 'Please enter number of rounding places for price without VAT'),
                     new Constraints\GreaterThanOrEqual(0),
                     new Constraints\LessThanOrEqual(Currency::MAX_ROUNDING_PLACES_PRICE_WITHOUT_VAT),
                 ],

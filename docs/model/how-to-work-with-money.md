@@ -119,7 +119,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 $orderItemFormBuilder->add('priceWithVat', MoneyType::class, [
     'scale' => 6,
     'constraints' => [
-        new NotBlank(['message' => 'Please enter unit price with VAT']),
+        new NotBlank(message: 'Please enter unit price with VAT'),
     ],
 ]);
 ```
@@ -157,8 +157,8 @@ $priceTableFormBuilder->add($key, MoneyType::class, [
     'required' => true,
     'invalid_message' => 'Please enter price in correct format (a number with decimal separator)',
     'constraints' => [
-        new NotBlank(['message' => 'Please enter price']),
-        new NotNegativeMoneyAmount(['message' => 'Price must be greater or equal to zero']),
+        new NotBlank(message: 'Please enter price'),
+        new NotNegativeMoneyAmount(message: 'Price must be greater or equal to zero'),
     ],
 ]);
 ```
@@ -192,10 +192,10 @@ $zboziFeedProductFormBuilder->add('cpc', MultidomainType::class, [
     'entry_options' => [
         'currency' => 'CZK',
         'constraints' => [
-            new MoneyRange([
-                'min' => Money::create(1),
-                'max' => Money::create(500),
-            ]),
+            new MoneyRange(
+                min: Money::create(1),
+                max: Money::create(500),
+            ),
         ],
     ],
 ]);

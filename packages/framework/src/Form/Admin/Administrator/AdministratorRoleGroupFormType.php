@@ -27,9 +27,10 @@ final class AdministratorRoleGroupFormType extends AbstractType
     {
         $builder->add('name', TextType::class, [
             'constraints' => [
-                new Constraints\NotBlank(['message' => 'Please enter name']),
+                new Constraints\NotBlank(message: 'Please enter name'),
                 new Constraints\Length(
-                    ['max' => 100, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                    max: 100,
+                    maxMessage: 'Name cannot be longer than {{ limit }} characters',
                 ),
             ],
             'label' => 'Role name',

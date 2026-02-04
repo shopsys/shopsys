@@ -74,7 +74,7 @@ final class ArticleFormType extends AbstractType
                     'choices' => $this->articleFacade->getAvailablePlacementChoices(),
                     'placeholder' => '-- Choose article position --',
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please choose article placement']),
+                        new Constraints\NotBlank(message: 'Please choose article placement'),
                     ],
                     'label' => 'Location',
                 ]);
@@ -93,7 +93,7 @@ final class ArticleFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter article name']),
+                    new Constraints\NotBlank(message: 'Please enter article name'),
                 ],
                 'label' => 'Name',
             ])
@@ -116,10 +116,10 @@ final class ArticleFormType extends AbstractType
             ->add('url', UrlType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter URL',
-                        'groups' => [self::VALIDATION_GROUP_TYPE_LINK],
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter URL',
+                        groups: [self::VALIDATION_GROUP_TYPE_LINK],
+                    ),
                 ],
                 'label' => 'URL',
                 'trim' => true,
@@ -131,10 +131,10 @@ final class ArticleFormType extends AbstractType
                 'required' => true,
                 'allow_products' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter article content',
-                        'groups' => [self::VALIDATION_GROUP_TYPE_SITE],
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter article content',
+                        groups: [self::VALIDATION_GROUP_TYPE_SITE],
+                    ),
                 ],
                 'label' => 'Content',
                 'row_attr' => [
@@ -144,7 +144,7 @@ final class ArticleFormType extends AbstractType
             ->add('createdAt', DatePickerType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter date of creation']),
+                    new Constraints\NotBlank(message: 'Please enter date of creation'),
                 ],
                 'label' => 'Creation date',
                 'row_attr' => [

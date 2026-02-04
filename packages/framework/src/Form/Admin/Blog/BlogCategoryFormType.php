@@ -128,7 +128,7 @@ final class BlogCategoryFormType extends AbstractType
                 'entry_options' => [
                     'required' => false,
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(max: 255, maxMessage: 'Name cannot be longer than {{ limit }} characters'),
                     ],
                 ],
                 'label' => 'Name',
@@ -219,7 +219,7 @@ final class BlogCategoryFormType extends AbstractType
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Heading (H1) cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(max: 255, maxMessage: 'Heading (H1) cannot be longer than {{ limit }} characters'),
                     ],
                 ],
                 'options_by_domain_id' => $seoH1OptionsByDomainId,
@@ -286,13 +286,13 @@ final class BlogCategoryFormType extends AbstractType
             ->add('image', ImageUploadType::class, [
                 'required' => false,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '15M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                        maxSize: '15M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'label' => 'Upload image',
                 'entity' => $options['blogCategory'],

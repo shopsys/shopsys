@@ -29,9 +29,10 @@ final class VatFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter VAT name']),
+                    new Constraints\NotBlank(message: 'Please enter VAT name'),
                     new Constraints\Length(
-                        ['max' => 50, 'maxMessage' => 'VAT name cannot be longer than {{ limit }} characters'],
+                        max: 50,
+                        maxMessage: 'VAT name cannot be longer than {{ limit }} characters',
                     ),
                 ],
             ])
@@ -44,7 +45,7 @@ final class VatFormType extends AbstractType
                 ],
                 'invalid_message' => 'Please enter VAT in correct format.',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
+                    new Constraints\NotBlank(message: 'Please enter VAT rate'),
                 ],
             ]);
     }

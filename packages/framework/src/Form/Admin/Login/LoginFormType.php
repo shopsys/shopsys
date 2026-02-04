@@ -26,12 +26,12 @@ final class LoginFormType extends AbstractType
         $builder
             ->add('username', TextType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter login']),
+                    new Constraints\NotBlank(message: 'Please enter login'),
                 ],
             ])
             ->add('password', PasswordType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter password']),
+                    new Constraints\NotBlank(message: 'Please enter password'),
                 ],
             ])
             ->add('login', SubmitType::class);

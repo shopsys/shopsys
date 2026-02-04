@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
+use Override;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
 
 class FileUpload extends Constraint
@@ -21,13 +24,43 @@ class FileUpload extends Constraint
         self::MIMETYPE_ERROR => 'MIMETYPE_ERROR',
     ];
 
-    public array|string $mimeTypes = 'image/*';
+    /**
+     * @param array<string, mixed>|null $options
+     * @param array<string>|string $mimeTypes
+     * @param int|null $maxSize
+     * @param string $mimeTypesMessage
+     * @param string $maxSizeMessage
+     * @param string $uploadErrorMessage
+     * @param array<string>|null $groups
+     * @param mixed $payload
+     */
+    #[HasNamedArguments]
+    public function __construct(
+        ?array $options = null,
+        public array|string $mimeTypes = 'image/*',
+        public ?int $maxSize = null,
+        public string $mimeTypesMessage = 'Type of file {{ fileName }} is unsupported.',
+        public string $maxSizeMessage = 'The file {{ fileName }} is too big.',
+        public string $uploadErrorMessage = 'Error occurred while uploading file.',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        if (is_array($options)) {
+            DeprecationHelper::trigger(
+                'Passing an array of options to configure the "%s" constraint is deprecated, use named arguments instead.',
+                static::class,
+            );
+        }
 
-    public int|null $maxSize = null;
+        parent::__construct($options, $groups, $payload);
+    }
 
-    public string $mimeTypesMessage = 'Type of file {{ fileName }} is unsupported.';
-
-    public string $maxSizeMessage = 'The file {{ fileName }} is too big.';
-
-    public string $uploadErrorMessage = 'Error occurred while uploading file.';
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getTargets(): string|array
+    {
+        return self::PROPERTY_CONSTRAINT;
+    }
 }

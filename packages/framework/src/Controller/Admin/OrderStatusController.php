@@ -57,7 +57,7 @@ class OrderStatusController extends AdminBaseController
     #[CsrfProtection]
     public function deleteAction(Request $request, int $id): Response
     {
-        $newId = $request->get('newId');
+        $newId = $request->query->has('newId') ? $request->query->getInt('newId') : null;
 
         try {
             $orderStatus = $this->orderStatusFacade->getById($id);

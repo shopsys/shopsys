@@ -31,7 +31,7 @@ class SearchAdminController extends AdminBaseController
     #[RequireRole(SystemRole::ADMIN)]
     public function searchAction(Request $request): Response
     {
-        $searchString = $request->get('search');
+        $searchString = $request->query->getString('search');
         $menu = $this->sideMenuBuilder->createMenu();
 
         $results = [];

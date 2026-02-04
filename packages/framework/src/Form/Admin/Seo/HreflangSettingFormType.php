@@ -59,11 +59,11 @@ final class HreflangSettingFormType extends AbstractType
                     'multiple' => true,
                     'expanded' => true,
                     'constraints' => [
-                        new Callback(['callback' => [$this, 'validateLanguageUniquenessInCollectionItems']]),
-                        new Count([
-                            'min' => 2,
-                            'minMessage' => 'At least two domains must be selected',
-                        ]),
+                        new Callback(callback: [$this, 'validateLanguageUniquenessInCollectionItems']),
+                        new Count(
+                            min: 2,
+                            minMessage: 'At least two domains must be selected',
+                        ),
                     ],
                 ],
                 'required' => false,
@@ -71,7 +71,7 @@ final class HreflangSettingFormType extends AbstractType
                 'error_bubbling' => false,
                 'allow_delete' => true,
                 'constraints' => [
-                    new Callback(['callback' => [$this, 'validateDomainUniqueness']]),
+                    new Callback(callback: [$this, 'validateDomainUniqueness']),
                 ],
             ])
             ->add('actionBar', ActionBarType::class, [

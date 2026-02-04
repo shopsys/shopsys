@@ -59,7 +59,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
 
         $requestDataSet->executeCallsDuringTestExecution(static::$kernel->getContainer());
 
-        $request->attributes->add($requestDataSet->getParameters());
+        $request->query->add($requestDataSet->getParameters());
 
         $response = $this->handleRequest($request);
 

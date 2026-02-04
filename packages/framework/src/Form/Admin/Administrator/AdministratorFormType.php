@@ -73,24 +73,26 @@ final class AdministratorFormType extends AbstractType
         $builderSettingsGroup
             ->add('username', TextType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter username']),
+                    new Constraints\NotBlank(message: 'Please enter username'),
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'Username cannot be longer than {{ limit }} characters'],
+                        max: 100,
+                        maxMessage: 'Username cannot be longer than {{ limit }} characters',
                     ),
-                    new UniqueEntityField([
-                        'entityInstance' => $adminToEdit,
-                        'message' => 'Administrator with user name "{{ value }}" is already registered',
-                        'fieldName' => 'username',
-                        'entityName' => Administrator::class,
-                    ]),
+                    new UniqueEntityField(
+                        entityInstance: $adminToEdit,
+                        message: 'Administrator with user name "{{ value }}" is already registered',
+                        fieldName: 'username',
+                        entityName: Administrator::class,
+                    ),
                 ],
                 'label' => 'Login name',
             ])
             ->add('realName', TextType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter full name']),
+                    new Constraints\NotBlank(message: 'Please enter full name'),
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'Full name cannot be longer than {{ limit }} characters'],
+                        max: 100,
+                        maxMessage: 'Full name cannot be longer than {{ limit }} characters',
                     ),
                 ],
                 'label' => 'Full name',
@@ -98,17 +100,18 @@ final class AdministratorFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Email(['message' => 'Please enter valid email']),
-                    new Constraints\NotBlank(['message' => 'Please enter email']),
+                    new Email(message: 'Please enter valid email'),
+                    new Constraints\NotBlank(message: 'Please enter email'),
                     new Constraints\Length(
-                        ['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters'],
+                        max: 255,
+                        maxMessage: 'Email cannot be longer than {{ limit }} characters',
                     ),
-                    new UniqueEntityField([
-                        'entityInstance' => $adminToEdit,
-                        'message' => 'Administrator with email "{{ value }}" is already registered',
-                        'fieldName' => 'email',
-                        'entityName' => Administrator::class,
-                    ]),
+                    new UniqueEntityField(
+                        entityInstance: $adminToEdit,
+                        message: 'Administrator with email "{{ value }}" is already registered',
+                        fieldName: 'email',
+                        entityName: Administrator::class,
+                    ),
                 ],
                 'label' => 'Email',
             ]);

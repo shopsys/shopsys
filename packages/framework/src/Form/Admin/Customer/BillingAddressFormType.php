@@ -65,41 +65,41 @@ final class BillingAddressFormType extends AbstractType
                     ->add('companyName', TextType::class, [
                         'required' => true,
                         'constraints' => [
-                            new Constraints\NotBlank([
-                                'message' => 'Please enter company name',
-                                'groups' => [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                            ]),
-                            new Constraints\Length([
-                                'max' => 100,
-                                'maxMessage' => 'Company name cannot be longer than {{ limit }} characters',
-                                'groups' => [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                            ]),
+                            new Constraints\NotBlank(
+                                message: 'Please enter company name',
+                                groups: [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                            ),
+                            new Constraints\Length(
+                                max: 100,
+                                maxMessage: 'Company name cannot be longer than {{ limit }} characters',
+                                groups: [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                            ),
                         ],
                         'label' => 'Company',
                     ])
                     ->add('companyNumber', TextType::class, [
                         'required' => true,
                         'constraints' => [
-                            new Constraints\NotBlank([
-                                'message' => 'Please enter identification number',
-                                'groups' => [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                            ]),
-                            new Constraints\Length([
-                                'max' => 50,
-                                'maxMessage' => 'Identification number cannot be longer than {{ limit }} characters',
-                                'groups' => [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                            ]),
+                            new Constraints\NotBlank(
+                                message: 'Please enter identification number',
+                                groups: [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                            ),
+                            new Constraints\Length(
+                                max: 50,
+                                maxMessage: 'Identification number cannot be longer than {{ limit }} characters',
+                                groups: [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                            ),
                         ],
                         'label' => 'Company number',
                     ])
                     ->add('companyTaxNumber', TextType::class, [
                         'required' => false,
                         'constraints' => [
-                            new Constraints\Length([
-                                'max' => 50,
-                                'maxMessage' => 'Tax number cannot be longer than {{ limit }} characters',
-                                'groups' => [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                            ]),
+                            new Constraints\Length(
+                                max: 50,
+                                maxMessage: 'Tax number cannot be longer than {{ limit }} characters',
+                                groups: [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                            ),
                         ],
                         'label' => 'Tax number',
                     ]),
@@ -113,39 +113,39 @@ final class BillingAddressFormType extends AbstractType
             ->add('street', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter street',
-                    ]),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter street',
+                    ),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Street name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Street',
             ])
             ->add('city', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter city',
-                    ]),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter city',
+                    ),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'City name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'City',
             ])
             ->add('postcode', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter zip code',
-                    ]),
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter zip code',
+                    ),
+                    new Constraints\Length(
+                        max: 30,
+                        maxMessage: 'Zip code cannot be longer than {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Postcode',
             ])
@@ -155,9 +155,9 @@ final class BillingAddressFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please choose country',
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please choose country',
+                    ),
                 ],
                 'label' => 'Country',
             ]);

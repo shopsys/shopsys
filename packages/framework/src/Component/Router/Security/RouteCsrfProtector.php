@@ -50,8 +50,9 @@ class RouteCsrfProtector implements EventSubscriberInterface
     {
         if ($this->isProtected($event)) {
             $request = $event->getRequest();
-            $csrfToken = $request->get(self::CSRF_TOKEN_REQUEST_PARAMETER);
-            $routeName = $request->get('_route');
+            $csrfToken = $request->query->get(self::CSRF_TOKEN_REQUEST_PARAMETER)
+                ?? $request->request->get(self::CSRF_TOKEN_REQUEST_PARAMETER);
+            $routeName = $request->attributes->get('_route');
 
             if ($csrfToken === null || !$this->isCsrfTokenValid($routeName, $csrfToken)) {
                 throw new BadRequestHttpException('Csrf token is invalid');

@@ -60,7 +60,6 @@
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "gopay/payments-sdk-php": "^1.7",
         "gedmo/doctrine-extensions": "^3.22",
-        "gordalina/cachetool": "^9.2",
         "guzzlehttp/guzzle": "^7.5",
         "helios-ag/fm-elfinder-bundle": "^12.2",
         "heureka/overeno-zakazniky": "^4.0.1",

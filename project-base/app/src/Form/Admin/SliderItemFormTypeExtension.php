@@ -49,13 +49,13 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
                 'image_entity_class' => SliderItem::class,
                 'image_type' => SliderItemFacade::IMAGE_TYPE_WEB,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
-                        'mimeTypesMessage' => 'Image can be only in JPG or PNG format',
-                        'maxSize' => '15M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        maxSize: '15M',
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                        mimeTypesMessage: 'Image can be only in JPG or PNG format',
+                    ),
                 ],
                 'label' => t('Upload image'),
                 'entity' => $options['slider_item'],
@@ -71,13 +71,13 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
                 'image_entity_class' => SliderItem::class,
                 'image_type' => SliderItemFacade::IMAGE_TYPE_MOBILE,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
-                        'mimeTypesMessage' => 'Image can be only in JPG or PNG format',
-                        'maxSize' => '15M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        maxSize: '15M',
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                        mimeTypesMessage: 'Image can be only in JPG or PNG format',
+                    ),
                 ],
                 'label' => t('Upload image for mobile devices'),
                 'entity' => $options['slider_item'],
@@ -96,7 +96,7 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
             'required' => true,
             'label' => t('GTM ID'),
             'constraints' => [
-                new Constraints\NotBlank(['message' => 'Please enter GTM ID']),
+                new Constraints\NotBlank(message: 'Please enter GTM ID'),
             ],
             'attr' => ['placeholder' => t('e.g. Sale-04-20-2020')],
         ])->add('gtmCreative', TextType::class, [

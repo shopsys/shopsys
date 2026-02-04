@@ -208,12 +208,12 @@ final class SalesmanFormType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name']),
+                    new Constraints\NotBlank(message: 'Please enter name'),
                 ],
             ])
             ->add('registeredAt', DatePickerType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter date of registration']),
+                    new Constraints\NotBlank(message: 'Please enter date of registration'),
                 ],
             ]);
     }

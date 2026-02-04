@@ -26,10 +26,10 @@ final class ProductStockFormType extends AbstractType
                 'placeholder' => '0',
             ],
             'constraints' => [
-                new Constraints\Regex([
-                    'pattern' => '/^-?\d+$/',
-                    'message' => 'Quantity must be an integer',
-                ]),
+                new Constraints\Regex(
+                    pattern: '/^-?\d+$/',
+                    message: 'Quantity must be an integer',
+                ),
             ],
         ]);
     }

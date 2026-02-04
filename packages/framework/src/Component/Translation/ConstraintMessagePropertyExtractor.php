@@ -9,13 +9,17 @@ use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
 use Override;
+use PhpParser\Modifiers;
 use PhpParser\Node;
+use PhpParser\Node\Param;
 use PhpParser\Node\PropertyItem;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
 use PhpParser\NodeVisitor\NameResolver;
+use Shopsys\FrameworkBundle\Component\Translation\Exception\StringValueUnextractableException;
 use SplFileInfo;
 use Symfony\Component\Validator\Constraint;
 use Twig\Node\Node as TwigNode;
@@ -23,14 +27,21 @@ use Twig\Node\Node as TwigNode;
 /**
  * Extracts messages from public properties (with names ending "message") of custom constraints for translation.
  *
- * Example:
+ * Supports both regular properties and PHP 8 constructor-promoted properties:
+ *
+ *     // Regular properties:
  *     class MyConstraint extends Constraint
  *     {
  *         public $message = 'This value will be extracted.';
- *
  *         public $otherMessage = 'This value will also be extracted.';
+ *     }
  *
- *         public $differentProperty = 'This value will not be extracted (not a message).';
+ *     // Constructor-promoted properties:
+ *     class MyConstraint extends Constraint
+ *     {
+ *         public function __construct(
+ *             public string $message = 'This will also be extracted.',
+ *         ) {}
  *     }
  */
 class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVisitor
@@ -82,6 +93,10 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
             $this->extractMessagesFromProperty($node);
         }
 
+        if ($node instanceof ClassMethod && $node->name->name === '__construct' && $this->isInsideConstraintClass) {
+            $this->extractMessagesFromPromotedProperties($node);
+        }
+
         return null;
     }
 
@@ -114,7 +129,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     protected function extractMessagesFromProperty(Property $node): void
     {
         foreach ($node->props as $propertyProperty) {
-            if ($this->isMessagePropertyProperty($propertyProperty)) {
+            if ($this->isMessageProperty($propertyProperty)) {
                 $messageId = $this->phpParserNodeHelper->getConcatenatedStringValue($propertyProperty->default, $this->file);
 
                 $message = new Message($messageId, $this->getTranslationDomain());
@@ -129,9 +144,48 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
      * @param \PhpParser\Node\PropertyItem $node
      * @return bool
      */
-    protected function isMessagePropertyProperty(PropertyItem $node): bool
+    protected function isMessageProperty(PropertyItem $node): bool
     {
-        return strtolower(substr($node->name->toString(), -7)) === 'message';
+        return $this->isMessage($node->name->toString());
+    }
+
+    /**
+     * @param \PhpParser\Node\Stmt\ClassMethod $node
+     */
+    protected function extractMessagesFromPromotedProperties(ClassMethod $node): void
+    {
+        foreach ($node->params as $param) {
+            if (!$this->isPublicPromotedMessageParam($param)) {
+                continue;
+            }
+
+            if ($param->default === null) {
+                continue;
+            }
+
+            try {
+                $messageId = $this->phpParserNodeHelper->getConcatenatedStringValue($param->default, $this->file);
+            } catch (StringValueUnextractableException) {
+                continue;
+            }
+
+            $message = new Message($messageId, $this->getTranslationDomain());
+            $message->addSource(new FileSource($this->file->getFilename(), $param->getLine()));
+
+            $this->catalogue->add($message);
+        }
+    }
+
+    /**
+     * @param \PhpParser\Node\Param $param
+     * @return bool
+     */
+    protected function isPublicPromotedMessageParam(Param $param): bool
+    {
+        $isPublic = ($param->flags & Modifiers::PUBLIC) !== 0;
+        $isMessageParam = $this->isMessage($param->var->name);
+
+        return $isPublic && $isMessageParam;
     }
 
     /**
@@ -168,5 +222,14 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast): null
     {
         return null;
+    }
+
+    /**
+     * @param string $propertyName
+     * @return bool
+     */
+    protected function isMessage(string $propertyName): bool
+    {
+        return strtolower(substr($propertyName, -7)) === 'message';
     }
 }

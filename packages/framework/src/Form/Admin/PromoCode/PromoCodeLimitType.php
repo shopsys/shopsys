@@ -40,10 +40,10 @@ final class PromoCodeLimitType extends AbstractType
     {
         $builder->add('fromPrice', NumberType::class, [
             'constraints' => [
-                new Constraints\NotBlank([
-                    'message' => 'Please enter limit from',
-                    'groups' => [PromoCodeFormType::VALIDATION_GROUP_TYPE_PERCENT, PromoCodeFormType::VALIDATION_GROUP_TYPE_NOMINAL],
-                ]),
+                new Constraints\NotBlank(
+                    message: 'Please enter limit from',
+                    groups: [PromoCodeFormType::VALIDATION_GROUP_TYPE_PERCENT, PromoCodeFormType::VALIDATION_GROUP_TYPE_NOMINAL],
+                ),
             ],
             'scale' => 6,
         ]);
@@ -54,18 +54,18 @@ final class PromoCodeLimitType extends AbstractType
             $constraint->groups = [PromoCodeFormType::VALIDATION_GROUP_TYPE_PERCENT];
         }
 
-        $options['constraints'][] = new Constraints\NotBlank([
-            'groups' => [PromoCodeFormType::VALIDATION_GROUP_TYPE_NOMINAL],
-        ]);
-        $options['constraints'][] = new Constraints\GreaterThanOrEqual([
-            'groups' => [PromoCodeFormType::VALIDATION_GROUP_TYPE_NOMINAL],
-            'value' => 1,
-        ]);
-        $options['constraints'][] = new Constraints\Regex([
-            'groups' => PromoCodeFormType::VALIDATION_GROUP_TYPE_PERCENT,
-            'pattern' => '/^\d+$/',
-            'message' => 'Please enter a whole number.',
-        ]);
+        $options['constraints'][] = new Constraints\NotBlank(
+            groups: [PromoCodeFormType::VALIDATION_GROUP_TYPE_NOMINAL],
+        );
+        $options['constraints'][] = new Constraints\GreaterThanOrEqual(
+            value: 1,
+            groups: [PromoCodeFormType::VALIDATION_GROUP_TYPE_NOMINAL],
+        );
+        $options['constraints'][] = new Constraints\Regex(
+            pattern: '/^\d+$/',
+            message: 'Please enter a whole number.',
+            groups: [PromoCodeFormType::VALIDATION_GROUP_TYPE_PERCENT],
+        );
         $options['scale'] = 6;
         $builder->add(
             'discount',

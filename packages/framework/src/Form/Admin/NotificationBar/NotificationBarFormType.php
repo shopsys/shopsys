@@ -54,13 +54,13 @@ final class NotificationBarFormType extends AbstractType
                 'required' => false,
                 'label' => 'Content',
                 'constraints' => [
-                    new NotBlank(['message' => 'Please enter notification bar content']),
+                    new NotBlank(message: 'Please enter notification bar content'),
                 ],
             ])
             ->add('rgbColor', ColorPickerType::class, [
                 'label' => 'Background color',
                 'constraints' => [
-                    new NotBlank(['message' => 'Please enter notification bar background color']),
+                    new NotBlank(message: 'Please enter notification bar background color'),
                 ],
             ])
             ->add('validityFrom', DateTimeType::class, [
@@ -85,13 +85,13 @@ final class NotificationBarFormType extends AbstractType
                 'image_entity_class' => NotificationBar::class,
                 'image_type' => null,
                 'file_constraints' => [
-                    new Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '15M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Image(
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                        maxSize: '15M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'entity' => $options['notification_bar'],
                 'label' => 'Upload new image',
@@ -120,7 +120,7 @@ final class NotificationBarFormType extends AbstractType
                 'data_class' => NotificationBarData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                    new Callback([$this, 'checkDateValidity']),
+                    new Callback(callback: [$this, 'checkDateValidity']),
                 ],
             ]);
     }

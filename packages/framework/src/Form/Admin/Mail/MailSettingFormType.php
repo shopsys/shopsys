@@ -32,14 +32,14 @@ final class MailSettingFormType extends AbstractType
         $builderSettingsGroup
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter email']),
-                    new Email(['message' => 'Please enter valid email']),
+                    new Constraints\NotBlank(message: 'Please enter email'),
+                    new Email(message: 'Please enter valid email'),
                 ],
                 'label' => 'Main administrator email',
             ])
             ->add('name', TextType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter full name']),
+                    new Constraints\NotBlank(message: 'Please enter full name'),
                 ],
                 'label' => 'Email name',
             ]);

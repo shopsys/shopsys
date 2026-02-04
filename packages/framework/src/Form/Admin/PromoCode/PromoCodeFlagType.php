@@ -38,9 +38,7 @@ final class PromoCodeFlagType extends AbstractType
             'choice_label' => 'name',
             'choice_value' => 'id',
             'constraints' => [
-                new NotBlank([
-                    'message' => 'Please choose flag',
-                ]),
+                new NotBlank(message: 'Please choose flag'),
             ],
         ]);
 
@@ -53,9 +51,7 @@ final class PromoCodeFlagType extends AbstractType
             'expanded' => true,
             'multiple' => false,
             'constraints' => [
-                new NotBlank([
-                    'message' => 'Please choose type of limitation',
-                ]),
+                new NotBlank(message: 'Please choose type of limitation'),
             ],
         ]);
 

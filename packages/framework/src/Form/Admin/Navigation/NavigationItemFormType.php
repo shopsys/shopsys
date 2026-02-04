@@ -60,14 +60,14 @@ final class NavigationItemFormType extends AbstractType
                 'label' => 'Name',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter navigation item name']),
+                    new Constraints\NotBlank(message: 'Please enter navigation item name'),
                 ],
             ])
             ->add('url', TextType::class, [
                 'label' => 'Link URL',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter link URL']),
+                    new Constraints\NotBlank(message: 'Please enter link URL'),
                 ],
             ]);
         $this->addColumnFields($builder);

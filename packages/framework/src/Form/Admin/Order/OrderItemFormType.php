@@ -43,45 +43,45 @@ final class OrderItemFormType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name']),
+                    new Constraints\NotBlank(message: 'Please enter name'),
                 ],
             ])
             ->add('catnum', TextType::class, [
                 'constraints' => [
-                    new Constraints\Length(['max' => '255']),
+                    new Constraints\Length(max: 255),
                 ],
             ])
             ->add('unitPriceWithVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter unit price with VAT']),
+                    new Constraints\NotBlank(message: 'Please enter unit price with VAT'),
                 ],
             ])
             ->add('unitPriceWithoutVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter unit price without VAT',
-                        'groups' => [self::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter unit price without VAT',
+                        groups: [self::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
+                    ),
                 ],
             ])
             ->add('totalPriceWithVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter total price with VAT',
-                        'groups' => [self::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter total price with VAT',
+                        groups: [self::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
+                    ),
                 ],
             ])
             ->add('totalPriceWithoutVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter total price without VAT',
-                        'groups' => [self::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
-                    ]),
+                    new Constraints\NotBlank(
+                        message: 'Please enter total price without VAT',
+                        groups: [self::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
+                    ),
                 ],
             ])
             ->add(
@@ -94,20 +94,21 @@ final class OrderItemFormType extends AbstractType
             ->add('vatPercent', NumberType::class, [
                 'input' => 'string',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
+                    new Constraints\NotBlank(message: 'Please enter VAT rate'),
                 ],
             ])
             ->add('quantity', IntegerType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter quantity']),
+                    new Constraints\NotBlank(message: 'Please enter quantity'),
                     new Constraints\GreaterThan(
-                        ['value' => 0, 'message' => 'Quantity must be greater than {{ compared_value }}'],
+                        value: 0,
+                        message: 'Quantity must be greater than {{ compared_value }}',
                     ),
                 ],
             ])
             ->add('unitName', TextType::class, [
                 'constraints' => [
-                    new Constraints\Length(['max' => 10]),
+                    new Constraints\Length(max: 10),
                 ],
             ]);
     }

@@ -147,8 +147,8 @@ class ProductPickerController extends AdminBaseController
     #[RequireRole(SystemRole::ADMIN)]
     public function basicProductPriceAction(Request $request): Response
     {
-        $productId = (int)$request->get('productId');
-        $domainId = (int)$request->get('domainId');
+        $productId = $request->request->getInt('productId');
+        $domainId = $request->request->getInt('domainId');
 
         $basicPrice = $this->productFacade->getProductPriceForDefaultPricingGroup(
             $this->productFacade->getById($productId),
@@ -172,7 +172,7 @@ class ProductPickerController extends AdminBaseController
     #[RequireRole(SystemRole::ADMIN)]
     public function productImageAction(Request $request): Response
     {
-        $productId = (int)$request->get('productId');
+        $productId = $request->request->getInt('productId');
 
         $product = $this->productFacade->getById($productId);
 

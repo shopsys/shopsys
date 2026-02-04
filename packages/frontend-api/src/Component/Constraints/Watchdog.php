@@ -6,6 +6,8 @@ namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
 use Attribute;
 use Override;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
 
 #[Attribute(Attribute::TARGET_PROPERTY | Attribute::IS_REPEATABLE)]
@@ -15,12 +17,6 @@ class Watchdog extends Constraint
     public const MAIN_VARIANT_ERROR = 'a59f8293-2803-4571-b307-2b4ce72d39b4';
     public const PRODUCT_NOT_FOUND_ERROR = '8bbd03a5-48be-40fa-8c0f-5e3b1202adfd';
 
-    public string $notAvailableInquiry = 'Watchdog is not available for product inquiry.';
-
-    public string $notAvailableMainVariant = 'Watchdog is not available for product main variant.';
-
-    public string $productNotFound = 'Product not found.';
-
     /**
      * @var array<string, string>
      */
@@ -29,6 +25,33 @@ class Watchdog extends Constraint
         self::MAIN_VARIANT_ERROR => 'MAIN_VARIANT_ERROR',
         self::PRODUCT_NOT_FOUND_ERROR => 'PRODUCT_NOT_FOUND_ERROR',
     ];
+
+    /**
+     * @param array<string, mixed>|null $options
+     * @param string $notAvailableInquiry
+     * @param string $notAvailableMainVariant
+     * @param string $productNotFound
+     * @param array<string>|null $groups
+     * @param mixed $payload
+     */
+    #[HasNamedArguments]
+    public function __construct(
+        ?array $options = null,
+        public string $notAvailableInquiry = 'Watchdog is not available for product inquiry.',
+        public string $notAvailableMainVariant = 'Watchdog is not available for product main variant.',
+        public string $productNotFound = 'Product not found.',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        if (is_array($options)) {
+            DeprecationHelper::trigger(
+                'Passing an array of options to configure the "%s" constraint is deprecated, use named arguments instead.',
+                static::class,
+            );
+        }
+
+        parent::__construct($options, $groups, $payload);
+    }
 
     /**
      * {@inheritdoc}

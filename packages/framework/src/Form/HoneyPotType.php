@@ -30,7 +30,7 @@ final class HoneyPotType extends AbstractType
         $resolver->setDefaults([
             'mapped' => false,
             'required' => false,
-            'constraints' => new Constraints\Blank(['message' => 'This field must be empty']),
+            'constraints' => new Constraints\Blank(message: 'This field must be empty'),
         ]);
     }
 }

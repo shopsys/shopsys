@@ -61,9 +61,9 @@ final class PaymentTransactionType extends AbstractType
                 'novalidate' => 'novalidate',
             ],
             'constraints' => [
-                new Constraints\Callback([
-                    'callback' => [$this, 'maximalRefundAmountValidation'],
-                ]),
+                new Constraints\Callback(
+                    callback: [$this, 'maximalRefundAmountValidation'],
+                ),
             ],
         ]);
     }

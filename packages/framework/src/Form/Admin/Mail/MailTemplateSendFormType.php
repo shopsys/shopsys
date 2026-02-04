@@ -44,8 +44,8 @@ final class MailTemplateSendFormType extends AbstractType
                 'required' => true,
                 'data' => $currentAdministrator->getEmail(),
                 'constraints' => [
-                    new NotBlank(['message' => 'Please enter email address']),
-                    new Email(['message' => 'Please enter valid email']),
+                    new NotBlank(message: 'Please enter email address'),
+                    new Email(message: 'Please enter valid email'),
                 ],
             ]);
 
@@ -54,7 +54,7 @@ final class MailTemplateSendFormType extends AbstractType
                 ->add('entityIdentifier', IntegerType::class, [
                     'label' => $labelForEntityIdentifier,
                     'required' => true,
-                    'constraints' => new NotBlank(['message' => 'Please enter an ID']),
+                    'constraints' => new NotBlank(message: 'Please enter an ID'),
                 ]);
         }
 

@@ -24,9 +24,10 @@ final class ComplaintStatusFormType extends AbstractType
             ->add('name', LocalizedType::class, [
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter complaint status name in all languages']),
+                        new Constraints\NotBlank(message: 'Please enter complaint status name in all languages'),
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Status name cannot be longer than {{ limit }} characters'],
+                            max: 255,
+                            maxMessage: 'Status name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],

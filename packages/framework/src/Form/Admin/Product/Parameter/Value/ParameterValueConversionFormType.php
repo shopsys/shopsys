@@ -38,16 +38,17 @@ final class ParameterValueConversionFormType extends AbstractType
     {
         $constraints = [
             new Constraints\Length(
-                ['max' => 255, 'maxMessage' => 'Parameter value cannot be longer than {{ limit }} characters'],
+                max: 255,
+                maxMessage: 'Parameter value cannot be longer than {{ limit }} characters',
             ),
-            new Constraints\NotBlank(['message' => 'Please enter parameter value']),
+            new Constraints\NotBlank(message: 'Please enter parameter value'),
         ];
 
         if (isset($options['type'])) {
-            $constraints[] = new Constraints\Type([
-                'type' => $options['type'],
-                'message' => 'Parameter value must be of type {{ type }}',
-            ]);
+            $constraints[] = new Constraints\Type(
+                type: $options['type'],
+                message: 'Parameter value must be of type {{ type }}',
+            );
         }
 
         $builder

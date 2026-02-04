@@ -504,7 +504,7 @@ class AdministratorController extends AdminBaseController
                 'row_attr' => ['class' => 'flex-column'],
                 'label_attr' => ['class' => 'col-xl-12'],
                 'constraints' => [
-                    new NotBlank(['message' => 'Please enter code']),
+                    new NotBlank(message: 'Please enter code'),
                     new Callback($twoFactorCodeValidationCallback),
                 ],
             ],

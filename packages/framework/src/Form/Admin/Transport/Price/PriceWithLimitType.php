@@ -38,7 +38,7 @@ final class PriceWithLimitType extends AbstractType
             ->add('price', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
-                    new NotBlank(['message' => 'Please enter price']),
+                    new NotBlank(message: 'Please enter price'),
                 ],
                 'label' => $this->inputPriceLabelExtension->getInputPriceLabel(),
             ])

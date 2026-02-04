@@ -106,9 +106,10 @@ final class StoreFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name']),
+                    new Constraints\NotBlank(message: 'Please enter name'),
                     new Constraints\Length(
-                        ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
+                        max: 255,
+                        maxMessage: 'Name cannot be longer than {{ limit }} characters',
                     ),
                 ],
                 'label' => 'Name',
@@ -122,9 +123,10 @@ final class StoreFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length(
-                        ['max' => 255, 'maxMessage' => 'External ID cannot be longer than {{ limit }} characters'],
+                        max: 255,
+                        maxMessage: 'External ID cannot be longer than {{ limit }} characters',
                     ),
-                    new Constraints\Callback([$this, 'sameStoreExternalIdValidation']),
+                    new Constraints\Callback(callback: [$this, 'sameStoreExternalIdValidation']),
                 ],
                 'label' => 'External ID',
             ])
@@ -217,33 +219,33 @@ final class StoreFormType extends AbstractType
                 'label' => 'Street',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter street']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter street'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'Street name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('city', TextType::class, [
                 'label' => 'City',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter city']),
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter city'),
+                    new Constraints\Length(
+                        max: 100,
+                        maxMessage: 'City name cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('postcode', TextType::class, [
                 'label' => 'Postcode',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter zip code']),
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
-                    ]),
+                    new Constraints\NotBlank(message: 'Please enter zip code'),
+                    new Constraints\Length(
+                        max: 30,
+                        maxMessage: 'Zip code cannot be longer than {{ limit }} characters',
+                    ),
                 ],
             ])
             ->add('country', ChoiceType::class, [
@@ -253,7 +255,7 @@ final class StoreFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please choose country']),
+                    new Constraints\NotBlank(message: 'Please choose country'),
                 ],
             ]);
 
@@ -272,7 +274,7 @@ final class StoreFormType extends AbstractType
             ->setDefaults([
                 'data_class' => StoreData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'constraints' => new Constraints\Callback([$this, 'validateOpeningHours']),
+                'constraints' => new Constraints\Callback(callback: [$this, 'validateOpeningHours']),
             ]);
     }
 
@@ -310,13 +312,13 @@ final class StoreFormType extends AbstractType
             'required' => false,
             'image_entity_class' => Store::class,
             'file_constraints' => [
-                new Constraints\Image([
-                    'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                    'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                    'maxSize' => '2M',
-                    'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                new Constraints\Image(
+                    maxSize: '2M',
+                    mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                    maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                         . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                ]),
+                    mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                ),
             ],
             'label' => 'Upload image',
             'entity' => $options['store'],

@@ -49,7 +49,7 @@ final class ProductParameterValueFormType extends AbstractType
                 },
                 'choice_value' => 'id',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please choose parameter']),
+                    new Constraints\NotBlank(message: 'Please choose parameter'),
                 ],
                 'group_by' => function (Parameter $parameter) {
                     return $this->getGroupName($parameter);
@@ -58,18 +58,19 @@ final class ProductParameterValueFormType extends AbstractType
             ->add('valueTextsByLocale', LocalizedType::class, [
                 'required' => true,
                 'main_constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter parameter value']),
+                    new Constraints\NotBlank(message: 'Please enter parameter value'),
                 ],
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Parameter value cannot be longer than {{ limit }} characters'],
+                            max: 255,
+                            maxMessage: 'Parameter value cannot be longer than {{ limit }} characters',
                         ),
-                        new Constraints\Type([
-                            'type' => 'numeric',
-                            'message' => 'Parameter value must be numeric',
-                            'groups' => [static::VALIDATION_GROUP_TYPE_SLIDER],
-                        ]),
+                        new Constraints\Type(
+                            type: 'numeric',
+                            message: 'Parameter value must be numeric',
+                            groups: [static::VALIDATION_GROUP_TYPE_SLIDER],
+                        ),
                     ],
                 ],
             ]);

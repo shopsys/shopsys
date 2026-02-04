@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
 
 class TransportInOrder extends Constraint
@@ -15,18 +17,6 @@ class TransportInOrder extends Constraint
     public const PICKUP_PLACE_UNAVAILABLE_ERROR = 'd86e0f9c-747d-4438-b3e2-991f4e963f41';
     public const WEIGHT_LIMIT_EXCEEDED_ERROR = 'b1eb2af1-2e7a-4463-aa5e-fb2bf82a30ef';
     public const MISSING_PICKUP_PLACE_IDENTIFIER_ERROR = '72cfdb60-9779-4903-a845-57e14b730795';
-
-    public string $transportNotSetMessage = 'Transport must be set in cart before sending the order';
-
-    public string $transportUnavailableMessage = 'Selected transport is not available';
-
-    public string $changedTransportPriceMessage = 'Selected transport price has changed';
-
-    public string $pickupPlaceUnavailableMessage = 'Selected pickup place is not available';
-
-    public string $weightLimitExceeded = 'Selected transport weight limit has been exceeded';
-
-    public string $missingPickupPlaceIdentifierMessage = 'Selected transport needs to have pickup place identifier set';
 
     /**
      * @var array<string, string>
@@ -39,6 +29,39 @@ class TransportInOrder extends Constraint
         self::WEIGHT_LIMIT_EXCEEDED_ERROR => 'WEIGHT_LIMIT_EXCEEDED_ERROR',
         self::MISSING_PICKUP_PLACE_IDENTIFIER_ERROR => 'MISSING_PICKUP_PLACE_IDENTIFIER_ERROR',
     ];
+
+    /**
+     * @param array<string, mixed>|null $options
+     * @param string $transportNotSetMessage
+     * @param string $transportUnavailableMessage
+     * @param string $changedTransportPriceMessage
+     * @param string $pickupPlaceUnavailableMessage
+     * @param string $weightLimitExceeded
+     * @param string $missingPickupPlaceIdentifierMessage
+     * @param array<string>|null $groups
+     * @param mixed $payload
+     */
+    #[HasNamedArguments]
+    public function __construct(
+        ?array $options = null,
+        public string $transportNotSetMessage = 'Transport must be set in cart before sending the order',
+        public string $transportUnavailableMessage = 'Selected transport is not available',
+        public string $changedTransportPriceMessage = 'Selected transport price has changed',
+        public string $pickupPlaceUnavailableMessage = 'Selected pickup place is not available',
+        public string $weightLimitExceeded = 'Selected transport weight limit has been exceeded',
+        public string $missingPickupPlaceIdentifierMessage = 'Selected transport needs to have pickup place identifier set',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        if (is_array($options)) {
+            DeprecationHelper::trigger(
+                'Passing an array of options to configure the "%s" constraint is deprecated, use named arguments instead.',
+                static::class,
+            );
+        }
+
+        parent::__construct($options, $groups, $payload);
+    }
 
     /**
      * {@inheritdoc}

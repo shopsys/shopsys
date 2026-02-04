@@ -96,10 +96,9 @@ class PriceListController extends AdminBaseController
     public function newAction(Request $request): Response
     {
         $priceListData = $this->priceListDataFactory->create();
-        $priceListData->domainId = $request->get(
-            'domainId',
-            $this->adminDomainFilterTabsFacade->getSelectedDomainId(static::DOMAIN_FILTER_NAMESPACE) ?? Domain::FIRST_DOMAIN_ID,
-        );
+        $priceListData->domainId = $request->query->has('domainId')
+            ? $request->query->getInt('domainId')
+            : ($this->adminDomainFilterTabsFacade->getSelectedDomainId(static::DOMAIN_FILTER_NAMESPACE) ?? Domain::FIRST_DOMAIN_ID);
 
         $form = $this->createForm(PriceListFormType::class, $priceListData, [
             'priceList' => null,

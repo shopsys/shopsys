@@ -26,10 +26,10 @@ final class LuigisBoxSettingFormType extends AbstractType
                 'label' => t('Luigi\'s Box rank'),
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotNull([
-                        'message' => 'Please enter the Luigi\'s Box rank.',
-                    ]),
-                    new Constraints\Range(['min' => 1, 'max' => 15]),
+                    new Constraints\NotNull(
+                        message: 'Please enter the Luigi\'s Box rank.',
+                    ),
+                    new Constraints\Range(min: 1, max: 15),
                 ],
             ])
             ->add('luigisBoxRankInfo', MessageType::class, [

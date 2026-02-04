@@ -45,8 +45,8 @@ final class StockSettingsFormType extends AbstractType
                 'label' => 'Days for transfer between warehouses',
                 'constraints' => [
                     new Constraints\NotBlank(),
-                    new Constraints\Regex(['pattern' => '/^\d+$/']),
-                    new Constraints\GreaterThanOrEqual(['value' => 0]),
+                    new Constraints\Regex(pattern: '/^\d+$/'),
+                    new Constraints\GreaterThanOrEqual(value: 0),
                 ],
             ]);
 
@@ -59,9 +59,9 @@ final class StockSettingsFormType extends AbstractType
                 'label' => 'Number of delivery days for out of stock products in XML feeds',
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotNull([
-                        'message' => 'Please enter the number of delivery days.',
-                    ]),
+                    new Constraints\NotNull(
+                        message: 'Please enter the number of delivery days.',
+                    ),
                 ],
             ])
             ->add('feedDeliveryDaysForOutOfStockProductsInfo', MessageType::class, [

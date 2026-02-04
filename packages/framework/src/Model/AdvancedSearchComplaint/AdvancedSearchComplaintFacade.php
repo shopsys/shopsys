@@ -44,8 +44,7 @@ class AdvancedSearchComplaintFacade
      */
     public function createAdvancedSearchComplaintForm(Request $request): FormInterface
     {
-        $rawRulesData = $request->get(static::RULES_FORM_NAME);
-        $rulesData = is_array($rawRulesData) ? $rawRulesData : [];
+        $rulesData = $request->query->all(static::RULES_FORM_NAME);
         $rulesFormData = $this->ruleFormViewDataFactory->createFromRequestData(
             ComplaintNumberFilter::NAME,
             $rulesData,
@@ -137,8 +136,6 @@ class AdvancedSearchComplaintFacade
      */
     public function isAdvancedSearchComplaintFormSubmitted(Request $request): bool
     {
-        $rulesData = $request->get(static::RULES_FORM_NAME);
-
-        return $rulesData !== null;
+        return $request->query->has(static::RULES_FORM_NAME);
     }
 }

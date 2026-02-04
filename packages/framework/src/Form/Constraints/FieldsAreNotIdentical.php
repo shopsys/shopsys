@@ -4,15 +4,48 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
+use Override;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
 
 class FieldsAreNotIdentical extends Constraint
 {
-    public string $field1;
+    /**
+     * @param array<string, mixed>|null $options
+     * @param string $field1
+     * @param string $field2
+     * @param string $errorPath
+     * @param string $message
+     * @param array<string>|null $groups
+     * @param mixed $payload
+     */
+    #[HasNamedArguments]
+    public function __construct(
+        ?array $options = null,
+        public string $field1 = '',
+        public string $field2 = '',
+        public string $errorPath = '',
+        public string $message = 'Fields must not be identical',
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        if (is_array($options)) {
+            DeprecationHelper::trigger(
+                'Passing an array of options to configure the "%s" constraint is deprecated, use named arguments instead.',
+                static::class,
+            );
+        }
 
-    public string $field2;
+        parent::__construct($options, $groups, $payload);
+    }
 
-    public string $errorPath;
-
-    public string $message = 'Fields must not be identical';
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getTargets(): string|array
+    {
+        return self::CLASS_CONSTRAINT;
+    }
 }

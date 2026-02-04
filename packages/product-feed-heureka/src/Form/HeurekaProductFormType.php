@@ -38,10 +38,10 @@ final class HeurekaProductFormType extends AbstractType
             'entry_options' => [
                 'currency' => 'CZK',
                 'constraints' => [
-                    new MoneyRange([
-                        'min' => Money::zero(),
-                        'max' => Money::create(500),
-                    ]),
+                    new MoneyRange(
+                        min: Money::zero(),
+                        max: Money::create(500),
+                    ),
                 ],
             ],
         ]);

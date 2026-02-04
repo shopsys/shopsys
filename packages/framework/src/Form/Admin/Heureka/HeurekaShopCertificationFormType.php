@@ -31,11 +31,11 @@ final class HeurekaShopCertificationFormType extends AbstractType
             ->add('heurekaApiKey', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length([
-                        'min' => 32,
-                        'max' => 32,
-                        'exactMessage' => 'Heureka API must be {{ limit }} characters',
-                    ]),
+                    new Constraints\Length(
+                        min: 32,
+                        max: 32,
+                        exactMessage: 'Heureka API must be {{ limit }} characters',
+                    ),
                 ],
                 'label' => 'Code of service Heureka - Verified by Customer',
                 'help' => t('Enter 32-digit code which will be sent to server') . ' ' . $options['server_name'],

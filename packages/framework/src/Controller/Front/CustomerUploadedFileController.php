@@ -38,7 +38,7 @@ class CustomerUploadedFileController
         string $uploadedFilename,
     ): DownloadFileResponse {
         try {
-            $hash = $request->get('hash', '');
+            $hash = $request->query->getString('hash');
             $uploadedFile = $this->getCustomerUploadedFile($uploadedFilename, $uploadedFileId, $hash);
             $filePath = $this->customerUploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
 
@@ -61,7 +61,7 @@ class CustomerUploadedFileController
     public function viewAction(Request $request, int $uploadedFileId, string $uploadedFilename): StreamedResponse
     {
         try {
-            $hash = $request->get('hash', '');
+            $hash = $request->query->getString('hash');
             $uploadedFile = $this->getCustomerUploadedFile($uploadedFilename, $uploadedFileId, $hash);
             $filePath = $this->customerUploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
 

@@ -32,18 +32,18 @@ final class ParameterValueFormType extends AbstractType
             'info_text' => t('The icon takes precedence over the RGB color value. You can upload a PNG, JPG, GIF, or SVG file.'),
             'required' => false,
             'file_constraints' => [
-                new Constraints\File([
-                    'maxSize' => '2M',
-                    'maxSizeMessage' => 'Uploaded file is too large ({{ size }} {{ suffix }}). '
+                new Constraints\File(
+                    maxSize: '2M',
+                    maxSizeMessage: 'Uploaded file is too large ({{ size }} {{ suffix }}). '
                         . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
-                    'extensions' => [
+                    extensions: [
                         'png' => 'image/png',
                         'jpg' => 'image/jpeg',
                         'jpeg' => 'image/jpeg',
                         'gif' => 'image/gif',
                         'svg' => 'image/svg+xml',
                     ],
-                ]),
+                ),
             ],
             'entity' => $options['entity'],
             'file_entity_class' => ParameterValue::class,

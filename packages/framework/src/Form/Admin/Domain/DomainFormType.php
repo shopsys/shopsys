@@ -33,13 +33,13 @@ final class DomainFormType extends AbstractType
             ->add(self::FIELD_ICON, ImageUploadType::class, [
                 'required' => false,
                 'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png'],
-                        'mimeTypesMessage' => 'Image can be only in PNG format',
-                        'maxSize' => '2M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                    new Constraints\Image(
+                        mimeTypes: ['image/png'],
+                        mimeTypesMessage: 'Image can be only in PNG format',
+                        maxSize: '2M',
+                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
+                    ),
                 ],
                 'info_text' => t('The optimal size of the icon is 46x26 px. Only PNG format is allowed.'),
             ])

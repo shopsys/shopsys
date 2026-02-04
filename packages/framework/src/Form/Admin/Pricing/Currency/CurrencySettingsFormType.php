@@ -37,7 +37,7 @@ final class CurrencySettingsFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter default currency']),
+                    new Constraints\NotBlank(message: 'Please enter default currency'),
                 ],
             ])
             ->add('domainDefaultCurrencies', CollectionType::class, [
@@ -49,7 +49,7 @@ final class CurrencySettingsFormType extends AbstractType
                     'choice_label' => 'name',
                     'choice_value' => 'id',
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter default currency']),
+                        new Constraints\NotBlank(message: 'Please enter default currency'),
                     ],
                 ],
             ])

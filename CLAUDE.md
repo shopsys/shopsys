@@ -256,6 +256,10 @@ Login credentials for PostgreSQL are set in the `project-base/app/.env` file.
 - Framework packages should only be modified via the monorepo, not directly in `/packages/`
 - **Always use proper Docker commands**: `docker compose exec` for PHP/storefront commands, direct execution for git/make/system commands
 
+## Skills / Slash Commands
+
+When the user asks to generate upgrade notes, always use the `/generate-upgrade-notes` command instead of manually analyzing commits.
+
 ## Core Development Principles
 
 **ALWAYS follow these principles when writing or modifying code:**

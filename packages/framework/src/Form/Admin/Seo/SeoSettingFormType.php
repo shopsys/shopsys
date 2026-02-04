@@ -54,20 +54,20 @@ final class SeoSettingFormType extends AbstractType
             ->add('title', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new NotInArray([
-                        'array' => array_diff($titlesOnOtherDomains, [null]),
-                        'message' => 'Same title is used on another domain',
-                    ]),
+                    new NotInArray(
+                        array: array_diff($titlesOnOtherDomains, [null]),
+                        message: 'Same title is used on another domain',
+                    ),
                 ],
                 'label' => 'Headline',
             ])
             ->add('titleAddOn', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new NotInArray([
-                        'array' => array_diff($titleAddOnsOnOtherDomains, [null]),
-                        'message' => 'Same title complement is used on another domain',
-                    ]),
+                    new NotInArray(
+                        array: array_diff($titleAddOnsOnOtherDomains, [null]),
+                        message: 'Same title complement is used on another domain',
+                    ),
                 ],
                 'label' => 'Complement to title',
                 'help' => t(
@@ -77,10 +77,10 @@ final class SeoSettingFormType extends AbstractType
             ->add('metaDescription', TextareaType::class, [
                 'required' => false,
                 'constraints' => [
-                    new NotInArray([
-                        'array' => array_diff($descriptionsOnOtherDomains, [null]),
-                        'message' => 'Same description is used on another domain',
-                    ]),
+                    new NotInArray(
+                        array: array_diff($descriptionsOnOtherDomains, [null]),
+                        message: 'Same description is used on another domain',
+                    ),
                 ],
                 'label' => 'Meta description',
             ]);

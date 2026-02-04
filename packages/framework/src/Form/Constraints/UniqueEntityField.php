@@ -4,15 +4,48 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
+use Override;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
 
 class UniqueEntityField extends Constraint
 {
-    public string $message = 'The "{{ value }}" value of "{{ fieldName }}" field must be unique';
+    /**
+     * @param array<string, mixed>|null $options
+     * @param string $fieldName
+     * @param string $entityName
+     * @param string $message
+     * @param object|null $entityInstance
+     * @param array<string>|null $groups
+     * @param mixed $payload
+     */
+    #[HasNamedArguments]
+    public function __construct(
+        ?array $options = null,
+        public string $fieldName = '',
+        public string $entityName = '',
+        public string $message = 'The "{{ value }}" value of "{{ fieldName }}" field must be unique',
+        public ?object $entityInstance = null,
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
+        if (is_array($options)) {
+            DeprecationHelper::trigger(
+                'Passing an array of options to configure the "%s" constraint is deprecated, use named arguments instead.',
+                static::class,
+            );
+        }
 
-    public string $fieldName;
+        parent::__construct($options, $groups, $payload);
+    }
 
-    public string $entityName;
-
-    public ?object $entityInstance = null;
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getTargets(): string|array
+    {
+        return self::PROPERTY_CONSTRAINT;
+    }
 }
