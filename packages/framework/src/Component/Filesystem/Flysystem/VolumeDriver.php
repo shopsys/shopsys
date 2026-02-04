@@ -196,6 +196,116 @@ class VolumeDriver extends Driver
 
         return $stat;
     }
+
+      /**
+     * Return content URL (for netmout volume driver)
+     * If file.url == 1 requests from JavaScript client with XHR
+     *
+     * @param string $hash    file hash
+     * @param array  $options options array
+     *
+     * @return boolean|string
+     * @author Naoki Sawada
+     */
+    #[Override]
+    public function getContentUrl($hash, $options = array())
+    {
+        if (($file = $this->file($hash)) === false) {
+            return false;
+        }
+        if (!empty($options['onetime']) && $this->options['onetimeUrl']) {
+            if (is_callable($this->options['onetimeUrl'])) {
+                return call_user_func_array($this->options['onetimeUrl'], array($file, $options, $this));
+            } else {
+                $ret = false;
+                if ($tmpdir = elFinder::getStaticVar('commonTempPath')) {
+                    if ($source = $this->open($hash)) {
+                        if ($_dat = tempnam($tmpdir, 'ELF')) {
+                            $token = md5($_dat . session_id());
+                            $dat = $tmpdir . DIRECTORY_SEPARATOR . 'ELF' . $token;
+                            if (rename($_dat, $dat)) {
+                                $info = stream_get_meta_data($source);
+                                if (!empty($info['uri'])) {
+                                    $tmp = $info['uri'];
+                                } else {
+                                    $tmp = tempnam($tmpdir, 'ELF');
+                                    if ($dest = fopen($tmp, 'wb')) {
+                                        if (!stream_copy_to_stream($source, $dest)) {
+                                            $tmp = false;
+                                        }
+                                        fclose($dest);
+                                    }
+                                }
+                                $this->close($source, $hash);
+                                if ($tmp) {
+                                    $info = array(
+                                        'file' => base64_encode($tmp),
+                                        'name' => $file['name'],
+                                        'mime' => $file['mime'],
+                                        'ts' => $file['ts']
+                                    );
+                                    if (file_put_contents($dat, json_encode($info))) {
+                                        $conUrl = elFinder::getConnectorUrl();
+                                        $ret = $conUrl . (strpos($conUrl, '?') !== false? '&' : '?') . 'cmd=file&onetime=1&target=' . $token;
+
+                                    }
+                                }
+                                if (!$ret) {
+                                    unlink($dat);
+                                }
+                            } else {
+                                unlink($_dat);
+                            }
+                        }
+                    }
+                }
+                return $ret;
+            }
+        }
+        if (empty($file['url']) && $this->URL) {
+            /* start fix for the double slash issue on the newly uploaded file - https://github.com/Studio-42/elFinder/issues/3725 */
+            $decoded = $this->decode($hash);
+
+            // safely strip root prefix if present
+            if (str_starts_with($decoded, $this->root)) {
+                $path = substr($decoded, strlen($this->root));
+            } else {
+                $path = $decoded;
+            }
+
+            // remove leading separator to avoid double slashes
+            $path = ltrim($path, '/');
+            $path = str_replace($this->separator, '/', $path);
+
+             if ($this->encoding) {
+                 $path = $this->convEncIn($path, true);
+             }
+
+             $path = str_replace('%2F', '/', rawurlencode($path));
+
+            return rtrim($this->URL, '/') . '/' . $path;
+            /* end fix */
+        } else {
+            $ret = false;
+            if (!empty($file['url']) && $file['url'] != 1) {
+                return $file['url'];
+            } else if (!empty($options['temporary']) && ($tempInfo = $this->getTempLinkInfo('temp_' . md5($hash . session_id())))) {
+                if (is_readable($tempInfo['path'])) {
+                    touch($tempInfo['path']);
+                    $ret = $tempInfo['url'] . '?' . rawurlencode($file['name']);
+                } else if ($source = $this->open($hash)) {
+                    if ($dest = fopen($tempInfo['path'], 'wb')) {
+                        if (stream_copy_to_stream($source, $dest)) {
+                            $ret = $tempInfo['url'] . '?' . rawurlencode($file['name']);
+                        }
+                        fclose($dest);
+                    }
+                    $this->close($source, $hash);
+                }
+            }
+            return $ret;
+        }
+    }
 }
 
 class_alias(VolumeDriver::class, 'elFinderVolumeFlysystem');
