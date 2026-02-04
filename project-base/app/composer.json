@@ -49,7 +49,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.7.0",
         "doctrine/orm": "^2.20.9",
         "doctrine/persistence": "^3.3.3",
-        "enlightn/security-checker": "^1.5",
+        "enlightn/security-checker": "^2.0",
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "guzzlehttp/guzzle": "^7.5.0",

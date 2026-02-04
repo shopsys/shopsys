@@ -107,7 +107,7 @@
         "doctrine/persistence": "^3.3.3",
         "elasticsearch/elasticsearch": "^7.6.1",
         "endroid/qr-code": "^6.0",
-        "enlightn/security-checker": "^1.3",
+        "enlightn/security-checker": "^2.0",
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "gedmo/doctrine-extensions": "^3.22",
