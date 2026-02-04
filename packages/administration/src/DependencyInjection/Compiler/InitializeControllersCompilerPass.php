@@ -19,7 +19,7 @@ class InitializeControllersCompilerPass implements CompilerPassInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $services = $container->findTaggedServiceIds('controller.service_arguments');
         $crudControllers = [];

@@ -27,7 +27,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function load(mixed $resource, ?string $type = null)
+    public function load(mixed $resource, ?string $type = null): RouteCollection
     {
         $routes = new RouteCollection();
 
@@ -42,7 +42,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function supports(mixed $resource, ?string $type = null)
+    public function supports(mixed $resource, ?string $type = null): bool
     {
         return $type === 'crud_controller';
     }
@@ -51,9 +51,8 @@ final class CrudControllerRouteLoader implements LoaderInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getResolver()
+    public function getResolver(): ?LoaderResolverInterface
     {
-        /* @phpstan-ignore-next-line */
         return null;
     }
 
@@ -61,7 +60,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function setResolver(LoaderResolverInterface $resolver)
+    public function setResolver(LoaderResolverInterface $resolver): void
     {
         // No implementation needed
     }
