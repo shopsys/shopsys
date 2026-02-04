@@ -17,7 +17,7 @@ export const useGtmPaginatedProductListViewEvent = (
     const lastViewedStringifiedProducts = useRef<string>(undefined);
     const currentPage = useCurrentPageQuery();
     const currentLoadMore = useCurrentLoadMoreQuery();
-    const previousLoadMoreRef = useRef(currentLoadMore);
+    const previousLoadMoreRef = useRef<number | undefined>(undefined);
     const { url } = useDomainConfig();
     const stringifiedProducts = JSON.stringify(paginatedProducts);
     const { didPageViewRun, isScriptLoaded } = useGtmContext();
@@ -33,10 +33,10 @@ export const useGtmPaginatedProductListViewEvent = (
             lastViewedStringifiedProducts.current = stringifiedProducts;
 
             let paginatedProductsSlice = paginatedProducts;
-            if (previousLoadMoreRef.current !== currentLoadMore) {
+            if (previousLoadMoreRef.current !== undefined && previousLoadMoreRef.current !== currentLoadMore) {
                 paginatedProductsSlice = paginatedProductsSlice.slice(currentLoadMore * DEFAULT_PAGE_SIZE);
-                previousLoadMoreRef.current = currentLoadMore;
             }
+            previousLoadMoreRef.current = currentLoadMore;
 
             gtmSafePushEvent(
                 getGtmProductListViewEvent(
@@ -49,5 +49,15 @@ export const useGtmPaginatedProductListViewEvent = (
                 ),
             );
         }
-    }, [gtmProductListName, currentPage, url, currentLoadMore, stringifiedProducts, didPageViewRun]);
+    }, [
+        gtmProductListName,
+        currentPage,
+        url,
+        currentLoadMore,
+        paginatedProducts,
+        stringifiedProducts,
+        didPageViewRun,
+        isScriptLoaded,
+        canSeePrices,
+    ]);
 };

@@ -24,5 +24,5 @@ export const useGtmSliderProductListViewEvent = (
                 getGtmProductListViewEvent(products, gtmProuctListName, 1, 0, url, !canSeePrices, isLuigisEnabled),
             );
         }
-    }, [gtmProuctListName, products, url, didPageViewRun]);
+    }, [gtmProuctListName, products, url, didPageViewRun, isScriptLoaded, canSeePrices, isLuigisEnabled]);
 };

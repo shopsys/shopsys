@@ -21,5 +21,5 @@ export const useGtmAutocompleteResultsViewEvent = (
             lastViewedAutocompleteResults.current = searchResults;
             gtmSafePushEvent(getGtmAutocompleteResultsViewEvent(searchResults, keyword));
         }
-    }, [searchResults, keyword, didPageViewRun]);
+    }, [searchResults, keyword, didPageViewRun, isScriptLoaded]);
 };

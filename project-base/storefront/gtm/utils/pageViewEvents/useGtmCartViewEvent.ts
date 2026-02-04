@@ -32,5 +32,12 @@ export const useGtmCartViewEvent = (gtmPageViewEvent: GtmPageViewEventType): voi
                 ),
             );
         }
-    }, [gtmPageViewEvent._isLoaded, gtmPageViewEvent.cart, gtmPageViewEvent.currencyCode, didPageViewRun]);
+    }, [
+        gtmPageViewEvent._isLoaded,
+        gtmPageViewEvent.cart,
+        gtmPageViewEvent.currencyCode,
+        didPageViewRun,
+        isScriptLoaded,
+        canSeePrices,
+    ]);
 };

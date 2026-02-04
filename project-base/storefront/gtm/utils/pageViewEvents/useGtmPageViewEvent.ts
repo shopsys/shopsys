@@ -17,5 +17,5 @@ export const useGtmPageViewEvent = (gtmPageViewEvent: GtmPageViewEventType, areD
             gtmSafePushEvent(gtmPageViewEvent);
             setDidPageViewRun(true);
         }
-    }, [gtmPageViewEvent, areDataFetching, slug]);
+    }, [gtmPageViewEvent, areDataFetching, slug, isScriptLoaded, setDidPageViewRun]);
 };

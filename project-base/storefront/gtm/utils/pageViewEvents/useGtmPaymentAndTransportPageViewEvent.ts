@@ -28,5 +28,5 @@ export const useGtmPaymentAndTransportPageViewEvent = (gtmPageViewEvent: GtmPage
                 ),
             );
         }
-    }, [gtmPageViewEvent._isLoaded, gtmPageViewEvent.cart, didPageViewRun]);
+    }, [gtmPageViewEvent._isLoaded, gtmPageViewEvent.cart, didPageViewRun, isScriptLoaded, canSeePrices]);
 };

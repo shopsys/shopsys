@@ -22,5 +22,5 @@ export const useGtmProductDetailViewEvent = (
             lastViewedProductDetailSlug.current = slug;
             gtmSafePushEvent(getGtmProductDetailViewEvent(productDetailData, currencyCode, url, !canSeePrices));
         }
-    }, [productDetailData, currencyCode, slug, url, isProductFetching, didPageViewRun]);
+    }, [productDetailData, currencyCode, slug, url, isProductFetching, didPageViewRun, isScriptLoaded, canSeePrices]);
 };
