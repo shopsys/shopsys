@@ -10,6 +10,8 @@ framework:
     profiler:
         collect: false
         enabled: false
+    property_info:
+        with_constructor_extractor: true
     router:
         strict_requirements: true
         utf8: true
