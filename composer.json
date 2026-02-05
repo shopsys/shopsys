@@ -92,7 +92,7 @@
         "becklyn/ordered-form-bundle": "^1.4",
         "commerceguys/intl": "^2.0.0",
         "composer/composer": "^2.2.12",
-        "cweagans/composer-patches": "^1.7",
+        "cweagans/composer-patches": "^2.0",
         "defuse/php-encryption": "^2.2.1",
         "doctrine/cache": "^1.7",
         "doctrine/collections": "^1.5",

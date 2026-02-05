@@ -79,6 +79,7 @@ RUN apk add --no-cache --virtual .build-deps \
         ca-certificates \
         coreutils \
         freetype \
+        git \
         htop \
         icu-data-full \
         icu-libs \
