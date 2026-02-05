@@ -1,6 +1,5 @@
 twig:
     debug: "%kernel.debug%"
-    exception_controller: null
     # form_themes:
     # Uncomment the previous line and add your form themes here
     globals:
