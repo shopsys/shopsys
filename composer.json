@@ -191,7 +191,7 @@
         "tracy/tracy": "^2.4.13",
         "tuscanicz/enum": "^2.1",
         "twig/twig": "^3.14.0",
-        "webmozart/assert": "^1.4",
+        "webmozart/assert": "^2.1",
         "webonyx/graphql-php": "^15.29.1"
     },
     "require-dev": {
