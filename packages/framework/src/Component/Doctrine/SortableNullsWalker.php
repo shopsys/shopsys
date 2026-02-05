@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
-use Doctrine\ORM\Query\SqlWalker;
+use Doctrine\ORM\Query\SqlOutputWalker;
 use Override;
 
 /**
  * Allows ORDER BY using NULLS FIRST | LAST
  * Inspired by https://github.com/beberlei/DoctrineExtensions/blob/master/lib/DoctrineExtensions/Query/SortableNullsWalker.php
  */
-class SortableNullsWalker extends SqlWalker
+class SortableNullsWalker extends SqlOutputWalker
 {
     protected const NULLS_FIRST = 'NULLS FIRST';
     protected const NULLS_LAST = 'NULLS LAST';
