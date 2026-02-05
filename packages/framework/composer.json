@@ -77,7 +77,7 @@
         "presta/sitemap-bundle": "^4.1",
         "prezent/doctrine-translatable": "^4.0",
         "prezent/doctrine-translatable-bundle": "^2.1",
-        "psr/log": "^2.0",
+        "psr/log": "^3.0",
         "ramsey/uuid": "^4.3.1",
         "roave/better-reflection": "^6.37",
         "sentry/sentry-symfony": "^5.0.1",
