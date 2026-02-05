@@ -16,11 +16,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'shopsys:recalculations',
+    name: RecalculationsCommand::COMMAND_NAME,
     description: 'Run all recalculations',
 )]
 class RecalculationsCommand extends Command
 {
+    public const string COMMAND_NAME = 'shopsys:recalculations';
+
     public function __construct(
         private readonly CategoryVisibilityRepository $categoryVisibilityRepository,
         private readonly ProductVisibilityFacade $productVisibilityFacade,

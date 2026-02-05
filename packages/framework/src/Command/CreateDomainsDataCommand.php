@@ -44,7 +44,7 @@ class CreateDomainsDataCommand extends Command
 
         if ($domainsCreatedCount > 0) {
             $application = $this->getApplicationInstance();
-            $recalculationsCommand = $application->get(RecalculationsCommand::getDefaultName());
+            $recalculationsCommand = $application->get(RecalculationsCommand::COMMAND_NAME);
 
             return $recalculationsCommand->run($input, $output);
         }
