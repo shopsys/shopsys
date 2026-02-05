@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Override;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 /**
  * Registry for managing roles organized by context
@@ -29,7 +29,7 @@ final class RoleRegistry implements RoleRegistryInterface
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\RoleProviderInterface> $allRoleProviders
      */
     public function __construct(
-        #[TaggedIterator('shopsys.role_provider')]
+        #[AutowireIterator('shopsys.role_provider')]
         iterable $allRoleProviders,
         private readonly ContextResolverInterface $contextResolver,
     ) {

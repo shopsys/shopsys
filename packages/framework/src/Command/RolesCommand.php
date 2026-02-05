@@ -24,7 +24,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[AsCommand(
@@ -53,9 +53,9 @@ class RolesCommand extends Command
         private readonly RoleRegistryInterface $roleRegistry,
         private readonly ContextResolverInterface $contextResolver,
         private readonly EventDispatcherInterface $eventDispatcher,
-        #[TaggedIterator('shopsys.role_hierarchy_provider')]
+        #[AutowireIterator('shopsys.role_hierarchy_provider')]
         iterable $hierarchyProviders,
-        #[TaggedIterator('shopsys.role_section_provider', defaultIndexMethod: 'getTargetContext')]
+        #[AutowireIterator('shopsys.role_section_provider', defaultIndexMethod: 'getTargetContext')]
         iterable $roleSectionsProviders = [],
     ) {
         parent::__construct();
