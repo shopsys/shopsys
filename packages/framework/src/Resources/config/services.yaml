@@ -698,8 +698,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail: ~
 
-    Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMail: ~
-
     Shopsys\FrameworkBundle\Model\Order\Messenger\HeurekaPlacedOrderMessageHandler:
         arguments:
             $logger: '@monolog.logger.queue'
