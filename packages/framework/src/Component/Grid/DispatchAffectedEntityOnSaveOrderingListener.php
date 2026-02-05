@@ -24,7 +24,7 @@ class DispatchAffectedEntityOnSaveOrderingListener
             return;
         }
 
-        $entityClass = $controllerEvent->getRequest()->get('entityClass');
+        $entityClass = $controllerEvent->getRequest()->request->getString('entityClass');
 
         switch ($entityClass) {
             case ParameterGroup::class:
