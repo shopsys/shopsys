@@ -84,15 +84,17 @@ class VatRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
      */
-    public function getVatsWithoutProductsMarkedForDeletion(): array
+    public function getVatsMarkedForDeletionWithoutReferences(): array
     {
         $query = $this->em->createQuery('
             SELECT v
             FROM ' . Vat::class . ' v
             LEFT JOIN ' . ProductDomain::class . ' pd WITH pd.vat = v
+            LEFT JOIN ' . PaymentDomain::class . ' payd WITH payd.vat = v
+            LEFT JOIN ' . TransportDomain::class . ' td WITH td.vat = v
             WHERE v.replaceWith IS NOT NULL
             GROUP BY v
-            HAVING COUNT(pd) = 0');
+            HAVING COUNT(pd) = 0 AND COUNT(payd) = 0 AND COUNT(td) = 0');
 
         return $query->getResult();
     }
@@ -141,6 +143,19 @@ class VatRepository
     {
         $this->replacePaymentsVat($oldVat, $newVat);
         $this->replaceTransportsVat($oldVat, $newVat);
+    }
+
+    public function replaceVatInPaymentsAndTransportsForVatsMarkedForDeletion(): void
+    {
+        $query = $this->em->createQuery('
+            SELECT v
+            FROM ' . Vat::class . ' v
+            WHERE v.replaceWith IS NOT NULL
+        ');
+
+        foreach ($query->getResult() as $vat) {
+            $this->replaceVat($vat, $vat->getReplaceWith());
+        }
     }
 
     protected function replacePaymentsVat(Vat $oldVat, Vat $newVat): void

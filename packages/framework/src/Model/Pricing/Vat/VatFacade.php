@@ -95,9 +95,14 @@ class VatFacade
         $this->em->flush();
     }
 
+    public function replaceVatInPaymentsAndTransportsForVatsMarkedForDeletion(): void
+    {
+        $this->vatRepository->replaceVatInPaymentsAndTransportsForVatsMarkedForDeletion();
+    }
+
     public function deleteAllReplacedVats(): int
     {
-        $vatsForDelete = $this->vatRepository->getVatsWithoutProductsMarkedForDeletion();
+        $vatsForDelete = $this->vatRepository->getVatsMarkedForDeletionWithoutReferences();
 
         foreach ($vatsForDelete as $vatForDelete) {
             $this->em->remove($vatForDelete);
