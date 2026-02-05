@@ -61,7 +61,7 @@
         "gopay/payments-sdk-php": "^1.7",
         "gedmo/doctrine-extensions": "^3.22",
         "guzzlehttp/guzzle": "^7.5",
-        "helios-ag/fm-elfinder-bundle": "^12.2",
+        "helios-ag/fm-elfinder-bundle": "^13.0",
         "heureka/overeno-zakazniky": "^4.0.1",
         "jms/metadata": "^2.6.1",
         "jms/translation-bundle": "^2.2.1",

@@ -114,7 +114,7 @@
         "google/cloud-storage": "^1.10",
         "gopay/payments-sdk-php": "^1.7",
         "guzzlehttp/guzzle": "^7.5",
-        "helios-ag/fm-elfinder-bundle": "^12.2",
+        "helios-ag/fm-elfinder-bundle": "^13.0",
         "heureka/overeno-zakazniky": "^4.0.1",
         "hybridauth/hybridauth": "^3.11",
         "jdorn/sql-formatter": "^1.2",

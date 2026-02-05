@@ -53,7 +53,7 @@
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "guzzlehttp/guzzle": "^7.5.0",
-        "helios-ag/fm-elfinder-bundle": "^12.2",
+        "helios-ag/fm-elfinder-bundle": "^13.0",
         "heureka/overeno-zakazniky": "^4.0.1",
         "jms/serializer-bundle": "^5.0",
         "jms/translation-bundle": "^2.2.1",
