@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\CodingStandards\Sniffs;
+namespace Shopsys\CodingStandards\Sniffs\General;
 
 use Override;
 use PHP_CodeSniffer\Files\File;
@@ -11,7 +11,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class ForbiddenDoctrineInheritanceSniff implements Sniff
 {
     /**
-     * @return int[]
+     * @return array<int|string>
      */
     #[Override]
     public function register(): array

@@ -5,11 +5,11 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\MethodDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
-use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
-use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
-use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
-use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
-use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForbiddenDoctrineInheritanceSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForbiddenDumpSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForbiddenSuperGlobalSniff;
+use Shopsys\CodingStandards\Sniffs\General\ObjectIsCreatedByFactorySniff;
+use Shopsys\CodingStandards\Sniffs\General\ValidVariableNameSniff;
 use Shopsys\FrameworkBundle\Command\EntitiesDumpCommand;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff;
@@ -77,7 +77,7 @@ return [
         __DIR__ . '/src/*',
         __DIR__ . '/tests/App/*',
     ],
-    \Shopsys\CodingStandards\Sniffs\ForbiddenExitSniff::class => [
+    \Shopsys\CodingStandards\Sniffs\General\ForbiddenExitSniff::class => [
         __DIR__ . '/app/downloadPhing.php',
     ],
     MethodDeclarationSniff::class . '.Underscore' => [

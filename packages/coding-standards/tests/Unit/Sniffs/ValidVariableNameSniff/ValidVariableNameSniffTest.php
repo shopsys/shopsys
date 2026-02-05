@@ -6,7 +6,7 @@ namespace Tests\CodingStandards\Unit\Sniffs\ValidVariableNameSniff;
 
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
+use Shopsys\CodingStandards\Sniffs\General\ValidVariableNameSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ValidVariableNameSniffTest extends AbstractSniffTestCase

@@ -6,7 +6,7 @@ namespace Tests\CodingStandards\Unit\Sniffs\ForbiddenExitSniff;
 
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\CodingStandards\Sniffs\ForbiddenExitSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForbiddenExitSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ForbiddenExitSniffTest extends AbstractSniffTestCase

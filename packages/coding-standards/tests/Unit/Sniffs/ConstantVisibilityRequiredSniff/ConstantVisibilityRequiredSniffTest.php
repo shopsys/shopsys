@@ -6,7 +6,7 @@ namespace Tests\CodingStandards\Unit\Sniffs\ConstantVisibilityRequiredSniff;
 
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff;
+use Shopsys\CodingStandards\Sniffs\General\ConstantVisibilityRequiredSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase

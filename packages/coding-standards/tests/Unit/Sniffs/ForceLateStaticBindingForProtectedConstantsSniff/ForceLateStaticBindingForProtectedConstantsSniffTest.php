@@ -6,7 +6,7 @@ namespace Tests\CodingStandards\Unit\Sniffs\ForceLateStaticBindingForProtectedCo
 
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForceLateStaticBindingForProtectedConstantsSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ForceLateStaticBindingForProtectedConstantsSniffTest extends AbstractSniffTestCase

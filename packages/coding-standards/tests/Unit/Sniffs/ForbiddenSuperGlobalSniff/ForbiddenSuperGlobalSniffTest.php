@@ -6,7 +6,7 @@ namespace Tests\CodingStandards\Unit\Sniffs\ForbiddenSuperGlobalSniff;
 
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForbiddenSuperGlobalSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ForbiddenSuperGlobalSniffTest extends AbstractSniffTestCase

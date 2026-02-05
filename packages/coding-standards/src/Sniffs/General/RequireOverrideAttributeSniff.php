@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\CodingStandards\Sniffs;
+namespace Shopsys\CodingStandards\Sniffs\General;
 
 use Override;
 use PHP_CodeSniffer\Files\File;
@@ -17,7 +17,7 @@ use const T_ANON_CLASS;
 class RequireOverrideAttributeSniff implements Sniff
 {
     /**
-     * @return array<int>
+     * @return array<int|string>
      */
     #[Override]
     public function register(): array
@@ -26,7 +26,7 @@ class RequireOverrideAttributeSniff implements Sniff
     }
 
     /**
-     * @param mixed $stackPtr
+     * @param int $stackPtr
      * @throws \ReflectionException
      */
     #[Override]

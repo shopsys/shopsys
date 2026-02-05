@@ -6,7 +6,7 @@ namespace Tests\CodingStandards\Unit\Sniffs\ForbiddenDoctrineInheritanceSniff;
 
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForbiddenDoctrineInheritanceSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ForbiddenDoctrineInheritanceSniffTest extends AbstractSniffTestCase

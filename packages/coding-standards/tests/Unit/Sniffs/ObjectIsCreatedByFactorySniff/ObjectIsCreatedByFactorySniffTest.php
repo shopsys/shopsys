@@ -6,7 +6,7 @@ namespace Tests\CodingStandards\Unit\Sniffs\ObjectIsCreatedByFactorySniff;
 
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
+use Shopsys\CodingStandards\Sniffs\General\ObjectIsCreatedByFactorySniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class ObjectIsCreatedByFactorySniffTest extends AbstractSniffTestCase
