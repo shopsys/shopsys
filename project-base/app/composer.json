@@ -124,7 +124,7 @@
         "phpstan/phpstan-doctrine": "^2.0.3",
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-symfony": "^2.0.6",
-        "phpunit/phpunit": "^11.2.1",
+        "phpunit/phpunit": "^12.5",
         "psr/event-dispatcher": "^1.0.0",
         "shopsys/biome-config": "19.0.x-dev",
         "shopsys/coding-standards": "19.0.x-dev",
@@ -135,7 +135,7 @@
         "symfony/debug-bundle": "^7.4",
         "symfony/var-dumper": "^7.4",
         "symfony/web-profiler-bundle": "^7.4",
-        "shopsys/phpunit-injector": "^2.5.1"
+        "shopsys/phpunit-injector": "^2.6.0"
     },
     "conflict": {
         "symfony/symfony": "*",

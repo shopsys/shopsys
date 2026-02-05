@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Domain;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -105,9 +106,9 @@ class DomainTest extends TestCase
     }
 
     /**
-     * @dataProvider switchDomainByRequestDataProvider
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
      */
+    #[DataProvider('switchDomainByRequestDataProvider')]
     public function testSwitchDomainByRequest(
         array $domainConfigs,
         string $requestHost,

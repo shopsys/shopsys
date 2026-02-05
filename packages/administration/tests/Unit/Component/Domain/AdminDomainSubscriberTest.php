@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\AdministrationBundle\Unit\Component\Domain;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Domain\AdminDomainSubscriber;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
@@ -61,9 +62,7 @@ class AdminDomainSubscriberTest extends TestCase
         $this->assertNull($event->getResponse());
     }
 
-    /**
-     * @dataProvider adminRedirectDataProvider
-     */
+    #[DataProvider('adminRedirectDataProvider')]
     public function testOnKernelRequestRedirectsToFirstDomain(
         string $requestUri,
         string $pathInfo,

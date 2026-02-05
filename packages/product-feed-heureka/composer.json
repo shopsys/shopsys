@@ -51,7 +51,7 @@
         "twig/twig": "^3.14.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^11.2.1"
+        "phpunit/phpunit": "^12.5"
     },
     "config": {
         "allow-plugins": {
