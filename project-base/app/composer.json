@@ -96,7 +96,7 @@
         "symfony/mailer": "^7.4",
         "symfony/messenger": "^7.4",
         "symfony/monolog-bridge": "^7.4",
-        "symfony/monolog-bundle": "^3.5.0",
+        "symfony/monolog-bundle": "^4.0",
         "symfony/property-info": "^7.4",
         "symfony/runtime": "^7.4",
         "symfony/security-bundle": "^7.4",
