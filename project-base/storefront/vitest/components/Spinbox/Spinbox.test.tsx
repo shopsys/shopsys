@@ -1,8 +1,8 @@
-import { fireEvent, render, cleanup } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
-import { describe, expect, test, vi, beforeEach, afterEach } from 'vitest';
+import { describe, expect, test, vi, beforeEach } from 'vitest';
 
 const { maxCartItemQuantity: MAX_CART_ITEM_QUANTITY } = VALIDATION_CONSTANTS;
 
@@ -27,10 +27,6 @@ describe('Spinbox Component', () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
-    });
-
-    afterEach(() => {
-        cleanup();
     });
 
     describe('Basic Rendering', () => {

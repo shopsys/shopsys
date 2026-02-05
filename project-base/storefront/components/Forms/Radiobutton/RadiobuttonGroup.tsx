@@ -5,7 +5,7 @@ import { RadiobuttonOptionType } from 'types/radiobuttonOptions';
 
 type RadiobuttonGroupProps = {
     name: string;
-    render: (input: JSX.Element, key: string) => ReactElement<any, any> | null;
+    render: (input: ReactElement, key: string) => ReactElement<any, any> | null;
     radiobuttons: RadiobuttonOptionType[];
     control: Control<any>;
     formName: string;

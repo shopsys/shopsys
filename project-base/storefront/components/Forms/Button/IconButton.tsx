@@ -9,7 +9,7 @@ type IconButtonProps = {
     className?: string;
     tid?: string;
     disabled?: boolean;
-    buttonRef?: React.RefObject<HTMLButtonElement>;
+    buttonRef?: React.RefObject<HTMLButtonElement | null>;
 };
 
 export const IconButton: FC<IconButtonProps> = ({

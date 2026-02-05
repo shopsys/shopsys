@@ -5,7 +5,7 @@ export const logErrorBoundary = (error: Error, info: ErrorInfo): void => {
     Sentry.withScope((scope) => {
         scope.setExtra('location', '_app.tsx:ErrorBoundary');
         scope.setExtra('componentStack', info.componentStack);
-        scope.setExtra('digest', info.digest);
+        scope.setExtra('digest', (info as ErrorInfo & { digest?: string }).digest);
         Sentry.captureException(error);
     });
 };

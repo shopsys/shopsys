@@ -96,6 +96,7 @@ const createPersistStore = (domainId: number) => {
 
 export const PersistStoreProvider: FC<PersistStoreProviderProps> = ({ children }) => {
     const domainConfig = useDomainConfig();
+    // Keep useMemo - createPersistStore has side effects (localStorage access, migrations)
     const store = useMemo(() => createPersistStore(domainConfig.domainId), [domainConfig.domainId]);
 
     return <PersistStoreContext.Provider value={store}>{children}</PersistStoreContext.Provider>;

@@ -9,7 +9,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductDetailRelatedProductsSectionProps = {
     relatedProducts: TypeListedProductFragment[];
-    sectionRef: RefObject<HTMLDivElement>;
+    sectionRef: RefObject<HTMLDivElement | null>;
 };
 
 export const ProductDetailRelatedProductsSection = ({

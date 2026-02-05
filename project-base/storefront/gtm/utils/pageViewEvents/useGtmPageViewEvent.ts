@@ -8,7 +8,7 @@ import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParame
 export const useGtmPageViewEvent = (gtmPageViewEvent: GtmPageViewEventType, areDataFetching?: boolean): void => {
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
-    const lastViewedSlug = useRef<string>();
+    const lastViewedSlug = useRef<string>(undefined);
     const { setDidPageViewRun, isScriptLoaded } = useGtmContext();
 
     useEffect(() => {
@@ -17,5 +17,5 @@ export const useGtmPageViewEvent = (gtmPageViewEvent: GtmPageViewEventType, areD
             gtmSafePushEvent(gtmPageViewEvent);
             setDidPageViewRun(true);
         }
-    }, [gtmPageViewEvent, areDataFetching, slug]);
+    }, [gtmPageViewEvent, areDataFetching, slug, isScriptLoaded, setDidPageViewRun]);
 };

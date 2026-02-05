@@ -1,4 +1,3 @@
-import { fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
@@ -21,6 +20,7 @@ const compat = new FlatCompat({
 });
 
 export default [
+    reactHooks.configs['recommended-latest'],
     {
         ignores: [
             'node_modules/*',
@@ -54,7 +54,6 @@ export default [
             react,
             'unused-imports': unusedImports,
             '@typescript-eslint': typescriptEslint,
-            'react-hooks': fixupPluginRules(reactHooks),
             'no-relative-import-paths': noRelativeImportPaths,
             'jsx-a11y': jsxA11y,
         },
@@ -157,8 +156,6 @@ export default [
                     message: 'Please use the custom createClient function from storefront/urql/fetcher.ts',
                 },
             ],
-
-            'react-hooks/rules-of-hooks': 'error',
 
             'react/no-unknown-property': [
                 'error',

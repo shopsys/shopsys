@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validateEmail, validatePassword } from 'components/Forms/validationRules';
-import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { LoginFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -44,24 +43,19 @@ export const useLoginFormMeta = (formProviderMethods: UseFormReturn<LoginFormTyp
     const { t } = useTranslation();
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'login-form',
-            fields: {
-                email: {
-                    name: 'email' as const,
-                    label: t('Your email'),
-                    errorMessage: errors.email?.message,
-                },
-                password: {
-                    name: 'password' as const,
-                    label: t('Password'),
-                    errorMessage: errors.password?.message,
-                },
+    return {
+        formName: 'login-form',
+        fields: {
+            email: {
+                name: 'email' as const,
+                label: t('Your email'),
+                errorMessage: errors.email?.message,
             },
-        }),
-        [errors.email?.message, errors.password?.message, t],
-    );
-
-    return formMeta;
+            password: {
+                name: 'password' as const,
+                label: t('Password'),
+                errorMessage: errors.password?.message,
+            },
+        },
+    };
 };

@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validateEmail } from 'components/Forms/validationRules';
-import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -40,25 +39,20 @@ export const usePasswordResetFormMeta = (
     const { t } = useTranslation();
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'password-reset-form',
-            messages: {
-                error: t('Could not reset password'),
-                success: t(
-                    'We have sent password reset instructions to your email address. Please check your inbox and follow the link to create a new password.',
-                ),
+    return {
+        formName: 'password-reset-form',
+        messages: {
+            error: t('Could not reset password'),
+            success: t(
+                'We have sent password reset instructions to your email address. Please check your inbox and follow the link to create a new password.',
+            ),
+        },
+        fields: {
+            email: {
+                name: 'email' as const,
+                label: t('Your email'),
+                errorMessage: errors.email?.message,
             },
-            fields: {
-                email: {
-                    name: 'email' as const,
-                    label: t('Your email'),
-                    errorMessage: errors.email?.message,
-                },
-            },
-        }),
-        [errors.email?.message, t],
-    );
-
-    return formMeta;
+        },
+    };
 };

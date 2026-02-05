@@ -7,7 +7,6 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 import { useNewsletterSubscribeMutation } from 'graphql/requests/newsletterSubscription/mutations/NewsletterSubscribeMutation.generated';
-import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
@@ -26,21 +25,18 @@ export const NewsletterForm: FC = () => {
         customMessage: formMeta.messages.error,
     });
 
-    const onSubscribeToNewsletterHandler = useCallback<SubmitHandler<NewsletterFormType>>(
-        async (newsletterFormData) => {
-            blurInput();
-            const subscribeToNewsletterResult = await subscribeToNewsletter(newsletterFormData);
+    const onSubscribeToNewsletterHandler: SubmitHandler<NewsletterFormType> = async (newsletterFormData) => {
+        blurInput();
+        const subscribeToNewsletterResult = await subscribeToNewsletter(newsletterFormData);
 
-            if (subscribeToNewsletterResult.data?.NewsletterSubscribe !== undefined) {
-                showSuccessMessage(formMeta.messages.success);
-            }
+        if (subscribeToNewsletterResult.data?.NewsletterSubscribe !== undefined) {
+            showSuccessMessage(formMeta.messages.success);
+        }
 
-            handleError(subscribeToNewsletterResult.error);
+        handleError(subscribeToNewsletterResult.error);
 
-            clearForm(subscribeToNewsletterResult.error, formProviderMethods, defaultValues);
-        },
-        [formMeta.messages, formProviderMethods, subscribeToNewsletter, defaultValues, handleError],
-    );
+        clearForm(subscribeToNewsletterResult.error, formProviderMethods, defaultValues);
+    };
 
     return (
         <FooterContainer className="bg-background-accent-less">

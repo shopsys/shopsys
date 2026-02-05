@@ -43,15 +43,20 @@ export const useProductList = (
     const [, TypeRemoveProductFromListMutation] = useRemoveProductFromListMutation();
     const [, removeListMutation] = useRemoveProductListMutation();
 
-    const [{ data: productListData, fetching: isProductListFetching }] = useProductListQuery({
+    const isQueryPaused = !isProductListHydrated || (!productListUuid && !isUserLoggedIn) || authLoading !== null;
+
+    const [{ data: productListData, fetching }] = useProductListQuery({
         variables: {
             input: {
                 type: productListType,
                 uuid: productListUuid,
             },
         },
-        pause: !isProductListHydrated || (!productListUuid && !isUserLoggedIn) || authLoading !== null,
+        pause: isQueryPaused,
     });
+
+    // Consider loading when query is paused due to hydration not being complete yet
+    const isProductListFetching = fetching || !isProductListHydrated;
 
     const refetchWithNetworkOnly = async () => {
         const result = await client

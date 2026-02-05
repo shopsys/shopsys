@@ -1,7 +1,6 @@
 import { GrapesJsProducts } from './GrapesJsProducts';
 import { UserText } from './UserText';
 import { useProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
-import { memo } from 'react';
 import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'utils/parsing/grapesJsParser';
 
 type GrapesJsParserProps = {
@@ -9,7 +8,7 @@ type GrapesJsParserProps = {
     visibleSliderItems?: number;
 };
 
-export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text, visibleSliderItems = 5 }) => {
+export const GrapesJsParser: FC<GrapesJsParserProps> = ({ text, visibleSliderItems = 5 }) => {
     const catnums = parseCatnums(text);
     const [{ data: productsData, fetching: areProductsFetching }] = useProductsByCatnums({
         variables: { catnums },
@@ -38,6 +37,4 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text, visibleSlid
             })}
         </div>
     );
-});
-
-GrapesJsParser.displayName = 'GrapesJsParser';
+};

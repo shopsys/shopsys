@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 
 type SectionRef = {
     id: string;
@@ -16,27 +16,24 @@ export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationRetu
     const [activeSection, setActiveSection] = useState<string | null>(null);
     const isUserScrollingRef = useRef(true);
 
-    const updateHash = useCallback((sectionId: string | null) => {
+    const updateHash = (sectionId: string | null) => {
         const url = new URL(window.location.href);
         url.hash = sectionId ?? '';
         window.history.replaceState(null, '', url);
-    }, []);
+    };
 
-    const scrollToSection = useCallback(
-        (sectionId: string) => {
-            const section = sections.find((s) => s.id === sectionId);
+    const scrollToSection = (sectionId: string) => {
+        const section = sections.find((s) => s.id === sectionId);
 
-            if (section?.ref.current) {
-                // Disable scroll detection during programmatic scroll
-                isUserScrollingRef.current = false;
+        if (section?.ref.current) {
+            // Disable scroll detection during programmatic scroll
+            isUserScrollingRef.current = false;
 
-                setActiveSection(sectionId);
-                updateHash(sectionId);
-                section.ref.current.scrollIntoView({ behavior: 'smooth' });
-            }
-        },
-        [sections, updateHash],
-    );
+            setActiveSection(sectionId);
+            updateHash(sectionId);
+            section.ref.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     // Handle initial hash
     useEffect(() => {

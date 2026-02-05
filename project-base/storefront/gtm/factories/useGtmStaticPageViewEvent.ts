@@ -6,7 +6,6 @@ import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { GtmPageViewEventType } from 'gtm/types/events';
 import { getGtmPageInfoType } from 'gtm/utils/getGtmPageInfoType';
 import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
-import { useMemo } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
 
@@ -20,17 +19,13 @@ export const useGtmStaticPageViewEvent = (
     const user = useCurrentCustomerData();
     const userConsent = usePersistStore((store) => store.userConsent);
 
-    return useMemo(
-        () =>
-            getGtmPageViewEvent(
-                getGtmPageInfoType(pageType, breadcrumbs),
-                gtmCartInfo,
-                isCartLoaded,
-                user,
-                userContactInformation,
-                domainConfig,
-                userConsent,
-            ),
-        [pageType, breadcrumbs, gtmCartInfo, isCartLoaded, user, userContactInformation, domainConfig, userConsent],
+    return getGtmPageViewEvent(
+        getGtmPageInfoType(pageType, breadcrumbs),
+        gtmCartInfo,
+        isCartLoaded,
+        user,
+        userContactInformation,
+        domainConfig,
+        userConsent,
     );
 };

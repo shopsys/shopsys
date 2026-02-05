@@ -6,9 +6,7 @@ import {
     FocusEventHandler,
     InputHTMLAttributes,
     KeyboardEventHandler,
-    useCallback,
     useEffect,
-    useMemo,
     useRef,
     useState,
 } from 'react';
@@ -52,7 +50,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     title,
 }) => {
     const { t } = useTranslation();
-    const step = useMemo(() => getStep(min, max), [min, max]);
+    const step = getStep(min, max);
 
     const [minValueInput, setMinValueInput] = useState<number | ''>(min);
     const [minValueThumb, setMinValueThumb] = useState(min);
@@ -88,7 +86,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         }
     }, [maxValue, minValue, max]);
 
-    const getPercent = useCallback((value: number) => Math.round(((value - min) / (max - min)) * 100), [min, max]);
+    const getPercent = (value: number) => Math.round(((value - min) / (max - min)) * 100);
 
     useEffect(() => {
         const minPercent = getPercent(minValueThumb);

@@ -7,7 +7,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductDetailOverviewSectionProps = {
     description: string | null;
-    sectionRef: RefObject<HTMLDivElement>;
+    sectionRef: RefObject<HTMLDivElement | null>;
 };
 
 export const ProductDetailOverviewSection = ({ description, sectionRef }: ProductDetailOverviewSectionProps) => {

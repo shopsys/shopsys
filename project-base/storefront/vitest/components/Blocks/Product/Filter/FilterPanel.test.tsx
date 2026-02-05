@@ -1,10 +1,10 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 vi.mock('next-translate/useTranslation', () => ({
     __esModule: true,
@@ -231,10 +231,6 @@ describe('FilterPanel Component', () => {
         vi.mocked(useUpdateFilterQuery).mockReturnValue({
             resetAllFilterQueries: mockResetAllFilterQueries,
         } as any);
-    });
-
-    afterEach(() => {
-        cleanup();
     });
 
     describe('Basic Rendering', () => {

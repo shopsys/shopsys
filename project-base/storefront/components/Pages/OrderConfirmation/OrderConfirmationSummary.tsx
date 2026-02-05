@@ -1,6 +1,5 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
-import React, { memo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -22,7 +21,7 @@ type OrderConfirmationSummaryProps = {
     totalDiscountPrice?: TypePriceFragment | null;
 };
 
-const OrderConfirmationSummaryComp: FC<OrderConfirmationSummaryProps> = ({
+export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
     promoCode,
     payment,
     transport,
@@ -115,5 +114,3 @@ const OrderConfirmationSummaryComp: FC<OrderConfirmationSummaryProps> = ({
         </div>
     );
 };
-
-export const OrderConfirmationSummary = memo(OrderConfirmationSummaryComp);

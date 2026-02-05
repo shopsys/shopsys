@@ -10,7 +10,7 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { usePersonalDataRequestMutation } from 'graphql/requests/personalData/mutations/PersonalDataRequestMutation.generated';
 import { TypePersonalDataAccessRequestTypeEnum } from 'graphql/types';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PersonalDataOverviewFormType } from 'types/form';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
@@ -33,23 +33,23 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
         customMessage: formMeta.messages.error,
     });
 
-    const onPersonalDataOverviewHandler = useCallback<SubmitHandler<PersonalDataOverviewFormType>>(
-        async (personalDataOverviewFormData) => {
-            blurInput();
-            const personalDataOverviewResult = await personalDataOverview({
-                email: personalDataOverviewFormData.email,
-                type: TypePersonalDataAccessRequestTypeEnum.Display,
-            });
+    const onPersonalDataOverviewHandler: SubmitHandler<PersonalDataOverviewFormType> = async (
+        personalDataOverviewFormData,
+    ) => {
+        blurInput();
+        const personalDataOverviewResult = await personalDataOverview({
+            email: personalDataOverviewFormData.email,
+            type: TypePersonalDataAccessRequestTypeEnum.Display,
+        });
 
-            if (personalDataOverviewResult.data?.RequestPersonalDataAccess !== undefined) {
-                setIsSuccess(true);
-            }
+        if (personalDataOverviewResult.data?.RequestPersonalDataAccess !== undefined) {
+            setIsSuccess(true);
+        }
 
-            handleError(personalDataOverviewResult.error);
-            clearForm(personalDataOverviewResult.error, formProviderMethods, { email: '' });
-        },
-        [personalDataOverview, formMeta.messages, formProviderMethods, handleError],
-    );
+        handleError(personalDataOverviewResult.error);
+
+        clearForm(personalDataOverviewResult.error, formProviderMethods, { email: '' });
+    };
 
     return (
         <Webline width="lg">

@@ -1,7 +1,6 @@
 import { SimpleNavigationListItem } from './SimpleNavigationListItem';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
-import { memo } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropType } from 'types/simpleNavigation';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -16,7 +15,7 @@ type SimpleNavigationProps = {
     ariaLabel?: string;
 };
 
-const SimpleNavigationComp: FC<SimpleNavigationProps> = ({
+export const SimpleNavigation: FC<SimpleNavigationProps> = ({
     title,
     listedItems,
     isWithoutSlider,
@@ -57,5 +56,3 @@ const SimpleNavigationComp: FC<SimpleNavigationProps> = ({
         </Webline>
     );
 };
-
-export const SimpleNavigation = memo(SimpleNavigationComp);

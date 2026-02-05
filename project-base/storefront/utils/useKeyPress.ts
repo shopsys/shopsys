@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 export const useKeypress = (key: string, handler: () => void) => {
-    const onKeyPressHandler = useRef<(event: KeyboardEvent) => void>();
+    const onKeyPressHandler = useRef<(event: KeyboardEvent) => void>(undefined);
 
     useEffect(() => {
         onKeyPressHandler.current = (event: KeyboardEvent) => {

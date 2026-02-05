@@ -2,7 +2,7 @@ import { AdvertImage } from './AdvertImage';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useAdvertsQuery } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import { memo, useMemo } from 'react';
+import { useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type PositionNameType = 'footer' | 'header' | 'cartPreview' | 'productListSecondRow';
@@ -14,7 +14,7 @@ type AdvertsProps = {
     isSingle?: boolean;
 };
 
-const AdvertsComp: FC<AdvertsProps> = ({ positionName, withWebline, currentCategory, className, isSingle }) => {
+export const Adverts: FC<AdvertsProps> = ({ positionName, withWebline, currentCategory, className, isSingle }) => {
     const [{ data: advertsData }] = useAdvertsQuery({
         variables: {
             categoryUuid: currentCategory?.uuid || null,
@@ -22,17 +22,15 @@ const AdvertsComp: FC<AdvertsProps> = ({ positionName, withWebline, currentCateg
         },
     });
 
-    const advertsForPosition = useMemo(
-        () => advertsData?.adverts.filter((advert) => advert.positionName === positionName) ?? [],
-        [advertsData?.adverts, positionName],
-    );
-
+    // keep useMemo for Math.random() - needs stable value across renders
     const displayedAdverts = useMemo(() => {
+        const advertsForPosition = advertsData?.adverts.filter((advert) => advert.positionName === positionName) ?? [];
+
         if (isSingle && advertsForPosition.length) {
             return [advertsForPosition[Math.floor(Math.random() * advertsForPosition.length)]];
         }
         return advertsForPosition;
-    }, [isSingle, advertsForPosition]);
+    }, [isSingle, advertsData?.adverts, positionName]);
 
     if (!displayedAdverts.length) {
         return null;
@@ -74,5 +72,3 @@ const getPositionNames = (positionName: PositionNameType) => {
 
     return ['cartPreview'];
 };
-
-export const Adverts = memo(AdvertsComp);

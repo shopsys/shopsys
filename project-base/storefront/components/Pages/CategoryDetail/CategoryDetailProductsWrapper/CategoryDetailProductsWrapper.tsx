@@ -5,7 +5,6 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/utils/getCategoryOrSeoCategoryGtmProductListName';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
-import { useMemo } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export type CategoryDetailProductsWrapperProps = {
@@ -24,10 +23,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProp
     hasNextPage,
 }) => {
     const { t } = useTranslation();
-    const gtmProductListName = useMemo(
-        () => getCategoryOrSeoCategoryGtmProductListName(category.originalCategorySlug),
-        [category],
-    );
+    const gtmProductListName = getCategoryOrSeoCategoryGtmProductListName(category.originalCategorySlug);
     useGtmPaginatedProductListViewEvent(products, gtmProductListName);
 
     return (

@@ -1,10 +1,10 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FilterGroupPrice } from 'components/Blocks/Product/Filter/FilterGroupPrice';
 import { getPriceRounded } from 'utils/mappers/price';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 vi.mock('next-translate/useTranslation', () => ({
     __esModule: true,
@@ -74,10 +74,6 @@ describe('FilterGroupPrice Component', () => {
             updateFilterPriceMinimumQuery: mockUpdateFilterPriceMinimumQuery,
             updateFilterPriceMaximumQuery: mockUpdateFilterPriceMaximumQuery,
         } as any);
-    });
-
-    afterEach(() => {
-        cleanup();
     });
 
     describe('Basic Rendering', () => {

@@ -7,7 +7,6 @@ import {
 } from 'components/Forms/validationRules';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeOrderWithdrawalDataFragment } from 'graphql/requests/orders/fragments/OrderWithdrawalDataFragment.generated';
-import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { OrderWithdrawalFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -66,43 +65,38 @@ export const useOrderWithdrawalFormMeta = (
     const { t } = useTranslation();
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'order-withdrawal-form',
-            messages: {
-                error: t('The withdrawal request could not be submitted'),
-                success: t('Your withdrawal request has been submitted'),
+    return {
+        formName: 'order-withdrawal-form',
+        messages: {
+            error: t('The withdrawal request could not be submitted'),
+            success: t('Your withdrawal request has been submitted'),
+        },
+        fields: {
+            firstName: {
+                name: 'firstName' as const,
+                label: t('First name'),
+                errorMessage: errors.firstName?.message,
             },
-            fields: {
-                firstName: {
-                    name: 'firstName' as const,
-                    label: t('First name'),
-                    errorMessage: errors.firstName?.message,
-                },
-                lastName: {
-                    name: 'lastName' as const,
-                    label: t('Last name'),
-                    errorMessage: errors.lastName?.message,
-                },
-                email: {
-                    name: 'email' as const,
-                    label: t('Email'),
-                    errorMessage: errors.email?.message,
-                },
-                telephone: {
-                    name: 'telephone' as const,
-                    label: t('Phone number (optional)'),
-                    errorMessage: errors.telephone?.message,
-                },
-                note: {
-                    name: 'note' as const,
-                    label: t('Note (optional)'),
-                    errorMessage: errors.note?.message,
-                },
+            lastName: {
+                name: 'lastName' as const,
+                label: t('Last name'),
+                errorMessage: errors.lastName?.message,
             },
-        }),
-        [errors, t],
-    );
-
-    return formMeta;
+            email: {
+                name: 'email' as const,
+                label: t('Email'),
+                errorMessage: errors.email?.message,
+            },
+            telephone: {
+                name: 'telephone' as const,
+                label: t('Phone number (optional)'),
+                errorMessage: errors.telephone?.message,
+            },
+            note: {
+                name: 'note' as const,
+                label: t('Note (optional)'),
+                errorMessage: errors.note?.message,
+            },
+        },
+    };
 };

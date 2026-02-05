@@ -21,5 +21,5 @@ export const useGtmContactInformationPageViewEvent = (gtmPageViewEvent: GtmPageV
             wasViewedRef.current = true;
             gtmSafePushEvent(getGtmContactInformationPageViewEvent(gtmPageViewEvent.cart, !canSeePrices));
         }
-    }, [gtmPageViewEvent._isLoaded, gtmPageViewEvent.cart, didPageViewRun]);
+    }, [gtmPageViewEvent._isLoaded, gtmPageViewEvent.cart, didPageViewRun, isScriptLoaded, canSeePrices]);
 };

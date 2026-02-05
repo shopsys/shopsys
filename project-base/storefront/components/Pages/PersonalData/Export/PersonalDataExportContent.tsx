@@ -10,7 +10,7 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { usePersonalDataRequestMutation } from 'graphql/requests/personalData/mutations/PersonalDataRequestMutation.generated';
 import { TypePersonalDataAccessRequestTypeEnum } from 'graphql/types';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PersonalDataExportFormType } from 'types/form';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
@@ -33,23 +33,23 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
         customMessage: formMeta.messages.error,
     });
 
-    const onPersonalDataExportHandler = useCallback<SubmitHandler<PersonalDataExportFormType>>(
-        async (personalDataExportFormData) => {
-            blurInput();
-            const personalDataExportResult = await personalDataExport({
-                email: personalDataExportFormData.email,
-                type: TypePersonalDataAccessRequestTypeEnum.Export,
-            });
+    const onPersonalDataExportHandler: SubmitHandler<PersonalDataExportFormType> = async (
+        personalDataExportFormData,
+    ) => {
+        blurInput();
+        const personalDataExportResult = await personalDataExport({
+            email: personalDataExportFormData.email,
+            type: TypePersonalDataAccessRequestTypeEnum.Export,
+        });
 
-            if (personalDataExportResult.data?.RequestPersonalDataAccess) {
-                setIsSuccess(true);
-            }
+        if (personalDataExportResult.data?.RequestPersonalDataAccess) {
+            setIsSuccess(true);
+        }
 
-            handleError(personalDataExportResult.error);
-            clearForm(personalDataExportResult.error, formProviderMethods, { email: '' });
-        },
-        [personalDataExport, formMeta.messages, formProviderMethods, handleError],
-    );
+        handleError(personalDataExportResult.error);
+
+        clearForm(personalDataExportResult.error, formProviderMethods, { email: '' });
+    };
 
     return (
         <Webline width="lg">

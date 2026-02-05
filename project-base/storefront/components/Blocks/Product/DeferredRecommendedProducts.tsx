@@ -19,7 +19,7 @@ const ProductsSliderPlaceholder = dynamic(() =>
 type DeferredRecommendedProductsProps = {
     recommendationType: TypeRecommendationType;
     itemUuids?: string[];
-    render: (input: JSX.Element) => ReactElement<any, any> | null;
+    render: (input: ReactElement) => ReactElement<any, any> | null;
 };
 
 export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> = ({

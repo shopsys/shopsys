@@ -3,7 +3,6 @@ import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectI
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { usePaymentChangeInSelect } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
-import { memo } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
@@ -16,7 +15,7 @@ type PaymentListItemProps = {
     changePayment: ChangePayment;
 };
 
-const PaymentListItemComp: FC<PaymentListItemProps> = ({ payment, isActive = false, changePayment }) => {
+export const PaymentListItem: FC<PaymentListItemProps> = ({ payment, isActive = false, changePayment }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
@@ -52,5 +51,3 @@ const PaymentListItemComp: FC<PaymentListItemProps> = ({ payment, isActive = fal
         </TransportAndPaymentListItem>
     );
 };
-
-export const PaymentListItem = memo(PaymentListItemComp);

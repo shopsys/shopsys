@@ -41,7 +41,7 @@ export const useCountdown = (endTime: CountdownTime, callback?: () => void, inte
         isLoading: true,
     });
 
-    const onCompleteRef = useRef<() => void>();
+    const onCompleteRef = useRef<() => void>(undefined);
     onCompleteRef.current = callback ?? router.reload;
 
     useEffect(() => {

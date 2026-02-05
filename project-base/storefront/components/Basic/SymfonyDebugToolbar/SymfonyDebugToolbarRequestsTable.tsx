@@ -6,7 +6,7 @@ type RequestsTableProps = {
 };
 
 export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
-    const responsesRefs: Array<RefObject<HTMLTableRowElement>> = Array(responses.length)
+    const responsesRefs: Array<RefObject<HTMLTableRowElement | null>> = Array(responses.length)
         .fill(null)
         .map(() => createRef());
 

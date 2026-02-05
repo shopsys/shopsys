@@ -3,7 +3,7 @@ import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import { useMemo } from 'react';
+import { ReactElement } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -32,7 +32,7 @@ type NewsletterFormMetaType = {
     fields: {
         [key in keyof NewsletterFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | ReactElement;
             errorMessage: string | undefined;
         };
     };
@@ -46,45 +46,40 @@ export const useNewsletterFormMeta = (
     const privacyPolicyArticleUrl = settingsData?.settings?.privacyPolicyArticleUrl;
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'newsletter-form',
-            messages: {
-                error: t('Could not subscribe to newsletter'),
-                success: t('You have successfully subscribed to our newsletter'),
+    return {
+        formName: 'newsletter-form',
+        messages: {
+            error: t('Could not subscribe to newsletter'),
+            success: t('You have successfully subscribed to our newsletter'),
+        },
+        fields: {
+            email: {
+                name: 'email' as const,
+                label: t('Your email'),
+                errorMessage: errors.email?.message,
             },
-            fields: {
-                email: {
-                    name: 'email' as const,
-                    label: t('Your email'),
-                    errorMessage: errors.email?.message,
-                },
-                privacyPolicy: {
-                    name: 'privacyPolicy' as const,
-                    label: (
-                        <Trans
-                            defaultTrans="I take note of the <lnk1>processing of personal data</lnk1>."
-                            i18nKey="PrivacyPolicyCheckbox"
-                            components={{
-                                lnk1: privacyPolicyArticleUrl ? (
-                                    <Link
-                                        aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                        className="inline text-sm"
-                                        href={privacyPolicyArticleUrl}
-                                        target="_blank"
-                                    />
-                                ) : (
-                                    <span className={linkPlaceholderTwClass} />
-                                ),
-                            }}
-                        />
-                    ),
-                    errorMessage: errors.privacyPolicy?.message,
-                },
+            privacyPolicy: {
+                name: 'privacyPolicy' as const,
+                label: (
+                    <Trans
+                        defaultTrans="I take note of the <lnk1>processing of personal data</lnk1>."
+                        i18nKey="PrivacyPolicyCheckbox"
+                        components={{
+                            lnk1: privacyPolicyArticleUrl ? (
+                                <Link
+                                    aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
+                                    className="inline text-sm"
+                                    href={privacyPolicyArticleUrl}
+                                    target="_blank"
+                                />
+                            ) : (
+                                <span className={linkPlaceholderTwClass} />
+                            ),
+                        }}
+                    />
+                ),
+                errorMessage: errors.privacyPolicy?.message,
             },
-        }),
-        [t, errors.email?.message, errors.privacyPolicy?.message, privacyPolicyArticleUrl],
-    );
-
-    return formMeta;
+        },
+    };
 };

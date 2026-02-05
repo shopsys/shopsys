@@ -5,7 +5,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { useStoresQuery } from 'graphql/requests/stores/queries/StoresQuery.generated';
 import { TypeCoordinates } from 'graphql/types';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
@@ -28,7 +28,7 @@ export const StoresWrapper: FC = () => {
         },
     });
     const edges = storesData?.stores.edges || [];
-    const mappedStores = useMemo(() => mapConnectionEdges<StoreOrPacketeryPoint>(edges), [edges]);
+    const mappedStores = mapConnectionEdges<StoreOrPacketeryPoint>(edges);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -41,9 +41,9 @@ export const StoresWrapper: FC = () => {
         });
     }, []);
 
-    const clickOnMarkerHandler = useCallback((uuid: string) => {
+    const clickOnMarkerHandler = (uuid: string) => {
         setSelectedStore(uuid);
-    }, []);
+    };
 
     if (!mappedStores) {
         return null;

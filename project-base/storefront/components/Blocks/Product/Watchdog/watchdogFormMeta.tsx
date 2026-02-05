@@ -3,7 +3,7 @@ import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import { useMemo } from 'react';
+import { ReactElement } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { WatchdogFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -34,7 +34,7 @@ type WatchdogFormMetaType = {
     fields: {
         [key in keyof WatchdogFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | ReactElement;
             errorMessage?: string;
         };
     };
@@ -47,49 +47,44 @@ export const useWatchdogFormMeta = (formProviderMethods: UseFormReturn<WatchdogF
 
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'watchdog-form',
-            messages: {
-                error: t('An error occurred while creating your watchdog'),
+    return {
+        formName: 'watchdog-form',
+        messages: {
+            error: t('An error occurred while creating your watchdog'),
+        },
+        fields: {
+            email: {
+                name: 'email' as const,
+                label: t('Your email'),
+                errorMessage: errors.email?.message,
             },
-            fields: {
-                email: {
-                    name: 'email' as const,
-                    label: t('Your email'),
-                    errorMessage: errors.email?.message,
-                },
-                productUuid: {
-                    name: 'productUuid' as const,
-                    label: t('Product'),
-                    errorMessage: errors.productUuid?.message,
-                },
-                gdprAgreement: {
-                    name: 'gdprAgreement' as const,
-                    label: (
-                        <Trans
-                            defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
-                            i18nKey="GdprAgreementCheckbox"
-                            components={{
-                                lnk1: privacyPolicyArticleUrl ? (
-                                    <Link
-                                        aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                        className="inline text-sm"
-                                        href={privacyPolicyArticleUrl}
-                                        target="_blank"
-                                    />
-                                ) : (
-                                    <span className={linkPlaceholderTwClass} />
-                                ),
-                            }}
-                        />
-                    ),
-                    errorMessage: errors.gdprAgreement?.message,
-                },
+            productUuid: {
+                name: 'productUuid' as const,
+                label: t('Product'),
+                errorMessage: errors.productUuid?.message,
             },
-        }),
-        [errors.gdprAgreement?.message, errors.productUuid?.message, t],
-    );
-
-    return formMeta;
+            gdprAgreement: {
+                name: 'gdprAgreement' as const,
+                label: (
+                    <Trans
+                        defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
+                        i18nKey="GdprAgreementCheckbox"
+                        components={{
+                            lnk1: privacyPolicyArticleUrl ? (
+                                <Link
+                                    aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
+                                    className="inline text-sm"
+                                    href={privacyPolicyArticleUrl}
+                                    target="_blank"
+                                />
+                            ) : (
+                                <span className={linkPlaceholderTwClass} />
+                            ),
+                        }}
+                    />
+                ),
+                errorMessage: errors.gdprAgreement?.message,
+            },
+        },
+    };
 };

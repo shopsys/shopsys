@@ -1,7 +1,6 @@
 import { useRedirectOnPermissionsChange } from './useRedirectOnPermissionsChange';
 import { useCustomerUserRoleGroupsQuery } from 'graphql/requests/customer/queries/CustomerUserRoleGroupsQuery.generated';
 import { TypeCustomerUserRoleGroup } from 'graphql/types';
-import { useMemo } from 'react';
 import { RadiobuttonOptionType } from 'types/radiobuttonOptions';
 
 export const useCustomerUserGroupsAsRadiobuttonOptions = (
@@ -15,9 +14,9 @@ export const useCustomerUserGroupsAsRadiobuttonOptions = (
     });
     const { redirect } = useRedirectOnPermissionsChange();
 
-    const customerUserRoleGroupsDataMemoized = useMemo(
-        () => mapUserGroupsToRadiobuttonOptions(customerUserRoleGroupsData?.customerUserRoleGroups, isDisabled),
-        [customerUserRoleGroupsData?.customerUserRoleGroups],
+    const customerUserRoleGroupsOptions = mapUserGroupsToRadiobuttonOptions(
+        customerUserRoleGroupsData?.customerUserRoleGroups,
+        isDisabled,
     );
 
     if (error?.networkError && error.networkError.message.includes('No Content')) {
@@ -25,7 +24,7 @@ export const useCustomerUserGroupsAsRadiobuttonOptions = (
     }
 
     return {
-        customerUserRoleGroupsOptions: customerUserRoleGroupsDataMemoized,
+        customerUserRoleGroupsOptions,
         isFetching,
     };
 };

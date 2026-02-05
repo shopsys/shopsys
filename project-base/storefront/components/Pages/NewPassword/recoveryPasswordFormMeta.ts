@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validateNewPassword, validateNewPasswordConfirm } from 'components/Forms/validationRules';
-import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { NewPasswordFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -48,28 +47,23 @@ export const useRecoveryPasswordFormMeta = (
     const { t } = useTranslation();
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'new-password-form',
-            messages: {
-                error: t('An error occurred while changing your password'),
-                success: t('Your password has been changed successfully'),
+    return {
+        formName: 'new-password-form',
+        messages: {
+            error: t('An error occurred while changing your password'),
+            success: t('Your password has been changed successfully'),
+        },
+        fields: {
+            newPassword: {
+                name: 'newPassword' as const,
+                label: t('New password'),
+                errorMessage: errors.newPassword?.message,
             },
-            fields: {
-                newPassword: {
-                    name: 'newPassword' as const,
-                    label: t('New password'),
-                    errorMessage: errors.newPassword?.message,
-                },
-                newPasswordConfirm: {
-                    name: 'newPasswordConfirm' as const,
-                    label: t('New password again'),
-                    errorMessage: errors.newPasswordConfirm?.message,
-                },
+            newPasswordConfirm: {
+                name: 'newPasswordConfirm' as const,
+                label: t('New password again'),
+                errorMessage: errors.newPasswordConfirm?.message,
             },
-        }),
-        [errors.newPassword?.message, errors.newPasswordConfirm?.message, t],
-    );
-
-    return formMeta;
+        },
+    };
 };

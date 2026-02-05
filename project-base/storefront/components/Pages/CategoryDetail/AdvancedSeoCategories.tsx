@@ -1,14 +1,13 @@
 import { Tag } from 'components/Basic/Tag/Tag';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import { memo } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type AdvancedSeoCategoriesProps = {
     readyCategorySeoMixLinks: TypeCategoryDetailFragment['readyCategorySeoMixLinks'];
 };
 
-const AdvancedSeoCategoriesComp: FC<AdvancedSeoCategoriesProps> = ({ readyCategorySeoMixLinks }) => {
+export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCategorySeoMixLinks }) => {
     const { t } = useTranslation();
 
     return (
@@ -28,5 +27,3 @@ const AdvancedSeoCategoriesComp: FC<AdvancedSeoCategoriesProps> = ({ readyCatego
         </Webline>
     );
 };
-
-export const AdvancedSeoCategories = memo(AdvancedSeoCategoriesComp);

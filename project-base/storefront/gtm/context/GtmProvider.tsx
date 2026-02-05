@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, createContext, useEffect, useRef } from 'react';
 import { useContext } from 'react';
+import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
 type GtmContextType = {
     didPageViewRun: boolean;
@@ -15,10 +16,15 @@ export const GtmProvider: FC = ({ children }) => {
     const [didPageViewRun, setDidPageViewRun] = useState(false);
     const [isScriptLoaded, setIsScriptLoaded] = useState(false);
     const router = useRouter();
+    const currentPathRef = useRef(getUrlWithoutGetParameters(router.asPath));
 
     useEffect(() => {
-        const onRouteChangeStart = () => {
-            setDidPageViewRun(false);
+        const onRouteChangeStart = (url: string) => {
+            const newPath = getUrlWithoutGetParameters(url);
+            if (currentPathRef.current !== newPath) {
+                currentPathRef.current = newPath;
+                setDidPageViewRun(false);
+            }
         };
 
         router.events.on('routeChangeStart', onRouteChangeStart);

@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validateEmail } from 'components/Forms/validationRules';
-import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PersonalDataExportFormType } from 'types/form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
@@ -43,23 +42,18 @@ export const usePersonalDataExportFormMeta = (
     const { t } = useTranslation();
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'personal-data-export-form',
-            messages: {
-                error: t('Could not sent personal data export request'),
-                success: t('We sent an email with link to export your personal data'),
+    return {
+        formName: 'personal-data-export-form',
+        messages: {
+            error: t('Could not sent personal data export request'),
+            success: t('We sent an email with link to export your personal data'),
+        },
+        fields: {
+            email: {
+                name: 'email' as const,
+                label: t('Your email'),
+                errorMessage: errors.email?.message,
             },
-            fields: {
-                email: {
-                    name: 'email' as const,
-                    label: t('Your email'),
-                    errorMessage: errors.email?.message,
-                },
-            },
-        }),
-        [errors.email?.message, t],
-    );
-
-    return formMeta;
+        },
+    };
 };

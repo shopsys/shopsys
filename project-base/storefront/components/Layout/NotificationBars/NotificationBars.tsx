@@ -5,14 +5,14 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { jwtDecode } from 'jwt-decode';
 import Trans from 'next-translate/Trans';
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { getTokensFromCookies } from 'utils/auth/getTokensFromCookies';
 import { useLogout } from 'utils/auth/useLogout';
 import { getYIQContrastTextColor } from 'utils/colors/colors';
 import { useNotificationBarsWithRevalidation } from 'utils/useNotificationBarRevalidation';
 
-export const NotificationBars: FC = memo(function NotificationBars() {
+export const NotificationBars: FC = () => {
     const { activeNotificationBars } = useNotificationBarsWithRevalidation();
     const user = useCurrentCustomerData();
     const [loggedAsUserEmail, setLoggedAsUserEmail] = useState<string>();
@@ -87,4 +87,4 @@ export const NotificationBars: FC = memo(function NotificationBars() {
             )}
         </>
     );
-});
+};

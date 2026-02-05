@@ -10,6 +10,7 @@ let ssrExchange: SSRExchange | null = null;
 export const UrqlWrapper: FC<{ pageProps: ServerSidePropsType }> = ({ children, pageProps }) => {
     const { t } = useTranslation();
 
+    // Keep useMemo - has side effects (mutates module-level ssrExchange, critical for SSR hydration)
     const client = useMemo(() => {
         if (!ssrExchange || typeof window === 'undefined') {
             ssrExchange = createSsrExchange({
@@ -21,6 +22,8 @@ export const UrqlWrapper: FC<{ pageProps: ServerSidePropsType }> = ({ children, 
         }
 
         return createClient({ t, ssrExchange, domainConfig: pageProps.domainConfig });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageProps.urqlState]);
 
     return <Provider value={client}>{children}</Provider>;

@@ -1,8 +1,8 @@
-import { DeepPartial, FieldValues, Resolver, useForm, UseFormReturn } from 'react-hook-form';
+import { DefaultValues, FieldValues, Resolver, useForm, UseFormReturn } from 'react-hook-form';
 
 export const useFormWrapper = <T extends FieldValues>(
     resolver: Resolver<T> | undefined,
-    defaultValues: DeepPartial<T>,
+    defaultValues: DefaultValues<T>,
 ): UseFormReturn<T> =>
     useForm<T>({
         mode: 'all',

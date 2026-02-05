@@ -1,11 +1,11 @@
-import { cloneElement, useCallback, useRef, useState } from 'react';
+import { cloneElement, ReactElement, useRef, useState } from 'react';
 
 type Placement = 'top' | 'bottom' | 'left' | 'right';
 
 type TooltipProps = {
     label?: string;
     placement?: Placement;
-    children: JSX.Element;
+    children: ReactElement<any>;
 };
 
 const OFFSET = 8;
@@ -46,7 +46,7 @@ export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top' }
     const triggerRef = useRef<HTMLElement>(null);
     const tooltipRef = useRef<HTMLDivElement>(null);
 
-    const updatePosition = useCallback(() => {
+    const updatePosition = () => {
         if (!triggerRef.current || !tooltipRef.current) {
             return;
         }
@@ -56,16 +56,16 @@ export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top' }
         const newPosition = getTooltipPosition(triggerRect, tooltipRect, placement);
 
         setPosition(newPosition);
-    }, [placement]);
+    };
 
-    const handleOpen = useCallback(() => {
+    const handleOpen = () => {
         setIsOpen(true);
         requestAnimationFrame(updatePosition);
-    }, [updatePosition]);
+    };
 
-    const handleClose = useCallback(() => {
+    const handleClose = () => {
         setIsOpen(false);
-    }, []);
+    };
 
     const childProps = {
         ...children.props,

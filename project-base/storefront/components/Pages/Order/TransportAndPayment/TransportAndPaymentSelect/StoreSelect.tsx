@@ -2,7 +2,6 @@ import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
-import { useMemo } from 'react';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
@@ -13,7 +12,7 @@ type StoreSelectProps = {
 };
 
 export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, stores, onSelectStoreCallback }) => {
-    const mappedStores = useMemo(() => mapConnectionEdges<StoreOrPacketeryPoint>(stores.edges), [stores.edges]);
+    const mappedStores = mapConnectionEdges<StoreOrPacketeryPoint>(stores.edges);
 
     return (
         <ul className="max-h-fit overflow-y-auto">

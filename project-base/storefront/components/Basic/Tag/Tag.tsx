@@ -19,7 +19,7 @@ type TagProps = {
           type?: never;
       } & (
           | {
-                render: (input: JSX.Element) => ReactElement<any, any> | null;
+                render: (input: ReactElement) => ReactElement<any, any> | null;
             }
           | {
                 render?: never;

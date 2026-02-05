@@ -13,7 +13,6 @@ import { TypeOrderWithdrawalDataFragment } from 'graphql/requests/orders/fragmen
 import { useOrderWithdrawalRequestMutation } from 'graphql/requests/orders/mutations/OrderWithdrawalRequestMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { OrderWithdrawalFormType } from 'types/form';
@@ -36,31 +35,28 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
-    const onSubmitHandler = useCallback<SubmitHandler<OrderWithdrawalFormType>>(
-        async (values) => {
-            const { firstName, lastName, email, telephone, note } = values;
-            const result = await orderWithdrawalRequest({
-                input: {
-                    orderUrlHash: order.urlHash,
-                    firstName,
-                    lastName,
-                    email,
-                    telephone: telephone || null,
-                    note: note || null,
-                },
-            });
+    const onSubmitHandler: SubmitHandler<OrderWithdrawalFormType> = async (values) => {
+        const { firstName, lastName, email, telephone, note } = values;
+        const result = await orderWithdrawalRequest({
+            input: {
+                orderUrlHash: order.urlHash,
+                firstName,
+                lastName,
+                email,
+                telephone: telephone || null,
+                note: note || null,
+            },
+        });
 
-            if (result.data?.OrderWithdrawalRequest) {
-                const [orderWithdrawalSuccessUrl] = getInternationalizedStaticUrls(
-                    [{ url: '/order-withdrawal-success/:orderUrlHash', param: order.urlHash }],
-                    url,
-                );
-                updatePageLoadingState({ isPageLoading: true, redirectPageType: 'order-withdrawal-success' });
-                router.replace(orderWithdrawalSuccessUrl);
-            }
-        },
-        [orderWithdrawalRequest, order.urlHash, router, url, updatePageLoadingState],
-    );
+        if (result.data?.OrderWithdrawalRequest) {
+            const [orderWithdrawalSuccessUrl] = getInternationalizedStaticUrls(
+                [{ url: '/order-withdrawal-success/:orderUrlHash', param: order.urlHash }],
+                url,
+            );
+            updatePageLoadingState({ isPageLoading: true, redirectPageType: 'order-withdrawal-success' });
+            router.replace(orderWithdrawalSuccessUrl);
+        }
+    };
 
     return (
         <Webline width="lg">

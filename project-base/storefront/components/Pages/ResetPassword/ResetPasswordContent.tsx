@@ -11,7 +11,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { usePasswordRecoveryMutation } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.generated';
 import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
@@ -35,21 +35,19 @@ export const ResetPasswordContent: FC = () => {
         field: { value },
     } = useController({ name: formMeta.fields.email.name, control: formProviderMethods.control });
 
-    const onResetPasswordHandler = useCallback<SubmitHandler<PasswordResetFormType>>(
-        async (passwordResetFormData) => {
-            blurInput();
-            const resetPasswordResult = await resetPassword(passwordResetFormData);
+    const onResetPasswordHandler: SubmitHandler<PasswordResetFormType> = async (passwordResetFormData) => {
+        blurInput();
+        const resetPasswordResult = await resetPassword(passwordResetFormData);
 
-            if (resetPasswordResult.data?.RequestPasswordRecovery) {
-                setIsSuccess(true);
-                onGtmSendFormEventHandler(GtmFormType.forgotten_password);
-            }
+        if (resetPasswordResult.data?.RequestPasswordRecovery) {
+            setIsSuccess(true);
+            onGtmSendFormEventHandler(GtmFormType.forgotten_password);
+        }
 
-            handleError(resetPasswordResult.error);
-            clearForm(resetPasswordResult.error, formProviderMethods, defaultValues);
-        },
-        [formMeta.messages, formProviderMethods, resetPassword, defaultValues, handleError],
-    );
+        handleError(resetPasswordResult.error);
+
+        clearForm(resetPasswordResult.error, formProviderMethods, defaultValues);
+    };
 
     return (
         <Webline width="lg">

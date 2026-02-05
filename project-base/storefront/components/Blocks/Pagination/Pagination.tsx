@@ -3,13 +3,13 @@ import { usePaginationContext } from 'components/providers/PaginationProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { useRouter } from 'next/router';
 import { Fragment, MouseEventHandler, forwardRef } from 'react';
-import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useUpdateLoadMoreQuery } from 'utils/queryParams/useUpdateLoadMoreQuery';
 import { useUpdatePaginationQuery } from 'utils/queryParams/useUpdatePaginationQuery';
+import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { usePagination } from 'utils/ui/usePagination';
 import { useScrollRestoration } from 'utils/ui/useScrollRestoration';
@@ -137,7 +137,7 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
                 aria-label={!isActive ? t('Go to page {{ page }}', { ns: 'accessibility', page: children }) : undefined}
                 href={href}
                 tabIndex={0}
-                className={twJoin(
+                className={twMergeCustom(
                     'flex size-8 items-center justify-center rounded-lg border-2 font-bold no-underline hover:no-underline md:size-12',
                     (isActive || isDotButton) && 'border-none hover:cursor-default',
                     isActive

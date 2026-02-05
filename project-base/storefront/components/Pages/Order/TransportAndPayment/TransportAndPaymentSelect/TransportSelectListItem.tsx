@@ -4,7 +4,6 @@ import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { useTransportChangeInSelect } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TypeTransportStoresFragment } from 'graphql/requests/transports/fragments/TransportStoresFragment.generated';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
-import { memo } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
@@ -22,7 +21,7 @@ type TransportListItemProps = {
     openPickupPlacePopup?: () => void;
 };
 
-const TransportListItemComp: FC<TransportListItemProps> = ({
+export const TransportListItem: FC<TransportListItemProps> = ({
     transport,
     isActive = false,
     changeTransport,
@@ -68,5 +67,3 @@ const TransportListItemComp: FC<TransportListItemProps> = ({
         </TransportAndPaymentListItem>
     );
 };
-
-export const TransportListItem = memo(TransportListItemComp);

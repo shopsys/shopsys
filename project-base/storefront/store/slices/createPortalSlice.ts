@@ -1,9 +1,10 @@
+import { ReactElement } from 'react';
 import { StateCreator } from 'zustand';
 
 export type PortalSlice = {
-    portalContent: JSX.Element | null;
+    portalContent: ReactElement | null;
 
-    updatePortalContent: (updatedPopupContent: JSX.Element | null) => void;
+    updatePortalContent: (updatedPopupContent: ReactElement | null) => void;
 };
 
 export const createPortalSlice: StateCreator<PortalSlice> = (set) => ({

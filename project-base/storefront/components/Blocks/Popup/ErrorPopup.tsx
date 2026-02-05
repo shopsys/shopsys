@@ -3,7 +3,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmMessageType } from 'gtm/enums/GtmMessageType';
 import { getGtmShowMessageEvent } from 'gtm/factories/getGtmShowMessageEvent';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
-import { ReactElement, useEffect, useMemo } from 'react';
+import { ReactElement, useEffect } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ErrorPopupProps = {
@@ -30,27 +30,17 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({ fields, gtmMessageOrigin = Gtm
         }
     }, [fields, gtmMessageOrigin]);
 
-    const mappedErrors = useMemo(() => {
-        return Object.entries(fields)
-            .filter(([, field]) => field.errorMessage !== undefined)
-            .map(([, field]) => (
-                <li
-                    key={field.name}
-                    className="border-border-default mb-2 border-b pb-2 last:mb-0 last:border-none last:pb-0"
-                >
-                    {field.label}
-                    <br />
-                    <span className="text-text-error">{field.errorMessage}</span>
-                </li>
-            ));
-    }, [fields]);
+    const fieldsWithErrors = Object.entries(fields).filter(([, field]) => field.errorMessage !== undefined);
 
-    const mappedAriaLabel = useMemo(() => {
-        return Object.entries(fields)
-            .filter(([, field]) => field.errorMessage !== undefined)
-            .map(([, field]) => field.errorMessage)
-            .join(', ');
-    }, [fields]);
+    const mappedErrors = fieldsWithErrors.map(([, field]) => (
+        <li key={field.name} className="border-border-default mb-2 border-b pb-2 last:mb-0 last:border-none last:pb-0">
+            {field.label}
+            <br />
+            <span className="text-text-error">{field.errorMessage}</span>
+        </li>
+    ));
+
+    const mappedAriaLabel = fieldsWithErrors.map(([, field]) => field.errorMessage).join(', ');
 
     return (
         <Popup

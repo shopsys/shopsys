@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMemo } from 'react';
+import { ReactElement } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PromoCodeFormType } from 'types/form';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -26,7 +26,7 @@ type PromoCodeFormMetaType = {
     fields: {
         [key in keyof PromoCodeFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | ReactElement;
             errorMessage: string | undefined;
         };
     };
@@ -36,19 +36,14 @@ export const usePromoCodeFormMeta = (formProviderMethods: UseFormReturn<PromoCod
     const { t } = useTranslation();
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = useMemo(
-        () => ({
-            formName: 'promoCode-form',
-            fields: {
-                promoCode: {
-                    name: 'promoCode' as const,
-                    label: t('Coupon'),
-                    errorMessage: errors.promoCode?.message,
-                },
+    return {
+        formName: 'promoCode-form',
+        fields: {
+            promoCode: {
+                name: 'promoCode' as const,
+                label: t('Coupon'),
+                errorMessage: errors.promoCode?.message,
             },
-        }),
-        [t, errors.promoCode?.message],
-    );
-
-    return formMeta;
+        },
+    };
 };

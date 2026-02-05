@@ -12,7 +12,7 @@ export const useGtmProductDetailViewEvent = (
     slug: string,
     isProductFetching: boolean,
 ): void => {
-    const lastViewedProductDetailSlug = useRef<string | undefined>(undefined);
+    const lastViewedProductDetailSlug = useRef<string>(undefined);
     const { url, currencyCode } = useDomainConfig();
     const { didPageViewRun, isScriptLoaded } = useGtmContext();
     const { canSeePrices } = useAuthorization();
@@ -22,5 +22,5 @@ export const useGtmProductDetailViewEvent = (
             lastViewedProductDetailSlug.current = slug;
             gtmSafePushEvent(getGtmProductDetailViewEvent(productDetailData, currencyCode, url, !canSeePrices));
         }
-    }, [productDetailData, currencyCode, slug, url, isProductFetching, didPageViewRun]);
+    }, [productDetailData, currencyCode, slug, url, isProductFetching, didPageViewRun, isScriptLoaded, canSeePrices]);
 };

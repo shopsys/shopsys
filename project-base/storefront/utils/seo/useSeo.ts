@@ -2,7 +2,6 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useSeoPageQuery } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
 import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
 import { CanonicalQueryParameters, generateCanonicalUrl } from 'utils/seo/generateCanonicalUrl';
 
@@ -16,9 +15,7 @@ export const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams 
     const { url } = useDomainConfig();
     const router = useRouter();
 
-    const pageSlug = useMemo(() => {
-        return extractSeoPageSlugFromUrl(router.asPath, url);
-    }, [router.asPath, url]);
+    const pageSlug = extractSeoPageSlugFromUrl(router.asPath, url);
 
     const [{ data: settingsData }] = useSettingsQuery();
     const [{ data: seoPageData }] = useSeoPageQuery({

@@ -5,7 +5,6 @@ import { Flag } from 'components/Basic/Flag/Flag';
 import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
 import { AnimatePresence } from 'framer-motion';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
-import { useMemo } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
@@ -33,23 +32,13 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
         resetAllFilterQueries,
     } = useUpdateFilterQuery();
 
-    const checkedBrands = useMemo(
-        () =>
-            currentFilter?.brands?.map((checkedBrandUuid) =>
-                filterOptions.brands?.find((brandOption) => brandOption.brand.uuid === checkedBrandUuid),
-            ),
-        [currentFilter?.brands, filterOptions.brands],
+    const checkedBrands = currentFilter?.brands?.map((checkedBrandUuid) =>
+        filterOptions.brands?.find((brandOption) => brandOption.brand.uuid === checkedBrandUuid),
     );
 
-    const checkedFlags = useMemo(
-        () => getCheckedFlags(defaultProductFiltersMap, filterOptions.flags, currentFilter?.flags),
-        [defaultProductFiltersMap, filterOptions.flags, currentFilter?.flags],
-    );
+    const checkedFlags = getCheckedFlags(defaultProductFiltersMap, filterOptions.flags, currentFilter?.flags);
 
-    const selectedParameters = useMemo(
-        () => getSelectedParameters(defaultProductFiltersMap, currentFilter?.parameters),
-        [defaultProductFiltersMap, currentFilter?.parameters],
-    );
+    const selectedParameters = getSelectedParameters(defaultProductFiltersMap, currentFilter?.parameters);
 
     return (
         <AnimatePresence initial={false}>
