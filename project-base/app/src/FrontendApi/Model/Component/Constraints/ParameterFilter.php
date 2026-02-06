@@ -26,10 +26,7 @@ class ParameterFilter extends Constraint
 
     /**
      * @param array<string, mixed>|null $options
-     * @param string $valuesNotSupportedForSliderTypeMessage
-     * @param string $minMaxNotSupportedForNonSliderTypeMessage
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

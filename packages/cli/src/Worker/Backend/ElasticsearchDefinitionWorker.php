@@ -27,11 +27,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
      */
     private ?array $localeConfig = null;
 
-    /**
-     * @param \Shopsys\Cli\Model\JsonHandler $jsonHandler
-     * @param \Shopsys\Cli\Model\YamlHandler $yamlHandler
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly JsonHandler $jsonHandler,
         private readonly YamlHandler $yamlHandler,
@@ -101,7 +96,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
     }
 
     /**
-     * @param string $definitionPath
      * @return array<string>
      */
     private function getIndexFolders(string $definitionPath): array
@@ -122,9 +116,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
     }
 
     /**
-     * @param string $indexFolder
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @param string $projectPath
      * @throws \JsonException
      * @return array{created: array<string>, modified: array<string>, deleted: array<string>}
      */
@@ -163,7 +154,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
     }
 
     /**
-     * @param string $indexFolder
      * @return array<mixed>|null
      */
     private function getTemplateData(string $indexFolder): ?array
@@ -193,7 +183,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
 
     /**
      * @param array<mixed> $templateData
-     * @param \Shopsys\Cli\Config\CoreDomainConfig $domain
      * @return array<mixed>
      */
     private function generateDefinitionForLocale(array $templateData, CoreDomainConfig $domain): array
@@ -210,7 +199,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
     }
 
     /**
-     * @param string $locale
      * @return array{stemmer: string|null, stopwords: string|array<string>, prefix: string, builtin_filters: array<string>}
      */
     private function getLocaleSettings(string $locale): array
@@ -285,19 +273,11 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
         return $data;
     }
 
-    /**
-     * @param string $filterName
-     * @return bool
-     */
     private function isStopFilter(string $filterName): bool
     {
         return str_ends_with($filterName, '_stop');
     }
 
-    /**
-     * @param string $filterName
-     * @return bool
-     */
     private function isStemmerFilter(string $filterName): bool
     {
         return str_ends_with($filterName, '_stemmer');
@@ -362,7 +342,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
 
     /**
      * @param array<mixed> $data
-     * @param string $locale
      * @return array<mixed>
      */
     private function updateIcuCollationLanguage(array $data, string $locale): array
@@ -381,7 +360,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
 
     /**
      * @param array<mixed> $properties
-     * @param string $locale
      * @return array<mixed>
      */
     private function updatePropertiesLanguage(array $properties, string $locale): array
@@ -414,8 +392,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
     }
 
     /**
-     * @param string $indexFolder
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
      * @return array<string>
      */
     private function deleteUnusedDefinitions(
@@ -446,8 +422,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
     }
 
     /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @param string $projectPath
      * @return string|null Relative path to modified Dockerfile, or null if no changes
      */
     private function updateDockerfilePlugins(CoreProjectConfig $config, string $projectPath): ?string
@@ -475,7 +449,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
     }
 
     /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
      * @return array<string>
      */
     private function getRequiredPlugins(CoreProjectConfig $config): array
@@ -493,7 +466,6 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
     }
 
     /**
-     * @param string $dockerfileContent
      * @return array<string>
      */
     private function getInstalledPlugins(string $dockerfileContent): array
@@ -508,9 +480,7 @@ final class ElasticsearchDefinitionWorker extends AbstractWorker
     }
 
     /**
-     * @param string $content
      * @param array<string> $plugins
-     * @return string
      */
     private function addPluginsToDockerfile(string $content, array $plugins): string
     {

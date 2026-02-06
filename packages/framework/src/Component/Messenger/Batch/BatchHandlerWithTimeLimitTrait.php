@@ -15,9 +15,6 @@ trait BatchHandlerWithTimeLimitTrait
 
     protected ?int $batchStartedAt = null;
 
-    /**
-     * @param bool $force
-     */
     public function flush(bool $force): void
     {
         if (!$force && !$this->shouldFlush()) {
@@ -36,11 +33,6 @@ trait BatchHandlerWithTimeLimitTrait
         $this->process($jobs);
     }
 
-    /**
-     * @param object $message
-     * @param \Symfony\Component\Messenger\Handler\Acknowledger|null $ack
-     * @return mixed
-     */
     protected function handle(object $message, ?Acknowledger $ack): mixed
     {
         if ($ack === null) {
@@ -64,12 +56,6 @@ trait BatchHandlerWithTimeLimitTrait
         return 0;
     }
 
-    /**
-     * @return bool
-     */
-    /**
-     * @return bool
-     */
     protected function shouldFlush(): bool
     {
         if ($this->jobs === []) {
@@ -93,17 +79,11 @@ trait BatchHandlerWithTimeLimitTrait
         return hrtime(true) - $this->batchStartedAt >= $maxWaitMilliseconds * 1000000;
     }
 
-    /**
-     * @return int
-     */
     protected function getBatchSize(): int
     {
         return 10;
     }
 
-    /**
-     * @return int
-     */
     protected function getMaxWaitMilliseconds(): int
     {
         return 2000;

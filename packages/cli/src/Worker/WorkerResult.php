@@ -7,8 +7,6 @@ namespace Shopsys\Cli\Worker;
 final class WorkerResult
 {
     /**
-     * @param bool $success
-     * @param string $message
      * @param array<string> $filesModified
      * @param array<string> $filesCreated
      * @param array<string> $filesDeleted
@@ -25,12 +23,10 @@ final class WorkerResult
     }
 
     /**
-     * @param string $message
      * @param array<string> $filesModified
      * @param array<string> $filesCreated
      * @param array<string> $filesDeleted
      * @param array<string> $hints
-     * @return self
      */
     public static function success(
         string $message,
@@ -49,10 +45,6 @@ final class WorkerResult
         );
     }
 
-    /**
-     * @param string $message
-     * @return self
-     */
     public static function failure(string $message): self
     {
         return new self(

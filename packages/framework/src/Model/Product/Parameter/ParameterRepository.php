@@ -707,8 +707,6 @@ class ParameterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param string $locale
-     * @return array
      */
     public function getProductParameterValuesDataByProducts(array $products, string $locale): array
     {

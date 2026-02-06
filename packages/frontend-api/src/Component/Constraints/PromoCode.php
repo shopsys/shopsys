@@ -38,16 +38,7 @@ class PromoCode extends Constraint
 
     /**
      * @param array<string, mixed>|null $options
-     * @param string $invalidMessage
-     * @param string $notYetValidMessage
-     * @param string $noLongerValidMessage
-     * @param string $noRelationToProductsInCartMessage
-     * @param string $forRegisteredCustomerUsersOnlyMessage
-     * @param string $notAvailableForCustomerUserPricingGroupMessage
-     * @param string $alreadyAppliedPromoCodeMessage
-     * @param string $limitNotReachedMessage
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

@@ -13,12 +13,7 @@ class NotIdenticalToEmailLocalPart extends Constraint
 {
     /**
      * @param array<string, mixed>|null $options
-     * @param string $password
-     * @param string $email
-     * @param string $errorPath
-     * @param string $message
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

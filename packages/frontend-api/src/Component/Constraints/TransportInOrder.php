@@ -32,14 +32,7 @@ class TransportInOrder extends Constraint
 
     /**
      * @param array<string, mixed>|null $options
-     * @param string $transportNotSetMessage
-     * @param string $transportUnavailableMessage
-     * @param string $changedTransportPriceMessage
-     * @param string $pickupPlaceUnavailableMessage
-     * @param string $weightLimitExceeded
-     * @param string $missingPickupPlaceIdentifierMessage
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

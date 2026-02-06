@@ -97,11 +97,7 @@ class MapSettingsSection implements DomainConfigSectionInterface
         ];
     }
 
-    /**
-     * @param mixed $value
-     * @return float
-     */
-    protected function validateLatitudeInput($value): float
+    protected function validateLatitudeInput(mixed $value): float
     {
         $float = (float)$value;
         $this->assertLatitude($float);
@@ -109,11 +105,7 @@ class MapSettingsSection implements DomainConfigSectionInterface
         return $float;
     }
 
-    /**
-     * @param mixed $value
-     * @return float
-     */
-    protected function validateLongitudeInput($value): float
+    protected function validateLongitudeInput(mixed $value): float
     {
         $float = (float)$value;
         $this->assertLongitude($float);
@@ -121,11 +113,7 @@ class MapSettingsSection implements DomainConfigSectionInterface
         return $float;
     }
 
-    /**
-     * @param mixed $value
-     * @return int
-     */
-    protected function validateZoomInput($value): int
+    protected function validateZoomInput(mixed $value): int
     {
         $int = (int)$value;
         $this->assertZoom($int);
@@ -133,9 +121,6 @@ class MapSettingsSection implements DomainConfigSectionInterface
         return $int;
     }
 
-    /**
-     * @param float $value
-     */
     protected function assertLatitude(float $value): void
     {
         if ($value < -90 || $value > 90) {
@@ -143,9 +128,6 @@ class MapSettingsSection implements DomainConfigSectionInterface
         }
     }
 
-    /**
-     * @param float $value
-     */
     protected function assertLongitude(float $value): void
     {
         if ($value < -180 || $value > 180) {
@@ -153,9 +135,6 @@ class MapSettingsSection implements DomainConfigSectionInterface
         }
     }
 
-    /**
-     * @param int $value
-     */
     protected function assertZoom(int $value): void
     {
         if ($value < 1 || $value > 20) {

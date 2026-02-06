@@ -14,10 +14,7 @@ class Contains extends Constraint
 {
     /**
      * @param array<string, mixed>|null $options
-     * @param string $needle
-     * @param string $message
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

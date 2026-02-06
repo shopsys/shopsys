@@ -186,9 +186,6 @@ class ReadyCategorySeoMix
         $this->ordering = $ordering;
     }
 
-    /**
-     * @return bool
-     */
     public function hasPriceBasedOrdering(): bool
     {
         return in_array($this->ordering, [

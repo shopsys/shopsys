@@ -24,9 +24,7 @@ class ResetPasswordHash extends Constraint
 
     /**
      * @param array<string, mixed>|null $options
-     * @param string $invalidMessage
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

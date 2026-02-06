@@ -129,7 +129,6 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param string $className
      * @return array<int, string> Parameter names indexed by position
      */
     protected function getConstructorParameterNames(string $className): array

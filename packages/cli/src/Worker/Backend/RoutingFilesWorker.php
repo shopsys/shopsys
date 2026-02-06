@@ -16,9 +16,6 @@ final class RoutingFilesWorker extends AbstractWorker
     private const string ROUTING_DIR = 'app/config/shopsys-routing';
     private const string ROUTING_FRONT_FILE_NAME_PATTERN = 'routing_front_*.yaml';
 
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {
@@ -86,8 +83,6 @@ final class RoutingFilesWorker extends AbstractWorker
     }
 
     /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @param string $projectPath
      * @return string[]
      */
     private function deleteUnnecessaryRoutingFiles(CoreProjectConfig $config, string $projectPath): array
@@ -117,10 +112,6 @@ final class RoutingFilesWorker extends AbstractWorker
         return $filesDeleted;
     }
 
-    /**
-     * @param string $locale
-     * @return string
-     */
     private function getRoutingFilePath(string $locale): string
     {
         return self::ROUTING_DIR . '/' . str_replace('*', $locale, self::ROUTING_FRONT_FILE_NAME_PATTERN);

@@ -134,9 +134,6 @@ class ProductEntityFieldMapper
         return $product->getDescription($this->domain->getId());
     }
 
-    /**
-     * @return array
-     */
     public function getParameters(Product $product): array
     {
         $products = [];

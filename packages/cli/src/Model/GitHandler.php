@@ -9,12 +9,6 @@ use Symfony\Component\Process\Process;
 
 final class GitHandler
 {
-    /**
-     * @param string $repositoryUrl
-     * @param string $targetDirectory
-     * @param string $branch
-     * @param callable|null $outputCallback
-     */
     public function cloneRepository(
         string $repositoryUrl,
         string $targetDirectory,
@@ -46,10 +40,6 @@ final class GitHandler
         $this->removeRemoteOrigin($targetDirectory, $outputCallback);
     }
 
-    /**
-     * @param string $repositoryUrl
-     * @return string
-     */
     public function getLatestTag(string $repositoryUrl): string
     {
         $process = new Process([
@@ -90,10 +80,6 @@ final class GitHandler
         return $matches[1];
     }
 
-    /**
-     * @param string $targetDirectory
-     * @param callable|null $outputCallback
-     */
     private function removeRemoteOrigin(string $targetDirectory, ?callable $outputCallback): void
     {
         $process = new Process(

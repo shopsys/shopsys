@@ -8,16 +8,12 @@ use Symfony\Component\Yaml\Yaml;
 
 final class YamlHandler
 {
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {
     }
 
     /**
-     * @param string $path
      * @return array<mixed>
      */
     public function readYaml(string $path): array
@@ -29,9 +25,7 @@ final class YamlHandler
     }
 
     /**
-     * @param string $path
      * @param array<mixed> $data
-     * @param int $inline
      */
     public function writeYaml(string $path, array $data, int $inline = 4): void
     {

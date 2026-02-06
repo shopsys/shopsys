@@ -25,10 +25,6 @@ final class PrepareCurrencyWorker extends AbstractWorker
      */
     private array $existingCurrencyCodes;
 
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     * @param \Shopsys\Cli\Model\TwigHandler $twigHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
         private readonly TwigHandler $twigHandler,
@@ -73,11 +69,6 @@ final class PrepareCurrencyWorker extends AbstractWorker
         );
     }
 
-    /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @param string $projectPath
-     * @return string|null
-     */
     private function createDatabaseMigration(CoreProjectConfig $config, string $projectPath): ?string
     {
         $migrationName = 'Version' . date('YmdHis');
@@ -146,7 +137,6 @@ final class PrepareCurrencyWorker extends AbstractWorker
     }
 
     /**
-     * @param string $projectPath
      * @return string[]
      */
     private function getExistingCurrencyCodes(string $projectPath): array

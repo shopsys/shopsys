@@ -9,13 +9,10 @@ use Shopsys\FrameworkBundle\Component\Doctrine\Exception\DefaultSchemaImportExce
 
 class DatabaseSchemaFacade
 {
-    protected string $defaultSchemaFilepath;
-
     public function __construct(
-        string $defaultSchemaFilepath,
+        protected string $defaultSchemaFilepath,
         protected readonly EntityManagerInterface $em,
     ) {
-        $this->defaultSchemaFilepath = $defaultSchemaFilepath;
     }
 
     public function createSchema(string $schemaName): void

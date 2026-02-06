@@ -12,19 +12,11 @@ use Symfony\Component\Yaml\Yaml;
 
 final class YamlConfigLoader
 {
-    /**
-     * @param \Shopsys\Cli\Config\ConfigSectionRegistry $registry
-     */
     public function __construct(
         private readonly ConfigSectionRegistry $registry,
     ) {
     }
 
-    /**
-     * @param string $configPath
-     * @param string $projectPath
-     * @return \Shopsys\Cli\Config\CoreProjectConfig
-     */
     public function load(string $configPath, string $projectPath): CoreProjectConfig
     {
         if (!file_exists($configPath)) {

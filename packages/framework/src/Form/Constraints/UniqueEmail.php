@@ -13,11 +13,7 @@ class UniqueEmail extends Constraint
 {
     /**
      * @param array<string, mixed>|null $options
-     * @param string|null $ignoredEmail
-     * @param int|null $domainId
      * @param array<string>|null $groups
-     * @param mixed $payload
-     * @param string $message
      */
     #[HasNamedArguments]
     public function __construct(

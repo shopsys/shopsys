@@ -15,10 +15,6 @@ final class CoreDomainConfigValidator
      */
     public const array SUPPORTED_DOMAIN_TYPES = ['b2c', 'b2b'];
 
-    /**
-     * @param string $value
-     * @return string
-     */
     public static function validateDomainName(string $value): string
     {
         if (trim($value) === '') {
@@ -28,10 +24,6 @@ final class CoreDomainConfigValidator
         return $value;
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
     public static function validateLocale(string $value): string
     {
         if (mb_strlen(trim($value)) !== 2) {
@@ -41,10 +33,6 @@ final class CoreDomainConfigValidator
         return strtolower($value);
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
     public static function validateTimeZone(string $value): string
     {
         try {
@@ -56,10 +44,6 @@ final class CoreDomainConfigValidator
         return $value;
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
     public static function validateDomainType(string $value): string
     {
         if (!in_array($value, self::SUPPORTED_DOMAIN_TYPES, true)) {
@@ -73,10 +57,6 @@ final class CoreDomainConfigValidator
         return $value;
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
     public static function validateCurrencyCode(string $value): string
     {
         if (!preg_match('/^[A-Za-z]{3}$/', $value)) {

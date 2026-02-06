@@ -30,11 +30,6 @@ class ConfigureCommand extends Command
     private const string OPTION_MODIFICATIONS = 'modifications';
     private const string ARGUMENT_PATH = 'path';
 
-    /**
-     * @param \Shopsys\Cli\Worker\WorkerRunner $workerRunner
-     * @param \Shopsys\Cli\Input\InteractiveInputCollector $interactiveInputCollector
-     * @param \Shopsys\Cli\Input\YamlConfigLoader $yamlConfigLoader
-     */
     public function __construct(
         private readonly WorkerRunner $workerRunner,
         private readonly InteractiveInputCollector $interactiveInputCollector,
@@ -83,11 +78,6 @@ HELP,
             );
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -128,7 +118,7 @@ HELP,
         $results = $this->workerRunner->run(
             $config,
             $projectPath,
-            function (WorkerInterface $worker, WorkerResult $result) use ($io, $input) {
+            function (WorkerInterface $worker, WorkerResult $result) use ($io, $input): void {
                 if ($result->success) {
                     $io->section(sprintf('<fg=green>✓</> %s', $result->message));
 
@@ -170,7 +160,6 @@ HELP,
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @param array<\Shopsys\Cli\Worker\WorkerResult> $results
      */
     private function displayHints(SymfonyStyle $io, array $results): void
@@ -185,9 +174,6 @@ HELP,
         $io->listing($hints);
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     */
     private function displayNextSteps(SymfonyStyle $io): void
     {
         $io->writeln('<info>Next steps:</info>');

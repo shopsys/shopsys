@@ -84,10 +84,6 @@ class AnnotationsAdder
         return $annotationLine;
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionClass
-     * @return string
-     */
     protected function getClassDeclarationString(ReflectionClass $reflectionClass): string
     {
         $parts = [];

@@ -15,9 +15,6 @@ final class MetatagSiteNameWorker extends AbstractWorker
 {
     private const string LOCALES_PATH = 'storefront/public/locales';
 
-    /**
-     * @param \Shopsys\Cli\Model\JsonHandler $jsonHandler
-     */
     public function __construct(
         private readonly JsonHandler $jsonHandler,
     ) {

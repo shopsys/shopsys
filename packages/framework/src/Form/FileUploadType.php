@@ -166,7 +166,6 @@ final class FileUploadType extends AbstractType
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]|null $selectedFiles
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      * @param \Symfony\Component\Validator\Constraint[] $fileConstraints
      */
     public function validateSelectedFiles(
@@ -191,10 +190,6 @@ final class FileUploadType extends AbstractType
         }
     }
 
-    /**
-     * @param array $options
-     * @return bool
-     */
     private function isRequiredFriendlyName(array $options): bool
     {
         if ($options['file_entity_class'] === null) {
@@ -217,10 +212,6 @@ final class FileUploadType extends AbstractType
         return AbstractFileUploadType::class;
     }
 
-    /**
-     * @param array $options
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     private function buildLocalizedNamesFieldsIfNecessary(array $options, FormBuilderInterface $builder): void
     {
         if (!$this->isRequiredFriendlyName($options)) {

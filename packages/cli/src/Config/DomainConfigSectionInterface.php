@@ -10,9 +10,6 @@ interface DomainConfigSectionInterface extends ConfigSectionInterface
 {
     /**
      * Collect values interactively
-     *
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param int $domainId
      */
     public function collectInteractive(SymfonyStyle $io, int $domainId): void;
 }

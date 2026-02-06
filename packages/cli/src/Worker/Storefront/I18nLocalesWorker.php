@@ -15,9 +15,6 @@ final class I18nLocalesWorker extends AbstractWorker
     private const string I18N_FILE_PATH = 'storefront/i18n.js';
     private const string I18NEXT_PARSER_FILE_PATH = 'storefront/config/i18next-parser.config.js';
 
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {

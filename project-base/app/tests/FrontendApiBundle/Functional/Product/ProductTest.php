@@ -506,10 +506,6 @@ class ProductTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param string $locale
-     * @return array
-     */
     private function getRedColorExpectedFile(string $locale): array
     {
         $redColorParameterValue = $this->getReference(ParameterColorValueDataFixture::PARAMETER_VALUE_RED_REFERENCE_PREFIX . $locale, ParameterValue::class);

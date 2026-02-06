@@ -17,9 +17,6 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
 {
     private const string FILE_PATH = 'storefront/next.config.js';
 
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {
@@ -64,11 +61,6 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
         );
     }
 
-    /**
-     * @param string $content
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @return string
-     */
     private function replaceRemotePatterns(string $content, CoreProjectConfig $config): string
     {
         $remotePatterns = $this->generateRemotePatterns($config);
@@ -84,10 +76,6 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
         return $result;
     }
 
-    /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @return string
-     */
     private function generateRemotePatterns(CoreProjectConfig $config): string
     {
         $patterns = [];
@@ -99,11 +87,6 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
         return "[\n" . implode(",\n", $patterns) . ",\n        ]";
     }
 
-    /**
-     * @param string $content
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @return string
-     */
     private function replaceDomainsArray(string $content, CoreProjectConfig $config): string
     {
         $prototypeData = $this->extractDomainPrototype($content);
@@ -121,7 +104,6 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
     }
 
     /**
-     * @param string $content
      * @return array{prototype: string, closingIndent: string}
      */
     private function extractDomainPrototype(string $content): array
@@ -138,9 +120,7 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
     }
 
     /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
      * @param array{prototype: string, closingIndent: string} $prototypeData
-     * @return string
      */
     private function generateDomainsCode(CoreProjectConfig $config, array $prototypeData): string
     {
@@ -153,11 +133,6 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
         return "[\n" . implode(",\n", $domains) . ",\n" . $prototypeData['closingIndent'] . ']';
     }
 
-    /**
-     * @param \Shopsys\Cli\Config\CoreDomainConfig $domain
-     * @param string $prototype
-     * @return string
-     */
     private function generateDomainFromPrototype(CoreDomainConfig $domain, string $prototype): string
     {
         $mapSettings = $domain->getConfigSection(MapSettingsSection::class);

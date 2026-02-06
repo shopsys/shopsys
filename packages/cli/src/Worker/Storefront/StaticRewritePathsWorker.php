@@ -15,9 +15,6 @@ final class StaticRewritePathsWorker extends AbstractWorker
 {
     private const string FILE_PATH = 'storefront/config/staticRewritePaths.ts';
 
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {
@@ -63,7 +60,6 @@ final class StaticRewritePathsWorker extends AbstractWorker
 
     /**
      * @param array<string> $lines
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
      * @return array<string>
      */
     private function replaceMappingLines(array $lines, CoreProjectConfig $config): array
@@ -93,11 +89,6 @@ final class StaticRewritePathsWorker extends AbstractWorker
         return $lines;
     }
 
-    /**
-     * @param int $index
-     * @param int $domainId
-     * @return string
-     */
     private function generateMappingLine(int $index, int $domainId): string
     {
         return sprintf(

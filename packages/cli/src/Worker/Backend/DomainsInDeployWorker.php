@@ -15,9 +15,6 @@ final class DomainsInDeployWorker extends AbstractWorker
 {
     private const string FILE_PATH = 'app/deploy/deploy-project.sh';
 
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {

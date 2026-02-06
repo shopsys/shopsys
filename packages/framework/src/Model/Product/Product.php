@@ -973,7 +973,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $relatedProducts
      */
-    protected function editRelatedProducts($relatedProducts)
+    protected function editRelatedProducts($relatedProducts): void
     {
         $this->relatedProducts->clear();
 

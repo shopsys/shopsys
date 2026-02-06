@@ -20,9 +20,6 @@ final class RoutesWorker extends AbstractWorker
      */
     private array $routesByLocale = [];
 
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {
@@ -71,8 +68,6 @@ final class RoutesWorker extends AbstractWorker
 
     /**
      * Parses existing routes.ts and stores routes by locale (1st=en, 2nd=cs, 3rd=sk)
-     *
-     * @param string $content
      */
     private function parseExistingRoutes(string $content): void
     {
@@ -92,7 +87,6 @@ final class RoutesWorker extends AbstractWorker
     }
 
     /**
-     * @param string $objectContent
      * @return array<string, string>
      */
     private function parseRouteObject(string $objectContent): array
@@ -108,10 +102,6 @@ final class RoutesWorker extends AbstractWorker
         return $routes;
     }
 
-    /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @return string
-     */
     private function generateRoutesContent(CoreProjectConfig $config): string
     {
         $routeObjects = [];
@@ -127,7 +117,6 @@ final class RoutesWorker extends AbstractWorker
     }
 
     /**
-     * @param string $locale
      * @return array<string, string>
      */
     private function getRoutesForLocale(string $locale): array
@@ -137,7 +126,6 @@ final class RoutesWorker extends AbstractWorker
 
     /**
      * @param array<string, string> $routes
-     * @return string
      */
     private function formatRouteObject(array $routes): string
     {

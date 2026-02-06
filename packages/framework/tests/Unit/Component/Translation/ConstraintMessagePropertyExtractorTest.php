@@ -55,11 +55,11 @@ class ConstraintMessagePropertyExtractorTest extends TestCase
         $expectedCatalogue = new MessageCatalogue();
 
         $message = new Message('Promoted message will be extracted.', 'validators');
-        $message->addSource(new FileSource($file->getFilename(), 19));
+        $message->addSource(new FileSource($file->getFilename(), 12));
         $expectedCatalogue->add($message);
 
         $message = new Message('Another promoted message.', 'validators');
-        $message->addSource(new FileSource($file->getFilename(), 20));
+        $message->addSource(new FileSource($file->getFilename(), 13));
         $expectedCatalogue->add($message);
 
         $this->assertEquals($expectedCatalogue, $actualCatalogue);

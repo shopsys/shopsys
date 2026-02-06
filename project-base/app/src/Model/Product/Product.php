@@ -44,9 +44,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method void setFlags(array<int,\App\Model\Product\Flag\Flag[]> $flagsByDomainId)
  * @method \App\Model\Product\Product[] getRelatedProducts()
  * @method __construct(\App\Model\Product\ProductData $productData, \App\Model\Product\Product[]|null $variants = null)
- * @method edit(\Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains, \App\Model\Product\ProductData $productData)
- * @method setData(\App\Model\Product\ProductData $productData)
- * @method editRelatedProducts(\App\Model\Product\Product[] $relatedProducts)
+ * @method void edit(\Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains, \App\Model\Product\ProductData $productData)
+ * @method void setData(\App\Model\Product\ProductData $productData)
+ * @method void editRelatedProducts(\App\Model\Product\Product[] $relatedProducts)
  */
 #[ORM\Table(name: 'products')]
 #[ORM\Entity]

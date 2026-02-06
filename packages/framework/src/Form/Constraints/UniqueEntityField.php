@@ -13,12 +13,7 @@ class UniqueEntityField extends Constraint
 {
     /**
      * @param array<string, mixed>|null $options
-     * @param string $fieldName
-     * @param string $entityName
-     * @param string $message
-     * @param object|null $entityInstance
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

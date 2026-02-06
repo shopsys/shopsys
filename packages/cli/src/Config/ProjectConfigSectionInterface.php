@@ -10,8 +10,6 @@ interface ProjectConfigSectionInterface extends ConfigSectionInterface
 {
     /**
      * Collect values interactively
-     *
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      */
     public function collectInteractive(SymfonyStyle $io): void;
 }

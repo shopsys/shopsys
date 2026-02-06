@@ -8,10 +8,6 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 
 final class ConfigSectionRegistry
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ServiceLocator $domainConfigSections
-     * @param \Symfony\Component\DependencyInjection\ServiceLocator $projectConfigSections
-     */
     public function __construct(
         private readonly ServiceLocator $domainConfigSections,
         private readonly ServiceLocator $projectConfigSections,
@@ -41,7 +37,6 @@ final class ConfigSectionRegistry
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ServiceLocator $configSectionLocator
      * @return \Shopsys\Cli\Config\ConfigSectionInterface[]
      */
     private function getConfigSectionsBySectionLocator(ServiceLocator $configSectionLocator): array

@@ -14,9 +14,6 @@ final class GitlabCiTestLocaleWorker extends AbstractWorker
 {
     private const string FILE_PATH = '.gitlab-ci.yml';
 
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {

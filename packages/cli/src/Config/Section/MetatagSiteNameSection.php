@@ -75,11 +75,7 @@ class MetatagSiteNameSection implements ProjectConfigSectionInterface
         ];
     }
 
-    /**
-     * @param mixed $value
-     * @return string
-     */
-    protected function validateSiteNameInput($value): string
+    protected function validateSiteNameInput(mixed $value): string
     {
         $string = trim((string)$value);
         $this->assertSiteName($string);
@@ -87,9 +83,6 @@ class MetatagSiteNameSection implements ProjectConfigSectionInterface
         return $string;
     }
 
-    /**
-     * @param string $value
-     */
     protected function assertSiteName(string $value): void
     {
         if ($value === '') {

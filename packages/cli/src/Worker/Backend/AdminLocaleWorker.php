@@ -15,9 +15,6 @@ final class AdminLocaleWorker extends AbstractWorker
 {
     private const string FILE_PATH = 'app/config/parameters_common.yaml';
 
-    /**
-     * @param \Shopsys\Cli\Model\YamlHandler $yamlHandler
-     */
     public function __construct(
         private readonly YamlHandler $yamlHandler,
     ) {

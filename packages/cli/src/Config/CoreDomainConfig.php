@@ -13,15 +13,6 @@ final class CoreDomainConfig
      */
     private array $configSections = [];
 
-    /**
-     * @param int $id
-     * @param string $name
-     * @param string $locale
-     * @param string $timezone
-     * @param string $type
-     * @param string $currencyCode
-     * @param bool $loadDemoData
-     */
     public function __construct(
         public readonly int $id,
         public readonly string $name,
@@ -35,8 +26,6 @@ final class CoreDomainConfig
 
     /**
      * @param array<string, mixed> $data
-     * @param \Shopsys\Cli\Config\ConfigSectionRegistry|null $registry
-     * @return self
      */
     public static function fromArray(array $data, ?ConfigSectionRegistry $registry = null): self
     {
@@ -94,9 +83,6 @@ final class CoreDomainConfig
         return $this->configSections[$sectionClass] ?? throw new LogicException(sprintf('Unknown section class: %s', $sectionClass));
     }
 
-    /**
-     * @param \Shopsys\Cli\Config\ConfigSectionInterface $section
-     */
     public function addConfigSection(ConfigSectionInterface $section): void
     {
         $this->configSections[$section::class] = $section;

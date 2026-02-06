@@ -15,19 +15,11 @@ use Symfony\Component\Yaml\Yaml;
 
 final class InteractiveInputCollector
 {
-    /**
-     * @param \Shopsys\Cli\Config\ConfigSectionRegistry $registry
-     */
     public function __construct(
         private readonly ConfigSectionRegistry $registry,
     ) {
     }
 
-    /**
-     * @param string $projectPath
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @return \Shopsys\Cli\Config\CoreProjectConfig
-     */
     public function collect(string $projectPath, SymfonyStyle $io): CoreProjectConfig
     {
         $this->displayHeader($io);
@@ -52,9 +44,6 @@ final class InteractiveInputCollector
         return $config;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     */
     private function displayHeader(SymfonyStyle $io): void
     {
         $io->writeln('');
@@ -66,7 +55,6 @@ final class InteractiveInputCollector
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return array<\Shopsys\Cli\Config\CoreDomainConfig>
      */
     private function collectDomains(SymfonyStyle $io): array
@@ -103,11 +91,6 @@ final class InteractiveInputCollector
         return $domains;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param int $domainId
-     * @return \Shopsys\Cli\Config\CoreDomainConfig
-     */
     private function collectCoreFields(SymfonyStyle $io, int $domainId): CoreDomainConfig
     {
         $io->section(sprintf('Domain %d Configuration', $domainId));
@@ -143,10 +126,6 @@ final class InteractiveInputCollector
         );
     }
 
-    /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     */
     private function displaySummary(CoreProjectConfig $config, SymfonyStyle $io): void
     {
         $io->section('Configuration Summary');
