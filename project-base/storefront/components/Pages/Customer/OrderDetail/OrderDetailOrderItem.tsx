@@ -32,6 +32,12 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
     const isUserLoggedIn = useIsUserLoggedIn();
     const { canCreateComplaint } = useAuthorization();
     const isProductGift = orderItem.type === TypeOrderItemTypeEnum.ProductGift;
+    const showComplaintButton =
+        canCreateComplaint &&
+        isUserLoggedIn &&
+        isOrderFromRegisteredCustomer &&
+        orderItem.order.withdrawalRequest === null &&
+        orderItem.type === TypeOrderItemTypeEnum.Product;
 
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const openCreateComplaintPopup = (
@@ -72,7 +78,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                 <div
                     className={twJoin(
                         'absolute top-5 left-0 z-10 rounded-tl-md rounded-br-md px-2 py-0.5',
-                        'bg-gradient-to-r from-purple-600 to-pink-600 text-xs font-semibold text-white shadow-md',
+                        'bg-linear-to-r from-purple-600 to-pink-600 text-xs font-semibold text-white shadow-md',
                     )}
                 >
                     {t('Gift')}
@@ -112,25 +118,22 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                             <span className="text-text-default text-sm">{orderItem.name}</span>
                         )}
 
-                        {canCreateComplaint &&
-                            isUserLoggedIn &&
-                            isOrderFromRegisteredCustomer &&
-                            orderItem.type === TypeOrderItemTypeEnum.Product && (
-                                <button
-                                    aria-haspopup="dialog"
-                                    className="text-link-default hover:text-link-hovered cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-none"
-                                    data-tid={TIDs.order_detail_create_complaint_button}
-                                    tabIndex={0}
-                                    aria-label={t('Create complaint for product {{ productName }}', {
-                                        ns: 'accessibility',
-                                        productName: orderItem.name,
-                                    })}
-                                    onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
-                                >
-                                    <FillIcon className="mr-2 size-6" />
-                                    {t('Create complaint')}
-                                </button>
-                            )}
+                        {showComplaintButton && (
+                            <button
+                                aria-haspopup="dialog"
+                                className="text-link-default hover:text-link-hovered cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-none"
+                                data-tid={TIDs.order_detail_create_complaint_button}
+                                tabIndex={0}
+                                aria-label={t('Create complaint for product {{ productName }}', {
+                                    ns: 'accessibility',
+                                    productName: orderItem.name,
+                                })}
+                                onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
+                            >
+                                <FillIcon className="mr-2 size-6" />
+                                {t('Create complaint')}
+                            </button>
+                        )}
                     </div>
                 </div>
 
