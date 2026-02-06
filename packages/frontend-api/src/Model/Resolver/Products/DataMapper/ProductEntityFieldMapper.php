@@ -190,7 +190,7 @@ class ProductEntityFieldMapper
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues[]
+     * @return array
      */
     public function getParameters(Product $product): array
     {

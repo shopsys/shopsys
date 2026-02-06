@@ -63,7 +63,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method bool isCurrentlyOutOfStock(\App\Model\Product\Product $product)
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
- * @method \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues[] getParameters(\App\Model\Product\Product $product)
+ * @method array getParameters(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getRelatedProductsPromise(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
