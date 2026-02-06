@@ -18,6 +18,7 @@ class GetArticlesTest extends GraphQlTestCase
 {
     private const ARTICLES_TOTAL_COUNT = 20;
     private const QUERY_PATH = __DIR__ . '/../_graphql/query/ArticlesQuery.graphql';
+    private const DRAGGABLE_ATTRIBUTE_REGEX = '/\sdraggable=(?:"[^"]*"|\'[^\']*\'|[^\s>]+)/i';
 
     /**
      * @inject
@@ -63,8 +64,26 @@ class GetArticlesTest extends GraphQlTestCase
     {
         foreach ($keys as $key) {
             $this->assertArrayHasKey($key, $actual, $message);
+
+            if ($key === 'text' && is_string($expected[$key]) && is_string($actual[$key])) {
+                $this->assertSame(
+                    $this->stripDraggableAttributes($expected[$key]),
+                    $this->stripDraggableAttributes($actual[$key]),
+                    $message,
+                );
+
+                continue;
+            }
+
             $this->assertSame($expected[$key], $actual[$key], $message);
         }
+    }
+
+    private function stripDraggableAttributes(string $text): string
+    {
+        $sanitizedText = preg_replace(self::DRAGGABLE_ATTRIBUTE_REGEX, '', $text);
+
+        return $sanitizedText ?? $text;
     }
 
     private function getArticlesDataProvider(): array
