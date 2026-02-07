@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -17,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPrio
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Throwable;
 
 class PriceListFacade
 {
@@ -32,6 +34,7 @@ class PriceListFacade
         protected readonly PriceListProductPriceDataFactory $priceListProductPriceDataFactory,
         protected readonly ProductFacade $productFacade,
         protected readonly ImportPriceListResultFactory $importPriceListResultFactory,
+        protected readonly MountManager $mountManager,
     ) {
     }
 
@@ -150,9 +153,9 @@ class PriceListFacade
         $importResult = $this->importPriceListResultFactory->create();
         $csvEncoder = new CsvEncoder();
 
-        $fileContent = $this->getFileContent($uploadedFileData);
-
-        if ($fileContent === false) {
+        try {
+            $fileContent = $this->getFileContent($uploadedFileData);
+        } catch (Throwable) {
             $importResult->addError(1, t('Cannot read file.'));
 
             return $importResult;
@@ -314,14 +317,10 @@ class PriceListFacade
         $importResult->increaseSuccessfulCount();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
-     * @return false|string
-     */
-    protected function getFileContent(UploadedFileData $uploadedFileData): string|false
+    protected function getFileContent(UploadedFileData $uploadedFileData): string
     {
-        $path = $this->fileUpload->getAbsoluteTemporaryFilepath(reset($uploadedFileData->uploadedFiles));
+        $path = $this->fileUpload->getTemporaryFilepathForMountManager(reset($uploadedFileData->uploadedFiles));
 
-        return file_get_contents($path);
+        return $this->mountManager->read('main://' . $path);
     }
 }
