@@ -77,7 +77,7 @@ class FriendlyUrl
         $this->routeName = $routeName;
         $this->entityId = $entityId;
         $this->domainId = $domainId;
-        $this->slug = $slug;
+        $this->slug = FriendlyUrlSlugNormalizer::normalize($slug);
         $this->main = false;
     }
 
