@@ -48,6 +48,16 @@ function returnSlug(string $route, ?string $redirectTo, ?int $redirectCode = nul
     exit;
 }
 
+function normalizeSlug(string $slug): string
+{
+    $decodedSlug = rawurldecode($slug);
+    $decodedSlugSegments = explode('/', $decodedSlug);
+
+    $encodedSlugSegments = array_map(static fn (string $segment): string => rawurlencode($segment), $decodedSlugSegments);
+
+    return implode('/', $encodedSlugSegments);
+}
+
 if ($slug === null || $domainId === null) {
     writeToLog(sprintf('400 Bad Request because slug (%s) or domainId (%d) is null',
         $slug,
@@ -58,7 +68,7 @@ if ($slug === null || $domainId === null) {
     exit;
 }
 
-$slug = ltrim(trim($slug), '/');
+$slug = normalizeSlug(ltrim(trim($slug), '/'));
 
 try {
     $connection = new PDO(
