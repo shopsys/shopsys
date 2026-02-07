@@ -47,16 +47,19 @@ class RegistrationMail implements MessageFactoryInterface
         );
     }
 
+    /**
+     * @return array<string, \Closure>
+     */
     protected function getVariablesReplacements(CustomerUser $customerUser): array
     {
         $router = $this->domainRouterFactory->getRouter($customerUser->getDomainId());
 
         return [
-            self::VARIABLE_FIRST_NAME => htmlspecialchars($customerUser->getFirstName(), ENT_QUOTES),
-            self::VARIABLE_LAST_NAME => htmlspecialchars($customerUser->getLastName(), ENT_QUOTES),
-            self::VARIABLE_EMAIL => htmlspecialchars($customerUser->getEmail(), ENT_QUOTES),
-            self::VARIABLE_URL => $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            self::VARIABLE_LOGIN_PAGE => $router->generate('front_login', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            self::VARIABLE_FIRST_NAME => fn () => htmlspecialchars($customerUser->getFirstName(), ENT_QUOTES),
+            self::VARIABLE_LAST_NAME => fn () => htmlspecialchars($customerUser->getLastName(), ENT_QUOTES),
+            self::VARIABLE_EMAIL => fn () => htmlspecialchars($customerUser->getEmail(), ENT_QUOTES),
+            self::VARIABLE_URL => fn () => $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            self::VARIABLE_LOGIN_PAGE => fn () => $router->generate('front_login', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ];
     }
 }

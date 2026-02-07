@@ -119,42 +119,46 @@ class OrderMail implements MessageFactoryInterface
         return null;
     }
 
+    /**
+     * @return array<string, \Closure>
+     */
     protected function getVariablesReplacementsForBody(Order $order): array
     {
-        $router = $this->domainRouterFactory->getRouter($order->getDomainId());
-
         $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
             $order->getItems(),
         );
 
         return [
-            self::VARIABLE_NUMBER => htmlspecialchars($order->getNumber(), ENT_QUOTES),
-            self::VARIABLE_DATE => $this->getFormattedDateTime($order),
-            self::VARIABLE_URL => $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            self::VARIABLE_TRANSPORT => htmlspecialchars($order->getTransportItem()->getName(), ENT_QUOTES),
-            self::VARIABLE_PAYMENT => htmlspecialchars($order->getPaymentItem()->getName(), ENT_QUOTES),
-            self::VARIABLE_TOTAL_PRICE_WITH_VAT => $this->getFormattedPriceWithVat($order),
-            self::VARIABLE_TOTAL_PRICE_WITHOUT_VAT => $this->getFormattedPriceWithoutVat($order),
-            self::VARIABLE_BILLING_ADDRESS => $this->getBillingAddressHtmlTable($order),
-            self::VARIABLE_DELIVERY_ADDRESS => $this->getDeliveryAddressHtmlTable($order),
-            self::VARIABLE_NOTE => $this->getNoteHtml($order),
-            self::VARIABLE_PRODUCTS => $this->getProductsHtmlTable($order, $orderItemTotalPricesById),
-            self::VARIABLE_ORDER_DETAIL_URL => $this->orderUrlGenerator->getOrderDetailUrl($order),
-            self::VARIABLE_TRANSPORT_INSTRUCTIONS => $this->getTransportInstructionsHtml($order),
-            self::VARIABLE_PAYMENT_INSTRUCTIONS => $this->getPaymentInstructionsHtml($order),
-            self::VARIABLE_TRACKING_INSTRUCTIONS => $this->getTrackingInstructions($order),
-            self::VARIABLE_TRANSPORT_INFO => $this->getTransportInfoHtml($order, $orderItemTotalPricesById),
-            self::VARIABLE_PAYMENT_INFO => $this->getPaymentInfoHtml($order, $orderItemTotalPricesById),
-            self::VARIABLE_ROUNDING_INFO => $this->getRoundingInfoHtml($order, $orderItemTotalPricesById),
-            self::VARIABLE_ADDRESSES => $this->getAddressesHtml($order),
+            self::VARIABLE_NUMBER => fn () => htmlspecialchars($order->getNumber(), ENT_QUOTES),
+            self::VARIABLE_DATE => fn () => $this->getFormattedDateTime($order),
+            self::VARIABLE_URL => fn () => $this->domainRouterFactory->getRouter($order->getDomainId())->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            self::VARIABLE_TRANSPORT => fn () => htmlspecialchars($order->getTransportItem()->getName(), ENT_QUOTES),
+            self::VARIABLE_PAYMENT => fn () => htmlspecialchars($order->getPaymentItem()->getName(), ENT_QUOTES),
+            self::VARIABLE_TOTAL_PRICE_WITH_VAT => fn () => $this->getFormattedPriceWithVat($order),
+            self::VARIABLE_TOTAL_PRICE_WITHOUT_VAT => fn () => $this->getFormattedPriceWithoutVat($order),
+            self::VARIABLE_BILLING_ADDRESS => fn () => $this->getBillingAddressHtmlTable($order),
+            self::VARIABLE_DELIVERY_ADDRESS => fn () => $this->getDeliveryAddressHtmlTable($order),
+            self::VARIABLE_NOTE => fn () => $this->getNoteHtml($order),
+            self::VARIABLE_PRODUCTS => fn () => $this->getProductsHtmlTable($order, $orderItemTotalPricesById),
+            self::VARIABLE_ORDER_DETAIL_URL => fn () => $this->orderUrlGenerator->getOrderDetailUrl($order),
+            self::VARIABLE_TRANSPORT_INSTRUCTIONS => fn () => $this->getTransportInstructionsHtml($order),
+            self::VARIABLE_PAYMENT_INSTRUCTIONS => fn () => $this->getPaymentInstructionsHtml($order),
+            self::VARIABLE_TRACKING_INSTRUCTIONS => fn () => $this->getTrackingInstructions($order),
+            self::VARIABLE_TRANSPORT_INFO => fn () => $this->getTransportInfoHtml($order, $orderItemTotalPricesById),
+            self::VARIABLE_PAYMENT_INFO => fn () => $this->getPaymentInfoHtml($order, $orderItemTotalPricesById),
+            self::VARIABLE_ROUNDING_INFO => fn () => $this->getRoundingInfoHtml($order, $orderItemTotalPricesById),
+            self::VARIABLE_ADDRESSES => fn () => $this->getAddressesHtml($order),
         ];
     }
 
+    /**
+     * @return array<string, \Closure>
+     */
     protected function getVariablesReplacementsForSubject(Order $order): array
     {
         return [
-            self::VARIABLE_NUMBER => $order->getNumber(),
-            self::VARIABLE_DATE => $this->getFormattedDateTime($order),
+            self::VARIABLE_NUMBER => fn () => $order->getNumber(),
+            self::VARIABLE_DATE => fn () => $this->getFormattedDateTime($order),
         ];
     }
 
