@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
+use Closure;
 use League\Flysystem\FilesystemOperationFailed;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -98,11 +99,19 @@ class Mailer
     }
 
     /**
-     * @param string[] $variablesKeysAndValues
+     * @param array<string, string|\Closure> $variablesKeysAndValues
      */
     protected function replaceVariables(string $string, array $variablesKeysAndValues): string
     {
-        return strtr($string, $variablesKeysAndValues);
+        $resolvedReplacements = [];
+
+        foreach ($variablesKeysAndValues as $key => $value) {
+            if (str_contains($string, $key)) {
+                $resolvedReplacements[$key] = $value instanceof Closure ? (string)($value() ?? '') : $value;
+            }
+        }
+
+        return strtr($string, $resolvedReplacements);
     }
 
     protected function replaceVariableImagesPaths(string $body): string
