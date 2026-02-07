@@ -150,8 +150,7 @@ class PriceListFacade
         $importResult = $this->importPriceListResultFactory->create();
         $csvEncoder = new CsvEncoder();
 
-        $path = $this->fileUpload->getAbsoluteTemporaryFilepath(reset($uploadedFileData->uploadedFiles));
-        $fileContent = file_get_contents($path);
+        $fileContent = $this->getFileContent($uploadedFileData);
 
         if ($fileContent === false) {
             $importResult->addError(1, t('Cannot read file.'));
@@ -183,40 +182,7 @@ class PriceListFacade
 
         foreach ($data as $row) {
             $line++;
-
-            $row = $this->preProcessCsvRow($row);
-            $violations = $this->validator->validate($row, $constraints);
-
-            foreach ($violations as $violation) {
-                $importResult->addWarning($line, $violation->getMessage());
-            }
-
-            if ($violations->count() > 0) {
-                continue;
-            }
-
-            $product = $this->productFacade->findByCatnum($row[PriceListCsvColumnsEnum::PRODUCT_CATNUM]);
-
-            if ($product === null) {
-                $importResult->addWarning(
-                    $line,
-                    t(
-                        'Product with catnum {{ catnum }} not found',
-                        ['{{ catnum }}' => $row[PriceListCsvColumnsEnum::PRODUCT_CATNUM]],
-                        Translator::VALIDATOR_TRANSLATION_DOMAIN,
-                    ),
-                );
-
-                continue;
-            }
-
-            $priceListData->priceListProductPricesData[] = $this->priceListProductPriceDataFactory->create(
-                $product,
-                Money::create($row[PriceListCsvColumnsEnum::PRICE]),
-                $priceListData->domainId,
-            );
-
-            $importResult->increaseSuccessfulCount();
+            $this->processCsvRow($row, $constraints, $importResult, $priceListData, $line);
         }
 
         if ($priceListData->id) {
@@ -304,5 +270,58 @@ class PriceListFacade
         $row[PriceListCsvColumnsEnum::PRICE] = str_replace(',', '.', $row[PriceListCsvColumnsEnum::PRICE]);
 
         return $row;
+    }
+
+    protected function processCsvRow(
+        array $rawRow,
+        Constraints\Collection $constraints,
+        ImportPriceListResult $importResult,
+        PriceListData $priceListData,
+        int $line,
+    ): void {
+        $row = $this->preProcessCsvRow($rawRow);
+        $violations = $this->validator->validate($row, $constraints);
+
+        foreach ($violations as $violation) {
+            $importResult->addWarning($line, $violation->getMessage());
+        }
+
+        if ($violations->count() > 0) {
+            return;
+        }
+
+        $product = $this->productFacade->findByCatnum($row[PriceListCsvColumnsEnum::PRODUCT_CATNUM]);
+
+        if ($product === null) {
+            $importResult->addWarning(
+                $line,
+                t(
+                    'Product with catnum {{ catnum }} not found',
+                    ['{{ catnum }}' => $row[PriceListCsvColumnsEnum::PRODUCT_CATNUM]],
+                    Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                ),
+            );
+
+            return;
+        }
+
+        $priceListData->priceListProductPricesData[] = $this->priceListProductPriceDataFactory->create(
+            $product,
+            Money::create($row[PriceListCsvColumnsEnum::PRICE]),
+            $priceListData->domainId,
+        );
+
+        $importResult->increaseSuccessfulCount();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
+     * @return false|string
+     */
+    protected function getFileContent(UploadedFileData $uploadedFileData): string|false
+    {
+        $path = $this->fileUpload->getAbsoluteTemporaryFilepath(reset($uploadedFileData->uploadedFiles));
+
+        return file_get_contents($path);
     }
 }
