@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\CspHeaderSetting\CspHeaderSettingFormType;
@@ -16,6 +17,7 @@ class CspHeaderController extends AdminBaseController
 {
     public function __construct(
         protected readonly Setting $setting,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -29,6 +31,7 @@ class CspHeaderController extends AdminBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->setting->set(Setting::CSP_HEADER, $form->getData()['cspHeader']);
+            $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SETTINGS_QUERY_KEY_PART);
             $this->addSuccessFlashTwig(t('Content-Security-Policy header has been set.'));
         }
 
