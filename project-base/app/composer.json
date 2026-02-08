@@ -195,11 +195,5 @@
             "require": "^6.4",
             "docker": false
         }
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/TomasLudvik/phing"
-        }
-    ]
+    }
 }
