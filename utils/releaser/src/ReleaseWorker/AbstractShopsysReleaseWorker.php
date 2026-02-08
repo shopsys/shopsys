@@ -51,6 +51,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         'shopsys/ordered-form',
         'shopsys/changelog-linker',
         'shopsys/jsformvalidator-bundle',
+        'shopsys/phpunit-injector',
         // packages outside monorepo
         'shopsys/deployment',
         // not related packages

@@ -34,6 +34,34 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 <!-- Add generated changelog below this line -->
 
+## [v14.5.1](https://github.com/shopsys/shopsys/compare/v14.5.0...v14.5.1) (2026-02-08)
+
+## What's Changed
+
+### :sparkles: Enhancements and features
+
+-   Images are no longer processed by PHP to avoid quality decrease by @TomasLudvik in https://github.com/shopsys/shopsys/pull/4360
+-   Added styles for grapesjs on localhost by @chlebektomas in https://github.com/shopsys/shopsys/pull/4385
+
+### :bug: Bug Fixes
+
+-   Pinned jquery version to 3.x major by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4428
+-   Fixed tests on single domain by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4429
+
+### :hammer: Developer experience and refactoring
+
+-   Replaced mutagen-compose with plain mutagen by @TomasLudvik in https://github.com/shopsys/shopsys/pull/4343
+
+### :placard: Upgraded Dependencies
+
+-   Updated to Symfony 6 by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4394
+-   Updated dependencies by @TomasLudvik in https://github.com/shopsys/shopsys/pull/4357
+-   Updated gopay/payments-sdk-php by @TomasLudvik in https://github.com/shopsys/shopsys/pull/4366
+-   Updated sspooky13/yaml-standards by @TomasLudvik in https://github.com/shopsys/shopsys/pull/4361
+-   Updated symplify/easy-coding-standard package to 12.2 by @machacjan in https://github.com/shopsys/shopsys/pull/4367
+
+**Full Changelog**: https://github.com/shopsys/shopsys/compare/v14.5.0...v14.5.1
+
 ## [v14.5.0](https://github.com/shopsys/shopsys/compare/v14.0.1...v14.5.0) (2025-11-27)
 
 <!-- Release notes generated using configuration in .github/release.yml at 14.5 -->

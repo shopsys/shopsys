@@ -23,7 +23,7 @@ class ShopsysFrameworkBundle extends Bundle
     /**
      * @var string
      */
-    public const VERSION = '14.5.1-dev';
+    public const VERSION = '14.5.1';
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
