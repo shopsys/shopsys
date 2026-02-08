@@ -34,7 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 <!-- Add generated changelog below this line -->
 
-## [v14.5.1](https://github.com/shopsys/shopsys/compare/v14.5.0...v14.5.1) (2026-02-04)
+## [v14.5.1](https://github.com/shopsys/shopsys/compare/v14.5.0...v14.5.1) (2026-02-08)
 
 ## What's Changed
 
