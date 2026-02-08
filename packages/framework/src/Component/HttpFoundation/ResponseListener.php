@@ -14,5 +14,6 @@ class ResponseListener
         $event->getResponse()->headers->set('X-XSS-Protection', '1; mode=block');
         $event->getResponse()->headers->set('X-Content-Type-Options', 'nosniff');
         $event->getResponse()->headers->set('X-Powered-By', 'Shopsys Platform');
+        $event->getResponse()->headers->set('Referrer-Policy', 'same-origin');
     }
 }

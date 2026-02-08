@@ -23,7 +23,7 @@ overblog_graphql:
         logger_service: Shopsys\FrontendApiBundle\Model\Logger\FrontendApiLogger
     security:
         enable_introspection: '%kernel.debug%'
-        handle_cors: true
+        handle_cors: false
         query_max_complexity: 1110
     services:
         promise_adapter: "webonyx_graphql.sync_promise_adapter"

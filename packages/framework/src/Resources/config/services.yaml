@@ -187,6 +187,10 @@ services:
         lazy: true
         public: true
 
+    Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
     Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator: ~
 
     Shopsys\FrameworkBundle\Component\Domain\DomainFacade:
