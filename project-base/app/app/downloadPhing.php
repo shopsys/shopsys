@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 return static function () {
-    if (str_contains(__DIR__, 'project-base')) {
+    if (file_exists(__DIR__ . '/../../../parameters_monorepo.yaml')) {
         $vendorDir = __DIR__ . '/../../../vendor';
     } else {
         $vendorDir = __DIR__ . '/../vendor';
