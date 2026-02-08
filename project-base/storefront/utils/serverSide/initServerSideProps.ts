@@ -47,6 +47,10 @@ export type ServerSidePropsType = {
     cookiesStore: CookiesStoreState;
 } & Record<string, any>;
 
+const sanitizeCspHeaderValue = (cspHeaderValue: string): string => {
+    return cspHeaderValue.replace(/[\r\n]/g, '');
+};
+
 type QueriesArray<VariablesType> = { query: string | DocumentNode; variables?: VariablesType }[];
 
 type InitServerSidePropsParameters<VariablesType> = {
@@ -146,6 +150,13 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     const resolvedQueries = await Promise.all(
         prefetchQueries.map((queryObject) => currentClient.query(queryObject.query, queryObject.variables).toPromise()),
     );
+
+    const settingsResult = resolvedQueries.find((query) => query.data?.settings?.cspHeader !== undefined);
+    const cspHeaderValue = settingsResult?.data?.settings?.cspHeader;
+
+    if (cspHeaderValue) {
+        context.res.setHeader('Content-Security-Policy', sanitizeCspHeaderValue(cspHeaderValue));
+    }
 
     const slugResult = resolvedQueries.find((query) => !!query.data?.slug?.slug);
     const parsedSlug = slugResult?.data.slug.slug;
