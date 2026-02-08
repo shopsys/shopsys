@@ -1,4 +1,4 @@
-FROM shopsys/php-image:v14.5.1 AS base
+FROM shopsys/php-image:14.5 AS base
 
 ARG project_root=.
 
