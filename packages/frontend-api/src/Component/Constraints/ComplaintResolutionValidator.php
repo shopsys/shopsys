@@ -37,7 +37,7 @@ class ComplaintResolutionValidator extends ConstraintValidator
         }
 
         if ($this->complaintResolutionEnum->isMoneyReturn($resolution) && ($value->bankAccountNumber === null || $value->bankAccountNumber === '')) {
-            $this->context->buildViolation($constraint->selecteComplaintResolutionRequiresBankAccountFilledMessage)
+            $this->context->buildViolation($constraint->selectedComplaintResolutionRequiresBankAccountFilledMessage)
                 ->setCode($constraint::SELECTED_COMPLAINT_RESOLUTION_REQUIRES_BANK_ACCOUNT_NUMBER_FILLED_ERROR)
                 ->atPath('bankAccountNumber')
                 ->addViolation();
