@@ -9397,6 +9397,15 @@ Main text for contact form
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="settings.cspheader">cspHeader</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Content Security Policy header value
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="settings.displaytimezone">displayTimezone</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
