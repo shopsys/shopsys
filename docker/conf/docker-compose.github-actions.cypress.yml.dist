@@ -6,7 +6,6 @@ services:
             - postgres-data:/var/lib/postgresql:rw
             - ./project-base/app/docker/postgres/postgres.conf:/etc/postgresql/postgresql.conf
         environment:
-            - PGDATA=/var/lib/postgresql/18/docker
             - POSTGRES_USER=root
             - POSTGRES_PASSWORD=root
             - POSTGRES_DB=shopsys
