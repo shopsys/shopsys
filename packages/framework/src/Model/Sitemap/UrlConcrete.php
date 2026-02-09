@@ -10,17 +10,11 @@ use Presta\SitemapBundle\Sitemap\Utils;
 
 class UrlConcrete extends BaseUrlConcrete
 {
-    /**
-     * @param string $loc
-     */
     public function __construct(string $loc)
     {
         $this->setLoc($loc);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function toXml(): string
     {

@@ -18,16 +18,6 @@ class PromotionFlagFacade
 {
     protected const string DEFAULT_PROMOTION_FLAG_COLOR = '#efd6ff';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory $flagDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyRepository $productPromotionXyRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyFactory $productPromotionXyFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory $productPromotionXyDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     */
     public function __construct(
         protected readonly FlagFacade $flagFacade,
         protected readonly EntityManagerInterface $em,
@@ -40,9 +30,6 @@ class PromotionFlagFacade
     ) {
     }
 
-    /**
-     * @param int $productId
-     */
     public function updatePromotionFlags(int $productId): void
     {
         try {
@@ -72,8 +59,6 @@ class PromotionFlagFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     protected function getUpdatedFlagsOnDomain(Product $product, int $domainId): array
@@ -99,11 +84,6 @@ class PromotionFlagFacade
         return array_values([...$nonPromotionFlags, $flagForCurrentProductPromotion]);
     }
 
-    /**
-     * @param int $x
-     * @param int $y
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     protected function findOrCreatePromotionFlag(int $x, int $y): Flag
     {
         $flag = $this->productPromotionXyRepository->findFlagByQuantities($x, $y);
@@ -139,12 +119,6 @@ class PromotionFlagFacade
         return $flag;
     }
 
-    /**
-     * @param int $x
-     * @param int $y
-     * @param string $locale
-     * @return string
-     */
     protected function buildPromotionFlagName(int $x, int $y, string $locale): string
     {
         return t(
@@ -159,9 +133,7 @@ class PromotionFlagFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param array<int, array<\Shopsys\FrameworkBundle\Model\Product\Flag\Flag>> $newFlagsByDomainId
-     * @return bool
      */
     protected function haveFlagsChanged(Product $product, array $newFlagsByDomainId): bool
     {

@@ -8,11 +8,6 @@ use Exception;
 
 class WrongItemTypeException extends Exception
 {
-    /**
-     * @param string $expectedType
-     * @param string $actualType
-     * @param \Exception|null $previous
-     */
     public function __construct(string $expectedType, string $actualType, ?Exception $previous = null)
     {
         $message = sprintf('OrderItem has to be of a type "%s", but it is "%s".', $expectedType, $actualType);

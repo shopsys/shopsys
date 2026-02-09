@@ -13,21 +13,12 @@ class CurrencyFormatterFactory
 {
     public const MAXIMUM_FRACTION_DIGITS = 10;
 
-    /**
-     * @param \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface $numberFormatRepository
-     * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
-     */
     public function __construct(
         protected readonly NumberFormatRepositoryInterface $numberFormatRepository,
         protected readonly CurrencyRepositoryInterface $intlCurrencyRepository,
     ) {
     }
 
-    /**
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \CommerceGuys\Intl\Formatter\CurrencyFormatter
-     */
     public function createByLocaleAndCurrency(string $locale, Currency $currency): CurrencyFormatter
     {
         return new CurrencyFormatter(

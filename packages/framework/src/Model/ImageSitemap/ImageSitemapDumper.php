@@ -9,9 +9,6 @@ use Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumper;
 
 class ImageSitemapDumper extends SitemapDumper
 {
-    /**
-     * @param string|null $section
-     */
     #[Override]
     protected function populate(?string $section = null): void
     {
@@ -20,9 +17,6 @@ class ImageSitemapDumper extends SitemapDumper
         $this->dispatcher->dispatch($event);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapIndex
-     */
     #[Override]
     protected function getRoot(): ImageSitemapIndex
     {

@@ -18,11 +18,6 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 
     private const EXPECTED_ORDER_IDS = [4, 5, 3, 1, 2, 6];
 
-    /**
-     * @param array $queryVariables
-     * @param int|null $offsetInExpected
-     * @param int|null $lengthInExpected
-     */
     #[DataProvider('getOrdersDataProvider')]
     public function testGetAllCustomerUserOrders(
         array $queryVariables,
@@ -61,9 +56,6 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         }
     }
 
-    /**
-     * @return iterable
-     */
     public static function getOrdersDataProvider(): iterable
     {
         // all orders
@@ -118,11 +110,6 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         yield [['filter' => ['status' => 'inProgress']], 0, 1];
     }
 
-    /**
-     * @param int|null $offset
-     * @param int|null $length
-     * @return array
-     */
     private function getExpectedUserOrders(?int $offset, ?int $length): array
     {
         $ordersArray = [];

@@ -8,25 +8,16 @@ use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
 class AdvertDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     */
     public function __construct(
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Advert\AdvertData
-     */
     protected function createInstance(): AdvertData
     {
         return new AdvertData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Advert\AdvertData
-     */
     public function create(): AdvertData
     {
         $advertData = $this->createInstance();
@@ -37,10 +28,6 @@ class AdvertDataFactory
         return $advertData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
-     * @return \Shopsys\FrameworkBundle\Model\Advert\AdvertData
-     */
     public function createFromAdvert(Advert $advert): AdvertData
     {
         $advertData = $this->createInstance();
@@ -49,10 +36,6 @@ class AdvertDataFactory
         return $advertData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
-     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
-     */
     protected function fillFromAdvert(AdvertData $advertData, Advert $advert): void
     {
         $advertData->name = $advert->getName();

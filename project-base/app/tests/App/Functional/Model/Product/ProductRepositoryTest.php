@@ -39,10 +39,6 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->getAllListableQueryBuilderTest(69, true);
     }
 
-    /**
-     * @param int $productReferenceId
-     * @param bool $isExpectedInResult
-     */
     private function getAllListableQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {
         $pricingGroup = $this->getReferenceForDomain(
@@ -82,10 +78,6 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->getAllSellableQueryBuilderTest(69, false);
     }
 
-    /**
-     * @param int $productReferenceId
-     * @param bool $isExpectedInResult
-     */
     private function getAllSellableQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {
         $pricingGroup = $this->getReferenceForDomain(
@@ -125,10 +117,6 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->getAllOfferedQueryBuilderTest(69, true);
     }
 
-    /**
-     * @param int $productReferenceId
-     * @param bool $isExpectedInResult
-     */
     private function getAllOfferedQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {
         $pricingGroup = $this->getReferenceForDomain(

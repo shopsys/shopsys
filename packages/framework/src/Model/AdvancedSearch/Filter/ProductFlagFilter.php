@@ -16,9 +16,6 @@ class ProductFlagFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'productFlag';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     */
     public function __construct(protected readonly FlagFacade $flagFacade)
     {
     }

@@ -16,12 +16,6 @@ use Twig\TwigFunction;
 
 class CategorySeoExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory
-     */
     public function __construct(
         protected readonly ParameterFacade $parameterFacade,
         protected readonly DomainRouterFactory $domainRouterFactory,
@@ -42,10 +36,6 @@ class CategorySeoExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $selectedCategorySeoMixCombinationJson
-     * @return \Generator
-     */
     public function getReadyCategoryMixCombinationParametersPairsIterator(
         string $selectedCategorySeoMixCombinationJson,
     ): Generator {
@@ -56,10 +46,6 @@ class CategorySeoExtension extends AbstractExtension
         }
     }
 
-    /**
-     * @param int $readyCategorySeoMixId
-     * @return string
-     */
     public function getAbsoluteUrlOfReadyCategorySeoMix(int $readyCategorySeoMixId): string
     {
         $readyCategorySeoMix = $this->readyCategorySeoMixFacade->findById($readyCategorySeoMixId);

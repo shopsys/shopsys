@@ -6,14 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 
 class Column
 {
-    protected string $id;
-
-    protected string $sourceColumnName;
-
-    protected string $title;
-
-    protected bool $sortable;
-
     protected string $classAttribute;
 
     protected string $orderSourceColumnName;
@@ -23,94 +15,63 @@ class Column
     protected ?string $help;
 
     /**
-     * @param string $id
-     * @param string $sourceColumnName
-     * @param string $title
-     * @param bool $sortable
      * @param array{ template?: string, help?: string }&array<string, mixed> $options
      */
-    public function __construct($id, $sourceColumnName, $title, $sortable, $options = [])
-    {
-        $this->id = $id;
-        $this->sourceColumnName = $sourceColumnName;
-        $this->title = $title;
-        $this->sortable = $sortable;
+    public function __construct(
+        protected string $id,
+        protected string $sourceColumnName,
+        protected string $title,
+        protected bool $sortable,
+        array $options = [],
+    ) {
         $this->classAttribute = '';
         $this->orderSourceColumnName = $sourceColumnName;
         $this->template = $options['template'] ?? null;
         $this->help = $options['help'] ?? null;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getSourceColumnName()
+    public function getSourceColumnName(): string
     {
         return $this->sourceColumnName;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSortable()
+    public function isSortable(): bool
     {
         return $this->sortable;
     }
 
-    /**
-     * @return string
-     */
-    public function getClassAttribute()
+    public function getClassAttribute(): string
     {
         return $this->classAttribute;
     }
 
-    /**
-     * @param string $class
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Column
-     */
-    public function setClassAttribute($class)
+    public function setClassAttribute(string $class): self
     {
         $this->classAttribute = $class;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOrderSourceColumnName()
+    public function getOrderSourceColumnName(): string
     {
         return $this->orderSourceColumnName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getHelp(): ?string
     {
         return $this->help;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTemplate(): ?string
     {
         return $this->template;

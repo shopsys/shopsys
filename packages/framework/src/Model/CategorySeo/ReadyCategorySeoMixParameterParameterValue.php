@@ -36,10 +36,6 @@ class ReadyCategorySeoMixParameterParameterValue
     #[ORM\ManyToOne(targetEntity: ParameterValue::class)]
     protected $parameterValue;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
-     */
     public function __construct(
         Parameter $parameter,
         ParameterValue $parameterValue,
@@ -51,7 +47,7 @@ class ReadyCategorySeoMixParameterParameterValue
     /**
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
      */
-    public function setReadyCategorySeoMix($readyCategorySeoMix)
+    public function setReadyCategorySeoMix($readyCategorySeoMix): void
     {
         $this->readyCategorySeoMix = $readyCategorySeoMix;
     }

@@ -28,10 +28,6 @@ final class MailTemplateFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_SEND_MAIL = 'sendMail';
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -103,7 +99,6 @@ final class MailTemplateFormType extends AbstractType
     }
 
     /**
-     * @param array $options
      * @return \Symfony\Component\Validator\Constraint[]
      */
     private function getSubjectConstraints(array $options): array
@@ -131,7 +126,6 @@ final class MailTemplateFormType extends AbstractType
     }
 
     /**
-     * @param array $options
      * @return \Symfony\Component\Validator\Constraint[]
      */
     private function getBodyConstraints(array $options): array
@@ -154,9 +148,6 @@ final class MailTemplateFormType extends AbstractType
         return $bodyConstraints;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

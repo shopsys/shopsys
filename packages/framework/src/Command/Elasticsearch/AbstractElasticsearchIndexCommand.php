@@ -23,12 +23,6 @@ abstract class AbstractElasticsearchIndexCommand extends Command
     private const ARGUMENT_INDEX_NAME = 'name';
     protected const OPTION_DOMAIN_ID = 'domainId';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry $indexRegistry
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly IndexRegistry $indexRegistry,
         protected readonly IndexFacade $indexFacade,
@@ -55,11 +49,6 @@ abstract class AbstractElasticsearchIndexCommand extends Command
             );
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -78,7 +67,6 @@ abstract class AbstractElasticsearchIndexCommand extends Command
     }
 
     /**
-     * @param string|null $indexName
      * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex[]
      */
     private function getAffectedIndexes(?string $indexName): array
@@ -90,11 +78,6 @@ abstract class AbstractElasticsearchIndexCommand extends Command
         return $this->indexRegistry->getRegisteredIndexes();
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
-     * @param int|null $domainId
-     */
     protected function executeForIndex(
         OutputInterface $output,
         AbstractIndex $index,
@@ -117,24 +100,11 @@ abstract class AbstractElasticsearchIndexCommand extends Command
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     abstract protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void;
 
-    /**
-     * @return string
-     */
     abstract protected function getArgumentNameDescription(): string;
 
-    /**
-     * @return string
-     */
     abstract protected function getActionStartedMessage(): string;
 
-    /**
-     * @return string
-     */
     abstract protected function getActionFinishedMessage(): string;
 }

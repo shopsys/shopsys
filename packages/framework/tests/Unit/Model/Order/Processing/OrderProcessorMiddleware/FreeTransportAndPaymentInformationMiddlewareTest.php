@@ -11,9 +11,6 @@ use Tests\FrameworkBundle\Test\MiddlewareTestCase;
 
 class FreeTransportAndPaymentInformationMiddlewareTest extends MiddlewareTestCase
 {
-    /**
-     * @return iterable
-     */
     public static function freeTransportAndPaymentInformationProvider(): iterable
     {
         yield [true];
@@ -21,9 +18,6 @@ class FreeTransportAndPaymentInformationMiddlewareTest extends MiddlewareTestCas
         yield [false];
     }
 
-    /**
-     * @param bool $expectedValue
-     */
     #[DataProvider('freeTransportAndPaymentInformationProvider')]
     public function testFreeTransportAndPaymentInformationIsProperlySet(bool $expectedValue): void
     {

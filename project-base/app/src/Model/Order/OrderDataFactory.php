@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as BaseOrderDataFactory
  * @method \App\Model\Order\OrderData create()
  * @method \App\Model\Order\OrderData createFromOrder(\App\Model\Order\Order $order)
  * @method \App\Model\Order\OrderData fillZeroPrices(\App\Model\Order\OrderData $orderData)
- * @method fillFromOrder(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order)
+ * @method void fillFromOrder(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order)
  */
 class OrderDataFactory extends BaseOrderDataFactory
 {

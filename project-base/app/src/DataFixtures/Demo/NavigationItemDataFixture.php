@@ -18,11 +18,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class NavigationItemDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade $navigationItemFacade
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDataFactory $navigationItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     */
     public function __construct(
         private readonly NavigationItemFacade $navigationItemFacade,
         private readonly NavigationItemDataFactory $navigationItemDataFactory,
@@ -30,9 +25,6 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -142,9 +134,6 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
-     */
     private function createItem(NavigationItemData $navigationItemData): void
     {
         $this->navigationItemFacade->create($navigationItemData);
@@ -162,7 +151,6 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
      * @param array<int, string[]> $categoryReferenceNamesByColumn
      */
     private function addCategoriesToNavigationItem(
@@ -179,20 +167,11 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
         }
     }
 
-    /**
-     * @param string $name
-     * @return \App\Model\Category\Category
-     */
     private function getCategoryReference(string $name): Category
     {
         return $this->getReference($name, Category::class);
     }
 
-    /**
-     * @param string $categoryReferenceName
-     * @param int $domainId
-     * @return string
-     */
     private function generateUrlForCategoryOnDomain(string $categoryReferenceName, int $domainId): string
     {
         $router = $this->domainRouterFactory->getRouter($domainId);

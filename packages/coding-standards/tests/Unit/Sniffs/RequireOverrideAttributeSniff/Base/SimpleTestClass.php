@@ -10,9 +10,6 @@ class SimpleTestClass
     {
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'name';
@@ -23,9 +20,6 @@ class SimpleTestClass
         // Base implementation
     }
 
-    /**
-     * @return int
-     */
     public function calculate(): int
     {
         return 42;

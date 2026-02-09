@@ -8,19 +8,15 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class GoogleProductDomainRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
     /**
-     * @param int $productId
      * @return \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomain[]
      */
-    public function findByProductId($productId)
+    public function findByProductId(int $productId): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
@@ -31,13 +27,10 @@ class GoogleProductDomainRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    /**
-     * @param int $productId
-     * @param int $domainId
-     * @return \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomain|null
-     */
-    public function findByProductIdAndDomainId($productId, $domainId)
-    {
+    public function findByProductIdAndDomainId(
+        int $productId,
+        int $domainId,
+    ): ?GoogleProductDomain {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
             ->from(GoogleProductDomain::class, 'p')

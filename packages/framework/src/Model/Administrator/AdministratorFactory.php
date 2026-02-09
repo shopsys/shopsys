@@ -8,17 +8,10 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class AdministratorFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $data
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     public function create(AdministratorData $data): Administrator
     {
         $entityClassName = $this->entityNameResolver->resolve(Administrator::class);

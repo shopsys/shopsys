@@ -16,16 +16,6 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 
 class BlogArticleFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFactory $blogArticleFactory
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler $blogArticleExportScheduler
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly BlogArticleRepository $blogArticleRepository,
@@ -38,28 +28,16 @@ class BlogArticleFacade
     ) {
     }
 
-    /**
-     * @param int $blogArticleId
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle
-     */
     public function getById(int $blogArticleId): BlogArticle
     {
         return $this->blogArticleRepository->getById($blogArticleId);
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     public function getAllArticlesCountByDomainId(int $domainId): int
     {
         return $this->blogArticleRepository->getAllBlogArticlesCountByDomainId($domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData $blogArticleData
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle
-     */
     public function create(BlogArticleData $blogArticleData): BlogArticle
     {
         $blogArticle = $this->blogArticleFactory->create($blogArticleData);
@@ -82,11 +60,6 @@ class BlogArticleFacade
         return $blogArticle;
     }
 
-    /**
-     * @param int $blogArticleId
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData $blogArticleData
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle
-     */
     public function edit(int $blogArticleId, BlogArticleData $blogArticleData): BlogArticle
     {
         $blogArticle = $this->blogArticleRepository->getById($blogArticleId);
@@ -107,9 +80,6 @@ class BlogArticleFacade
         return $blogArticle;
     }
 
-    /**
-     * @param int $blogArticleId
-     */
     public function delete(int $blogArticleId): void
     {
         $blogArticle = $this->blogArticleRepository->getById($blogArticleId);
@@ -122,7 +92,6 @@ class BlogArticleFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle[]
      */
     public function getAllByDomainId(int $domainId): array
@@ -131,7 +100,6 @@ class BlogArticleFacade
     }
 
     /**
-     * @param int $domainId
      * @return int[]
      */
     public function getAllIdsByDomainId(int $domainId): array
@@ -140,9 +108,6 @@ class BlogArticleFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param int $domainId
-     * @param string $locale
      * @return int[]
      */
     public function getBlogArticleIdsByCategory(BlogCategory $blogCategory, int $domainId, string $locale): array
@@ -155,7 +120,6 @@ class BlogArticleFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle[]
      */
     public function getAllVisibleOnDomain(DomainConfig $domainConfig): array
@@ -163,12 +127,6 @@ class BlogArticleFacade
         return $this->blogArticleRepository->getAllVisibleOnDomain($domainConfig);
     }
 
-    /**
-     * @param int|null $selectedDomainId
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getQueryBuilderForQuickSearch(
         ?int $selectedDomainId,
         QuickSearchFormData $searchData,

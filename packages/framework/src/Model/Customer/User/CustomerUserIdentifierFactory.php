@@ -11,11 +11,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CustomerUserIdentifierFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly RequestStack $requestStack,
@@ -23,9 +18,6 @@ class CustomerUserIdentifierFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier
-     */
     public function get(): CustomerUserIdentifier
     {
         try {
@@ -43,10 +35,6 @@ class CustomerUserIdentifierFactory
         return new CustomerUserIdentifier($cartIdentifier, $this->currentCustomerUser->findCurrentCustomerUser());
     }
 
-    /**
-     * @param string|null $cartIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier
-     */
     public function getOnlyWithCartIdentifier(?string $cartIdentifier): CustomerUserIdentifier
     {
         if ($this->transformStringHelper->emptyToNull($cartIdentifier) === null) {
@@ -56,10 +44,6 @@ class CustomerUserIdentifierFactory
         return new CustomerUserIdentifier($cartIdentifier);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier
-     */
     public function getByCustomerUser(CustomerUser $customerUser): CustomerUserIdentifier
     {
         return new CustomerUserIdentifier('', $customerUser);

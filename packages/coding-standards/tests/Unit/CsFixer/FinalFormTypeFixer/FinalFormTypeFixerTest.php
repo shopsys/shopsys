@@ -10,9 +10,6 @@ use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
 final class FinalFormTypeFixerTest extends AbstractFixerTestCase
 {
-    /**
-     * @return \Shopsys\CodingStandards\CsFixer\FinalFormTypeFixer
-     */
     #[Override]
     protected function createFixerService(): FinalFormTypeFixer
     {

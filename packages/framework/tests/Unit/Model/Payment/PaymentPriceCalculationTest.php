@@ -27,7 +27,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class PaymentPriceCalculationTest extends TestCase
 {
-    public static function calculateIndependentPriceProvider()
+    public static function calculateIndependentPriceProvider(): array
     {
         return [
             [
@@ -47,7 +47,7 @@ class PaymentPriceCalculationTest extends TestCase
         ];
     }
 
-    public static function calculatePriceProvider()
+    public static function calculatePriceProvider(): array
     {
         return [
             [
@@ -80,13 +80,6 @@ class PaymentPriceCalculationTest extends TestCase
         ];
     }
 
-    /**
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
-     * @param string $vatPercent
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     */
     #[DataProvider('calculateIndependentPriceProvider')]
     public function testCalculateIndependentPrice(
         int $inputPriceType,
@@ -94,7 +87,7 @@ class PaymentPriceCalculationTest extends TestCase
         string $vatPercent,
         Money $priceWithoutVat,
         Money $priceWithVat,
-    ) {
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->onlyMethods(['getInputPriceType'])
             ->disableOriginalConstructor()
@@ -147,15 +140,6 @@ class PaymentPriceCalculationTest extends TestCase
         $this->assertThat($price->getPriceWithVat(), new IsMoneyEqual($priceWithVat));
     }
 
-    /**
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
-     * @param string $vatPercent
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
-     * @param bool $forceFreePrice
-     */
     #[DataProvider('calculatePriceProvider')]
     public function testCalculatePrice(
         int $inputPriceType,
@@ -165,7 +149,7 @@ class PaymentPriceCalculationTest extends TestCase
         Money $priceWithVat,
         Price $productsPrice,
         bool $forceFreePrice,
-    ) {
+    ): void {
         $priceLimit = Money::create(1000);
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->onlyMethods(['getInputPriceType', 'getFreeTransportAndPaymentPriceLimit'])

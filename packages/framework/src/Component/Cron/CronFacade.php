@@ -13,12 +13,6 @@ use Throwable;
 
 class CronFacade
 {
-    /**
-     * @param \Monolog\Logger $logger
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor $cronModuleExecutor
-     */
     public function __construct(
         protected readonly Logger $logger,
         protected readonly CronConfig $cronConfig,
@@ -27,18 +21,12 @@ class CronFacade
     ) {
     }
 
-    /**
-     * @param \DateTimeInterface $roundedTime
-     */
-    public function scheduleModulesByTime(DateTimeInterface $roundedTime)
+    public function scheduleModulesByTime(DateTimeInterface $roundedTime): void
     {
         $cronModuleConfigsToSchedule = $this->cronConfig->getCronModuleConfigsByTime($roundedTime);
         $this->cronModuleFacade->scheduleModules($cronModuleConfigsToSchedule);
     }
 
-    /**
-     * @param string $instanceName
-     */
     public function runScheduledModulesForInstance(string $instanceName): void
     {
         $cronModuleConfigs = $this->cronConfig->getCronModuleConfigsForInstance($instanceName);
@@ -49,7 +37,6 @@ class CronFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[] $cronModuleConfigs
-     * @param string $instanceName
      */
     protected function runModules(array $cronModuleConfigs, string $instanceName): void
     {
@@ -86,20 +73,14 @@ class CronFacade
         $this->logger->popProcessor();
     }
 
-    /**
-     * @param string $serviceId
-     */
-    public function runModuleByServiceId($serviceId)
+    public function runModuleByServiceId(string $serviceId): void
     {
         $cronModuleConfig = $this->cronConfig->getCronModuleConfigByServiceId($serviceId);
 
         $this->runSingleModule($cronModuleConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
-     */
-    protected function runSingleModule(CronModuleConfig $cronModuleConfig)
+    protected function runSingleModule(CronModuleConfig $cronModuleConfig): void
     {
         if ($this->cronModuleFacade->isModuleDisabled($cronModuleConfig) === true) {
             return;
@@ -149,13 +130,12 @@ class CronFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->cronConfig->getAllCronModuleConfigs();
     }
 
     /**
-     * @param string $instanceName
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
     public function getAllForInstance(string $instanceName): array

@@ -732,10 +732,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @param bool $isSliderSelectable
-     * @param array $filter
-     */
     #[DataProvider('isSliderSelectable')]
     public function testIsSliderSelectable(bool $isSliderSelectable, array $filter): void
     {
@@ -761,9 +757,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @return iterable
-     */
     public static function isSliderSelectable(): iterable
     {
         yield [true, 'filter' => []];
@@ -771,9 +764,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         yield [false, 'filter' => ['brands' => ['738ead90-3108-433d-ad6e-1ea23f68a13d']]];
     }
 
-    /**
-     * @return array
-     */
     private function getRedColorExpectedFile(): array
     {
         $redColorParameterValue = $this->getReference(ParameterColorValueDataFixture::PARAMETER_VALUE_RED_REFERENCE_PREFIX . $this->firstDomainLocale, ParameterValue::class);

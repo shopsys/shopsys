@@ -21,7 +21,6 @@ class Flag extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -36,7 +35,6 @@ class Flag extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translations(targetEntity: FlagTranslation::class)]
     protected $translations;
@@ -66,9 +64,6 @@ class Flag extends AbstractTranslatableEntity
     #[ORM\ManyToOne(targetEntity: ProductPromotionXy::class)]
     protected $promotionXy;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
     public function __construct(FlagData $flagData)
     {
         $this->uuid = $flagData->uuid ?: Uuid::uuid4()->toString();
@@ -78,17 +73,11 @@ class Flag extends AbstractTranslatableEntity
         $this->lockedForDeletion = false;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
-    public function edit(FlagData $flagData)
+    public function edit(FlagData $flagData): void
     {
         $this->setData($flagData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
     protected function setData(FlagData $flagData): void
     {
         $this->setTranslations($flagData);
@@ -168,10 +157,7 @@ class Flag extends AbstractTranslatableEntity
         return $this->promotionXy;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
-    protected function setTranslations(FlagData $flagData)
+    protected function setTranslations(FlagData $flagData): void
     {
         foreach ($flagData->name as $locale => $name) {
             $this->translation($locale)->setName($name);

@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 
 class SeoPageGridFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageRepository $seoPageRepository
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly SeoPageRepository $seoPageRepository,
@@ -23,10 +18,6 @@ class SeoPageGridFactory
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     public function create(int $domainId): Grid
     {
         $queryBuilder = $this->seoPageRepository->getAllQueryBuilder()

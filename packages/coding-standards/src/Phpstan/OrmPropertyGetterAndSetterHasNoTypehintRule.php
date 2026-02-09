@@ -17,20 +17,12 @@ class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
 {
     private const CHECKED_NAMESPACE = 'Shopsys\\';
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getNodeType(): string
     {
         return ClassMethod::class;
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     * @param \PHPStan\Analyser\Scope $scope
-     * @return array
-     */
     #[Override]
     public function processNode(Node $node, Scope $scope): array
     {
@@ -62,13 +54,6 @@ class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
         return [];
     }
 
-    /**
-     * @param \PhpParser\Node\Stmt\ClassMethod $node
-     * @param string $methodName
-     * @param \PHPStan\Analyser\Scope $scope
-     * @param \PHPStan\Reflection\PropertyReflection $propertyReflection
-     * @return array
-     */
     private function checkGetter(
         ClassMethod $node,
         string $methodName,
@@ -92,13 +77,6 @@ class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
         return [];
     }
 
-    /**
-     * @param \PhpParser\Node\Stmt\ClassMethod $node
-     * @param string $methodName
-     * @param \PHPStan\Analyser\Scope $scope
-     * @param \PHPStan\Reflection\PropertyReflection $propertyReflection
-     * @return array
-     */
     private function checkSetter(
         ClassMethod $node,
         string $methodName,
@@ -135,10 +113,6 @@ class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
         return [];
     }
 
-    /**
-     * @param \PHPStan\Reflection\PropertyReflection $property
-     * @return bool
-     */
     private function hasOrmMapping(PropertyReflection $property): bool
     {
         $nativeReflection = $property->getNativeReflection();
@@ -158,11 +132,6 @@ class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
         return false;
     }
 
-    /**
-     * @param string $methodName
-     * @param \PHPStan\Analyser\Scope $scope
-     * @return bool
-     */
     private function isMethodInAncestor(string $methodName, Scope $scope): bool
     {
         $classReflection = $scope->getClassReflection();
@@ -190,11 +159,6 @@ class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
         return false;
     }
 
-    /**
-     * @param string $parameterType
-     * @param \PHPStan\Analyser\Scope $scope
-     * @return bool
-     */
     private function isParameterDataObjectOfCurrentEntity(string $parameterType, Scope $scope): bool
     {
         $currentClassName = $scope->getClassReflection()?->getName();

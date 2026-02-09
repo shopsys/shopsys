@@ -13,12 +13,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 
 class ResetPasswordMailFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail $resetPasswordMail
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     */
     public function __construct(
         protected readonly Mailer $mailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
@@ -27,10 +21,7 @@ class ResetPasswordMailFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     */
-    public function sendMail(CustomerUser $customerUser)
+    public function sendMail(CustomerUser $customerUser): void
     {
         $mailTemplate = $this->mailTemplateFacade->getWrappedWithGrapesJsBody(
             MailTemplate::RESET_PASSWORD_NAME,
@@ -39,11 +30,6 @@ class ResetPasswordMailFacade
         $this->sendMailTemplate($mailTemplate, $customerUser);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $customerUser
-     * @param string|null $forceSendTo
-     */
     public function sendMailTemplate(
         MailTemplate $mailTemplate,
         ResetPasswordInterface $customerUser,

@@ -24,20 +24,6 @@ class CartFacade
 {
     protected const DAYS_LIMIT = 130;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory $cartItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade $giftCartFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CartFactory $cartFactory,
@@ -54,13 +40,6 @@ class CartFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $quantity
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param bool $isAbsoluteQuantity
-     * @return \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
-     */
     public function addProductToExistingCart(
         Product $product,
         int $quantity,
@@ -118,10 +97,7 @@ class CartFacade
         return $result;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
-    public function deleteCart(Cart $cart)
+    public function deleteCart(Cart $cart): void
     {
         foreach ($cart->getItems() as $item) {
             $this->em->remove($item);
@@ -132,11 +108,7 @@ class CartFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $cartItemId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getProductByCartItemId($cartItemId)
+    public function getProductByCartItemId(int $cartItemId): Product
     {
         $cart = $this->findCartOfCurrentCustomerUser();
 
@@ -149,31 +121,22 @@ class CartFacade
         return $cart->getItemById($cartItemId)->getProduct();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
-    public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
-    {
+    public function findCartByCustomerUserIdentifier(
+        CustomerUserIdentifier $customerUserIdentifier,
+    ): ?Cart {
         return $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
-    public function findCartOfCurrentCustomerUser()
+    public function findCartOfCurrentCustomerUser(): ?Cart
     {
         $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
 
         return $this->findCartByCustomerUserIdentifier($customerUserIdentifier);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
-     */
-    public function getCartByCustomerUserIdentifierCreateIfNotExists(CustomerUserIdentifier $customerUserIdentifier)
-    {
+    public function getCartByCustomerUserIdentifierCreateIfNotExists(
+        CustomerUserIdentifier $customerUserIdentifier,
+    ): Cart {
         $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
 
         if ($cart === null) {
@@ -189,16 +152,12 @@ class CartFacade
         return $cart;
     }
 
-    public function deleteOldCarts()
+    public function deleteOldCarts(): void
     {
         $this->cartRepository->deleteOldCartsForUnregisteredCustomerUsers(static::DAYS_LIMIT);
         $this->cartRepository->deleteOldCartsForRegisteredCustomerUsers(static::DAYS_LIMIT);
     }
 
-    /**
-     * @param string $cartIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
     public function findCartByCartIdentifier(string $cartIdentifier): ?Cart
     {
         $customerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($cartIdentifier);
@@ -206,11 +165,6 @@ class CartFacade
         return $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
     }
 
-    /**
-     * @param string $cartItemUuid
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
-     */
     public function removeItemFromExistingCartByUuid(string $cartItemUuid, Cart $cart): Cart
     {
         $cartItemToRemove = $cart->getItemByUuid($cartItemUuid);

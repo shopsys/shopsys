@@ -15,12 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
 
 class CustomerUserPasswordRecoveryMutation extends AbstractMutation
 {
-    /**
-     * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\FrontendApi\Mutation\Login\LoginMutation $loginMutation
-     * @param \Overblog\GraphQLBundle\Definition\ArgumentFactory $argumentFactory
-     */
     public function __construct(
         private readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
         private readonly Domain $domain,
@@ -29,11 +23,6 @@ class CustomerUserPasswordRecoveryMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return string
-     */
     public function requestPasswordRecoveryMutation(Argument $argument, InputValidator $validator): string
     {
         $validator->validate();
@@ -43,11 +32,6 @@ class CustomerUserPasswordRecoveryMutation extends AbstractMutation
         return 'success';
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
-     */
     public function recoverPasswordMutation(Argument $argument, InputValidator $validator): LoginResultData
     {
         $validator->validate();

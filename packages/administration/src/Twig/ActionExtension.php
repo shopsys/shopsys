@@ -20,12 +20,6 @@ use Twig\TwigFunction;
 
 class ActionExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry $crudControllerRegistry
-     * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
-     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $router
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface $routeAccessChecker
-     */
     public function __construct(
         private readonly CrudControllerRegistry $crudControllerRegistry,
         private readonly CrudRouteProvider $crudRouteProvider,
@@ -38,7 +32,7 @@ class ActionExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -49,8 +43,6 @@ class ActionExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Action\RouteData\ActionRouteInterface|null $actionRoute
-     * @param mixed $data
      * @return string|null Return null if user does not have access to the action
      */
     private function generateActionUrl(?ActionRouteInterface $actionRoute, mixed $data): ?string
@@ -81,11 +73,6 @@ class ActionExtension extends AbstractExtension
         throw new InvalidArgumentException('Action has invalid route type');
     }
 
-    /**
-     * @param string $routeName
-     * @param array $parameters
-     * @return string|null
-     */
     private function generateByRoute(string $routeName, array $parameters): ?string
     {
         // Generate URL first to ensure that route exists and parameters are valid

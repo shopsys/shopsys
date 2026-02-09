@@ -12,33 +12,20 @@ use Symfony\Component\Routing\RequestContext;
 
 class LocalizedRouterFactory
 {
-    protected string $localeRoutersResourcesFilepathMask;
-
     /**
-     * @var \Symfony\Component\Routing\Router[][]
+     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router[][]
      */
     protected array $routersByLocaleAndHost;
 
-    /**
-     * @param string $localeRoutersResourcesFilepathMask
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param string $cacheDir
-     */
     public function __construct(
-        $localeRoutersResourcesFilepathMask,
+        protected string $localeRoutersResourcesFilepathMask,
         protected readonly ContainerInterface $container,
         protected readonly string $cacheDir,
     ) {
-        $this->localeRoutersResourcesFilepathMask = $localeRoutersResourcesFilepathMask;
         $this->routersByLocaleAndHost = [];
     }
 
-    /**
-     * @param string $locale
-     * @param \Symfony\Component\Routing\RequestContext $context
-     * @return \Symfony\Component\Routing\Router
-     */
-    public function getRouter($locale, RequestContext $context)
+    public function getRouter(string $locale, RequestContext $context): Router
     {
         if (file_exists($this->getLocaleRouterResourceByLocale($locale)) === false) {
             $message = 'File with localized routes for locale `' . $locale . '` was not found. '
@@ -61,28 +48,16 @@ class LocalizedRouterFactory
         return $this->routersByLocaleAndHost[$locale][$context->getHost()];
     }
 
-    /**
-     * @param string $locale
-     * @return string
-     */
     protected function getLocaleRouterResourceByLocale(string $locale): string
     {
         return str_replace('*', $locale, $this->localeRoutersResourcesFilepathMask);
     }
 
-    /**
-     * @param string $locale
-     * @return string
-     */
     protected function getRoutingCacheDir(string $locale): string
     {
         return $this->cacheDir . '/' . $locale;
     }
 
-    /**
-     * @param string $locale
-     * @return array
-     */
     protected function getRouterOptions(string $locale): array
     {
         $options = [];

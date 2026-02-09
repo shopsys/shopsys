@@ -25,17 +25,10 @@ final class CountryFormType extends AbstractType
 {
     protected ?Country $country = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     */
     public function __construct(protected readonly CountryFacade $countryFacade)
     {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -107,9 +100,6 @@ final class CountryFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

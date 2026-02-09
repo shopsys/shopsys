@@ -11,24 +11,12 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class CartItemFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum $cartItemTypeEnum
-     */
     public function __construct(
         protected readonly EntityNameResolver $entityNameResolver,
         protected readonly CartItemTypeEnum $cartItemTypeEnum,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $quantity
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPrice
-     * @param string $type
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
-     */
     public function create(
         Cart $cart,
         Product $product,

@@ -10,10 +10,6 @@ use Presta\SitemapBundle\Sitemap\Urlset;
 
 class ImageSitemapIndex extends BaseSitemapIndex
 {
-    /**
-     * @param \Presta\SitemapBundle\Sitemap\Urlset $urlset
-     * @return string
-     */
     #[Override]
     protected function getSitemapXml(Urlset $urlset): string
     {

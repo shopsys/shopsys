@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Blog\Article;
 
+use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Relay\Connection\Output\Connection;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
@@ -12,20 +14,14 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class BlogArticlesQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
-     */
     public function __construct(
         protected readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade,
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return object|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
-     */
-    public function blogArticlesQuery(Argument $argument)
-    {
+    public function blogArticlesQuery(
+        Argument $argument,
+    ): Connection|Promise {
         $this->pageSizeValidator->checkMaxPageSize($argument);
         $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
 
@@ -37,13 +33,10 @@ class BlogArticlesQuery extends AbstractQuery
         return $paginator->auto($argument, $this->blogArticleElasticsearchFacade->getAllBlogArticlesTotalCount());
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @return object|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
-     */
-    public function blogArticleByCategoryQuery(Argument $argument, BlogCategory $blogCategory)
-    {
+    public function blogArticleByCategoryQuery(
+        Argument $argument,
+        BlogCategory $blogCategory,
+    ): Connection|Promise {
         $this->pageSizeValidator->checkMaxPageSize($argument);
         $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
 

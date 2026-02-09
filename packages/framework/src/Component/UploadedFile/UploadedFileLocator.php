@@ -12,11 +12,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundExcepti
 
 class UploadedFileLocator extends AbstractUploadedFileLocator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return string
-     */
     public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
     {
         if ($this->fileExists($uploadedFile)) {
@@ -31,10 +26,6 @@ class UploadedFileLocator extends AbstractUploadedFileLocator
         throw new FileNotFoundException();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface $uploadedFile
-     * @return string
-     */
     #[Override]
     protected function getFilePath(UploadedFileInterface $uploadedFile): string
     {

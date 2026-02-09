@@ -8,24 +8,12 @@ use Exception;
 
 class InvalidQuantityException extends Exception
 {
-    protected mixed $invalidValue;
-
-    /**
-     * @param mixed $invalidValue
-     * @param string $message
-     * @param \Exception|null $previous
-     */
-    public function __construct($invalidValue, $message = '', ?Exception $previous = null)
+    public function __construct(protected mixed $invalidValue, string $message = '', ?Exception $previous = null)
     {
-        $this->invalidValue = $invalidValue;
-
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getInvalidValue()
+    public function getInvalidValue(): mixed
     {
         return $this->invalidValue;
     }

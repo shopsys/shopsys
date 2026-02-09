@@ -28,13 +28,6 @@ class ComplaintMail implements MessageFactoryInterface
     public const string VARIABLE_COMPLAINT_DETAIL_URL = '{complaint_detail_url}';
     public const string VARIABLE_COMPLAINT_RESOLUTION = '{complaint_resolution}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly DomainRouterFactory $domainRouterFactory,
@@ -45,12 +38,10 @@ class ComplaintMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     #[Override]
-    public function createMessage(MailTemplate $mailTemplate, $complaint): MessageData
+    public function createMessage(MailTemplate $mailTemplate, mixed $complaint): MessageData
     {
         $complaintDomainId = $complaint->getDomainId();
 
@@ -66,19 +57,11 @@ class ComplaintMail implements MessageFactoryInterface
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $complaintStatus
-     * @return string
-     */
     public function getMailTemplateNameByStatus(ComplaintStatus $complaintStatus): string
     {
         return static::MAIL_TEMPLATE_NAME_PREFIX . $complaintStatus->getId();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
-     * @return array
-     */
     protected function getVariablesReplacementsForBody(Complaint $complaint): array
     {
         $complaintDomainId = $complaint->getDomainId();
@@ -95,10 +78,6 @@ class ComplaintMail implements MessageFactoryInterface
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
-     * @return array
-     */
     protected function getVariablesReplacementsForSubject(Complaint $complaint): array
     {
         return [
@@ -108,10 +87,6 @@ class ComplaintMail implements MessageFactoryInterface
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
-     * @return string
-     */
     protected function getFormattedDateTime(Complaint $complaint): string
     {
         return $this->dateTimeFormatterExtension->formatDateTime(
@@ -120,19 +95,11 @@ class ComplaintMail implements MessageFactoryInterface
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
-     * @return string
-     */
     protected function getDomainLocaleByComplaint(Complaint $complaint): string
     {
         return $this->domain->getDomainConfigById($complaint->getDomainId())->getLocale();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
-     * @return string
-     */
     protected function getComplaintDetailUrl(Complaint $complaint): string
     {
         return $this->domainRouterFactory->getRouter($complaint->getDomainId())->generate(

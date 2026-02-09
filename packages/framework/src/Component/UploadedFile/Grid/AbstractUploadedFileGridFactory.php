@@ -19,13 +19,6 @@ abstract class AbstractUploadedFileGridFactory
 {
     protected const string UPLOADED_FILES_CACHE = 'UPLOADED_FILES_CACHE';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileAdminListFacade $uploadedFileAdminListFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly UploadedFileFacade $uploadedFileFacade,
@@ -36,9 +29,7 @@ abstract class AbstractUploadedFileGridFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchFormData
      * @param callable(array $row, array $rows): array|null $additionalRowManipulator
-     * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
      */
     protected function createDataSource(
         QuickSearchFormData $quickSearchFormData,
@@ -67,8 +58,6 @@ abstract class AbstractUploadedFileGridFactory
 
     /**
      * @param int[] $allFileIds
-     * @param int $uploadedFileId
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
     protected function getUploadedFileById(array $allFileIds, int $uploadedFileId): UploadedFile
     {
@@ -82,11 +71,6 @@ abstract class AbstractUploadedFileGridFactory
         return $uploadedFilesById[$uploadedFileId];
     }
 
-    /**
-     * @param string $gridName
-     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     protected function createInstance(string $gridName, DataSourceInterface $dataSource): Grid
     {
         $grid = $this->gridFactory->create($gridName, $dataSource, AdminRoleConstant::ROLE_FILES);

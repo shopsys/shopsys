@@ -8,11 +8,6 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class HeurekaFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationFactory $heurekaShopCertificationFactory
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting $heurekaSetting
-     */
     public function __construct(
         protected readonly HeurekaShopCertificationFactory $heurekaShopCertificationFactory,
         protected readonly HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper,
@@ -20,47 +15,28 @@ class HeurekaFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function sendOrderInfo(Order $order): void
     {
         $heurekaShopCertification = $this->heurekaShopCertificationFactory->create($order);
         $heurekaShopCertification->logOrder();
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isHeurekaShopCertificationActivated($domainId)
+    public function isHeurekaShopCertificationActivated(int $domainId): bool
     {
         return $this->heurekaSetting->isHeurekaShopCertificationActivated($domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isHeurekaWidgetActivated($domainId)
+    public function isHeurekaWidgetActivated(int $domainId): bool
     {
         return $this->heurekaSetting->isHeurekaWidgetActivated($domainId);
     }
 
-    /**
-     * @param string $locale
-     * @return bool
-     */
-    public function isDomainLocaleSupported($locale)
+    public function isDomainLocaleSupported(string $locale): bool
     {
         return $this->heurekaShopCertificationLocaleHelper->isDomainLocaleSupported($locale);
     }
 
-    /**
-     * @param string $locale
-     * @return string|null
-     */
-    public function getServerNameByLocale($locale)
+    public function getServerNameByLocale(string $locale): ?string
     {
         return $this->heurekaShopCertificationLocaleHelper->getServerNameByLocale($locale);
     }

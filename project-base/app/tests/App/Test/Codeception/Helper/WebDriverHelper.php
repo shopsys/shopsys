@@ -10,10 +10,7 @@ use Tests\App\Test\Codeception\Module\StrictWebDriver;
 
 class WebDriverHelper extends Module
 {
-    /**
-     * @return \Tests\App\Test\Codeception\Module\StrictWebDriver
-     */
-    private function getWebDriver()
+    private function getWebDriver(): StrictWebDriver
     {
         /** @var \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver */
         $strictWebDriver = $this->getModule(StrictWebDriver::class);
@@ -21,10 +18,7 @@ class WebDriverHelper extends Module
         return $strictWebDriver;
     }
 
-    /**
-     * @param string $page
-     */
-    public function seeCurrentPageEquals($page)
+    public function seeCurrentPageEquals(string $page): void
     {
         $expectedUrl = Uri::appendPath($this->getWebDriver()->_getUrl(), $page);
         $currentUrl = $this->getWebDriver()->webDriver->getCurrentURL();

@@ -60,10 +60,6 @@ class ConstraintMessageExtractorTest extends TestCase
         $this->assertCount(11, $actualCatalogue->getDomain('validators')->all());
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @return \JMS\TranslationBundle\Model\MessageCatalogue
-     */
     private function extract(SplFileInfo $file): MessageCatalogue
     {
         $phpParserNodeHelper = new PhpParserNodeHelper();
@@ -79,12 +75,6 @@ class ConstraintMessageExtractorTest extends TestCase
         return $catalogue;
     }
 
-    /**
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     * @param string $messageId
-     * @param string $domain
-     * @param int $line
-     */
     private function assertCatalogueHasMessage(
         MessageCatalogue $catalogue,
         string $messageId,

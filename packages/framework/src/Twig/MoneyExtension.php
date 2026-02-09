@@ -11,11 +11,8 @@ use Twig\TwigFilter;
 
 class MoneyExtension extends AbstractExtension
 {
-    /**
-     * @return array
-     */
     #[Override]
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter(
@@ -25,19 +22,12 @@ class MoneyExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @param int|null $decimal
-     * @param string $decimalPoint
-     * @param string $thousandsSeparator
-     * @return string
-     */
     public function moneyFormatFilter(
         Money $money,
         ?int $decimal = null,
         string $decimalPoint = '.',
         string $thousandsSeparator = '',
-    ) {
+    ): string {
         $moneyString = $money->getAmount();
 
         if ($decimal === null) {
@@ -47,10 +37,6 @@ class MoneyExtension extends AbstractExtension
         return number_format((float)$moneyString, $decimal, $decimalPoint, $thousandsSeparator);
     }
 
-    /**
-     * @param string $numeric
-     * @return int
-     */
     protected function getNumberOfDecimalPlaces(string $numeric): int
     {
         $decimalPointPosition = strpos($numeric, '.');

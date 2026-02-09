@@ -12,9 +12,6 @@ class SettingsQuery extends AbstractQuery
     {
     }
 
-    /**
-     * @return array
-     */
     public function settingsQuery(): array
     {
         /*

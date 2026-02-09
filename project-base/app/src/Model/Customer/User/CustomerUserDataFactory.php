@@ -12,8 +12,8 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory as BaseU
 
 /**
  * @method __construct(\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade, \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade, \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository $customerRepository, \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade, \Psr\Clock\ClockInterface $clock)
- * @method fillForDomainId(\App\Model\Customer\User\CustomerUserData $customerUserData, int $domainId)
- * @method fillFromUser(\App\Model\Customer\User\CustomerUserData $customerUserData, \App\Model\Customer\User\CustomerUser $customerUser)
+ * @method void fillForDomainId(\App\Model\Customer\User\CustomerUserData $customerUserData, int $domainId)
+ * @method void fillFromUser(\App\Model\Customer\User\CustomerUserData $customerUserData, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Customer\User\CustomerUserData create()
  * @method \App\Model\Customer\User\CustomerUserData createForCustomerWithPresetPricingGroup(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer)
  */
@@ -29,7 +29,6 @@ class CustomerUserDataFactory extends BaseUserDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \App\Model\Customer\User\CustomerUserData
      */
     #[Override]
@@ -42,7 +41,6 @@ class CustomerUserDataFactory extends BaseUserDataFactory
     }
 
     /**
-     * @param int $domainId
      * @return \App\Model\Customer\User\CustomerUserData
      */
     #[Override]

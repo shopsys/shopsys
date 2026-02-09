@@ -20,7 +20,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class BasePriceCalculationTest extends TestCase
 {
-    public static function calculateBasePriceProvider()
+    public static function calculateBasePriceProvider(): array
     {
         return [
             [
@@ -42,23 +42,15 @@ class BasePriceCalculationTest extends TestCase
         ];
     }
 
-    /**
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
-     * @param mixed $vatPercent
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceWithVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceVatAmount
-     */
     #[DataProvider('calculateBasePriceProvider')]
     public function testCalculateBasePriceRoundedByCurrency(
         int $inputPriceType,
         Money $inputPrice,
-        $vatPercent,
+        mixed $vatPercent,
         Money $basePriceWithoutVat,
         Money $basePriceWithVat,
         Money $basePriceVatAmount,
-    ) {
+    ): void {
         $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);

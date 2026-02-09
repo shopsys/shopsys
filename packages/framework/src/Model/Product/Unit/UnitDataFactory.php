@@ -8,24 +8,15 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class UnitDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly Domain $domain)
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData
-     */
     protected function createInstance(): UnitData
     {
         return new UnitData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData
-     */
     public function create(): UnitData
     {
         $unitData = $this->createInstance();
@@ -34,9 +25,6 @@ class UnitDataFactory
         return $unitData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     */
     protected function fillNew(UnitData $unitData): void
     {
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -44,10 +32,6 @@ class UnitDataFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData
-     */
     public function createFromUnit(Unit $unit): UnitData
     {
         $unitData = $this->createInstance();
@@ -56,11 +40,7 @@ class UnitDataFactory
         return $unitData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     */
-    protected function fillFromUnit(UnitData $unitData, Unit $unit)
+    protected function fillFromUnit(UnitData $unitData, Unit $unit): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation[] $translations */
         $translations = $unit->getTranslations();

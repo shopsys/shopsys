@@ -14,10 +14,7 @@ class UniqueProductCatnum extends Constraint
 {
     /**
      * @param array<string, mixed>|null $options
-     * @param string $message
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

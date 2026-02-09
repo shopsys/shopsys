@@ -60,18 +60,12 @@ final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/correct/SingleValueWithoutNamespace.php'];
     }
 
-    /**
-     * @param string $fileToTest
-     */
     #[DataProvider('getWrongFiles')]
     public function testWrongFiles(string $fileToTest): void
     {
         $this->runWrongFilesTest($fileToTest);
     }
 
-    /**
-     * @param string $fileToTest
-     */
     #[DataProvider('getCorrectFiles')]
     public function testCorrectFiles(string $fileToTest): void
     {

@@ -31,7 +31,7 @@ class RoleRegistryTest extends TestCase
         $this->contextResolver = $this->createMock(ContextResolverInterface::class);
         $this->contextResolver
             ->method('validateContextClass')
-            ->willReturnCallback(function (string $context) {
+            ->willReturnCallback(function (string $context): void {
                 if (!in_array($context, [self::TEST_ADMIN_CONTEXT, self::TEST_API_CONTEXT], true)) {
                     throw new InvalidArgumentException("Invalid context: {$context}");
                 }
@@ -67,7 +67,7 @@ class RoleRegistryTest extends TestCase
         $coreProvider = $this->createMock(CoreRoleProviderInterface::class);
         $coreProvider->method('getTargetContext')->willReturn(self::TEST_ADMIN_CONTEXT);
         $coreProvider->method('getPriority')->willReturn(0);
-        $coreProvider->method('configureRoles')->willReturnCallback(function () {});
+        $coreProvider->method('configureRoles')->willReturnCallback(function (): void {});
 
         // Should not throw exception
         $registry = new RoleRegistry([$coreProvider], $this->contextResolver);
@@ -76,7 +76,7 @@ class RoleRegistryTest extends TestCase
 
     public function testGetRoleReturnsValidRole(): void
     {
-        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) {
+        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_ADMIN', 'Administrator', [Permission::FULL]));
         });
 
@@ -89,7 +89,7 @@ class RoleRegistryTest extends TestCase
 
     public function testGetRoleWithPermissionIdentifier(): void
     {
-        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) {
+        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_USER', 'User', [Permission::VIEW, Permission::EDIT]));
         });
 
@@ -102,7 +102,7 @@ class RoleRegistryTest extends TestCase
 
     public function testGetRoleThrowsExceptionForNonExistentRole(): void
     {
-        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) {
+        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_ADMIN', 'Administrator', [Permission::FULL]));
         });
 
@@ -116,7 +116,7 @@ class RoleRegistryTest extends TestCase
 
     public function testGetRoleThrowsExceptionForUnavailablePermission(): void
     {
-        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) {
+        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_VIEWER', 'Viewer', [Permission::VIEW]));
         });
 
@@ -130,7 +130,7 @@ class RoleRegistryTest extends TestCase
 
     public function testGetRolesReturnsAllRolesForContext(): void
     {
-        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) {
+        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_ADMIN', 'Administrator', [Permission::FULL]));
             $collection->add(new Role('ROLE_USER', 'User', [Permission::VIEW]));
         });
@@ -148,12 +148,12 @@ class RoleRegistryTest extends TestCase
     {
         $collectedRoles = [];
 
-        $provider1 = $this->createProvider(self::TEST_ADMIN_CONTEXT, 20, function (RoleCollection $collection) use (&$collectedRoles) {
+        $provider1 = $this->createProvider(self::TEST_ADMIN_CONTEXT, 20, function (RoleCollection $collection) use (&$collectedRoles): void {
             $collectedRoles[] = 'provider1';
             $collection->add(new Role('ROLE_USER', 'User', [Permission::VIEW]));
         });
 
-        $provider2 = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) use (&$collectedRoles) {
+        $provider2 = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) use (&$collectedRoles): void {
             $collectedRoles[] = 'provider2';
             $collection->add(new Role('ROLE_ADMIN', 'Admin', [Permission::FULL]));
         });
@@ -167,11 +167,11 @@ class RoleRegistryTest extends TestCase
 
     public function testProvidersGroupedByContext(): void
     {
-        $adminProvider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) {
+        $adminProvider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_ADMIN', 'Admin', [Permission::FULL]));
         });
 
-        $apiProvider = $this->createProvider(self::TEST_API_CONTEXT, 10, function (RoleCollection $collection) {
+        $apiProvider = $this->createProvider(self::TEST_API_CONTEXT, 10, function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_API', 'API User', [Permission::VIEW]));
         });
 
@@ -189,7 +189,7 @@ class RoleRegistryTest extends TestCase
     public function testRoleCollectionsCachedPerContext(): void
     {
         $callCount = 0;
-        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) use (&$callCount) {
+        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) use (&$callCount): void {
             $callCount++;
             $collection->add(new Role('ROLE_ADMIN', 'Admin', [Permission::FULL]));
         });
@@ -207,7 +207,7 @@ class RoleRegistryTest extends TestCase
 
     public function testProviderExceptionWrappedWithContext(): void
     {
-        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) {
+        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
             throw new RuntimeException('Provider failed');
         });
 
@@ -230,7 +230,7 @@ class RoleRegistryTest extends TestCase
 
     public function testGetRoleWithFullPermissionIncludesSubordinatePermissions(): void
     {
-        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) {
+        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_ADMIN', 'Administrator', [Permission::FULL]));
         });
 
@@ -252,11 +252,11 @@ class RoleRegistryTest extends TestCase
         $coreProvider = $this->createMock(CoreRoleProviderInterface::class);
         $coreProvider->method('getTargetContext')->willReturn(self::TEST_ADMIN_CONTEXT);
         $coreProvider->method('getPriority')->willReturn(-10);
-        $coreProvider->method('configureRoles')->willReturnCallback(function (RoleCollection $collection) {
+        $coreProvider->method('configureRoles')->willReturnCallback(function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_SYSTEM', 'System', [Permission::FULL]));
         });
 
-        $regularProvider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) {
+        $regularProvider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_USER', 'User', [Permission::VIEW]));
         });
 
@@ -272,13 +272,13 @@ class RoleRegistryTest extends TestCase
         $contextResolver = $this->createMock(ContextResolverInterface::class);
         $contextResolver
             ->method('validateContextClass')
-            ->willReturnCallback(function (string $context) {
+            ->willReturnCallback(function (string $context): void {
                 if (!in_array($context, [self::TEST_ADMIN_CONTEXT, self::TEST_API_CONTEXT], true)) {
                     throw new InvalidArgumentException("Invalid context: {$context}");
                 }
             });
 
-        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) {
+        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_ADMIN', 'Admin', [Permission::FULL]));
         });
 
@@ -296,13 +296,13 @@ class RoleRegistryTest extends TestCase
         $contextResolver = $this->createMock(ContextResolverInterface::class);
         $contextResolver
             ->method('validateContextClass')
-            ->willReturnCallback(function (string $context) {
+            ->willReturnCallback(function (string $context): void {
                 if (!in_array($context, [self::TEST_ADMIN_CONTEXT, self::TEST_API_CONTEXT], true)) {
                     throw new InvalidArgumentException("Invalid context: {$context}");
                 }
             });
 
-        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection) {
+        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
             $collection->add(new Role('ROLE_ADMIN', 'Admin', [Permission::FULL]));
         });
 
@@ -315,12 +315,6 @@ class RoleRegistryTest extends TestCase
         $registry->getRoles(self::TEST_ADMIN_CONTEXT);
     }
 
-    /**
-     * @param string $context
-     * @param int $priority
-     * @param callable $configureCallback
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\RoleProviderInterface
-     */
     private function createProvider(string $context, int $priority, callable $configureCallback): RoleProviderInterface
     {
         $provider = $this->createMock(RoleProviderInterface::class);

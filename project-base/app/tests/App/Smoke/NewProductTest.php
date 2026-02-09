@@ -13,9 +13,6 @@ use Tests\App\Test\ApplicationTestCase;
 
 class NewProductTest extends ApplicationTestCase
 {
-    /**
-     * @return iterable
-     */
     public static function createOrEditProductProvider(): iterable
     {
         yield ['/admin/product/new/'];
@@ -23,9 +20,6 @@ class NewProductTest extends ApplicationTestCase
         yield ['/admin/product/edit/1'];
     }
 
-    /**
-     * @param string $relativeUrl
-     */
     #[DataProvider('createOrEditProductProvider')]
     public function testCreateOrEditProduct(string $relativeUrl): void
     {
@@ -57,9 +51,6 @@ class NewProductTest extends ApplicationTestCase
         $this->assertStringStartsWith($domain->getBaseUrl() . '/admin/product/list', $client->followRedirect()->getUri());
     }
 
-    /**
-     * @param \Symfony\Component\DomCrawler\Form $form
-     */
     private function fillForm(Form $form): void
     {
         $unit = $this->getReference(UnitDataFixture::UNIT_CUBIC_METERS, Unit::class);

@@ -10,6 +10,7 @@ use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade;
 use Shopsys\FrameworkBundle\Model\Localization\DbIndexesFacade;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,12 +22,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CreateDomainsDataCommand extends Command
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator $domainDataCreator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\DbIndexesFacade $dbIndexesFacade
-     */
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly DomainDataCreator $domainDataCreator,
@@ -43,7 +38,7 @@ class CreateDomainsDataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $domainsCreatedCount = 0;
-        $this->em->wrapInTransaction(function () use ($output, &$domainsCreatedCount) {
+        $this->em->wrapInTransaction(function () use ($output, &$domainsCreatedCount): void {
             $domainsCreatedCount = $this->doExecute($output);
         });
 
@@ -57,11 +52,7 @@ class CreateDomainsDataCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
-    private function doExecute(OutputInterface $output)
+    private function doExecute(OutputInterface $output): int
     {
         $output->writeln('Start of creating new domains data.');
 
@@ -81,10 +72,7 @@ class CreateDomainsDataCommand extends Command
         return $domainsCreatedCount;
     }
 
-    /**
-     * @return \Symfony\Component\Console\Application
-     */
-    protected function getApplicationInstance()
+    protected function getApplicationInstance(): Application
     {
         $application = $this->getApplication();
 

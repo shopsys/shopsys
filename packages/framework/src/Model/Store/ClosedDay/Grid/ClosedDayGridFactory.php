@@ -15,12 +15,6 @@ use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class ClosedDayGridFactory
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
@@ -29,10 +23,6 @@ class ClosedDayGridFactory
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     public function create(int $domainId): Grid
     {
         $queryBuilder = $this->em

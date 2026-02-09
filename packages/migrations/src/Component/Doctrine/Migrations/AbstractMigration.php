@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 
 use Doctrine\DBAL\Cache\QueryCacheProfile;
+use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration as DoctrineAbstractMigration;
 use Doctrine\Migrations\Query\Query;
@@ -30,14 +31,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         throw new MethodIsNotAllowedException($message);
     }
 
-    /**
-     * @param string $query
-     * @param array $params
-     * @param array $types
-     * @param \Doctrine\DBAL\Cache\QueryCacheProfile|null $qcp
-     * @return \Doctrine\DBAL\Result
-     */
-    public function sql($query, array $params = [], $types = [], ?QueryCacheProfile $qcp = null)
+    public function sql(string $query, array $params = [], array $types = [], ?QueryCacheProfile $qcp = null): Result
     {
         $this->sqlQueries[] = new Query($query, $params, $types);
 
@@ -66,10 +60,6 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         return $this->sqlQueries;
     }
 
-    /**
-     * @param string $version
-     * @return bool
-     */
     protected function isAppMigrationNotInstalled(string $version): bool
     {
         return !$this->sql(
@@ -78,10 +68,6 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         )->fetchOne();
     }
 
-    /**
-     * @param string $version
-     * @return bool
-     */
     protected function isAppMigrationNotInstalledRemoveIfExists(string $version): bool
     {
         $isAppMigrationNotInstalled = $this->isAppMigrationNotInstalled($version);
@@ -101,20 +87,11 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         return $isAppMigrationNotInstalled;
     }
 
-    /**
-     * @param string $version
-     * @return string
-     */
     protected function prefixAppMigrationVersion(string $version): string
     {
         return 'App\\Migrations\\' . $version;
     }
 
-    /**
-     * @param string $tableName
-     * @param string $columnName
-     * @return bool
-     */
     protected function columnExists(string $tableName, string $columnName): bool
     {
         return $this->sql('SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = :table_name AND column_name = :column_name)', [
@@ -123,10 +100,6 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         ])->fetchOne();
     }
 
-    /**
-     * @param string $tableName
-     * @return bool
-     */
     protected function tableExists(string $tableName): bool
     {
         return $this->sql('SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = :table_name)', [
@@ -134,9 +107,6 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         ])->fetchOne();
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function down(Schema $schema): void
     {

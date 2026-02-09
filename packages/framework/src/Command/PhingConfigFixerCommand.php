@@ -87,10 +87,6 @@ class PhingConfigFixerCommand extends Command
         return $returnCode;
     }
 
-    /**
-     * @param string $content
-     * @return string
-     */
     protected function fixConfiguration(string $content): string
     {
         $content = $this->normalizeXml($content);
@@ -105,10 +101,6 @@ class PhingConfigFixerCommand extends Command
         return $content;
     }
 
-    /**
-     * @param string $content
-     * @return string
-     */
     protected function normalizeXml(string $content): string
     {
         $xml = new SimpleXMLElement($content);
@@ -117,7 +109,6 @@ class PhingConfigFixerCommand extends Command
     }
 
     /**
-     * @param string $content
      * @return string[]
      */
     protected function extractTargetBlocksIndexedByName(string $content): array
@@ -135,28 +126,18 @@ class PhingConfigFixerCommand extends Command
         return $targetBlocks;
     }
 
-    /**
-     * @param int $position
-     * @return string
-     */
     protected function getTargetPlaceholder(int $position): string
     {
         return '<!--- TARGET ' . $position . ' -->';
     }
 
-    /**
-     * @param string $content
-     * @return string
-     */
     protected function normalizeWhitespaceBetweenPlaceholders(string $content): string
     {
         return preg_replace('~(<!--- TARGET \d+ -->)(?: *\n)*(?= *<!--- TARGET \d+ -->)~mu', "$1\n\n", $content);
     }
 
     /**
-     * @param string $content
      * @param string[] $targetBlocks
-     * @return string
      */
     protected function replaceTargetsByPlaceholders(string $content, array $targetBlocks): string
     {
@@ -180,9 +161,7 @@ class PhingConfigFixerCommand extends Command
     }
 
     /**
-     * @param string $content
      * @param string[] $targetBlocks
-     * @return string
      */
     protected function replacePlaceholdersByTargets(string $content, array $targetBlocks): string
     {

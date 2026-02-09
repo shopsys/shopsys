@@ -12,16 +12,12 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade as Ba
  * @property \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
  * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository, \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory, \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade $resetPasswordMailFacade, \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator, \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade, \Psr\Clock\ClockInterface $clock)
- * @method changePassword(\App\Model\Customer\User\CustomerUser $customerUser, string $password, string|null $deviceId = null)
- * @method setPassword(\App\Model\Customer\User\CustomerUser $customerUser, string $password)
+ * @method void changePassword(\App\Model\Customer\User\CustomerUser $customerUser, string $password, string|null $deviceId = null)
+ * @method void setPassword(\App\Model\Customer\User\CustomerUser $customerUser, string $password)
  */
 class CustomerUserPasswordFacade extends BaseCustomerUserPasswordFacade
 {
     /**
-     * @param string $email
-     * @param int $domainId
-     * @param string|null $resetPasswordHash
-     * @param string $newPassword
      * @return \App\Model\Customer\User\CustomerUser
      */
     #[Override]

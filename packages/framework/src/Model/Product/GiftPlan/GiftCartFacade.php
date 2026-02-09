@@ -18,15 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class GiftCartFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory $cartItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade $giftPlanFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CartItemFactory $cartItemFactory,
@@ -38,10 +29,6 @@ class GiftCartFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param int $domainId
-     */
     public function refreshProductGiftsInCart(Cart $cart, int $domainId): void
     {
         $cartItemSetupList = $this->getGiftCartItemSetupListByCart($cart, $domainId);
@@ -70,8 +57,6 @@ class GiftCartFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartItemSetup[]
      */
     protected function getGiftCartItemSetupListByCart(Cart $cart, int $domainId): array
@@ -102,13 +87,6 @@ class GiftCartFacade
         return $giftsSetup;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $quantity
-     * @param int $domainId
-     * @return bool
-     */
     public function isGiftProductSellable(
         Product $product,
         PricingGroup $pricingGroup,
@@ -141,11 +119,6 @@ class GiftCartFacade
         return $productVisibility->isVisible() && !$product->isCalculatedSellingDenied($domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param int $domainId
-     * @return array
-     */
     public function refreshProductGiftCartItemsAndGetInvalidItems(Cart $cart, int $domainId): array
     {
         $invalidItems = [];

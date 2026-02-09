@@ -10,52 +10,31 @@ class QuantifiedProduct
 {
     public const string CART_ITEM_TYPE_KEY = 'cartItemType';
 
-    protected int $quantity;
-
     /**
      * @var array<string,mixed>
      */
     protected array $additionalData;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $quantity
-     */
-    public function __construct(protected readonly Product $product, $quantity)
+    public function __construct(protected readonly Product $product, protected int $quantity)
     {
-        $this->quantity = $quantity;
         $this->additionalData = [];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getProduct()
+    public function getProduct(): Product
     {
         return $this->product;
     }
 
-    /**
-     * @return int
-     */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @param string $key
-     * @return mixed
-     */
     public function getAdditionalData(string $key): mixed
     {
         return $this->additionalData[$key] ?? null;
     }
 
-    /**
-     * @param string $key
-     * @param mixed $additionalData
-     */
     public function setAdditionalData(string $key, mixed $additionalData): void
     {
         $this->additionalData[$key] = $additionalData;

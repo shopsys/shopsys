@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 
 class AggregationResultToProductFilterCountDataTransformer
 {
-    /**
-     * @param array $aggregationResult
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
     public function translateAbsoluteNumbers(array $aggregationResult): ProductFilterCountData
     {
         $countData = new ProductFilterCountData();
@@ -23,7 +19,6 @@ class AggregationResultToProductFilterCountDataTransformer
     }
 
     /**
-     * @param array $aggregationResult
      * @return int[]
      */
     public function getFlagCount(array $aggregationResult): array
@@ -42,7 +37,6 @@ class AggregationResultToProductFilterCountDataTransformer
     }
 
     /**
-     * @param array $aggregationResult
      * @return int[]
      */
     public function getBrandCount(array $aggregationResult): array
@@ -60,19 +54,11 @@ class AggregationResultToProductFilterCountDataTransformer
         return $result;
     }
 
-    /**
-     * @param array $aggregationResult
-     * @return int
-     */
     protected function getStockCount(array $aggregationResult): int
     {
         return $aggregationResult['aggregations']['stock']['doc_count'];
     }
 
-    /**
-     * @param array $aggregationResult
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
     public function translateAbsoluteNumbersWithParameters(array $aggregationResult): ProductFilterCountData
     {
         $countData = $this->translateAbsoluteNumbers($aggregationResult);
@@ -82,7 +68,6 @@ class AggregationResultToProductFilterCountDataTransformer
     }
 
     /**
-     * @param array $aggregationResult
      * @return int[][]
      */
     protected function getParametersCount(array $aggregationResult): array
@@ -100,7 +85,6 @@ class AggregationResultToProductFilterCountDataTransformer
     }
 
     /**
-     * @param array $parameterBucket
      * @return int[]
      */
     protected function getValuesCount(array $parameterBucket): array
@@ -118,7 +102,6 @@ class AggregationResultToProductFilterCountDataTransformer
     }
 
     /**
-     * @param array $aggregationResult
      * @return int[]
      */
     public function translateParameterValuesPlusNumbers(array $aggregationResult): array

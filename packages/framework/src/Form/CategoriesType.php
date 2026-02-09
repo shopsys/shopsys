@@ -21,12 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class CategoriesType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesTypeTransformer $categoriesTypeTransformer
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         private readonly CategoriesTypeTransformer $categoriesTypeTransformer,
         private readonly CategoryFacade $categoryFacade,
@@ -35,11 +29,6 @@ final class CategoriesType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -47,19 +36,12 @@ final class CategoriesType extends AbstractType
         $view->vars['main_category_path'] = $this->getMainCategoryPath($options);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addViewTransformer($this->categoriesTypeTransformer);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -95,10 +77,6 @@ final class CategoriesType extends AbstractType
         return CollectionType::class;
     }
 
-    /**
-     * @param array $options
-     * @return string|null
-     */
     private function getMainCategoryPath(array $options): ?string
     {
         if ($options['product'] === null) {

@@ -15,9 +15,6 @@ class Version20240325165512 extends AbstractMigration implements ContainerAwareI
 
     private const string LOCALE_EN = 'en';
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {

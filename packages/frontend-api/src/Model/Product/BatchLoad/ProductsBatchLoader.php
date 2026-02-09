@@ -16,12 +16,6 @@ class ProductsBatchLoader
      */
     protected static array $totalsIndexedByBatchLoadDataId;
 
-    /**
-     * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchProvider $productElasticsearchBatchProvider
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade $giftPlanFacade
-     */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly ProductElasticsearchBatchProvider $productElasticsearchBatchProvider,
@@ -32,7 +26,6 @@ class ProductsBatchLoader
 
     /**
      * @param int[][] $productsIds
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadVisibleByIds(array $productsIds): Promise
     {
@@ -41,7 +34,6 @@ class ProductsBatchLoader
 
     /**
      * @param int[][] $productsIds
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadVisibleCountByIds(array $productsIds): Promise
     {
@@ -50,7 +42,6 @@ class ProductsBatchLoader
 
     /**
      * @param int[][] $productsIds
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadVisibleAndSortedByIds(array $productsIds): Promise
     {
@@ -66,17 +57,12 @@ class ProductsBatchLoader
 
     /**
      * @param int[][] $productsIds
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadSellableByIds(array $productsIds): Promise
     {
         return $this->promiseAdapter->all($this->productElasticsearchBatchProvider->getBatchedSellableByProductIds($productsIds)[ProductElasticsearchBatchRepository::PRODUCTS_KEY]);
     }
 
-    /**
-     * @param array $productsIds
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function loadSellableCountByIds(array $productsIds): Promise
     {
         return $this->promiseAdapter->all($this->productElasticsearchBatchProvider->getBatchedSellableByProductIds($productsIds)[ProductElasticsearchBatchRepository::TOTALS_KEY]);
@@ -84,7 +70,6 @@ class ProductsBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductSellableInCategoryBatchLoadData[] $sellableInCategoryBatchLoadData
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadSellableInCategoryByIds(array $sellableInCategoryBatchLoadData): Promise
     {
@@ -93,17 +78,12 @@ class ProductsBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductSellableInCategoryBatchLoadData[] $sellableInCategoryBatchLoadData
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadSellableCountInCategoryByIds(array $sellableInCategoryBatchLoadData): Promise
     {
         return $this->promiseAdapter->all($this->productElasticsearchBatchProvider->getBatchedSellableInCategoryByIds($sellableInCategoryBatchLoadData)[ProductElasticsearchBatchRepository::TOTALS_KEY]);
     }
 
-    /**
-     * @param string $batchLoadDataId
-     * @return int
-     */
     public static function getTotalByBatchLoadDataId(string $batchLoadDataId): int
     {
         return self::$totalsIndexedByBatchLoadDataId[$batchLoadDataId] ?? 0;
@@ -111,7 +91,6 @@ class ProductsBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadByEntities(array $productBatchLoadByEntitiesData): Promise
     {
@@ -127,11 +106,6 @@ class ProductsBatchLoader
         return $this->promiseAdapter->all($result);
     }
 
-    /**
-     * @param array $arrayForSorting
-     * @param array $originalArray
-     * @return array
-     */
     protected function sortByOriginalArray(array $arrayForSorting, array $originalArray): array
     {
         $sortedItems = [];
@@ -150,7 +124,6 @@ class ProductsBatchLoader
 
     /**
      * @param int[] $productIds
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadProductGiftsByMainProductIds(array $productIds): Promise
     {

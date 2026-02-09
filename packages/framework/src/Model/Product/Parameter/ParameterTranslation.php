@@ -15,7 +15,6 @@ class ParameterTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translatable(targetEntity: Parameter::class)]
     protected $translatable;
@@ -37,7 +36,7 @@ class ParameterTranslation extends AbstractTranslation
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
     }

@@ -28,7 +28,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     private BrandFactory $brandFactory;
 
     #[Group('multidomain')]
-    public function testCreateBrandDomain()
+    public function testCreateBrandDomain(): void
     {
         $brandData = $this->brandDataFactory->create();
 
@@ -47,7 +47,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     }
 
     #[Group('singledomain')]
-    public function testCreateBrandDomainForSingleDomain()
+    public function testCreateBrandDomainForSingleDomain(): void
     {
         $brandData = $this->brandDataFactory->create();
 
@@ -63,11 +63,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
         $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedBrand->getSeoH1(self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @param \App\Model\Product\Brand\Brand $brand
-     * @return \App\Model\Product\Brand\Brand
-     */
-    private function getRefreshedBrandFromDatabase(Brand $brand)
+    private function getRefreshedBrandFromDatabase(Brand $brand): Brand
     {
         $this->em->persist($brand);
         $this->em->flush();

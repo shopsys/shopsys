@@ -16,9 +16,6 @@ class OrderNameFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'customerName';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
@@ -84,11 +81,7 @@ class OrderNameFilter implements AdvancedSearchFilterInterface
         }
     }
 
-    /**
-     * @param string $operator
-     * @return string
-     */
-    protected function getContainsDqlOperator($operator)
+    protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {
             case self::OPERATOR_CONTAINS:

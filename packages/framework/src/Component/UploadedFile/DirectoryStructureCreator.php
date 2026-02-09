@@ -13,11 +13,6 @@ class DirectoryStructureCreator
 {
     protected FilesystemOperator $filesysytem;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     */
     public function __construct(
         protected readonly UploadedFileConfig $uploadedFileConfig,
         protected readonly UploadedFileLocator $uploadedFileLocator,
@@ -26,7 +21,7 @@ class DirectoryStructureCreator
         $this->filesysytem = $filesystem;
     }
 
-    public function makeUploadedFileDirectories()
+    public function makeUploadedFileDirectories(): void
     {
         $uploadedFileEntityConfigs = $this->uploadedFileConfig->getAllUploadedFileEntityConfigs();
         $directories = [];

@@ -12,11 +12,6 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInter
 
 class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportRepository $blogArticleExportRepository
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade $blogArticleExportQueueFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly BlogArticleExportRepository $blogArticleExportRepository,
@@ -24,10 +19,6 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     #[Override]
     public function getTotalCount(int $domainId): int
     {
@@ -38,11 +29,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
     }
 
     /**
-     * @param int $domainId
-     * @param int $lastProcessedId
-     * @param int $batchSize
      * @param string[] $fields
-     * @return array
      */
     #[Override]
     public function getExportDataForBatch(
@@ -66,10 +53,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
     }
 
     /**
-     * @param int $domainId
-     * @param array $restrictToIds
      * @param string[] $fields
-     * @return array
      */
     #[Override]
     public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
@@ -88,10 +72,6 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
         return $results;
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     #[Override]
     public function getChangedCount(int $domainId): int
     {
@@ -99,9 +79,6 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
     }
 
     /**
-     * @param int $domainId
-     * @param int $lastProcessedId
-     * @param int $batchSize
      * @return int[]
      */
     #[Override]
@@ -110,9 +87,6 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
         return $this->blogArticleExportQueueFacade->getIds($domainId, $batchSize);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public static function getName(): string
     {

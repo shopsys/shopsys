@@ -40,14 +40,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class PaymentFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider $paymentTypeProvider
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade $paymentInstructionFacade
-     */
     public function __construct(
         private readonly TransportFacade $transportFacade,
         private readonly PaymentFacade $paymentFacade,
@@ -58,10 +50,6 @@ final class PaymentFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -236,9 +224,6 @@ final class PaymentFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @return array
-     */
     private function getGopayPaymentMethodOptionsByDomainId(): array
     {
         $allGoPayPaymentMethods = $this->goPayPaymentMethodFacade->getAll();
@@ -267,9 +252,6 @@ final class PaymentFormType extends AbstractType
         return $optionsByDomainId;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -285,10 +267,6 @@ final class PaymentFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function validateBankTransferType(PaymentData $paymentData, ExecutionContextInterface $context): void
     {
         if ($paymentData->type !== PaymentTypeEnum::TYPE_BANK_TRANSFER) {
@@ -378,10 +356,6 @@ final class PaymentFormType extends AbstractType
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function validateGopayPaymentMethod(PaymentData $paymentData, ExecutionContextInterface $context): void
     {
         if ($paymentData->type !== PaymentTypeEnum::TYPE_GOPAY) {
@@ -407,10 +381,6 @@ final class PaymentFormType extends AbstractType
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     public function addHiddenByGoPayWarning(PaymentData $paymentData, FormBuilderInterface $builder): void
     {
         $domainIdsWithHiddenByGoPay = array_keys(array_filter($paymentData->hiddenByGoPay));

@@ -30,17 +30,6 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     public const string IMAGES_TRANSLATIONS_TABLE_NAME = 'images_translations';
     public const string IMAGE_TYPE = 'jpg';
 
-    /**
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     * @param string $dataFixturesResourcesDirectory
-     * @param string $targetImagesDirectory
-     * @param string $targetDomainImagesDirectory
-     * @param string $targetFileManagerUploadDirectory
-     */
     public function __construct(
         FilesystemOperator $filesystem,
         Filesystem $localFilesystem,
@@ -55,9 +44,6 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         parent::__construct($filesystem, $localFilesystem, $mountManager, $em, $transformStringHelper);
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -361,14 +347,6 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
-    /**
-     * @param int $entityId
-     * @param string $entityName
-     * @param int $imageId
-     * @param array $names
-     * @param string|null $type
-     * @param int $position
-     */
     private function saveImageIntoDb(
         int $entityId,
         string $entityName,

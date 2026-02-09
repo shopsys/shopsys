@@ -25,14 +25,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
 class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\DiscountCalculation $discountCalculation
-     * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     */
     public function __construct(
         CurrentPromoCodeFacade $currentPromoCodeFacade,
         PromoCodeFacade $promoCodeFacade,
@@ -87,13 +79,6 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit $promoCodeLimit
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $productItem
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null
-     */
     protected function createDiscountOrderItemData(
         PromoCode $promoCode,
         PromoCodeLimit $promoCodeLimit,
@@ -128,12 +113,6 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         return $discountOrderItemData;
     }
 
-    /**
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit $promoCodeLimit
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $productItem
-     * @return string
-     */
     protected function getOrderItemName(
         string $locale,
         PromoCodeLimit $promoCodeLimit,
@@ -147,10 +126,6 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $item
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     protected function getItemTotalPriceWithAppliedPromotions(OrderItemData $item): PriceInterface
     {
         $totalPrice = $item->getTotalPrice();

@@ -91,11 +91,6 @@ class PriceExtensionTest extends FunctionalTestCase
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $input
-     * @param string $result
-     * @param string $locale
-     */
     #[DataProvider('priceFilterSingledomainDataProvider')]
     #[Group('multidomain')]
     public function testPriceFilterSingledomain(Money $input, string $locale, string $result): void
@@ -176,12 +171,6 @@ class PriceExtensionTest extends FunctionalTestCase
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $input
-     * @param int $domainId
-     * @param string $locale
-     * @param string $result
-     */
     #[DataProvider('priceFilterMultidomainDataProvider')]
     #[Group('multidomain')]
     public function testPriceFilterMultidomain(Money $input, int $domainId, string $locale, string $result): void
@@ -193,11 +182,6 @@ class PriceExtensionTest extends FunctionalTestCase
         $this->assertSame($result, $priceExtension->priceFilter($input));
     }
 
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Twig\PriceExtension
-     */
     private function getPriceExtensionWithMockedConfiguration(int $domainId, string $locale): PriceExtension
     {
         $domain1DefaultCurrencyData = $this->currencyDataFactory->create();

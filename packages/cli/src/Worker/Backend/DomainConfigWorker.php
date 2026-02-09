@@ -15,9 +15,6 @@ final class DomainConfigWorker extends AbstractWorker
     private const string DOMAINS_URLS_FILE_PATH = 'app/config/domains_urls.yaml.dist';
     private const string DOMAINS_FILE_PATH = 'app/config/domains.yaml';
 
-    /**
-     * @param \Shopsys\Cli\Model\YamlHandler $yamlHandler
-     */
     public function __construct(
         private readonly YamlHandler $yamlHandler,
     ) {
@@ -61,10 +58,6 @@ final class DomainConfigWorker extends AbstractWorker
         );
     }
 
-    /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @param string $projectPath
-     */
     private function updateDomainsUrlsYamlFile(CoreProjectConfig $config, string $projectPath): void
     {
         $filePath = $projectPath . '/' . self::DOMAINS_URLS_FILE_PATH;
@@ -84,10 +77,6 @@ final class DomainConfigWorker extends AbstractWorker
         );
     }
 
-    /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @param string $projectPath
-     */
     private function updateDomainsYamlFile(CoreProjectConfig $config, string $projectPath): void
     {
         $filePath = $projectPath . '/' . self::DOMAINS_FILE_PATH;

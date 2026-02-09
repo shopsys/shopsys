@@ -12,9 +12,6 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ProductsIdsToProductsTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(protected readonly ProductRepository $productRepository)
     {
     }
@@ -49,7 +46,7 @@ class ProductsIdsToProductsTransformer implements DataTransformerInterface
         if (is_array($productsIds)) {
             foreach ($productsIds as $key => $productId) {
                 try {
-                    $products[$key] = $this->productRepository->getById($productId);
+                    $products[$key] = $this->productRepository->getById((int)$productId);
                 } catch (ProductNotFoundException $e) {
                     throw new TransformationFailedException('Product not found', 0, $e);
                 }

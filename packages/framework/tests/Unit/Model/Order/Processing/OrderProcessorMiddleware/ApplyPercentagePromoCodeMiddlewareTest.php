@@ -92,9 +92,6 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
         }
     }
 
-    /**
-     * @param string|null $promoCodeType
-     */
     #[DataProvider('invalidPromoCodeTypeDataProvider')]
     public function testNoPromoCodeIsAdded(?string $promoCodeType): void
     {
@@ -150,9 +147,6 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    /**
-     * @return iterable
-     */
     public static function invalidPromoCodeTypeDataProvider(): iterable
     {
         yield [PromoCodeTypeEnum::DISCOUNT_TYPE_NOMINAL];
@@ -162,10 +156,6 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
         yield [null];
     }
 
-    /**
-     * @param array $discountPrices
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\ApplyPercentagePromoCodeMiddleware
-     */
     private function createApplyPercentagePromoCodeMiddleware(
         array $discountPrices,
     ): ApplyPercentagePromoCodeMiddleware {
@@ -192,7 +182,6 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param array<int, array{unitPrice: \Shopsys\FrameworkBundle\Model\Pricing\Price, quantity: int, name: string, id: int}> $productsTestInputData
      */
     private function addProductsToOrderData(OrderData $orderData, array $productsTestInputData): void

@@ -46,7 +46,6 @@ class AdministratorActivity
     protected $lastActionTime;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param string $ipAddress
      */
     public function __construct(
@@ -59,7 +58,7 @@ class AdministratorActivity
         $this->lastActionTime = new DatePoint();
     }
 
-    public function updateLastActionTime()
+    public function updateLastActionTime(): void
     {
         $this->lastActionTime = new DatePoint();
     }

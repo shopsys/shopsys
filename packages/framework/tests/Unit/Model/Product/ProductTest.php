@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Product;
 
-use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsNotVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Tests\FrameworkBundle\Unit\TestCase;
 
 class ProductTest extends TestCase
 {
-    public function testNoVariant()
+    public function testNoVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $product = Product::create($productData);
@@ -22,7 +22,7 @@ class ProductTest extends TestCase
         $this->assertFalse($product->isMainVariant());
     }
 
-    public function testIsVariant()
+    public function testIsVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -32,7 +32,7 @@ class ProductTest extends TestCase
         $this->assertFalse($variant->isMainVariant());
     }
 
-    public function testIsMainVariant()
+    public function testIsMainVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -42,7 +42,7 @@ class ProductTest extends TestCase
         $this->assertTrue($mainVariant->isMainVariant());
     }
 
-    public function testGetMainVariant()
+    public function testGetMainVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -51,7 +51,7 @@ class ProductTest extends TestCase
         $this->assertSame($mainVariant, $variant->getMainVariant());
     }
 
-    public function testGetMainVariantException()
+    public function testGetMainVariantException(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $product = Product::create($productData);
@@ -60,11 +60,12 @@ class ProductTest extends TestCase
         $product->getMainVariant();
     }
 
-    public function testCreateVariantFromVariantException()
+    public function testCreateVariantFromVariantException(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
         $variant2 = Product::create($productData);
+        $this->setValueOfProtectedProperty($variant2, 'id', 2);
         $mainVariant = Product::createMainVariant($productData, [$variant]);
         Product::createMainVariant($productData, [$variant2]);
 
@@ -72,24 +73,27 @@ class ProductTest extends TestCase
         $mainVariant->addVariant($variant2);
     }
 
-    public function testCreateVariantFromMainVariantException()
+    public function testCreateVariantFromMainVariantException(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
         $variant2 = Product::create($productData);
         $mainVariant = Product::createMainVariant($productData, [$variant]);
         $mainVariant2 = Product::createMainVariant($productData, [$variant2]);
+        $this->setValueOfProtectedProperty($mainVariant2, 'id', 2);
 
         $this->expectException(MainVariantCannotBeVariantException::class);
         $mainVariant->addVariant($mainVariant2);
     }
 
-    public function testCreateMainVariantFromVariantException()
+    public function testCreateMainVariantFromVariantException(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
         $variant2 = Product::create($productData);
+        $this->setValueOfProtectedProperty($variant2, 'id', 2);
         $variant3 = Product::create($productData);
+        $this->setValueOfProtectedProperty($variant3, 'id', 3);
         Product::createMainVariant($productData, [$variant]);
         Product::createMainVariant($productData, [$variant2]);
 
@@ -97,17 +101,18 @@ class ProductTest extends TestCase
         $variant2->addVariant($variant3);
     }
 
-    public function testAddSelfAsVariantException()
+    public function testAddSelfAsVariantException(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
         $mainVariant = Product::createMainVariant($productData, [$variant]);
+        $this->setValueOfProtectedProperty($mainVariant, 'id', 1);
 
         $this->expectException(MainVariantCannotBeVariantException::class);
         $mainVariant->addVariant($mainVariant);
     }
 
-    public function testRefreshVariants()
+    public function testRefreshVariants(): void
     {
         $productData = TestProductProvider::getTestProductData();
 

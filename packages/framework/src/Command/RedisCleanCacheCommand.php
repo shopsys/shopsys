@@ -19,8 +19,6 @@ class RedisCleanCacheCommand extends Command
 {
     /**
      * RedisCleanCacheCommand constructor.
-     *
-     * @param \Shopsys\FrameworkBundle\Component\Redis\RedisFacade $redisFacade
      */
     public function __construct(private readonly RedisFacade $redisFacade)
     {

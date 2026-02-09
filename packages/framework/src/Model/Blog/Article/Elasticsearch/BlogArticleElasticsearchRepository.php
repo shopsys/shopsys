@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 
 class BlogArticleElasticsearchRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQueryFactory $filterQueryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher $blogArticleElasticsearchDataFetcher
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly FilterQueryFactory $filterQueryFactory,
         protected readonly BlogArticleElasticsearchDataFetcher $blogArticleElasticsearchDataFetcher,
@@ -23,10 +18,6 @@ class BlogArticleElasticsearchRepository
     ) {
     }
 
-    /**
-     * @param string $uuid
-     * @return array
-     */
     public function getByUuid(string $uuid): array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredByUuid($uuid);
@@ -38,10 +29,6 @@ class BlogArticleElasticsearchRepository
         }
     }
 
-    /**
-     * @param bool $onlyVisibleOnHomepage
-     * @return int
-     */
     public function getAllBlogArticlesTotalCount(bool $onlyVisibleOnHomepage = false): int
     {
         $filterQuery = $this->filterQueryFactory
@@ -51,12 +38,6 @@ class BlogArticleElasticsearchRepository
         return $this->blogArticleElasticsearchDataFetcher->getTotalCount($filterQuery);
     }
 
-    /**
-     * @param int $offset
-     * @param int $limit
-     * @param bool $onlyVisibleOnHomepage
-     * @return array
-     */
     public function getAllBlogArticles(int $offset, int $limit, bool $onlyVisibleOnHomepage = false): array
     {
         $filterQuery = $this->filterQueryFactory
@@ -66,10 +47,6 @@ class BlogArticleElasticsearchRepository
         return $this->blogArticleElasticsearchDataFetcher->getAllResults($filterQuery);
     }
 
-    /**
-     * @param string $slug
-     * @return array
-     */
     public function getBySlug(string $slug): array
     {
         $blogArticle = $this->findBySlug($slug);
@@ -85,10 +62,6 @@ class BlogArticleElasticsearchRepository
         return $blogArticle;
     }
 
-    /**
-     * @param string $slug
-     * @return array|null
-     */
     protected function findBySlug(string $slug): ?array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredBySlug($slug);
@@ -100,13 +73,6 @@ class BlogArticleElasticsearchRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param int $offset
-     * @param int $limit
-     * @param bool $onlyVisibleOnHomepage
-     * @return array
-     */
     public function getByBlogCategory(
         BlogCategory $blogCategory,
         int $offset,
@@ -120,11 +86,6 @@ class BlogArticleElasticsearchRepository
         return $this->blogArticleElasticsearchDataFetcher->getAllResults($filterQuery);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param bool $onlyVisibleOnHomepage
-     * @return int
-     */
     public function getByBlogCategoryTotalCount(BlogCategory $blogCategory, bool $onlyVisibleOnHomepage = false): int
     {
         $filterQuery = $this->filterQueryFactory

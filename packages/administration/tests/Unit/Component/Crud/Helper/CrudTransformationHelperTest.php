@@ -11,10 +11,6 @@ use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 
 class CrudTransformationHelperTest extends TestCase
 {
-    /**
-     * @param string $controllerName
-     * @param string $expectedRouteName
-     */
     #[DataProvider('transformToRouteNameDataProvider')]
     public function testTransformToRouteName(string $controllerName, string $expectedRouteName): void
     {
@@ -64,11 +60,6 @@ class CrudTransformationHelperTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $controllerClass
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     * @param string $expectedController
-     */
     #[DataProvider('generateControllerDataProvider')]
     public function testGenerateController(
         string $controllerClass,
@@ -114,10 +105,6 @@ class CrudTransformationHelperTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $controllerName
-     * @param string $expectedRouteUrl
-     */
     #[DataProvider('transformToRouteUrlDataProvider')]
     public function testTransformToRouteUrl(string $controllerName, string $expectedRouteUrl): void
     {
@@ -167,10 +154,6 @@ class CrudTransformationHelperTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $controllerName
-     * @param string $expectedCleanName
-     */
     #[DataProvider('getCleanControllerNameDataProvider')]
     public function testGetCleanControllerName(string $controllerName, string $expectedCleanName): void
     {

@@ -30,10 +30,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     public const string READY_CATEGORY_SEO_BLACK_ELECTRONICS = 'ready_category_seo_black_electronics';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory
      */
     public function __construct(
         private readonly ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory,
@@ -296,15 +293,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
-     * @param string $h1
      * @param string[] $slugs
-     * @param int $domainId
-     * @param string|null $referenceName
-     * @param string|null $description
-     * @param string|null $shortDescription
-     * @param string|null $title
-     * @param string|null $metaDescription
      */
     private function createReadyCategorySeoMix(
         SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
@@ -353,12 +342,6 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         }
     }
 
-    /**
-     * @param string $parameterValueTranslation
-     * @param string|null $numericValue
-     * @param string $locale
-     * @return int
-     */
     private function getParameterValueId(string $parameterValueTranslation, ?string $numericValue, string $locale): int
     {
         return $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale($parameterValueTranslation, $numericValue, $locale)->getId();

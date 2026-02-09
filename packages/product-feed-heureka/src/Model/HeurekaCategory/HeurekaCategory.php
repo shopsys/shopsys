@@ -40,9 +40,6 @@ class HeurekaCategory
     #[ORM\ManyToMany(targetEntity: Category::class)]
     protected $categories;
 
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData $heurekaCategoryData
-     */
     public function __construct(HeurekaCategoryData $heurekaCategoryData)
     {
         $this->id = $heurekaCategoryData->id;
@@ -50,18 +47,12 @@ class HeurekaCategory
         $this->setData($heurekaCategoryData);
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData $heurekaCategoryData
-     */
-    public function edit(HeurekaCategoryData $heurekaCategoryData)
+    public function edit(HeurekaCategoryData $heurekaCategoryData): void
     {
         $this->editCategories($heurekaCategoryData->categories);
         $this->setData($heurekaCategoryData);
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData $heurekaCategoryData
-     */
     protected function setData(HeurekaCategoryData $heurekaCategoryData): void
     {
         $this->name = $heurekaCategoryData->name;
@@ -71,7 +62,7 @@ class HeurekaCategory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      */
-    protected function editCategories(array $categories)
+    protected function editCategories(array $categories): void
     {
         $this->categories->clear();
 
@@ -80,18 +71,12 @@ class HeurekaCategory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
-    public function addCategory(Category $category)
+    public function addCategory(Category $category): void
     {
         $this->categories->add($category);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
-    public function removeCategory(Category $category)
+    public function removeCategory(Category $category): void
     {
         $this->categories->removeElement($category);
     }

@@ -15,9 +15,6 @@ final class SocialNetworkConfigWorker extends AbstractWorker
 {
     private const string FILE_PATH = 'app/config/packages/social_network_config.yaml';
 
-    /**
-     * @param \Shopsys\Cli\Model\YamlHandler $yamlHandler
-     */
     public function __construct(
         private readonly YamlHandler $yamlHandler,
     ) {
@@ -78,7 +75,6 @@ final class SocialNetworkConfigWorker extends AbstractWorker
     }
 
     /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
      * @return array<string, array<int>>
      */
     private function buildEnabledDomainsMap(CoreProjectConfig $config): array

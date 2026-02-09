@@ -43,7 +43,7 @@ class ProductVideo
     /**
      * @param string $videoToken
      */
-    public function setVideoToken($videoToken)
+    public function setVideoToken($videoToken): void
     {
         $this->videoToken = $videoToken;
     }
@@ -59,7 +59,7 @@ class ProductVideo
     /**
      * @param int $id
      */
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }

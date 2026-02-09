@@ -15,11 +15,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class CompanyOwnerVoter extends AbstractB2bVoter
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     */
     public function __construct(
         Domain $domain,
         protected readonly Security $security,
@@ -28,25 +23,14 @@ class CompanyOwnerVoter extends AbstractB2bVoter
         parent::__construct($domain);
     }
 
-    /**
-     * @param string $attribute
-     * @param mixed $subject
-     * @return bool
-     */
     #[Override]
-    protected function supports(string $attribute, $subject): bool
+    protected function supports(string $attribute, mixed $subject): bool
     {
         return $attribute === 'is_company_owner_voter';
     }
 
-    /**
-     * @param string $attribute
-     * @param \Overblog\GraphQLBundle\Definition\Argument|null $argument
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @return bool
-     */
     #[Override]
-    protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token)
+    protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token): bool
     {
         if ($this->security->isGranted(CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS)) {
             return $this->isCompanyCustomer($token);
@@ -55,10 +39,6 @@ class CompanyOwnerVoter extends AbstractB2bVoter
         return false;
     }
 
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @return bool
-     */
     protected function isCompanyCustomer(TokenInterface $token): bool
     {
         /** @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $loggedUser */

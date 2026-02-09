@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ZboziProductDomainFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainRepository $zboziProductDomainRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ZboziProductDomainRepository $zboziProductDomainRepository,
@@ -23,21 +18,21 @@ class ZboziProductDomainFacade
     }
 
     /**
-     * @param int $productId
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]|null
      */
-    public function findByProductId($productId)
+    public function findByProductId(int $productId): ?array
     {
         return $this->zboziProductDomainRepository->findByProductId($productId);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]
      */
-    public function getZboziProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
-    {
+    public function getZboziProductDomainsByProductsAndDomainIndexedByProductId(
+        array $products,
+        DomainConfig $domain,
+    ): array {
         $productIds = [];
 
         foreach ($products as $product) {
@@ -51,10 +46,9 @@ class ZboziProductDomainFacade
     }
 
     /**
-     * @param int $productId
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData[] $zboziProductDomainsData
      */
-    public function saveZboziProductDomainsForProductId($productId, array $zboziProductDomainsData)
+    public function saveZboziProductDomainsForProductId(int $productId, array $zboziProductDomainsData): void
     {
         $existingZboziProductDomains = $this->zboziProductDomainRepository->findByProductId($productId);
 
@@ -74,7 +68,7 @@ class ZboziProductDomainFacade
     protected function removeOldZboziProductDomainsForProductId(
         array $existingZboziProductDomains,
         array $newZboziProductDomainsData,
-    ) {
+    ): void {
         $domainsIdsWithNewZboziProductDomains = [];
 
         foreach ($newZboziProductDomainsData as $newZboziProductDomainData) {
@@ -88,11 +82,7 @@ class ZboziProductDomainFacade
         }
     }
 
-    /**
-     * @param int $productId
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
-     */
-    protected function saveZboziProductDomain($productId, ZboziProductDomainData $zboziProductDomainData)
+    protected function saveZboziProductDomain(int $productId, ZboziProductDomainData $zboziProductDomainData): void
     {
         $product = $this->productRepository->getById($productId);
         $zboziProductDomainData->product = $product;
@@ -110,10 +100,7 @@ class ZboziProductDomainFacade
         }
     }
 
-    /**
-     * @param int $productId
-     */
-    public function delete($productId)
+    public function delete(int $productId): void
     {
         $zboziProductDomains = $this->zboziProductDomainRepository->findByProductId($productId);
 

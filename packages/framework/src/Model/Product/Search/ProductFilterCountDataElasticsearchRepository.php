@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class ProductFilterCountDataElasticsearchRepository
 {
-    /**
-     * @param \Elasticsearch\Client $client
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\AggregationResultToProductFilterCountDataTransformer $aggregationResultToCountDataTransformer
-     */
     public function __construct(
         protected readonly Client $client,
         protected readonly ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
@@ -23,11 +18,6 @@ class ProductFilterCountDataElasticsearchRepository
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $baseFilterQuery
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
     public function getProductFilterCountDataInSearch(
         ProductFilterData $productFilterData,
         FilterQuery $baseFilterQuery,
@@ -63,11 +53,6 @@ class ProductFilterCountDataElasticsearchRepository
         return $countData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $baseFilterQuery
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
     public function getProductFilterCountDataInCategory(
         ProductFilterData $productFilterData,
         FilterQuery $baseFilterQuery,
@@ -133,8 +118,6 @@ class ProductFilterCountDataElasticsearchRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $plusFlagsQuery
      * @return int[]
      */
     protected function calculateFlagsPlusNumbers(
@@ -152,8 +135,6 @@ class ProductFilterCountDataElasticsearchRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $plusBrandsQuery
      * @return int[]
      */
     protected function calculateBrandsPlusNumbers(
@@ -172,10 +153,6 @@ class ProductFilterCountDataElasticsearchRepository
 
     /**
      * When calculating plus numbers for a parameter, this parameter must be excluded from filter query (clone and unset)
-     *
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $countData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $plusParametersQuery
      */
     protected function replaceParametersPlusNumbers(
         ProductFilterData $productFilterData,
@@ -200,11 +177,6 @@ class ProductFilterCountDataElasticsearchRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData $parameterFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $parameterFilterQuery
-     * @return array
-     */
     protected function calculateParameterPlusNumbers(
         ParameterFilterData $parameterFilterData,
         FilterQuery $parameterFilterQuery,
@@ -225,11 +197,6 @@ class ProductFilterCountDataElasticsearchRepository
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $countData
-     * @param array $plusParameterNumbers
-     * @param int $parameterId
-     */
     protected function mergeParameterCountData(
         ProductFilterCountData $countData,
         array $plusParameterNumbers,

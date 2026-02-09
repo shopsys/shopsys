@@ -14,24 +14,16 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundExcepti
 
 class UploadedFileRepository implements UploadedFileRepositoryInterface
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getUploadedFileRepository(): EntityRepository
     {
         return $this->em->getRepository(UploadedFile::class);
     }
 
     /**
-     * @param string $entityName
-     * @param int $entityId
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     public function getAllUploadedFilesByEntity(string $entityName, int $entityId): array
@@ -45,9 +37,6 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
     }
 
     /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     #[Override]
@@ -71,10 +60,6 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
             ->getResult();
     }
 
-    /**
-     * @param int $uploadedFileId
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
-     */
     #[Override]
     public function getById(int $uploadedFileId): UploadedFile
     {
@@ -89,12 +74,6 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
         return $uploadedFile;
     }
 
-    /**
-     * @param int $uploadedFileId
-     * @param string $uploadedFileSlug
-     * @param string $uploadedFileExtension
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
-     */
     public function getByIdSlugAndExtension(
         int $uploadedFileId,
         string $uploadedFileSlug,
@@ -178,9 +157,6 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
 
     /**
      * @param int[] $entityIds
-     * @param string $entityName
-     * @param string|null $requiredLocale
-     * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[][]
      */
     public function getAllFilesIndexedByEntityId(

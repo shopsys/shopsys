@@ -27,12 +27,12 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @method \App\Model\Category\Category[] getAllTranslated(string $locale)
  * @method \App\Model\Category\Category[] getAllTranslatedWithoutBranch(\App\Model\Category\Category $category, string $locale)
- * @method createFriendlyUrlsWhenRenamed(\App\Model\Category\Category $category, array $originalNames)
+ * @method void createFriendlyUrlsWhenRenamed(\App\Model\Category\Category $category, array $originalNames)
  * @method array getChangedNamesByLocale(\App\Model\Category\Category $category, array $originalNames)
  * @method \App\Model\Category\Category[] getByIds(int[] $categoryIds)
  * @method \App\Model\Category\Category getVisibleOnDomainByUuid(int $domainId, string $categoryUuid)
  * @method \App\Model\Category\Category getProductMainCategoryOnCurrentDomain(\App\Model\Product\Product $product)
- * @method dispatchCategoryEvent(\App\Model\Category\Category $category, string $eventType)
+ * @method void dispatchCategoryEvent(\App\Model\Category\Category $category, string $eventType)
  * @method \App\Model\Category\Category[] getCategoriesOfProductByFilterData(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Category\CategoryRepository $categoryRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade, \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory, \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory, \Shopsys\FrameworkBundle\Model\Category\CategoryFactory $categoryFactory, \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher, \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher, \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade, \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade)
  * @method \App\Model\Category\Category create(\App\Model\Category\CategoryData $categoryData)
@@ -40,21 +40,11 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
  */
 class CategoryFacade extends BaseCategoryFacade
 {
-    /**
-     * @param \App\Model\Category\Category $destinationCategory
-     * @return array
-     */
     public function getCategoriesInPath(Category $destinationCategory): array
     {
         return array_slice($this->categoryRepository->getPath($destinationCategory), 1);
     }
 
-    /**
-     * @param \App\Model\Category\Category $destinationCategory
-     * @param string $locale
-     * @param string $delimiter
-     * @return string
-     */
     public function getCategoriesNamesInPathAsString(
         Category $destinationCategory,
         string $locale,
@@ -72,8 +62,6 @@ class CategoryFacade extends BaseCategoryFacade
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[]
      */
     public function getAllVisibleChildrenByCategoryAndDomainConfig(

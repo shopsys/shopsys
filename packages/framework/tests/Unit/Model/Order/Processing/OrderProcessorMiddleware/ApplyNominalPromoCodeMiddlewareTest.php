@@ -67,9 +67,6 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
         $this->assertSame('Promo code', $actualDiscountItemsType[0]->name);
     }
 
-    /**
-     * @param string|null $promoCodeType
-     */
     #[DataProvider('invalidPromoCodeTypeDataProvider')]
     public function testNoPromoCodeIsAdded(?string $promoCodeType): void
     {
@@ -106,9 +103,6 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    /**
-     * @return iterable
-     */
     public static function invalidPromoCodeTypeDataProvider(): iterable
     {
         yield [PromoCodeTypeEnum::DISCOUNT_TYPE_PERCENT];
@@ -118,10 +112,6 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
         yield [null];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $discountPrice
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\ApplyNominalPromoCodeMiddleware
-     */
     private function createApplyNominalPromoCodeMiddleware(?Price $discountPrice): ApplyNominalPromoCodeMiddleware
     {
         $currentPromoCodeFacade = $this->createMock(CurrentPromoCodeFacade::class);
@@ -144,9 +134,6 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|\PHPUnit\Framework\MockObject\MockObject
-     */
     private function createCurrencyMock(): Currency|MockObject
     {
         $currency = $this->createMock(Currency::class);
@@ -157,9 +144,6 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
         return $currency;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|\PHPUnit\Framework\MockObject\MockObject
-     */
     private function createCurrencyFacadeMock(): CurrencyFacade|MockObject
     {
         $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)

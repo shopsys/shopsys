@@ -22,10 +22,6 @@ class RegistrationMail implements MessageFactoryInterface
     public const VARIABLE_URL = '{url}';
     public const VARIABLE_LOGIN_PAGE = '{login_page}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly DomainRouterFactory $domainRouterFactory,
@@ -33,13 +29,13 @@ class RegistrationMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     #[Override]
-    public function createMessage(MailTemplate $mailTemplate, $customerUser)
-    {
+    public function createMessage(
+        MailTemplate $mailTemplate,
+        $customerUser,
+    ): MessageData {
         return new MessageData(
             $customerUser->getEmail(),
             $mailTemplate->getBccEmail(),
@@ -51,11 +47,7 @@ class RegistrationMail implements MessageFactoryInterface
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return array
-     */
-    protected function getVariablesReplacements(CustomerUser $customerUser)
+    protected function getVariablesReplacements(CustomerUser $customerUser): array
     {
         $router = $this->domainRouterFactory->getRouter($customerUser->getDomainId());
 

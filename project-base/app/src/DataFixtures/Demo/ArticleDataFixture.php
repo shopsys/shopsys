@@ -41,12 +41,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
     private const string REFERENCE_NAME_KEY = 'referenceName';
     private const string UUID_NAMESPACE = '008cf1fb-218e-45c2-ae6e-02f9324948ba';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory $articleDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         private readonly ArticleFacade $articleFacade,
         private readonly ArticleDataFactory $articleDataFactory,
@@ -55,9 +49,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -68,7 +59,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[][]
      */
     private function getDataForArticles(DomainConfig $domainConfig): array
@@ -325,10 +315,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
         ];
     }
 
-    /**
-     * @param array $articles
-     * @param int $domainId
-     */
     private function createArticlesFromArray(array $articles, int $domainId): void
     {
         foreach ($articles as $article) {
@@ -340,10 +326,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
         }
     }
 
-    /**
-     * @param array $data
-     * @param int $domainId
-     */
     private function createArticleFromArray(array $data, int $domainId): void
     {
         $articleData = $this->articleDataFactory->create($domainId);
@@ -358,10 +340,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
         $this->createArticleFromArticleData($articleData, $data[self::REFERENCE_NAME_KEY] ?? null);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     * @param string|null $referenceName
-     */
     private function createArticleFromArticleData(ArticleData $articleData, ?string $referenceName = null): void
     {
         $article = $this->articleFacade->create($articleData);
@@ -371,10 +349,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
         }
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
     private function generateUrlForHomepageOnDomain(int $domainId): string
     {
         $router = $this->domainRouterFactory->getRouter($domainId);
@@ -382,11 +356,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
         return $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    /**
-     * @param string $categoryReferenceName
-     * @param int $domainId
-     * @return string
-     */
     private function generateUrlForCategoryOnDomain(string $categoryReferenceName, int $domainId): string
     {
         $router = $this->domainRouterFactory->getRouter($domainId);
@@ -399,10 +368,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
         );
     }
 
-    /**
-     * @param array $articleInputData
-     * @return bool
-     */
     private function isMandatoryArticle(array $articleInputData): bool
     {
         return array_key_exists(self::REFERENCE_NAME_KEY, $articleInputData) && in_array($articleInputData[self::REFERENCE_NAME_KEY], self::ARTICLES_MANDATORY_ON_ALL_DOMAINS, true);

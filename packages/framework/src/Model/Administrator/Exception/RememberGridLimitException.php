@@ -8,23 +8,12 @@ use Exception;
 
 class RememberGridLimitException extends Exception
 {
-    protected string $gridId;
-
-    /**
-     * @param string $gridId
-     * @param \Exception|null $previous
-     */
-    public function __construct($gridId, ?Exception $previous = null)
+    public function __construct(protected string $gridId, ?Exception $previous = null)
     {
-        $this->gridId = $gridId;
-
         parent::__construct('Grid \'' . $this->gridId . ' \' does not allow paging', 0, $previous);
     }
 
-    /**
-     * @return string
-     */
-    public function getGridId()
+    public function getGridId(): string
     {
         return $this->gridId;
     }

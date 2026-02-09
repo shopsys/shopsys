@@ -6,16 +6,12 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 
 class CronModuleRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFactory $cronModuleFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CronModuleFactory $cronModuleFactory,
@@ -23,27 +19,17 @@ class CronModuleRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getCronModuleRepository()
+    protected function getCronModuleRepository(): EntityRepository
     {
         return $this->em->getRepository(CronModule::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getCronModuleRunRepository()
+    protected function getCronModuleRunRepository(): EntityRepository
     {
         return $this->em->getRepository(CronModuleRun::class);
     }
 
-    /**
-     * @param string $serviceId
-     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModule
-     */
-    public function getCronModuleByServiceId($serviceId)
+    public function getCronModuleByServiceId(string $serviceId): CronModule
     {
         $cronModule = $this->getCronModuleRepository()->find($serviceId);
 
@@ -59,7 +45,7 @@ class CronModuleRepository
     /**
      * @return string[]
      */
-    public function getAllScheduledCronModuleServiceIds()
+    public function getAllScheduledCronModuleServiceIds(): array
     {
         $query = $this->em->createQuery(
             'SELECT cm.serviceId FROM ' . CronModule::class . ' cm WHERE cm.scheduled = TRUE',
@@ -98,7 +84,6 @@ class CronModuleRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronModuleRun[]
      */
     public function getAllRunsByCronModule(CronModule $cronModule): array
@@ -110,10 +95,6 @@ class CronModuleRepository
             ->getQuery()->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getRunsByCronModuleQueryBuilder(CronModule $cronModule): QueryBuilder
     {
         return $this->getCronModuleRunRepository()->createQueryBuilder('cmr')
@@ -123,9 +104,6 @@ class CronModuleRepository
             ->orderBy('cmr.startedAt', 'DESC');
     }
 
-    /**
-     * @param int $numberOfDays
-     */
     public function deleteOldCronModuleRuns(int $numberOfDays): void
     {
         $this->em->getConnection()->executeStatement(

@@ -12,19 +12,11 @@ use Shopsys\Releaser\Stage;
 
 final class SetPhpImageVersionInDockerfileReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \Shopsys\Releaser\FileManipulator\DockerfileVersionFileManipulator $dockerfileVersionFileManipulator
-     */
     public function __construct(
         private readonly DockerfileVersionFileManipulator $dockerfileVersionFileManipulator,
     ) {
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -37,10 +29,6 @@ final class SetPhpImageVersionInDockerfileReleaseWorker extends AbstractShopsysR
         );
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,
@@ -63,10 +51,6 @@ final class SetPhpImageVersionInDockerfileReleaseWorker extends AbstractShopsysR
         );
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @return string
-     */
     private function getDevelopmentVersionString(Version $version): string
     {
         return $version->getMajor()->getValue() . '.' . $version->getMinor()->getValue();

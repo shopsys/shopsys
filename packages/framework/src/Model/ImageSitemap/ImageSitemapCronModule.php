@@ -10,9 +10,6 @@ use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class ImageSitemapCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFacade $imageSitemapFacade
-     */
     public function __construct(
         protected readonly ImageSitemapFacade $imageSitemapFacade,
     ) {
@@ -22,12 +19,12 @@ class ImageSitemapCronModule implements SimpleCronModuleInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
     }
 
     #[Override]
-    public function run()
+    public function run(): void
     {
         $this->imageSitemapFacade->generateForAllDomains();
     }

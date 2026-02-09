@@ -10,11 +10,6 @@ use Throwable;
 
 class OrderItemHasOnlyOneTotalPriceException extends RuntimeException
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $totalPriceWithVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $totalPriceWithoutVat
-     * @param \Throwable|null $previous
-     */
     public function __construct(?Money $totalPriceWithVat, ?Money $totalPriceWithoutVat, ?Throwable $previous = null)
     {
         $message = sprintf(

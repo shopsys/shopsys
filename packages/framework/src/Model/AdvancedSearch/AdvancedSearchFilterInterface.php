@@ -26,8 +26,6 @@ interface AdvancedSearchFilterInterface
 
     /**
      * Returns a unique name of the filter
-     *
-     * @return string
      */
     public function getName(): string;
 
@@ -40,23 +38,18 @@ interface AdvancedSearchFilterInterface
 
     /**
      * Returns a form type that should be used for value selection
-     *
-     * @return string|\Symfony\Component\Form\FormTypeInterface
      */
     public function getValueFormType(): FormTypeInterface|string;
 
     /**
      * Returns options that will be passed to the form type used for value selection
-     *
-     * @return array
      */
     public function getValueFormOptions(): array;
 
     /**
      * Method that applies the filtering conditions specified by $rulesData to the provided query builder
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData);
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void;
 }

@@ -18,10 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CronWatchCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
-     */
     public function __construct(
         protected readonly CronFacade $cronFacade,
         protected readonly MutexFactory $mutexFactory,

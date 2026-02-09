@@ -28,17 +28,6 @@ class TransportAndPaymentWatcherFacade
 {
     protected CartWithModificationsResult $cartWithModificationsResult;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade $cartTransportFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Transport\TransportValidationFacade $transportValidationFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade $cartPaymentFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade $paymentValidationFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     */
     public function __construct(
         protected readonly TransportFacade $transportFacade,
         protected readonly PaymentFacade $paymentFacade,
@@ -52,10 +41,6 @@ class TransportAndPaymentWatcherFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult $cartWithModificationsResult
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     public function checkTransportAndPayment(
         CartWithModificationsResult $cartWithModificationsResult,
         Cart $cart,
@@ -91,10 +76,6 @@ class TransportAndPaymentWatcherFacade
         $this->checkPayment($cart);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkTransportPriceAndWeightLimit(Transport $transport, Cart $cart): void
     {
         try {
@@ -108,10 +89,6 @@ class TransportAndPaymentWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     */
     protected function checkPaymentPrice(Cart $cart, Payment $payment): void
     {
         try {
@@ -122,10 +99,6 @@ class TransportAndPaymentWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkTransportAvailabilityForProductsInCart(Transport $transport, Cart $cart): void
     {
         try {
@@ -136,10 +109,6 @@ class TransportAndPaymentWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkPersonalPickupStoreAvailability(Transport $transport, Cart $cart): void
     {
         try {
@@ -150,10 +119,6 @@ class TransportAndPaymentWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkPacketeryIdIsValid(Transport $transport, Cart $cart): void
     {
         if ($transport->isPacketery() && !is_numeric($cart->getPickupPlaceIdentifier())) {
@@ -161,9 +126,6 @@ class TransportAndPaymentWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkTransport(Cart $cart): void
     {
         if ($cart->isEmpty()) {
@@ -197,9 +159,6 @@ class TransportAndPaymentWatcherFacade
         $this->checkPacketeryIdIsValid($transport, $cart);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkPayment(Cart $cart): void
     {
         if ($cart->isEmpty()) {
@@ -225,18 +184,12 @@ class TransportAndPaymentWatcherFacade
         $this->checkPaymentPrice($cart, $payment);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function setTransportInCartUnavailable(Cart $cart): void
     {
         $this->cartWithModificationsResult->setTransportIsUnavailable();
         $this->cartTransportFacade->unsetCartTransport($cart);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function setPaymentInCartUnavailable(Cart $cart): void
     {
         $this->cartWithModificationsResult->setPaymentIsUnavailable();

@@ -189,9 +189,6 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         self::assertNull($oldCart);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
     private function findCartOfCurrentCustomer(): ?Cart
     {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
@@ -202,10 +199,6 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         return $this->cartFacade->findCartByCustomerUserIdentifier($customerUserIdentifier);
     }
 
-    /**
-     * @param string $email
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
     private function findCartOfCustomerByEmail(string $email): ?Cart
     {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
@@ -216,10 +209,6 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         return $this->cartFacade->findCartByCustomerUserIdentifier($customerUserIdentifier);
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $productQuantity
-     */
     private function addProductToCustomerCart(Product $product, int $productQuantity): void
     {
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [

@@ -10,12 +10,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
 class AdministratorActivityFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityRepository $administratorActivityRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactory $administratorActivityFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorActivityRepository $administratorActivityRepository,
@@ -24,15 +18,10 @@ class AdministratorActivityFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param string $ipAddress
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity
-     */
     public function create(
         Administrator $administrator,
-        $ipAddress,
-    ) {
+        string $ipAddress,
+    ): AdministratorActivity {
         $administratorActivity = $this->administratorActivityFactory->create($administrator, $ipAddress);
 
         $this->em->persist($administratorActivity);
@@ -41,10 +30,7 @@ class AdministratorActivityFacade
         return $administratorActivity;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     */
-    public function updateCurrentActivityLastActionTime(Administrator $administrator)
+    public function updateCurrentActivityLastActionTime(Administrator $administrator): void
     {
         $currentAdministratorActivity = $this->administratorActivityRepository->getCurrent($administrator);
         $currentAdministratorActivity->updateLastActionTime();
@@ -52,11 +38,9 @@ class AdministratorActivityFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity[]
      */
-    public function getLastAdministratorActivities(Administrator $administrator, $maxResults)
+    public function getLastAdministratorActivities(Administrator $administrator, int $maxResults): array
     {
         return $this->administratorActivityRepository->getLastAdministratorActivities($administrator, $maxResults);
     }

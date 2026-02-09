@@ -18,9 +18,6 @@ class ImageConfigDefinition implements ConfigurationInterface
     public const CONFIG_TYPE_NAME = 'name';
     protected const CONFIG_IMAGES = 'images';
 
-    /**
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
-     */
     #[Override]
     public function getConfigTreeBuilder(): TreeBuilder
     {
@@ -33,12 +30,9 @@ class ImageConfigDefinition implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
-     */
-    protected function buildItemsNode(ArrayNodeDefinition $node)
-    {
+    protected function buildItemsNode(
+        ArrayNodeDefinition $node,
+    ): ArrayNodeDefinition {
         return $node
             ->addDefaultsIfNotSet()
             ->children()

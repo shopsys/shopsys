@@ -13,16 +13,10 @@ use Override;
 
 class MainFilesystemFactory implements FilesystemFactoryInterface
 {
-    /**
-     * @param string $projectDir
-     */
     public function __construct(protected readonly string $projectDir)
     {
     }
 
-    /**
-     * @return \League\Flysystem\FilesystemOperator
-     */
     #[Override]
     public function create(): FilesystemOperator
     {

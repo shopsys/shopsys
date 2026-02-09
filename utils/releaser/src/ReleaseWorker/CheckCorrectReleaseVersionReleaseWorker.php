@@ -11,11 +11,6 @@ use Shopsys\Releaser\Stage;
 
 final class CheckCorrectReleaseVersionReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -33,10 +28,6 @@ final class CheckCorrectReleaseVersionReleaseWorker extends AbstractShopsysRelea
         return Stage::getAllStages();
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

@@ -16,12 +16,8 @@ class JsFileExtractor implements FileVisitorInterface
 {
     protected const DUMP_FILE = 'translationsDump.json';
 
-    /**
-     * @param \SplFileInfo $file
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     */
     #[Override]
-    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
+    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue): void
     {
         if ($this->isFileTranslationDump($file) === false) {
             return;
@@ -49,22 +45,13 @@ class JsFileExtractor implements FileVisitorInterface
         }
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @return bool
-     */
     protected function isFileTranslationDump(SplFileInfo $file): bool
     {
         return $file->getFilename() === static::DUMP_FILE;
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     * @param array $ast
-     */
     #[Override]
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
     }
 

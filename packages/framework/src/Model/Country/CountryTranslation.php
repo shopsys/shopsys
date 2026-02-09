@@ -14,7 +14,6 @@ class CountryTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translatable(targetEntity: Country::class)]
     protected $translatable;

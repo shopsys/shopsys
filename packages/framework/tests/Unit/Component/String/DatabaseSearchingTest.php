@@ -21,9 +21,6 @@ class DatabaseSearchingTest extends TestCase
         parent::setUp();
     }
 
-    /**
-     * @return array
-     */
     public static function searchTextProvider(): array
     {
         return [
@@ -36,10 +33,6 @@ class DatabaseSearchingTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $searchText
-     * @param string $querySearchStringQuery
-     */
     #[DataProvider('searchTextProvider')]
     public function testSafeFilename(string $searchText, string $querySearchStringQuery): void
     {

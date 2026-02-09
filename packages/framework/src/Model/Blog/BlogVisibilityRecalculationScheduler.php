@@ -13,9 +13,6 @@ class BlogVisibilityRecalculationScheduler
         $this->recalculate = true;
     }
 
-    /**
-     * @return bool
-     */
     public function isRecalculationScheduled(): bool
     {
         return $this->recalculate;

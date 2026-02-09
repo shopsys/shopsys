@@ -10,28 +10,17 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 
 class OrderItemDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
         protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
-     */
     protected function createInstance(): OrderItemData
     {
         return new OrderItemData();
     }
 
-    /**
-     * @param string $orderItemType
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
-     */
     public function create(string $orderItemType): OrderItemData
     {
         $orderItemData = $this->createInstance();
@@ -41,10 +30,6 @@ class OrderItemDataFactory
         return $orderItemData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
-     */
     public function createFromOrderItem(OrderItem $orderItem): OrderItemData
     {
         $orderItemData = $this->createInstance();
@@ -54,11 +39,7 @@ class OrderItemDataFactory
         return $orderItemData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
-     */
-    protected function fillFromOrderItem(OrderItemData $orderItemData, OrderItem $orderItem)
+    protected function fillFromOrderItem(OrderItemData $orderItemData, OrderItem $orderItem): void
     {
         $orderItemData->name = $orderItem->getName();
         $orderItemData->unitPriceWithVat = $orderItem->getUnitPriceWithVat();
@@ -77,10 +58,6 @@ class OrderItemDataFactory
         $orderItemData->usePriceCalculation = $this->isUsingPriceCalculation($orderItemData, $orderItem);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
-     */
     protected function addFieldsByOrderItemType(OrderItemData $orderItemData, OrderItem $orderItem): void
     {
         if ($orderItem->isTypeTransport()) {
@@ -94,11 +71,6 @@ class OrderItemDataFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
-     * @return bool
-     */
     protected function isUsingPriceCalculation(OrderItemData $orderItemData, OrderItem $orderItem): bool
     {
         if ($orderItem->hasForcedTotalPrice()) {
@@ -142,12 +114,6 @@ class OrderItemDataFactory
         return true;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface $quantifiedItemPrice
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
-     */
     public function createFromQuantifiedProduct(
         QuantifiedProduct $quantifiedProduct,
         QuantifiedItemPriceInterface $quantifiedItemPrice,

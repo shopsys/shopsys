@@ -9,12 +9,6 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class FeedPathProvider
 {
-    /**
-     * @param string $feedUrlPrefix
-     * @param string $feedDir
-     * @param string $projectDir
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(
         protected readonly string $feedUrlPrefix,
         protected readonly string $feedDir,
@@ -23,42 +17,22 @@ class FeedPathProvider
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
-    public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $domainConfig->getBaseUrl() . $this->feedUrlPrefix . $this->getFeedFilename($feedInfo, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
-    public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $this->feedDir . $this->getFeedFilename($feedInfo, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
-    public function getFeedLocalFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    public function getFeedLocalFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $this->projectDir . $this->feedDir . $this->getFeedFilename($feedInfo, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
-    protected function getFeedFilename(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    protected function getFeedFilename(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         $feedHash = $this->setting->get(Setting::FEED_HASH);
 

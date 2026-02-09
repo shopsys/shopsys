@@ -9,16 +9,15 @@ class RuleFormViewDataFactory
     public const TEMPLATE_RULE_FORM_KEY = '__template__';
 
     /**
-     * @param string $defaultFilterName
-     * @param array|null $requestData
-     * @return array
+     * @param array<int|string, array<string, mixed>>|null $requestData
+     * @return array<int|string, array{subject: string, operator: string|null, value: mixed}>
      */
     public function createFromRequestData(string $defaultFilterName, ?array $requestData = null): array
     {
         if ($requestData === null) {
             $searchRulesViewData = [];
         } else {
-            $searchRulesViewData = array_values($requestData);
+            $searchRulesViewData = $requestData;
         }
 
         if (count($searchRulesViewData) === 0) {
@@ -31,8 +30,7 @@ class RuleFormViewDataFactory
     }
 
     /**
-     * @param string $filterName
-     * @return array
+     * @return array{subject: string, operator: null, value: null}
      */
     public function createDefault(string $filterName): array
     {

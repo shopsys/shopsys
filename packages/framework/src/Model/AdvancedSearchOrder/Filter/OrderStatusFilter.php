@@ -16,9 +16,6 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'orderStatus';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     */
     public function __construct(protected readonly OrderStatusFacade $orderStatusFacade)
     {
     }
@@ -83,10 +80,6 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
         }
     }
 
-    /**
-     * @param string $operator
-     * @return string
-     */
     protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {

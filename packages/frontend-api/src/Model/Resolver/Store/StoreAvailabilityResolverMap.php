@@ -10,17 +10,11 @@ use Override;
 
 class StoreAvailabilityResolverMap extends ResolverMap
 {
-    /**
-     * @param \Overblog\DataLoader\DataLoaderInterface $storesBatchLoader
-     */
     public function __construct(
         protected readonly DataLoaderInterface $storesBatchLoader,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

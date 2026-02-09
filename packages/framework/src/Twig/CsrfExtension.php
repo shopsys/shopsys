@@ -14,10 +14,6 @@ class CsrfExtension extends AbstractExtension
 {
     protected UrlGeneratorInterface $router;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $generator
-     */
     public function __construct(
         protected RouteCsrfProtector $routeCsrfProtector,
         UrlGeneratorInterface $generator,
@@ -36,12 +32,6 @@ class CsrfExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $name
-     * @param array $parameters
-     * @param bool $schemeRelative
-     * @return string
-     */
     public function protectedUrl(string $name, array $parameters = [], bool $schemeRelative = false): string
     {
         $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->routeCsrfProtector->getCsrfTokenByRoute(

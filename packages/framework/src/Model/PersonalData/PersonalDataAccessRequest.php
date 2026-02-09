@@ -51,9 +51,6 @@ class PersonalDataAccessRequest
     #[ORM\Column(type: 'string', length: 50)]
     protected $type;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestData $personalDataAccessRequestData
-     */
     public function __construct(PersonalDataAccessRequestData $personalDataAccessRequestData)
     {
         $this->email = $personalDataAccessRequestData->email;

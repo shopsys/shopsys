@@ -10,10 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
 class ProductFilterNormalizer
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     */
     public function removeExcessiveFilters(
         ProductFilterData $productFilterData,
         ProductFilterConfig $productFilterConfig,
@@ -23,10 +19,6 @@ class ProductFilterNormalizer
         $this->removeExcessiveParametersAndValues($productFilterData, $productFilterConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     */
     protected function removeExcessiveBrands(
         ProductFilterData $productFilterData,
         ProductFilterConfig $productFilterConfig,
@@ -39,10 +31,6 @@ class ProductFilterNormalizer
         $productFilterData->brands = array_values($productFilterData->brands);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     */
     protected function removeExcessiveFlags(
         ProductFilterData $productFilterData,
         ProductFilterConfig $productFilterConfig,
@@ -55,10 +43,6 @@ class ProductFilterNormalizer
         $productFilterData->flags = array_values($productFilterData->flags);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     */
     protected function removeExcessiveParametersAndValues(
         ProductFilterData $productFilterData,
         ProductFilterConfig $productFilterConfig,
@@ -67,10 +51,6 @@ class ProductFilterNormalizer
         $this->removeExcessiveParameterValues($productFilterData, $productFilterConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     */
     protected function removeExcessiveParameters(
         ProductFilterData $productFilterData,
         ProductFilterConfig $productFilterConfig,
@@ -88,10 +68,6 @@ class ProductFilterNormalizer
         $productFilterData->parameters = array_values($productFilterData->parameters);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     */
     protected function removeExcessiveParameterValues(
         ProductFilterData $productFilterData,
         ProductFilterConfig $productFilterConfig,
@@ -179,11 +155,6 @@ class ProductFilterNormalizer
         return $parameterValues;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param int $parameterId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
-     */
     protected function removeParameterValue(
         ProductFilterData $productFilterData,
         int $parameterId,

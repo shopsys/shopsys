@@ -15,11 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Category\Exception\ReadyCategorySeo
 
 class ReadyCategorySeoMixQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
@@ -27,10 +22,6 @@ class ReadyCategorySeoMixQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param string $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix
-     */
     public function readyCategorySeoMixQuery(string $urlSlug): ReadyCategorySeoMix
     {
         try {

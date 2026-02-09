@@ -9,11 +9,6 @@ use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\InvalidTimeFormatExc
 
 class CronTimeResolver
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface $cronTime
-     * @param \DateTimeInterface $dateTime
-     * @return bool
-     */
     public function isValidAtTime(CronTimeInterface $cronTime, DateTimeInterface $dateTime): bool
     {
         $hour = (int)$dateTime->format('G');
@@ -23,11 +18,6 @@ class CronTimeResolver
             $this->isMatchWithTimeString($minute, $cronTime->getTimeMinutes());
     }
 
-    /**
-     * @param int $value
-     * @param string $timeString
-     * @return bool
-     */
     protected function isMatchWithTimeString(int $value, string $timeString): bool
     {
         $timeValues = explode(',', $timeString);
@@ -47,11 +37,6 @@ class CronTimeResolver
         return false;
     }
 
-    /**
-     * @param string $timeString
-     * @param int $maxValue
-     * @param int $divisibleBy
-     */
     public function validateTimeString(string $timeString, int $maxValue, int $divisibleBy): void
     {
         $timeValues = explode(',', $timeString);

@@ -9,7 +9,7 @@ class JmeterCsvReporter
     /**
      * @param resource $handle
      */
-    public function writeHeader($handle)
+    public function writeHeader($handle): void
     {
         fputcsv($handle, [
             'timestamp',
@@ -24,15 +24,16 @@ class JmeterCsvReporter
 
     /**
      * @param resource $handle
-     * @param float $duration
-     * @param string $routeName
-     * @param int $statusCode
-     * @param bool $isSuccessful
-     * @param string $relativeUrl
-     * @param int $queryCount
      */
-    public function writeLine($handle, $duration, $routeName, $statusCode, $isSuccessful, $relativeUrl, $queryCount)
-    {
+    public function writeLine(
+        $handle,
+        float $duration,
+        string $routeName,
+        int $statusCode,
+        bool $isSuccessful,
+        string $relativeUrl,
+        int $queryCount,
+    ): void {
         fputcsv($handle, [
             time(),
             round($duration),

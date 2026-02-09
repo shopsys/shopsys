@@ -6,13 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter;
 
 class ResolvedChangesFormatter
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\CollectionChangesFormatter $collectionChangesFormatter
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\ScalarDataTypeFormatter $scalarDataTypeFormatter
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\MoneyDataTypeFormatter $moneyDataTypeFormatter
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\DateTimeDataTypeFormatter $dateTimeDataTypeFormatter
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\BooleanDataTypeFormatter $booleanDataTypeFormatter
-     */
     public function __construct(
         protected readonly CollectionChangesFormatter $collectionChangesFormatter,
         protected readonly ScalarDataTypeFormatter $scalarDataTypeFormatter,
@@ -22,10 +15,6 @@ class ResolvedChangesFormatter
     ) {
     }
 
-    /**
-     * @param array $changeSet
-     * @return string
-     */
     public function formatResolvedChanges(array $changeSet): string
     {
         $formattedChanges = [];

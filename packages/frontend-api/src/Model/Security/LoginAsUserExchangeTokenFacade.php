@@ -12,13 +12,6 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 class LoginAsUserExchangeTokenFacade
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeTokenRepository $loginAsUserExchangeTokenRepository
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeTokenFactory $loginAsUserExchangeTokenFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly LoginAsUserExchangeTokenRepository $loginAsUserExchangeTokenRepository,
         protected readonly LoginAsUserExchangeTokenFactory $loginAsUserExchangeTokenFactory,
@@ -28,11 +21,6 @@ class LoginAsUserExchangeTokenFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @return string
-     */
     public function createAndGetUnencryptedToken(
         CustomerUser $customerUser,
         Administrator $administrator,
@@ -51,18 +39,11 @@ class LoginAsUserExchangeTokenFacade
         return $unencryptedToken;
     }
 
-    /**
-     * @param string $exchangeToken
-     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeToken|null
-     */
     public function findValidByToken(string $exchangeToken): ?LoginAsUserExchangeToken
     {
         return $this->loginAsUserExchangeTokenRepository->findValidByToken($exchangeToken);
     }
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeToken $exchangeTokenEntity
-     */
     public function delete(LoginAsUserExchangeToken $exchangeTokenEntity): void
     {
         $this->entityManager->remove($exchangeTokenEntity);

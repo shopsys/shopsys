@@ -17,13 +17,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SitemapListener implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade $sitemapFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     */
     public function __construct(
         protected readonly SitemapFacade $sitemapFacade,
         protected readonly Domain $domain,
@@ -44,9 +37,6 @@ class SitemapListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Presta\SitemapBundle\Event\SitemapPopulateEvent $event
-     */
     public function populateSitemap(SitemapPopulateEvent $event): void
     {
         $section = $event->getSection();
@@ -61,10 +51,6 @@ class SitemapListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
-     */
     protected function populateForDomainConfig(DomainConfig $domainConfig, AbstractGenerator $generator): void
     {
         $this->addUrlForHomepage($generator, $domainConfig);
@@ -138,9 +124,6 @@ class SitemapListener implements EventSubscriberInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[] $sitemapItems
-     * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string $section
      */
     protected function addUrlsForSitemapItems(
         array $sitemapItems,
@@ -158,11 +141,6 @@ class SitemapListener implements EventSubscriberInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[] $sitemapItems
-     * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string $section
-     * @param string $routeName
-     * @param callable $getAlternativeForDomainCallable
      */
     protected function addUrlsForSitemapItemsWithAlternativeLocations(
         array $sitemapItems,
@@ -198,10 +176,6 @@ class SitemapListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     protected function addUrlForHomepage(
         AbstractGenerator $generator,
         DomainConfig $domainConfig,
@@ -219,11 +193,6 @@ class SitemapListener implements EventSubscriberInterface
         $generator->addUrl($multilingualUrl, $this->sitemapFacade->getSectionNameForDomainConfig('homepage', $domainConfig));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string $slug
-     * @return string
-     */
     protected function getAbsoluteUrlByDomainConfigAndSlug(DomainConfig $domainConfig, string $slug): string
     {
         return $domainConfig->getUrl() . '/' . $slug;

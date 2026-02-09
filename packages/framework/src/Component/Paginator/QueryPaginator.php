@@ -16,8 +16,6 @@ class QueryPaginator implements PaginatorInterface
     protected bool $includeMetaColumns = false;
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string|null $hydrationMode
      * @param array<string, mixed> $hints
      */
     public function __construct(
@@ -27,12 +25,6 @@ class QueryPaginator implements PaginatorInterface
     ) {
     }
 
-    /**
-     * @param int $page
-     * @param int|null $pageSize
-     * @param int|null $totalCount
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
     #[Override]
     public function getResult(
         int $page = 1,
@@ -82,19 +74,14 @@ class QueryPaginator implements PaginatorInterface
 
     /**
      * Enables inclusion of meta columns in query results
-     *
-     * @return $this
      */
-    public function includeMetaColumns(): self
+    public function includeMetaColumns(): static
     {
         $this->includeMetaColumns = true;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
     #[Override]
     public function getTotalCount(): int
     {
@@ -103,10 +90,6 @@ class QueryPaginator implements PaginatorInterface
         return $totalNativeQuery->getSingleScalarResult();
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @return \Doctrine\ORM\NativeQuery
-     */
     protected function getTotalNativeQuery(QueryBuilder $queryBuilder): NativeQuery
     {
         $em = $queryBuilder->getEntityManager();

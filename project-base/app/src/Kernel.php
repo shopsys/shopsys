@@ -45,11 +45,6 @@ class Kernel extends BaseKernel
         Translator::injectSelf($translator);
     }
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $container
-     * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $builder
-     */
     protected function configureContainer(
         ContainerConfigurator $container,
         LoaderInterface $loader,
@@ -91,9 +86,6 @@ class Kernel extends BaseKernel
         }
     }
 
-    /**
-     * @param \Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator $routes
-     */
     protected function configureRoutesApp(RoutingConfigurator $routes): void
     {
         $configDir = $this->getConfigDir();
@@ -109,18 +101,11 @@ class Kernel extends BaseKernel
         $routes->import($configDir . '/routes' . self::CONFIG_EXTS);
     }
 
-    /**
-     * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
-     * @return \Symfony\Component\Routing\RouteCollection
-     */
     public function loadRoutes(LoaderInterface $loader): RouteCollection
     {
         return $this->loadRoutesForConfiguration($loader, 'configureRoutesApp');
     }
 
-    /**
-     * @param \Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator $routes
-     */
     protected function configureRoutesAdministration(RoutingConfigurator $routes): void
     {
         $configDir = $this->getConfigDir();
@@ -134,20 +119,11 @@ class Kernel extends BaseKernel
         }
     }
 
-    /**
-     * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
-     * @return \Symfony\Component\Routing\RouteCollection
-     */
     public function loadRoutesAdministration(LoaderInterface $loader): RouteCollection
     {
         return $this->loadRoutesForConfiguration($loader, 'configureRoutesAdministration');
     }
 
-    /**
-     * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
-     * @param string $configuration
-     * @return \Symfony\Component\Routing\RouteCollection
-     */
     public function loadRoutesForConfiguration(LoaderInterface $loader, string $configuration): RouteCollection
     {
         $file = (new ReflectionObject($this))->getFileName();

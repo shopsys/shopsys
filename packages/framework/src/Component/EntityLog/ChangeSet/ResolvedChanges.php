@@ -10,13 +10,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class ResolvedChanges implements JsonSerializable
 {
-    /**
-     * @param string $dataType
-     * @param mixed $oldReadableValue
-     * @param mixed $oldValue
-     * @param mixed $newReadableValue
-     * @param mixed $newValue
-     */
     public function __construct(
         public string $dataType,
         public mixed $oldReadableValue,
@@ -26,9 +19,6 @@ class ResolvedChanges implements JsonSerializable
     ) {
     }
 
-    /**
-     * @return bool
-     */
     public function isOldValueSameAsNewValue(): bool
     {
         if ($this->oldValue instanceof Money && $this->newValue instanceof Money) {
@@ -38,9 +28,6 @@ class ResolvedChanges implements JsonSerializable
         return $this->oldValue === $this->newValue;
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function jsonSerialize(): array
     {

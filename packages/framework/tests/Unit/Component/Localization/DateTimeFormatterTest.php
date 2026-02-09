@@ -18,9 +18,6 @@ use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DateTimeFormatterTest extends TestCase
 {
-    /**
-     * @return array
-     */
     public static function formatDateTimeDataProvider(): array
     {
         return [
@@ -43,11 +40,6 @@ class DateTimeFormatterTest extends TestCase
         ];
     }
 
-    /**
-     * @param \Symfony\Component\Clock\DatePoint $inputDateTime
-     * @param string $dateTimeZone
-     * @param string $result
-     */
     #[DataProvider('formatDateTimeDataProvider')]
     public function testFormatDateTimeWithTimezone(
         DatePoint $inputDateTime,
@@ -64,16 +56,12 @@ class DateTimeFormatterTest extends TestCase
             $inputDateTime,
             IntlDateFormatter::MEDIUM,
             IntlDateFormatter::MEDIUM,
-            null,
+            'en',
         );
 
         $this->assertEquals($result, $formattedDate);
     }
 
-    /**
-     * @param string $dateTimeZoneString
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     private function getMockedDomain(string $dateTimeZoneString): Domain
     {
         $settingMock = $this->getMockBuilder(Setting::class)

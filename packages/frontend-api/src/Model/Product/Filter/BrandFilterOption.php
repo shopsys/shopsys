@@ -8,11 +8,6 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 
 class BrandFilterOption
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @param int $count
-     * @param bool $isAbsolute
-     */
     public function __construct(
         public readonly Brand $brand,
         public readonly int $count,

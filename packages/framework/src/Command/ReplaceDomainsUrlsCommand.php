@@ -24,15 +24,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ReplaceDomainsUrlsCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer $domainUrlReplacer
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade $blogArticleExportQueueFacade
-     * @param \Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessageDispatcher $articleExportMessageDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
-     */
     public function __construct(
         private readonly Domain $domain,
         private readonly DomainUrlReplacer $domainUrlReplacer,

@@ -12,17 +12,11 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ErrorHandlerListener
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     */
     public function __construct(
         protected readonly ContextResolverInterface $contextResolver,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
-     */
     public function onKernelException(ExceptionEvent $event): void
     {
         $throwable = $event->getThrowable();

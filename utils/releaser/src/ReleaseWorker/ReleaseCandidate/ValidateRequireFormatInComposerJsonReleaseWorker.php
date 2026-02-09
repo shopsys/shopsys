@@ -18,21 +18,12 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
 {
     private bool $isSuccessful = false;
 
-    /**
-     * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
-     * @param \Shopsys\Releaser\FilesProvider\PackageNamesProvider $packageNamesProvider
-     */
     public function __construct(
         private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
         private readonly PackageNamesProvider $packageNamesProvider,
     ) {
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -41,10 +32,6 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
         return 'Validate "require" and "require-dev" version format for all packages';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,
@@ -66,8 +53,6 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
 
     /**
      * @param mixed[] $jsonContent
-     * @param string $section
-     * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
      */
     private function validateVersions(array $jsonContent, string $section, SplFileInfo $splFileInfo): void
     {
@@ -91,11 +76,6 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
         }
     }
 
-    /**
-     * @param string $packageName
-     * @param string $version
-     * @return bool
-     */
     private function shouldSkipPackageNameAndVersion(string $packageName, string $version): bool
     {
         if (Strings::startsWith($packageName, 'ext-')) {

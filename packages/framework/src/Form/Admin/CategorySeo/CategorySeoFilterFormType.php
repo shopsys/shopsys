@@ -17,18 +17,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class CategorySeoFilterFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFacade $categorySeoFacade
-     */
     public function __construct(
         private readonly CategorySeoFacade $categorySeoFacade,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -58,9 +51,6 @@ final class CategorySeoFilterFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

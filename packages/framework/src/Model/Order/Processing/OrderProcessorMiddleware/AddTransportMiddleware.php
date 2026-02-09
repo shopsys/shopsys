@@ -21,11 +21,6 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
 {
     public const string ADDITIONAL_DATA_CART_TOTAL_WEIGHT = 'cartTotalWeight';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     */
     public function __construct(
         protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly CurrencyFacade $currencyFacade,
@@ -33,11 +28,6 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
-     */
     #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,
@@ -80,12 +70,6 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
         return $orderProcessingStack->processNext($orderProcessingData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $transportPrice
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
-     */
     protected function getTransportItemData(
         PriceInterface $transportPrice,
         Transport $transport,

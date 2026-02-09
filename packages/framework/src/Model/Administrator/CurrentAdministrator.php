@@ -9,17 +9,11 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class CurrentAdministrator
 {
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     */
     public function __construct(
         protected readonly TokenStorageInterface $tokenStorage,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     public function getCurrentlyLoggedAdministrator(): Administrator
     {
         $administrator = $this->tokenStorage->getToken()?->getUser();

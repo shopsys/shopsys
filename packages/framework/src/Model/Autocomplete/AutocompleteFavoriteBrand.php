@@ -34,11 +34,6 @@ class AutocompleteFavoriteBrand implements OrderableEntityInterface
     #[ORM\Column(type: 'integer')]
     protected $position;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @param int $domainId
-     * @param int $position
-     */
     public function __construct(Brand $brand, int $domainId, int $position)
     {
         $this->brand = $brand;
@@ -46,16 +41,25 @@ class AutocompleteFavoriteBrand implements OrderableEntityInterface
         $this->position = $position;
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+     */
     public function getBrand()
     {
         return $this->brand;
     }
 
+    /**
+     * @return int
+     */
     public function getDomainId()
     {
         return $this->domainId;
     }
 
+    /**
+     * @return int
+     */
     public function getPosition()
     {
         return $this->position;
@@ -65,7 +69,7 @@ class AutocompleteFavoriteBrand implements OrderableEntityInterface
      * @param int $position
      */
     #[Override]
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }

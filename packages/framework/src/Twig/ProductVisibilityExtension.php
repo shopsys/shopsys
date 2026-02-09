@@ -15,12 +15,6 @@ use Twig\TwigFunction;
 
 class ProductVisibilityExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     */
     public function __construct(
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -33,7 +27,7 @@ class ProductVisibilityExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('isVisibleForDefaultPricingGroup', $this->isVisibleForDefaultPricingGroupOnDomain(...)),
@@ -52,20 +46,12 @@ class ProductVisibilityExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'product_visibility';
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return bool
-     */
-    public function isVisibleForDefaultPricingGroupOnDomain(Product $product, $domainId)
+    public function isVisibleForDefaultPricingGroupOnDomain(Product $product, int $domainId): bool
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
         $productVisibility = $this->productVisibilityFacade->getProductVisibility(
@@ -77,10 +63,6 @@ class ProductVisibilityExtension extends AbstractExtension
         return $productVisibility->isVisible();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return bool
-     */
     public function isVisibleForDefaultPricingGroupOnEachDomain(Product $product): bool
     {
         $defaultPricingGroupIdsIndexedByDomainId = $this->pricingGroupSettingFacade->getAllDefaultPricingGroupsIdsIndexedByDomainId();
@@ -91,10 +73,6 @@ class ProductVisibilityExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return bool
-     */
     public function isVisibleForDefaultPricingGroupOnSomeDomain(Product $product): bool
     {
         $defaultPricingGroupIdsIndexedByDomainId = $this->pricingGroupSettingFacade->getAllDefaultPricingGroupsIdsIndexedByDomainId();
@@ -105,11 +83,6 @@ class ProductVisibilityExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return bool
-     */
     public function isSellableOnDomain(Product $product, int $domainId): bool
     {
         $calculatedSellingDeniedPerDomainIds = $this->productFacade->getCalculatedSellingDeniedPerDomainIds($product);

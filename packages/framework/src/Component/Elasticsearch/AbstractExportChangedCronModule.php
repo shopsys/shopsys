@@ -13,13 +13,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractExportChangedCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         protected readonly AbstractIndex $index,
         protected readonly IndexFacade $indexFacade,
@@ -29,16 +22,13 @@ abstract class AbstractExportChangedCronModule implements SimpleCronModuleInterf
     ) {
     }
 
-    /**
-     * @param \Monolog\Logger $logger
-     */
     #[Override]
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
     }
 
     #[Override]
-    public function run()
+    public function run(): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index::getName(), $domainId);

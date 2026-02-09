@@ -11,19 +11,11 @@ class ProductQueryParams
      */
     protected ?array $uuids = null;
 
-    /**
-     * @param int $pageSize
-     * @param int $page
-     */
     public function __construct(protected readonly int $pageSize, protected readonly int $page = 1)
     {
     }
 
-    /**
-     * @param array $uuids
-     * @return self
-     */
-    public function withUuids(array $uuids): self
+    public function withUuids(array $uuids): static
     {
         $query = clone $this;
         $query->uuids = $uuids;
@@ -39,17 +31,11 @@ class ProductQueryParams
         return $this->uuids;
     }
 
-    /**
-     * @return int
-     */
     public function getPage(): int
     {
         return $this->page;
     }
 
-    /**
-     * @return int
-     */
     public function getPageSize(): int
     {
         return $this->pageSize;

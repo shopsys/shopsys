@@ -24,11 +24,6 @@ use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class FriendlyUrlRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly EntityNameResolver $entityNameResolver,
@@ -36,19 +31,11 @@ class FriendlyUrlRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getFriendlyUrlRepository(): EntityRepository
     {
         return $this->em->getRepository(FriendlyUrl::class);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $slug
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
-     */
     public function findByDomainIdAndSlug(int $domainId, string $slug): ?FriendlyUrl
     {
         return $this->getFriendlyUrlRepository()->findOneBy(
@@ -59,12 +46,6 @@ class FriendlyUrlRepository
         );
     }
 
-    /**
-     * @param int $domainId
-     * @param string $routeName
-     * @param int $entityId
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
-     */
     public function getMainFriendlyUrl(int $domainId, string $routeName, int $entityId): FriendlyUrl
     {
         $criteria = [
@@ -82,12 +63,6 @@ class FriendlyUrlRepository
         return $friendlyUrl;
     }
 
-    /**
-     * @param int $domainId
-     * @param string $routeName
-     * @param int $entityId
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
-     */
     public function findMainFriendlyUrl(int $domainId, string $routeName, int $entityId): ?FriendlyUrl
     {
         $criteria = [
@@ -101,8 +76,6 @@ class FriendlyUrlRepository
     }
 
     /**
-     * @param string $routeName
-     * @param int $entityId
      * @return array<int, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null>
      */
     public function getMainFriendlyUrlsIndexedByDomains(string $routeName, int $entityId): array
@@ -120,8 +93,6 @@ class FriendlyUrlRepository
     }
 
     /**
-     * @param string $routeName
-     * @param int $entityId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
     public function getAllByRouteNameAndEntityId(string $routeName, int $entityId): array
@@ -141,8 +112,6 @@ class FriendlyUrlRepository
     }
 
     /**
-     * @param string $routeName
-     * @param int $entityId
      * @param int[] $domainIds
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
@@ -164,9 +133,6 @@ class FriendlyUrlRepository
     }
 
     /**
-     * @param string $routeName
-     * @param int $entityId
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
     public function getAllByRouteNameAndEntityIdAndDomainId(string $routeName, int $entityId, int $domainId): array
@@ -182,8 +148,6 @@ class FriendlyUrlRepository
 
     /**
      * @param object[]|int[] $entitiesOrEntityIds
-     * @param string $routeName
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
     public function getMainFriendlyUrlsByEntitiesIndexedByEntityId(
@@ -203,9 +167,6 @@ class FriendlyUrlRepository
     }
 
     /**
-     * @param int $domainId
-     * @param string $routeName
-     * @param int $entityId
      * @return string[]
      */
     public function getAllSlugsByRouteNameAndDomainId(int $domainId, string $routeName, int $entityId): array
@@ -219,11 +180,6 @@ class FriendlyUrlRepository
         return array_map(fn (FriendlyUrl $friendlyUrl) => $friendlyUrl->getSlug(), $friendlyUrls);
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getNonUsedFriendlyUrlQueryBuilderByDomainIdAndQuickSearch(
         int $domainId,
         QuickSearchFormData $quickSearchData,
@@ -245,9 +201,6 @@ class FriendlyUrlRepository
         return $queryBuilder;
     }
 
-    /**
-     * @return \Doctrine\ORM\Query\Expr\Orx
-     */
     protected function getWhereConditionForNonExistingEntities(): Orx
     {
         $queryBuilder = $this->em->createQueryBuilder();

@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class CustomerUploadedFileLocator extends AbstractUploadedFileLocator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
-     * @return string
-     */
     public function getCustomerUploadedFileDownloadUrl(
         DomainConfig $domainConfig,
         CustomerUploadedFile $customerUploadedFile,
@@ -35,11 +30,6 @@ class CustomerUploadedFileLocator extends AbstractUploadedFileLocator
         throw new CustomerFileNotFoundException();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
-     * @return string
-     */
     public function getCustomerUploadedFileViewUrl(
         DomainConfig $domainConfig,
         CustomerUploadedFile $customerUploadedFile,
@@ -57,10 +47,6 @@ class CustomerUploadedFileLocator extends AbstractUploadedFileLocator
         throw new CustomerFileNotFoundException();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface $uploadedFile
-     * @return string
-     */
     #[Override]
     protected function getFilePath(UploadedFileInterface $uploadedFile): string
     {

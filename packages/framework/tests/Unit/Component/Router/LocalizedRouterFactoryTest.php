@@ -9,13 +9,12 @@ use Shopsys\FrameworkBundle\Component\Router\Exception\LocalizedRoutingConfigFil
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouterInterface;
 
 class LocalizedRouterFactoryTest extends TestCase
 {
     protected const LOCALE_ROUTERS_CONFIGURATION_MASK = __DIR__ . '/Resources/routing_front_*.yaml';
 
-    public function testGetRouterRouterNotResolvedException()
+    public function testGetRouterRouterNotResolvedException(): void
     {
         $containerMock = $this->createMock(ContainerInterface::class);
         $context = new RequestContext();
@@ -29,7 +28,7 @@ class LocalizedRouterFactoryTest extends TestCase
         $localizedRouterFactory->getRouter('ru', $context);
     }
 
-    public function testGetRouter()
+    public function testGetRouter(): void
     {
         $containerMock = $this->createMock(ContainerInterface::class);
         $context1 = new RequestContext();
@@ -47,11 +46,6 @@ class LocalizedRouterFactoryTest extends TestCase
         $router2 = $localizedRouterFactory->getRouter('en', $context2);
         $router3 = $localizedRouterFactory->getRouter('en', $context1);
         $router4 = $localizedRouterFactory->getRouter('cs', $context1);
-
-        $this->assertInstanceOf(RouterInterface::class, $router1);
-        $this->assertInstanceOf(RouterInterface::class, $router2);
-        $this->assertInstanceOf(RouterInterface::class, $router3);
-        $this->assertInstanceOf(RouterInterface::class, $router4);
 
         $this->assertSame($router1, $router3);
         $this->assertNotSame($router1, $router2);

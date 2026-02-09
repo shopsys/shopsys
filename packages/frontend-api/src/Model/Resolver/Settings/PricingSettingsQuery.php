@@ -11,11 +11,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class PricingSettingsQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CurrencyFacade $currencyFacade,

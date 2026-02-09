@@ -39,9 +39,6 @@ class PriceListProductPrice
     #[ORM\ManyToOne(targetEntity: PriceList::class, inversedBy: 'priceListProductPrices')]
     protected $priceList;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData $priceListProductPriceData
-     */
     public function __construct(
         PriceListProductPriceData $priceListProductPriceData,
     ) {
@@ -68,7 +65,7 @@ class PriceListProductPrice
     /**
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceList $priceList
      */
-    public function setPriceList($priceList)
+    public function setPriceList($priceList): void
     {
         $this->priceList = $priceList;
     }

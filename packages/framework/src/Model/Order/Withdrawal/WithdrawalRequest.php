@@ -63,19 +63,12 @@ class WithdrawalRequest
     #[ORM\Column(type: 'datetime_immutable')]
     protected $requestedAt;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData $withdrawalRequestData
-     */
     public function __construct(Order $order, WithdrawalRequestData $withdrawalRequestData)
     {
         $this->order = $order;
         $this->setData($withdrawalRequestData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData $withdrawalRequestData
-     */
     protected function setData(WithdrawalRequestData $withdrawalRequestData): void
     {
         $this->firstName = $withdrawalRequestData->firstName;
@@ -86,9 +79,6 @@ class WithdrawalRequest
         $this->requestedAt = $withdrawalRequestData->requestedAt ?? new DateTimeImmutable();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData $withdrawalRequestData
-     */
     public function edit(WithdrawalRequestData $withdrawalRequestData): void
     {
         $this->setData($withdrawalRequestData);

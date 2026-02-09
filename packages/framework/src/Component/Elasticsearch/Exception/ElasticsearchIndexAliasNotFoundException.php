@@ -8,9 +8,6 @@ use Exception;
 
 class ElasticsearchIndexAliasNotFoundException extends Exception
 {
-    /**
-     * @param string $aliasName
-     */
     public function __construct(string $aliasName)
     {
         parent::__construct(sprintf(

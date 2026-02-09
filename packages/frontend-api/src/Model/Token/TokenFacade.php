@@ -31,13 +31,6 @@ class TokenFacade
 
     protected const int REFRESH_TOKEN_EXPIRATION = 3600 * 24 * 14;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationProvider $jwtConfigurationProvider
-     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenCustomerUserTransformer $tokenCustomerUserTransformer
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CustomerUserFacade $customerUserFacade,
@@ -47,12 +40,6 @@ class TokenFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $deviceId
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administrator
-     * @return string
-     */
     public function createAccessTokenAsString(
         CustomerUser $customerUser,
         string $deviceId,
@@ -73,12 +60,6 @@ class TokenFacade
             ->toString();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $secretChain
-     * @param string $deviceId
-     * @return \Lcobucci\JWT\UnencryptedToken
-     */
     public function generateRefreshTokenByCustomerUserAndSecretChainAndDeviceId(
         CustomerUser $customerUser,
         string $secretChain,
@@ -94,11 +75,6 @@ class TokenFacade
         return $tokenBuilder->getToken($jwtConfiguration->signer(), $jwtConfiguration->signingKey());
     }
 
-    /**
-     * @param int $expiration
-     * @param int $domainId
-     * @return \Lcobucci\JWT\Builder
-     */
     protected function getTokenBuilderWithExpiration(int $expiration, int $domainId): Builder
     {
         $currentTime = $this->clock->now();
@@ -113,10 +89,6 @@ class TokenFacade
             ->expiresAt($expirationTime);
     }
 
-    /**
-     * @param string $tokenString
-     * @return \Lcobucci\JWT\UnencryptedToken
-     */
     public function getTokenByString(string $tokenString): UnencryptedToken
     {
         try {
@@ -134,9 +106,6 @@ class TokenFacade
         }
     }
 
-    /**
-     * @param \Lcobucci\JWT\UnencryptedToken $token
-     */
     public function validateToken(UnencryptedToken $token): void
     {
         $jwtConfiguration = $this->jwtConfigurationProvider->getConfiguration();
@@ -161,12 +130,6 @@ class TokenFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $deviceId
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administrator
-     * @return string
-     */
     public function createRefreshTokenAsString(
         CustomerUser $customerUser,
         string $deviceId,

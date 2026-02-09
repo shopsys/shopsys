@@ -22,19 +22,11 @@ class PluginCrudExtensionRegistry
      */
     protected array $crudExtensionsByTypeAndServiceId = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
-    /**
-     * @param \Shopsys\Plugin\PluginCrudExtensionInterface $crudExtension
-     * @param string $type
-     * @param string $serviceId
-     */
     public function registerCrudExtension(
         PluginCrudExtensionInterface $crudExtension,
         string $type,
@@ -51,7 +43,6 @@ class PluginCrudExtensionRegistry
     }
 
     /**
-     * @param string $type
      * @return \Shopsys\Plugin\PluginCrudExtensionInterface[]
      */
     public function getCrudExtensions(string $type): array
@@ -59,9 +50,6 @@ class PluginCrudExtensionRegistry
         return $this->crudExtensionsByTypeAndServiceId[$type] ?? [];
     }
 
-    /**
-     * @param string $type
-     */
     public static function assertTypeIsKnown(string $type): void
     {
         if (!in_array($type, static::KNOWN_TYPES, true)) {

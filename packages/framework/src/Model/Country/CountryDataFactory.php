@@ -8,24 +8,15 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class CountryDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly Domain $domain)
     {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\CountryData
-     */
     protected function createInstance(): CountryData
     {
         return new CountryData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\CountryData
-     */
     public function create(): CountryData
     {
         $countryData = $this->createInstance();
@@ -34,10 +25,6 @@ class CountryDataFactory
         return $countryData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
-     * @return \Shopsys\FrameworkBundle\Model\Country\CountryData
-     */
     public function createFromCountry(Country $country): CountryData
     {
         $countryData = $this->createInstance();
@@ -46,10 +33,6 @@ class CountryDataFactory
         return $countryData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
-     */
     protected function fillFromCountry(CountryData $countryData, Country $country): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Country\CountryTranslation[] $translations */
@@ -67,9 +50,6 @@ class CountryDataFactory
         $countryData->code = $country->getCode();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     */
     protected function fillNew(CountryData $countryData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {

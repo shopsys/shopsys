@@ -15,20 +15,12 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class WatchdogValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly ProductFacade $productFacade,
         protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
-    /**
-     * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
@@ -61,10 +53,6 @@ class WatchdogValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param string $message
-     * @param string $code
-     */
     protected function addViolationWithCodeToContext(string $message, string $code): void
     {
         $this->context->buildViolation($message)

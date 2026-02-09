@@ -12,21 +12,16 @@ use function t;
 
 class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
     ) {
     }
 
     /**
-     * @param string $routeName
-     * @param array $routeParameters
      * @return array|\Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     #[Override]
-    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         $breadcrumbItems[] = new BreadcrumbItem(
             t('Department stores', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN),

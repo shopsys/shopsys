@@ -22,15 +22,6 @@ class UploadedFileExtension extends AbstractExtension
 {
     protected const FILE_NOT_FOUND_ICON_TYPE = 'not-found';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension $fileThumbnailExtension
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileLocator $customerUploadedFileLocator
-     * @param \Symfony\UX\Icons\IconRendererInterface $iconRenderer
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly UploadedFileFacade $uploadedFileFacade,
@@ -58,38 +49,21 @@ class UploadedFileExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return string
-     */
     public function getUploadedFileUrl(UploadedFile $uploadedFile): string
     {
         return $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID), $uploadedFile);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
-     * @return string
-     */
     public function getCustomerUploadedFileUrl(CustomerUploadedFile $customerUploadedFile): string
     {
         return $this->customerUploadedFileFacade->getCustomerUploadedFileDownloadUrl($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID), $customerUploadedFile);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
-     * @return bool
-     */
     public function customerUploadedFileExists(CustomerUploadedFile $customerUploadedFile): bool
     {
         return $this->customerUploadedFileLocator->fileExists($customerUploadedFile);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @param string|null $additionalClasses
-     * @return string
-     */
     public function getUploadedFilePreviewHtml(UploadedFile $uploadedFile, ?string $additionalClasses = null): string
     {
         $filepath = $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
@@ -108,10 +82,6 @@ class UploadedFileExtension extends AbstractExtension
         return sprintf('<img src="%s"%s>', $fileThumbnailInfo->getImageUri(), $additionalClasses !== null ? 'class="' . $additionalClasses . '"' : '');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return string
-     */
     public function getUploadedFilePreviewWithLinkHtml(UploadedFile $uploadedFile): string
     {
         $filePreviewClasses = 'w-100 h-100 object-contain';
@@ -133,10 +103,6 @@ class UploadedFileExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @param string $uploadedFileIconType
-     * @return string
-     */
     protected function getUploadedFileIconHtml(string $uploadedFileIconType): string
     {
         return $this->iconRenderer->renderIcon('file-' . $uploadedFileIconType, [
@@ -144,18 +110,11 @@ class UploadedFileExtension extends AbstractExtension
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return bool
-     */
     public function uploadedFileExists(UploadedFile $uploadedFile): bool
     {
         return $this->uploadedFileLocator->fileExists($uploadedFile);
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'file_extension';

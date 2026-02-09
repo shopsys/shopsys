@@ -11,11 +11,6 @@ class MailerSettingProvider
 {
     protected bool $deliveryDisabled;
 
-    /**
-     * @param string $mailerDsn
-     * @param bool $whitelistForced
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
-     */
     public function __construct(
         string $mailerDsn,
         protected readonly bool $whitelistForced,
@@ -25,7 +20,6 @@ class MailerSettingProvider
     }
 
     /**
-     * @param int $domainId
      * @return string[]
      */
     public function getWhitelistPatternsAsArray(int $domainId): array
@@ -35,26 +29,16 @@ class MailerSettingProvider
         return $mailWhitelist !== null ? Json::decode($mailWhitelist, true) : [];
     }
 
-    /**
-     * @return bool
-     */
     public function isWhitelistForced(): bool
     {
         return $this->whitelistForced;
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
     public function isWhitelistEnabled(int $domainId): bool
     {
         return $this->isWhitelistForced() || $this->mailSettingFacade->isWhitelistEnabled($domainId);
     }
 
-    /**
-     * @return bool
-     */
     public function isDeliveryDisabled(): bool
     {
         return $this->deliveryDisabled;

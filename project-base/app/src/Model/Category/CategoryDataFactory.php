@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory as BaseCategoryDataFactory;
 
 /**
- * @method fillNew(\App\Model\Category\CategoryData $categoryData)
+ * @method void fillNew(\App\Model\Category\CategoryData $categoryData)
  * @method int[] getParametersSortedByPositionFilteredByCategory(\App\Model\Category\Category $category)
  * @method \App\Model\Category\CategoryData create()
  */

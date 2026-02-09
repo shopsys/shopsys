@@ -39,9 +39,6 @@ class IndexFacadeTest extends TestCase
         $this->entityManagerMock = $this->createMock(EntityManager::class);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition
-     */
     private function getIndexDefinitionMockReturningDomainId(): IndexDefinition
     {
         /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\MockObject $indexDefinitionMock */
@@ -51,9 +48,6 @@ class IndexFacadeTest extends TestCase
         return $indexDefinitionMock;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade
-     */
     private function createIndexFacadeInstance(): IndexFacade
     {
         return new IndexFacade(
@@ -102,11 +96,6 @@ class IndexFacadeTest extends TestCase
         $indexFacade->migrate($indexDefinitionMock, new NullOutput());
     }
 
-    /**
-     * @param array $affectedIds
-     * @param array $exportData
-     * @param array $expectedIdsToDelete
-     */
     #[DataProvider('exportIdsDataProvider')]
     public function testExportIds(array $affectedIds, array $exportData, array $expectedIdsToDelete): void
     {
@@ -142,9 +131,6 @@ class IndexFacadeTest extends TestCase
         $indexFacade->exportIds($indexMock, $indexDefinitionMock, $affectedIds);
     }
 
-    /**
-     * @return array
-     */
     public static function exportIdsDataProvider(): array
     {
         return [

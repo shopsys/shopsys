@@ -12,19 +12,11 @@ use Symfony\Component\Messenger\Stamp\ReceivedStamp;
 
 class DelayEnvelopeMiddleware implements MiddlewareInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector $delayedEnvelopesCollector
-     */
     public function __construct(
         protected readonly DelayedEnvelopesCollector $delayedEnvelopesCollector,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Messenger\Envelope $envelope
-     * @param \Symfony\Component\Messenger\Middleware\StackInterface $stack
-     * @return \Symfony\Component\Messenger\Envelope
-     */
     #[Override]
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {

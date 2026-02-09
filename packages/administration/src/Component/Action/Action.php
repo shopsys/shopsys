@@ -8,30 +8,18 @@ use Override;
 
 final class Action extends AbstractRoutableAction
 {
-    /**
-     * @param string $name
-     * @param string $label
-     * @param string|null $icon
-     * @return self
-     */
     #[Override]
-    public static function create(string $name, string $label, ?string $icon = null): self
+    public static function create(string $name, string $label, ?string $icon = null): static
     {
         return new self($name, $label, $icon);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getTemplate(): string
     {
         return '@ShopsysAdministration/crud/inline/action.html.twig';
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function getTemplateParameters(): array
     {

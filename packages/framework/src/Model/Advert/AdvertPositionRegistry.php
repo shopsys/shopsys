@@ -36,18 +36,11 @@ class AdvertPositionRegistry
         ];
     }
 
-    /**
-     * @param string $positionName
-     * @return bool
-     */
     public static function isCategoryPosition(string $positionName): bool
     {
         return in_array($positionName, self::getCategoryPosition(), true);
     }
 
-    /**
-     * @param string $positionName
-     */
     public function assertPositionNameIsKnown(string $positionName): void
     {
         $knownPositionsNames = array_keys($this->getAllLabelsIndexedByNames());

@@ -139,12 +139,6 @@ class PromotionFlagFacadeTest extends TestCase
         $promotionFlagFacade->updatePromotionFlags(1);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|\PHPUnit\Framework\MockObject\MockObject $productMock
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|\PHPUnit\Framework\MockObject\MockObject|null $promotionFlagToReturn
-     * @param \Doctrine\ORM\EntityManagerInterface|\PHPUnit\Framework\MockObject\MockObject|null $emMock
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade
-     */
     private function createPromotionFlagFacade(
         Product|MockObject $productMock,
         Flag|MockObject|null $promotionFlagToReturn = null,
@@ -186,7 +180,6 @@ class PromotionFlagFacadeTest extends TestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $initialFlags
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product|\PHPUnit\Framework\MockObject\MockObject
      */
     private function createProductMockWithFlags(array $initialFlags): Product|MockObject
     {
@@ -201,11 +194,6 @@ class PromotionFlagFacadeTest extends TestCase
         return $productMock;
     }
 
-    /**
-     * @param int $id
-     * @param bool $hasPromotionXy
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|\PHPUnit\Framework\MockObject\MockObject
-     */
     private function createFlagMock(int $id, bool $hasPromotionXy): Flag|MockObject
     {
         $flagMock = $this->getMockBuilder(Flag::class)
@@ -219,11 +207,6 @@ class PromotionFlagFacadeTest extends TestCase
         return $flagMock;
     }
 
-    /**
-     * @param int|null $buyQuantity
-     * @param int|null $freeQuantity
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|\PHPUnit\Framework\MockObject\MockObject
-     */
     private function createPromotionXyMock(?int $buyQuantity, ?int $freeQuantity): ProductPromotionXy|MockObject
     {
         $promotionXyMock = $this->getMockBuilder(ProductPromotionXy::class)

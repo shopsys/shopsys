@@ -19,12 +19,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class AdministratorUserProvider implements UserProviderInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade $administratorActivityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly AdministratorRepository $administratorRepository,
         protected readonly AdministratorActivityFacade $administratorActivityFacade,
@@ -35,9 +29,8 @@ class AdministratorUserProvider implements UserProviderInterface
 
     /**
      * @param string $username The username
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername(string $username): Administrator
     {
         $administrator = $this->administratorRepository->findByUserNameWithPasswordFilled($username);
 
@@ -53,10 +46,6 @@ class AdministratorUserProvider implements UserProviderInterface
         return $administrator;
     }
 
-    /**
-     * @param string $identifier
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     #[Override]
     public function loadUserByIdentifier(string $identifier): Administrator
     {
@@ -64,7 +53,6 @@ class AdministratorUserProvider implements UserProviderInterface
     }
 
     /**
-     * @param \Symfony\Component\Security\Core\User\UserInterface $userInterface
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
     #[Override]
@@ -104,9 +92,7 @@ class AdministratorUserProvider implements UserProviderInterface
             throw new UserNotFoundException('Unable to find an active admin');
         }
 
-        if ($freshAdministrator instanceof Administrator) {
-            $this->administratorActivityFacade->updateCurrentActivityLastActionTime($freshAdministrator);
-        }
+        $this->administratorActivityFacade->updateCurrentActivityLastActionTime($freshAdministrator);
 
         if ($freshAdministrator->getRolesChangedAt() > $administrator->getRolesChangedAt()) {
             //In this step token does not exist, so we are not able to update user roles.
@@ -117,10 +103,6 @@ class AdministratorUserProvider implements UserProviderInterface
         return $freshAdministrator;
     }
 
-    /**
-     * @param string $class
-     * @return bool
-     */
     #[Override]
     public function supportsClass(string $class): bool
     {

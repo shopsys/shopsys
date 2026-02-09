@@ -15,19 +15,12 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class MoneyResolverMap extends ResolverMap
 {
-    /**
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     * @param \Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper $moneyFormatterHelper
-     */
     public function __construct(
         protected readonly Security $security,
         protected readonly MoneyFormatterHelper $moneyFormatterHelper,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {
@@ -40,10 +33,6 @@ class MoneyResolverMap extends ResolverMap
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @return bool
-     */
     protected function shouldShowAmount(Money $money): bool
     {
         if ($money instanceof HiddenMoney) {
@@ -55,10 +44,6 @@ class MoneyResolverMap extends ResolverMap
             $this->security->isGranted(CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @return string
-     */
     protected function serializeMoney(Money $money): string
     {
         if ($this->shouldShowAmount($money)) {
@@ -68,19 +53,11 @@ class MoneyResolverMap extends ResolverMap
         return HiddenMoney::HIDDEN_FORMAT;
     }
 
-    /**
-     * @param string $value
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     protected function parseValue(string $value): Money
     {
         return Money::create($value);
     }
 
-    /**
-     * @param \GraphQL\Language\AST\StringValueNode $valueNode
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     protected function parseLiteral(StringValueNode $valueNode): Money
     {
         return Money::create($valueNode->value);

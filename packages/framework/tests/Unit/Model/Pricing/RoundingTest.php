@@ -14,7 +14,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class RoundingTest extends TestCase
 {
-    public static function roundingProvider()
+    public static function roundingProvider(): array
     {
         return [
             [
@@ -56,19 +56,13 @@ class RoundingTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $unroundedPrice
-     * @param mixed $expectedAsPriceWithVat
-     * @param mixed $expectedAsPriceWithoutVat
-     * @param mixed $expectedAsVatAmount
-     */
     #[DataProvider('roundingProvider')]
     public function testRoundingByCurrency(
-        $unroundedPrice,
-        $expectedAsPriceWithVat,
-        $expectedAsPriceWithoutVat,
-        $expectedAsVatAmount,
-    ) {
+        mixed $unroundedPrice,
+        mixed $expectedAsPriceWithVat,
+        mixed $expectedAsPriceWithoutVat,
+        mixed $expectedAsVatAmount,
+    ): void {
         $rounding = new Rounding();
 
         $currency = $this->createCurrency(Currency::ROUNDING_TYPE_INTEGER);
@@ -84,7 +78,7 @@ class RoundingTest extends TestCase
         $this->assertThat($rounding->roundVatAmount($unroundedPrice, $currency), new IsMoneyEqual($expectedAsVatAmount));
     }
 
-    public static function roundingPriceWithVatProvider()
+    public static function roundingPriceWithVatProvider(): array
     {
         return [
             [
@@ -135,17 +129,12 @@ class RoundingTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $roundingType
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $outputPrice
-     */
     #[DataProvider('roundingPriceWithVatProvider')]
     public function testRoundingPriceWithVatByCurrency(
         string $roundingType,
         Money $inputPrice,
         Money $outputPrice,
-    ) {
+    ): void {
         $currency = $this->createCurrency($roundingType);
 
         $rounding = new Rounding();
@@ -154,10 +143,6 @@ class RoundingTest extends TestCase
         $this->assertThat($roundedPrice, new IsMoneyEqual($outputPrice));
     }
 
-    /**
-     * @param string $roundingType
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     private function createCurrency(string $roundingType): Currency
     {
         $currencyData = new CurrencyData();

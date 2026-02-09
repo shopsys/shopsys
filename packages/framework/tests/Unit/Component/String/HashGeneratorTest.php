@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 
 class HashGeneratorTest extends TestCase
 {
-    public static function hashLengthProvider()
+    public static function hashLengthProvider(): array
     {
         return [
             [1],
@@ -19,11 +19,8 @@ class HashGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $length
-     */
     #[DataProvider('hashLengthProvider')]
-    public function testGenerateHash($length)
+    public function testGenerateHash(mixed $length): void
     {
         $hashGererator = new HashGenerator();
 

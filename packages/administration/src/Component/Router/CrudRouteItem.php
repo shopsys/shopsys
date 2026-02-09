@@ -9,12 +9,6 @@ use Symfony\Component\Routing\Route;
 
 final class CrudRouteItem
 {
-    /**
-     * @param string $controller
-     * @param \Symfony\Component\Routing\Route $route
-     * @param string $routeName
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
-     */
     public function __construct(
         private readonly string $controller,
         private readonly Route $route,
@@ -23,33 +17,21 @@ final class CrudRouteItem
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getController(): string
     {
         return $this->controller;
     }
 
-    /**
-     * @return \Symfony\Component\Routing\Route
-     */
     public function getRoute(): Route
     {
         return $this->route;
     }
 
-    /**
-     * @return string
-     */
     public function getRouteName(): string
     {
         return $this->routeName;
     }
 
-    /**
-     * @return \Shopsys\AdministrationBundle\Component\Config\ActionType
-     */
     public function getPageType(): ActionType
     {
         return $this->pageType;

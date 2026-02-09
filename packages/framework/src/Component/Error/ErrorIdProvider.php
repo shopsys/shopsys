@@ -10,16 +10,10 @@ final class ErrorIdProvider
 {
     private ?string $errorId = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     */
     public function __construct(private readonly HashGenerator $hashGenerator)
     {
     }
 
-    /**
-     * @return string
-     */
     public function getErrorId(): string
     {
         if (!$this->errorId) {

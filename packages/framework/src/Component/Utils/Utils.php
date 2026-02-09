@@ -7,9 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Utils;
 class Utils
 {
     /**
-     * @param string $haystack
      * @param string[] $needles
-     * @return bool
      */
     public static function strStartsWithAny(string $haystack, array $needles): bool
     {
@@ -22,21 +20,11 @@ class Utils
         return false;
     }
 
-    /**
-     * @param mixed $testVariable
-     * @param mixed $default
-     * @return mixed
-     */
     public static function ifNull(mixed $testVariable, mixed $default): mixed
     {
         return $testVariable ?? $default;
     }
 
-    /**
-     * @param array $array
-     * @param int|string $key
-     * @param mixed|null $defaultValue
-     */
     public static function setArrayDefaultValue(array &$array, int|string $key, mixed $defaultValue = null): void
     {
         if (!array_key_exists($key, $array)) {
@@ -44,10 +32,6 @@ class Utils
         }
     }
 
-    /**
-     * @param mixed $value
-     * @return array
-     */
     public static function mixedToArray(mixed $value): array
     {
         if ($value === null) {

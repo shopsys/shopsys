@@ -25,13 +25,6 @@ class HreflangLinksFacade
     protected const string ROUTE_BLOG_ARTICLE_DETAIL = 'front_blogarticle_detail';
     protected const string ROUTE_BLOG_CATEGORY_DETAIL = 'front_blogcategory_detail';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     */
     public function __construct(
         protected readonly SeoSettingFacade $seoSettingFacade,
         protected readonly Domain $domain,
@@ -41,13 +34,6 @@ class HreflangLinksFacade
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @param string $routeName
-     * @param int $entityId
-     * @param bool $absoluteUrl
-     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink
-     */
     public function createHreflangLink(
         int $domainId,
         string $routeName,
@@ -76,9 +62,6 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $currentDomainId
-     * @param bool $absoluteUrl
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     public function getForProduct(Product $product, int $currentDomainId, bool $absoluteUrl = true): array
@@ -103,9 +86,6 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $currentDomainId
-     * @param bool $absoluteUrl
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     public function getForCategory(Category $category, int $currentDomainId, bool $absoluteUrl = true): array
@@ -124,9 +104,6 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @param int $currentDomainId
-     * @param bool $absoluteUrl
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     public function getForBrand(Brand $brand, int $currentDomainId, bool $absoluteUrl = true): array
@@ -135,9 +112,6 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle $blogArticle
-     * @param int $currentDomainId
-     * @param bool $absoluteUrl
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     public function getForBlogArticle(BlogArticle $blogArticle, int $currentDomainId, bool $absoluteUrl = true): array
@@ -156,9 +130,6 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param int $currentDomainId
-     * @param bool $absoluteUrl
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     public function getForBlogCategory(
@@ -180,9 +151,6 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @param int $currentDomainId
-     * @param bool $absoluteUrl
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     public function getForFlag(Flag $flag, int $currentDomainId, bool $absoluteUrl = true): array
@@ -191,9 +159,6 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
-     * @param int $currentDomainId
-     * @param bool $absoluteUrl
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     public function getForSeoPage(SeoPage $seoPage, int $currentDomainId, bool $absoluteUrl = true): array
@@ -202,11 +167,6 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle|\Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|\Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\Product\Product|\Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage|\Shopsys\FrameworkBundle\Model\Product\Flag\Flag $entity
-     * @param int $currentDomainId
-     * @param string $routeName
-     * @param bool $absoluteUrl
-     * @param callable|null $isVisibleCallable
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     protected function doGetHrefLinks(
@@ -236,7 +196,6 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param int $currentDomainId
      * @return int[]
      */
     protected function getRelevantDomainIds(int $currentDomainId): array
@@ -247,11 +206,7 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
-     * @param bool $absoluteUrl
      * @throws \Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException
-     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink
      */
     protected function createHreflangLinkForSeoPage(int $domainId, SeoPage $seoPage, bool $absoluteUrl): HreflangLink
     {

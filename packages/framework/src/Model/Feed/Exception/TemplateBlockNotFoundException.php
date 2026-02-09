@@ -8,12 +8,7 @@ use Exception;
 
 class TemplateBlockNotFoundException extends Exception
 {
-    /**
-     * @param string $blockName
-     * @param string $templateName
-     * @param \Exception|null $previous
-     */
-    public function __construct($blockName, $templateName, ?Exception $previous = null)
+    public function __construct(string $blockName, string $templateName, ?Exception $previous = null)
     {
         $message = sprintf('Block "%s" does not exist in template "%s".', $blockName, $templateName);
 

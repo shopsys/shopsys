@@ -11,10 +11,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductImageFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ImageFacade $imageFacade,
@@ -22,10 +18,7 @@ class ProductImageFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @param int $domainId
      * @throws \Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException
-     * @return string
      */
     public function getProductImageUrl(?Product $product, int $domainId): string
     {

@@ -22,18 +22,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class PriceQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider $transportPriceProvider
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider $paymentPriceProvider
-     * @param \Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper $gqlContextHelper
-     */
     public function __construct(
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly Domain $domain,
@@ -48,12 +36,6 @@ class PriceQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param string|null $cartUuid
-     * @param \ArrayObject|null $context
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function priceByPaymentQuery(
         Payment $payment,
         ?string $cartUuid = null,
@@ -89,10 +71,6 @@ class PriceQuery extends AbstractQuery
         return $this->paymentPriceProvider->getPaymentPrice($cart, $payment, $this->domain->getCurrentDomainConfig());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     protected function calculateIndependentPaymentPrice(Payment $payment): PriceInterface
     {
         return $this->paymentPriceCalculation->calculateIndependentPrice(
@@ -102,12 +80,6 @@ class PriceQuery extends AbstractQuery
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param string|null $cartUuid
-     * @param \ArrayObject|null $context
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function priceByTransportQuery(
         Transport $transport,
         ?string $cartUuid = null,
@@ -130,10 +102,6 @@ class PriceQuery extends AbstractQuery
         return $this->transportPriceProvider->getTransportPrice($cart, $transport, $this->domain->getCurrentDomainConfig());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     protected function calculateIndependentTransportPrice(Transport $transport): PriceInterface
     {
         return $this->transportPriceCalculation->calculateIndependentPrice(

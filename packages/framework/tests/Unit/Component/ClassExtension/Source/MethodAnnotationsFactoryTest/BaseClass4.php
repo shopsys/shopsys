@@ -20,7 +20,7 @@ class BaseClass4
      *
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
-    public function setCategory($category)
+    public function setCategory($category): void
     {
     }
 }

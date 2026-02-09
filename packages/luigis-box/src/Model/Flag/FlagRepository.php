@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagReposit
 
 class FlagRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository $flagRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
-     */
     public function __construct(
         protected readonly BaseFlagRepository $flagRepository,
         protected readonly Domain $domain,

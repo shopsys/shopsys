@@ -13,10 +13,6 @@ final class IntervalEvaluator
      */
     private const string EXACT_VERSION_PATTERN = '#^(v|[0-9])#';
 
-    /**
-     * @param string $version
-     * @return bool
-     */
     public function isClosedInterval(string $version): bool
     {
         $version = $this->normalizeVersion($version);
@@ -49,10 +45,6 @@ final class IntervalEvaluator
         return $isClosedInterval;
     }
 
-    /**
-     * @param string $version
-     * @return string
-     */
     private function normalizeVersion(string $version): string
     {
         // remove spaces

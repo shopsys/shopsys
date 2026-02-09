@@ -312,14 +312,6 @@ final class ProductPriceQueryTest extends TransactionFunctionalTestCase
         $this->assertEquals(new DatePoint('2084-01-10 08:30:00'), $priceInfo->nextPriceChange);
     }
 
-    /**
-     * @param array $specialPrices
-     * @param string $expectedPriceWithVat
-     * @param string $expectedPriceWithoutVat
-     * @param string $expectedVatAmount
-     * @param float $expectedPercentageDiscount
-     * @param string $expectedNextPriceChange
-     */
     #[DataProvider('getVariantSpecialPrices')]
     public function testValidSpecialPriceIsReturnedForVariants(
         array $specialPrices,
@@ -355,9 +347,6 @@ final class ProductPriceQueryTest extends TransactionFunctionalTestCase
         $this->assertMoney('24.29', $priceInfo->basicPrice->getVatAmount());
     }
 
-    /**
-     * @return iterable
-     */
     public static function getVariantSpecialPrices(): iterable
     {
         yield 'lowest price should be selected' => [

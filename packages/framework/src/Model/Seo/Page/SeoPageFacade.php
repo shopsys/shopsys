@@ -14,14 +14,6 @@ class SeoPageFacade
 {
     public const string IMAGE_TYPE_OG = 'og';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageRepository $seoPageRepository
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFactory $seoPageFactory
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly EntityManagerInterface $em,
@@ -32,10 +24,6 @@ class SeoPageFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
-     */
     public function create(SeoPageData $seoPageData): SeoPage
     {
         $seoPage = $this->seoPageFactory->create($seoPageData);
@@ -48,11 +36,6 @@ class SeoPageFacade
         return $seoPage;
     }
 
-    /**
-     * @param int $seoPageId
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
-     */
     public function edit(int $seoPageId, SeoPageData $seoPageData): SeoPage
     {
         $seoPage = $this->seoPageRepository->getById($seoPageId);
@@ -66,9 +49,6 @@ class SeoPageFacade
         return $seoPage;
     }
 
-    /**
-     * @param int $seoPageId
-     */
     public function delete(int $seoPageId): void
     {
         $seoPage = $this->seoPageRepository->getById($seoPageId);
@@ -81,30 +61,16 @@ class SeoPageFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $seoPageId
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
-     */
     public function getById(int $seoPageId): SeoPage
     {
         return $this->seoPageRepository->getById($seoPageId);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $pageSlug
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
-     */
     public function getByDomainIdAndPageSlug(int $domainId, string $pageSlug): SeoPage
     {
         return $this->seoPageRepository->getByDomainIdAndPageSlug($domainId, $pageSlug);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $pageSlug
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage|null
-     */
     public function findByDomainIdAndPageSlug(int $domainId, string $pageSlug): ?SeoPage
     {
         return $this->seoPageRepository->findByDomainIdAndPageSlug($domainId, $pageSlug);

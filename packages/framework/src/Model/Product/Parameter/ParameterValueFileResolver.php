@@ -10,21 +10,12 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
 class ParameterValueFileResolver
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataExtractor $uploadedFileDataExtractor
-     */
     public function __construct(
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly UploadedFileDataExtractor $uploadedFileDataExtractor,
     ) {
     }
 
-    /**
-     * @param array $parameterValuesData
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return array
-     */
     public function addIconDataToParameterValuesData(
         array $parameterValuesData,
         DomainConfig $domainConfig,

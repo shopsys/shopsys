@@ -10,17 +10,12 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class ParameterGridFactory implements GridFactoryInterface
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
@@ -29,10 +24,6 @@ class ParameterGridFactory implements GridFactoryInterface
     ) {
     }
 
-    /**
-     * @param string|null $roleConstant
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     #[Override]
     public function create(?string $roleConstant): Grid
     {
@@ -86,10 +77,7 @@ class ParameterGridFactory implements GridFactoryInterface
         return $grid;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource
-     */
-    protected function getParametersDataSource()
+    protected function getParametersDataSource(): QueryBuilderDataSource
     {
         $locales = $this->localization->getLocalesOfAllDomains();
         $queryBuilder = $this->em->createQueryBuilder();

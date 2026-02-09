@@ -38,10 +38,6 @@ class StockDomain
     #[ORM\Column(type: 'boolean')]
     protected $isEnabled = false;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
-     * @param int $domainId
-     */
     public function __construct(Stock $stock, int $domainId)
     {
         $this->stock = $stock;
@@ -57,17 +53,11 @@ class StockDomain
         return $this->domainId;
     }
 
-    /**
-     * @param bool $isEnabled
-     */
     public function setEnabled(bool $isEnabled): void
     {
         $this->isEnabled = $isEnabled;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->isEnabled;

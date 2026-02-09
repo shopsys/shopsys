@@ -110,9 +110,6 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
         $this->assertTransportAndPaymentItemsAreFree($responseData);
     }
 
-    /**
-     * @return array
-     */
     protected function getExpectedOrderItems(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -169,10 +166,6 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param string $cartUuid
-     * @return array
-     */
     private function createOrderAndGetResponseData(string $cartUuid): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
@@ -183,10 +176,6 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
         return $this->getResponseDataForGraphQlType($response, 'CreateOrder');
     }
 
-    /**
-     * @param string $cartUuid
-     * @param string $promoCode
-     */
     public function applyPromoCode(string $cartUuid, string $promoCode): void
     {
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ApplyPromoCodeToCart.graphql', [
@@ -195,10 +184,6 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
         ]);
     }
 
-    /**
-     * @param string $firstDomainLocale
-     * @return string
-     */
     private function getExpectedPromoCodeItemName(string $firstDomainLocale): string
     {
         return sprintf(
@@ -211,9 +196,6 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
         );
     }
 
-    /**
-     * @return string
-     */
     private function addProductToCart(): string
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
@@ -226,9 +208,6 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
         return $response['data']['AddToCart']['cart']['uuid'];
     }
 
-    /**
-     * @param array $responseData
-     */
     private function assertTransportAndPaymentItemsAreFree(array $responseData): void
     {
         foreach ($responseData['order']['items'] as $item) {

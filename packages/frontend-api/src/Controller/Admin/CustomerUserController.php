@@ -19,11 +19,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CustomerUserController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeTokenFacade $loginAsUserExchangeTokenFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     */
     public function __construct(
         protected readonly LoginAsUserExchangeTokenFacade $loginAsUserExchangeTokenFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
@@ -31,10 +26,6 @@ class CustomerUserController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param int $customerUserId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/login-as-customer-user/{customerUserId}')]
     #[CanEdit(AdminRoleConstant::ROLE_CUSTOMER)]
     #[CsrfProtection]
@@ -52,11 +43,6 @@ class CustomerUserController extends AdminBaseController
         }
     }
 
-    /**
-     * @param int $domainId
-     * @param string $exchangeToken
-     * @return string
-     */
     protected function getStorefrontUrl(int $domainId, string $exchangeToken): string
     {
         return $this->domainRouterFactory->getRouter($domainId)->generate(

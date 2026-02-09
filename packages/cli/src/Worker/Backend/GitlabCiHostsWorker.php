@@ -16,9 +16,6 @@ final class GitlabCiHostsWorker extends AbstractWorker
 {
     private const string FILE_PATH = '.gitlab-ci.yml';
 
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {
@@ -77,7 +74,6 @@ final class GitlabCiHostsWorker extends AbstractWorker
 
     /**
      * @param array<\Shopsys\Cli\Config\CoreDomainConfig> $domains
-     * @return string
      */
     private function buildHostsValue(array $domains): string
     {
@@ -104,9 +100,7 @@ final class GitlabCiHostsWorker extends AbstractWorker
     }
 
     /**
-     * @param \Shopsys\Cli\Config\CoreDomainConfig $domain
      * @param array<string> $usedPrefixes
-     * @return string
      */
     private function getHostPrefix(CoreDomainConfig $domain, array $usedPrefixes): string
     {

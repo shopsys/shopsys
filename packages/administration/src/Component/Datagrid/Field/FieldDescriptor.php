@@ -27,7 +27,6 @@ final class FieldDescriptor
     private array $options;
 
     /**
-     * @param string $name
      * @param FieldOptions $options
      */
     public function __construct(
@@ -67,41 +66,26 @@ final class FieldDescriptor
         return $optionsResolver->resolve($options);
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getLabel(): string
     {
         return $this->options['label'];
     }
 
-    /**
-     * @param array $options
-     */
     public function update(array $options): void
     {
         $this->options = $this->resolveOptions(array_merge($this->options, $options));
     }
 
-    /**
-     * @return bool
-     */
     public function isVisible(): bool
     {
         return $this->options['visible'];
     }
 
-    /**
-     * @return bool
-     */
     public function isSortable(): bool
     {
         // Transformed fields are not sortable because it would be confusing for the user to sort by not displayed values
@@ -116,25 +100,16 @@ final class FieldDescriptor
         return $this->options['sortable'];
     }
 
-    /**
-     * @return bool
-     */
     public function isVirtual(): bool
     {
         return $this->options['virtual'];
     }
 
-    /**
-     * @return string|null
-     */
     public function getHelp(): ?string
     {
         return $this->options['help'];
     }
 
-    /**
-     * @return string|null
-     */
     public function getTemplate(): ?string
     {
         return $this->options['template'];
@@ -148,9 +123,6 @@ final class FieldDescriptor
         return $this->options['transform'];
     }
 
-    /**
-     * @return string|null
-     */
     public function getSelectProperty(): ?string
     {
         if ($this->isVirtual()) {
@@ -160,9 +132,6 @@ final class FieldDescriptor
         return $this->options['property'] ?? $this->getName();
     }
 
-    /**
-     * @return string|null
-     */
     public function getMappingProperty(): ?string
     {
         if ($this->isVirtual() && $this->options['property'] === null && $this->getTransform() === null) {

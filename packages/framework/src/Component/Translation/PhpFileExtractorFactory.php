@@ -6,18 +6,12 @@ namespace Shopsys\FrameworkBundle\Component\Translation;
 
 class PhpFileExtractorFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper $phpParserNodeHelper
-     */
     public function __construct(
         protected readonly PhpParserNodeHelper $phpParserNodeHelper,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor
-     */
-    public function create()
+    public function create(): PhpFileExtractor
     {
         $transMethodSpecifications = [
             new TransMethodSpecification('trans', 0, 2),

@@ -22,9 +22,6 @@ class DatabaseDumpCommand extends Command
     private const ARG_OUTPUT_FILE = 'outputFile';
     private const OPT_PGDUMP_BIN = 'pgdump-bin';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider
-     */
     public function __construct(
         protected readonly DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider,
     ) {
@@ -101,10 +98,7 @@ class DatabaseDumpCommand extends Command
         return proc_close($process);
     }
 
-    /**
-     * @return array
-     */
-    private function getDescriptorSpec()
+    private function getDescriptorSpec(): array
     {
         return [
             0 => ['pipe', 'r'], // stdin

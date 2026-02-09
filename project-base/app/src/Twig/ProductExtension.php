@@ -27,8 +27,6 @@ class ProductExtension extends BaseProductExtension
 {
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
-     * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -45,7 +43,7 @@ class ProductExtension extends BaseProductExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         $functions = parent::getFunctions();
         $functions[] = new TwigFunction(
@@ -56,10 +54,6 @@ class ProductExtension extends BaseProductExtension
         return $functions;
     }
 
-    /**
-     * @param string|null $orderingId
-     * @return string
-     */
     public function getOrderingNameByOrderingId(?string $orderingId): string
     {
         if ($orderingId === null) {

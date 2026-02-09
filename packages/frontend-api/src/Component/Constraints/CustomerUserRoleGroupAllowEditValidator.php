@@ -16,11 +16,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CustomerUserRoleGroupAllowEditValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected Security $security,
@@ -28,10 +23,6 @@ class CustomerUserRoleGroupAllowEditValidator extends ConstraintValidator
     ) {
     }
 
-    /**
-     * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
@@ -61,12 +52,6 @@ class CustomerUserRoleGroupAllowEditValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $currentCustomerUser
-     * @param string $customerUserGroupRoleToBeSetUuid
-     * @param string $editedCustomerUserUuid
-     * @return bool
-     */
     protected function canEditCustomerUserRoleGroup(
         CustomerUser $currentCustomerUser,
         string $customerUserGroupRoleToBeSetUuid,
@@ -83,12 +68,6 @@ class CustomerUserRoleGroupAllowEditValidator extends ConstraintValidator
         return $customerUserGroupRoleToBeSetUuid === $currentCustomerUser->getRoleGroup()->getUuid();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $currentCustomerUser
-     * @param string $customerUserGroupRoleToBeSetUuid
-     * @param string $editedCustomerUserUuid
-     * @return bool
-     */
     protected function canEditCustomerUserRoleGroupForRoleApiAll(
         CustomerUser $currentCustomerUser,
         string $customerUserGroupRoleToBeSetUuid,

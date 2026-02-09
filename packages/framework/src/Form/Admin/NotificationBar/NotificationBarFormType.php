@@ -125,10 +125,6 @@ final class NotificationBarFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function checkDateValidity(
         NotificationBarData $notificationBarData,
         ExecutionContextInterface $context,

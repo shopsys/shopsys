@@ -6,25 +6,16 @@ namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
 class PersonalDataAccessRequestDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestData
-     */
     protected function createInstance(): PersonalDataAccessRequestData
     {
         return new PersonalDataAccessRequestData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestData
-     */
     public function create(): PersonalDataAccessRequestData
     {
         return $this->createInstance();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestData
-     */
     public function createForExport(): PersonalDataAccessRequestData
     {
         $personalDataAccessRequestData = $this->createInstance();
@@ -33,9 +24,6 @@ class PersonalDataAccessRequestDataFactory
         return $personalDataAccessRequestData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestData
-     */
     public function createForDisplay(): PersonalDataAccessRequestData
     {
         $personalDataAccessRequestData = $this->createInstance();

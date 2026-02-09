@@ -9,12 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class CategoryParameterFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFactory $categoryParameterFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CategoryParameterRepository $categoryParameterRepository,
@@ -24,7 +18,6 @@ class CategoryParameterFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int[] $parameterIds
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[] $parametersCollapsed
      */
@@ -85,7 +78,6 @@ class CategoryParameterFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getParametersCollapsedByCategory(Category $category): array

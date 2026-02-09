@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 class MoneyConvertingDataSourceDecorator implements DataSourceInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $innerDataSource
      * @param string[] $moneyColumnNames
      */
     public function __construct(
@@ -20,13 +19,6 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
     ) {
     }
 
-    /**
-     * @param int|null $limit
-     * @param int $page
-     * @param string|null $orderSourceColumnName
-     * @param string $orderDirection
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
     #[Override]
     public function getPaginatedRows(
         ?int $limit = null,
@@ -55,10 +47,6 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
         );
     }
 
-    /**
-     * @param int|string $rowId
-     * @return array
-     */
     #[Override]
     public function getOneRow(int|string $rowId): array
     {
@@ -67,28 +55,18 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
         return $this->convertRow($row);
     }
 
-    /**
-     * @return int
-     */
     #[Override]
     public function getTotalRowsCount(): int
     {
         return $this->innerDataSource->getTotalRowsCount();
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getRowIdSourceColumnName(): string
     {
         return $this->innerDataSource->getRowIdSourceColumnName();
     }
 
-    /**
-     * @param array $row
-     * @return array
-     */
     protected function convertRow(array $row): array
     {
         foreach ($this->moneyColumnNames as $columnName) {

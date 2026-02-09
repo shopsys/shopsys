@@ -16,20 +16,12 @@ class EntityNameResolver
     ) {
     }
 
-    /**
-     * @param string $entityName
-     * @return string
-     */
     public function resolve(string $entityName): string
     {
         return $this->entityExtensionMap[$entityName] ?? $entityName;
     }
 
-    /**
-     * @param mixed $subject
-     * @return mixed
-     */
-    public function resolveIn($subject)
+    public function resolveIn(mixed $subject): mixed
     {
         if (is_string($subject)) {
             return $this->resolveInString($subject);
@@ -48,9 +40,6 @@ class EntityNameResolver
 
     /**
      * Replace every occurrence of the original FQNs with word borders on both sides and not followed by a back-slash
-     *
-     * @param string $string
-     * @return string
      */
     protected function resolveInString(string $string): string
     {
@@ -62,10 +51,6 @@ class EntityNameResolver
         return $string;
     }
 
-    /**
-     * @param array $array
-     * @return array
-     */
     protected function resolveInArray(array $array): array
     {
         return array_map([$this, 'resolveIn'], $array);
@@ -73,10 +58,8 @@ class EntityNameResolver
 
     /**
      * Resolve entity names recursively in all properties of the subject (even private ones)
-     *
-     * @param object $object
      */
-    protected function resolveInObjectProperties($object): void
+    protected function resolveInObjectProperties(object $object): void
     {
         $reflection = new ReflectionObject($object);
 

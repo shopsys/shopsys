@@ -38,8 +38,6 @@ class CategoryRepository extends BaseCategoryRepository
 {
     /**
      * @param \App\Model\Category\Category[] $categories
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
      * @return int[]
      */
     #[Override]
@@ -85,9 +83,6 @@ class CategoryRepository extends BaseCategoryRepository
     /**
      * Thanks to joining "c.domains" instead of "CategoryDomain::class",
      * the category domains can be eager loaded (by adding "cd" to "select" part), but are still excluded from the result array
-     *
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
     #[Override]
     public function getAllVisibleByDomainIdQueryBuilder(int $domainId): QueryBuilder
@@ -101,8 +96,6 @@ class CategoryRepository extends BaseCategoryRepository
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[]
      */
     public function getAllVisibleChildrenByCategoryAndDomainConfig(

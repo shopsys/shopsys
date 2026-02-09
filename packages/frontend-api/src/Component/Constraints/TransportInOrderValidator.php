@@ -17,12 +17,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class TransportInOrderValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Transport\TransportValidationFacade $transportValidationFacade
-     */
     public function __construct(
         protected readonly TransportFacade $transportFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -31,10 +25,6 @@ class TransportInOrderValidator extends ConstraintValidator
     ) {
     }
 
-    /**
-     * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
@@ -64,11 +54,6 @@ class TransportInOrderValidator extends ConstraintValidator
         $this->checkRequiredPickupPlaceIdentifier($transportInCart, $cart->getPickupPlaceIdentifier(), $constraint);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param string|null $pickupPlaceIdentifier
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\TransportInOrder $transportInOrder
-     */
     protected function checkRequiredPickupPlaceIdentifier(
         Transport $transport,
         ?string $pickupPlaceIdentifier,

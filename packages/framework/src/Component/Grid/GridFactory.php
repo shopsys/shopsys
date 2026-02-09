@@ -12,13 +12,6 @@ use Twig\Environment;
 
 class GridFactory
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     * @param \Twig\Environment $twig
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
-     */
     public function __construct(
         protected readonly RequestStack $requestStack,
         protected readonly RouterInterface $router,
@@ -28,15 +21,11 @@ class GridFactory
     ) {
     }
 
-    /**
-     * @param string $gridId
-     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
-     * @param string $roleConstant
-     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
-    public function create(string $gridId, DataSourceInterface $dataSource, string $roleConstant)
-    {
+    public function create(
+        string $gridId,
+        DataSourceInterface $dataSource,
+        string $roleConstant,
+    ): Grid {
         return new Grid(
             $gridId,
             $roleConstant,

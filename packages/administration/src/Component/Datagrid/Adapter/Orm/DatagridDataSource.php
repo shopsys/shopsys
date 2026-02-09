@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 
 final class DatagridDataSource extends QueryBuilderWithRowManipulatorDataSource
 {
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string $orderSourceColumnName
-     * @param string $orderDirection
-     */
     #[Override]
     protected function addQueryOrder(
         QueryBuilder $queryBuilder,
@@ -27,13 +22,6 @@ final class DatagridDataSource extends QueryBuilderWithRowManipulatorDataSource
         $queryBuilder->orderBy(str_replace('.', '__', $orderSourceColumnName), $orderDirection);
     }
 
-    /**
-     * @param int|null $limit
-     * @param int $page
-     * @param string|null $orderSourceColumnName
-     * @param string $orderDirection
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
     #[Override]
     public function getPaginatedRows(
         ?int $limit = null,

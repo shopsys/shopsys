@@ -20,10 +20,6 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
 
     protected ?Localization $localization = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
         Localization $localization,

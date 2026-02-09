@@ -10,13 +10,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 
 class ComplaintStatusFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFactory $complaintStatusFactory
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusRepository $complaintStatusRepository
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail $complaintMail
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ComplaintStatusFactory $complaintStatusFactory,
@@ -26,10 +19,6 @@ class ComplaintStatusFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
-     */
     public function create(ComplaintStatusData $complaintStatusData): ComplaintStatus
     {
         $complaintStatus = $this->complaintStatusFactory->create(
@@ -48,11 +37,6 @@ class ComplaintStatusFacade
         return $complaintStatus;
     }
 
-    /**
-     * @param int $complaintStatusId
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
-     */
     public function edit(int $complaintStatusId, ComplaintStatusData $complaintStatusData): ComplaintStatus
     {
         $complaintStatus = $this->complaintStatusRepository->getById($complaintStatusId);
@@ -62,10 +46,6 @@ class ComplaintStatusFacade
         return $complaintStatus;
     }
 
-    /**
-     * @param int $complaintStatusId
-     * @param int|null $newComplaintStatusId
-     */
     public function deleteById(int $complaintStatusId, ?int $newComplaintStatusId = null): void
     {
         $complaintStatus = $this->complaintStatusRepository->getById($complaintStatusId);
@@ -80,17 +60,12 @@ class ComplaintStatusFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $complaintStatusId
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
-     */
     public function getById(int $complaintStatusId): ComplaintStatus
     {
         return $this->complaintStatusRepository->getById($complaintStatusId);
     }
 
     /**
-     * @param int $complaintStatusId
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus[]
      */
     public function getAllExceptId(int $complaintStatusId): array
@@ -98,10 +73,6 @@ class ComplaintStatusFacade
         return $this->complaintStatusRepository->getAllExceptId($complaintStatusId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $complaintStatus
-     * @return bool
-     */
     public function isComplaintStatusUsed(ComplaintStatus $complaintStatus): bool
     {
         return $this->complaintStatusRepository->isComplaintStatusUsed($complaintStatus);
@@ -115,9 +86,6 @@ class ComplaintStatusFacade
         return $this->complaintStatusRepository->getAll();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
-     */
     public function getDefault(): ComplaintStatus
     {
         return $this->complaintStatusRepository->getDefault();

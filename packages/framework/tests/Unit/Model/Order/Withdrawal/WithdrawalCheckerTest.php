@@ -51,11 +51,6 @@ class WithdrawalCheckerTest extends TestCase
         $checker->checkOrderWithdrawal($order);
     }
 
-    /**
-     * @param \DateTimeImmutable $currentDate
-     * @param \DateTimeImmutable $withdrawalDeadline
-     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalChecker
-     */
     private function createWithdrawalChecker(
         DateTimeImmutable $currentDate,
         DateTimeImmutable $withdrawalDeadline,

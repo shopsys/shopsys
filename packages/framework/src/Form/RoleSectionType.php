@@ -18,10 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class RoleSectionType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
-     */
     public function __construct(
         private readonly RoleRegistryInterface $roleRegistry,
         private readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
@@ -29,7 +25,6 @@ final class RoleSectionType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      */
     #[Override]
@@ -58,8 +53,6 @@ final class RoleSectionType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param array<string, mixed> $options
      */
     #[Override]
@@ -70,9 +63,6 @@ final class RoleSectionType extends AbstractType
         $view->vars['show_header'] = $options['show_header'] ?? true;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

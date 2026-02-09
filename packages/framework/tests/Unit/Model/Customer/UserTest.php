@@ -11,7 +11,7 @@ use Tests\FrameworkBundle\Unit\TestCase;
 
 class UserTest extends TestCase
 {
-    public function testGetFullNameReturnsLastnameAndFirstnameForUser()
+    public function testGetFullNameReturnsLastnameAndFirstnameForUser(): void
     {
         $customerUserData = TestCustomerProvider::getTestCustomerUserData(false);
         $customerUser = new CustomerUser($customerUserData);
@@ -19,14 +19,14 @@ class UserTest extends TestCase
         $this->assertSame('Lastname Firstname', $customerUser->getFullName());
     }
 
-    public function testGetFullNameReturnsCompanyNameForCompanyUser()
+    public function testGetFullNameReturnsCompanyNameForCompanyUser(): void
     {
         $customerUser = TestCustomerProvider::getTestCustomerUser();
 
         $this->assertSame('companyName', $customerUser->getFullName());
     }
 
-    public static function isResetPasswordHashValidProvider()
+    public static function isResetPasswordHashValidProvider(): array
     {
         return [
             [
@@ -62,19 +62,13 @@ class UserTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $resetPasswordHash
-     * @param mixed $resetPasswordHashValidThrough
-     * @param mixed $sentHash
-     * @param mixed $isExpectedValid
-     */
     #[DataProvider('isResetPasswordHashValidProvider')]
     public function testIsResetPasswordHashValid(
-        $resetPasswordHash,
-        $resetPasswordHashValidThrough,
-        $sentHash,
-        $isExpectedValid,
-    ) {
+        mixed $resetPasswordHash,
+        mixed $resetPasswordHashValidThrough,
+        mixed $sentHash,
+        mixed $isExpectedValid,
+    ): void {
         $customerUser = TestCustomerProvider::getTestCustomerUser();
 
         $this->setValueOfProtectedProperty($customerUser, 'resetPasswordHash', $resetPasswordHash);

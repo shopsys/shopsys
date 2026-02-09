@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\EntityRepository;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
@@ -15,12 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductVisibilityNotFoundExc
 
 class ProductVisibilityRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerDecorator $em,
         protected readonly Domain $domain,
@@ -43,11 +38,7 @@ class ProductVisibilityRepository
         $this->em->refreshLoadedEntitiesByClassName(ProductVisibility::class);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
-     */
-    public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, $domainId)
+    public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, int $domainId): void
     {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO product_visibilities (product_id, pricing_group_id, domain_id, visible)
@@ -64,25 +55,16 @@ class ProductVisibilityRepository
         $this->refreshProductsVisibility();
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getProductVisibilityRepository()
+    protected function getProductVisibilityRepository(): EntityRepository
     {
         return $this->em->getRepository(ProductVisibility::class);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
-     */
     public function getProductVisibility(
         Product $product,
         PricingGroup $pricingGroup,
-        $domainId,
-    ) {
+        int $domainId,
+    ): ProductVisibility {
         $productVisibility = $this->getProductVisibilityRepository()->find([
             'product' => $product->getId(),
             'pricingGroup' => $pricingGroup->getId(),
@@ -97,11 +79,9 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility[]
      */
-    public function findProductVisibilitiesByDomainIdAndProduct($domainId, Product $product): array
+    public function findProductVisibilitiesByDomainIdAndProduct(int $domainId, Product $product): array
     {
         return $this->getProductVisibilityRepository()->findBy([
             'product' => $product->getId(),
@@ -110,9 +90,7 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param array<int, int> $defaultPricingGroupIdsIndexedByDomainId
-     * @return int
      */
     public function getCountOfDomainsProductIsVisibleOn(
         Product $product,
@@ -133,7 +111,7 @@ class ProductVisibilityRepository
     /**
      * @param int[]|null $productIds
      */
-    protected function calculateIndependentVisibility(?array $productIds)
+    protected function calculateIndependentVisibility(?array $productIds): void
     {
         $variables = [
             'now' => $this->clock->now(),
@@ -231,7 +209,7 @@ class ProductVisibilityRepository
     /**
      * @param int[]|null $productIds
      */
-    protected function hideVariantsWithInvisibleMainVariant(?array $productIds)
+    protected function hideVariantsWithInvisibleMainVariant(?array $productIds): void
     {
         $variables = [
             'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
@@ -273,7 +251,7 @@ class ProductVisibilityRepository
     /**
      * @param int[]|null $productIds
      */
-    protected function hideMainVariantsWithoutVisibleVariants(?array $productIds)
+    protected function hideMainVariantsWithoutVisibleVariants(?array $productIds): void
     {
         $variables = [
             'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
@@ -316,8 +294,6 @@ class ProductVisibilityRepository
 
     /**
      * @param int[] $productIds
-     * @param int $pricingGroupId
-     * @param int $domainId
      * @return bool[]
      */
     public function getProductsVisibilitiesByPricingGroupAndDomainIndexedByProductId(

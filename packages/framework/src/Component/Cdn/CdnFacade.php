@@ -11,10 +11,6 @@ class CdnFacade
 {
     protected ?string $cdnDomain = null;
 
-    /**
-     * @param string|null $cdnDomain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         ?string $cdnDomain,
         protected readonly Domain $domain,
@@ -24,19 +20,11 @@ class CdnFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function resolveDomainUrlForAssets(DomainConfig $domainConfig): string
     {
         return $this->cdnDomain ?? $domainConfig->getBaseUrl();
     }
 
-    /**
-     * @param string|null $content
-     * @return string|null
-     */
     public function replaceUrlsByCdnForAssets(?string $content): ?string
     {
         if ($content === null || $this->cdnDomain === null) {

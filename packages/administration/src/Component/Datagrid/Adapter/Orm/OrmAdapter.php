@@ -19,9 +19,6 @@ final class OrmAdapter implements AdapterInterface
 
     /**
      * @param class-string $entityClass
-     * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\Grid\HintsHelper $hintsHelper
      * @param null|\Closure(\Doctrine\ORM\QueryBuilder $configureQuery): void $configureQuery
      */
     public function __construct(
@@ -39,9 +36,7 @@ final class OrmAdapter implements AdapterInterface
     }
 
     /**
-     * @param string $identificationName
      * @param array<\Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor> $fields
-     * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
      */
     #[Override]
     public function getDatasource(string $identificationName, array $fields): DataSourceInterface
@@ -74,7 +69,6 @@ final class OrmAdapter implements AdapterInterface
 
     /**
      * @param class-string $entityClass
-     * @return \Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\ProxyQuery
      */
     private function createProxyQuery(string $entityClass): ProxyQuery
     {

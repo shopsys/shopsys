@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
 class UploadedFileDeleteDoctrineListenerTest extends TestCase
 {
-    public function testPreRemoveDeleteFile()
+    public function testPreRemoveDeleteFile(): void
     {
         $uploadedFile = new UploadedFile('dummy.txt', 'dummy.txt', 'dummy', ['en' => 'dummy']);
 

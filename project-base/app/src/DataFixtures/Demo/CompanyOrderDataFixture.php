@@ -33,10 +33,6 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \App\Model\Order\PlaceOrderFacade $placeOrderFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      */
     public function __construct(
         private readonly PlaceOrderFacade $placeOrderFacade,
@@ -48,9 +44,6 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -62,9 +55,6 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         }
     }
 
-    /**
-     * @param int $domainId
-     */
     private function loadOrders(int $domainId): void
     {
         $referenceSuffix = 0;
@@ -199,13 +189,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @param \App\Model\Order\OrderData $orderData
      * @param array<string, int> $products
-     * @param string $transportReferenceName
-     * @param string $paymentReferenceName
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     * @param int $referenceSuffix
-     * @return \App\Model\Order\Order
      */
     private function createOrder(
         OrderData $orderData,
@@ -263,10 +247,6 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         ];
     }
 
-    /**
-     * @param \App\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     */
     private function mapCompanyAddressDataToOrderData(OrderData $orderData, Customer $customer): void
     {
         $customerBillingAddress = $customer->getBillingAddress();
@@ -280,10 +260,6 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $orderData->companyTaxNumber = $customerBillingAddress->getCompanyTaxNumber();
     }
 
-    /**
-     * @param \App\Model\Order\OrderData $orderData
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     */
     private function mapCustomerUserDataToOrderData(OrderData $orderData, CustomerUser $customerUser): void
     {
         $orderData->firstName = $customerUser->getFirstName();
@@ -292,10 +268,6 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $orderData->telephone = $customerUser->getTelephone();
     }
 
-    /**
-     * @param \App\Model\Order\OrderData $orderData
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     */
     private function mapDeliveryAddressDataToOrderData(
         OrderData $orderData,
         CustomerUser $customerUser,

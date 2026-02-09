@@ -15,7 +15,6 @@ class CategoryTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translatable(targetEntity: Category::class)]
     protected $translatable;
@@ -37,7 +36,7 @@ class CategoryTranslation extends AbstractTranslation
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
     }

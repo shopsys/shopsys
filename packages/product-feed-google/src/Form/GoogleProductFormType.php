@@ -15,17 +15,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class GoogleProductFormType extends AbstractType
 {
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     */
     public function __construct(private readonly TranslatorInterface $translator)
     {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -34,7 +27,7 @@ final class GoogleProductFormType extends AbstractType
             'entry_type' => YesNoType::class,
             'display_mode' => 'columns',
         ])
-        ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+        ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event): void {
             // Setting default value of multidomain form "show" to true via event because of dynamic form count
             $multidomainShowForm = $event->getForm()->get('show');
 

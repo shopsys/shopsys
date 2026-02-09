@@ -14,10 +14,6 @@ use Twig\TwigFunction;
 
 class DomainExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly InMemoryCache $inMemoryCache,
@@ -28,7 +24,7 @@ class DomainExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getDomain', $this->getDomain(...)),
@@ -40,43 +36,26 @@ class DomainExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    public function getDomain()
+    public function getDomain(): Domain
     {
         return $this->domain;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'domain';
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getDomainNameById($domainId)
+    public function getDomainNameById(int $domainId): string
     {
         return $this->getDomain()->getDomainConfigById($domainId)->getName();
     }
 
-    /**
-     * @return bool
-     */
-    public function isMultidomain()
+    public function isMultidomain(): bool
     {
         return $this->getDomain()->isMultidomain();
     }
 
-    /**
-     * @param string $locale
-     * @return string
-     */
     public function getDomainUrlByLocale(string $locale): string
     {
         foreach ($this->domain->getAll() as $domain) {
@@ -88,17 +67,11 @@ class DomainExtension extends AbstractExtension
         throw new NoDomainSelectedException('Domain for locale `' . $locale . '` not found;');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function getFirstDomainConfig(): DomainConfig
     {
         return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
     }
 
-    /**
-     * @return int
-     */
     public function getDomainsCount(): int
     {
         return $this->inMemoryCache->getOrSaveValue(

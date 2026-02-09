@@ -11,11 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class NotFoundRedirectToStorefrontException extends NotFoundHttpException
 {
-    /**
-     * @param string $message
-     * @param \Exception|null $previous
-     */
-    public function __construct($message = '', ?Exception $previous = null)
+    public function __construct(string $message = '', ?Exception $previous = null)
     {
         $isDev = class_exists('App\Environment') && Environment::getEnvironment() === EnvironmentType::DEVELOPMENT;
 
@@ -24,9 +20,6 @@ class NotFoundRedirectToStorefrontException extends NotFoundHttpException
         parent::__construct($message, $previous, 0, $headers);
     }
 
-    /**
-     * @return string
-     */
     protected function getRedirectLocation(): string
     {
         $location = '@storefront';

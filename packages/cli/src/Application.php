@@ -37,9 +37,6 @@ final class Application extends BaseApplication
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder
-     */
     private function buildContainer(): ContainerBuilder
     {
         $container = new ContainerBuilder();

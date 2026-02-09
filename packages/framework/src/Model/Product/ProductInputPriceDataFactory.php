@@ -12,12 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade;
 
 class ProductInputPriceDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly ProductInputPriceFacade $productInputPriceFacade,
         protected readonly VatFacade $vatFacade,
@@ -26,18 +20,13 @@ class ProductInputPriceDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceData
-     */
     protected function createInstance(): ProductInputPriceData
     {
         return new ProductInputPriceData();
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param array<int, \Shopsys\FrameworkBundle\Component\Money\Money|null> $manualInputPricesByPricingGroupId
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceData
      */
     public function create(Vat $vat, array $manualInputPricesByPricingGroupId): ProductInputPriceData
     {
@@ -67,7 +56,6 @@ class ProductInputPriceDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return array<int, \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceData>
      */
     public function createFromProductForAllDomains(Product $product): array
@@ -88,7 +76,6 @@ class ProductInputPriceDataFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[] $allPricingGroups
-     * @param int $domainId
      * @return array<int, null>
      */
     protected function getNullForPricingGroupsByDomainId(array $allPricingGroups, int $domainId): array

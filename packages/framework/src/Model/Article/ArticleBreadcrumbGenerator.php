@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Component\Breadcrumb\DomainBreadcrumbGeneratorInterf
 
 class ArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
-     */
     public function __construct(protected readonly ArticleRepository $articleRepository)
     {
     }
@@ -21,7 +18,7 @@ class ArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         $article = $this->articleRepository->getById($routeParameters['id']);
 
@@ -47,7 +44,7 @@ class ArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return ['front_article_detail'];
     }

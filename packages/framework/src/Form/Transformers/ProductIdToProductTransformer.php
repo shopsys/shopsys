@@ -13,16 +13,12 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ProductIdToProductTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(protected readonly ProductRepository $productRepository)
     {
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return int|null
      */
     #[Override]
     public function transform($product): ?int
@@ -36,7 +32,6 @@ class ProductIdToProductTransformer implements DataTransformerInterface
 
     /**
      * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
      */
     #[Override]
     public function reverseTransform($productId): ?Product

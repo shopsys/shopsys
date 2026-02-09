@@ -15,29 +15,17 @@ use Shopsys\FrameworkBundle\Model\Country\Exception\CountryNotFoundException;
 
 class CountryRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OrderByCollationHelper $orderByCollationHelper,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getCountryRepository(): EntityRepository
     {
         return $this->em->getRepository(Country::class);
     }
 
-    /**
-     * @param string $locale
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function createSortedJoinedQueryBuilder(string $locale, int $domainId): QueryBuilder
     {
         return $this->getCountryRepository()->createQueryBuilder('c')
@@ -49,19 +37,11 @@ class CountryRepository
             ->setParameter('domainId', $domainId);
     }
 
-    /**
-     * @param int $countryId
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
-     */
     public function findById(int $countryId): ?Country
     {
         return $this->getCountryRepository()->find($countryId);
     }
 
-    /**
-     * @param int $countryId
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
-     */
     public function getById(int $countryId): Country
     {
         $country = $this->findById($countryId);
@@ -82,8 +62,6 @@ class CountryRepository
     }
 
     /**
-     * @param int $domainId
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Country\Country[]
      */
     public function getAllEnabledByDomainIdWithLocale(int $domainId, string $locale): array
@@ -97,8 +75,6 @@ class CountryRepository
     }
 
     /**
-     * @param int $domainId
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Country\Country[]
      */
     public function getAllByDomainIdWithLocale(int $domainId, string $locale): array
@@ -109,18 +85,11 @@ class CountryRepository
             ->getResult();
     }
 
-    /**
-     * @param string $countryCode
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
-     */
     public function findByCode(string $countryCode): ?Country
     {
         return $this->getCountryRepository()->findOneBy(['code' => $countryCode]);
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->getCountryRepository()->createQueryBuilder('c')
@@ -129,10 +98,6 @@ class CountryRepository
             ->getSingleScalarResult();
     }
 
-    /**
-     * @param string $countryCode
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
-     */
     public function getByCode(string $countryCode): Country
     {
         $country = $this->findByCode($countryCode);

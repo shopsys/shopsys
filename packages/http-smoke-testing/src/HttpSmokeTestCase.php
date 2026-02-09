@@ -7,6 +7,7 @@ namespace Shopsys\HttpSmokeTesting;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
+use Shopsys\HttpSmokeTesting\RouterAdapter\RouterAdapterInterface;
 use Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,11 +45,9 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * You must configure the provided RequestDataSets by implementing customizeRouteConfigs method.
      * If you need custom behavior for creating or handling requests in your application you should override the
      * createRequest or handleRequest method.
-     *
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      */
     #[DataProvider('httpResponseTestDataProvider')]
-    final public function testHttpResponse(RequestDataSet $requestDataSet)
+    final public function testHttpResponse(RequestDataSet $requestDataSet): void
     {
         if ($requestDataSet->isSkipped()) {
             $message = sprintf('Test for route "%s" was skipped.', $requestDataSet->getRouteName());
@@ -74,7 +73,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      *
      * @return \Shopsys\HttpSmokeTesting\RequestDataSet[][]
      */
-    public static function httpResponseTestDataProvider()
+    public static function httpResponseTestDataProvider(): array
     {
         static::boot();
 
@@ -106,10 +105,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         );
     }
 
-    /**
-     * @return \Shopsys\HttpSmokeTesting\RouterAdapter\RouterAdapterInterface
-     */
-    protected static function getRouterAdapter()
+    protected static function getRouterAdapter(): RouterAdapterInterface
     {
         $router = static::$kernel->getContainer()->get('test.service_container')->get(AdministrationRouter::class);
 
@@ -118,16 +114,10 @@ abstract class HttpSmokeTestCase extends KernelTestCase
 
     /**
      * This method must be implemented to customize and configure the test cases for individual routes
-     *
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    abstract protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer);
+    abstract protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void;
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    protected static function createRequest(RequestDataSet $requestDataSet)
+    protected static function createRequest(RequestDataSet $requestDataSet): Request
     {
         $uri = static::getRouterAdapter()->generateUri($requestDataSet);
 
@@ -148,20 +138,12 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         return $request;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function handleRequest(Request $request)
+    protected function handleRequest(Request $request): Response
     {
         return static::$kernel->handle($request);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
-     */
-    protected function assertResponse(Response $response, RequestDataSet $requestDataSet)
+    protected function assertResponse(Response $response, RequestDataSet $requestDataSet): void
     {
         $failMessage = sprintf(
             'Failed asserting that status code %d for route "%s" is identical to expected %d',
@@ -176,12 +158,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         );
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
-     * @param string $message
-     * @return string
-     */
-    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, $message)
+    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, string $message): string
     {
         if (count($requestDataSet->getDebugNotes()) > 0) {
             $indentedDebugNotes = array_map(function ($debugNote) {

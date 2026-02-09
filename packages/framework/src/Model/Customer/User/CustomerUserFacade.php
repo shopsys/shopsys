@@ -24,21 +24,6 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory $customerUserFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory $customerDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CustomerUserRepository $customerUserRepository,
@@ -56,52 +41,30 @@ class CustomerUserFacade
     ) {
     }
 
-    /**
-     * @param int $customerUserId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
-    public function getCustomerUserById($customerUserId)
+    public function getCustomerUserById(int $customerUserId): CustomerUser
     {
         return $this->customerUserRepository->getCustomerUserById($customerUserId);
     }
 
-    /**
-     * @param string $email
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     */
-    public function findCustomerUserByEmailAndDomain($email, $domainId)
+    public function findCustomerUserByEmailAndDomain(string $email, int $domainId): ?CustomerUser
     {
         return $this->customerUserRepository->findCustomerUserByEmailAndDomain($email, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
-    public function create(CustomerUserUpdateData $customerUserUpdateData)
+    public function create(CustomerUserUpdateData $customerUserUpdateData): CustomerUser
     {
         $customer = $this->createCustomerWithAddresses($customerUserUpdateData);
 
         return $this->createCustomerUserWithRegistrationMail($customer, $customerUserUpdateData->customerUserData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
-    public function createWithActivationMail(CustomerUserUpdateData $customerUserUpdateData)
+    public function createWithActivationMail(CustomerUserUpdateData $customerUserUpdateData): CustomerUser
     {
         $customer = $this->createCustomerWithAddresses($customerUserUpdateData);
 
         return $this->createCustomerUserWithActivationMail($customer, $customerUserUpdateData->customerUserData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     protected function createCustomerUserWithRegistrationMail(
         Customer $customer,
         CustomerUserData $customerUserData,
@@ -116,11 +79,6 @@ class CustomerUserFacade
         return $customerUser;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function createCustomerUserWithActivationMail(
         Customer $customer,
         CustomerUserData $customerUserData,
@@ -135,11 +93,6 @@ class CustomerUserFacade
         return $customerUser;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     protected function createCustomerUser(
         Customer $customer,
         CustomerUserData $customerUserData,
@@ -158,19 +111,12 @@ class CustomerUserFacade
         return $customerUser;
     }
 
-    /**
-     * @param int $customerUserId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @param string|null $deviceId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function edit(
         int $customerUserId,
         CustomerUserUpdateData $customerUserUpdateData,
         ?DeliveryAddress $deliveryAddress = null,
         ?string $deviceId = null,
-    ) {
+    ): CustomerUser {
         $customerUser = $this->getCustomerUserById($customerUserId);
         $customerUserOriginalRoles = $customerUser->getRoles();
 
@@ -215,12 +161,7 @@ class CustomerUserFacade
         return $customerUser;
     }
 
-    /**
-     * @param int $customerUserId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
-    public function editByAdmin(int $customerUserId, CustomerUserUpdateData $customerUserUpdateData)
+    public function editByAdmin(int $customerUserId, CustomerUserUpdateData $customerUserUpdateData): CustomerUser
     {
         $customerUser = $this->edit($customerUserId, $customerUserUpdateData);
 
@@ -231,17 +172,11 @@ class CustomerUserFacade
         return $customerUser;
     }
 
-    /**
-     * @param int $customerUserId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @param string|null $deviceId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function editByCustomerUser(
         int $customerUserId,
         CustomerUserUpdateData $customerUserUpdateData,
         ?string $deviceId = null,
-    ) {
+    ): CustomerUser {
         $customerUser = $this->edit($customerUserId, $customerUserUpdateData, null, $deviceId);
 
         $this->em->flush();
@@ -249,10 +184,7 @@ class CustomerUserFacade
         return $customerUser;
     }
 
-    /**
-     * @param int $customerUserId
-     */
-    public function delete($customerUserId)
+    public function delete(int $customerUserId): void
     {
         $customerUser = $this->getCustomerUserById($customerUserId);
 
@@ -262,16 +194,11 @@ class CustomerUserFacade
         $this->customerFacade->deleteIfNoCustomerUsersLeft($customerUser->getCustomer());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     */
     public function amendCustomerUserDataFromOrder(
         CustomerUser $customerUser,
         Order $order,
         ?DeliveryAddress $deliveryAddress,
-    ) {
+    ): void {
         $this->edit(
             $customerUser->getId(),
             $this->customerUserUpdateDataFactory->createAmendedByOrder($customerUser, $order, $deliveryAddress),
@@ -281,10 +208,6 @@ class CustomerUserFacade
         $this->em->flush();
     }
 
-    /**
-     * @param string $email
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     */
     protected function setEmail(string $email, CustomerUser $customerUser): void
     {
         $customerUserByEmailAndDomain = $this->findCustomerUserByEmailAndDomain(
@@ -302,11 +225,6 @@ class CustomerUserFacade
         $customerUser->setEmail($email);
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
-     */
     public function createCustomerWithBillingAddress(
         int $domainId,
         BillingAddressData $billingAddressData,
@@ -323,13 +241,6 @@ class CustomerUserFacade
         return $customer;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $refreshTokenChain
-     * @param string $deviceId
-     * @param \DateTimeImmutable $tokenExpiration
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administrator
-     */
     public function addRefreshTokenChain(
         CustomerUser $customerUser,
         string $refreshTokenChain,
@@ -348,21 +259,11 @@ class CustomerUserFacade
         $this->em->flush();
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function getByUuid(string $uuid): CustomerUser
     {
         return $this->customerUserRepository->getOneByUuid($uuid);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string|null $deliveryAddressUuid
-     * @param bool $isSubscribeToNewsletter
-     */
     public function updateCustomerUserByOrder(
         CustomerUser $customerUser,
         Order $order,
@@ -376,11 +277,6 @@ class CustomerUserFacade
         $this->amendCustomerUserDataFromOrder($customerUser, $order, $deliveryAddress);
     }
 
-    /**
-     * @param string|null $deliveryAddressUuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
-     */
     protected function resolveDeliveryAddress(
         ?string $deliveryAddressUuid,
         CustomerUser $customerUser,
@@ -395,9 +291,6 @@ class CustomerUserFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     */
     public function sendActivationMail(CustomerUser $customerUser): void
     {
         $resetPasswordHash = $this->hashGenerator->generateHash(CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
@@ -407,21 +300,12 @@ class CustomerUserFacade
         $this->customerMailFacade->sendActivationMail($customerUser);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
-     */
     public function setDefaultDeliveryAddress(CustomerUser $customerUser, DeliveryAddress $deliveryAddress): void
     {
         $customerUser->setDefaultDeliveryAddress($deliveryAddress);
         $this->em->flush();
     }
 
-    /**
-     * @param int $id
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function editCustomerUser(int $id, CustomerUserData $customerUserData): CustomerUser
     {
         $customerUser = $this->getCustomerUserById($id);
@@ -438,10 +322,6 @@ class CustomerUserFacade
         return $customerUser;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
-     */
     protected function createCustomerWithAddresses(CustomerUserUpdateData $customerUserUpdateData): Customer
     {
         $customer = $this->createCustomerWithBillingAddress(
@@ -479,11 +359,6 @@ class CustomerUserFacade
         return $this->customerUserRepository->getAll();
     }
 
-    /**
-     * @param string $customerUserUuid
-     * @param \DateTimeInterface $referenceDateTime
-     * @return bool
-     */
     public function isLastSecurityChangeOlderThan(string $customerUserUuid, DateTimeInterface $referenceDateTime): bool
     {
         return $this->customerUserRepository->isLastSecurityChangeOlderThan($customerUserUuid, $referenceDateTime);
@@ -492,7 +367,6 @@ class CustomerUserFacade
     /**
      * @param string[] $customerUserCurrentRoles
      * @param string[] $customerUserOriginalRoles
-     * @return bool
      */
     protected function areRolesChanged(array $customerUserCurrentRoles, array $customerUserOriginalRoles): bool
     {
@@ -500,7 +374,6 @@ class CustomerUserFacade
     }
 
     /**
-     * @param int $salesRepresentativeId
      * @return string[]
      */
     public function findEmailsOfCustomerUsersUsingSalesRepresentative(int $salesRepresentativeId): array

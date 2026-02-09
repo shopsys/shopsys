@@ -16,9 +16,6 @@ class OrderCityFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'customerCity';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
@@ -84,10 +81,6 @@ class OrderCityFilter implements AdvancedSearchFilterInterface
         }
     }
 
-    /**
-     * @param string $operator
-     * @return string
-     */
     protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {

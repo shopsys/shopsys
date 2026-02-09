@@ -16,9 +16,6 @@ class ProductNameFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'productName';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
@@ -82,10 +79,6 @@ class ProductNameFilter implements AdvancedSearchFilterInterface
         }
     }
 
-    /**
-     * @param string $operator
-     * @return string
-     */
     protected function getDqlOperator(string $operator): string
     {
         switch ($operator) {

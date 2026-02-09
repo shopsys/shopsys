@@ -8,7 +8,6 @@ class BooleanDataTypeFormatter
 {
     /**
      * @param array{oldReadableValue: bool, newReadableValue: bool, oldValue: bool, newValue: bool} $changes
-     * @return string
      */
     public function formatChanges(array $changes): string
     {

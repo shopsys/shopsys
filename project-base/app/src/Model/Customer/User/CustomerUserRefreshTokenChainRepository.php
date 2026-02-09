@@ -8,8 +8,8 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainRep
 
 /**
  * @method \App\Model\Customer\User\CustomerUserRefreshTokenChain[] findCustomersTokenChains(\App\Model\Customer\User\CustomerUser $customerUser)
- * @method removeAllCustomerUserRefreshTokenChains(\App\Model\Customer\User\CustomerUser $customerUser, string|null $excludedDeviceId = null)
- * @method removeCustomerRefreshTokenChain(\App\Model\Customer\User\CustomerUserRefreshTokenChain $refreshTokenChain)
+ * @method void removeAllCustomerUserRefreshTokenChains(\App\Model\Customer\User\CustomerUser $customerUser, string|null $excludedDeviceId = null)
+ * @method void removeCustomerRefreshTokenChain(\App\Model\Customer\User\CustomerUserRefreshTokenChain $refreshTokenChain)
  * @method array findCustomersTokenChainsByDeviceId(\App\Model\Customer\User\CustomerUser $customerUser, string $deviceId)
  */
 class CustomerUserRefreshTokenChainRepository extends BaseCustomerUserRefreshTokenChainRepository

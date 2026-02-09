@@ -11,11 +11,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
  */
 class ProductRecalculationDispatcherExecutor
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationRepository $productRecalculationRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade
-     * @param \Symfony\Component\Messenger\MessageBusInterface $messageBus
-     */
     public function __construct(
         protected readonly ProductRecalculationRepository $productRecalculationRepository,
         protected readonly ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade,
@@ -25,7 +20,6 @@ class ProductRecalculationDispatcherExecutor
 
     /**
      * @param int[] $productIds
-     * @param string $productRecalculationPriorityEnum
      * @param string[] $exportScopes
      * @return int[]
      */

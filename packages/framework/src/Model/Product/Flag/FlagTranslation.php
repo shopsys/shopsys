@@ -14,7 +14,6 @@ class FlagTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translatable(targetEntity: Flag::class)]
     protected $translatable;
@@ -36,7 +35,7 @@ class FlagTranslation extends AbstractTranslation
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }

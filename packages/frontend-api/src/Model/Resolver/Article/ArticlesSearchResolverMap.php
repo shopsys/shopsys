@@ -10,9 +10,6 @@ use Override;
 
 class ArticlesSearchResolverMap extends ResolverMap
 {
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

@@ -32,33 +32,6 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
 class ProductFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactory $productFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory $productAccessoryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory $productCategoryDomainFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory $productParameterValueFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory $productVisibilityFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoFacade $productVideoFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyFactory $productPromotionXyFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory $productPromotionXyDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyRepository $productPromotionXyRepository
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
@@ -88,20 +61,11 @@ class ProductFacade
     ) {
     }
 
-    /**
-     * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getById($productId)
+    public function getById(int $productId): Product
     {
         return $this->productRepository->getById($productId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param string $priority
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
     public function create(
         ProductData $productData,
         string $priority = ProductRecalculationPriorityEnum::REGULAR,
@@ -122,11 +86,7 @@ class ProductFacade
         return $product;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    public function setAdditionalDataAfterCreate(Product $product, ProductData $productData)
+    public function setAdditionalDataAfterCreate(Product $product, ProductData $productData): void
     {
         // Persist of ProductCategoryDomain requires known primary key of Product
         // @see https://github.com/doctrine/doctrine2/issues/4869
@@ -151,12 +111,6 @@ class ProductFacade
         $this->productVideoFacade->saveProductVideosToProduct($product, $productData->productVideosData);
     }
 
-    /**
-     * @param int $productId
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param string $priority
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
     public function edit(
         int $productId,
         ProductData $productData,
@@ -203,10 +157,6 @@ class ProductFacade
         return $product;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     protected function refreshProductPromotions(Product $product, ProductData $productData): void
     {
         foreach ($productData->promotionXyData as $domainId => $promotionData) {
@@ -218,11 +168,6 @@ class ProductFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyData $promotionData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     */
     protected function refreshProductPromotionForDomain(
         ProductPromotionXyData $promotionData,
         Product $product,
@@ -259,10 +204,6 @@ class ProductFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $productId
-     * @param string $priority
-     */
     public function delete(
         int $productId,
         string $priority = ProductRecalculationPriorityEnum::REGULAR,
@@ -284,14 +225,13 @@ class ProductFacade
         $this->em->remove($product);
         $this->em->flush();
 
-        $this->pluginCrudExtensionFacade->removeAllData('product', $product->getId());
+        $this->pluginCrudExtensionFacade->removeAllData('product', $productId);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
      */
-    protected function saveParameters(Product $product, array $productParameterValuesData)
+    protected function saveParameters(Product $product, array $productParameterValuesData): void
     {
         // Doctrine runs INSERTs before DELETEs in UnitOfWork. In case of UNIQUE constraint
         // in database, this leads in trying to insert duplicate entry.
@@ -340,10 +280,9 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface[][]
      */
-    public function getAllProductPricesIndexedByDomainId(Product $product)
+    public function getAllProductPricesIndexedByDomainId(Product $product): array
     {
         $productSellingPrices = [];
 
@@ -355,8 +294,6 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface[]
      */
     public function getAllProductPricesByDomainId(Product $product, int $domainId): array
@@ -370,11 +307,6 @@ class ProductFacade
         return $productPrices;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
-     */
     public function getProductPriceForDefaultPricingGroup(Product $product, int $domainId): ProductPriceInterface
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
@@ -382,12 +314,6 @@ class ProductFacade
         return $this->getProductPriceForPricingGroup($product, $domainId, $pricingGroup);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
-     */
     protected function getProductPriceForPricingGroup(
         Product $product,
         int $domainId,
@@ -402,10 +328,7 @@ class ProductFacade
         return $sellingPrice;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
-    protected function createProductVisibilities(Product $product)
+    protected function createProductVisibilities(Product $product): void
     {
         $toFlush = [];
 
@@ -425,10 +348,9 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $accessories
      */
-    protected function refreshProductAccessories(Product $product, array $accessories)
+    protected function refreshProductAccessories(Product $product, array $accessories): void
     {
         $oldProductAccessories = $this->productAccessoryRepository->getAllByProduct($product);
 
@@ -450,28 +372,17 @@ class ProductFacade
         }
     }
 
-    /**
-     * @param string $productCatnum
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getOneByCatnumExcludeMainVariants($productCatnum)
-    {
+    public function getOneByCatnumExcludeMainVariants(
+        string $productCatnum,
+    ): Product {
         return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
     public function getByUuid(string $uuid): Product
     {
         return $this->productRepository->getOneByUuid($uuid);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     public function editProductStockRelation(ProductData $productData, Product $product): void
     {
         $stockIds = array_map(
@@ -497,10 +408,6 @@ class ProductFacade
         return $this->productRepository->getAllByIds($ids);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param array $originalNames
-     */
     protected function createFriendlyUrlsWhenRenamed(Product $product, array $originalNames): void
     {
         $changedNames = $this->getChangedNamesByLocale($product, $originalNames);
@@ -516,11 +423,6 @@ class ProductFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param array $originalNames
-     * @return array
-     */
     protected function getChangedNamesByLocale(Product $product, array $originalNames): array
     {
         $changedProductNames = [];
@@ -534,10 +436,6 @@ class ProductFacade
         return $changedProductNames;
     }
 
-    /**
-     * @param string $catnum
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
-     */
     public function findByCatnum(string $catnum): ?Product
     {
         return $this->productRepository->findByCatnum($catnum);
@@ -552,10 +450,6 @@ class ProductFacade
         return $this->productRepository->findAllByCatnums($catnums);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return array
-     */
     public function getCalculatedSellingDeniedPerDomainIds(Product $product): array
     {
         return $this->productRepository->getCalculatedSellingDeniedPerDomainIds($product);

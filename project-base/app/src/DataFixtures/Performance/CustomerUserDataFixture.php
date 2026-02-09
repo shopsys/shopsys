@@ -6,6 +6,8 @@ namespace App\DataFixtures\Performance;
 
 use App\DataFixtures\Demo\CountryDataFixture;
 use App\Model\Customer\DeliveryAddressDataFactory;
+use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\CustomerUserUpdateData;
 use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator as Faker;
@@ -23,23 +25,12 @@ class CustomerUserDataFixture
 {
     public const FIRST_PERFORMANCE_USER = 'first_performance_user';
 
-    private int $userCountPerDomain;
-
     /**
-     * @param int $userCountPerDomain
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserEditFacade
      * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
-     * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      */
     public function __construct(
-        $userCountPerDomain,
+        private int $userCountPerDomain,
         private readonly EntityManagerInterface $em,
         private readonly Domain $domain,
         private readonly SqlLoggerFacade $sqlLoggerFacade,
@@ -51,13 +42,9 @@ class CustomerUserDataFixture
         private readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         private readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
     ) {
-        $this->userCountPerDomain = $userCountPerDomain;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -84,12 +71,7 @@ class CustomerUserDataFixture
         $this->sqlLoggerFacade->reenableLogging();
     }
 
-    /**
-     * @param int $domainId
-     * @param int $userNumber
-     * @return \App\Model\Customer\User\CustomerUser
-     */
-    private function createCustomerUserOnDomain($domainId, $userNumber)
+    private function createCustomerUserOnDomain(int $domainId, int $userNumber): CustomerUser
     {
         $customerUserUpdateData = $this->getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber);
 
@@ -99,13 +81,10 @@ class CustomerUserDataFixture
         return $customerUser;
     }
 
-    /**
-     * @param int $domainId
-     * @param int $userNumber
-     * @return \App\Model\Customer\User\CustomerUserUpdateData
-     */
-    private function getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber)
-    {
+    private function getRandomCustomerUserUpdateDataByDomainId(
+        int $domainId,
+        int $userNumber,
+    ): CustomerUserUpdateData {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $country = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
 

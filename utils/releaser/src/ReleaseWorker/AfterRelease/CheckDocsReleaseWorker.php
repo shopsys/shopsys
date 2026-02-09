@@ -11,11 +11,6 @@ use Shopsys\Releaser\Stage;
 
 final class CheckDocsReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -24,10 +19,6 @@ final class CheckDocsReleaseWorker extends AbstractShopsysReleaseWorker
         return '[Manually] Check documentation is released, version is present and latest highest version is set as default';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

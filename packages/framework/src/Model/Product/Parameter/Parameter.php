@@ -30,7 +30,6 @@ class Parameter extends AbstractTranslatableEntity
 
     /**
      * @var int
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -45,7 +44,6 @@ class Parameter extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translations(targetEntity: ParameterTranslation::class)]
     protected $translations;
@@ -76,9 +74,6 @@ class Parameter extends AbstractTranslatableEntity
     #[ORM\ManyToOne(targetEntity: ParameterGroup::class)]
     protected $group;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
-     */
     public function __construct(ParameterData $parameterData)
     {
         $this->translations = new ArrayCollection();
@@ -86,17 +81,11 @@ class Parameter extends AbstractTranslatableEntity
         $this->setData($parameterData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
-     */
-    public function edit(ParameterData $parameterData)
+    public function edit(ParameterData $parameterData): void
     {
         $this->setData($parameterData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
-     */
     protected function setData(ParameterData $parameterData): void
     {
         $this->setTranslations($parameterData);
@@ -131,10 +120,7 @@ class Parameter extends AbstractTranslatableEntity
         return $this->translation($locale)->getName();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
-     */
-    protected function setTranslations(ParameterData $parameterData)
+    protected function setTranslations(ParameterData $parameterData): void
     {
         foreach ($parameterData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -158,9 +144,6 @@ class Parameter extends AbstractTranslatableEntity
         return $this->parameterType;
     }
 
-    /**
-     * @return bool
-     */
     public function isSlider(): bool
     {
         return $this->getParameterType() === self::PARAMETER_TYPE_SLIDER;

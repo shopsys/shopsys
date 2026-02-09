@@ -8,9 +8,6 @@ use Shopsys\FrameworkBundle\Component\Messenger\AbstractMessageDispatcher;
 
 class PlacedOrderMessageDispatcher extends AbstractMessageDispatcher
 {
-    /**
-     * @param int $orderId
-     */
     public function dispatchPlacedOrderMessage(int $orderId): void
     {
         $this->messageBus->dispatch(new PlacedOrderMessage($orderId));

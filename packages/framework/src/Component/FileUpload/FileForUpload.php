@@ -6,68 +6,36 @@ namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
 class FileForUpload
 {
-    protected string $temporaryFilename;
-
-    protected string $fileClass;
-
-    protected string $category;
-
-    protected ?string $targetDirectory = null;
-
-    protected int $nameConventionType;
-
-    /**
-     * @param string $temporaryFilename
-     * @param string $fileClass
-     * @param string $category
-     * @param string|null $targetDirectory
-     * @param int $nameConventionType
-     */
-    public function __construct($temporaryFilename, $fileClass, $category, $targetDirectory, $nameConventionType)
-    {
-        $this->temporaryFilename = $temporaryFilename;
-        $this->fileClass = $fileClass;
-        $this->category = $category;
-        $this->targetDirectory = $targetDirectory;
-        $this->nameConventionType = $nameConventionType;
+    public function __construct(
+        protected string $temporaryFilename,
+        protected string $fileClass,
+        protected string $category,
+        protected int $nameConventionType,
+        protected ?string $targetDirectory = null,
+    ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getTemporaryFilename()
+    public function getTemporaryFilename(): string
     {
         return $this->temporaryFilename;
     }
 
-    /**
-     * @return string
-     */
-    public function getFileClass()
+    public function getFileClass(): string
     {
         return $this->fileClass;
     }
 
-    /**
-     * @return string
-     */
-    public function getCategory()
+    public function getCategory(): string
     {
         return $this->category;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTargetDirectory()
+    public function getTargetDirectory(): ?string
     {
         return $this->targetDirectory;
     }
 
-    /**
-     * @return int
-     */
-    public function getNameConventionType()
+    public function getNameConventionType(): int
     {
         return $this->nameConventionType;
     }

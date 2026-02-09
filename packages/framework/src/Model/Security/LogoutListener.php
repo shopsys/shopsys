@@ -13,17 +13,11 @@ class LogoutListener implements EventSubscriberInterface
 {
     protected const string ADMINISTRATION_TOKEN = 'administration';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Security\AdminLogoutHandler $adminLogoutHandler
-     */
     public function __construct(
         protected readonly AdminLogoutHandler $adminLogoutHandler,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Security\Http\Event\LogoutEvent $event
-     */
     public function onLogout(LogoutEvent $event): void
     {
         if (!($event->getToken() instanceof UsernamePasswordToken)) {

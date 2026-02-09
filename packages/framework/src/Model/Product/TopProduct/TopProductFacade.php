@@ -9,11 +9,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class TopProductFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository $topProductRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFactory $topProductFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly TopProductRepository $topProductRepository,
@@ -22,18 +17,14 @@ class TopProductFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProduct[]
      */
-    public function getAll($domainId)
+    public function getAll(int $domainId): array
     {
         return $this->topProductRepository->getAll($domainId);
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getOfferedProducts(int $domainId, PricingGroup $pricingGroup, ?int $limit): array
@@ -42,10 +33,9 @@ class TopProductFacade
     }
 
     /**
-     * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      */
-    public function saveTopProductsForDomain($domainId, array $products)
+    public function saveTopProductsForDomain(int $domainId, array $products): void
     {
         $oldTopProducts = $this->topProductRepository->getAll($domainId);
 

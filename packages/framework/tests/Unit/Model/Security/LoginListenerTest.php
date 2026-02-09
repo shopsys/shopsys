@@ -35,10 +35,6 @@ class LoginListenerTest extends TestCase
         $this->callOnSecurityInteractiveLogin($administratorMock);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administratorMock
-     * @return \Shopsys\FrameworkBundle\Model\Security\LoginListener
-     */
     protected function callOnSecurityInteractiveLogin(Administrator $administratorMock): LoginListener
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
@@ -68,7 +64,8 @@ class LoginListenerTest extends TestCase
         $responseMock = $this->getMockBuilder(Response::class)
             ->getMock();
 
-        $loginListener->onSecurityInteractiveLogin(new LoginSuccessEvent($authenticatorMock, $passportMock, $tokenMock, new Request(), $responseMock, 'test-firewall'));
+        $request = new Request([], [], [], [], [], ['REMOTE_ADDR' => '127.0.0.1']);
+        $loginListener->onSecurityInteractiveLogin(new LoginSuccessEvent($authenticatorMock, $passportMock, $tokenMock, $request, $responseMock, 'test-firewall'));
 
         return $loginListener;
     }

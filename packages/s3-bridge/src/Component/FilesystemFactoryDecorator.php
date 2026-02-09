@@ -14,19 +14,12 @@ use Shopsys\FrameworkBundle\Component\Filesystem\FilesystemFactoryInterface;
 
 class FilesystemFactoryDecorator implements FilesystemFactoryInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Filesystem\FilesystemFactoryInterface $inner
-     * @param \Shopsys\S3Bridge\Component\S3Configuration $s3Configuration
-     */
     public function __construct(
         protected readonly FilesystemFactoryInterface $inner,
         protected readonly S3Configuration $s3Configuration,
     ) {
     }
 
-    /**
-     * @return \League\Flysystem\FilesystemOperator
-     */
     #[Override]
     public function create(): FilesystemOperator
     {
@@ -42,9 +35,6 @@ class FilesystemFactoryDecorator implements FilesystemFactoryInterface
         return $this->inner->create();
     }
 
-    /**
-     * @return \Aws\S3\S3Client
-     */
     protected function createS3Client(): S3Client
     {
         return new S3Client([

@@ -22,11 +22,6 @@ class AdministratorFrontSecurityFacade
     // same as in security.yaml
     public const ADMINISTRATION_CONTEXT = 'administration';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorUserProvider $administratorUserProvider
-     * @param \Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface $accessDecisionManager
-     */
     public function __construct(
         protected readonly RequestStack $requestStack,
         protected readonly AdministratorUserProvider $administratorUserProvider,
@@ -34,9 +29,6 @@ class AdministratorFrontSecurityFacade
     ) {
     }
 
-    /**
-     * @return bool
-     */
     public function isAdministratorLogged(): bool
     {
         try {
@@ -52,9 +44,6 @@ class AdministratorFrontSecurityFacade
         return $this->accessDecisionManager->decide($token, [SystemRole::ADMIN]);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     public function getCurrentAdministrator(): Administrator
     {
         if ($this->isAdministratorLogged()) {
@@ -69,7 +58,6 @@ class AdministratorFrontSecurityFacade
     }
 
     /**
-     * @return \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::handle()
      */
     protected function getAdministratorToken(): TokenInterface
@@ -99,7 +87,6 @@ class AdministratorFrontSecurityFacade
     }
 
     /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::handle()
      * @see \Symfony\Component\Security\Core\Authentication\Token\AbstractToken::setUser()
      */

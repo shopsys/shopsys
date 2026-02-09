@@ -19,7 +19,6 @@ class Unit extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -28,31 +27,21 @@ class Unit extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translations(targetEntity: UnitTranslation::class)]
     protected $translations;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     */
     public function __construct(UnitData $unitData)
     {
         $this->translations = new ArrayCollection();
         $this->setData($unitData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     */
-    public function edit(UnitData $unitData)
+    public function edit(UnitData $unitData): void
     {
         $this->setData($unitData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     */
     protected function setData(UnitData $unitData): void
     {
         $this->setTranslations($unitData);
@@ -75,10 +64,7 @@ class Unit extends AbstractTranslatableEntity
         return $this->translation($locale)->getName();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     */
-    protected function setTranslations(UnitData $unitData)
+    protected function setTranslations(UnitData $unitData): void
     {
         foreach ($unitData->name as $locale => $name) {
             $this->translation($locale)->setName($name);

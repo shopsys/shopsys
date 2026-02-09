@@ -40,7 +40,6 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var int
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -49,7 +48,6 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\ProductTranslation>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translations(targetEntity: ProductTranslation::class)]
     protected $translations;
@@ -189,7 +187,6 @@ class Product extends AbstractTranslatableEntity
     protected $isAllowedNegativeStock;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
     protected function __construct(ProductData $productData, ?array $variants = null)
@@ -220,12 +217,11 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      */
     public function edit(
         array $productCategoryDomains,
         ProductData $productData,
-    ) {
+    ): void {
         $this->setDomains($productData);
 
         if (!$this->isVariant()) {
@@ -240,9 +236,6 @@ class Product extends AbstractTranslatableEntity
         $this->setData($productData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     protected function setData(ProductData $productData): void
     {
         $this->sellingFrom = $productData->sellingFrom;
@@ -260,7 +253,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     public static function create(ProductData $productData)
@@ -269,7 +261,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
@@ -278,10 +269,6 @@ class Product extends AbstractTranslatableEntity
         return new static($productData, $variants);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param int $domainId
-     */
     public function changeVatForDomain(Vat $vat, int $domainId): void
     {
         $this->getProductDomain($domainId)->setVat($vat);
@@ -318,10 +305,6 @@ class Product extends AbstractTranslatableEntity
         return $fullNamesByLocale;
     }
 
-    /**
-     * @param string|null $locale
-     * @return string|null
-     */
     public function getFullName(?string $locale = null): ?string
     {
         return trim(
@@ -380,11 +363,6 @@ class Product extends AbstractTranslatableEntity
         return $this->ean;
     }
 
-    /**
-     * @param int $quantity
-     * @param int $domainId
-     * @return int
-     */
     public function calculateFreeQuantity(int $quantity, int $domainId): int
     {
         if ($this->getPromotionXy($domainId) === null) {
@@ -404,7 +382,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
      */
     public function getPromotionXy(int $domainId)
@@ -412,10 +389,6 @@ class Product extends AbstractTranslatableEntity
         return $this->getProductDomain($domainId)->getPromotionXy();
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
     public function getVatForDomain(int $domainId): Vat
     {
         return $this->getProductDomain($domainId)->getVat();
@@ -480,7 +453,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return int
      */
     public function getOrderingPriority(int $domainId)
@@ -491,7 +463,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      */
-    public function setProductCategoryDomains($productCategoryDomains)
+    public function setProductCategoryDomains($productCategoryDomains): void
     {
         foreach ($this->productCategoryDomains as $productCategoryDomain) {
             if ($this->isProductCategoryDomainInArray($productCategoryDomain, $productCategoryDomains) === false) {
@@ -518,9 +490,7 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain $searchProductCategoryDomain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
-     * @return bool
      */
     protected function isProductCategoryDomainInArray(
         ProductCategoryDomain $searchProductCategoryDomain,
@@ -538,7 +508,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return bool|null
      */
     public function isDomainHidden(int $domainId)
@@ -556,7 +525,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getFlags(int $domainId)
@@ -567,7 +535,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param array<int, \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]> $flagsByDomainId
      */
-    public function setFlags($flagsByDomainId)
+    public function setFlags($flagsByDomainId): void
     {
         foreach ($this->domains as $domain) {
             if (!array_key_exists($domain->getDomainId(), $flagsByDomainId)) {
@@ -579,7 +547,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return int[]
      */
     public function getFlagsIdsForDomain(int $domainId): array
@@ -643,10 +610,7 @@ class Product extends AbstractTranslatableEntity
         return $this->mainVariant;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $variant
-     */
-    public function addVariant(self $variant)
+    public function addVariant(self $variant): void
     {
         if (!$this->isMainVariant()) {
             throw new VariantCanBeAddedOnlyToMainVariantException(
@@ -675,7 +639,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      */
-    protected function copyProductCategoryDomains(array $productCategoryDomains)
+    protected function copyProductCategoryDomains(array $productCategoryDomains): void
     {
         $newProductCategoryDomains = [];
 
@@ -690,7 +654,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
      */
-    protected function addVariants(array $variants)
+    protected function addVariants(array $variants): void
     {
         foreach ($variants as $variant) {
             $this->addVariant($variant);
@@ -705,7 +669,7 @@ class Product extends AbstractTranslatableEntity
         return $this->variants->getValues();
     }
 
-    public function unsetMainVariant()
+    public function unsetMainVariant(): void
     {
         if (!$this->isVariant()) {
             throw new ProductIsNotVariantException();
@@ -718,16 +682,13 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
      */
-    protected function setMainVariant($mainVariant)
+    protected function setMainVariant($mainVariant): void
     {
         $this->variantType = self::VARIANT_TYPE_VARIANT;
         $this->mainVariant = $mainVariant;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    protected function setTranslations(ProductData $productData)
+    protected function setTranslations(ProductData $productData): void
     {
         foreach ($productData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -746,10 +707,7 @@ class Product extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    protected function setDomains(ProductData $productData)
+    protected function setDomains(ProductData $productData): void
     {
         foreach ($this->domains as $productDomain) {
             $domainId = $productDomain->getDomainId();
@@ -772,7 +730,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductDomain
      */
     protected function getProductDomain(int $domainId)
@@ -791,7 +748,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getShortDescription(int $domainId)
@@ -800,7 +756,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getDescription(int $domainId)
@@ -808,17 +763,12 @@ class Product extends AbstractTranslatableEntity
         return $this->getProductDomain($domainId)->getDescription();
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
     public function getDescriptionAsPlainText(int $domainId): ?string
     {
         return TransformStringHelper::convertHtmlToPlainText($this->getDescription($domainId));
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoH1(int $domainId)
@@ -827,7 +777,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoTitle(int $domainId)
@@ -836,7 +785,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoMetaDescription(int $domainId)
@@ -854,9 +802,9 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null $promotionXy
-     * @param $domainId
+     * @param int $domainId
      */
-    public function setPromotionXy($promotionXy, $domainId)
+    public function setPromotionXy($promotionXy, $domainId): void
     {
         $this->getProductDomain($domainId)->setPromotionXy($promotionXy);
     }
@@ -870,10 +818,7 @@ class Product extends AbstractTranslatableEntity
         return new ProductTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    protected function createDomains(ProductData $productData)
+    protected function createDomains(ProductData $productData): void
     {
         $domainIds = array_keys($productData->seoTitles);
 
@@ -936,7 +881,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getShortDescriptionUsp1(int $domainId)
@@ -945,7 +889,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getShortDescriptionUsp2(int $domainId)
@@ -954,7 +897,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getShortDescriptionUsp3(int $domainId)
@@ -963,7 +905,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getShortDescriptionUsp4(int $domainId)
@@ -972,7 +913,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getShortDescriptionUsp5(int $domainId)
@@ -1033,7 +973,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $relatedProducts
      */
-    protected function editRelatedProducts($relatedProducts)
+    protected function editRelatedProducts($relatedProducts): void
     {
         $this->relatedProducts->clear();
 
@@ -1076,9 +1016,6 @@ class Product extends AbstractTranslatableEntity
         return $this->isAllowedNegativeStock;
     }
 
-    /**
-     * @return bool
-     */
     public function isSellableOnAllDomains(): bool
     {
         foreach ($this->domains as $domain) {
@@ -1090,9 +1027,6 @@ class Product extends AbstractTranslatableEntity
         return true;
     }
 
-    /**
-     * @return bool
-     */
     public function isSellableOnAnyDomain(): bool
     {
         foreach ($this->domains as $domain) {

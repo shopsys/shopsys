@@ -18,9 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CheckTimezonesCommand extends Command
 {
-    /**
-     * @param \Doctrine\DBAL\Connection $connection
-     */
     public function __construct(private readonly Connection $connection)
     {
         parent::__construct();
@@ -37,10 +34,7 @@ class CheckTimezonesCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    private function checkUniformityOfTimezones(OutputInterface $output)
+    private function checkUniformityOfTimezones(OutputInterface $output): void
     {
         $output->writeln('Checks uniformity of PHP and Postgres timezones...');
 

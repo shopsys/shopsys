@@ -14,8 +14,6 @@ class Db extends BaseDb
 {
     /**
      * Revert database to the original state
-     *
-     * @param \Codeception\TestInterface $test
      */
     #[Override]
     public function _after(TestInterface $test): void
@@ -23,7 +21,7 @@ class Db extends BaseDb
         $this->_loadDump();
     }
 
-    public function cleanup()
+    public function cleanup(): void
     {
         /** @var \Tests\App\Test\Codeception\Helper\SymfonyHelper $symfonyHelper */
         $symfonyHelper = $this->getModule(SymfonyHelper::class);

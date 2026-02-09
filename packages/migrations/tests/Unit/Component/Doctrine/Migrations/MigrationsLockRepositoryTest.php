@@ -36,9 +36,6 @@ class MigrationsLockRepositoryTest extends AbstractMigrationLockTestCase
         }
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function getMigrationsDataProvider(): Iterator
     {
         yield [
@@ -63,7 +60,6 @@ class MigrationsLockRepositoryTest extends AbstractMigrationLockTestCase
 
     /**
      * @param string[] $foundMigrationClasses
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository
      */
     private function getMigrationsLockRepository(array $foundMigrationClasses): MigrationsLockRepository
     {

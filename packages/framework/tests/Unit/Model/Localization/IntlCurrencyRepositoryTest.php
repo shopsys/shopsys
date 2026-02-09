@@ -10,11 +10,8 @@ use Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository;
 
 class IntlCurrencyRepositoryTest extends TestCase
 {
-    /**
-     * @param mixed $currencyCode
-     */
     #[DataProvider('getSupportedCurrencyCodes')]
-    public function testGetSupportedCurrencies($currencyCode)
+    public function testGetSupportedCurrencies(mixed $currencyCode): void
     {
         $intlCurrencyRepository = new IntlCurrencyRepository();
         $intlCurrencyRepository->get($currencyCode);
@@ -23,7 +20,7 @@ class IntlCurrencyRepositoryTest extends TestCase
     /**
      * @return string[][]
      */
-    public static function getSupportedCurrencyCodes()
+    public static function getSupportedCurrencyCodes(): array
     {
         $data = [];
 

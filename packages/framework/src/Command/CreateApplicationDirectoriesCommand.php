@@ -23,53 +23,17 @@ use Symfony\Component\Filesystem\Filesystem;
 )]
 class CreateApplicationDirectoriesCommand extends Command
 {
-    /**
-     * @var string[]
-     */
-    private array $defaultInternalDirectories;
-
-    /**
-     * @var string[]
-     */
-    private array $defaultPublicDirectories;
-
-    /**
-     * @var string[]|null
-     */
-    private ?array $internalDirectories = null;
-
-    /**
-     * @var string[]|null
-     */
-    private ?array $publicDirectories = null;
-
-    /**
-     * @param array $defaultInternalDirectories
-     * @param array $defaultPublicDirectories
-     * @param array|null $internalDirectories
-     * @param array|null $publicDirectories
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
-     * @param \Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator $imageDirectoryStructureCreator
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator $uploadedFileDirectoryStructureCreator
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\DirectoryStructureCreator $customerUploadedFileDirectoryStructureCreator
-     */
     public function __construct(
-        $defaultInternalDirectories,
-        $defaultPublicDirectories,
-        $internalDirectories,
-        $publicDirectories,
         private readonly FilesystemOperator $filesystem,
         private readonly Filesystem $localFilesystem,
         private readonly ImageDirectoryStructureCreator $imageDirectoryStructureCreator,
         private readonly UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator,
         private readonly CustomerUploadedFileDirectoryStructureCreator $customerUploadedFileDirectoryStructureCreator,
+        private readonly array $defaultInternalDirectories,
+        private readonly array $defaultPublicDirectories,
+        private readonly ?array $internalDirectories = null,
+        private readonly ?array $publicDirectories = null,
     ) {
-        $this->defaultInternalDirectories = $defaultInternalDirectories;
-        $this->defaultPublicDirectories = $defaultPublicDirectories;
-        $this->internalDirectories = $internalDirectories;
-        $this->publicDirectories = $publicDirectories;
-
         parent::__construct();
     }
 
@@ -87,10 +51,7 @@ class CreateApplicationDirectoriesCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    private function createMiscellaneousDirectories(OutputInterface $output)
+    private function createMiscellaneousDirectories(OutputInterface $output): void
     {
         $publicDirectories = $this->getPublicDirectories();
         $internalDirectories = $this->getInternalDirectories();
@@ -104,20 +65,14 @@ class CreateApplicationDirectoriesCommand extends Command
         $output->writeln('<fg=green>Miscellaneous application directories were successfully created.</fg=green>');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    private function createImageDirectories(OutputInterface $output)
+    private function createImageDirectories(OutputInterface $output): void
     {
         $this->imageDirectoryStructureCreator->makeImageDirectories();
 
         $output->writeln('<fg=green>Directories for images were successfully created.</fg=green>');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    private function createUploadedFileDirectories(OutputInterface $output)
+    private function createUploadedFileDirectories(OutputInterface $output): void
     {
         $this->uploadedFileDirectoryStructureCreator->makeUploadedFileDirectories();
 
@@ -125,9 +80,9 @@ class CreateApplicationDirectoriesCommand extends Command
     }
 
     /**
-     * return array
+     * @return string[]
      */
-    private function getPublicDirectories()
+    private function getPublicDirectories(): array
     {
         $directories = $this->defaultPublicDirectories;
 
@@ -138,10 +93,7 @@ class CreateApplicationDirectoriesCommand extends Command
         return $directories;
     }
 
-    /**
-     * @return array
-     */
-    private function getInternalDirectories()
+    private function getInternalDirectories(): array
     {
         $directories = $this->defaultInternalDirectories;
 
@@ -152,9 +104,6 @@ class CreateApplicationDirectoriesCommand extends Command
         return $directories;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function createCustomerUploadedFileDirectories(OutputInterface $output): void
     {
         $this->customerUploadedFileDirectoryStructureCreator->makeCustomerUploadedFileDirectories();

@@ -9,11 +9,11 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
 /**
  * @property \App\Model\Payment\PaymentRepository $paymentRepository
  * @method \App\Model\Payment\Payment create(\App\Model\Payment\PaymentData $paymentData)
- * @method edit(\App\Model\Payment\Payment $payment, \App\Model\Payment\PaymentData $paymentData)
+ * @method void edit(\App\Model\Payment\Payment $payment, \App\Model\Payment\PaymentData $paymentData)
  * @method \App\Model\Payment\Payment getById(int $id)
- * @method setAdditionalDataAndFlush(\App\Model\Payment\Payment $payment, \App\Model\Payment\PaymentData $paymentData)
+ * @method void setAdditionalDataAndFlush(\App\Model\Payment\Payment $payment, \App\Model\Payment\PaymentData $paymentData)
  * @method \App\Model\Payment\Payment[] getVisibleByDomainId(int $domainId)
- * @method updatePaymentPrices(\App\Model\Payment\Payment $payment, \Shopsys\FrameworkBundle\Component\Money\Money[] $pricesIndexedByDomainId, \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[] $vatsIndexedByDomainId)
+ * @method void updatePaymentPrices(\App\Model\Payment\Payment $payment, \Shopsys\FrameworkBundle\Component\Money\Money[] $pricesIndexedByDomainId, \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[] $vatsIndexedByDomainId)
  * @method \App\Model\Payment\Payment[] getAllIncludingDeleted()
  * @method \App\Model\Payment\Payment[] getAll()
  * @method \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] getIndependentBasePricesIndexedByDomainId(\App\Model\Payment\Payment $payment)

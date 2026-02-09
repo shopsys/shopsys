@@ -5,35 +5,25 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Slider;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
 
 class SliderItemRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClockInterface $clock,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getSliderItemRepository()
+    protected function getSliderItemRepository(): EntityRepository
     {
         return $this->em->getRepository(SliderItem::class);
     }
 
-    /**
-     * @param int $sliderItemId
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
-     */
-    public function getById($sliderItemId)
+    public function getById(int $sliderItemId): SliderItem
     {
         /** @var \Shopsys\FrameworkBundle\Model\Slider\SliderItem|null $sliderItem */
         $sliderItem = $this->getSliderItemRepository()->find($sliderItemId);
@@ -47,11 +37,7 @@ class SliderItemRepository
         return $sliderItem;
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem|null
-     */
-    public function findById($id)
+    public function findById(int $id): ?SliderItem
     {
         /** @var \Shopsys\FrameworkBundle\Model\Slider\SliderItem $sliderItem */
         $sliderItem = $this->getSliderItemRepository()->find($id);
@@ -62,13 +48,12 @@ class SliderItemRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getSliderItemRepository()->findAll();
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
     public function getAllVisibleByDomainId(int $domainId): array
@@ -92,9 +77,6 @@ class SliderItemRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getSliderItemQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()

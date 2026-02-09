@@ -21,7 +21,7 @@ class TransformStringTest extends TestCase
         parent::setUp();
     }
 
-    public static function safeFilenameProvider()
+    public static function safeFilenameProvider(): array
     {
         return [
             [
@@ -59,17 +59,13 @@ class TransformStringTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $actual
-     * @param mixed $expected
-     */
     #[DataProvider('safeFilenameProvider')]
-    public function testSafeFilename($actual, $expected)
+    public function testSafeFilename(mixed $actual, mixed $expected): void
     {
         $this->assertSame($expected, $this->transformStringHelper->safeFilename($actual));
     }
 
-    public static function stringToFriendlyUrlSlugProvider()
+    public static function stringToFriendlyUrlSlugProvider(): array
     {
         return [
             [
@@ -103,17 +99,13 @@ class TransformStringTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $actual
-     * @param mixed $expected
-     */
     #[DataProvider('stringToFriendlyUrlSlugProvider')]
-    public function testStringToFriendlyUrlSlug($actual, $expected)
+    public function testStringToFriendlyUrlSlug(mixed $actual, mixed $expected): void
     {
         $this->assertSame($expected, $this->transformStringHelper->stringToFriendlyUrlSlug($actual));
     }
 
-    public static function stringToCamelCaseProvider()
+    public static function stringToCamelCaseProvider(): array
     {
         return [
             [
@@ -155,19 +147,12 @@ class TransformStringTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $actual
-     * @param mixed $expected
-     */
     #[DataProvider('stringToCamelCaseProvider')]
-    public function testStringToCamelCase($actual, $expected)
+    public function testStringToCamelCase(mixed $actual, mixed $expected): void
     {
         $this->assertSame($expected, $this->transformStringHelper->stringToCamelCase($actual));
     }
 
-    /**
-     * @return array
-     */
     public static function stringTrailingSlashesProvider(): array
     {
         return [
@@ -198,29 +183,18 @@ class TransformStringTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $string
-     * @param string $expected
-     */
     #[DataProvider('stringTrailingSlashesProvider')]
     public function testAddOrRemoveTrailingSlashFromString(string $string, string $expected): void
     {
         static::assertSame($expected, $this->transformStringHelper->addOrRemoveTrailingSlashFromString($string));
     }
 
-    /**
-     * @param string|null $original
-     * @param string|null $expected
-     */
     #[DataProvider('trimmedStringOrNullProvider')]
     public function testGetTrimmedStringOrNullOnEmpty(?string $original, ?string $expected): void
     {
         static::assertSame($expected, $this->transformStringHelper->getTrimmedStringOrNullOnEmpty($original));
     }
 
-    /**
-     * @return array
-     */
     public static function trimmedStringOrNullProvider(): array
     {
         return [
@@ -251,19 +225,12 @@ class TransformStringTest extends TestCase
         ];
     }
 
-    /**
-     * @param string|null $htmlString
-     * @param string|null $expected
-     */
     #[DataProvider('convertHtmlToPlainTextDataProvider')]
     public function testConvertHtmlToPlainText(?string $htmlString, ?string $expected): void
     {
         $this->assertSame($expected, TransformStringHelper::convertHtmlToPlainText($htmlString));
     }
 
-    /**
-     *  @return iterable
-     */
     public static function convertHtmlToPlainTextDataProvider(): iterable
     {
         yield 'null' => [

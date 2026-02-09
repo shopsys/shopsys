@@ -135,9 +135,6 @@ class LoginViaExchangeTokenTest extends GraphQlTestCase
         $this->assertInvalidTokenError($response);
     }
 
-    /**
-     * @param array $response
-     */
     private function assertInvalidTokenError(array $response): void
     {
         $this->assertResponseContainsArrayOfErrors($response);
@@ -148,11 +145,6 @@ class LoginViaExchangeTokenTest extends GraphQlTestCase
         $this->assertSame('invalid-credentials', $error['extensions']['userCode']);
     }
 
-    /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     * @param \App\Model\Administrator\Administrator $administrator
-     * @return string
-     */
     private function createExpiredExchangeToken(CustomerUser $customerUser, Administrator $administrator): string
     {
         $expiredDate = (new DatePoint())->modify('-1 minute');

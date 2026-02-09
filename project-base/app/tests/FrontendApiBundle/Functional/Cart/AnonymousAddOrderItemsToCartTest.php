@@ -36,10 +36,6 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
      */
     private ProductDataFactory $productDataFactory;
 
-    /**
-     * @param bool $shouldMerge
-     * @param string|null $cartUuid
-     */
     #[DataProvider('notExistingCartDataProvider')]
     public function testOrderItemsAreAddedToNotExistingCart(bool $shouldMerge, ?string $cartUuid): void
     {
@@ -80,9 +76,6 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         $this->assertActualCartContent($data['uuid'], $expectedItems);
     }
 
-    /**
-     * @return iterable
-     */
     public static function notExistingCartDataProvider(): iterable
     {
         // cart is created with repeat order
@@ -277,9 +270,6 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         $this->assertActualCartContent($data['uuid'], $expectedItems);
     }
 
-    /**
-     * @param bool $shouldMerge
-     */
     #[DataProvider('trueFalseDataProvider')]
     public function testTheSameProductIsNotAddedAsSeparateOrderItem(bool $shouldMerge): void
     {
@@ -323,9 +313,6 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         $this->assertActualCartContent($cartUuid, $expectedItems);
     }
 
-    /**
-     * @return iterable
-     */
     public static function trueFalseDataProvider(): iterable
     {
         yield [true];
@@ -333,10 +320,6 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         yield [false];
     }
 
-    /**
-     * @param string $cartUuid
-     * @param array $expectedItems
-     */
     private function assertActualCartContent(string $cartUuid, array $expectedItems): void
     {
         $response = $this->getResponseContentForGql(
@@ -349,9 +332,6 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         $this->assertArrayElements($expectedItems, $data['items']);
     }
 
-    /**
-     * @param \App\Model\Product\Product $productInOrder
-     */
     private function hideProduct(Product $productInOrder): void
     {
         $productData = $this->productDataFactory->createFromProduct($productInOrder);

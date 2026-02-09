@@ -12,11 +12,6 @@ use Symfony\Component\Routing\RequestContext;
 
 class AbstractRouterFactory
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param string $cacheDir
-     */
     public function __construct(
         protected readonly RequestStack $requestStack,
         protected readonly ContainerInterface $container,
@@ -24,12 +19,9 @@ class AbstractRouterFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Symfony\Component\Routing\RequestContext
-     */
-    protected function getRequestContextByDomainConfig(DomainConfig $domainConfig)
-    {
+    protected function getRequestContextByDomainConfig(
+        DomainConfig $domainConfig,
+    ): RequestContext {
         $urlComponents = parse_url($domainConfig->getUrl());
         $requestContext = new RequestContext();
         $request = $this->requestStack->getCurrentRequest();
@@ -56,9 +48,6 @@ class AbstractRouterFactory
         return $requestContext;
     }
 
-    /**
-     * @return array
-     */
     protected function getRouterOptions(): array
     {
         $options = ['resource_type' => 'service'];

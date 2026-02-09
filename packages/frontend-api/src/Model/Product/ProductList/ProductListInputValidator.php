@@ -10,17 +10,11 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\Inva
 
 abstract class ProductListInputValidator implements ProductListInputValidatorInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
-    /**
-     * @param array $input
-     */
     #[Override]
     public function validateInput(array $input): void
     {

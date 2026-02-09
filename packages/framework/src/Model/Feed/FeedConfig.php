@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface;
 class FeedConfig implements CronTimeInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInterface $feed
-     * @param string $hours
-     * @param string $minutes
      * @param int[] $domainIds
      */
     public function __construct(
@@ -23,26 +20,17 @@ class FeedConfig implements CronTimeInterface
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInterface
-     */
     public function getFeed(): FeedInterface
     {
         return $this->feed;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getTimeMinutes(): string
     {
         return $this->minutes;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getTimeHours(): string
     {

@@ -8,58 +8,36 @@ use Symfony\Component\Routing\Route;
 
 class RouteInfo
 {
-    private string $routeName;
-
-    /**
-     * @param string $routeName
-     * @param \Symfony\Component\Routing\Route $route
-     * @param array $annotations
-     */
-    public function __construct($routeName, private readonly Route $route, private readonly array $annotations = [])
-    {
-        $this->routeName = $routeName;
+    public function __construct(
+        private string $routeName,
+        private readonly Route $route,
+        private readonly array $annotations = [],
+    ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getRouteName()
+    public function getRouteName(): string
     {
         return $this->routeName;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutePath()
+    public function getRoutePath(): string
     {
         return $this->route->getPath();
     }
 
-    /**
-     * @return string
-     */
-    public function getRouteCondition()
+    public function getRouteCondition(): string
     {
         return $this->route->getCondition();
     }
 
-    /**
-     * @param string $method
-     * @return bool
-     */
-    public function isHttpMethodAllowed($method)
+    public function isHttpMethodAllowed(string $method): bool
     {
         $methods = $this->route->getMethods();
 
         return count($methods) === 0 || in_array(strtoupper($method), $methods, true);
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function isRouteParameterRequired($name)
+    public function isRouteParameterRequired(string $name): bool
     {
         return !$this->route->hasDefault($name) && in_array($name, $this->getRouteParameterNames(), true);
     }
@@ -67,16 +45,13 @@ class RouteInfo
     /**
      * @return string[]
      */
-    public function getRouteParameterNames()
+    public function getRouteParameterNames(): array
     {
         $compiledRoute = $this->route->compile();
 
         return $compiledRoute->getVariables();
     }
 
-    /**
-     * @return array
-     */
     public function getAnnotations(): array
     {
         return $this->annotations;

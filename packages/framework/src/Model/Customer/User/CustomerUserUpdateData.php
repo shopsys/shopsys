@@ -24,11 +24,6 @@ class CustomerUserUpdateData
      */
     public $deliveryAddressData;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData|null $deliveryAddressData
-     */
     public function __construct(
         BillingAddressData $billingAddressData,
         CustomerUserData $customerUserData,

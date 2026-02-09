@@ -20,10 +20,6 @@ class CompanyComplaintDataFixture extends AbstractReferenceFixture implements De
     public const string COMPANY_OWNER_COMPLAINT = 'company_owner_complaint';
     public const string COMPANY_USER_COMPLAINT = 'company_user_complaint';
 
-    /**
-     * @param \App\DataFixtures\Demo\Helper\ComplaintHelper $complaintHelper
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
-     */
     public function __construct(
         private readonly ComplaintHelper $complaintHelper,
         private readonly ComplaintResolutionEnum $complaintResolutionEnum,
@@ -46,9 +42,6 @@ class CompanyComplaintDataFixture extends AbstractReferenceFixture implements De
         }
     }
 
-    /**
-     * @param int $domainId
-     */
     private function importCompanyComplaints(int $domainId): void
     {
         $this->createComplaint(
@@ -69,12 +62,7 @@ class CompanyComplaintDataFixture extends AbstractReferenceFixture implements De
     }
 
     /**
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Customer\User\CustomerUser $customer
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile[] $uploadedFiles
-     * @param string $referenceName
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
      */
     private function createComplaint(
         Order $order,

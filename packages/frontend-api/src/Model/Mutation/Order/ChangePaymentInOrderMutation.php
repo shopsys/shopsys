@@ -16,20 +16,12 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Payment\Exception\PaymentNotFoundUs
 
 class ChangePaymentInOrderMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly PaymentFacade $paymentFacade,
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function changePaymentInOrderMutation(Argument $argument): Order
     {
         $input = $argument['input'];

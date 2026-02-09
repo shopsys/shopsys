@@ -16,10 +16,6 @@ class OrderProcessingStack
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
-     */
     public function processNext(OrderProcessingData $orderProcessingData): OrderProcessingData
     {
         if ($this->hasNext()) {
@@ -29,9 +25,6 @@ class OrderProcessingStack
         return $orderProcessingData;
     }
 
-    /**
-     * @return bool
-     */
     protected function hasNext(): bool
     {
         return $this->position < count($this->processingMiddlewares);

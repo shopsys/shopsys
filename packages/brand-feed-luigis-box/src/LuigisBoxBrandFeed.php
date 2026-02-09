@@ -12,10 +12,6 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedInterface;
 
 class LuigisBoxBrandFeed implements FeedInterface
 {
-    /**
-     * @param \Shopsys\BrandFeed\LuigisBoxBundle\LuigisBoxBrandFeedInfo $luigisBoxBrandFeedInfo
-     * @param \Shopsys\BrandFeed\LuigisBoxBundle\Model\LuigisBoxBrandFeedItemFacade $luigisBoxBrandFeedItemFacade
-     */
     public function __construct(
         protected readonly LuigisBoxBrandFeedInfo $luigisBoxBrandFeedInfo,
         protected readonly LuigisBoxBrandFeedItemFacade $luigisBoxBrandFeedItemFacade,

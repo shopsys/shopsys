@@ -13,12 +13,6 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class CachedBestsellingProductFacade
 {
-    /**
-     * @param \Symfony\Contracts\Cache\CacheInterface $cache
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductFacade $bestsellingProductFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
-     */
     public function __construct(
         protected readonly CacheInterface $cache,
         protected readonly BestsellingProductFacade $bestsellingProductFacade,
@@ -28,10 +22,6 @@ class CachedBestsellingProductFacade
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $limit
      * @return int[]
      */
     public function getOfferedBestsellingProductIds(
@@ -62,11 +52,7 @@ class CachedBestsellingProductFacade
         );
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
-    public function invalidateCacheByDomainIdAndCategory($domainId, Category $category)
+    public function invalidateCacheByDomainIdAndCategory(int $domainId, Category $category): void
     {
         $pricingGroups = $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);
 
@@ -76,13 +62,7 @@ class CachedBestsellingProductFacade
         }
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return string
-     */
-    protected function getCacheId($domainId, Category $category, PricingGroup $pricingGroup)
+    protected function getCacheId(int $domainId, Category $category, PricingGroup $pricingGroup): string
     {
         return $domainId . '_' . $category->getId() . '_' . $pricingGroup->getId();
     }

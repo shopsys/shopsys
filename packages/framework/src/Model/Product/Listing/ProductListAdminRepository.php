@@ -17,11 +17,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 
 class ProductListAdminRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Localization $localization,
@@ -29,10 +24,6 @@ class ProductListAdminRepository
     ) {
     }
 
-    /**
-     * @param int $pricingGroupId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getProductListQueryBuilder(int $pricingGroupId): QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder();
@@ -71,10 +62,6 @@ class ProductListAdminRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     */
     public function extendQueryBuilderByQuickSearchData(
         QueryBuilder $queryBuilder,
         QuickSearchFormData $quickSearchData,

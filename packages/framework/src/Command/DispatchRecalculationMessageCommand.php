@@ -23,10 +23,6 @@ use Webmozart\Assert\InvalidArgumentException;
 )]
 class DispatchRecalculationMessageCommand extends Command
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum $productRecalculationPriorityEnum
-     */
     public function __construct(
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly ProductRecalculationPriorityEnum $productRecalculationPriorityEnum,
@@ -107,9 +103,7 @@ class DispatchRecalculationMessageCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
      * @param string[] $scopes
-     * @return int
      */
     protected function executeAll(SymfonyStyle $symfonyStyle, array $scopes): int
     {
@@ -126,10 +120,7 @@ class DispatchRecalculationMessageCommand extends Command
 
     /**
      * @param int[] $productIds
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
-     * @param string $priority
      * @param string[] $scopes
-     * @return int
      */
     protected function executeIds(
         array $productIds,

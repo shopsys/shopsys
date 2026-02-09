@@ -49,9 +49,6 @@ class ShopsysAdministrationExtension extends Extension implements PrependExtensi
         return Configuration::EXTENSION_ALIAS;
     }
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function prepend(ContainerBuilder $container): void
     {
@@ -72,9 +69,6 @@ class ShopsysAdministrationExtension extends Extension implements PrependExtensi
         $this->autoRegisterFormThemes($container);
     }
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     public function autoRegisterFormThemes(ContainerBuilder $container): void
     {
         $finder = new Finder();

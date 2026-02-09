@@ -22,9 +22,6 @@ class CronLockCommand extends Command
     protected const SLEEP_TIME = 600;
     protected const MAX_LOCK_TIME = 3600;
 
-    /**
-     * @param \NinjaMutex\Lock\LockInterface $lock
-     */
     public function __construct(
         protected readonly LockInterface $lock,
     ) {

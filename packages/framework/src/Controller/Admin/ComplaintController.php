@@ -26,15 +26,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_COMPLAINT)]
 class ComplaintController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintGridFactory $complaintGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade $complaintFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory $complaintDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\AdvancedSearchComplaintFacade $advancedSearchComplaintFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ComplaintGridFactory $complaintGridFactory,
@@ -46,10 +37,6 @@ class ComplaintController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/complaint/list/')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -96,11 +83,6 @@ class ComplaintController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/complaint/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -142,10 +124,6 @@ class ComplaintController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/complaint/get-advanced-search-rule-form/', methods: ['post'])]
     #[CanView]
     public function getRuleFormAction(Request $request): Response

@@ -13,11 +13,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 {
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade $zboziProductDomainFacade
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactory $zboziProductDomainDataFactory
-     */
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly ZboziProductDomainFacade $zboziProductDomainFacade,
@@ -25,30 +20,23 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return ZboziProductFormType::class;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Zbozi.cz product feed');
     }
 
     /**
-     * @param int $productId
-     * @return array
+     * {@inheritdoc}
      */
     #[Override]
-    public function getData($productId)
+    public function getData(int $productId): array
     {
         $zboziProductDomains = $this->zboziProductDomainFacade->findByProductId($productId);
 
@@ -60,11 +48,10 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param int $productId
-     * @param array $data
+     * {@inheritdoc}
      */
     #[Override]
-    public function saveData($productId, $data)
+    public function saveData(int $productId, mixed $data): void
     {
         $zboziProductDomainsDataIndexedByDomainId = [];
 
@@ -91,16 +78,11 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
         );
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
-     * @param string $propertyName
-     * @param mixed $propertyValue
-     */
     private function setZboziProductDomainDataProperty(
         ZboziProductDomainData $zboziProductDomainData,
-        $propertyName,
-        $propertyValue,
-    ) {
+        string $propertyName,
+        mixed $propertyValue,
+    ): void {
         switch ($propertyName) {
             case 'show':
                 $zboziProductDomainData->show = $propertyValue;
@@ -119,9 +101,8 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[] $zboziProductDomains
-     * @return array
      */
-    private function getZboziProductDomainsAsPluginDataArray(array $zboziProductDomains)
+    private function getZboziProductDomainsAsPluginDataArray(array $zboziProductDomains): array
     {
         $pluginData = [
             'show' => [],
@@ -139,10 +120,10 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param int $productId
+     * {@inheritdoc}
      */
     #[Override]
-    public function removeData($productId)
+    public function removeData(int $productId): void
     {
         $this->zboziProductDomainFacade->delete($productId);
     }

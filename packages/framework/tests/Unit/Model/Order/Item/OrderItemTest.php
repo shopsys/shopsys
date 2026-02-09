@@ -113,7 +113,7 @@ class OrderItemTest extends TestCase
         $this->assertFalse($orderItem->isTypeProductAndHasProduct());
     }
 
-    public function testEditProductTypeWithProduct()
+    public function testEditProductTypeWithProduct(): void
     {
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'newName';
@@ -132,7 +132,7 @@ class OrderItemTest extends TestCase
         $this->assertSame('10.000000', $orderItem->getvatPercent());
     }
 
-    public function testEditProductTypeWithoutProduct()
+    public function testEditProductTypeWithoutProduct(): void
     {
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'newName';
@@ -151,7 +151,7 @@ class OrderItemTest extends TestCase
         $this->assertSame('10.000000', $orderItem->getvatPercent());
     }
 
-    public function testConstructWithMainVariantThrowsException()
+    public function testConstructWithMainVariantThrowsException(): void
     {
         $variant = Product::create(TestProductProvider::getTestProductData());
         $mainVariant = Product::createMainVariant(TestProductProvider::getTestProductData(), [$variant]);
@@ -161,9 +161,6 @@ class OrderItemTest extends TestCase
         $this->createOrderProduct($mainVariant);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     private function createOrderPayment(): OrderItem
     {
         $orderPayment = new OrderItem(
@@ -183,9 +180,6 @@ class OrderItemTest extends TestCase
         return $orderPayment;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     private function createOrderTransport(): OrderItem
     {
         $orderTransport = new OrderItem(
@@ -203,10 +197,6 @@ class OrderItemTest extends TestCase
         return $orderTransport;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     private function createOrderProduct(?Product $product = null): OrderItem
     {
         $orderProduct = new OrderItem(

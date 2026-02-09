@@ -14,20 +14,12 @@ use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 
 class OrderPriceCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
-     */
     public function __construct(
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
         protected readonly Rounding $rounding,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderTotalPriceInterface
-     */
     public function getOrderTotalPrice(Order $order): OrderTotalPriceInterface
     {
         $priceWithVat = Money::zero();
@@ -53,9 +45,6 @@ class OrderPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $orderTotalPrice
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     public function calculateOrderRoundingPrice(

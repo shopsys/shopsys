@@ -9,10 +9,6 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class TransferInvalidDataException extends TransferException
 {
-    /**
-     * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
-     * @param \Exception|null $previous
-     */
     public function __construct(
         ConstraintViolationListInterface $violations,
         ?Exception $previous = null,
@@ -22,10 +18,6 @@ class TransferInvalidDataException extends TransferException
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
-     * @return string
-     */
     private function getViolationsAsString(ConstraintViolationListInterface $violations): string
     {
         $constraintsViolationsMessages = [];

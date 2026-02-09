@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class UploadedFileGridFactory extends AbstractUploadedFileGridFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchFormData
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     public function createWithSearch(QuickSearchFormData $quickSearchFormData): Grid
     {
         $dataSource = $this->createDataSource($quickSearchFormData);

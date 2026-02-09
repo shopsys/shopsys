@@ -15,9 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class PricesByPricingGroupsType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     */
     public function __construct(
         protected readonly PricingGroupFacade $pricingGroupFacade,
     ) {

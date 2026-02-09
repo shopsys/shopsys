@@ -6,9 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\LanguageConstant;
 
 class LanguageConstantDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData
-     */
     public function create(): LanguageConstantData
     {
         $languageConstantData = new LanguageConstantData();
@@ -17,14 +14,6 @@ class LanguageConstantDataFactory
         return $languageConstantData;
     }
 
-    /**
-     * @param string $key
-     * @param string $locale
-     * @param string $translation
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant|null $languageConstant
-     * @param string $namespace
-     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData
-     */
     public function createFromDataOrLanguageConstant(
         string $key,
         string $locale,
@@ -37,13 +26,6 @@ class LanguageConstantDataFactory
             : $this->createFromLanguageConstant($languageConstant, $locale, $translation);
     }
 
-    /**
-     * @param string $key
-     * @param string $locale
-     * @param string $originalTranslation
-     * @param string $namespace
-     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData
-     */
     protected function createFromData(
         string $key,
         string $locale,
@@ -59,12 +41,6 @@ class LanguageConstantDataFactory
         return $languageConstantData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant $languageConstant
-     * @param string $locale
-     * @param string $originalTranslation
-     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData
-     */
     protected function createFromLanguageConstant(
         LanguageConstant $languageConstant,
         string $locale,

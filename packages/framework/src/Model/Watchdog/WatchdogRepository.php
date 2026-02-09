@@ -20,13 +20,6 @@ use Shopsys\FrameworkBundle\Model\Watchdog\Exception\WatchdogNotFoundException;
 
 class WatchdogRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
@@ -36,18 +29,11 @@ class WatchdogRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getWatchdogRepository(): EntityRepository
     {
         return $this->em->getRepository(Watchdog::class);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Watchdog\Watchdog
-     */
     public function getById(int $id): Watchdog
     {
         $watchdog = $this->getWatchdogRepository()->find($id);
@@ -59,9 +45,6 @@ class WatchdogRepository
         return $watchdog;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -69,12 +52,6 @@ class WatchdogRepository
             ->from(Watchdog::class, 'w');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param string $email
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Watchdog\Watchdog|null
-     */
     public function findByProductEmailAndDomainId(Product $product, string $email, int $domainId): ?Watchdog
     {
         return $this->getQueryBuilder()
@@ -87,10 +64,6 @@ class WatchdogRepository
             ->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getWatchdogProductsQueryBuilder(string $locale): QueryBuilder
     {
         return $this->getQueryBuilder()
@@ -104,10 +77,6 @@ class WatchdogRepository
             ->groupBy('w.product, pt.name, p.catnum');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getWatchdogsByProductQueryBuilder(Product $product): QueryBuilder
     {
         return $this->getQueryBuilder()
@@ -115,9 +84,6 @@ class WatchdogRepository
             ->setParameter('product', $product);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Watchdog\Watchdog|null
-     */
     public function findNextWatchdogToSend(): ?Watchdog
     {
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -147,9 +113,6 @@ class WatchdogRepository
         return null;
     }
 
-    /**
-     * @param string $email
-     */
     public function deleteByEmail(string $email): void
     {
         if ($this->transformStringHelper->emptyToNull($email) === null) {
@@ -164,7 +127,6 @@ class WatchdogRepository
     }
 
     /**
-     * @param string $email
      * @return \Shopsys\FrameworkBundle\Model\Watchdog\Watchdog[]
      */
     public function getWatchdogsByEmail(string $email): array

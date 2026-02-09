@@ -8,10 +8,6 @@ use Exception;
 
 class UndefinedLegacyCurrencyException extends Exception
 {
-    /**
-     * @param string $currencyCode
-     * @param \Exception|null $previous
-     */
     public function __construct(string $currencyCode, ?Exception $previous = null)
     {
         $message = sprintf('Legacy currency for code %s is not defined', $currencyCode);

@@ -21,11 +21,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_ORDER_STATUS)]
 class OrderStatusController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusInlineEdit $orderStatusInlineEdit
-     * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
-     */
     public function __construct(
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly OrderStatusInlineEdit $orderStatusInlineEdit,
@@ -33,9 +28,6 @@ class OrderStatusController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/order-status/list/')]
     #[CanView]
     public function listAction(): Response
@@ -47,11 +39,6 @@ class OrderStatusController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/order-status/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -94,10 +81,6 @@ class OrderStatusController extends AdminBaseController
         return $this->redirectToRoute('admin_orderstatus_list');
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/order-status/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]

@@ -33,19 +33,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 class ImageFacade extends BaseImageFacade
 {
     /**
-     * @param string $imageUrlPrefix
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \App\Component\Image\ImageRepository $imageRepository
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactory $imageFactory
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
-     * @param \Symfony\Contracts\Cache\CacheInterface|\Symfony\Component\Cache\Adapter\AdapterInterface $cache
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         string $imageUrlPrefix,
@@ -80,11 +68,10 @@ class ImageFacade extends BaseImageFacade
     }
 
     /**
-     * @param mixed $entity
-     * @param array $images
+     * {@inheritdoc}
      */
     #[Override]
-    public function deleteImages($entity, array $images): void
+    public function deleteImages(object $entity, array $images): void
     {
         $entityName = $this->imageConfig->getEntityName($entity);
         $entityId = $this->getEntityId($entity);
@@ -105,10 +92,10 @@ class ImageFacade extends BaseImageFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
+     * {@inheritdoc}
      */
     #[Override]
-    protected function saveImageOrdering($orderedImages): void
+    protected function saveImageOrdering(array $orderedImages): void
     {
         // Image entity can be cached, and It caused no persisted entity -> fatal on flush
         $persistedImages = [];

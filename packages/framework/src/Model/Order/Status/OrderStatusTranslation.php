@@ -14,7 +14,6 @@ class OrderStatusTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translatable(targetEntity: OrderStatus::class)]
     protected $translatable;
@@ -36,7 +35,7 @@ class OrderStatusTranslation extends AbstractTranslation
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }

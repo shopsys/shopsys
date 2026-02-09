@@ -9,12 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProgressBarFactory
 {
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param int $max
-     * @return \Symfony\Component\Console\Helper\ProgressBar
-     */
-    public function create(OutputInterface $output, $max)
+    public function create(OutputInterface $output, int $max): ProgressBar
     {
         $bar = new ProgressBar($output, $max);
         $this->initializeCustomPlaceholderFormatters();
@@ -27,14 +22,14 @@ class ProgressBarFactory
         return $bar;
     }
 
-    protected function initializeCustomPlaceholderFormatters()
+    protected function initializeCustomPlaceholderFormatters(): void
     {
         ProgressBar::setPlaceholderFormatterDefinition('remaining_hms', function (ProgressBar $bar) {
             if ($bar->getProgress() !== 0) {
                 $secondsPerStep = (time() - $bar->getStartTime()) / $bar->getProgress();
                 $remainingSteps = $bar->getMaxSteps() - $bar->getProgress();
 
-                $remainingSeconds = round($secondsPerStep * $remainingSteps);
+                $remainingSeconds = (int)round($secondsPerStep * $remainingSteps);
             } else {
                 $remainingSeconds = 0;
             }
@@ -47,17 +42,13 @@ class ProgressBarFactory
         });
     }
 
-    /**
-     * @param int $timeInSeconds
-     * @return string
-     */
-    protected function formatTimeHms($timeInSeconds)
+    protected function formatTimeHms(int $timeInSeconds): string
     {
         return sprintf(
             '%dh %02dm %02ds',
-            floor($timeInSeconds / 3600),
-            floor(intdiv((int)$timeInSeconds, 60) % 60),
-            floor($timeInSeconds % 60),
+            intdiv($timeInSeconds, 3600),
+            intdiv($timeInSeconds, 60) % 60,
+            $timeInSeconds % 60,
         );
     }
 }

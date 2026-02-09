@@ -17,11 +17,7 @@ class CollateExpressionNode extends FunctionNode
 
     protected readonly string $collation;
 
-    /**
-     * @param \Doctrine\ORM\Query\AST\PathExpression $expression
-     * @param string $collation
-     */
-    public function __construct($expression = null, $collation = null)
+    public function __construct(mixed $expression = null, ?string $collation = null)
     {
         parent::__construct('COLLATE');
 
@@ -37,19 +33,12 @@ class CollateExpressionNode extends FunctionNode
         $this->collation = $collation;
     }
 
-    /**
-     * @param \Doctrine\ORM\Query\Parser $parser
-     */
     #[Override]
     public function parse(Parser $parser): void
     {
         // This is not used as we create the node manually
     }
 
-    /**
-     * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
-     * @return string
-     */
     #[Override]
     public function getSql(SqlWalker $sqlWalker): string
     {

@@ -27,17 +27,6 @@ use Symfony\Component\Clock\DatePoint;
 
 class ProductDemoDataSetter
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider $domainsForDataFixtureProvider
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockRepository $stockRepository
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory $productInputPriceDataFactory
-     */
     public function __construct(
         private readonly DomainsForDataFixtureProvider $domainsForDataFixtureProvider,
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
@@ -51,17 +40,12 @@ class ProductDemoDataSetter
     ) {
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param string $unitReference
-     */
     public function setUnit(ProductData $productData, string $unitReference): void
     {
         $productData->unit = $this->persistentReferenceFacade->getReference($unitReference, Unit::class);
     }
 
     /**
-     * @param \App\Model\Product\ProductData $productData
      * @param string[] $flagReferences
      */
     public function setFlags(ProductData $productData, array $flagReferences): void
@@ -73,28 +57,16 @@ class ProductDemoDataSetter
         }
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param string $date
-     */
     public function setSellingFrom(ProductData $productData, string $date): void
     {
         $productData->sellingFrom = new DatePoint($date);
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param string $date
-     */
     public function setSellingTo(ProductData $productData, string $date): void
     {
         $productData->sellingTo = new DatePoint($date);
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param array $parametersValues
-     */
     public function setProductParameterValues(ProductData $productData, array $parametersValues): void
     {
         foreach ($parametersValues as $parameterValues) {
@@ -120,11 +92,6 @@ class ProductDemoDataSetter
         }
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param string $price
-     * @param string $vatReference
-     */
     public function setPriceForAllPricingGroups(
         ProductData $productData,
         string $price,
@@ -159,7 +126,6 @@ class ProductDemoDataSetter
     }
 
     /**
-     * @param \App\Model\Product\ProductData $productData
      * @param string[] $categoryReferences
      */
     public function setCategoriesForAllDomains(ProductData $productData, array $categoryReferences): void
@@ -171,19 +137,11 @@ class ProductDemoDataSetter
         }
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param string $brandReference
-     */
     public function setBrand(ProductData $productData, string $brandReference): void
     {
         $productData->brand = $this->persistentReferenceFacade->getReference($brandReference, Brand::class);
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param int $quantity
-     */
     public function setStocksQuantity(ProductData $productData, int $quantity): void
     {
         $stocks = $this->stockRepository->getAllStocks();
@@ -195,10 +153,6 @@ class ProductDemoDataSetter
         }
     }
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param int $orderingPriority
-     */
     public function setOrderingPriority(ProductData $productData, int $orderingPriority): void
     {
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {

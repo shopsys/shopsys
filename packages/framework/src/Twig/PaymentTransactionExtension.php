@@ -11,9 +11,6 @@ use Twig\TwigFilter;
 
 class PaymentTransactionExtension extends AbstractExtension
 {
-    /**
-     * @return array
-     */
     #[Override]
     public function getFilters(): array
     {

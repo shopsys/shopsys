@@ -13,7 +13,6 @@ class MailTemplateSenderFacade
 {
     /**
      * @param \Traversable<int, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderInterface> $mailTemplateSenders
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      */
     public function __construct(
         protected readonly Traversable $mailTemplateSenders,
@@ -21,20 +20,11 @@ class MailTemplateSenderFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @return string|null
-     */
     public function getFormLabelForEntityIdentifier(MailTemplate $mailTemplate): ?string
     {
         return $this->getTemplateSender($mailTemplate)->getFormLabelForEntityIdentifier();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param string $mailTo
-     * @param int|null $entityId
-     */
     public function sendMail(MailTemplate $mailTemplate, string $mailTo, ?int $entityId): void
     {
         $this->getTemplateSender($mailTemplate)->sendTemplate(
@@ -44,10 +34,6 @@ class MailTemplateSenderFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderInterface
-     */
     protected function getTemplateSender(MailTemplate $mailTemplate): MailTemplateSenderInterface
     {
         foreach ($this->mailTemplateSenders as $mailTemplateSender) {
@@ -59,10 +45,6 @@ class MailTemplateSenderFacade
         throw new NoSenderForMailTemplateException($mailTemplate);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @return bool
-     */
     public function mailSenderExists(MailTemplate $mailTemplate): bool
     {
         try {

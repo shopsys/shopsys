@@ -13,13 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductListFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFactory $productListFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListRepository $productListRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory $productListDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListItemFactory $productListItemFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
         protected readonly ProductListFactory $productListFactory,
@@ -29,10 +22,6 @@ class ProductListFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListData $productListData
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList
-     */
     public function create(ProductListData $productListData): ProductList
     {
         $productList = $this->productListFactory->create($productListData);
@@ -42,11 +31,6 @@ class ProductListFacade
         return $productList;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList
-     */
     public function addProductToList(ProductList $productList, Product $product): ProductList
     {
         if ($productList->findProductListItemByProduct($product) !== null) {
@@ -62,7 +46,6 @@ class ProductListFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
      * @return int[]
      */
     public function getProductIdsByProductList(ProductList $productList): array
@@ -70,12 +53,6 @@ class ProductListFacade
         return $this->productListRepository->getProductIdsByProductList($productList);
     }
 
-    /**
-     * @param string $productListType
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string|null $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
-     */
     public function findProductListByTypeAndCustomerUser(
         string $productListType,
         CustomerUser $customerUser,
@@ -85,8 +62,6 @@ class ProductListFacade
     }
 
     /**
-     * @param string $productListType
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList[]
      */
     public function getProductListsByTypeAndCustomerUser(
@@ -96,11 +71,6 @@ class ProductListFacade
         return $this->productListRepository->getProductListsByTypeAndCustomerUser($productListType, $customerUser);
     }
 
-    /**
-     * @param string $uuid
-     * @param string|null $productListType
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
-     */
     public function findAnonymousProductList(
         string $uuid,
         ?string $productListType = null,
@@ -108,20 +78,11 @@ class ProductListFacade
         return $this->productListRepository->findAnonymousProductList($uuid, $productListType);
     }
 
-    /**
-     * @param string $uuid
-     * @return bool
-     */
     public function existsProductListWithUuid(string $uuid): bool
     {
         return $this->productListRepository->existsProductListWithUuid($uuid);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
-     */
     public function removeProductFromList(ProductList $productList, Product $product): ?ProductList
     {
         $productListItem = $productList->findProductListItemByProduct($product);
@@ -143,18 +104,12 @@ class ProductListFacade
         return $productList;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
-     */
     public function removeProductList(ProductList $productList): void
     {
         $this->entityManager->remove($productList);
         $this->entityManager->flush();
     }
 
-    /**
-     * @param \DateTimeImmutable $olderThan
-     */
     public function removeOldAnonymousProductLists(DateTimeImmutable $olderThan): void
     {
         $this->productListRepository->removeOldAnonymousProductLists($olderThan);
@@ -162,7 +117,6 @@ class ProductListFacade
 
     /**
      * @param string[] $productListsUuids
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
     public function mergeProductListsToCustomerUser(array $productListsUuids, CustomerUser $customerUser): void
     {
@@ -175,10 +129,6 @@ class ProductListFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $anonymousProductList
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     */
     protected function mergeProductListToCustomerUser(
         ProductList $anonymousProductList,
         CustomerUser $customerUser,
@@ -192,20 +142,12 @@ class ProductListFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
-     */
     protected function setCustomerUserToProductList(CustomerUser $customerUser, ProductList $productList): void
     {
         $productList->setCustomerUser($customerUser);
         $this->entityManager->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productListToMergeFrom
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productListToMergeTo
-     */
     protected function mergeProductLists(ProductList $productListToMergeFrom, ProductList $productListToMergeTo): void
     {
         foreach (array_reverse($productListToMergeFrom->getItems()) as $productListItem) {

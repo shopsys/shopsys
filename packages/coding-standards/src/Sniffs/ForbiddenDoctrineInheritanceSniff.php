@@ -20,7 +20,6 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $file
      * @param int $classPosition
      */
     #[Override]

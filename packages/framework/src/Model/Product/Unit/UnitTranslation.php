@@ -14,7 +14,6 @@ class UnitTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translatable(targetEntity: Unit::class)]
     protected $translatable;
@@ -36,7 +35,7 @@ class UnitTranslation extends AbstractTranslation
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }

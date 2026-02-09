@@ -6,10 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\Localization;
 
 class DateTimeFormatPattern
 {
-    protected string $pattern;
-
-    protected string $locale;
-
     /**
      * @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
@@ -21,31 +17,25 @@ class DateTimeFormatPattern
     protected ?int $timeType = null;
 
     /**
-     * @param string $pattern
-     * @param string $locale
      * @param int|null $dateType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param int|null $timeType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
-    public function __construct($pattern, $locale, $dateType = null, $timeType = null)
-    {
-        $this->pattern = $pattern;
-        $this->locale = $locale;
+    public function __construct(
+        protected string $pattern,
+        protected string $locale,
+        ?int $dateType = null,
+        ?int $timeType = null,
+    ) {
         $this->dateType = $dateType;
         $this->timeType = $timeType;
     }
 
-    /**
-     * @return string
-     */
-    public function getPattern()
+    public function getPattern(): string
     {
         return $this->pattern;
     }
 
-    /**
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -53,7 +43,7 @@ class DateTimeFormatPattern
     /**
      * @return int|null @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
-    public function getDateType()
+    public function getDateType(): ?int
     {
         return $this->dateType;
     }
@@ -61,7 +51,7 @@ class DateTimeFormatPattern
     /**
      * @return int|null @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
-    public function getTimeType()
+    public function getTimeType(): ?int
     {
         return $this->timeType;
     }

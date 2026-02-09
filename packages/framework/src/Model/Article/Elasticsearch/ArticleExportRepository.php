@@ -12,12 +12,6 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 
 class ArticleExportRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
-     * @param \Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser $grapesJsParser
-     */
     public function __construct(
         protected readonly ArticleRepository $articleRepository,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
@@ -26,10 +20,6 @@ class ArticleExportRepository
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     public function getVisibleArticleSitesCountByDomainId(int $domainId): int
     {
         return (int)($this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainId)
@@ -40,9 +30,6 @@ class ArticleExportRepository
     }
 
     /**
-     * @param int $domainId
-     * @param int $limit
-     * @param int $lastProcessedId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
     public function getAllVisibleArticleSitesByDomainId(int $domainId, int $limit, int $lastProcessedId): array
@@ -57,7 +44,6 @@ class ArticleExportRepository
     }
 
     /**
-     * @param int $domainId
      * @param int[] $articleIds
      * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
@@ -70,10 +56,6 @@ class ArticleExportRepository
             ->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
-     * @return array
-     */
     public function extractArticle(Article $article): array
     {
         $domainId = $article->getDomainId();

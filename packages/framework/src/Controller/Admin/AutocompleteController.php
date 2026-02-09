@@ -19,11 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[ForRole(AdminRoleConstant::ROLE_AUTOCOMPLETE)]
 class AutocompleteController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteDataFactory $autocompleteFavoriteDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteFacade $autocompleteFavoriteFacade
-     */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly AutocompleteFavoriteDataFactory $autocompleteFavoriteDataFactory,
@@ -31,10 +26,6 @@ class AutocompleteController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/autocomplete/setting/')]
     #[CanEdit(methods: ['POST'])]
     #[CanView(methods: ['GET'])]

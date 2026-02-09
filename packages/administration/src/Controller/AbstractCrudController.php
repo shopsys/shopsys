@@ -26,40 +26,25 @@ abstract class AbstractCrudController extends AbstractController
     #[Required]
     public OrmAdapterFactory $ormAdapterFactory;
 
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfig $config
-     */
     public function configure(CrudConfig $config): void
     {
     }
 
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionsConfig $actions
-     */
     protected function configureActions(ActionsConfig $actions): void
     {
     }
 
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid $datagrid
-     */
     protected function configureDatagrid(Datagrid $datagrid): void
     {
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     */
     protected function configureQuery(QueryBuilder $queryBuilder): void
     {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function listAction(): Response
     {
-        $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder) {
+        $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder): void {
             $this->configureQuery($queryBuilder);
 
             foreach ($this->definition->getExtensions() as $extension) {
@@ -84,10 +69,6 @@ abstract class AbstractCrudController extends AbstractController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function detailAction(int $id): Response
     {
         return $this->render('@ShopsysAdministration/crud/detail.html.twig', [
@@ -96,10 +77,6 @@ abstract class AbstractCrudController extends AbstractController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function editAction(int $id): Response
     {
         return $this->render('@ShopsysAdministration/crud/edit.html.twig', [
@@ -108,9 +85,6 @@ abstract class AbstractCrudController extends AbstractController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function createAction(): Response
     {
         return $this->render('@ShopsysAdministration/crud/new.html.twig', [
@@ -119,17 +93,12 @@ abstract class AbstractCrudController extends AbstractController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function deleteAction(int $id): Response
     {
         return $this->redirect($this->generateUrl('admin_default_dashboard'));
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
      * @return \Shopsys\AdministrationBundle\Component\Action\AbstractAction[]
      */
     final protected function getConfiguredActions(ActionType $actionType): array

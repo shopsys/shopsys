@@ -145,16 +145,6 @@ class OrderItem
     #[ORM\ManyToMany(targetEntity: self::class)]
     protected $relatedItems;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param string $type
-     * @param string|null $unitName
-     * @param string|null $catnum
-     */
     public function __construct(
         Order $order,
         string $name,
@@ -228,9 +218,6 @@ class OrderItem
         return $this->unitPriceWithVat;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getPrice(): PriceInterface
     {
         return new Price($this->unitPriceWithoutVat, $this->unitPriceWithVat);
@@ -257,8 +244,6 @@ class OrderItem
     /**
      * The total price property can be used when order item has prices that differ from current price calculation implementation.
      * Otherwise, it should be set to NULL (which means it will be calculated automatically).
-     *
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface|null $totalPrice
      */
     public function setTotalPrice(?PriceInterface $totalPrice): void
     {
@@ -266,9 +251,6 @@ class OrderItem
         $this->totalPriceWithoutVat = $totalPrice?->getPriceWithoutVat();
     }
 
-    /**
-     * @return bool
-     */
     public function hasForcedTotalPrice(): bool
     {
         if ($this->totalPriceWithVat === null xor $this->totalPriceWithoutVat === null) {
@@ -310,10 +292,7 @@ class OrderItem
         return $this->catnum;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     */
-    public function edit(OrderItemData $orderItemData)
+    public function edit(OrderItemData $orderItemData): void
     {
         $this->name = $orderItemData->name;
         $this->unitPriceWithoutVat = $orderItemData->unitPriceWithoutVat;
@@ -433,74 +412,46 @@ class OrderItem
         $this->product = $productGift;
     }
 
-    /**
-     * @param string $type
-     * @return bool
-     */
     public function isType(string $type): bool
     {
         return $this->type === $type;
     }
 
-    /**
-     * @return bool
-     */
     public function isTypeProduct(): bool
     {
         return $this->isType(OrderItemTypeEnum::TYPE_PRODUCT);
     }
 
-    /**
-     * @return bool
-     */
     public function isTypeProductGift(): bool
     {
         return $this->isType(OrderItemTypeEnum::TYPE_PRODUCT_GIFT);
     }
 
-    /**
-     * @return bool
-     */
     public function isTypePayment(): bool
     {
         return $this->isType(OrderItemTypeEnum::TYPE_PAYMENT);
     }
 
-    /**
-     * @return bool
-     */
     public function isTypeTransport(): bool
     {
         return $this->isType(OrderItemTypeEnum::TYPE_TRANSPORT);
     }
 
-    /**
-     * @return bool
-     */
     public function isTypeDiscount(): bool
     {
         return $this->isType(OrderItemTypeEnum::TYPE_DISCOUNT);
     }
 
-    /**
-     * @return bool
-     */
     public function isTypeRounding(): bool
     {
         return $this->isType(OrderItemTypeEnum::TYPE_ROUNDING);
     }
 
-    /**
-     * @return bool
-     */
     public function isTypePromotion(): bool
     {
         return $this->isType(OrderItemTypeEnum::TYPE_PROMOTION);
     }
 
-    /**
-     * @param string $type
-     */
     protected function checkTypeOf(string $type): void
     {
         if ($this->type !== $type) {
@@ -551,9 +502,6 @@ class OrderItem
         return $this->type;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $relatedItem
-     */
     public function addRelatedItem(self $relatedItem): void
     {
         $this->relatedItems->add($relatedItem);

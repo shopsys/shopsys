@@ -19,10 +19,6 @@ class ResetPasswordMail implements MessageFactoryInterface
     public const VARIABLE_EMAIL = '{email}';
     public const VARIABLE_NEW_PASSWORD_URL = '{new_password_url}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Security\NewPasswordUrlProvider $newPasswordUrlProvider
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly NewPasswordUrlProvider $newPasswordUrlProvider,
@@ -30,13 +26,13 @@ class ResetPasswordMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
      * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $administrator
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     #[Override]
-    public function createMessage(MailTemplate $template, $administrator)
-    {
+    public function createMessage(
+        MailTemplate $template,
+        $administrator,
+    ): MessageData {
         $domainId = $template->getDomainId();
 
         return new MessageData(
@@ -52,8 +48,6 @@ class ResetPasswordMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $administrator
-     * @param int $domainId
      * @return string[]
      */
     protected function getBodyValuesIndexedByVariableName(ResetPasswordInterface $administrator, int $domainId): array
@@ -65,8 +59,6 @@ class ResetPasswordMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $administrator
-     * @param int $domainId
      * @return string[]
      */
     protected function getSubjectValuesIndexedByVariableName(

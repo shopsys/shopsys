@@ -9,20 +9,11 @@ use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundExce
 
 class TransportPriceRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param int $cartTotalWeight
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportPrice
-     */
     public function getTransportPriceOnDomainByTransportAndClosestWeight(
         int $domainId,
         Transport $transport,

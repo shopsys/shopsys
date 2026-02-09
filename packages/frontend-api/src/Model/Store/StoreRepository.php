@@ -11,19 +11,12 @@ use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class StoreRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->entityManager->createQueryBuilder()
@@ -31,11 +24,6 @@ class StoreRepository
             ->from(Store::class, 's');
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrontendApiBundle\Model\Store\StoresFilterOptions $storesFilterOptions
-     * @return int
-     */
     public function getFilteredStoresCount(int $domainId, StoresFilterOptions $storesFilterOptions): int
     {
         $queryBuilder = $this->getBasicFilteredQueryBuilder($domainId, $storesFilterOptions)
@@ -44,11 +32,6 @@ class StoreRepository
         return (int)$queryBuilder->getQuery()->getSingleScalarResult();
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrontendApiBundle\Model\Store\StoresFilterOptions $storesFilterOptions
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getBasicFilteredQueryBuilder(
         int $domainId,
         StoresFilterOptions $storesFilterOptions,
@@ -67,10 +50,6 @@ class StoreRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrontendApiBundle\Model\Store\StoresFilterOptions $storesFilterOptions
-     * @param int|null $limit
-     * @param int|null $offset
      * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
      */
     public function getFilteredQueryBuilder(

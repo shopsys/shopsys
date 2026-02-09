@@ -21,9 +21,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
 {
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
      * @param \App\Model\Category\Category $category
      * @return \App\Model\Product\Flag\Flag[]
      */
@@ -44,9 +41,6 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
      * @param \App\Model\Product\Brand\Brand $brand
      * @return \App\Model\Product\Flag\Flag[]
      */
@@ -67,10 +61,6 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
-     * @param string|null $searchText
      * @return \App\Model\Product\Flag\Flag[]
      */
     #[Override]
@@ -87,9 +77,6 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
      * @return \App\Model\Product\Flag\Flag[]
      */
     #[Override]
@@ -104,9 +91,6 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
-     * @param string $locale
-     * @param int $domainId
      * @return \App\Model\Product\Flag\Flag[]
      */
     protected function getVisibleFlagsByProductsQueryBuilderForDomain(

@@ -14,9 +14,6 @@ final class DomainsEnvWorker extends AbstractWorker
 {
     private const string FILE_PATH = 'storefront/.env';
 
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {
@@ -100,10 +97,6 @@ final class DomainsEnvWorker extends AbstractWorker
         );
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
     private function getPlaceholderUrl(int $domainId): string
     {
         return sprintf('http://127.0.0.%d:8000/', $domainId);

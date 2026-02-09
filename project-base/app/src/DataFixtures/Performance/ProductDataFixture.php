@@ -25,8 +25,6 @@ class ProductDataFixture
 {
     public const FIRST_PERFORMANCE_PRODUCT = 'first_performance_product';
 
-    private int $productTotalCount;
-
     private int $countImported;
 
     private int $demoDataIterationCounter;
@@ -42,19 +40,11 @@ class ProductDataFixture
     private array $productTemplates;
 
     /**
-     * @param int $productTotalCount
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \App\Model\Category\CategoryRepository $categoryRepository
-     * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     * @param \App\Model\Product\ProductDataFactory $productDataFactory
      */
     public function __construct(
-        $productTotalCount,
+        private int $productTotalCount,
         private readonly EntityManagerInterface $em,
         private readonly ProductFacade $productFacade,
         private readonly SqlLoggerFacade $sqlLoggerFacade,
@@ -65,15 +55,11 @@ class ProductDataFixture
         private readonly ProgressBarFactory $progressBarFactory,
         private readonly ProductDataFactory $productDataFactory,
     ) {
-        $this->productTotalCount = $productTotalCount;
         $this->countImported = 0;
         $this->demoDataIterationCounter = 0;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -123,7 +109,7 @@ class ProductDataFixture
     /**
      * @param string[][] $variantCatnumsByMainVariantCatnum
      */
-    private function createVariants(array $variantCatnumsByMainVariantCatnum)
+    private function createVariants(array $variantCatnumsByMainVariantCatnum): void
     {
         $uniqueIndex = $this->getUniqueIndex();
 
@@ -142,11 +128,7 @@ class ProductDataFixture
         }
     }
 
-    /**
-     * @param string $catnum
-     * @return \App\Model\Product\Product
-     */
-    private function getProductByCatnum($catnum)
+    private function getProductByCatnum(string $catnum): Product
     {
         if (!array_key_exists($catnum, $this->productsByCatnum)) {
             $query = $this->em->createQuery('SELECT p FROM ' . Product::class . ' p WHERE p.catnum = :catnum')
@@ -160,7 +142,7 @@ class ProductDataFixture
     /**
      * @param \App\Model\Product\ProductData $productData
      */
-    private function makeProductDataUnique(ProductData $productData)
+    private function makeProductDataUnique(ProductData $productData): void
     {
         $matches = [];
         $uniqueIndex = $this->getUniqueIndex();
@@ -180,23 +162,20 @@ class ProductDataFixture
         }
     }
 
-    /**
-     * @return string
-     */
-    private function getUniqueIndex()
+    private function getUniqueIndex(): string
     {
         $this->demoDataIterationCounter++;
 
         return ' #' . $this->demoDataIterationCounter;
     }
 
-    private function clearResources()
+    private function clearResources(): void
     {
         $this->em->clear();
         gc_collect_cycles();
     }
 
-    private function cleanAndLoadReferences()
+    private function cleanAndLoadReferences(): void
     {
         $this->clearResources();
         $this->productsByCatnum = [];
@@ -218,7 +197,7 @@ class ProductDataFixture
     /**
      * @param \App\Model\Product\ProductData $productData
      */
-    private function setRandomPerformanceCategoriesToProductData(ProductData $productData)
+    private function setRandomPerformanceCategoriesToProductData(ProductData $productData): void
     {
         $this->cleanPerformanceCategoriesFromProductDataByDomainId($productData, 1);
         $this->cleanPerformanceCategoriesFromProductDataByDomainId($productData, 2);
@@ -228,9 +207,8 @@ class ProductDataFixture
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param int $domainId
      */
-    private function cleanPerformanceCategoriesFromProductDataByDomainId(ProductData $productData, $domainId)
+    private function cleanPerformanceCategoriesFromProductDataByDomainId(ProductData $productData, int $domainId): void
     {
         foreach ($productData->categoriesByDomainId[$domainId] as $key => $category) {
             if ($this->isPerformanceCategory($category)) {
@@ -241,10 +219,11 @@ class ProductDataFixture
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param int $domainId
      */
-    private function addRandomPerformanceCategoriesToProductDataByDomainId(ProductData $productData, $domainId)
-    {
+    private function addRandomPerformanceCategoriesToProductDataByDomainId(
+        ProductData $productData,
+        int $domainId,
+    ): void {
         $performanceCategoryIds = $this->getPerformanceCategoryIds();
         $randomPerformanceCategoryIds = $this->faker->randomElements(
             $performanceCategoryIds,
@@ -262,7 +241,7 @@ class ProductDataFixture
     /**
      * @return int[]
      */
-    private function getPerformanceCategoryIds()
+    private function getPerformanceCategoryIds(): array
     {
         $allCategoryIds = $this->categoryRepository->getAllIds();
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
@@ -274,11 +253,7 @@ class ProductDataFixture
         return array_slice($allCategoryIds, $firstPerformanceCategoryKey);
     }
 
-    /**
-     * @param \App\Model\Category\Category $category
-     * @return bool
-     */
-    private function isPerformanceCategory(Category $category)
+    private function isPerformanceCategory(Category $category): bool
     {
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
             CategoryDataFixture::FIRST_PERFORMANCE_CATEGORY,

@@ -110,9 +110,7 @@ class GetFilteredStoresTest extends GraphQlTestCase
     }
 
     /**
-     * @param string|null $searchText
      * @param array{latitude: float, longitude: float}|null $coordinates
-     * @return array
      */
     private function getResponseEdges(?string $searchText = null, ?array $coordinates = null): array
     {

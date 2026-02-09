@@ -12,19 +12,13 @@ use Twig\TwigFunction;
 
 class InputPriceLabelExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('inputPriceLabel', $this->getInputPriceLabel(...)),
@@ -32,10 +26,7 @@ class InputPriceLabelExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getInputPriceLabel()
+    public function getInputPriceLabel(): string
     {
         $inputPriceType = $this->pricingSetting->getInputPriceType();
 
@@ -53,9 +44,6 @@ class InputPriceLabelExtension extends AbstractExtension
         }
     }
 
-    /**
-     * @return string
-     */
     public function getPriceVatLabel(): string
     {
         $inputPriceType = $this->pricingSetting->getInputPriceType();
@@ -69,10 +57,7 @@ class InputPriceLabelExtension extends AbstractExtension
         };
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'input_price_label_extension';
     }

@@ -13,26 +13,20 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class InputPriceCalculationTest extends TestCase
 {
-    /**
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     * @param string $vatPercent
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedResult
-     */
     #[DataProvider('getInputPriceDataProvider')]
     public function testGetInputPrice(
         int $inputPriceType,
         Money $priceWithVat,
         string $vatPercent,
         Money $expectedResult,
-    ) {
+    ): void {
         $inputPriceCalculation = new InputPriceCalculation();
         $actualInputPrice = $inputPriceCalculation->getInputPrice($inputPriceType, $priceWithVat, $vatPercent);
 
         $this->assertThat($actualInputPrice, new IsMoneyEqual($expectedResult));
     }
 
-    public static function getInputPriceDataProvider()
+    public static function getInputPriceDataProvider(): array
     {
         return [
             [

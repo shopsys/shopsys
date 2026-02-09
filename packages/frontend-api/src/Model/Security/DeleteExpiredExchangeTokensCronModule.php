@@ -12,9 +12,6 @@ class DeleteExpiredExchangeTokensCronModule implements SimpleCronModuleInterface
 {
     protected Logger $logger;
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeTokenFacade $loginAsUserExchangeTokenFacade
-     */
     public function __construct(
         protected readonly LoginAsUserExchangeTokenFacade $loginAsUserExchangeTokenFacade,
     ) {
@@ -24,13 +21,13 @@ class DeleteExpiredExchangeTokensCronModule implements SimpleCronModuleInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
 
     #[Override]
-    public function run()
+    public function run(): void
     {
         $this->logger->info('Removing expired login as user exchange tokens');
         $this->loginAsUserExchangeTokenFacade->deleteAllExpired();

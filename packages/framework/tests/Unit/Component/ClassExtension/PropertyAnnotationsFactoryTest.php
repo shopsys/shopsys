@@ -18,10 +18,14 @@ use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotatio
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass2;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass3;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass4;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass5;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass6;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass2;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass3;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass4;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass5;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass6;
 
 class PropertyAnnotationsFactoryTest extends TestCase
 {
@@ -36,20 +40,22 @@ class PropertyAnnotationsFactoryTest extends TestCase
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass2' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass2',
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass3' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass3',
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass4' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass4',
+            'Shopsys\FrameworkBundle\Model\Category\Category' => 'App\Model\Category\Category',
+            'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass5' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass5',
+            'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass6' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass6',
         ]);
 
         $typehintHelper = new TypehintHelper();
+        $docBlockParser = new DocBlockParser();
 
         $this->propertyAnnotationsFactory = new PropertyAnnotationsFactory(
             $replacementMap,
-            new AnnotationsReplacer($replacementMap, new DocBlockParser(), $typehintHelper),
+            new AnnotationsReplacer($replacementMap, $docBlockParser, $typehintHelper),
             $typehintHelper,
+            $docBlockParser,
         );
     }
 
-    /**
-     * @return array
-     */
     public static function getProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider(): array
     {
         return [
@@ -71,10 +77,6 @@ class PropertyAnnotationsFactoryTest extends TestCase
         ];
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkReflectionClass
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectReflectionClass
-     */
     #[DataProvider('getProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider')]
     public function testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResult(
         ReflectionClass $frameworkReflectionClass,
@@ -101,6 +103,47 @@ class PropertyAnnotationsFactoryTest extends TestCase
         );
         $this->assertStringContainsString(
             '@property \Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass $class',
+            $annotationLines,
+        );
+    }
+
+    public function testAnnotationTakesPrecedenceOverTypehint(): void
+    {
+        $annotationLines = $this->propertyAnnotationsFactory->getProjectClassNecessaryPropertyAnnotationsLines(
+            ReflectionObject::createFromName(BaseClass5::class),
+            ReflectionObject::createFromName(ChildClass5::class),
+        );
+
+        // Annotation provides more specific type (Category[]) than typehint (array)
+        // Should use annotation type, not fall back to typehint
+        $this->assertStringContainsString(
+            '@property \App\Model\Category\Category[] $categories',
+            $annotationLines,
+        );
+    }
+
+    public function testGetProjectClassNecessaryPropertyAnnotationsLinesWithTypehintOnly(): void
+    {
+        $annotationLines = $this->propertyAnnotationsFactory->getProjectClassNecessaryPropertyAnnotationsLines(
+            ReflectionObject::createFromName(BaseClass6::class),
+            ReflectionObject::createFromName(ChildClass6::class),
+        );
+
+        // Property with typehint only (no @var annotation)
+        $this->assertStringContainsString(
+            '@property \App\Model\Category\CategoryFacade $categoryFacade',
+            $annotationLines,
+        );
+
+        // Property with nullable typehint only
+        $this->assertStringContainsString(
+            '@property \App\Model\Category\Category|null $nullableCategory',
+            $annotationLines,
+        );
+
+        // Property with union typehint only
+        $this->assertStringContainsString(
+            '@property \App\Model\Category\Category|\App\Model\Category\CategoryFacade $unionType',
             $annotationLines,
         );
     }

@@ -11,16 +11,10 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 
 class CartItemResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly Domain $domain)
     {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

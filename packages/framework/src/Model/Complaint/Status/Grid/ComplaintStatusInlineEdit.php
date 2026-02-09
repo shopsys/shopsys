@@ -18,14 +18,6 @@ use Symfony\Component\Form\FormInterface;
 
 class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\Grid\ComplaintStatusGridFactory $complaintStatusGridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusDataFactory $complaintStatusDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         ComplaintStatusGridFactory $complaintStatusGridFactory,
         AccessCheckerInterface $accessChecker,
@@ -39,7 +31,6 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
-     * @return int
      */
     #[Override]
     protected function createEntityAndGetId(mixed $complaintStatusData): int
@@ -56,7 +47,6 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int|string $complaintStatusId
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
      */
     #[Override]
@@ -65,10 +55,6 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
         $this->complaintStatusFacade->edit($complaintStatusId, $complaintStatusData);
     }
 
-    /**
-     * @param int|string|null $rowId
-     * @return \Symfony\Component\Form\FormInterface
-     */
     #[Override]
     public function getForm(int|string|null $rowId): FormInterface
     {
@@ -82,9 +68,6 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
         return $this->formFactory->create(ComplaintStatusFormType::class, $complaintStatusData);
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     protected function getRoleConstant(): string
     {

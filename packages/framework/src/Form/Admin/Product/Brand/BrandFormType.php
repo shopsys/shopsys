@@ -25,20 +25,12 @@ use Symfony\Component\Validator\Constraints;
 
 final class BrandFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     */
     public function __construct(
         private readonly Domain $domain,
         private readonly SeoSettingFacade $seoSettingFacade,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -165,9 +157,6 @@ final class BrandFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -179,10 +168,6 @@ final class BrandFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null $brand
-     * @return string
-     */
     private function getTitlePlaceholder(?Brand $brand = null): string
     {
         return $brand?->getName() ?? '';

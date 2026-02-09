@@ -13,7 +13,6 @@ class MustUploadFileValidator extends ConstraintValidator
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileData $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
      */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void

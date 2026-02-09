@@ -13,19 +13,11 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class OrderItemFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public function createOrderItem(
         OrderItemData $orderItemData,
         Order $order,
@@ -44,12 +36,6 @@ class OrderItemFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public function createProduct(
         OrderItemData $orderItemData,
         Order $order,
@@ -65,12 +51,6 @@ class OrderItemFactory
         return $orderItem;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public function createProductGift(
         OrderItemData $orderItemData,
         Order $order,
@@ -86,12 +66,6 @@ class OrderItemFactory
         return $orderItem;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public function createTransport(
         OrderItemData $orderItemData,
         Order $order,
@@ -107,12 +81,6 @@ class OrderItemFactory
         return $orderItem;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public function createPayment(
         OrderItemData $orderItemData,
         Order $order,
@@ -128,11 +96,6 @@ class OrderItemFactory
         return $orderItem;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public function createDiscount(
         OrderItemData $orderItemData,
         Order $order,
@@ -143,11 +106,6 @@ class OrderItemFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public function createRounding(
         OrderItemData $orderItemData,
         Order $order,

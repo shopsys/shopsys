@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
 
 class CartPaymentDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider $paymentPriceProvider
-     */
     public function __construct(
         protected readonly PaymentFacade $paymentFacade,
         protected readonly Domain $domain,
@@ -25,12 +20,6 @@ class CartPaymentDataFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param string $paymentUuid
-     * @param string|null $goPayBankSwift
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentData
-     */
     public function create(Cart $cart, string $paymentUuid, ?string $goPayBankSwift): CartPaymentData
     {
         $domainId = $this->domain->getId();
@@ -45,12 +34,6 @@ class CartPaymentDataFactory
         return $cartPaymentData;
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     protected function getPaymentWatchedPriceWithVat(int $domainId, Cart $cart, Payment $payment): Money
     {
         return $this->paymentPriceProvider->getPaymentPrice(

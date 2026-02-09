@@ -17,7 +17,6 @@ class CategoryRepository extends BaseCategoryRepository
 {
     /**
      * @param \App\Model\Category\Category[] $categories
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[][]
      */
     public function getAllVisibleChildrenByCategoriesAndDomainConfig(

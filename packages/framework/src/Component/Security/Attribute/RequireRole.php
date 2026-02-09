@@ -25,7 +25,6 @@ final readonly class RequireRole
     public array $roles;
 
     /**
-     * @param string|array $roles
      * @param array<string|\Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod> $methods
      */
     public function __construct(

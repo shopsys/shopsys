@@ -11,9 +11,6 @@ use Twig\TwigFunction;
 
 final class ErrorIdExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
-     */
     public function __construct(
         private readonly ErrorIdProvider $errorIdProvider,
     ) {
@@ -23,16 +20,13 @@ final class ErrorIdExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('error_id', $this->getErrorId(...)),
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getErrorId(): string
     {
         return $this->errorIdProvider->getErrorId();

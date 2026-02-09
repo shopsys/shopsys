@@ -44,8 +44,6 @@ final class WorkerRunner
     }
 
     /**
-     * @param \Shopsys\Cli\Config\CoreProjectConfig $config
-     * @param string $projectPath
      * @param callable(\Shopsys\Cli\Worker\WorkerInterface, \Shopsys\Cli\Worker\WorkerResult): void $progressCallback
      * @return array<\Shopsys\Cli\Worker\WorkerResult>
      */
@@ -87,7 +85,6 @@ final class WorkerRunner
 
     /**
      * @param array<\Shopsys\Cli\Worker\WorkerResult> $results
-     * @return bool
      */
     public function allSuccessful(array $results): bool
     {

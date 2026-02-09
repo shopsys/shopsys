@@ -25,8 +25,6 @@ abstract class AbstractContext
      * Get a human-readable description of this context. It should explain what this context is for and when it is used.
      * This description can help developer to understand the purpose of the context and when it should be applied.
      * It's also used in `shopsys:contexts:list` command
-     *
-     * @return string
      */
     abstract public function getDescription(): string;
 

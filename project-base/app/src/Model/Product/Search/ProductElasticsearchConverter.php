@@ -10,10 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter a
 
 class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
 {
-    /**
-     * @param array $product
-     * @return array
-     */
     #[Override]
     public function fillEmptyFields(array $product): array
     {

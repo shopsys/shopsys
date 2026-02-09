@@ -30,7 +30,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
     /**
      * @var int
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -39,7 +38,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translations(targetEntity: TransportTranslation::class)]
     protected $translations;
@@ -105,9 +103,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     #[ORM\Column(type: 'string', length: 25)]
     protected $type;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     */
     public function __construct(TransportData $transportData)
     {
         $this->translations = new ArrayCollection();
@@ -121,18 +116,12 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         $this->setData($transportData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     */
-    public function edit(TransportData $transportData)
+    public function edit(TransportData $transportData): void
     {
         $this->setDomains($transportData);
         $this->setData($transportData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     */
     protected function setData(TransportData $transportData): void
     {
         $this->hidden = $transportData->hidden;
@@ -142,10 +131,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         $this->setTranslations($transportData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     */
-    protected function setTranslations(TransportData $transportData)
+    protected function setTranslations(TransportData $transportData): void
     {
         foreach ($transportData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -201,7 +187,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isEnabled(int $domainId)
@@ -220,7 +205,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @param array<int, \Shopsys\FrameworkBundle\Model\Transport\TransportPrice> $prices
      */
-    public function setPrices($prices)
+    public function setPrices($prices): void
     {
         $this->prices = new ArrayCollection($prices);
     }
@@ -241,7 +226,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         return $this->deleted;
     }
 
-    public function markAsDeleted()
+    public function markAsDeleted(): void
     {
         $this->deleted = true;
     }
@@ -258,15 +243,12 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      * @param int $position
      */
     #[Override]
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     */
-    protected function setDomains(TransportData $transportData)
+    protected function setDomains(TransportData $transportData): void
     {
         foreach ($this->domains as $transportDomain) {
             $domainId = $transportDomain->getDomainId();
@@ -275,10 +257,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     */
-    protected function createDomains(TransportData $transportData)
+    protected function createDomains(TransportData $transportData): void
     {
         $domainIds = array_keys($transportData->enabled);
 
@@ -299,10 +278,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         return new TransportTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     */
-    public function addPayment(Payment $payment)
+    public function addPayment(Payment $payment): void
     {
         if (!$this->payments->contains($payment)) {
             $this->payments->add($payment);
@@ -313,7 +289,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
      */
-    public function setPayments($payments)
+    public function setPayments($payments): void
     {
         foreach ($this->payments as $currentPayment) {
             if (!in_array($currentPayment, $payments, true)) {
@@ -326,10 +302,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     */
-    public function removePayment(Payment $payment)
+    public function removePayment(Payment $payment): void
     {
         if ($this->payments->contains($payment)) {
             $this->payments->removeElement($payment);
@@ -346,7 +319,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Transport\TransportDomain
      */
     public function getTransportDomain(int $domainId)
@@ -360,10 +332,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         throw new TransportDomainNotFoundException($domainId, $this->id);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportPrice
-     */
     public function getLowestPriceOnDomain(int $domainId): TransportPrice
     {
         $lowestPrice = null;
@@ -384,7 +352,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Transport\TransportPrice[]
      */
     public function getPricesByDomainId(int $domainId): array
@@ -416,17 +383,11 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         return $this->daysUntilDelivery;
     }
 
-    /**
-     * @return bool
-     */
     public function isPersonalPickup(): bool
     {
         return $this->type === TransportTypeEnum::TYPE_PERSONAL_PICKUP;
     }
 
-    /**
-     * @return bool
-     */
     public function isPacketery(): bool
     {
         return $this->type === TransportTypeEnum::TYPE_PACKETERY;
@@ -457,10 +418,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         return $this->type;
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
     public function getVatForDomain(int $domainId): Vat
     {
         return $this->getTransportDomain($domainId)->getVat();

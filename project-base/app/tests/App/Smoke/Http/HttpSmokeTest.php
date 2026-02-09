@@ -9,25 +9,19 @@ use Shopsys\HttpSmokeTesting\HttpSmokeTestCase;
 use Shopsys\HttpSmokeTesting\RouteConfigCustomizer;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class HttpSmokeTest extends HttpSmokeTestCase
 {
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     #[Override]
-    protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
+    protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomization = new RouteConfigCustomization(KernelTestCase::getContainer());
         $routeConfigCustomization->customizeRouteConfigs($routeConfigCustomizer);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Override]
-    protected function handleRequest(Request $request)
+    protected function handleRequest(Request $request): Response
     {
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = static::getContainer()->get('doctrine.orm.entity_manager');

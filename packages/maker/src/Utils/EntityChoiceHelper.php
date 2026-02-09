@@ -13,7 +13,6 @@ use Symfony\Component\Console\Question\Question;
 class EntityChoiceHelper
 {
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param array<string, string> $entityExtensionMap
      */
     public function __construct(
@@ -22,11 +21,6 @@ class EntityChoiceHelper
     ) {
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
-     * @param string $questionText
-     * @return string
-     */
     public function askForEntity(ConsoleStyle $io, string $questionText): string
     {
         while (true) {
@@ -64,9 +58,6 @@ class EntityChoiceHelper
     /**
      * Converts a fully qualified class name to a format suitable for autocompletion.
      * E.g. "Shopsys\FrameworkBundle\Model\Store\Store" -> "Store (Shopsys\FrameworkBundle\Model\Store\Store)"
-     *
-     * @param string $fqcn
-     * @return string
      */
     protected function convertFqcnToAutocompleteFormat(string $fqcn): string
     {
@@ -75,10 +66,6 @@ class EntityChoiceHelper
         return sprintf('%s (%s)', $className, $fqcn);
     }
 
-    /**
-     * @param string $autocompleteFormat
-     * @return string
-     */
     protected function convertAutocompleteFormatToFqcn(string $autocompleteFormat): string
     {
         if (preg_match('/\((.*?)\)$/', $autocompleteFormat, $matches)) {

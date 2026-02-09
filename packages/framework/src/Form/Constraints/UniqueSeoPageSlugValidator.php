@@ -12,18 +12,11 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueSeoPageSlugValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade $seoPageFacade
-     */
     public function __construct(
         protected readonly SeoPageFacade $seoPageFacade,
     ) {
     }
 
-    /**
-     * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {

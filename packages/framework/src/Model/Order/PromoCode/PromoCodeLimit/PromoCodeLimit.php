@@ -31,10 +31,6 @@ class PromoCodeLimit
     #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     protected $discount;
 
-    /**
-     * @param string $from
-     * @param string $discount
-     */
     public function __construct(string $from, string $discount)
     {
         $this->fromPrice = $from;

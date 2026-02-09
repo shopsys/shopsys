@@ -9,9 +9,6 @@ use Tests\CodingStandards\Unit\Sniffs\RequireOverrideAttributeSniff\Base\SimpleT
 
 class SimpleWithParentClass extends SimpleTestClass
 {
-    /**
-     * @return string
-     */
     #[Override]
     public function getName(): string
     {
@@ -23,9 +20,6 @@ class SimpleWithParentClass extends SimpleTestClass
     {
     }
 
-    /**
-     * @return string
-     */
     public function uniqueMethod(): string
     {
         return '';

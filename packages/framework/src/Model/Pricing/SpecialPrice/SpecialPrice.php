@@ -22,9 +22,6 @@ class SpecialPrice
 
     public string $priceListName;
 
-    /**
-     * @return bool
-     */
     public function isFuturePrice(): bool
     {
         $now = new DatePoint();
@@ -32,9 +29,6 @@ class SpecialPrice
         return $this->validFrom > $now;
     }
 
-    /**
-     * @return bool
-     */
     public function isNowActive(): bool
     {
         $now = new DatePoint();

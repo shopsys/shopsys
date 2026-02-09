@@ -8,16 +8,12 @@ use RuntimeException;
 
 class JsonHandler
 {
-    /**
-     * @param \Shopsys\Cli\Model\FileHandler $fileHandler
-     */
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {
     }
 
     /**
-     * @param string $path
      * @return array<mixed>
      */
     public function readJson(string $path): array
@@ -33,7 +29,6 @@ class JsonHandler
     }
 
     /**
-     * @param string $path
      * @param array<mixed> $data
      */
     public function writeJson(string $path, array $data): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -17,7 +18,7 @@ use Tests\FrameworkBundle\Unit\Model\Customer\Mock\TokenMock;
 
 class CurrentCustomerUserTest extends TestCase
 {
-    public function testGetPricingGroupForUnregisteredCustomerReturnsDefaultPricingGroup()
+    public function testGetPricingGroupForUnregisteredCustomerReturnsDefaultPricingGroup(): void
     {
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
@@ -41,7 +42,7 @@ class CurrentCustomerUserTest extends TestCase
         $this->assertSame($expectedPricingGroup, $pricingGroup);
     }
 
-    public function testGetPricingGroupForRegisteredCustomerReturnsHisPricingGroup()
+    public function testGetPricingGroupForRegisteredCustomerReturnsHisPricingGroup(): void
     {
         $customerUser = TestCustomerProvider::getTestCustomerUser();
         $expectedPricingGroup = $customerUser->getPricingGroup();
@@ -62,12 +63,9 @@ class CurrentCustomerUserTest extends TestCase
         $this->assertSame($expectedPricingGroup, $pricingGroup);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $defaultPricingGroup
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    private function getPricingGroupSettingFacadeMockReturningDefaultPricingGroup(PricingGroup $defaultPricingGroup)
-    {
+    private function getPricingGroupSettingFacadeMockReturningDefaultPricingGroup(
+        PricingGroup $defaultPricingGroup,
+    ): MockObject|PricingGroupSettingFacade {
         $pricingGroupSettingFacadeMock = $this->getMockBuilder(PricingGroupSettingFacade::class)
             ->onlyMethods(['getDefaultPricingGroupByCurrentDomain'])
             ->disableOriginalConstructor()
@@ -80,12 +78,9 @@ class CurrentCustomerUserTest extends TestCase
         return $pricingGroupSettingFacadeMock;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
-     */
-    private function getTokenStorageMockForCustomerUser(CustomerUser $customerUser)
-    {
+    private function getTokenStorageMockForCustomerUser(
+        CustomerUser $customerUser,
+    ): MockObject|TokenStorage {
         /**
          * Until version 6 of symfony, the TokenInterface mock needs to be mocked manually.
          * The function getUserIdentifier() is included in the interface only with annotation and therefore cannot be mocked using the phpunit tool.

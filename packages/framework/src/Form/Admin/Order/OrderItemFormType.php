@@ -25,18 +25,11 @@ final class OrderItemFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION = 'notUsingPriceCalculation';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     */
     public function __construct(
         protected readonly OrderItemDataFactory $orderItemDataFactory,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -113,9 +106,6 @@ final class OrderItemFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -130,7 +120,6 @@ final class OrderItemFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
      * @return string[]
      */
     public static function resolveValidationGroups(FormInterface $form): array

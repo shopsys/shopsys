@@ -10,20 +10,10 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ManualBestsellingProductFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $position
-     * @return \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProduct
-     */
     public function create(
         int $domainId,
         Category $category,

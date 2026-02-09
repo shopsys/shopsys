@@ -20,11 +20,6 @@ class PersonalDataAccessMail implements MessageFactoryInterface
     public const VARIABLE_URL = '{url}';
     public const VARIABLE_DOMAIN = '{domain}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly Setting $setting,
@@ -33,13 +28,13 @@ class PersonalDataAccessMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     #[Override]
-    public function createMessage(MailTemplate $template, $personalDataAccessRequest)
-    {
+    public function createMessage(
+        MailTemplate $template,
+        $personalDataAccessRequest,
+    ): MessageData {
         return new MessageData(
             $personalDataAccessRequest->getEmail(),
             $template->getBccEmail(),
@@ -58,13 +53,7 @@ class PersonalDataAccessMail implements MessageFactoryInterface
         );
     }
 
-    /**
-     * @param string $url
-     * @param string $email
-     * @param string $domainName
-     * @return array
-     */
-    protected function getBodyValuesIndexedByVariableName($url, $email, $domainName)
+    protected function getBodyValuesIndexedByVariableName(string $url, string $email, string $domainName): array
     {
         return [
             self::VARIABLE_URL => $url,
@@ -73,22 +62,14 @@ class PersonalDataAccessMail implements MessageFactoryInterface
         ];
     }
 
-    /**
-     * @param string $domainName
-     * @return array
-     */
-    protected function getSubjectValuesIndexedByVariableName($domainName)
+    protected function getSubjectValuesIndexedByVariableName(string $domainName): array
     {
         return [
             self::VARIABLE_DOMAIN => $domainName,
         ];
     }
 
-    /**
-     * @param string $hash
-     * @return string
-     */
-    protected function getVariablePersonalDataAccessUrl($hash)
+    protected function getVariablePersonalDataAccessUrl(string $hash): string
     {
         $router = $this->domainRouterFactory->getRouter($this->domain->getId());
 

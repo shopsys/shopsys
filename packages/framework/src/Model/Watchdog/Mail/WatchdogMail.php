@@ -25,14 +25,6 @@ class WatchdogMail
     public const string VARIABLE_PRODUCT_URL = '{product_url}';
     public const string VARIABLE_PRODUCT_IMAGE = '{product_image}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Image\ProductImageFacade $productImageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Mailer\MailerHelper $mailerHelper
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly Domain $domain,
@@ -43,11 +35,6 @@ class WatchdogMail
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\Watchdog $watchdog
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
-     */
     public function createMessage(MailTemplate $template, Watchdog $watchdog): MessageData
     {
         return $this->createMessageFromProductAndEmail(
@@ -58,13 +45,6 @@ class WatchdogMail
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
-     * @param string $email
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
-     */
     public function createMessageFromProductAndEmail(
         MailTemplate $template,
         string $email,
@@ -86,8 +66,6 @@ class WatchdogMail
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param string $locale
      * @return array<string, string>
      */
     protected function getSubjectVariablesReplacements(Product $product, string $locale): array
@@ -98,8 +76,6 @@ class WatchdogMail
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
      * @return array<string, string>
      */
     protected function getBodyVariablesReplacements(Product $product, int $domainId): array
@@ -114,12 +90,6 @@ class WatchdogMail
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param string $locale
-     * @return string
-     */
     protected function getProductQuantity(Product $product, int $domainId, string $locale): string
     {
         $productQuantity = $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId(
@@ -136,11 +106,6 @@ class WatchdogMail
         return $productQuantity . ' ' . $unit;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     protected function getProductUrl(Product $product, int $domainId): string
     {
         return $this->domainRouterFactory->getRouter($domainId)->generate(

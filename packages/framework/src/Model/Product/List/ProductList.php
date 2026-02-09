@@ -61,9 +61,6 @@ class ProductList
     #[ORM\Column(type: 'string', length: 20, nullable: false)]
     protected $type;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListData $productListData
-     */
     public function __construct(ProductListData $productListData)
     {
         $this->customerUser = $productListData->customerUser;
@@ -79,9 +76,6 @@ class ProductList
         $this->updatedAt = new DatePoint();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem $productListItem
-     */
     public function addItem(ProductListItem $productListItem): void
     {
         $this->setUpdatedAtToNow();
@@ -97,9 +91,6 @@ class ProductList
         $this->customerUser = $customerUser;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem $productListItem
-     */
     public function removeItem(ProductListItem $productListItem): void
     {
         $this->setUpdatedAtToNow();
@@ -122,10 +113,6 @@ class ProductList
         return $this->type;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem|null
-     */
     public function findProductListItemByProduct(Product $product): ?ProductListItem
     {
         foreach ($this->items as $productListItem) {
@@ -137,9 +124,6 @@ class ProductList
         return null;
     }
 
-    /**
-     * @return int
-     */
     public function getItemsCount(): int
     {
         return $this->items->count();

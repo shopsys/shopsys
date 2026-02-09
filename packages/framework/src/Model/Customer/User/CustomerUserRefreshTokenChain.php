@@ -51,9 +51,6 @@ class CustomerUserRefreshTokenChain
     #[ORM\ManyToOne(targetEntity: Administrator::class)]
     protected $administrator;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainData $customerUserRefreshTokenChainData
-     */
     public function __construct(CustomerUserRefreshTokenChainData $customerUserRefreshTokenChainData)
     {
         $this->uuid = $customerUserRefreshTokenChainData->uuid ?: Uuid::uuid4()->toString();

@@ -15,10 +15,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueSlugsOnDomainsValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DomainRouterFactory $domainRouterFactory,
@@ -27,7 +23,6 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
 
     /**
      * @param array $values
-     * @param \Symfony\Component\Validator\Constraint $constraint
      */
     #[Override]
     public function validate(mixed $values, Constraint $constraint): void
@@ -40,10 +35,6 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
         $this->validateExists($values, $constraint);
     }
 
-    /**
-     * @param array $values
-     * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains $constraint
-     */
     protected function validateDuplication(array $values, UniqueSlugsOnDomains $constraint): void
     {
         $slugsCountByDomainId = $this->getSlugsCountIndexedByDomainId($values);
@@ -64,11 +55,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param array $values
-     * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains $constraint
-     */
-    protected function validateExists($values, UniqueSlugsOnDomains $constraint)
+    protected function validateExists(array $values, UniqueSlugsOnDomains $constraint): void
     {
         foreach ($values as $urlData) {
             $domainId = $urlData[UrlListData::FIELD_DOMAIN];
@@ -93,10 +80,9 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
      * @return int[][]
      */
-    protected function getSlugsCountIndexedByDomainId(array $values)
+    protected function getSlugsCountIndexedByDomainId(array $values): array
     {
         $slugsCountByDomainId = [];
 

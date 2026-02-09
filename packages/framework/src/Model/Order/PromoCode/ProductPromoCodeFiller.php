@@ -12,12 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductPromoCodeFiller
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository $promoCodeProductRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryRepository $promoCodeCategoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandRepository $promoCodeBrandRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
-     */
     public function __construct(
         protected readonly PromoCodeProductRepository $promoCodeProductRepository,
         protected readonly PromoCodeCategoryRepository $promoCodeCategoryRepository,
@@ -28,8 +22,6 @@ class ProductPromoCodeFiller
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @return array<int, \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode>
      */
     public function getPromoCodePerProductByDomainId(
@@ -56,8 +48,6 @@ class ProductPromoCodeFiller
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
      */
     protected function fillPromoCodeDiscountsForAllProducts(
@@ -84,8 +74,6 @@ class ProductPromoCodeFiller
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int[] $allowedProductIds
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
-     * @param int $domainId
      * @return array<int, \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode>
      */
     protected function fillPromoCodes(
@@ -113,12 +101,6 @@ class ProductPromoCodeFiller
         return $promoCodeDiscountPercentPerProduct;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
-     */
     public function filterProductByPromoCodeFlags(
         Product $product,
         PromoCode $validEnteredPromoCode,
@@ -145,8 +127,6 @@ class ProductPromoCodeFiller
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param int $domainId
      * @return int[]
      */
     public function getAllowedProductIdsForBrandsAndCategories(PromoCode $promoCode, int $domainId): array

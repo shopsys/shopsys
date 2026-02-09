@@ -8,18 +8,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 
 class ParameterWithValuesFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
-     */
     public function __construct(
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
     ) {
     }
 
-    /**
-     * @param array $productData
-     * @return array
-     */
     public function createParametersArrayFromProductArray(array $productData): array
     {
         $parametersWithValues = [];
@@ -42,10 +35,6 @@ class ParameterWithValuesFactory
         return $parametersWithValues;
     }
 
-    /**
-     * @param array $product
-     * @return array
-     */
     protected function mapParameterArray(array $product): array
     {
         return [
@@ -57,10 +46,6 @@ class ParameterWithValuesFactory
         ];
     }
 
-    /**
-     * @param array $parameterArray
-     * @return array|null
-     */
     protected function mapColorIcon(array $parameterArray): ?array
     {
         $anchorText = $parameterArray['parameter_value_icon_anchor_text'];

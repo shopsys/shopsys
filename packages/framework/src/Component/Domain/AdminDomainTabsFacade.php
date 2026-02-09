@@ -13,36 +13,23 @@ class AdminDomainTabsFacade
 {
     protected const string SESSION_SELECTED_DOMAIN = 'selected_domain_id';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly RequestStack $requestStack,
     ) {
     }
 
-    /**
-     * @return int
-     */
     public function getSelectedDomainId(): int
     {
         return $this->getSelectedDomainConfig()->getId();
     }
 
-    /**
-     * @param int $domainId
-     */
     public function setSelectedDomainId(int $domainId): void
     {
         $domainConfig = $this->domain->getDomainConfigById($domainId);
         $this->requestStack->getSession()->set(static::SESSION_SELECTED_DOMAIN, $domainConfig->getId());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function getSelectedDomainConfig(): DomainConfig
     {
         try {

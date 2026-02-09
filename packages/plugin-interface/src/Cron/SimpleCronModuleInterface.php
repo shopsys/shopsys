@@ -18,13 +18,10 @@ use Monolog\Logger;
  */
 interface SimpleCronModuleInterface
 {
-    /**
-     * @param \Monolog\Logger $logger
-     */
-    public function setLogger(Logger $logger);
+    public function setLogger(Logger $logger): void;
 
     /**
      * This method is called to run the CRON module.
      */
-    public function run();
+    public function run(): void;
 }

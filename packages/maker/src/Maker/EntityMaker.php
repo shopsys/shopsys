@@ -23,9 +23,6 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class EntityMaker extends BaseMaker
 {
-    /**
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityFieldsConfigurator $entityFieldsConfigurator
-     */
     public function __construct(
         protected readonly EntityFieldsConfigurator $entityFieldsConfigurator,
     ) {
@@ -48,11 +45,6 @@ class EntityMaker extends BaseMaker
         return 'Create a new entity class';
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
-     * @param \Symfony\Bundle\MakerBundle\Generator $generator
-     */
     #[Override]
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
@@ -149,9 +141,6 @@ class EntityMaker extends BaseMaker
         return [];
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\Generator $generator
-     */
     protected function createEntityClass(Generator $generator): void
     {
         $classNameDetails = $this->createClassNameDetails($generator);
@@ -168,9 +157,6 @@ class EntityMaker extends BaseMaker
         $generator->writeChanges();
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\Generator $generator
-     */
     protected function createEntityDataClass(Generator $generator): void
     {
         $classNameDetails = $generator->createClassNameDetails(
@@ -189,9 +175,6 @@ class EntityMaker extends BaseMaker
         $generator->writeChanges();
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\Generator $generator
-     */
     protected function createEntityDataFactoryClass(Generator $generator): void
     {
         $classNameDetails = $generator->createClassNameDetails(
@@ -217,9 +200,6 @@ class EntityMaker extends BaseMaker
         $generator->writeChanges();
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\Generator $generator
-     */
     protected function createEntityTranslationClass(Generator $generator): void
     {
         $classNameDetails = $generator->createClassNameDetails(
@@ -244,9 +224,6 @@ class EntityMaker extends BaseMaker
         $generator->writeChanges();
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\Generator $generator
-     */
     protected function createEntityDomainClass(Generator $generator): void
     {
         $classNameDetails = $generator->createClassNameDetails(
@@ -274,9 +251,6 @@ class EntityMaker extends BaseMaker
         $generator->writeChanges();
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\Generator $generator
-     */
     protected function createEntityDomainNotFoundExceptionClass(Generator $generator): void
     {
         $classNameDetails = $generator->createClassNameDetails(

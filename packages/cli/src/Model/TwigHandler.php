@@ -21,9 +21,7 @@ final class TwigHandler
     }
 
     /**
-     * @param string $templatePath
      * @param array<string, mixed> $variables
-     * @return string
      */
     public function render(string $templatePath, array $variables = []): string
     {

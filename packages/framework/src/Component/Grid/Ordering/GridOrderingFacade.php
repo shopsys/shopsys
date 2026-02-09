@@ -9,18 +9,11 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderab
 
 class GridOrderingFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @param string $entityClass
-     * @param array $rowIds
-     */
-    public function saveOrdering($entityClass, array $rowIds)
+    public function saveOrdering(string $entityClass, array $rowIds): void
     {
         $entityRepository = $this->getEntityRepository($entityClass);
         $position = 0;
@@ -33,11 +26,7 @@ class GridOrderingFacade
         $this->em->flush();
     }
 
-    /**
-     * @param string $entityClass
-     * @return mixed
-     */
-    protected function getEntityRepository($entityClass)
+    protected function getEntityRepository(string $entityClass): mixed
     {
         $interfaces = class_implements($entityClass);
 

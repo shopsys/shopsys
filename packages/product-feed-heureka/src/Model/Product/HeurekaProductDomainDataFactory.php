@@ -6,17 +6,11 @@ namespace Shopsys\ProductFeed\HeurekaBundle\Model\Product;
 
 class HeurekaProductDomainDataFactory
 {
-    /**
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData
-     */
     protected function createInstance(): HeurekaProductDomainData
     {
         return new HeurekaProductDomainData();
     }
 
-    /**
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData
-     */
     public function create(): HeurekaProductDomainData
     {
         return $this->createInstance();

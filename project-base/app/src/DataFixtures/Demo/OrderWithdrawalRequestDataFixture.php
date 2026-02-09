@@ -16,10 +16,6 @@ use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 
 class OrderWithdrawalRequestDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory $withdrawalRequestDataFactory
-     */
     public function __construct(
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
         protected readonly WithdrawalRequestDataFactory $withdrawalRequestDataFactory,

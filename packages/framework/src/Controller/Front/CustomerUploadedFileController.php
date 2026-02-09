@@ -16,22 +16,12 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CustomerUploadedFileController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     */
     public function __construct(
         protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
         protected readonly FilesystemOperator $filesystem,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $uploadedFileId
-     * @param string $uploadedFilename
-     * @return \Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse
-     */
     public function downloadAction(
         Request $request,
         int $uploadedFileId,
@@ -52,12 +42,6 @@ class CustomerUploadedFileController
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $uploadedFileId
-     * @param string $uploadedFilename
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     */
     public function viewAction(Request $request, int $uploadedFileId, string $uploadedFilename): StreamedResponse
     {
         try {
@@ -65,7 +49,7 @@ class CustomerUploadedFileController
             $uploadedFile = $this->getCustomerUploadedFile($uploadedFilename, $uploadedFileId, $hash);
             $filePath = $this->customerUploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
 
-            return new StreamedResponse(function () use ($filePath) {
+            return new StreamedResponse(function () use ($filePath): void {
                 $stream = $this->filesystem->readStream($filePath);
                 fpassthru($stream);
                 fclose($stream);
@@ -78,12 +62,6 @@ class CustomerUploadedFileController
         }
     }
 
-    /**
-     * @param string $uploadedFilename
-     * @param int $uploadedFileId
-     * @param string $hash
-     * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile
-     */
     protected function getCustomerUploadedFile(
         string $uploadedFilename,
         int $uploadedFileId,

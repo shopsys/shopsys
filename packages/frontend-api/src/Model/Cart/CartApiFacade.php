@@ -21,14 +21,6 @@ use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 
 class CartApiFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     */
     public function __construct(
         protected readonly CartFacade $cartFacade,
         protected readonly CustomerUserIdentifierFactory $customerUserIdentifierFactory,
@@ -39,11 +31,6 @@ class CartApiFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @param string|null $cartUuid
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
     public function findCart(?CustomerUser $customerUser, ?string $cartUuid): ?Cart
     {
         $this->assertFilledCustomerUserOrUuid($customerUser, $cartUuid);
@@ -57,10 +44,6 @@ class CartApiFacade
         return $this->getCartByUuid($cartUuid);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @param string|null $cartUuid
-     */
     protected function assertFilledCustomerUserOrUuid(?CustomerUser $customerUser, ?string $cartUuid): void
     {
         if ($customerUser === null && $cartUuid === null) {
@@ -68,10 +51,6 @@ class CartApiFacade
         }
     }
 
-    /**
-     * @param string $cartUuid
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
-     */
     public function getCartByUuid(string $cartUuid): Cart
     {
         $cart = $this->cartFacade->findCartByCartIdentifier($cartUuid);
@@ -84,11 +63,6 @@ class CartApiFacade
         return $cart;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @param string|null $cartUuid
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
-     */
     public function getCartCreateIfNotExists(?CustomerUser $customerUser, ?string $cartUuid): Cart
     {
         if ($customerUser === null && $cartUuid !== null) {
@@ -108,21 +82,11 @@ class CartApiFacade
         return $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     public function deleteCart(Cart $cart): void
     {
         $this->cartFacade->deleteCart($cart);
     }
 
-    /**
-     * @param string $productUuid
-     * @param int $quantity
-     * @param bool $isAbsoluteQuantity
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @return \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
-     */
     public function addProductByUuidToCart(
         string $productUuid,
         int $quantity,
@@ -142,11 +106,6 @@ class CartApiFacade
         }
     }
 
-    /**
-     * @param string $cartItemUuid
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
-     */
     public function removeItemByUuidFromCart(string $cartItemUuid, Cart $cart): Cart
     {
         try {

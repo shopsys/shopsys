@@ -23,13 +23,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 )]
 class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry $indexRegistry
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         IndexRegistry $indexRegistry,
         IndexFacade $indexFacade,

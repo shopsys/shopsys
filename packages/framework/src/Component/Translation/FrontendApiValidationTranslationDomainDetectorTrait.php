@@ -8,9 +8,6 @@ trait FrontendApiValidationTranslationDomainDetectorTrait
 {
     protected bool $isFrontendApiBundleConstraintClass = false;
 
-    /**
-     * @param string $className
-     */
     protected function setIfFrontendApiClass(string $className): void
     {
         if (str_starts_with($className, 'Shopsys\\FrontendApiBundle\\') || str_starts_with($className, 'App\\FrontendApi\\')) {
@@ -18,9 +15,6 @@ trait FrontendApiValidationTranslationDomainDetectorTrait
         }
     }
 
-    /**
-     * @return string
-     */
     protected function getTranslationDomain(): string
     {
         if ($this->isFrontendApiBundleConstraintClass) {

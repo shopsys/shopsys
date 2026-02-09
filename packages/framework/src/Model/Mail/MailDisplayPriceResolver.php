@@ -13,19 +13,12 @@ class MailDisplayPriceResolver
     public const string DISPLAY_PRICE_BOTH = 'both';
     protected const string DISPLAY_PRICE_SELLING = 'selling_price';
 
-    /**
-     * @param string $mailTemplateDisplayPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         protected readonly string $mailTemplateDisplayPrice,
         protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getDisplayPrice(): string
     {
         if ($this->mailTemplateDisplayPrice === static::DISPLAY_PRICE_SELLING) {

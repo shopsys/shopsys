@@ -8,9 +8,6 @@ use InvalidArgumentException;
 
 class SpaydValidator
 {
-    /**
-     * @param string $spayd
-     */
     public function validate(string $spayd): void
     {
         $spayd = trim($spayd);
@@ -122,8 +119,6 @@ class SpaydValidator
 
     /**
      * Validates BIC (8 or 11 characters, A–Z and 0–9), basic syntactic check.
-     *
-     * @param string $bic
      */
     protected function assertValidBic(string $bic): void
     {
@@ -137,8 +132,6 @@ class SpaydValidator
     /**
      * Validates IBAN in general (ISO 13616) and its checksum (mod 97 == 1).
      * Any country code (A–Z) allowed, length 15–34, format: CCkk... (2-letter country code + 2 check digits).
-     *
-     * @param string $iban
      */
     protected function assertValidIban(string $iban): void
     {
@@ -163,9 +156,6 @@ class SpaydValidator
     /**
      * IBAN checksum (ISO 13616): move the first four characters to the end,
      * convert letters to numbers (A=10 ... Z=35), the number mod 97 must be 1.
-     *
-     * @param string $iban
-     * @return bool
      */
     protected function ibanChecksumIsValid(string $iban): bool
     {

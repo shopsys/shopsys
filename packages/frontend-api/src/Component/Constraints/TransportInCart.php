@@ -30,13 +30,7 @@ class TransportInCart extends Constraint
 
     /**
      * @param array<string, mixed>|null $options
-     * @param string $unavailableTransportMessage
-     * @param string $unavailablePickupPlaceMessage
-     * @param string $weightLimitExceededMessage
-     * @param string $missingPickupPlaceIdentifierMessage
-     * @param string $invalidTransportPaymentCombinationMessage
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

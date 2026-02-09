@@ -17,16 +17,6 @@ class CronModuleConfig implements CronTimeInterface
 
     protected string $instanceName;
 
-    /**
-     * @param \Shopsys\Plugin\Cron\SimpleCronModuleInterface|\Shopsys\Plugin\Cron\IteratedCronModuleInterface $service
-     * @param string $serviceId
-     * @param string $timeHours
-     * @param string $timeMinutes
-     * @param string|null $readableName
-     * @param string|null $readableFrequency
-     * @param int $runEveryMin
-     * @param int $timeoutIteratedCronSec
-     */
     public function __construct(
         protected readonly SimpleCronModuleInterface|IteratedCronModuleInterface $service,
         protected readonly string $serviceId,
@@ -40,67 +30,43 @@ class CronModuleConfig implements CronTimeInterface
         $this->assignToInstance(self::DEFAULT_INSTANCE_NAME);
     }
 
-    /**
-     * @return \Shopsys\Plugin\Cron\SimpleCronModuleInterface|\Shopsys\Plugin\Cron\IteratedCronModuleInterface
-     */
     public function getService(): SimpleCronModuleInterface|IteratedCronModuleInterface
     {
         return $this->service;
     }
 
-    /**
-     * @return string
-     */
     public function getServiceId(): string
     {
         return $this->serviceId;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getTimeMinutes(): string
     {
         return $this->timeMinutes;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getTimeHours(): string
     {
         return $this->timeHours;
     }
 
-    /**
-     * @return string|null
-     */
     public function getReadableName(): ?string
     {
         return $this->readableName;
     }
 
-    /**
-     * @return string
-     */
     public function getInstanceName(): string
     {
         return $this->instanceName;
     }
 
-    /**
-     * @param string $instanceName
-     */
     public function assignToInstance(string $instanceName): void
     {
         $this->instanceName = $instanceName;
     }
 
-    /**
-     * @return string
-     */
     public function getReadableFrequency(): string
     {
         if ($this->readableFrequency !== null) {
@@ -135,17 +101,11 @@ class CronModuleConfig implements CronTimeInterface
         ]);
     }
 
-    /**
-     * @return int
-     */
     public function getRunEveryMin(): int
     {
         return $this->runEveryMin;
     }
 
-    /**
-     * @return int
-     */
     public function getTimeoutIteratedCronSec(): int
     {
         return $this->timeoutIteratedCronSec;

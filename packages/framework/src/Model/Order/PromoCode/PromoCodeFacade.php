@@ -22,22 +22,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class PromoCodeFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactory $promoCodeFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository $promoCodeLimitRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository $promoCodeProductRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryRepository $promoCodeCategoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductFactory $promoCodeProductFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryFactory $promoCodeCategoryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandRepository $promoCodeBrandRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandFactory $promoCodeBrandFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupFactory $promoCodePricingGroupFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PromoCodeRepository $promoCodeRepository,
@@ -56,10 +40,6 @@ class PromoCodeFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     */
     public function create(PromoCodeData $promoCodeData): PromoCode
     {
         $promoCode = $this->promoCodeFactory->create($promoCodeData);
@@ -71,11 +51,6 @@ class PromoCodeFacade
         return $promoCode;
     }
 
-    /**
-     * @param int $promoCodeId
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     */
     public function edit(int $promoCodeId, PromoCodeData $promoCodeData): PromoCode
     {
         $promoCode = $this->getById($promoCodeId);
@@ -87,18 +62,11 @@ class PromoCodeFacade
         return $promoCode;
     }
 
-    /**
-     * @param int $promoCodeId
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     */
     public function getById(int $promoCodeId): PromoCode
     {
         return $this->promoCodeRepository->getById($promoCodeId);
     }
 
-    /**
-     * @param int $promoCodeId
-     */
     public function deleteById(int $promoCodeId): void
     {
         $promoCode = $this->getById($promoCodeId);
@@ -106,11 +74,6 @@ class PromoCodeFacade
         $this->em->flush();
     }
 
-    /**
-     * @param string $code
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
-     */
     public function findPromoCodeByCodeAndDomain(string $code, int $domainId): ?PromoCode
     {
         return $this->promoCodeRepository->findByCodeAndDomainId($code, $domainId);
@@ -124,10 +87,6 @@ class PromoCodeFacade
         return $this->promoCodeRepository->getAll();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     */
     protected function refreshPromoCodeRelations(PromoCode $promoCode, PromoCodeData $promoCodeData): void
     {
         $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limits);
@@ -139,7 +98,6 @@ class PromoCodeFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit[] $limits
      */
     protected function refreshPromoCodeLimits(PromoCode $promoCode, array $limits): void
@@ -159,7 +117,6 @@ class PromoCodeFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[] $pricingGroups
      */
     protected function refreshPromoCodePricingGroups(PromoCode $promoCode, array $pricingGroups): void
@@ -197,7 +154,6 @@ class PromoCodeFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      */
     protected function refreshPromoCodeCategories(PromoCode $promoCode, array $categories): void
@@ -235,7 +191,6 @@ class PromoCodeFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      */
     protected function refreshPromoCodeProducts(PromoCode $promoCode, array $products): void
@@ -273,7 +228,6 @@ class PromoCodeFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brands
      */
     protected function refreshPromoCodeBrands(PromoCode $promoCode, array $brands): void
@@ -311,7 +265,6 @@ class PromoCodeFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[] $flags
      */
     protected function refreshPromoCodeFlags(PromoCode $promoCode, array $flags): void
@@ -326,9 +279,6 @@ class PromoCodeFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     */
     public function massCreate(PromoCodeData $promoCodeData): void
     {
         $existingPromoCodeCodes = $this->promoCodeRepository->getAllPromoCodeCodes();
@@ -351,16 +301,12 @@ class PromoCodeFacade
         }
     }
 
-    /**
-     * @return int
-     */
     public function getMassLastGeneratedBatchId(): int
     {
         return $this->promoCodeRepository->getMassLastGeneratedBatchId();
     }
 
     /**
-     * @param int $batchId
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]|null
      */
     public function findByMassBatchId(int $batchId): ?array
@@ -368,11 +314,6 @@ class PromoCodeFacade
         return $this->promoCodeRepository->findByMassBatchId($batchId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit
-     */
     public function getHighestLimitByPromoCodeAndTotalPrice(
         PromoCode $promoCode,
         PriceInterface $price,

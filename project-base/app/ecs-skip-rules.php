@@ -5,7 +5,6 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\MethodDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
-use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
@@ -15,8 +14,16 @@ use Shopsys\FrameworkBundle\Command\EntitiesDumpCommand;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 use Symplify\CodingStandard\Fixer\Commenting\RemoveUselessDefaultCommentFixer;
+
+$filesExcludedFromStrictTyping = [
+    ...json_decode(file_get_contents(__DIR__ . '/var/cache/dev/' . EntitiesDumpCommand::OUTPUT_FILE), true, 512, JSON_THROW_ON_ERROR),
+    __DIR__ . '/tests/App/Functional/EntityExtension/Model/*',
+    '**Data.php',
+];
 
 return [
     __DIR__ . '/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php',
@@ -26,12 +33,6 @@ return [
     ],
     DisallowMultipleAssignmentsSniff::class => [
         __DIR__ . '/src/Kernel.php',
-    ],
-    PhpdocToPropertyTypeFixer::class => [
-        __DIR__ . '/src',
-        __DIR__ . '/app',
-        __DIR__ . '/tests/App/Acceptance',
-        __DIR__ . '/tests/App/Functional/EntityExtension/Model/*',
     ],
     FunctionLengthSniff::class => [
         __DIR__ . '/src/Component/DataBridge/Transfer/AbstractBridgeImportTransfer.php',
@@ -61,14 +62,9 @@ return [
         __DIR__ . '/src/Model/Product/Search/ProductElasticsearchConverter.php',
         __DIR__ . '/src/DataFixtures/Demo/UnitDataFixture.php',
     ],
-    CamelCapsFunctionNameSniff::class => [
-        __DIR__ . '/tests/App/Test/Codeception/ActorInterface.php',
-    ],
     ValidVariableNameSniff::class => [
         __DIR__ . '/tests/App/Functional/Controller/CdnTest.php',
         __DIR__ . '/tests/App/Functional/EntityExtension/EntityExtensionTest.php',
-        __DIR__ . '/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php',
-        __DIR__ . '/tests/App/Test/Codeception/ActorInterface.php',
     ],
     ObjectIsCreatedByFactorySniff::class => [
         __DIR__ . '/tests/*',
@@ -100,9 +96,9 @@ return [
     ForbiddenSuperGlobalSniff::class => [
         __DIR__ . '/tests/App/Functional/Controller/CdnTest.php',
     ],
-    PropertyTypeHintSniff::class => [
-        ...json_decode(file_get_contents(__DIR__ . '/var/cache/dev/' . EntitiesDumpCommand::OUTPUT_FILE), true, 512, JSON_THROW_ON_ERROR),
-        __DIR__ . '/tests/App/Functional/EntityExtension/Model/*',
-        '**Data.php',
-    ],
+    PropertyTypeHintSniff::class => $filesExcludedFromStrictTyping,
+    ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT => $filesExcludedFromStrictTyping,
+    ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_USELESS_ANNOTATION => $filesExcludedFromStrictTyping,
+    ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT => $filesExcludedFromStrictTyping,
+    ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_USELESS_ANNOTATION => $filesExcludedFromStrictTyping,
 ];

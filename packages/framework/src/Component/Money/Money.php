@@ -10,54 +10,38 @@ use Litipk\BigNumbers\Decimal;
 use Litipk\BigNumbers\Errors\BigNumbersError;
 use Override;
 use Shopsys\FrameworkBundle\Component\Money\Exception\InvalidNumericArgumentException;
-use Shopsys\FrameworkBundle\Component\Money\Exception\UnsupportedTypeException;
 use function substr;
 
 class Money implements JsonSerializable
 {
-    /**
-     * @param \Litipk\BigNumbers\Decimal $decimal
-     */
     protected function __construct(protected readonly Decimal $decimal)
     {
     }
 
-    /**
-     * @param int|string $value
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public static function create($value): self
+    public static function create(int|string $value): static
     {
-        $decimal = self::createDecimal($value);
+        $decimal = static::createDecimal($value);
 
-        return new self($decimal);
+        return new static($decimal);
     }
 
     /**
-     * @param float $float
      * @param int $scale must be specified when creating from floats to avoid issues with precision
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public static function createFromFloat(float $float, int $scale): self
+    public static function createFromFloat(float $float, int $scale): static
     {
         // Using Decimal::fromString as the Decimal::fromFloat has issues with specified scale
         // See https://github.com/Litipk/php-bignumbers/pull/67 for details
-        $decimal = self::createDecimal((string)$float, $scale);
+        $decimal = static::createDecimal((string)$float, $scale);
 
-        return new self($decimal);
+        return new static($decimal);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public static function zero(): self
+    public static function zero(): static
     {
-        return self::create(0);
+        return static::create(0);
     }
 
-    /**
-     * @return string
-     */
     public function getAmount(): string
     {
         if ($this->decimal->isZero() && $this->decimal->isNegative()) {
@@ -78,46 +62,29 @@ class Money implements JsonSerializable
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function add(self $money): self
+    public function add(self $money): static
     {
         $resultDecimal = $this->decimal->add($money->decimal);
 
-        return new self($resultDecimal);
+        return new static($resultDecimal);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function subtract(self $money): self
+    public function subtract(self $money): static
     {
         $resultDecimal = $this->decimal->sub($money->decimal);
 
-        return new self($resultDecimal);
+        return new static($resultDecimal);
     }
 
-    /**
-     * @param int|string $multiplier
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function multiply($multiplier): self
+    public function multiply(int|string $multiplier): static
     {
         $decimalMultiplier = self::createDecimal($multiplier);
         $resultDecimal = $this->decimal->mul($decimalMultiplier);
 
-        return new self($resultDecimal);
+        return new static($resultDecimal);
     }
 
-    /**
-     * @param int|string $divisor
-     * @param int $scale
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function divide($divisor, int $scale): self
+    public function divide(int|string $divisor, int $scale): static
     {
         $decimalDivisor = self::createDecimal($divisor);
 
@@ -128,31 +95,22 @@ class Money implements JsonSerializable
 
         $resultDecimal = $this->decimal->div($decimalDivisor, $scale);
 
-        return new self($resultDecimal);
+        return new static($resultDecimal);
     }
 
-    /**
-     * @param int $scale
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function round(int $scale): self
+    public function round(int $scale): static
     {
         $decimal = $this->decimal->round($scale);
 
-        return new self($decimal);
+        return new static($decimal);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @return bool
-     */
     public function equals(self $money): bool
     {
         return $this->decimal->equals($money->decimal);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
      * @return int same as spaceship operator (<=>)
      */
     public function compare(self $money): int
@@ -160,85 +118,51 @@ class Money implements JsonSerializable
         return $this->decimal->comp($money->decimal);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @return bool
-     */
     public function isGreaterThan(self $money): bool
     {
         return $this->decimal->isGreaterThan($money->decimal);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @return bool
-     */
     public function isGreaterThanOrEqualTo(self $money): bool
     {
         return $this->decimal->isGreaterOrEqualTo($money->decimal);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @return bool
-     */
     public function isLessThan(self $money): bool
     {
         return $this->decimal->isLessThan($money->decimal);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @return bool
-     */
     public function isLessThanOrEqualTo(self $money): bool
     {
         return $this->decimal->isLessOrEqualTo($money->decimal);
     }
 
-    /**
-     * @return bool
-     */
     public function isNegative(): bool
     {
         return $this->decimal->isNegative() && !$this->decimal->isZero();
     }
 
-    /**
-     * @return bool
-     */
     public function isPositive(): bool
     {
         return $this->decimal->isPositive();
     }
 
-    /**
-     * @return bool
-     */
     public function isZero(): bool
     {
         return $this->decimal->isZero();
     }
 
-    /**
-     * @param int|string $value
-     * @param int|null $scale
-     * @return \Litipk\BigNumbers\Decimal
-     */
-    protected static function createDecimal($value, ?int $scale = null): Decimal
+    protected static function createDecimal(int|string $value, ?int $scale = null): Decimal
     {
         if (is_int($value)) {
             return Decimal::fromInteger($value);
         }
 
-        if (is_string($value)) {
-            try {
-                return Decimal::fromString($value, $scale);
-            } catch (BigNumbersError | InvalidArgumentException $e) {
-                throw new InvalidNumericArgumentException($value, $e);
-            }
+        try {
+            return Decimal::fromString($value, $scale);
+        } catch (BigNumbersError | InvalidArgumentException $e) {
+            throw new InvalidNumericArgumentException($value, $e);
         }
-
-        throw new UnsupportedTypeException($value, ['string', 'int']);
     }
 }

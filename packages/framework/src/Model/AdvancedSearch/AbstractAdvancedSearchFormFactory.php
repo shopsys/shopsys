@@ -8,16 +8,12 @@ use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchFilterTransl
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 abstract class AbstractAdvancedSearchFormFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchConfig $advancedSearchConfig
-     * @param \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchFilterTranslation $advancedSearchFilterTranslation
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation
-     */
     public function __construct(
         protected readonly AdvancedSearchConfig $advancedSearchConfig,
         protected readonly AdvancedSearchFilterTranslation $advancedSearchFilterTranslation,
@@ -27,11 +23,9 @@ abstract class AbstractAdvancedSearchFormFactory
     }
 
     /**
-     * @param string $name
-     * @param array $rulesViewData
-     * @return \Symfony\Component\Form\FormInterface
+     * @param array<int|string, array{subject: string, operator: string|null, value: mixed}> $rulesViewData
      */
-    public function createRulesForm($name, $rulesViewData)
+    public function createRulesForm(string $name, array $rulesViewData): FormInterface
     {
         $options = [
             'csrf_protection' => false,
@@ -53,13 +47,10 @@ abstract class AbstractAdvancedSearchFormFactory
         return $form;
     }
 
-    /**
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $ruleFilter
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    protected function createRuleFormBuilder($name, AdvancedSearchFilterInterface $ruleFilter)
-    {
+    protected function createRuleFormBuilder(
+        int|string $name,
+        AdvancedSearchFilterInterface $ruleFilter,
+    ): FormBuilderInterface {
         return $this->formFactory->createNamedBuilder((string)$name, FormType::class, null, [
             'data_class' => AdvancedSearchRuleData::class,
         ])
@@ -77,10 +68,9 @@ abstract class AbstractAdvancedSearchFormFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $filter
      * @return string[]
      */
-    protected function getFilterOperatorChoices(AdvancedSearchFilterInterface $filter)
+    protected function getFilterOperatorChoices(AdvancedSearchFilterInterface $filter): array
     {
         $choices = [];
 
@@ -94,7 +84,7 @@ abstract class AbstractAdvancedSearchFormFactory
     /**
      * @return string[]
      */
-    protected function getSubjectChoices()
+    protected function getSubjectChoices(): array
     {
         $choices = [];
 

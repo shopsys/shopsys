@@ -43,13 +43,6 @@ final class PromoCodeFormType extends AbstractType
 
     private ?PromoCode $promoCode = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum $promoCodeTypeEnum
-     */
     public function __construct(
         private readonly PromoCodeFacade $promoCodeFacade,
         private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
@@ -59,10 +52,6 @@ final class PromoCodeFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -99,10 +88,6 @@ final class PromoCodeFormType extends AbstractType
         $builder->add($actionBar);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     private function buildBaseGroup(FormBuilderInterface $builder, array $options): void
     {
         $baseGroup = $builder->create('baseGroup', GroupType::class, [
@@ -158,9 +143,6 @@ final class PromoCodeFormType extends AbstractType
         $builder->add($baseGroup);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     private function buildLimitsFormGroup(FormBuilderInterface $builder): void
     {
         $discountOptions = [
@@ -209,9 +191,6 @@ final class PromoCodeFormType extends AbstractType
         $builder->add($limitsGroup);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     private function buildTimeValidationFormGroup(FormBuilderInterface $builder): void
     {
         $timeValidationGroup = $builder->create('timeValidationGroup', GroupType::class, [
@@ -229,9 +208,6 @@ final class PromoCodeFormType extends AbstractType
         $builder->add($timeValidationGroup);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     private function buildFlagsFormGroup(FormBuilderInterface $builder): void
     {
         $flagsGroup = $builder->create('flagsGroup', GroupType::class, [
@@ -254,9 +230,6 @@ final class PromoCodeFormType extends AbstractType
         $builder->add($flagsGroup);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     private function buildCustomersFormGroup(FormBuilderInterface $builder): void
     {
         $customersGroup = $builder->create('customersGroup', GroupType::class, [
@@ -276,9 +249,6 @@ final class PromoCodeFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     private function buildProductsWithSaleForm(FormBuilderInterface $builder): void
     {
         $builder
@@ -289,9 +259,6 @@ final class PromoCodeFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     private function buildCategoriesWithSaleFormGroup(FormBuilderInterface $builder): void
     {
         $displayCategoriesGroup = $builder->create('displayCategoriesGroup', GroupType::class, [
@@ -305,9 +272,6 @@ final class PromoCodeFormType extends AbstractType
         $builder->add($displayCategoriesGroup);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     private function buildBrandsWithSaleFormGroup(FormBuilderInterface $builder): void
     {
         $displayCategoriesGroup = $builder->create('displayBrandsGroup', GroupType::class, [
@@ -324,10 +288,6 @@ final class PromoCodeFormType extends AbstractType
         $builder->add($displayCategoriesGroup);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function addMassGenerationGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderMassPromoCodeGroup = $builder->create('massPromoCodeGroup', GroupType::class, [
@@ -352,9 +312,6 @@ final class PromoCodeFormType extends AbstractType
         return $builderMassPromoCodeGroup;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -384,10 +341,6 @@ final class PromoCodeFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function validateUniquePromoCodeByDomain(
         PromoCodeData $promoCodeData,
         ExecutionContextInterface $context,
@@ -407,9 +360,6 @@ final class PromoCodeFormType extends AbstractType
         }
     }
 
-    /**
-     * @return int
-     */
     private function getDomainId(): int
     {
         if ($this->promoCode !== null) {

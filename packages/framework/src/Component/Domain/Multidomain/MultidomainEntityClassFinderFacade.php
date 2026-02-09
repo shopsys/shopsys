@@ -10,13 +10,6 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class MultidomainEntityClassFinderFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinder $multidomainEntityClassFinder
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface $multidomainEntityClassProvider
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder $notNullableColumnsFinder
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly MultidomainEntityClassFinder $multidomainEntityClassFinder,
@@ -29,7 +22,7 @@ class MultidomainEntityClassFinderFacade
     /**
      * @return string[]
      */
-    public function getMultidomainEntitiesNames()
+    public function getMultidomainEntitiesNames(): array
     {
         return $this->multidomainEntityClassFinder->getMultidomainEntitiesNames(
             $this->em->getMetadataFactory()->getAllMetadata(),
@@ -41,7 +34,7 @@ class MultidomainEntityClassFinderFacade
     /**
      * @return string[][]
      */
-    public function getAllNotNullableColumnNamesIndexedByTableName()
+    public function getAllNotNullableColumnNamesIndexedByTableName(): array
     {
         $multidomainClassesMetadata = [];
 

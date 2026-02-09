@@ -23,11 +23,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class MigrateCommand extends Command
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock $migrationsLock
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator $migrationLockPlanCalculator
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly MigrationsLock $migrationsLock,
@@ -43,7 +38,7 @@ class MigrateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $this->em->wrapInTransaction(function () use ($output) {
+            $this->em->wrapInTransaction(function () use ($output): void {
                 $this->executeDoctrineMigrateCommand($output);
 
                 $output->writeln('');
@@ -62,9 +57,6 @@ class MigrateCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function executeDoctrineMigrateCommand(OutputInterface $output): void
     {
         $doctrineMigrateCommand = $this->getApplication()->find('doctrine:migrations:migrate');
@@ -85,9 +77,6 @@ class MigrateCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function executeCheckSchemaCommand(OutputInterface $output): void
     {
         $checkSchemaCommand = $this->getApplication()->find('shopsys:migrations:check-schema');

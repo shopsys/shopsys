@@ -11,11 +11,6 @@ use Symfony\Component\Mime\Part\AbstractPart;
 
 class Email extends BaseEmail
 {
-    /**
-     * @param int $domainId
-     * @param \Symfony\Component\Mime\Header\Headers|null $headers
-     * @param \Symfony\Component\Mime\Part\AbstractPart|null $body
-     */
     public function __construct(
         protected readonly int $domainId,
         ?Headers $headers = null,
@@ -24,9 +19,6 @@ class Email extends BaseEmail
         parent::__construct($headers, $body);
     }
 
-    /**
-     * @return int
-     */
     public function getDomainId(): int
     {
         return $this->domainId;
@@ -34,7 +26,6 @@ class Email extends BaseEmail
 
     /**
      * @internal
-     * @return array
      */
     #[Override]
     public function __serialize(): array
@@ -44,7 +35,6 @@ class Email extends BaseEmail
 
     /**
      * @internal
-     * @param array $data
      */
     #[Override]
     public function __unserialize(array $data): void

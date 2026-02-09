@@ -14,9 +14,6 @@ class PaymentTypeProvider
     ) {
     }
 
-    /**
-     * @return array
-     */
     public function getAllIndexedByTranslations(): array
     {
         $allIndexedByTranslations = [];

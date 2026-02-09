@@ -59,11 +59,6 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
         }
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $selfPosition
-     * @return string|null
-     */
     private function findConstantNameFromSelfCall(File $file, int $selfPosition): ?string
     {
         $tokens = $file->getTokens();
@@ -94,7 +89,6 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $file
      * @return string[]
      */
     private function getAllProtectedConstantsInClass(File $file): array
@@ -114,11 +108,6 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
         return $protectedConstants;
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $constPosition
-     * @return bool
-     */
     private function isProtectedVisibility(File $file, int $constPosition): bool
     {
         $protectedModifierPosition = TokenHelper::findPreviousLocal($file, T_PROTECTED, $constPosition);

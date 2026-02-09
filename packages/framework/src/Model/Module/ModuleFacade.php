@@ -8,11 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ModuleFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Module\EnabledModuleRepository $enabledModuleRepository
-     * @param \Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactory $enabledModuleFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly EnabledModuleRepository $enabledModuleRepository,
@@ -20,22 +15,14 @@ class ModuleFacade
     ) {
     }
 
-    /**
-     * @param string $moduleName
-     * @return bool
-     */
-    public function isEnabled($moduleName)
+    public function isEnabled(string $moduleName): bool
     {
         $enabledModule = $this->enabledModuleRepository->findByName($moduleName);
 
         return $enabledModule !== null;
     }
 
-    /**
-     * @param string $moduleName
-     * @param bool $isEnabled
-     */
-    public function setEnabled($moduleName, $isEnabled)
+    public function setEnabled(string $moduleName, bool $isEnabled): void
     {
         $enabledModule = $this->enabledModuleRepository->findByName($moduleName);
 

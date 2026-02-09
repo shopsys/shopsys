@@ -10,9 +10,7 @@ use RuntimeException;
 class AdminLocaleNotFoundException extends RuntimeException
 {
     /**
-     * @param string|null $adminLocale
      * @param string[] $possibleLocales
-     * @param \Exception|null $previous
      */
     public function __construct(
         ?string $adminLocale = null,

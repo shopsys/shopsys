@@ -15,13 +15,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class BlogArticleExportChangedCronModule extends AbstractExportChangedCronModule
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex $index
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface|null $eventDispatcher
-     */
     public function __construct(
         BlogArticleIndex $index,
         IndexFacade $indexFacade,

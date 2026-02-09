@@ -25,14 +25,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_FEED)]
 class FeedController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedFacade $feedFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository $feedModuleRepository
-     * @param \Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory $arrayDataSourceFactory
-     */
     public function __construct(
         protected readonly FeedFacade $feedFacade,
         protected readonly GridFactory $gridFactory,
@@ -43,11 +35,6 @@ class FeedController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param string $feedName
-     * @param int $domainId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/feed/generate/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
     #[SuperAdminOnly]
     public function generateAction(string $feedName, int $domainId): Response
@@ -75,11 +62,6 @@ class FeedController extends AdminBaseController
         return $this->redirectToRoute('admin_feed_list');
     }
 
-    /**
-     * @param string $feedName
-     * @param int $domainId
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     #[Route(path: '/feed/schedule/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
     #[CanEdit]
     public function scheduleAction(string $feedName, int $domainId): RedirectResponse
@@ -107,9 +89,6 @@ class FeedController extends AdminBaseController
         return $this->redirectToRoute('admin_feed_list');
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/feed/list/')]
     #[CanView]
     public function listAction(): Response

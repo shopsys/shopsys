@@ -10,9 +10,6 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 
 class CategoryIndex extends AbstractIndex
 {
-    /**
-     * @return string
-     */
     #[Override]
     public static function getName(): string
     {

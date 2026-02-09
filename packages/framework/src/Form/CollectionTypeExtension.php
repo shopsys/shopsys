@@ -17,10 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 final class CollectionTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -46,9 +42,6 @@ final class CollectionTypeExtension extends AbstractTypeExtension
         yield CollectionType::class;
     }
 
-    /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     private function removeOriginalResizeFormListener(EventDispatcherInterface $eventDispatcher): void
     {
         $listenersByEventName = $eventDispatcher->getListeners();

@@ -24,21 +24,6 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class ImageFacade
 {
-    /**
-     * @param string $imageUrlPrefix
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactory $imageFactory
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
-     * @param \Symfony\Contracts\Cache\CacheInterface|\Symfony\Component\Cache\Adapter\AdapterInterface $cache
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly string $imageUrlPrefix,
         protected readonly EntityManagerInterface $em,
@@ -56,11 +41,6 @@ class ImageFacade
     ) {
     }
 
-    /**
-     * @param object $entity
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData $imageUploadData
-     * @param string|null $type
-     */
     public function manageImages(object $entity, ImageUploadData $imageUploadData, ?string $type = null): void
     {
         $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
@@ -97,10 +77,8 @@ class ImageFacade
     }
 
     /**
-     * @param object $entity
      * @param array<int, array<string,string>> $namesIndexedByImageIdAndLocale
      * @param array<int, string> $temporaryFilenamesIndexedByImageId
-     * @param string|null $type
      */
     protected function uploadImages(
         object $entity,
@@ -122,7 +100,6 @@ class ImageFacade
     }
 
     /**
-     * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $images
      */
     protected function deleteImages(object $entity, array $images): void
@@ -140,11 +117,6 @@ class ImageFacade
         }
     }
 
-    /**
-     * @param object $entity
-     * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
-     */
     public function getImageByEntity(object $entity, ?string $type): Image
     {
         return $this->imageRepository->getImageByEntity(
@@ -155,8 +127,6 @@ class ImageFacade
     }
 
     /**
-     * @param object $entity
-     * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     public function getImagesByEntityIndexedById(object $entity, ?string $type): array
@@ -169,7 +139,6 @@ class ImageFacade
     }
 
     /**
-     * @param object $entity
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     public function getAllImagesByEntity(object $entity): array
@@ -180,9 +149,6 @@ class ImageFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     */
     public function deleteImageFiles(Image $image): void
     {
         $filepath = $this->imageLocator->getAbsoluteImageFilepath($image);
@@ -192,10 +158,6 @@ class ImageFacade
         }
     }
 
-    /**
-     * @param object $entity
-     * @return int
-     */
     protected function getEntityId(object $entity): int
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
@@ -210,12 +172,6 @@ class ImageFacade
         throw new EntityIdentifierException($message);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param object $imageOrEntity
-     * @param string|null $type
-     * @return string
-     */
     public function getImageUrl(
         DomainConfig $domainConfig,
         object $imageOrEntity,
@@ -242,20 +198,11 @@ class ImageFacade
             . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $friendlyUrlSeoEntityName);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getEmptyImageUrl(DomainConfig $domainConfig): string
     {
         return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig) . '/public/frontend/images/noimage.png';
     }
 
-    /**
-     * @param object $imageOrEntity
-     * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
-     */
     public function getImageByObject(object $imageOrEntity, ?string $type = null): Image
     {
         if ($imageOrEntity instanceof Image) {
@@ -265,10 +212,6 @@ class ImageFacade
         return $this->getImageByEntity($imageOrEntity, $type);
     }
 
-    /**
-     * @param int $imageId
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
-     */
     public function getById(int $imageId): Image
     {
         return $this->imageRepository->getById($imageId);
@@ -287,9 +230,6 @@ class ImageFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData $imageUploadData
-     */
     protected function saveImagesPathnames(ImageUploadData $imageUploadData): void
     {
         foreach ($imageUploadData->namesIndexedByImageIdAndLocale as $imageId => $filenamesIndexedByLocale) {
@@ -300,11 +240,6 @@ class ImageFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $imageId
-     * @param int $domainId
-     * @return string
-     */
     protected function getCacheIdForImageUrl(
         int $imageId,
         int $domainId,
@@ -316,11 +251,6 @@ class ImageFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     * @param string $locale
-     * @return string|null
-     */
     protected function getSeoNameByImageAndLocale(Image $image, string $locale): ?string
     {
         return match ($image->getEntityName()) {
@@ -331,10 +261,6 @@ class ImageFacade
         };
     }
 
-    /**
-     * @param string|null $seoEntityName
-     * @return string|null
-     */
     protected function getFriendlyUrlSlug(?string $seoEntityName): ?string
     {
         if ($seoEntityName === null) {

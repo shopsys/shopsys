@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 
 abstract class LegalConditionsFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly ArticleFacade $articleFacade,
         protected readonly Setting $setting,
@@ -23,52 +18,29 @@ abstract class LegalConditionsFacade
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
-     */
-    public function findTermsAndConditions($domainId)
+    public function findTermsAndConditions(int $domainId): ?Article
     {
         return $this->findArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $termsAndConditions
-     */
     public function setTermsAndConditions(int $domainId, ?Article $termsAndConditions = null): void
     {
         $this->setArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainId, $termsAndConditions);
     }
 
-    /**
-     * @return string
-     */
-    abstract public function getTermsAndConditionsDownloadFilename();
+    abstract public function getTermsAndConditionsDownloadFilename(): string;
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
-     */
-    public function findPrivacyPolicy($domainId)
+    public function findPrivacyPolicy(int $domainId): ?Article
     {
         return $this->findArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $privacyPolicy
-     */
     public function setPrivacyPolicy(int $domainId, ?Article $privacyPolicy = null): void
     {
         $this->setArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainId, $privacyPolicy);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
-     * @return bool
-     */
-    public function isArticleUsedAsLegalConditions(Article $article)
+    public function isArticleUsedAsLegalConditions(Article $article): bool
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $legalConditionsArticles = [
@@ -84,12 +56,7 @@ abstract class LegalConditionsFacade
         return false;
     }
 
-    /**
-     * @param string $settingKey
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
-     */
-    protected function findArticle($settingKey, $domainId)
+    protected function findArticle(string $settingKey, int $domainId): ?Article
     {
         $articleId = $this->setting->getForDomain($settingKey, $domainId);
 
@@ -100,11 +67,6 @@ abstract class LegalConditionsFacade
         return null;
     }
 
-    /**
-     * @param string $settingKey
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $article
-     */
     protected function setArticle(string $settingKey, int $domainId, ?Article $article = null): void
     {
         $articleId = null;

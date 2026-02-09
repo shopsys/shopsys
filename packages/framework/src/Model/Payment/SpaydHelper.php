@@ -15,7 +15,6 @@ class SpaydHelper
      * @param string|null $specificSymbol Specific symbol
      * @param string|null $constantSymbol Constant symbol
      * @param string|null $message Message for the recipient
-     * @return string
      */
     public static function createSpayd(
         string $internationalBankAccountNumber,

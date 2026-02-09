@@ -24,15 +24,6 @@ class ComplaintHelper
 {
     private const UUID_NAMESPACE = '4bd62d36-8baa-4f8a-b074-c084641823b0';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory $complaintDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemDataFactory $complaintItemDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade $complaintApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository $complaintNumberSequenceRepository
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory $customerUploadedFileDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \App\Model\Product\ProductFacade $productFacade
-     */
     public function __construct(
         private readonly ComplaintDataFactory $complaintDataFactory,
         private readonly ComplaintItemDataFactory $complaintItemDataFactory,
@@ -45,14 +36,7 @@ class ComplaintHelper
     }
 
     /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     * @param \App\Model\Order\Order|null $order
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $status
-     * @param string $resolution
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[] $items
-     * @param string|null $manualDocumentNumber
-     * @param string|null $bankAccountNumber
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
      */
     public function createComplaint(
         CustomerUser $customerUser,
@@ -93,13 +77,7 @@ class ComplaintHelper
     }
 
     /**
-     * @param \App\Model\Order\Item\OrderItem|null $orderItem
-     * @param string $description
-     * @param int $quantity
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile[] $uploadedFiles
-     * @param string|null $manualComplaintItemName
-     * @param string|null $manualComplaintItemCatnum
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData
      */
     public function createComplaintItemData(
         ?OrderItem $orderItem,
@@ -127,10 +105,6 @@ class ComplaintHelper
         return $item;
     }
 
-    /**
-     * @param string $pathToImage
-     * @return \Symfony\Component\HttpFoundation\File\UploadedFile
-     */
     public function createUploadedFile(string $pathToImage): UploadedFile
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'complaint_demo_data_');

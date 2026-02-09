@@ -11,13 +11,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class CategoryDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
-     */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
@@ -27,18 +20,11 @@ class CategoryDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryData
-     */
     protected function createInstance(): CategoryData
     {
         return new CategoryData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryData
-     */
     public function createFromCategory(Category $category): CategoryData
     {
         $categoryData = $this->createInstance();
@@ -47,9 +33,6 @@ class CategoryDataFactory
         return $categoryData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryData
-     */
     public function create(): CategoryData
     {
         $categoryData = $this->createInstance();
@@ -58,9 +41,6 @@ class CategoryDataFactory
         return $categoryData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
     protected function fillNew(CategoryData $categoryData): void
     {
         $categoryData->image = $this->imageUploadDataFactory->create();
@@ -78,10 +58,6 @@ class CategoryDataFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
     protected function fillFromCategory(CategoryData $categoryData, Category $category): void
     {
         $categoryData->name = $category->getNames();
@@ -112,7 +88,6 @@ class CategoryDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return int[]
      */
     protected function getParametersSortedByPositionFilteredByCategory(Category $category): array

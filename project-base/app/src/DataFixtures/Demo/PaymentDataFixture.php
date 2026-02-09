@@ -36,8 +36,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
-     * @param \App\Model\Payment\PaymentDataFactory $paymentDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
@@ -46,9 +44,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -155,7 +150,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \App\Model\Payment\PaymentData $paymentData
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
     private function setBankAccountDetailsToPaymentData(PaymentData $paymentData, DomainConfig $domainConfig): void
     {
@@ -171,9 +165,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param string $referenceName
      * @param \App\Model\Payment\PaymentData $paymentData
-     * @param array $transportsReferenceNames
      */
     private function createPayment(
         string $referenceName,
@@ -209,7 +201,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \App\Model\Payment\PaymentData $paymentData
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      */
     private function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
     {

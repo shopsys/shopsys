@@ -16,11 +16,6 @@ class ProductUrlsBatchLoader
     protected const string PRODUCT_URLS_CACHE_NAMESPACE = 'loadedProductUrls';
     protected const string PRODUCT_IMAGE_URLS_CACHE_NAMESPACE = 'loadedProductImageUrls';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
-     */
     public function __construct(
         protected readonly ProductCollectionFacade $productCollectionFacade,
         protected readonly InMemoryCache $inMemoryCache,
@@ -30,7 +25,6 @@ class ProductUrlsBatchLoader
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
     public function loadForProducts(array $products, DomainConfig $domainConfig): void
     {
@@ -49,11 +43,6 @@ class ProductUrlsBatchLoader
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getProductUrl(Product $product, DomainConfig $domainConfig): string
     {
         $key = $this->getKey($product, $domainConfig);
@@ -65,11 +54,6 @@ class ProductUrlsBatchLoader
         throw new ProductUrlNotLoadedException($product, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string|null
-     */
     public function getProductImageUrl(Product $product, DomainConfig $domainConfig): ?string
     {
         $key = $this->getKey($product, $domainConfig);
@@ -81,11 +65,6 @@ class ProductUrlsBatchLoader
         throw new ProductImageUrlNotLoadedException($product, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     protected function getKey(Product $product, DomainConfig $domainConfig): string
     {
         return $domainConfig->getId() . '-' . $product->getId();

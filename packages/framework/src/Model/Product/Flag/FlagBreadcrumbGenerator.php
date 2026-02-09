@@ -11,10 +11,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class FlagBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly FlagFacade $flagFacade,
         protected readonly Domain $domain,
@@ -25,7 +21,7 @@ class FlagBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         $breadcrumbItems = [];
 

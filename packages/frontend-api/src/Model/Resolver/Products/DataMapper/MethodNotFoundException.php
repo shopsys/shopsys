@@ -8,11 +8,6 @@ use Exception;
 
 class MethodNotFoundException extends Exception
 {
-    /**
-     * @param string $fieldName
-     * @param object $mapper
-     * @param \Exception|null $previous
-     */
     public function __construct(string $fieldName, object $mapper, ?Exception $previous = null)
     {
         $message = sprintf('Method "%s" not found in class "%s"', $fieldName, get_class($mapper));

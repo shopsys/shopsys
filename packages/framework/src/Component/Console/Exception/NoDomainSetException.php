@@ -8,9 +8,6 @@ use Exception;
 
 class NoDomainSetException extends Exception
 {
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(?Exception $previous = null)
     {
         $message = 'There are no domains set.';

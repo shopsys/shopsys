@@ -16,15 +16,11 @@ class MethodAnnotationsFactory
      */
     protected array $warningBag = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
-     */
     public function __construct(
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
         protected readonly AnnotationsReplacer $annotationsReplacer,
         protected readonly DocBlockParser $docBlockParser,
+        protected readonly TypehintHelper $typehintHelper,
     ) {
     }
 
@@ -36,11 +32,6 @@ class MethodAnnotationsFactory
         return $this->warningBag;
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkClassBetterReflection
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectClassBetterReflection
-     * @return string
-     */
     public function getProjectClassNecessaryMethodAnnotationsLines(
         ReflectionClass $frameworkClassBetterReflection,
         ReflectionClass $projectClassBetterReflection,
@@ -59,11 +50,6 @@ class MethodAnnotationsFactory
         return $methodAnnotationsLines;
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethodFromFrameworkClass
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectClassBetterReflection
-     * @return string
-     */
     public function getMethodAnnotationLine(
         ReflectionMethod $reflectionMethodFromFrameworkClass,
         ReflectionClass $projectClassBetterReflection,
@@ -75,18 +61,9 @@ class MethodAnnotationsFactory
                 continue;
             }
 
-            try {
-                $docBlockReturnTypes = $this->docBlockParser
-                    ->getReturnTypes($reflectionMethodFromFrameworkClass->getDocComment());
-            } catch (InvalidArgumentException $exception) {
-                $this->warningBag[] = $exception;
-
-                continue;
-            }
-
             $methodReturnTypeIsExtended = $this->methodReturningTypeIsExtendedInProject(
                 $frameworkClassPattern,
-                $docBlockReturnTypes,
+                $reflectionMethodFromFrameworkClass,
             );
 
             $methodParameterTypeIsExtended = $this->methodParameterTypeIsExtendedInProject(
@@ -119,11 +96,6 @@ class MethodAnnotationsFactory
         return '';
     }
 
-    /**
-     * @param string $methodName
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionClass
-     * @return bool
-     */
     protected function isMethodImplementedInClass(string $methodName, ReflectionClass $reflectionClass): bool
     {
         try {
@@ -135,10 +107,6 @@ class MethodAnnotationsFactory
         }
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
-     * @return string
-     */
     protected function getMethodParameterNamesWithTypes(ReflectionMethod $reflectionMethod): string
     {
         $methodParameterNamesWithTypes = [];
@@ -163,28 +131,39 @@ class MethodAnnotationsFactory
         return implode(', ', $methodParameterNamesWithTypes);
     }
 
-    /**
-     * @param string $frameworkClassPattern
-     * @param \phpDocumentor\Reflection\Type[] $docBlockReturnTypes
-     * @return bool
-     */
     protected function methodReturningTypeIsExtendedInProject(
         string $frameworkClassPattern,
-        array $docBlockReturnTypes,
+        ReflectionMethod $reflectionMethod,
     ): bool {
-        foreach ($docBlockReturnTypes as $docBlockReturnType) {
-            if (preg_match($frameworkClassPattern, (string)$docBlockReturnType)) {
-                return true;
-            }
+        try {
+            $docBlockReturnTypes = $this->docBlockParser->getReturnTypes($reflectionMethod->getDocComment());
+        } catch (InvalidArgumentException $exception) {
+            $this->warningBag[] = $exception;
+            $docBlockReturnTypes = [];
         }
 
-        return false;
+        if ($docBlockReturnTypes !== []) {
+            foreach ($docBlockReturnTypes as $docBlockReturnType) {
+                if (preg_match($frameworkClassPattern, (string)$docBlockReturnType)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // Fallback to typehint when no docblock annotation exists or when docblock parsing failed
+        $typehintReturnType = $this->typehintHelper->getMethodReturnTypeFromTypehint($reflectionMethod);
+
+        if ($typehintReturnType === null) {
+            return false;
+        }
+
+        return (bool)preg_match($frameworkClassPattern, $typehintReturnType);
     }
 
     /**
-     * @param string $frameworkClassPattern
      * @param \Roave\BetterReflection\Reflection\ReflectionParameter[] $methodParameters
-     * @return bool
      */
     protected function methodParameterTypeIsExtendedInProject(
         string $frameworkClassPattern,
@@ -194,7 +173,11 @@ class MethodAnnotationsFactory
             $type = $this->docBlockParser->getParameterType($methodParameter);
 
             if ($type === null) {
-                return false;
+                $type = $this->typehintHelper->getParameterTypeFromTypehint($methodParameter);
+            }
+
+            if ($type === null) {
+                continue;
             }
 
             if (preg_match($frameworkClassPattern, (string)$type)) {

@@ -11,10 +11,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly CategoryRepository $categoryRepository,
         protected readonly Domain $domain,
@@ -25,7 +21,7 @@ class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         $category = $this->categoryRepository->getById($routeParameters['id']);
 
@@ -57,7 +53,7 @@ class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return ['front_product_list'];
     }

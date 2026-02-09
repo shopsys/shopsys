@@ -15,15 +15,12 @@ class SqlLoggerFacade
 
     protected bool $isLoggerTemporarilyDisabled;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
         $this->isLoggerTemporarilyDisabled = false;
     }
 
-    public function temporarilyDisableLogging()
+    public function temporarilyDisableLogging(): void
     {
         if ($this->isLoggerTemporarilyDisabled) {
             $message = 'Trying to disable already disabled SQL logger.';
@@ -35,7 +32,7 @@ class SqlLoggerFacade
         $this->isLoggerTemporarilyDisabled = true;
     }
 
-    public function reenableLogging()
+    public function reenableLogging(): void
     {
         if (!$this->isLoggerTemporarilyDisabled) {
             $message = 'Trying to reenable already enabled SQL logger.';

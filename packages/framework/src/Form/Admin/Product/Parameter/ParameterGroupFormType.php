@@ -20,20 +20,12 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class ParameterGroupFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         private readonly ParameterGroupFacade $parameterGroupFacade,
         private readonly Localization $localization,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -57,9 +49,6 @@ final class ParameterGroupFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -75,10 +64,6 @@ final class ParameterGroupFormType extends AbstractType
             ->setAllowedTypes('parameterGroup', [ParameterGroup::class, 'null']);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData $parameterGroupData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function validateUniqueParameterGroupName(
         ParameterGroupData $parameterGroupData,
         ExecutionContextInterface $context,

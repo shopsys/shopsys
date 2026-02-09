@@ -10,7 +10,6 @@ class ParameterSortingHelper
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     public function sortParameterValuesAlphabetically(array $parameterValues, string $locale): array

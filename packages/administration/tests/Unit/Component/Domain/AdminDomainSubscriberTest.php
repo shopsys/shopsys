@@ -19,17 +19,11 @@ use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class AdminDomainSubscriberTest extends TestCase
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private function createFirstDomainConfig(): DomainConfig
     {
         return DomainConfigHelper::getDomainConfig();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private function createFirstDomainConfigWithPostfix(): DomainConfig
     {
         return DomainConfigHelper::getDomainConfig(
@@ -69,10 +63,6 @@ class AdminDomainSubscriberTest extends TestCase
 
     /**
      * @dataProvider adminRedirectDataProvider
-     * @param string $requestUri
-     * @param string $pathInfo
-     * @param string $expectedRedirectUrl
-     * @param string|null $queryString
      */
     public function testOnKernelRequestRedirectsToFirstDomain(
         string $requestUri,

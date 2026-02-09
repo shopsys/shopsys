@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter;
 
 class MultidomainEntityDataCreator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter $sqlQuoter
-     */
     public function __construct(
         protected readonly MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade,
         protected readonly EntityManagerInterface $em,
@@ -22,11 +17,7 @@ class MultidomainEntityDataCreator
     ) {
     }
 
-    /**
-     * @param int $templateDomainId
-     * @param int $newDomainId
-     */
-    public function copyAllMultidomainDataForNewDomain($templateDomainId, $newDomainId)
+    public function copyAllMultidomainDataForNewDomain(int $templateDomainId, int $newDomainId): void
     {
         $columnNamesIndexedByTableName = $this->multidomainEntityClassFinderFacade
             ->getAllNotNullableColumnNamesIndexedByTableName();
@@ -46,13 +37,14 @@ class MultidomainEntityDataCreator
     }
 
     /**
-     * @param int $templateDomainId
-     * @param int $newDomainId
-     * @param string $tableName
      * @param string[] $columnNames
      */
-    protected function copyMultidomainDataForNewDomain($templateDomainId, $newDomainId, $tableName, array $columnNames)
-    {
+    protected function copyMultidomainDataForNewDomain(
+        int $templateDomainId,
+        int $newDomainId,
+        string $tableName,
+        array $columnNames,
+    ): void {
         $quotedColumnNames = $this->sqlQuoter->quoteIdentifiers($columnNames);
         $quotedColumnNamesSql = implode(', ', $quotedColumnNames);
         $quotedTableName = $this->sqlQuoter->quoteIdentifier($tableName);

@@ -11,26 +11,13 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class DirectoryStructureCreator
 {
-    protected string $imageDir;
-
-    protected string $domainImageDir;
-
-    /**
-     * @param string $imageDir
-     * @param string $domainImageDir
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     */
     public function __construct(
-        $imageDir,
-        $domainImageDir,
+        protected string $imageDir,
+        protected string $domainImageDir,
         protected readonly ImageConfig $imageConfig,
         protected readonly ImageLocator $imageLocator,
         protected readonly FilesystemOperator $filesystem,
     ) {
-        $this->imageDir = $imageDir;
-        $this->domainImageDir = $domainImageDir;
     }
 
     public function makeImageDirectories(): void
@@ -63,11 +50,6 @@ class DirectoryStructureCreator
         }
     }
 
-    /**
-     * @param string $entityName
-     * @param string|null $type
-     * @return string
-     */
     protected function getTargetDirectoryByType(string $entityName, ?string $type): string
     {
         return $this->imageDir . $this->imageLocator->getRelativeImagePath($entityName, $type);

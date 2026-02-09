@@ -100,25 +100,22 @@ class CronModule
         return $this->suspended;
     }
 
-    public function schedule()
+    public function schedule(): void
     {
         $this->scheduled = true;
     }
 
-    public function unschedule()
+    public function unschedule(): void
     {
         $this->scheduled = false;
         $this->suspended = false;
     }
 
-    public function suspend()
+    public function suspend(): void
     {
         $this->suspended = true;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;

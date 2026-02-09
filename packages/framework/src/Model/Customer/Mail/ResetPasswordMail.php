@@ -18,10 +18,6 @@ class ResetPasswordMail implements MessageFactoryInterface
     public const VARIABLE_EMAIL = '{email}';
     public const VARIABLE_NEW_PASSWORD_URL = '{new_password_url}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Security\NewPasswordUrlProvider $newPasswordUrlProvider
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly NewPasswordUrlProvider $newPasswordUrlProvider,
@@ -29,12 +25,10 @@ class ResetPasswordMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
      * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     #[Override]
-    public function createMessage(MailTemplate $template, $customerUser)
+    public function createMessage(MailTemplate $template, mixed $customerUser): MessageData
     {
         $domainId = $template->getDomainId();
 
@@ -51,11 +45,9 @@ class ResetPasswordMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $customerUser
-     * @param int $domainId
      * @return string[]
      */
-    protected function getBodyValuesIndexedByVariableName(ResetPasswordInterface $customerUser, int $domainId)
+    protected function getBodyValuesIndexedByVariableName(ResetPasswordInterface $customerUser, int $domainId): array
     {
         return [
             self::VARIABLE_EMAIL => htmlspecialchars($customerUser->getEmail(), ENT_QUOTES),
@@ -64,12 +56,12 @@ class ResetPasswordMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $customerUser
-     * @param int $domainId
      * @return string[]
      */
-    protected function getSubjectValuesIndexedByVariableName(ResetPasswordInterface $customerUser, int $domainId)
-    {
+    protected function getSubjectValuesIndexedByVariableName(
+        ResetPasswordInterface $customerUser,
+        int $domainId,
+    ): array {
         return $this->getBodyValuesIndexedByVariableName($customerUser, $domainId);
     }
 }

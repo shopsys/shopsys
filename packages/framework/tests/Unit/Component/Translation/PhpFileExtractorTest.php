@@ -11,6 +11,7 @@ use PhpParser\ParserFactory;
 use PhpParser\PhpVersion;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor;
 use Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractorFactory;
 use Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -18,7 +19,7 @@ use SplFileInfo;
 
 class PhpFileExtractorTest extends TestCase
 {
-    public function testExtractController()
+    public function testExtractController(): void
     {
         $fileName = 'Controller.php';
 
@@ -27,59 +28,56 @@ class PhpFileExtractorTest extends TestCase
         $expected = new MessageCatalogue();
 
         $message = new Message('trans test', Translator::DEFAULT_TRANSLATION_DOMAIN);
-        $message->addSource(new FileSource($fileName, 22));
+        $message->addSource(new FileSource($fileName, 19));
         $expected->add($message);
 
         $message = new Message('trans test with domain', 'testDomain');
-        $message->addSource(new FileSource($fileName, 23));
+        $message->addSource(new FileSource($fileName, 20));
         $expected->add($message);
 
         $message = new Message('t test', Translator::DEFAULT_TRANSLATION_DOMAIN);
-        $message->addSource(new FileSource($fileName, 25));
+        $message->addSource(new FileSource($fileName, 22));
         $expected->add($message);
 
         $message = new Message('t test with domain', 'testDomain');
-        $message->addSource(new FileSource($fileName, 26));
+        $message->addSource(new FileSource($fileName, 23));
         $expected->add($message);
 
         $message = new Message('my %adjective% string', Translator::DEFAULT_TRANSLATION_DOMAIN);
-        $message->addSource(new FileSource($fileName, 30));
+        $message->addSource(new FileSource($fileName, 27));
         $expected->add($message);
 
         $message = new Message('my string with domain only', 'another-translation-domain');
-        $message->addSource(new FileSource($fileName, 31));
+        $message->addSource(new FileSource($fileName, 28));
         $expected->add($message);
 
         $message = new Message('my %adjective% string with domain', 'another-translation-domain');
-        $message->addSource(new FileSource($fileName, 32));
+        $message->addSource(new FileSource($fileName, 29));
         $expected->add($message);
 
         $message = new Message('my %adjective% string with named locale', 'someDomain');
-        $message->addSource(new FileSource($fileName, 33));
+        $message->addSource(new FileSource($fileName, 30));
         $expected->add($message);
 
         $message = new Message('my %adjective% string with unsorted arguments', 'unsortedDomain');
-        $message->addSource(new FileSource($fileName, 34));
+        $message->addSource(new FileSource($fileName, 31));
         $expected->add($message);
 
         $message = new Message('my %adjective% string with null domain', Translator::DEFAULT_TRANSLATION_DOMAIN);
-        $message->addSource(new FileSource($fileName, 35));
+        $message->addSource(new FileSource($fileName, 32));
         $expected->add($message);
 
         $this->assertEquals($expected, $catalogue);
     }
 
-    private function getExtractor()
+    private function getExtractor(): PhpFileExtractor
     {
         $phpFileExtractorFactory = new PhpFileExtractorFactory(new PhpParserNodeHelper());
 
         return $phpFileExtractorFactory->create();
     }
 
-    /**
-     * @param mixed $filename
-     */
-    private function extract($filename)
+    private function extract(mixed $filename): MessageCatalogue
     {
         if (!is_file($filename)) {
             throw new RuntimeException(sprintf('The file "%s" does not exist.', $filename));

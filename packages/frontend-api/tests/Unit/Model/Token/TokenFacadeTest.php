@@ -31,9 +31,6 @@ use Tests\FrameworkBundle\Test\DomainConfigHelper;
 class TokenFacadeTest extends TestCase
 {
     /**
-     * @param string|null $issuedBy
-     * @param \Lcobucci\JWT\Signer\Key\InMemory|null $privateKey
-     * @param \DateTimeImmutable|null $expiresAt
      * @param class-string|null $exceptionClass
      */
     #[DataProvider('tokensDataProvider')]
@@ -52,12 +49,6 @@ class TokenFacadeTest extends TestCase
         $tokenFacade->validateToken($token);
     }
 
-    /**
-     * @param string|null $issuedBy
-     * @param \Lcobucci\JWT\Signer\Key\InMemory|null $privateKey
-     * @param \DateTimeImmutable|null $expiresAt
-     * @return \Lcobucci\JWT\UnencryptedToken
-     */
     protected function createToken(
         ?string $issuedBy,
         ?InMemory $privateKey,
@@ -88,9 +79,6 @@ class TokenFacadeTest extends TestCase
         return $builder->getToken($signer, $privateKey);
     }
 
-    /**
-     * @return iterable
-     */
     public static function tokensDataProvider(): iterable
     {
         yield [
@@ -122,9 +110,6 @@ class TokenFacadeTest extends TestCase
         ];
     }
 
-    /**
-     * @return \Shopsys\FrontendApiBundle\Model\Token\TokenFacade
-     */
     private function createTokenFacade(): TokenFacade
     {
         $domain = $this->createDomain();
@@ -148,9 +133,6 @@ class TokenFacadeTest extends TestCase
         );
     }
 
-    /**
-     * @return \Lcobucci\JWT\Configuration
-     */
     private function createJwtConfiguration(): Configuration
     {
         $domain = $this->createDomain();
@@ -159,9 +141,6 @@ class TokenFacadeTest extends TestCase
         return (new JwtConfigurationProvider($parameterBag, $domain))->getConfiguration();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     private function createDomain(): Domain
     {
         $domainConfig = DomainConfigHelper::getDomainConfig();

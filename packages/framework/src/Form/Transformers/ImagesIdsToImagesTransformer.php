@@ -14,9 +14,6 @@ class ImagesIdsToImagesTransformer implements DataTransformerInterface
 {
     protected ImageFacade $imageFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageRepository
-     */
     public function __construct(ImageFacade $imageRepository)
     {
         $this->imageFacade = $imageRepository;

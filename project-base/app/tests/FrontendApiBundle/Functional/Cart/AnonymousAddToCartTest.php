@@ -121,11 +121,8 @@ class AnonymousAddToCartTest extends GraphQlTestCase
         self::assertEquals($desiredProductQuantity, $cartItems[0]->getQuantity());
     }
 
-    /**
-     * @param mixed $invalidQuantity
-     */
     #[DataProvider('getInvalidQuantityProvider')]
-    public function testInvalidQuantityProvided($invalidQuantity): void
+    public function testInvalidQuantityProvided(mixed $invalidQuantity): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $this->testingProduct->getUuid(),
@@ -197,10 +194,6 @@ class AnonymousAddToCartTest extends GraphQlTestCase
         self::assertEquals($unknownUuid, $response['data']['AddToCart']['cart']['uuid']);
     }
 
-    /**
-     * @param int $productQuantity
-     * @return array
-     */
     private function addTestingProductToNewCart(int $productQuantity): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [

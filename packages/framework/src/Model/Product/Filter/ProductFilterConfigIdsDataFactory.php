@@ -10,20 +10,12 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class ProductFilterConfigIdsDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @param array $aggregationElasticsearchResult
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigIdsData
-     */
     public function createFromElasticsearchAggregationResult(
         array $aggregationElasticsearchResult,
     ): ProductFilterConfigIdsData {
@@ -36,7 +28,6 @@ class ProductFilterConfigIdsDataFactory
     }
 
     /**
-     * @param array $aggregationResult
      * @return int[]
      */
     protected function extractBrandIds(array $aggregationResult): array
@@ -53,7 +44,6 @@ class ProductFilterConfigIdsDataFactory
     }
 
     /**
-     * @param array $aggregationResult
      * @return int[]
      */
     protected function extractFlagIds(array $aggregationResult): array
@@ -69,10 +59,6 @@ class ProductFilterConfigIdsDataFactory
         }, $flagsData);
     }
 
-    /**
-     * @param array $aggregationResult
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
-     */
     protected function extractPriceRange(array $aggregationResult): PriceRange
     {
         $pricesData = $aggregationResult['prices'];
@@ -86,10 +72,6 @@ class ProductFilterConfigIdsDataFactory
         return new PriceRange($minPrice, $maxPrice);
     }
 
-    /**
-     * @param array $aggregationResult
-     * @return array
-     */
     protected function extractParameterValueIdsByParameterId(array $aggregationResult): array
     {
         if (!array_key_exists('parameters', $aggregationResult)) {

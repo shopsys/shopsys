@@ -14,11 +14,6 @@ class MergeCartFacade
 {
     protected bool $showCartMergeInfo = false;
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory $cartItemFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(
         protected readonly CartApiFacade $cartFacade,
         protected readonly CartItemFactory $cartItemFactory,
@@ -26,10 +21,6 @@ class MergeCartFacade
     ) {
     }
 
-    /**
-     * @param string $cartUuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     */
     public function mergeCartByUuidToCustomerCart(string $cartUuid, CustomerUser $customerUser): void
     {
         $oldCart = $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
@@ -42,10 +33,6 @@ class MergeCartFacade
         $this->mergeCarts($oldCart, $customerCart);
     }
 
-    /**
-     * @param string $cartUuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     */
     public function overwriteCustomerCartWithCartByUuid(string $cartUuid, CustomerUser $customerUser): void
     {
         $oldCart = $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
@@ -58,10 +45,6 @@ class MergeCartFacade
         $this->entityManager->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $currentCart
-     */
     protected function mergeCarts(Cart $cart, Cart $currentCart): void
     {
         foreach ($cart->getItems() as $itemToMerge) {
@@ -93,9 +76,6 @@ class MergeCartFacade
         $this->cartFacade->deleteCart($cart);
     }
 
-    /**
-     * @return bool
-     */
     public function shouldShowCartMergeInfo(): bool
     {
         return $this->showCartMergeInfo;

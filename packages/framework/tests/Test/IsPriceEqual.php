@@ -12,17 +12,11 @@ final class IsPriceEqual extends Constraint
 {
     private PriceExporter $exporter;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $value
-     */
     public function __construct(private readonly PriceInterface $value)
     {
         $this->exporter = new PriceExporter();
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function toString(): string
     {
@@ -31,7 +25,6 @@ final class IsPriceEqual extends Constraint
 
     /**
      * @param mixed $other
-     * @return bool
      */
     #[Override]
     protected function matches($other): bool

@@ -10,27 +10,19 @@ use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class RecalculateGiftFlagsCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade
-     */
     public function __construct(
         protected readonly GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade,
     ) {
     }
 
-    /**
-     * @param \Monolog\Logger $logger
-     */
     #[Override]
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
     }
 
     #[Override]
-    public function run()
+    public function run(): void
     {
         $this->giftFlagSynchronizerFacade->refreshAllGiftPlans();
-
-        return true;
     }
 }

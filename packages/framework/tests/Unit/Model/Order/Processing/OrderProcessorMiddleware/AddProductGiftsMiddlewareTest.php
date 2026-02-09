@@ -20,7 +20,7 @@ use Tests\FrameworkBundle\Test\MiddlewareTestCase;
 
 class AddProductGiftsMiddlewareTest extends MiddlewareTestCase
 {
-    public function testAddProductWithGifts()
+    public function testAddProductWithGifts(): void
     {
         $orderProcessingData = $this->createOrderProcessingData();
         $productData = new ProductData();
@@ -68,10 +68,6 @@ class AddProductGiftsMiddlewareTest extends MiddlewareTestCase
         $this->assertSame(Money::create(244)->getAmount(), $actualOrderData->totalPrice->getPriceWithVat()->getAmount());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddProductGiftsMiddleware
-     */
     private function createAddProductGiftsMiddleware(
         QuantifiedItemPrice $quantifiedItemPrice,
     ): AddProductGiftsMiddleware {
@@ -84,10 +80,6 @@ class AddProductGiftsMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddProductsMiddleware
-     */
     private function createAddProductsMiddleware(QuantifiedItemPrice $quantifiedItemPrice): AddProductsMiddleware
     {
         $quantifiedProductPriceCalculation = $this->createMock(QuantifiedProductPriceCalculation::class);

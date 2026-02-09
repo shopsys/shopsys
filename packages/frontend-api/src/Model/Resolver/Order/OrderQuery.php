@@ -19,13 +19,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class OrderQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly OrderFacade $orderFacade,
@@ -35,12 +28,6 @@ class OrderQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param string|null $uuid
-     * @param string|null $urlHash
-     * @param string|null $orderNumber
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     public function orderByUuidOrUrlHashQuery(
         ?string $uuid = null,
         ?string $urlHash = null,
@@ -67,11 +54,6 @@ class OrderQuery extends AbstractQuery
         throw new RequestError('You need to be logged in or provide argument \'urlHash\'.');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     protected function getOrderForCustomerUserByUuid(CustomerUser $customerUser, string $uuid): Order
     {
         if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)) {
@@ -81,11 +63,6 @@ class OrderQuery extends AbstractQuery
         return $this->orderApiFacade->getByUuidAndCustomerUser($uuid, $customerUser);
     }
 
-    /**
-     * @param string $orderNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     protected function getByOrderNumberAndCustomerUser(string $orderNumber, CustomerUser $customerUser): Order
     {
         if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)) {

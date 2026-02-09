@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory as BaseGoPayClientFac
 
 class GoPayClientFactory extends BaseGoPayClientFactory
 {
-    /**
-     * @param array $gopayConfig
-     * @return \Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClient
-     */
     #[Override]
     protected function createInstance(array $gopayConfig): GoPayClient
     {

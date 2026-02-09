@@ -11,20 +11,15 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository $brandRepository
-     */
     public function __construct(protected readonly BrandRepository $brandRepository)
     {
     }
 
     /**
-     * @param string $routeName
-     * @param array $routeParameters
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     #[Override]
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         $isBrandDetail = $routeName === 'front_brand_detail';
 
@@ -47,7 +42,7 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return ['front_brand_detail'];
     }

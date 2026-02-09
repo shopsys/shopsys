@@ -6,18 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\Store\OpeningHours;
 
 class OpeningHoursDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory $openingHoursRangeDataFactory
-     */
     public function __construct(
         protected readonly OpeningHoursRangeDataFactory $openingHoursRangeDataFactory,
     ) {
     }
 
-    /**
-     * @param int $dayOfWeek
-     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData
-     */
     public function createForDayOfWeek(int $dayOfWeek): OpeningHoursData
     {
         $openingHoursData = new OpeningHoursData();
@@ -40,10 +33,6 @@ class OpeningHoursDataFactory
         return $weekOpeningHourData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHours
-     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData
-     */
     public function createFromOpeningHour(OpeningHours $openingHours): OpeningHoursData
     {
         $openingHoursData = $this->createForDayOfWeek($openingHours->getDayOfWeek());

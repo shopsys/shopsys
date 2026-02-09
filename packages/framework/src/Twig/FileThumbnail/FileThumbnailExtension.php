@@ -20,10 +20,6 @@ class FileThumbnailExtension extends AbstractExtension
      */
     protected array $iconsByExtension;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
-     */
     public function __construct(
         protected readonly FileUpload $fileUpload,
         protected readonly ImageProcessor $imageProcessor,
@@ -44,9 +40,6 @@ class FileThumbnailExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     public function getFunctions(): array
     {
@@ -58,18 +51,11 @@ class FileThumbnailExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'file_thumbnail_extension';
     }
 
-    /**
-     * @param string $filepath
-     * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
-     */
     public function getFileThumbnailInfo(string $filepath): FileThumbnailInfo
     {
         try {
@@ -79,10 +65,6 @@ class FileThumbnailExtension extends AbstractExtension
         }
     }
 
-    /**
-     * @param string $temporaryFilename
-     * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
-     */
     public function getFileThumbnailInfoByTemporaryFilename(string $temporaryFilename): FileThumbnailInfo
     {
         $filepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
@@ -90,19 +72,11 @@ class FileThumbnailExtension extends AbstractExtension
         return $this->getFileThumbnailInfo($filepath);
     }
 
-    /**
-     * @param string $filepath
-     * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
-     */
     protected function getImageThumbnailInfo(string $filepath): FileThumbnailInfo
     {
         return new FileThumbnailInfo(null, $this->imageProcessor->getEncodedImageUri($filepath));
     }
 
-    /**
-     * @param string $filepath
-     * @return string
-     */
     protected function getIconTypeByFilename(string $filepath): string
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));

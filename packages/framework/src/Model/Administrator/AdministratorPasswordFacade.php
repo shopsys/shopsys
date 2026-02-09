@@ -14,13 +14,6 @@ class AdministratorPasswordFacade
 {
     public const RESET_PASSWORD_HASH_LENGTH = 50;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
-     * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMailFacade $resetPasswordMailFacade
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorRepository $administratorRepository,
@@ -30,9 +23,6 @@ class AdministratorPasswordFacade
     ) {
     }
 
-    /**
-     * @param string $administratorUserName
-     */
     public function resetPassword(string $administratorUserName): void
     {
         $administrator = $this->administratorRepository->getByUserName($administratorUserName);
@@ -45,12 +35,6 @@ class AdministratorPasswordFacade
         $this->resetPasswordMailFacade->sendMail($administrator);
     }
 
-    /**
-     * @param string $administratorUserName
-     * @param string|null $resetPasswordHash
-     * @param string $newPassword
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     public function setNewPassword(
         string $administratorUserName,
         ?string $resetPasswordHash,
@@ -67,10 +51,6 @@ class AdministratorPasswordFacade
         return $administrator;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param string $password
-     */
     public function setPassword(Administrator $administrator, string $password): void
     {
         $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($administrator);

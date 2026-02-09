@@ -31,7 +31,6 @@ class PricingGroup
     protected $domainId;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @param int $domainId
      */
     public function __construct(PricingGroupData $pricingGroupData, $domainId)
@@ -40,17 +39,11 @@ class PricingGroup
         $this->setData($pricingGroupData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     */
-    public function edit(PricingGroupData $pricingGroupData)
+    public function edit(PricingGroupData $pricingGroupData): void
     {
         $this->setData($pricingGroupData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     */
     protected function setData(PricingGroupData $pricingGroupData): void
     {
         $this->name = $pricingGroupData->name;

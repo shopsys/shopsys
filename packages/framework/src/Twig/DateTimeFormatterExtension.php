@@ -18,10 +18,6 @@ class DateTimeFormatterExtension extends AbstractExtension
 {
     protected const HOUR_IN_SECONDS = 60 * 60;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface $dateTimeFormatter
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly DateTimeFormatterInterface $dateTimeFormatter,
         protected readonly Localization $localization,
@@ -32,7 +28,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      * @return \Twig\TwigFilter[]
      */
     #[Override]
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter(
@@ -58,7 +54,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -68,12 +64,7 @@ class DateTimeFormatterExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param mixed $dateTime
-     * @param string|null $locale
-     * @return string
-     */
-    public function formatDate($dateTime, $locale = null)
+    public function formatDate(mixed $dateTime, ?string $locale = null): string
     {
         return $this->format(
             $dateTime,
@@ -83,12 +74,7 @@ class DateTimeFormatterExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @param mixed $dateTime
-     * @param string|null $locale
-     * @return string
-     */
-    public function formatTime($dateTime, $locale = null)
+    public function formatTime(mixed $dateTime, ?string $locale = null): string
     {
         return $this->format(
             $dateTime,
@@ -98,12 +84,7 @@ class DateTimeFormatterExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @param mixed $dateTime
-     * @param string|null $locale
-     * @return string
-     */
-    public function formatDateTime($dateTime, $locale = null)
+    public function formatDateTime(mixed $dateTime, ?string $locale = null): string
     {
         return $this->format(
             $dateTime,
@@ -114,13 +95,10 @@ class DateTimeFormatterExtension extends AbstractExtension
     }
 
     /**
-     * @param mixed $dateTime
      * @param int $dateType {@link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants}
      * @param int $timeType {@link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants}
-     * @param string|null $locale
-     * @return string
      */
-    protected function format($dateTime, $dateType, $timeType, $locale = null)
+    protected function format(mixed $dateTime, int $dateType, int $timeType, ?string $locale = null): string
     {
         if ($dateTime === null) {
             return '-';
@@ -134,11 +112,7 @@ class DateTimeFormatterExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @param string|null $locale
-     * @return string
-     */
-    protected function getLocale($locale = null)
+    protected function getLocale(?string $locale = null): string
     {
         if ($locale === null) {
             $locale = $this->localization->getRequestLocale();
@@ -147,11 +121,7 @@ class DateTimeFormatterExtension extends AbstractExtension
         return $locale;
     }
 
-    /**
-     * @param mixed $value
-     * @return \DateTimeInterface
-     */
-    protected function convertToDateTime($value)
+    protected function convertToDateTime(mixed $value): DateTimeInterface
     {
         if ($value instanceof DateTimeInterface) {
             return $value;
@@ -160,11 +130,7 @@ class DateTimeFormatterExtension extends AbstractExtension
         return new DatePoint($value);
     }
 
-    /**
-     * @param int $date
-     * @return string
-     */
-    public function dateOfCreation($date)
+    public function dateOfCreation(int $date): string
     {
         $startDate = date('Y', strtotime('1-1-' . $date));
         $endDate = date('Y');
@@ -176,10 +142,6 @@ class DateTimeFormatterExtension extends AbstractExtension
         return $startDate . ' - ' . $endDate;
     }
 
-    /**
-     * @param int|null $durationInSeconds
-     * @return string
-     */
     public function formatDurationInSeconds(?int $durationInSeconds): string
     {
         if ($durationInSeconds === null) {
@@ -198,10 +160,7 @@ class DateTimeFormatterExtension extends AbstractExtension
         return $formattedHours . date('i:s', $durationInSeconds);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'date_formatter_extension';
     }

@@ -17,19 +17,11 @@ class PersonalPickupPointMiddleware implements OrderProcessorMiddlewareInterface
 {
     public const string ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER = 'pickupPlaceIdentifier';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
-     */
     #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,
@@ -67,10 +59,6 @@ class PersonalPickupPointMiddleware implements OrderProcessorMiddlewareInterface
         return $orderProcessingStack->processNext($orderProcessingData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     */
     protected function updateDeliveryDataByStore(OrderData $orderData, Store $store): void
     {
         $orderData->personalPickupStore = $store;

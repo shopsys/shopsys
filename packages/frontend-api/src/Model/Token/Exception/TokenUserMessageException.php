@@ -13,19 +13,13 @@ class TokenUserMessageException extends CustomUserMessageAuthenticationException
 {
     protected const CODE = 'invalid-token';
 
-    /**
-     * @return bool
-     */
     #[Override]
     public function isClientSafe(): bool
     {
         return true;
     }
 
-    /**
-     * @return string
-     */
-    public function getCategory()
+    public function getCategory(): string
     {
         return 'token';
     }

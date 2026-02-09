@@ -12,19 +12,11 @@ use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
 
 class SetOrderDataAsAdministratorMiddleware implements OrderProcessorMiddlewareInterface
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
-     */
     public function __construct(
         protected readonly LoginAsUserFacade $loginAsUserFacade,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
-     */
     #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,

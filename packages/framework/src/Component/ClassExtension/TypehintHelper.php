@@ -4,23 +4,65 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
+use Roave\BetterReflection\Reflection\ReflectionIntersectionType;
+use Roave\BetterReflection\Reflection\ReflectionMethod;
 use Roave\BetterReflection\Reflection\ReflectionNamedType;
+use Roave\BetterReflection\Reflection\ReflectionParameter;
 use Roave\BetterReflection\Reflection\ReflectionProperty;
+use Roave\BetterReflection\Reflection\ReflectionUnionType;
 
 class TypehintHelper
 {
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
-     * @return string|null
-     */
     public function getPropertyTypeFromTypehint(ReflectionProperty $reflectionProperty): ?string
     {
-        $type = $reflectionProperty->getType();
+        return $this->formatReflectionType($reflectionProperty->getType());
+    }
 
-        if (($type instanceof ReflectionNamedType) === false) {
+    public function getParameterTypeFromTypehint(ReflectionParameter $reflectionParameter): ?string
+    {
+        $type = $reflectionParameter->getType();
+
+        return $this->formatReflectionType($type);
+    }
+
+    public function getMethodReturnTypeFromTypehint(ReflectionMethod $reflectionMethod): ?string
+    {
+        $type = $reflectionMethod->getReturnType();
+
+        return $this->formatReflectionType($type);
+    }
+
+    protected function formatReflectionType(
+        ReflectionNamedType|ReflectionUnionType|ReflectionIntersectionType|null $type,
+    ): ?string {
+        if ($type === null) {
             return null;
         }
 
-        return '\\' . $type->getName();
+        if ($type instanceof ReflectionUnionType) {
+            $typeStrings = [];
+
+            foreach ($type->getTypes() as $subType) {
+                if ($subType instanceof ReflectionNamedType) {
+                    $name = $subType->getName();
+                    $typeStrings[] = $subType->isBuiltin() ? $name : '\\' . $name;
+                }
+            }
+
+            return implode('|', $typeStrings);
+        }
+
+        if ($type instanceof ReflectionNamedType) {
+            $name = $type->getName();
+            $typeString = $type->isBuiltin() ? $name : '\\' . $name;
+
+            if ($type->allowsNull() && $name !== 'null' && $name !== 'mixed') {
+                return $typeString . '|null';
+            }
+
+            return $typeString;
+        }
+
+        return null;
     }
 }

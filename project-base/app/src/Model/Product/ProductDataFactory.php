@@ -14,12 +14,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory as BaseProductDataF
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] getParametersData(\App\Model\Product\Product $product)
  * @property \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
- * @method fillProductStockByProduct(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
- * @method fillProductStockByStocks(\App\Model\Product\ProductData $productData)
- * @method fillNew(\App\Model\Product\ProductData $productData)
+ * @method void fillProductStockByProduct(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
+ * @method void fillProductStockByStocks(\App\Model\Product\ProductData $productData)
+ * @method void fillNew(\App\Model\Product\ProductData $productData)
  * @method __construct(\Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Model\Product\Parameter\ParameterRepository $parameterRepository, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade, \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository, \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade, \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory, \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory, \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade, \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade, \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory, \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory $productInputPriceDataFactory, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory, \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory, \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoRepository $productVideoRepository, \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory $productPromotionXyDataFactory)
- * @method fillProductVideosByProductId(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
- * @method fillProductGiftsDataByMainProduct(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $mainProduct)
+ * @method void fillProductVideosByProductId(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
  */
 class ProductDataFactory extends BaseProductDataFactory
 {

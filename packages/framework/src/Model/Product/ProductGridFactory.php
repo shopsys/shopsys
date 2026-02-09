@@ -17,12 +17,6 @@ class ProductGridFactory
     protected const string PRODUCT_VISIBILITIES_EACH_DOMAIN_CACHE = 'PRODUCT_VISIBILITIES_EACH_DOMAIN_CACHE';
     protected const string PRODUCT_VISIBILITIES_SOME_DOMAIN_CACHE = 'PRODUCT_VISIBILITIES_SOME_DOMAIN_CACHE';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
-     */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
@@ -32,9 +26,7 @@ class ProductGridFactory
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     public function getProductControllerGrid(QueryBuilder $queryBuilder): Grid
     {
@@ -63,11 +55,6 @@ class ProductGridFactory
         return $grid;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param array $gridViewParameters
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     public function getProductPickerControllerGrid(QueryBuilder $queryBuilder, array $gridViewParameters): Grid
     {
         $dataSource = $this->getGridDataSource($queryBuilder);
@@ -91,10 +78,6 @@ class ProductGridFactory
         return $grid;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @return \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource
-     */
     protected function getGridDataSource(QueryBuilder $queryBuilder): QueryBuilderWithRowManipulatorDataSource
     {
         return $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
@@ -121,8 +104,6 @@ class ProductGridFactory
 
     /**
      * @param int[] $productIds
-     * @param int $productId
-     * @return bool
      */
     protected function isProductVisibleForDefaultPricingGroupOnEachDomain(array $productIds, int $productId): bool
     {
@@ -138,8 +119,6 @@ class ProductGridFactory
 
     /**
      * @param int[] $productIds
-     * @param int $productId
-     * @return bool
      */
     protected function isProductVisibleForDefaultPricingGroupOnSomeDomain(array $productIds, int $productId): bool
     {

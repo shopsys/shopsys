@@ -9,9 +9,6 @@ use Shopsys\FrameworkBundle\Component\Console\ConsoleHelper;
 
 final class CronContext extends AbstractContext
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Console\ConsoleHelper $consoleHelper
-     */
     public function __construct(
         private readonly ConsoleHelper $consoleHelper,
     ) {

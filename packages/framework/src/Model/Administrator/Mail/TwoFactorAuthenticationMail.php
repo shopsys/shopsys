@@ -17,10 +17,6 @@ class TwoFactorAuthenticationMail implements MessageFactoryInterface
     public const string TWO_FACTOR_AUTHENTICATION_CODE = 'two_factor_authentication_code';
     public const string VARIABLE_AUTHENTICATION_CODE = '{authentication_code}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly Domain $domain,
@@ -28,13 +24,13 @@ class TwoFactorAuthenticationMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
      * @param \Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface $administrator
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     #[Override]
-    public function createMessage(MailTemplate $template, $administrator)
-    {
+    public function createMessage(
+        MailTemplate $template,
+        $administrator,
+    ): MessageData {
         return new MessageData(
             $administrator->getEmailAuthRecipient(),
             $template->getBccEmail(),

@@ -175,7 +175,7 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
      * {@inheritdoc}
      */
     #[Override]
-    public function get($currencyCode, $locale = null): Currency
+    public function get(string $currencyCode, ?string $locale = null): Currency
     {
         if (!$this->isSupportedCurrency($currencyCode)) {
             throw new UnsupportedCurrencyException($currencyCode);
@@ -212,10 +212,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         return $supportedCurrencies;
     }
 
-    /**
-     * @param string $currencyCode
-     * @return bool
-     */
     public function isSupportedCurrency(string $currencyCode): bool
     {
         return in_array($currencyCode, self::SUPPORTED_CURRENCY_CODES, true);

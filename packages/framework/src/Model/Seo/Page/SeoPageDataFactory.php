@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 
 class SeoPageDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DomainRouterFactory $domainRouterFactory,
@@ -22,9 +17,6 @@ class SeoPageDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData
-     */
     public function create(): SeoPageData
     {
         $seoPageData = new SeoPageData();
@@ -33,10 +25,6 @@ class SeoPageDataFactory
         return $seoPageData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData
-     */
     public function createFromSeoPage(SeoPage $seoPage): SeoPageData
     {
         $seoPageData = $this->create();
@@ -45,10 +33,6 @@ class SeoPageDataFactory
         return $seoPageData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
-     */
     protected function fillFromSeoPage(SeoPageData $seoPageData, SeoPage $seoPage): void
     {
         $seoPageData->pageName = $seoPage->getPageName();

@@ -8,10 +8,6 @@ use DateTimeImmutable;
 
 class OpeningHoursWithDateDataFactory
 {
-    /**
-     * @param \DateTimeImmutable $date
-     * @return \Shopsys\FrontendApiBundle\Model\Store\OpeningHours\OpeningHoursWithDateData
-     */
     public function createForDate(DateTimeImmutable $date): OpeningHoursWithDateData
     {
         $openingHoursWithDateData = new OpeningHoursWithDateData();

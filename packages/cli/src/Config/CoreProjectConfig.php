@@ -14,7 +14,6 @@ final class CoreProjectConfig
     private array $sections = [];
 
     /**
-     * @param string $projectPath
      * @param array<\Shopsys\Cli\Config\CoreDomainConfig> $domains
      */
     public function __construct(
@@ -65,9 +64,6 @@ final class CoreProjectConfig
 
     /**
      * @param array<string, mixed> $data
-     * @param string $projectPath
-     * @param \Shopsys\Cli\Config\ConfigSectionRegistry|null $registry
-     * @return self
      */
     public static function fromArray(array $data, string $projectPath, ?ConfigSectionRegistry $registry = null): self
     {
@@ -125,9 +121,6 @@ final class CoreProjectConfig
         return $this->sections[$sectionClass] ?? throw new LogicException(sprintf('Unknown section class: %s', $sectionClass));
     }
 
-    /**
-     * @param \Shopsys\Cli\Config\ConfigSectionInterface $section
-     */
     public function addConfigSection(ConfigSectionInterface $section): void
     {
         $this->sections[$section::class] = $section;

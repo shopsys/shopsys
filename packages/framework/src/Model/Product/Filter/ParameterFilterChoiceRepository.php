@@ -17,11 +17,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ParameterFilterChoiceRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
@@ -30,10 +25,6 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
     public function getParameterFilterChoicesInCategory(
@@ -79,8 +70,6 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     protected function getVisibleParametersIndexedByIdOrderedByName(array $rows, string $locale): array
@@ -113,8 +102,6 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[][]
      */
     protected function getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, string $locale): array
@@ -141,8 +128,6 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     protected function getParameterValuesIndexedByIdOrderedByText(array $rows, string $locale): array

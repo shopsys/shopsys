@@ -8,16 +8,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityIdIsNotSetException;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityNotFoundException;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\MethodGetIdDoesNotExistException;
-use Shopsys\FrameworkBundle\Component\DataFixture\Exception\ObjectRequiredException;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException;
 
 class PersistentReferenceFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceRepository $persistentReferenceRepository
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactory $persistentReferenceFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PersistentReferenceRepository $persistentReferenceRepository,
@@ -27,7 +21,6 @@ class PersistentReferenceFacade
 
     /**
      * @template T
-     * @param string $name
      * @param class-string<T>|null $entityClassName
      * @return T
      */
@@ -43,16 +36,8 @@ class PersistentReferenceFacade
         return $entity;
     }
 
-    /**
-     * @param string $name
-     * @param object $object
-     */
-    public function persistReference($name, $object)
+    public function persistReference(string $name, object $object): void
     {
-        if (!is_object($object)) {
-            throw new ObjectRequiredException($object);
-        }
-
         $entityName = get_class($object);
 
         if (!method_exists($object, 'getId')) {
@@ -77,12 +62,7 @@ class PersistentReferenceFacade
         $this->em->flush();
     }
 
-    /**
-     * @param string $name
-     * @param object $object
-     * @param int $domainId
-     */
-    public function persistReferenceForDomain(string $name, $object, int $domainId): void
+    public function persistReferenceForDomain(string $name, object $object, int $domainId): void
     {
         $referenceName = $this->createDomainReferenceName($name, $domainId);
         $this->persistReference($referenceName, $object);
@@ -90,8 +70,6 @@ class PersistentReferenceFacade
 
     /**
      * @template T
-     * @param string $name
-     * @param int $domainId
      * @param class-string<T>|null $entityClassName
      * @return T
      */
@@ -102,11 +80,6 @@ class PersistentReferenceFacade
         return $this->getReference($referenceName, $entityClassName);
     }
 
-    /**
-     * @param string $name
-     * @param int $domainId
-     * @return string
-     */
     protected function createDomainReferenceName(string $name, int $domainId): string
     {
         return sprintf('%s_%s', $name, $domainId);

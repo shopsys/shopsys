@@ -13,16 +13,6 @@ use Shopsys\MakerBundle\Utils\NamingHelper;
  */
 class RelationProperty extends Property
 {
-    /**
-     * @param string $propertyName
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityRelationTypeEnum $relationType
-     * @param string $relationOwningClass
-     * @param string $relationTargetEntity
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityTypeEnum $entityType
-     * @param bool $isNullable
-     * @param bool $orphanRemoval
-     * @param string|null $inverseProperty
-     */
     public function __construct(
         public string $propertyName,
         public EntityRelationTypeEnum $relationType,
@@ -66,9 +56,6 @@ class RelationProperty extends Property
         return $attributeLines;
     }
 
-    /**
-     * @return string|null
-     */
     public function getVarDocBlock(): ?string
     {
         if ($this->isCollection()) {
@@ -78,10 +65,6 @@ class RelationProperty extends Property
         return null;
     }
 
-    /**
-     * @param \Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum $collectionTypeHintType
-     * @return string
-     */
     #[Override]
     public function getTypeHint(
         CollectionTypeHintTypeEnum $collectionTypeHintType = CollectionTypeHintTypeEnum::COLLECTION,
@@ -101,36 +84,23 @@ class RelationProperty extends Property
         return sprintf('%s%s', $typehintPrefix, '\\' . $this->relationTargetEntity);
     }
 
-    /**
-     * @return bool
-     */
     #[Override]
     public function isCollection(): bool
     {
         return $this->relationType === EntityRelationTypeEnum::ONE_TO_MANY || $this->relationType === EntityRelationTypeEnum::MANY_TO_MANY;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getGetterName(): string
     {
         return 'get' . ucfirst($this->propertyName);
     }
 
-    /**
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityRelationTypeEnum $relationType
-     * @return string
-     */
     public function getInverseSettingName(EntityRelationTypeEnum $relationType): string
     {
         return $relationType === EntityRelationTypeEnum::ONE_TO_MANY ? 'mappedBy' : 'inversedBy';
     }
 
-    /**
-     * @return string|null
-     */
     #[Override]
     public function getAdditionalInformation(): ?string
     {

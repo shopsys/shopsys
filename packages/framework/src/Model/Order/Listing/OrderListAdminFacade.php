@@ -4,24 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Listing;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class OrderListAdminFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository $orderListAdminRepository
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly OrderListAdminRepository $orderListAdminRepository,
         protected readonly Localization $localization,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getOrderListQueryBuilder()
+    public function getOrderListQueryBuilder(): QueryBuilder
     {
         return $this->orderListAdminRepository->getOrderListQueryBuilder($this->localization->getCurrentLocaleForTranslatableEntities());
     }

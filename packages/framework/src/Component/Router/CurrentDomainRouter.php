@@ -22,11 +22,6 @@ class CurrentDomainRouter implements ChainRouterInterface
 {
     protected RequestContext $context;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DomainRouterFactory $domainRouterFactory,
@@ -34,49 +29,30 @@ class CurrentDomainRouter implements ChainRouterInterface
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\Routing\RequestContext
-     */
     #[Override]
     public function getContext(): RequestContext
     {
         return $this->context;
     }
 
-    /**
-     * @param \Symfony\Component\Routing\RequestContext $context
-     */
     #[Override]
     public function setContext(RequestContext $context): void
     {
         $this->context = $context;
     }
 
-    /**
-     * @return \Symfony\Component\Routing\RouteCollection
-     */
     #[Override]
     public function getRouteCollection(): RouteCollection
     {
         return $this->getDomainRouter()->getRouteCollection();
     }
 
-    /**
-     * @param string $name
-     * @param array $parameters
-     * @param int $referenceType
-     * @return string
-     */
     #[Override]
     public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->getDomainRouter()->generate($name, $parameters, $referenceType);
     }
 
-    /**
-     * @param string $pathinfo
-     * @return array
-     */
     #[Override]
     public function match(string $pathinfo): array
     {
@@ -91,10 +67,6 @@ class CurrentDomainRouter implements ChainRouterInterface
         return $this->domainRouterFactory->getRouter($this->domain->getId());
     }
 
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface|\Symfony\Component\Routing\Matcher\RequestMatcherInterface|\Symfony\Component\Routing\Generator\UrlGeneratorInterface $router
-     * @param int $priority
-     */
     #[Override]
     public function add(RouterInterface|RequestMatcherInterface|UrlGeneratorInterface $router, int $priority = 0): void
     {
@@ -113,10 +85,6 @@ class CurrentDomainRouter implements ChainRouterInterface
         return $allRouters;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return array
-     */
     #[Override]
     public function matchRequest(Request $request): array
     {

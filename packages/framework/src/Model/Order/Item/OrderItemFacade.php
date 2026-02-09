@@ -15,16 +15,6 @@ class OrderItemFacade
 {
     protected const int DEFAULT_PRODUCT_QUANTITY = 1;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OrderRepository $orderRepository,
@@ -37,11 +27,6 @@ class OrderItemFacade
     ) {
     }
 
-    /**
-     * @param int $orderId
-     * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
     public function addProductToOrder(int $orderId, int $productId): OrderItem
     {
         $order = $this->orderRepository->getById($orderId);

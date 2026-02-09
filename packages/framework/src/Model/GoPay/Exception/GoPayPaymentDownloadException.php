@@ -9,13 +9,6 @@ use GoPay\Http\Response;
 
 class GoPayPaymentDownloadException extends Exception
 {
-    /**
-     * @param string $url
-     * @param string $method
-     * @param int $expectedCode
-     * @param array|null $requestData
-     * @param \GoPay\Http\Response|null $responseData
-     */
     public function __construct(
         public readonly string $url,
         public readonly string $method,

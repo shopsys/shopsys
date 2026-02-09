@@ -12,15 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PricingGroupFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactory $pricingGroupFactory
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PricingGroupRepository $pricingGroupRepository,
@@ -32,22 +23,15 @@ class PricingGroupFacade
     ) {
     }
 
-    /**
-     * @param int $pricingGroupId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    public function getById($pricingGroupId)
+    public function getById(int $pricingGroupId): PricingGroup
     {
         return $this->pricingGroupRepository->getById($pricingGroupId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    public function create(PricingGroupData $pricingGroupData, $domainId)
-    {
+    public function create(
+        PricingGroupData $pricingGroupData,
+        int $domainId,
+    ): PricingGroup {
         $pricingGroup = $this->pricingGroupFactory->create($pricingGroupData, $domainId);
 
         $this->em->persist($pricingGroup);
@@ -63,13 +47,10 @@ class PricingGroupFacade
         return $pricingGroup;
     }
 
-    /**
-     * @param int $pricingGroupId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    public function edit($pricingGroupId, PricingGroupData $pricingGroupData)
-    {
+    public function edit(
+        int $pricingGroupId,
+        PricingGroupData $pricingGroupData,
+    ): PricingGroup {
         $pricingGroup = $this->pricingGroupRepository->getById($pricingGroupId);
         $pricingGroup->edit($pricingGroupData);
 
@@ -80,11 +61,6 @@ class PricingGroupFacade
         return $pricingGroup;
     }
 
-    /**
-     * @param int $oldPricingGroupId
-     * @param int|null $newPricingGroupId
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig|null $selectedDomain
-     */
     public function delete(
         int $oldPricingGroupId,
         ?int $newPricingGroupId = null,
@@ -117,33 +93,28 @@ class PricingGroupFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->pricingGroupRepository->getAll();
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getByDomainId($domainId)
+    public function getByDomainId(int $domainId): array
     {
         return $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);
     }
 
     /**
-     * @param int $id
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getAllExceptIdByDomainId($id, $domainId)
+    public function getAllExceptIdByDomainId(int $id, int $domainId): array
     {
         return $this->pricingGroupRepository->getAllExceptIdByDomainId($id, $domainId);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $eventType
      * @see \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupEvent class
      */
     protected function dispatchPricingGroupEvent(PricingGroup $pricingGroup, string $eventType): void

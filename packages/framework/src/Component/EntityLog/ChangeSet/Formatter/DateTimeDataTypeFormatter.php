@@ -9,9 +9,6 @@ use Symfony\Component\Clock\DatePoint;
 
 class DateTimeDataTypeFormatter
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
-     */
     public function __construct(
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
     ) {
@@ -19,7 +16,6 @@ class DateTimeDataTypeFormatter
 
     /**
      * @param array{oldReadableValue: null, newReadableValue: null, oldValue: string, newValue: string} $changes
-     * @return string
      */
     public function formatChanges(array $changes): string
     {

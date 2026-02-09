@@ -13,9 +13,6 @@ use const T_CLASS;
 
 class ForbiddenDoctrineDefaultValueSniff implements Sniff
 {
-    /**
-     * @return array
-     */
     #[Override]
     public function register(): array
     {
@@ -23,7 +20,6 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $file
      * @param int $classPosition
      */
     #[Override]
@@ -58,10 +54,6 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
         }
     }
 
-    /**
-     * @param string $attributeString
-     * @return bool
-     */
     protected function attributeContainsDefaultValue(string $attributeString): bool
     {
         return (bool)preg_match('~options\s*:\s*\[.*[\'"]default[\'"]\s*=>~s', $attributeString);

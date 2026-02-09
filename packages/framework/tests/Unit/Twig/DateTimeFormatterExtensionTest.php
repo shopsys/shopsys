@@ -19,9 +19,6 @@ use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DateTimeFormatterExtensionTest extends TestCase
 {
-    /**
-     * @return array
-     */
     public static function formatDateDataProvider(): array
     {
         return [
@@ -33,13 +30,8 @@ class DateTimeFormatterExtensionTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $input
-     * @param mixed $locale
-     * @param mixed $result
-     */
     #[DataProvider('formatDateDataProvider')]
-    public function testFormatDate($input, $locale, $result): void
+    public function testFormatDate(mixed $input, mixed $locale, mixed $result): void
     {
         $localizationMock = $this->createLocalizationMock($locale);
         $dateTimeFormatter = $this->createDateTimeFormatter();
@@ -49,11 +41,7 @@ class DateTimeFormatterExtensionTest extends TestCase
         $this->assertSame($result, $dateTimeFormatterExtension->formatDate($input));
     }
 
-    /**
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected function createLocalizationMock($locale): Localization
+    protected function createLocalizationMock(string $locale): Localization
     {
         $localizationMock = $this->getMockBuilder(Localization::class)
             ->disableOriginalConstructor()
@@ -66,9 +54,6 @@ class DateTimeFormatterExtensionTest extends TestCase
         return $localizationMock;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter
-     */
     protected function createDateTimeFormatter(): DateTimeFormatter
     {
         $displayTimeZoneProvider = new DisplayTimeZoneProvider(DomainConfigHelper::DEFAULT_TIMEZONE_STRING, $this->getMockedDomain());
@@ -77,9 +62,6 @@ class DateTimeFormatterExtensionTest extends TestCase
         return new DateTimeFormatter($dateTimeFormatPatternRepository, $displayTimeZoneProvider);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     private function getMockedDomain(): Domain
     {
         $settingMock = $this->getMockBuilder(Setting::class)

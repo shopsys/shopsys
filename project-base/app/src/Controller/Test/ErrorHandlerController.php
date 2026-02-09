@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ErrorHandlerController extends AbstractController
 {
     #[Route(path: '/error-handler/notice')]
-    public function noticeAction()
+    public function noticeAction(): Response
     {
         $undefined[42];
 
@@ -20,13 +20,13 @@ class ErrorHandlerController extends AbstractController
     }
 
     #[Route(path: '/error-handler/exception')]
-    public function exceptionAction()
+    public function exceptionAction(): void
     {
         throw new ExpectedTestException('Expected exception');
     }
 
     #[Route(path: '/error-handler/unknown-domain')]
-    public function unknownDomainAction()
+    public function unknownDomainAction(): void
     {
         throw new UnableToResolveDomainException('http://localhost:8000');
     }

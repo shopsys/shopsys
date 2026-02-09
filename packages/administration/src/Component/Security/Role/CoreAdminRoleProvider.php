@@ -18,9 +18,6 @@ use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
  */
 class CoreAdminRoleProvider implements CoreRoleProviderInterface
 {
-    /**
-     * @return int
-     */
     #[Override]
     public function getPriority(): int
     {
@@ -36,9 +33,6 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
         return AdminContext::class;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection $roleCollection
-     */
     #[Override]
     public function configureRoles(RoleCollection $roleCollection): void
     {

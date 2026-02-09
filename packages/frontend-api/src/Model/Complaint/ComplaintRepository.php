@@ -13,10 +13,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class ComplaintRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
@@ -24,10 +20,6 @@ class ComplaintRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param int $limit
-     * @param int $offset
-     * @param string|null $search
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
      */
     public function getCustomerUserComplaintsLimitedList(
@@ -49,10 +41,6 @@ class ComplaintRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param int $limit
-     * @param int $offset
-     * @param string|null $search
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
      */
     public function getCustomerComplaintsLimitedList(
@@ -72,11 +60,6 @@ class ComplaintRepository
             ->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string|null $search
-     * @return int
-     */
     public function getCustomerUserComplaintsListCount(
         CustomerUser $customerUser,
         ?string $search = null,
@@ -89,11 +72,6 @@ class ComplaintRepository
             ->getSingleScalarResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param string|null $search
-     * @return int
-     */
     public function getCustomerComplaintsListCount(
         Customer $customer,
         ?string $search = null,
@@ -106,10 +84,6 @@ class ComplaintRepository
             ->getSingleScalarResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createCustomerUserComplaintsQueryBuilder(
         CustomerUser $customerUser,
     ): QueryBuilder {
@@ -118,10 +92,6 @@ class ComplaintRepository
             ->setParameter('customerUser', $customerUser);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createCustomerComplaintsQueryBuilder(
         Customer $customer,
     ): QueryBuilder {
@@ -130,11 +100,6 @@ class ComplaintRepository
             ->setParameter('customer', $customer);
     }
 
-    /**
-     * @param string $complaintNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
-     */
     public function findByComplaintNumberAndCustomerUser(
         string $complaintNumber,
         CustomerUser $customerUser,
@@ -146,11 +111,6 @@ class ComplaintRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * @param string $complaintNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
-     */
     public function findByComplaintNumberAndCustomer(
         string $complaintNumber,
         Customer $customer,
@@ -162,9 +122,6 @@ class ComplaintRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function createQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -172,11 +129,6 @@ class ComplaintRepository
             ->select('c');
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string|null $search
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function applySearchToQueryBuilder(QueryBuilder $queryBuilder, ?string $search = null): QueryBuilder
     {
         if ($search === null) {

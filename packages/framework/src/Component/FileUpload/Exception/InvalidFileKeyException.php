@@ -9,11 +9,7 @@ use Shopsys\FrameworkBundle\Component\Utils\Debug;
 
 class InvalidFileKeyException extends Exception
 {
-    /**
-     * @param mixed $key
-     * @param \Exception|null $previous
-     */
-    public function __construct($key, ?Exception $previous = null)
+    public function __construct(mixed $key, ?Exception $previous = null)
     {
         parent::__construct('Upload file key ' . Debug::export($key) . ' is invalid', 0, $previous);
     }

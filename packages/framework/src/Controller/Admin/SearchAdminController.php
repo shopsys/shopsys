@@ -15,18 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class SearchAdminController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder $sideMenuBuilder
-     */
     public function __construct(
         protected readonly SideMenuBuilder $sideMenuBuilder,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/search/')]
     #[RequireRole(SystemRole::ADMIN)]
     public function searchAction(Request $request): Response
@@ -45,11 +38,6 @@ class SearchAdminController extends AdminBaseController
         );
     }
 
-    /**
-     * @param array $results
-     * @param \Knp\Menu\ItemInterface $item
-     * @param string $searchString
-     */
     protected function buildResultsList(array &$results, ItemInterface $item, string $searchString): void
     {
         if ($item->getLabel() && $item->getUri() && $this->containsLabelSearchString($item->getLabel(), $searchString)) {
@@ -65,29 +53,16 @@ class SearchAdminController extends AdminBaseController
         }
     }
 
-    /**
-     * @param string $label
-     * @param string $searchString
-     * @return bool
-     */
     protected function containsLabelSearchString(string $label, string $searchString): bool
     {
         return str_contains($this->convertStringWithDiacritics($label), $this->convertStringWithDiacritics($searchString));
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
     protected function convertStringWithDiacritics(string $string): string
     {
         return strtolower(preg_replace('~[\p{M}-]+~u', '', Normalizer::normalize($string, Normalizer::FORM_D)));
     }
 
-    /**
-     * @param \Knp\Menu\ItemInterface $item
-     * @return array
-     */
     protected function buildPathByItem(ItemInterface $item): array
     {
         $itemLabels = [$item->getLabel()];

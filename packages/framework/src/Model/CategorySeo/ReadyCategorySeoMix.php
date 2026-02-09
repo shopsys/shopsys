@@ -104,9 +104,6 @@ class ReadyCategorySeoMix
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
-     */
     public function __construct(ReadyCategorySeoMixData $readyCategorySeoMixData)
     {
         $this->readyCategorySeoMixParameterParameterValues = new ArrayCollection();
@@ -127,9 +124,6 @@ class ReadyCategorySeoMix
         $this->uuid = Uuid::uuid4()->toString();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
-     */
     public function edit(ReadyCategorySeoMixData $readyCategorySeoMixData): void
     {
         $this->category = $readyCategorySeoMixData->category;
@@ -171,7 +165,7 @@ class ReadyCategorySeoMix
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
      */
-    public function setFlag($flag)
+    public function setFlag($flag): void
     {
         $this->flag = $flag;
     }
@@ -187,14 +181,11 @@ class ReadyCategorySeoMix
     /**
      * @param string $ordering
      */
-    public function setOrdering($ordering)
+    public function setOrdering($ordering): void
     {
         $this->ordering = $ordering;
     }
 
-    /**
-     * @return bool
-     */
     public function hasPriceBasedOrdering(): bool
     {
         return in_array($this->ordering, [

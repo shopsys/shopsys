@@ -26,11 +26,6 @@ class LuigisBoxClient
     protected const int COUNT_OF_DYNAMIC_PARAMETER_FILTERS = 15;
 
     /**
-     * @param string $luigisBoxApiUrl
-     * @param array $trackerIdsByDomainIds
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Monolog\Logger $logger
-     * @param \Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum $luigisBoxEndpointEnum
      * @param \Symfony\Component\HttpClient\TraceableHttpClient $httpClient
      */
     public function __construct(
@@ -52,16 +47,12 @@ class LuigisBoxClient
         }
     }
 
-    /**
-     * @return string
-     */
     protected function getTrackerId(): string
     {
         return $this->trackerIdsByDomainIds[$this->domain->getId()];
     }
 
     /**
-     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
      * @param array<string, int> $limitsByType
      * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]
      */
@@ -136,11 +127,6 @@ class LuigisBoxClient
         return $resultsByType;
     }
 
-    /**
-     * @param array $data
-     * @param string $endpoint
-     * @return int
-     */
     protected function getTotalHitsFromData(array $data, string $endpoint): int
     {
         if ($endpoint === LuigisBoxEndpointEnum::AUTOCOMPLETE) {
@@ -155,9 +141,7 @@ class LuigisBoxClient
     }
 
     /**
-     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
      * @param array<string, int> $limitsByType
-     * @return string
      */
     protected function getLuigisBoxApiUrl(
         LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
@@ -173,10 +157,6 @@ class LuigisBoxClient
         return $url;
     }
 
-    /**
-     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
-     * @return string
-     */
     protected function getUrlWithBasicParameters(LuigisBoxBatchLoadData $luigisBoxBatchLoadData): string
     {
         return $this->luigisBoxApiUrl .
@@ -187,10 +167,8 @@ class LuigisBoxClient
     }
 
     /**
-     * @param string $url
      * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxSearchBatchLoadData $luigisBoxBatchLoadData
      * @param array<string, int> $limitsByType
-     * @return string
      */
     protected function addSearchSpecificParametersToUrl(
         string $url,
@@ -233,10 +211,8 @@ class LuigisBoxClient
     }
 
     /**
-     * @param string $url
      * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxSearchBatchLoadData $luigisBoxBatchLoadData
      * @param array<string, int> $limitsByType
-     * @return string
      */
     protected function addAutocompleteSpecificParametersToUrl(
         string $url,
@@ -254,10 +230,6 @@ class LuigisBoxClient
         return $url;
     }
 
-    /**
-     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
-     * @return array
-     */
     protected function getBody(
         LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
     ): array {
@@ -271,9 +243,7 @@ class LuigisBoxClient
     }
 
     /**
-     * @param array $body
      * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxRecommendationBatchLoadData $luigisBoxBatchLoadData
-     * @return array
      */
     protected function addRecommendationSpecificParametersToBody(
         array $body,
@@ -294,10 +264,6 @@ class LuigisBoxClient
         return $body;
     }
 
-    /**
-     * @param string|null $orderingMode
-     * @return string|null
-     */
     protected function getOrderingMode(?string $orderingMode): ?string
     {
         return match ($orderingMode) {
@@ -309,10 +275,6 @@ class LuigisBoxClient
         };
     }
 
-    /**
-     * @param string $identity
-     * @return int
-     */
     protected function getIdFromIdentity(string $identity): int
     {
         return (int)str_replace(
@@ -329,10 +291,6 @@ class LuigisBoxClient
         );
     }
 
-    /**
-     * @param array $types
-     * @return string
-     */
     protected function getMainType(array $types): string
     {
         if (in_array(TypeInLuigisBoxEnum::PRODUCT, $types, true)) {
@@ -344,7 +302,6 @@ class LuigisBoxClient
 
     /**
      * @param array<string, int> $typesWithLimits
-     * @return string
      */
     protected function getQuicksearchTypesWithLimits(array $typesWithLimits): string
     {
@@ -359,19 +316,12 @@ class LuigisBoxClient
         return implode(',', $quicksearchTypesWithLimit);
     }
 
-    /**
-     * @param array $limitsByType
-     * @return int
-     */
     protected function getMainTypeLimit(array $limitsByType): int
     {
         return $limitsByType[$this->getMainType(array_keys($limitsByType))];
     }
 
     /**
-     * @param array $data
-     * @param string $endpoint
-     * @param array $types
      * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]
      */
     protected function getResultsIndexedByItemType(array $data, string $endpoint, array $types): array
@@ -398,10 +348,6 @@ class LuigisBoxClient
         return $resultsByType;
     }
 
-    /**
-     * @param string $hitUrl
-     * @return string
-     */
     protected function getTypeFromHitUrl(string $hitUrl): string
     {
         $type = explode('-', $hitUrl)[0];
@@ -419,7 +365,6 @@ class LuigisBoxClient
 
     /**
      * @param array<string, int> $limitsByType
-     * @return string
      */
     protected function mapLimitsByTypeToLuigisBoxLimit(array $limitsByType): string
     {
@@ -432,10 +377,6 @@ class LuigisBoxClient
         return implode(',', $luigisBoxLimits);
     }
 
-    /**
-     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxSearchBatchLoadData $luigisBoxBatchLoadData
-     * @return int
-     */
     protected function getNumberOfDynamicalFacetsWithoutAppliedFilterFacets(
         LuigisBoxSearchBatchLoadData $luigisBoxBatchLoadData,
     ): int {

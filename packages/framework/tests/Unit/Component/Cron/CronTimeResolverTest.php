@@ -13,7 +13,7 @@ use Symfony\Component\Clock\DatePoint;
 
 class CronTimeResolverTest extends TestCase
 {
-    public static function validTimeStringProvider()
+    public static function validTimeStringProvider(): array
     {
         return [
             ['*', 1, 1],
@@ -26,19 +26,14 @@ class CronTimeResolverTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $timeString
-     * @param mixed $maxValue
-     * @param mixed $divisibleBy
-     */
     #[DataProvider('validTimeStringProvider')]
-    public function testValidateTimeString($timeString, $maxValue, $divisibleBy)
+    public function testValidateTimeString(mixed $timeString, mixed $maxValue, mixed $divisibleBy): void
     {
         $cronTimeResolver = new CronTimeResolver();
         $cronTimeResolver->validateTimeString($timeString, $maxValue, $divisibleBy);
     }
 
-    public static function invalidTimeStringProvider()
+    public static function invalidTimeStringProvider(): array
     {
         return [
             ['abcd', 1, 1],
@@ -51,20 +46,18 @@ class CronTimeResolverTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $invalidTimeString
-     * @param mixed $maxValue
-     * @param mixed $divisibleBy
-     */
     #[DataProvider('invalidTimeStringProvider')]
-    public function testValidateTimeStringInvalidTimeFormatException($invalidTimeString, $maxValue, $divisibleBy)
-    {
+    public function testValidateTimeStringInvalidTimeFormatException(
+        mixed $invalidTimeString,
+        mixed $maxValue,
+        mixed $divisibleBy,
+    ): void {
         $cronTimeResolver = new CronTimeResolver();
         $this->expectException(InvalidTimeFormatException::class);
         $cronTimeResolver->validateTimeString($invalidTimeString, $maxValue, $divisibleBy);
     }
 
-    public static function isValidAtTimeProvider()
+    public static function isValidAtTimeProvider(): array
     {
         return [
             ['0', '0', '2000-01-01 00:00:00', true],
@@ -86,15 +79,13 @@ class CronTimeResolverTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $timeHours
-     * @param mixed $timeMinutes
-     * @param mixed $dateTimeString
-     * @param mixed $isValid
-     */
     #[DataProvider('isValidAtTimeProvider')]
-    public function testIsValidAtTime($timeHours, $timeMinutes, $dateTimeString, $isValid)
-    {
+    public function testIsValidAtTime(
+        mixed $timeHours,
+        mixed $timeMinutes,
+        mixed $dateTimeString,
+        mixed $isValid,
+    ): void {
         $cronTimeMock = $this->getMockBuilder(CronTimeInterface::class)
             ->onlyMethods(['getTimeHours', 'getTimeMinutes'])
             ->getMock();

@@ -63,9 +63,6 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
      */
     private CustomerUserIdentifierFactory $customerUserIdentifierFactory;
 
-    /**
-     * @param string $promoCodeCode
-     */
     #[DataProvider('usablePromoCodeDataProvider')]
     public function testApplyPromoCode(string $promoCodeCode): void
     {
@@ -97,9 +94,6 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         );
     }
 
-    /**
-     * @return iterable
-     */
     public static function usablePromoCodeDataProvider(): iterable
     {
         yield 'valid promo code' => [PromoCodeDataFixture::VALID_PROMO_CODE];
@@ -210,10 +204,6 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         self::assertEquals($validPromoCode->getCode(), $promoCodeModifications['noLongerApplicablePromoCode'][0]);
     }
 
-    /**
-     * @param string|null $promoCodeReferenceName
-     * @param string $expectedError
-     */
     #[DataProvider('getInvalidPromoCodesDataProvider')]
     public function testApplyInvalidPromoCode(?string $promoCodeReferenceName, string $expectedError): void
     {
@@ -238,9 +228,6 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         self::assertEquals($expectedError, $violations['input.promoCode'][0]['code']);
     }
 
-    /**
-     * @return iterable
-     */
     public static function getInvalidPromoCodesDataProvider(): iterable
     {
         yield [null, PromoCodeConstraint::INVALID_ERROR];
@@ -254,9 +241,6 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         yield [PromoCodeDataFixture::PROMO_CODE_FOR_VIP_PRICING_GROUP, PromoCodeConstraint::NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR];
     }
 
-    /**
-     * @param \App\Model\Product\Product $product
-     */
     private function hideProduct(Product $product): void
     {
         $productData = $this->productDataFactory->createFromProduct($product);
@@ -266,9 +250,6 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         $this->handleDispatchedRecalculationMessages();
     }
 
-    /**
-     * @return array
-     */
     private function createUserCartWithHelloKittyProduct(): array
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
@@ -281,9 +262,6 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         return $this->getResponseDataForGraphQlType($response, 'AddToCart');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
     private function findCartOfCurrentCustomer(): ?Cart
     {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */

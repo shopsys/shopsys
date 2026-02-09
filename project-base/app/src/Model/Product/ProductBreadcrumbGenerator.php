@@ -23,7 +23,7 @@ class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implemen
      * {@inheritdoc}
      */
     #[Override]
-    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         return $this->getBreadcrumbItemsOnDomain($this->domain->getId(), $routeName, $routeParameters, $this->domain->getLocale());
     }
@@ -55,9 +55,6 @@ class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implemen
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @param int $domainId
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     protected function getCategoryBreadcrumbItemsOnDomain(Category $category, int $domainId, string $locale): array

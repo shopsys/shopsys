@@ -4,26 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class CustomerUserListAdminFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     */
     public function __construct(protected readonly CustomerUserRepository $customerUserRepository)
     {
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getCustomerUserListQueryBuilderByQuickSearchData(
-        $domainId,
+        int $domainId,
         QuickSearchFormData $quickSearchData,
-    ) {
+    ): QueryBuilder {
         return $this->customerUserRepository->getCustomerUserListQueryBuilderByQuickSearchData(
             $domainId,
             $quickSearchData,

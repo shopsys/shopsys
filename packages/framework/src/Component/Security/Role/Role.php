@@ -23,7 +23,6 @@ class Role
     protected ?string $roleSection = null;
 
     /**
-     * @param string $constant
      * @param string $name Human-readable name
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission> $availablePermissions
      * @param bool $allowOverwrite Whether the role can be modified after creation
@@ -37,17 +36,11 @@ class Role
         $this->calculatePermissions($availablePermissions);
     }
 
-    /**
-     * @return string
-     */
     public function getConstant(): string
     {
         return $this->constant;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
@@ -61,18 +54,11 @@ class Role
         return $this->expandedPermissions;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission $permission
-     * @return bool
-     */
     public function hasPermission(Permission $permission): bool
     {
         return in_array($permission, $this->getAvailablePermissions(), true);
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         if ($this->isOverwritable() === false) {
@@ -82,9 +68,6 @@ class Role
         $this->name = $name;
     }
 
-    /**
-     * @param bool $overwritable
-     */
     public function setOverwritable(bool $overwritable): void
     {
         if ($this->isOverwritable() === false) {
@@ -106,9 +89,6 @@ class Role
         $this->calculatePermissions($availablePermissions);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission $permission
-     */
     public function addPermission(Permission $permission): void
     {
         if ($this->isOverwritable() === false) {
@@ -122,17 +102,11 @@ class Role
         $this->setAvailablePermissions(array_merge($this->highestLevelPermissions, [$permission]));
     }
 
-    /**
-     * @return string|null
-     */
     public function getRoleSection(): ?string
     {
         return $this->roleSection;
     }
 
-    /**
-     * @param string $roleSection
-     */
     public function setRoleSection(string $roleSection): void
     {
         if ($this->isOverwritable() === false) {
@@ -151,8 +125,6 @@ class Role
      *
      * This is because backward compatibility. User could have ROLE_*_FULL but if available permissions do not include FULL,
      * administrator would not be able to reach the full permission in the UI.
-     *
-     * @return bool
      */
     public function shouldIncludeFullPermission(): bool
     {
@@ -171,17 +143,11 @@ class Role
         return !(count($highest) === 1 && $highest[0] === Permission::VIEW);
     }
 
-    /**
-     * @return bool
-     */
     public function isSingleRole(): bool
     {
         return count($this->getAvailablePermissions()) === 0;
     }
 
-    /**
-     * @return bool
-     */
     public function isOverwritable(): bool
     {
         return $this->allowOverwrite;
@@ -225,9 +191,6 @@ class Role
         return $highestPermissions;
     }
 
-    /**
-     * @return bool
-     */
     protected function hasFullPermission(): bool
     {
         return $this->hasPermission(Permission::FULL);

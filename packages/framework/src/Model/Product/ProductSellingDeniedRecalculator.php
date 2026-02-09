@@ -11,10 +11,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ProductSellingDeniedRecalculator
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,

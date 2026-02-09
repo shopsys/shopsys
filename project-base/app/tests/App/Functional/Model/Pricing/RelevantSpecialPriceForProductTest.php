@@ -23,31 +23,26 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
     private const int TEST_DOMAIN_ID = 1;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade
      * @inject
      */
     private readonly SpecialPriceFacade $specialPriceFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceDataFactory
      * @inject
      */
     private readonly PriceListProductPriceDataFactory $priceListProductPriceDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceFactory
      * @inject
      */
     private readonly PriceListProductPriceFactory $priceListProductPriceFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory
      * @inject
      */
     private readonly PriceListDataFactory $priceListDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade
      * @inject
      */
     private readonly PriceListFacade $priceListFacade;
@@ -148,11 +143,6 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
         $this->assertNull($specialPrice, 'No special price should be set for product');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param string $priceListReferenceName
-     * @param string $productPriceAmount
-     */
     private function addProductToPriceList(
         Product $product,
         string $priceListReferenceName,
@@ -173,9 +163,6 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
         $this->em->flush();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
     private function createBasicPrice(): Price
     {
         return new Price(

@@ -30,7 +30,6 @@ class DocBlockParserTest extends TestCase
     }
 
     /**
-     * @param string $phpDoc
      * @param string[] $returnTypes
      */
     #[DataProvider('methodPhpDocReturnTypeDataProvider')]
@@ -39,10 +38,6 @@ class DocBlockParserTest extends TestCase
         $this->assertEquals($returnTypes, $this->docBlockParser->getReturnTypes($phpDoc));
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionParameter $reflectionParameter
-     * @param string $paramTypeString
-     */
     #[DataProvider('methodPhpDocParamTypeDataProvider')]
     public function testGetMethodParamTypeFromPhpDoc(
         ReflectionParameter $reflectionParameter,
@@ -51,10 +46,6 @@ class DocBlockParserTest extends TestCase
         $this->assertEquals($this->docBlockParser->getParameterType($reflectionParameter), $paramTypeString);
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
-     * @param string $paramTypeString
-     */
     #[DataProvider('methodPhpDocPropertyTypeDataProvider')]
     public function testGetPropertyTypeFromPhpDoc(
         ReflectionProperty $reflectionProperty,

@@ -37,12 +37,6 @@ class MigrationsExecutor implements Executor
 
     protected EventDispatcher $dispatcher;
 
-    /**
-     * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Symfony\Component\Stopwatch\Stopwatch $stopwatch
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         DependencyFactory $dependencyFactory,
         protected readonly LoggerInterface $logger,
@@ -54,20 +48,12 @@ class MigrationsExecutor implements Executor
         $this->dispatcher = $dependencyFactory->getEventDispatcher();
     }
 
-    /**
-     * @param \Doctrine\Migrations\Query\Query $sqlQuery
-     */
     #[Override]
     public function addSql(Query $sqlQuery): void
     {
         $this->sqlQueries[] = $sqlQuery;
     }
 
-    /**
-     * @param \Doctrine\Migrations\Metadata\MigrationPlan $plan
-     * @param \Doctrine\Migrations\MigratorConfiguration $migratorConfiguration
-     * @return \Doctrine\Migrations\Version\ExecutionResult
-     */
     #[Override]
     public function execute(MigrationPlan $plan, MigratorConfiguration $migratorConfiguration): ExecutionResult
     {
@@ -84,11 +70,6 @@ class MigrationsExecutor implements Executor
         return $result;
     }
 
-    /**
-     * @param \Doctrine\Migrations\Metadata\MigrationPlan $plan
-     * @param \Doctrine\Migrations\Version\ExecutionResult $result
-     * @param \Doctrine\Migrations\MigratorConfiguration $configuration
-     */
     protected function executeMigration(
         MigrationPlan $plan,
         ExecutionResult $result,

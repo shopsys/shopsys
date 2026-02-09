@@ -21,12 +21,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 class ParameterRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ParameterValueFactory $parameterValueFactory,
@@ -35,51 +29,31 @@ class ParameterRepository
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getParameterRepository(): EntityRepository
     {
         return $this->em->getRepository(Parameter::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getParameterValueRepository(): EntityRepository
     {
         return $this->em->getRepository(ParameterValue::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getParameterGroupRepository(): EntityRepository
     {
         return $this->em->getRepository(ParameterGroup::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
     protected function getProductParameterValueRepository(): EntityRepository
     {
         return $this->em->getRepository(ProductParameterValue::class);
     }
 
-    /**
-     * @param int $parameterId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null
-     */
     public function findById(int $parameterId): ?Parameter
     {
         return $this->getParameterRepository()->find($parameterId);
     }
 
-    /**
-     * @param int $parameterId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
     public function getById(int $parameterId): Parameter
     {
         $parameter = $this->findById($parameterId);
@@ -94,8 +68,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getParametersUsedByProductsInCategory(Category $category, DomainConfig $domainConfig): array
@@ -113,11 +85,6 @@ class ParameterRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
-     */
     protected function applyCategorySeoConditions(QueryBuilder $queryBuilder, Category $category, int $domainId): void
     {
         $queryBuilder
@@ -129,10 +96,6 @@ class ParameterRepository
             ->setParameter('domainId', $domainId);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
     public function getByUuid(string $uuid): Parameter
     {
         $parameter = $this->getParameterRepository()->findOneBy(['uuid' => $uuid]);
@@ -144,10 +107,6 @@ class ParameterRepository
         return $parameter;
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
     public function getParameterValueByUuid(string $uuid): ParameterValue
     {
         $parameterValue = $this->getParameterValueRepository()->findOneBy(['uuid' => $uuid]);
@@ -171,7 +130,6 @@ class ParameterRepository
     }
 
     /**
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getAllWithTranslations(string $locale): array
@@ -185,9 +143,6 @@ class ParameterRepository
             ->execute();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getAllQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -195,12 +150,6 @@ class ParameterRepository
             ->from(Parameter::class, 'p');
     }
 
-    /**
-     * @param string $valueText
-     * @param string|null $numericValue
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null
-     */
     public function findParameterValueByValueTextNumericValueAndLocale(
         string $valueText,
         ?string $numericValue,
@@ -213,10 +162,6 @@ class ParameterRepository
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterValueData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
     public function findOrCreateParameterValueByParameterValueData(
         ParameterValueData $parameterValueData,
     ): ParameterValue {
@@ -242,12 +187,6 @@ class ParameterRepository
         return $parameterValue;
     }
 
-    /**
-     * @param string $valueText
-     * @param string|null $numericValue
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
     public function getParameterValueByValueTextNumericValueAndLocale(
         string $valueText,
         ?string $numericValue,
@@ -262,10 +201,6 @@ class ParameterRepository
         return $parameterValue;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getProductParameterValuesByProductQueryBuilder(
         Product $product,
     ): QueryBuilder {
@@ -284,11 +219,6 @@ class ParameterRepository
             ->setParameter('product_id', $product->getId());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getProductParameterValuesByProductSortedByOrderingPriorityAndNameQueryBuilder(
         Product $product,
         string $locale,
@@ -311,7 +241,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
     public function getProductParameterValuesByProduct(Product $product): array
@@ -322,8 +251,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
     public function getProductParameterValuesByProductSortedByOrderingPriorityAndName(
@@ -337,7 +264,6 @@ class ParameterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param string $locale
      * @return string[][]
      */
     public function getParameterValuesIndexedByProductIdAndParameterNameForProducts(
@@ -367,7 +293,6 @@ class ParameterRepository
 
     /**
      * @param string[] $namesByLocale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null
      */
     public function findParameterByNames(array $namesByLocale): ?Parameter
     {
@@ -395,7 +320,6 @@ class ParameterRepository
     }
 
     /**
-     * @param array $productIdsAndParameterNamesAndValues
      * @return string[][]
      */
     protected function getParameterValuesIndexedByProductIdAndParameterName(
@@ -452,7 +376,6 @@ class ParameterRepository
 
     /**
      * @param int[] $parameterIds
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getVisibleParametersByIds(array $parameterIds, string $locale): array
@@ -490,11 +413,6 @@ class ParameterRepository
         return $parameterValuesIndexedById;
     }
 
-    /**
-     * @param string $locale
-     * @param string $type
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getQueryBuilderParameterValuesUsedByProductsByLocaleAndType(
         string $locale,
         string $type,
@@ -509,10 +427,6 @@ class ParameterRepository
             ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pv.text', $locale));
     }
 
-    /**
-     * @param int $parameterValueId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
     public function getParameterValueById(int $parameterValueId): ParameterValue
     {
         $parameterValue = $this->getParameterValueRepository()->find($parameterValueId);
@@ -527,7 +441,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     public function getParameterValuesByParameter(Parameter $parameter): array
@@ -544,11 +457,6 @@ class ParameterRepository
             ->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $oldParameterValue
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $newParameterValue
-     */
     public function updateParameterValueInProductsByConversion(
         Parameter $parameter,
         ParameterValue $oldParameterValue,
@@ -566,9 +474,6 @@ class ParameterRepository
             ->execute();
     }
 
-    /**
-     * @return int
-     */
     public function getCountOfSliderParametersWithoutTheirsNumericValueFilled(): int
     {
         try {
@@ -591,9 +496,6 @@ class ParameterRepository
             ->getResult();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getSliderParametersWithoutTheirsNumericValueFilledQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -606,10 +508,6 @@ class ParameterRepository
             ->setParameter('type', Parameter::PARAMETER_TYPE_SLIDER);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @return int
-     */
     public function getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(Parameter $parameter): int
     {
         try {
@@ -628,12 +526,6 @@ class ParameterRepository
         }
     }
 
-    /**
-     * @param string $name
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null $excludeParameter
-     * @return bool
-     */
     public function existsParameterByName(string $name, string $locale, ?Parameter $excludeParameter = null): bool
     {
         $queryBuilder = $this->em->createQueryBuilder()
@@ -657,8 +549,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getParametersUsedByProductsInCategoryWithoutSlider(Category $category, int $domainId): array
@@ -676,10 +566,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @param int $domainId
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     public function getParameterValuesUsedByProductsInCategoryByParameter(
@@ -719,11 +605,6 @@ class ParameterRepository
         return $this->getIdsIndexedByUuids($parameterValueUuids, ParameterValue::class);
     }
 
-    /**
-     * @param string $text
-     * @param string $locale
-     * @return int
-     */
     public function getParameterValueIdByText(string $text, string $locale): int
     {
         return $this->em->createQueryBuilder()
@@ -741,7 +622,6 @@ class ParameterRepository
 
     /**
      * @param string[] $uuids
-     * @param string $entityName
      * @return array<string, int>
      */
     protected function getIdsIndexedByUuids(array $uuids, string $entityName): array
@@ -765,10 +645,6 @@ class ParameterRepository
         return $idsIndexedByUuids;
     }
 
-    /**
-     * @param int $parameterGroupId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
-     */
     public function getParameterGroupById(int $parameterGroupId): ParameterGroup
     {
         $parameterGroup = $this->getParameterGroupRepository()->find($parameterGroupId);
@@ -793,10 +669,6 @@ class ParameterRepository
             ->execute();
     }
 
-    /**
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getOrderedParameterGroupsQueryBuilder(string $locale): QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -808,12 +680,6 @@ class ParameterRepository
             ->orderBy('pg.position', 'ASC');
     }
 
-    /**
-     * @param string $name
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup|null $excludeParameterGroup
-     * @return bool
-     */
     public function existsParameterGroupByName(
         string $name,
         string $locale,
@@ -841,8 +707,6 @@ class ParameterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param string $locale
-     * @return array
      */
     public function getProductParameterValuesDataByProducts(array $products, string $locale): array
     {

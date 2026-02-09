@@ -33,16 +33,6 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
         self::FACET_PRICE,
     ];
 
-    /**
-     * @param \Shopsys\LuigisBoxBundle\Model\Brand\BrandRepository $brandRepository
-     * @param \Shopsys\LuigisBoxBundle\Model\Flag\FlagRepository $flagRepository
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory $productFilterOptionsFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\LuigisBoxBundle\Model\Product\Parameter\Value\ParameterValueRepository $parameterValueRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     */
     public function __construct(
         protected readonly BrandRepository $brandRepository,
         protected readonly FlagRepository $flagRepository,
@@ -57,8 +47,6 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
 
     /**
      * @param array<int, array<string, mixed>> $luigisBoxFacets
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
      */
     public function map(array $luigisBoxFacets, ProductFilterData $productFilterData): ProductFilterOptions
     {
@@ -110,7 +98,6 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
 
     /**
      * @param array<string, mixed> $facetValues
-     * @return array
      */
     protected function mapValuesToCountsByName(array $facetValues): array
     {
@@ -123,10 +110,6 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
         return $valuesToCountsByName;
     }
 
-    /**
-     * @param array $facetData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
-     */
     protected function mapAvailability(array $facetData, ProductFilterCountData $productFilterCountData): void
     {
         if ($facetData['name'] === self::FACET_AVAILABILITY) {
@@ -135,8 +118,6 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
     }
 
     /**
-     * @param array $facetData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
      * @return array|\Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     protected function mapBrands(
@@ -154,8 +135,6 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
     }
 
     /**
-     * @param array $facetData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
      * @return array|\Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     protected function mapFlags(array $facetData, ProductFilterCountData $productFilterCountData): array
@@ -170,10 +149,6 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
         return $flags;
     }
 
-    /**
-     * @param array $facetData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
-     */
     protected function mapPriceRange(array $facetData): PriceRange
     {
         $minPrice = 0;
@@ -194,11 +169,6 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
         return new PriceRange(Money::create($minPrice), Money::create($maxPrice));
     }
 
-    /**
-     * @param array $facetData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice|null
-     */
     protected function mapParameterWithValues(
         array $facetData,
         ProductFilterCountData $productFilterCountData,
@@ -261,7 +231,6 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
     }
 
     /**
-     * @param array $facetData
      * @return array{minimalValue: string, maximalValue: string}
      */
     protected function getMinimalAndMaximalValueForSlider(array $facetData): array
@@ -293,7 +262,6 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
      * @param array<string, mixed> $facetValues
-     * @return array
      */
     protected function mapValuesToApproximateCountsForSlider(array $parameterValues, array $facetValues): array
     {
@@ -329,7 +297,6 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
 
     /**
      * @param array<int, array{value: string, hits_count: int}> $facetValues
-     * @return int
      */
     protected function getCountInStock(array $facetValues): int
     {

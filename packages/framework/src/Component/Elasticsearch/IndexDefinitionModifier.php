@@ -8,20 +8,12 @@ use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 
 class IndexDefinitionModifier
 {
-    /**
-     * @param string $environment
-     * @param bool $forceElasticLimit
-     */
     public function __construct(
         protected readonly string $environment,
         protected readonly bool $forceElasticLimit,
     ) {
     }
 
-    /**
-     * @param array $decodedDefinition
-     * @return array
-     */
     public function modifyDefinition(array $decodedDefinition): array
     {
         if ($this->environment !== EnvironmentType::PRODUCTION || $this->forceElasticLimit) {

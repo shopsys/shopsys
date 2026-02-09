@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer;
 
 class MessageIdNormalizerTest extends TestCase
 {
-    public static function normalizeMessageIdProvider()
+    public static function normalizeMessageIdProvider(): array
     {
         return [
             ['Příliš žluťoučký kůň úpěl ďábelské ódy.', 'Příliš žluťoučký kůň úpěl ďábelské ódy.'],
@@ -25,12 +25,8 @@ class MessageIdNormalizerTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $messageId
-     * @param mixed $expectedMesssageId
-     */
     #[DataProvider('normalizeMessageIdProvider')]
-    public function testNormalizeMessageId($messageId, $expectedMesssageId)
+    public function testNormalizeMessageId(mixed $messageId, mixed $expectedMesssageId): void
     {
         $messageIdNormalizer = new MessageIdNormalizer();
         $normalizedMessageId = $messageIdNormalizer->normalizeMessageId($messageId);
@@ -38,7 +34,7 @@ class MessageIdNormalizerTest extends TestCase
         $this->assertSame($expectedMesssageId, $normalizedMessageId);
     }
 
-    public function testGetNormalizedCatalogue()
+    public function testGetNormalizedCatalogue(): void
     {
         $messageIdNormalizer = new MessageIdNormalizer();
 
@@ -68,7 +64,7 @@ class MessageIdNormalizerTest extends TestCase
         $this->assertEquals($message->getSourceString(), $normalizedMessage->getSourceString());
     }
 
-    public function testGetNormalizedCatalogueInvalidMessageIdArgumentException()
+    public function testGetNormalizedCatalogueInvalidMessageIdArgumentException(): void
     {
         $messageIdNormalizer = new MessageIdNormalizer();
 
@@ -91,9 +87,6 @@ class MessageIdNormalizerTest extends TestCase
         $normalizedCatalogue->get($message->getId(), $message->getDomain());
     }
 
-    /**
-     * @param string $messageId
-     */
     #[DataProvider('emptyMessageIdProvider')]
     public function testEmptyMessageIsNotAddedToCatalogue(string $messageId): void
     {
@@ -108,9 +101,6 @@ class MessageIdNormalizerTest extends TestCase
         $this->assertFalse($normalizedCatalogue->has($messageWithOnlyWhitespace));
     }
 
-    /**
-     * @return iterable
-     */
     public static function emptyMessageIdProvider(): iterable
     {
         yield 'empty string' => [''];

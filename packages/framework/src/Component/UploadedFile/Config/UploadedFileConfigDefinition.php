@@ -19,9 +19,6 @@ class UploadedFileConfigDefinition implements ConfigurationInterface
     public const string CONFIG_TYPE_REQUIRE_FRIENDLY_NAME = 'require_friendly_name';
     protected const string CONFIG_ENTITY_FILES = 'entity_files';
 
-    /**
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
-     */
     #[Override]
     public function getConfigTreeBuilder(): TreeBuilder
     {
@@ -34,12 +31,9 @@ class UploadedFileConfigDefinition implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
-     */
-    protected function buildItemsNode(ArrayNodeDefinition $node)
-    {
+    protected function buildItemsNode(
+        ArrayNodeDefinition $node,
+    ): ArrayNodeDefinition {
         return $node
             ->addDefaultsIfNotSet()
             ->children()

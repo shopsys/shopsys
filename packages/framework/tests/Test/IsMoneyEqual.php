@@ -12,17 +12,11 @@ final class IsMoneyEqual extends Constraint
 {
     private MoneyExporter $exporter;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $value
-     */
     public function __construct(private readonly Money $value)
     {
         $this->exporter = new MoneyExporter();
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function toString(): string
     {
@@ -31,7 +25,6 @@ final class IsMoneyEqual extends Constraint
 
     /**
      * @param mixed $other
-     * @return bool
      */
     #[Override]
     protected function matches($other): bool

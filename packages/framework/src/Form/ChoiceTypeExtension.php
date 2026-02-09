@@ -11,9 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ChoiceTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -22,9 +19,6 @@ final class ChoiceTypeExtension extends AbstractTypeExtension
         ]);
     }
 
-    /**
-     * @return iterable
-     */
     #[Override]
     public static function getExtendedTypes(): iterable
     {

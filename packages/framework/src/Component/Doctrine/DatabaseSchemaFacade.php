@@ -9,36 +9,23 @@ use Shopsys\FrameworkBundle\Component\Doctrine\Exception\DefaultSchemaImportExce
 
 class DatabaseSchemaFacade
 {
-    protected string $defaultSchemaFilepath;
-
-    /**
-     * @param mixed $defaultSchemaFilepath
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(
-        $defaultSchemaFilepath,
+        protected string $defaultSchemaFilepath,
         protected readonly EntityManagerInterface $em,
     ) {
-        $this->defaultSchemaFilepath = $defaultSchemaFilepath;
     }
 
-    /**
-     * @param string $schemaName
-     */
-    public function createSchema($schemaName)
+    public function createSchema(string $schemaName): void
     {
         $this->em->getConnection()->executeQuery('CREATE SCHEMA ' . $schemaName);
     }
 
-    /**
-     * @param string $schemaName
-     */
-    public function dropSchemaIfExists($schemaName)
+    public function dropSchemaIfExists(string $schemaName): void
     {
         $this->em->getConnection()->executeQuery('DROP SCHEMA IF EXISTS ' . $schemaName . ' CASCADE');
     }
 
-    public function importDefaultSchema()
+    public function importDefaultSchema(): void
     {
         $connection = $this->em->getConnection();
         $handle = fopen($this->defaultSchemaFilepath, 'r');

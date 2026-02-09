@@ -69,7 +69,6 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param string $categoryReferenceName
      * @return \App\Model\Product\Flag\Flag[]
      */
     protected function getChoicesForCategoryReference(string $categoryReferenceName): array
@@ -93,7 +92,6 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param string $searchText
      * @return \App\Model\Product\Flag\Flag[]
      */
     protected function getChoicesForSearchText(string $searchText): array

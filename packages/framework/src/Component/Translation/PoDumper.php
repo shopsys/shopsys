@@ -12,12 +12,10 @@ use Override;
 class PoDumper implements DumperInterface
 {
     /**
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      * @param string $domain
-     * @return string
      */
     #[Override]
-    public function dump(MessageCatalogue $catalogue, $domain = Translator::DEFAULT_TRANSLATION_DOMAIN)
+    public function dump(MessageCatalogue $catalogue, $domain = Translator::DEFAULT_TRANSLATION_DOMAIN): string
     {
         $output = 'msgid ""' . "\n";
         $output .= 'msgstr ""' . "\n";
@@ -44,11 +42,7 @@ class PoDumper implements DumperInterface
         return $output;
     }
 
-    /**
-     * @param string $str
-     * @return string
-     */
-    protected function escape($str)
+    protected function escape(string $str): string
     {
         return addcslashes($str, "\0..\37\42\134");
     }
@@ -57,7 +51,7 @@ class PoDumper implements DumperInterface
      * @param \JMS\TranslationBundle\Model\Message[] $messages
      * @return \JMS\TranslationBundle\Model\Message[]
      */
-    protected function sortMessagesByMessageId(array $messages)
+    protected function sortMessagesByMessageId(array $messages): array
     {
         usort($messages, function (Message $messageA, Message $messageB) {
             return strcmp($messageA->getId(), $messageB->getId());

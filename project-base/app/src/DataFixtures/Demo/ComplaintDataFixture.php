@@ -18,10 +18,6 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
     public const string COMPLAINT_PREFIX = 'complaint_';
     public const string COMPLAINT_BANK_ACCOUNT_NUMBER = '6846460001/5500';
 
-    /**
-     * @param \App\DataFixtures\Demo\Helper\ComplaintHelper $complaintHelper
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
-     */
     public function __construct(
         private readonly ComplaintHelper $complaintHelper,
         private readonly ComplaintResolutionEnum $complaintResolutionEnum,

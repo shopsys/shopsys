@@ -8,21 +8,17 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DomainDbFunctionsFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected readonly EntityManagerInterface $em, protected readonly Domain $domain)
     {
     }
 
-    public function createDomainDbFunctions()
+    public function createDomainDbFunctions(): void
     {
         $this->createDomainIdsByLocaleFunction();
         $this->createLocaleByDomainIdFunction();
     }
 
-    protected function createDomainIdsByLocaleFunction()
+    protected function createDomainIdsByLocaleFunction(): void
     {
         $domainsIdsByLocale = [];
 
@@ -41,7 +37,7 @@ class DomainDbFunctionsFacade
             $domainIdsByLocaleSqlClauses[] = $sql;
         }
 
-        return $this->em->getConnection()->executeStatement(
+        $this->em->getConnection()->executeStatement(
             'CREATE OR REPLACE FUNCTION get_domain_ids_by_locale(locale text) RETURNS SETOF integer AS $$
             BEGIN
                 CASE
@@ -53,7 +49,7 @@ class DomainDbFunctionsFacade
         );
     }
 
-    protected function createLocaleByDomainIdFunction()
+    protected function createLocaleByDomainIdFunction(): void
     {
         $localeByDomainIdSqlClauses = [];
 
@@ -63,7 +59,7 @@ class DomainDbFunctionsFacade
                 . ' THEN RETURN \'' . $domainConfig->getLocale() . '\';';
         }
 
-        return $this->em->getConnection()->executeStatement(
+        $this->em->getConnection()->executeStatement(
             'CREATE OR REPLACE FUNCTION get_domain_locale(domain_id integer) RETURNS text AS $$
             BEGIN
                 CASE

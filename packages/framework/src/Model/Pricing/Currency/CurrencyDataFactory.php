@@ -6,26 +6,16 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 
 class CurrencyDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData
-     */
     protected function createInstance(): CurrencyData
     {
         return new CurrencyData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData
-     */
     public function create(): CurrencyData
     {
         return $this->createInstance();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData
-     */
     public function createFromCurrency(Currency $currency): CurrencyData
     {
         $currencyData = $this->createInstance();
@@ -34,11 +24,7 @@ class CurrencyDataFactory
         return $currencyData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     */
-    protected function fillFromCurrency(CurrencyData $currencyData, Currency $currency)
+    protected function fillFromCurrency(CurrencyData $currencyData, Currency $currency): void
     {
         $currencyData->name = $currency->getName();
         $currencyData->code = $currency->getCode();

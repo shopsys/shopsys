@@ -11,25 +11,16 @@ class ElasticsearchRequestCollection
      */
     protected array $collectedData = [];
 
-    /**
-     * @return array
-     */
     public function getCollectedData(): array
     {
         return $this->collectedData;
     }
 
-    /**
-     * @return int
-     */
     public function getCollectedDataCount(): int
     {
         return count($this->collectedData);
     }
 
-    /**
-     * @return float
-     */
     public function getTotalTime(): float
     {
         $totalRequestsTime = 0;
@@ -42,24 +33,14 @@ class ElasticsearchRequestCollection
         return $totalRequestsTime;
     }
 
-    /**
-     * @param string $requestCurl
-     * @param string|null $requestJson
-     * @param mixed $requestData
-     * @param string $method
-     * @param string $uri
-     * @param int|null $statusCode
-     * @param mixed $response
-     * @param float $duration
-     */
     public function addRequest(
         string $requestCurl,
         ?string $requestJson,
-        $requestData,
+        mixed $requestData,
         string $method,
         string $uri,
         ?int $statusCode,
-        $response,
+        mixed $response,
         float $duration,
     ): void {
         $this->collectedData[] = [

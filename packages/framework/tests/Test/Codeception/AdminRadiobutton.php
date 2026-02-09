@@ -13,10 +13,6 @@ use PHPUnit\Framework\Assert;
  */
 class AdminRadiobutton
 {
-    /**
-     * @param \Tests\FrameworkBundle\Test\Codeception\ActorInterface $tester
-     * @param string $cssSelector
-     */
     protected function __construct(protected readonly ActorInterface $tester, protected readonly string $cssSelector)
     {
     }
@@ -25,19 +21,12 @@ class AdminRadiobutton
      * It is important to understand that AdminRadiobutton represents the whole group of radio inputs with the same name
      * You need to use the name or CSS class of the group (and not an ID of a particular radio input) as the $cssSelector
      * Example: AdminRadiobutton::createByCss($actor, '[name="product_form[displayAvailabilityGroup][hidden]"]')
-     *
-     * @param \Tests\FrameworkBundle\Test\Codeception\ActorInterface $tester
-     * @param string $cssSelector
-     * @return \Tests\FrameworkBundle\Test\Codeception\AdminRadiobutton
      */
-    public static function createByCss(ActorInterface $tester, string $cssSelector): self
+    public static function createByCss(ActorInterface $tester, string $cssSelector): static
     {
         return new static($tester, $cssSelector);
     }
 
-    /**
-     * @param string $radioValue
-     */
     public function select(string $radioValue): void
     {
         $imageElementClass = $this->getImageElementClassByValue($radioValue);
@@ -45,9 +34,6 @@ class AdminRadiobutton
         $this->tester->clickByCss('.' . $imageElementClass);
     }
 
-    /**
-     * @param string $radioValue
-     */
     public function assertSelected(string $radioValue): void
     {
         $imageElementClass = $this->getImageElementClassByValue($radioValue);
@@ -67,9 +53,6 @@ class AdminRadiobutton
 
     /**
      * Method will mark the particular image element with a generated class via JS so it can be targeted by Selenium easily.
-     *
-     * @param string $radioValue
-     * @return string
      */
     protected function getImageElementClassByValue(string $radioValue): string
     {

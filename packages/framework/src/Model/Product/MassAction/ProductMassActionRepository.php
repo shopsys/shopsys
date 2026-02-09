@@ -11,9 +11,6 @@ class ProductMassActionRepository
 {
     protected EntityManagerInterface $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(
         EntityManagerInterface $entityManager,
     ) {
@@ -22,9 +19,8 @@ class ProductMassActionRepository
 
     /**
      * @param int[] $selectedProductIds
-     * @param bool $hidden
      */
-    public function setHidden(array $selectedProductIds, $hidden)
+    public function setHidden(array $selectedProductIds, bool $hidden): void
     {
         $updateQueryBuilder = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')

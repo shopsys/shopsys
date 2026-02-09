@@ -16,15 +16,6 @@ class CustomerUserPasswordFacade
     public const RESET_PASSWORD_HASH_LENGTH = 50;
     public const MINIMUM_PASSWORD_LENGTH = 6;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade $resetPasswordMailFacade
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CustomerUserRepository $customerUserRepository,
@@ -36,10 +27,6 @@ class CustomerUserPasswordFacade
     ) {
     }
 
-    /**
-     * @param string $email
-     * @param int $domainId
-     */
     public function resetPassword(string $email, int $domainId): void
     {
         $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
@@ -51,12 +38,6 @@ class CustomerUserPasswordFacade
         $this->resetPasswordMailFacade->sendMail($customerUser);
     }
 
-    /**
-     * @param string $email
-     * @param int $domainId
-     * @param string|null $hash
-     * @return bool
-     */
     public function isResetPasswordHashValid(string $email, int $domainId, ?string $hash): bool
     {
         $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
@@ -64,13 +45,6 @@ class CustomerUserPasswordFacade
         return $customerUser->isResetPasswordHashValid($hash);
     }
 
-    /**
-     * @param string $email
-     * @param int $domainId
-     * @param string|null $resetPasswordHash
-     * @param string $newPassword
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function setNewPassword(
         string $email,
         int $domainId,
@@ -88,11 +62,6 @@ class CustomerUserPasswordFacade
         return $customerUser;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $password
-     * @param string|null $deviceId
-     */
     public function changePassword(CustomerUser $customerUser, string $password, ?string $deviceId = null): void
     {
         $this->setPassword($customerUser, $password);
@@ -100,10 +69,6 @@ class CustomerUserPasswordFacade
         $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser, $deviceId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $password
-     */
     public function setPassword(CustomerUser $customerUser, string $password): void
     {
         $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($customerUser);

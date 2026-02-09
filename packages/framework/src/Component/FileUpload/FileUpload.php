@@ -30,18 +30,6 @@ class FileUpload
     protected const int DELETE_OLD_FILES_SECONDS = 86400;
     protected const string POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE = 'positionByEntityAndType';
 
-    /**
-     * @param string $temporaryDir
-     * @param array $directoriesByFileClass
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention $fileNamingConvention
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository $customerUploadedFileRepository
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     */
     public function __construct(
         protected readonly string $temporaryDir,
         protected array $directoriesByFileClass,
@@ -56,10 +44,6 @@ class FileUpload
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @return string
-     */
     public function upload(UploadedFile $file): string
     {
         if ($file->getError()) {
@@ -75,10 +59,6 @@ class FileUpload
         return $temporaryFilename;
     }
 
-    /**
-     * @param string $filename
-     * @return bool
-     */
     public function tryDeleteTemporaryFile(string $filename): bool
     {
         if ($filename !== '') {
@@ -94,47 +74,26 @@ class FileUpload
         return true;
     }
 
-    /**
-     * @param string $filename
-     * @return string
-     */
     public function getTemporaryFilename(string $filename): string
     {
         return $this->transformStringHelper->safeFilename(uniqid('', true) . '__' . $filename);
     }
 
-    /**
-     * @param string $temporaryFilename
-     * @return string
-     */
     public function getTemporaryFilepath(string $temporaryFilename): string
     {
         return $this->getTemporaryDirectory() . '/' . $this->transformStringHelper->safeFilename($temporaryFilename);
     }
 
-    /**
-     * @param string $temporaryFilename
-     * @return string
-     */
     public function getAbsoluteTemporaryFilepath(string $temporaryFilename): string
     {
         return $this->parameterBag->get('kernel.project_dir') . $this->getTemporaryDirectory() . '/' . $this->transformStringHelper->safeFilename($temporaryFilename);
     }
 
-    /**
-     * @return string
-     */
     public function getTemporaryDirectory(): string
     {
         return $this->temporaryDir . '/' . static::TEMPORARY_DIRECTORY;
     }
 
-    /**
-     * @param string $fileClass
-     * @param string $category
-     * @param string|null $targetDirectory
-     * @return string
-     */
     public function getUploadDirectory(string $fileClass, string $category, ?string $targetDirectory): string
     {
         return $this->getDirectoryByFileClass($fileClass)
@@ -142,13 +101,6 @@ class FileUpload
             . ($targetDirectory !== null ? '/' . $targetDirectory : '');
     }
 
-    /**
-     * @param string $filename
-     * @param string $fileClass
-     * @param string $category
-     * @param string|null $targetDirectory
-     * @return string
-     */
     protected function getTargetFilepath(
         string $filename,
         string $fileClass,
@@ -158,10 +110,6 @@ class FileUpload
         return $this->getUploadDirectory($fileClass, $category, $targetDirectory) . '/' . $filename;
     }
 
-    /**
-     * @param string $temporaryFilename
-     * @return string
-     */
     public function getOriginalFilenameByTemporary(string $temporaryFilename): string
     {
         $matches = [];
@@ -173,9 +121,6 @@ class FileUpload
         return $temporaryFilename;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface $entity
-     */
     public function preFlushEntity(EntityFileUploadInterface $entity): void
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
@@ -190,9 +135,6 @@ class FileUpload
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface $entity
-     */
     public function postFlushEntity(EntityFileUploadInterface $entity): void
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
@@ -228,11 +170,6 @@ class FileUpload
         }
     }
 
-    /**
-     * @param \League\Flysystem\StorageAttributes $uploadedFile
-     * @param int $currentTimestamp
-     * @return bool
-     */
     protected function shouldDeleteFile(StorageAttributes $uploadedFile, int $currentTimestamp): bool
     {
         return $uploadedFile->isFile() && $currentTimestamp - $uploadedFile->lastModified() >= static::DELETE_OLD_FILES_SECONDS;
@@ -259,7 +196,6 @@ class FileUpload
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
-     * @return int
      */
     protected function getPositionForNewEntity(EntityFileUploadInterface $entity): int
     {
@@ -299,10 +235,6 @@ class FileUpload
         return $position;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface $entity
-     * @return string
-     */
     protected function getUploadEntityType(EntityFileUploadInterface $entity): string
     {
         if ($entity instanceof Image) {
@@ -320,10 +252,6 @@ class FileUpload
         return $uploadEntityType;
     }
 
-    /**
-     * @param string $fileClass
-     * @return string
-     */
     protected function getDirectoryByFileClass(string $fileClass): string
     {
         if (array_key_exists($fileClass, $this->directoriesByFileClass)) {

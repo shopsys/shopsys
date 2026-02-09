@@ -15,7 +15,7 @@ class LoggableEntityConfigFactoryTest extends TransactionFunctionalTestCase
      */
     private LoggableEntityConfigFactory $loggableEntityConfigFactory;
 
-    public function testGetLoggableSetupForOrderEntity()
+    public function testGetLoggableSetupForOrderEntity(): void
     {
         $loggableSetup = $this->loggableEntityConfigFactory->getLoggableSetupByEntity(Order::class);
 

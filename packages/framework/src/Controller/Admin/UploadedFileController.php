@@ -30,14 +30,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_FILES)]
 class UploadedFileController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormDataFactory $uploadedFileFormDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Grid\UploadedFileGridFactory $uploadedFileGridFactory
-     */
     public function __construct(
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly AdministratorGridFacade $administratorGridFacade,
@@ -48,10 +40,6 @@ class UploadedFileController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/uploaded-file/list')]
     #[CanView]
     public function listAction(Request $request): Response
@@ -71,11 +59,6 @@ class UploadedFileController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/uploaded-file/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -124,10 +107,6 @@ class UploadedFileController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/uploaded-file/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -167,10 +146,6 @@ class UploadedFileController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/uploaded-file/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]

@@ -20,10 +20,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class MailWhitelistFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\MailWhitelistTransformer $mailWhitelistTransformer
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
-     */
     public function __construct(
         private readonly MailWhitelistTransformer $mailWhitelistTransformer,
         private readonly MailerSettingProvider $mailerSettingProvider,

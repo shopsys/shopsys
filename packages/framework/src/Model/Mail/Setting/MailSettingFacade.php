@@ -8,142 +8,82 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class MailSettingFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(
         protected readonly Setting $setting,
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getMainAdminMail($domainId)
+    public function getMainAdminMail(int $domainId): string
     {
         return $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getMainAdminMailName($domainId)
+    public function getMainAdminMailName(int $domainId): string
     {
         return $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
     public function getMailWhitelist(int $domainId): ?string
     {
         return $this->setting->getForDomain(MailSetting::MAIL_WHITELIST, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
     public function isWhitelistEnabled(int $domainId): bool
     {
         return (bool)$this->setting->getForDomain(MailSetting::MAIL_WHITELIST_ENABLED, $domainId);
     }
 
-    /**
-     * @param string $mainAdminMail
-     * @param int $domainId
-     */
-    public function setMainAdminMail($mainAdminMail, $domainId)
+    public function setMainAdminMail(string $mainAdminMail, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIN_ADMIN_MAIL, $mainAdminMail, $domainId);
     }
 
-    /**
-     * @param string $mainAdminMailName
-     * @param int $domainId
-     */
-    public function setMainAdminMailName($mainAdminMailName, $domainId)
+    public function setMainAdminMailName(string $mainAdminMailName, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $mainAdminMailName, $domainId);
     }
 
-    /**
-     * @param string|null $value
-     * @param int $domainId
-     */
     public function setMailWhitelist(?string $value, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIL_WHITELIST, $value, $domainId);
     }
 
-    /**
-     * @param bool $enabled
-     * @param int $domainId
-     */
     public function setWhitelistEnabled(bool $enabled, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIL_WHITELIST_ENABLED, $enabled, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
     public function getFacebookUrl(int $domainId): ?string
     {
         return $this->setting->getForDomain(MailSetting::MAIL_FACEBOOK_URL, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
     public function getInstagramUrl(int $domainId): ?string
     {
         return $this->setting->getForDomain(MailSetting::MAIL_INSTAGRAM_URL, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
     public function getYoutubeUrl(int $domainId): ?string
     {
         return $this->setting->getForDomain(MailSetting::MAIL_YOUTUBE_URL, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
     public function getLinkedInUrl(int $domainId): ?string
     {
         return $this->setting->getForDomain(MailSetting::MAIL_LINKEDIN_URL, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
     public function getTiktokUrl(int $domainId): ?string
     {
         return $this->setting->getForDomain(MailSetting::MAIL_TIKTOK_URL, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
     public function getFooterText(int $domainId): ?string
     {
         return $this->setting->getForDomain(MailSetting::MAIL_FOOTER_TEXT, $domainId);
     }
 
     /**
-     * @param int $domainId
      * @return array<string, string|null>
      */
     public function getFooterIconUrls(int $domainId): array
@@ -157,54 +97,32 @@ class MailSettingFacade
         ];
     }
 
-    /**
-     * @param string|null $value
-     * @param int $domainId
-     */
     public function setFacebookUrl(?string $value, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIL_FACEBOOK_URL, $value, $domainId);
     }
 
-    /**
-     * @param string|null $value
-     * @param int $domainId
-     */
     public function setInstagramUrl(?string $value, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIL_INSTAGRAM_URL, $value, $domainId);
     }
 
-    /**
-     * @param string|null $value
-     * @param int $domainId
-     */
     public function setYoutubeUrl(?string $value, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIL_YOUTUBE_URL, $value, $domainId);
     }
 
-    /**
-     * @param string|null $value
-     * @param int $domainId
-     */
     public function setLinkedInUrl(?string $value, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIL_LINKEDIN_URL, $value, $domainId);
     }
 
-    /**
-     * @param string|null $value
-     * @param int $domainId
-     */
     public function setTiktokUrl(?string $value, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIL_TIKTOK_URL, $value, $domainId);
     }
 
     /**
-     * @param string|null $value
-     * @param int $domainId
      * @throws \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException
      */
     public function setFooterText(?string $value, int $domainId): void

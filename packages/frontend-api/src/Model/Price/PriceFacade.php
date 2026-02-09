@@ -10,20 +10,12 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 
 class PriceFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory $priceFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     */
     public function __construct(
         protected readonly PriceFactory $priceFactory,
         protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
-    /**
-     * @param array $pricesArray
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
-     */
     public function createProductPriceFromArrayForCurrentCustomer(array $pricesArray): ProductPriceInterface
     {
         return $this->priceFactory->createProductPriceFromArrayByPricingGroup(

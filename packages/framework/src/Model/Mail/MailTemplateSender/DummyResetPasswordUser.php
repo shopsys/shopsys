@@ -11,23 +11,16 @@ class DummyResetPasswordUser implements ResetPasswordInterface
 {
     protected const string DUMMY_RESET_PASSWORD_HASH = 'dummy-reset-password-hash';
 
-    /**
-     * @param string $email
-     */
     public function __construct(protected readonly string $email)
     {
     }
 
     #[Override]
-    public function getId()
+    public function getId(): int
     {
         return 1;
     }
 
-    /**
-     * @param string|null $hash
-     * @return bool
-     */
     #[Override]
     public function isResetPasswordHashValid(?string $hash): bool
     {
@@ -35,13 +28,13 @@ class DummyResetPasswordUser implements ResetPasswordInterface
     }
 
     #[Override]
-    public function getResetPasswordHash()
+    public function getResetPasswordHash(): string
     {
         return static::DUMMY_RESET_PASSWORD_HASH;
     }
 
     #[Override]
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }

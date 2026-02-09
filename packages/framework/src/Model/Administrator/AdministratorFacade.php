@@ -16,16 +16,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class AdministratorFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactory $administratorFactory
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade
-     * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     * @param \Psr\Clock\ClockInterface $clock
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator $currentAdministrator
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorRepository $administratorRepository,
@@ -38,10 +28,6 @@ class AdministratorFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     public function create(AdministratorData $administratorData): Administrator
     {
         $administrator = $this->administratorFactory->create($administratorData);
@@ -54,12 +40,7 @@ class AdministratorFacade
         return $administrator;
     }
 
-    /**
-     * @param int $administratorId
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
-    public function edit($administratorId, AdministratorData $administratorData): Administrator
+    public function edit(int $administratorId, AdministratorData $administratorData): Administrator
     {
         $administrator = $this->administratorRepository->getById($administratorId);
         $administrator->edit($administratorData);
@@ -71,9 +52,6 @@ class AdministratorFacade
         return $administrator;
     }
 
-    /**
-     * @param int $administratorId
-     */
     public function delete(int $administratorId): void
     {
         $administrator = $this->administratorRepository->getById($administratorId);
@@ -82,9 +60,6 @@ class AdministratorFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     */
     protected function checkForDelete(Administrator $administrator): void
     {
         $adminCountExcludingSuperadmin = $this->administratorRepository->getCountExcludingSuperadmin();
@@ -102,61 +77,37 @@ class AdministratorFacade
         }
     }
 
-    /**
-     * @param int $administratorId
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     public function getById(int $administratorId): Administrator
     {
         return $this->administratorRepository->getById($administratorId);
     }
 
-    /**
-     * @param string $administratorUserName
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     public function getByUserName(string $administratorUserName): Administrator
     {
         return $this->administratorRepository->getByUserName($administratorUserName);
     }
 
-    /**
-     * @param string $administratorEmail
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     public function getByEmail(string $administratorEmail): Administrator
     {
         return $this->administratorRepository->getByEmail($administratorEmail);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllListableExcludingSuperadminQueryBuilder(): QueryBuilder
     {
         return $this->administratorRepository->getAllListableExcludingSuperadminQueryBuilder();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllQueryBuilder(): QueryBuilder
     {
         return $this->administratorRepository->getAllQueryBuilder();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     */
     public function setRolesChangedNow(Administrator $administrator): void
     {
         $administrator->setRolesChangedNow();
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     */
     public function setAdministratorTransferIssuesLastSeenDateTime(Administrator $administrator): void
     {
         $administrator->setTransferIssuesLastSeenDateTime($this->clock->now());
@@ -164,7 +115,6 @@ class AdministratorFacade
     }
 
     /**
-     * @param int $roleGroupId
      * @return string[]
      */
     public function findAdministratorNamesWithRoleGroup(int $roleGroupId): array
@@ -172,18 +122,11 @@ class AdministratorFacade
         return $this->administratorRepository->findAdministratorNamesWithRoleGroup($roleGroupId);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
-     */
     public function findByUuid(string $uuid): ?Administrator
     {
         return $this->administratorRepository->findByUuid($uuid);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     public function getCurrentlyLoggedAdministrator(): Administrator
     {
         return $this->currentAdministrator->getCurrentlyLoggedAdministrator();

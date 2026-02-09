@@ -30,9 +30,6 @@ abstract class ApplicationTestCase extends WebTestCase
         $this->em->getConnection()->setAutoCommit(false);
     }
 
-    /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
-     */
     #[Override]
     protected static function getContainer(): ContainerInterface
     {
@@ -41,8 +38,6 @@ abstract class ApplicationTestCase extends WebTestCase
 
     /**
      * Method is declared as final, so it's not unintentionally overridden by using SymfonyTestContainer trait
-     *
-     * @return \Psr\Container\ContainerInterface
      */
     #[Override]
     final public function createContainer(): PsrContainerInterface
@@ -50,9 +45,6 @@ abstract class ApplicationTestCase extends WebTestCase
         return self::getContainer();
     }
 
-    /**
-     * @return \Tests\App\Test\Client
-     */
     public static function getCurrentClient(): Client
     {
         if (static::$client === null) {
@@ -67,12 +59,6 @@ abstract class ApplicationTestCase extends WebTestCase
      * Creates a new Client with provided options, disabled reboot and Domain switched to ID 1
      * The Client will have its own Kernel and Container, with different instances of services
      * This means that it will not have access to changed DB data if your other Client has EM in transaction
-     *
-     * @param string|null $username
-     * @param string|null $password
-     * @param array $kernelOptions
-     * @param array $clientOptions
-     * @return \Tests\App\Test\Client
      */
     protected function createNewClient(
         ?string $username = null,
@@ -97,11 +83,6 @@ abstract class ApplicationTestCase extends WebTestCase
 
     /**
      * Configures the instance of currently used client; creates one if none exists
-     *
-     * @param string|null $username
-     * @param string|null $password
-     * @param array $clientOptions
-     * @return \Tests\App\Test\Client
      */
     protected function configureCurrentClient(
         ?string $username,
@@ -116,12 +97,6 @@ abstract class ApplicationTestCase extends WebTestCase
         return $client;
     }
 
-    /**
-     * @param string|null $username
-     * @param string|null $password
-     * @param array $clientOptions
-     * @return array
-     */
     private function getClientServerParameters(
         ?string $username,
         ?string $password,

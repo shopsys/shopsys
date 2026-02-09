@@ -12,11 +12,6 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 
 final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -25,10 +20,6 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
         return 'Test your branch locally - running composer-dev, standards and tests - this might take a few minutes';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

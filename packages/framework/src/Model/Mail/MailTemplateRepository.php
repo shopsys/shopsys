@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
@@ -12,30 +13,18 @@ use Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException;
 
 class MailTemplateRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Localization $localization,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getMailTemplateRepository()
+    protected function getMailTemplateRepository(): EntityRepository
     {
         return $this->em->getRepository(MailTemplate::class);
     }
 
-    /**
-     * @param string $templateName
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate|null
-     */
-    public function findByNameAndDomainId($templateName, $domainId)
+    public function findByNameAndDomainId(string $templateName, int $domainId): ?MailTemplate
     {
         $criteria = [
             'name' => $templateName,
@@ -45,12 +34,7 @@ class MailTemplateRepository
         return $this->getMailTemplateRepository()->findOneBy($criteria);
     }
 
-    /**
-     * @param string $templateName
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
-    public function getByNameAndDomainId($templateName, $domainId)
+    public function getByNameAndDomainId(string $templateName, int $domainId): MailTemplate
     {
         $mailTemplate = $this->findByNameAndDomainId($templateName, $domainId);
 
@@ -64,20 +48,15 @@ class MailTemplateRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[]
      */
-    public function getAllByDomainId($domainId)
+    public function getAllByDomainId(int $domainId): array
     {
         $criteria = ['domainId' => $domainId];
 
         return $this->getMailTemplateRepository()->findBy($criteria);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function createQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->getMailTemplateRepository()->createQueryBuilder('mt')
@@ -85,10 +64,6 @@ class MailTemplateRepository
             ->setParameter('domainId', $domainId);
     }
 
-    /**
-     * @param int $mailTemplateId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
     public function getById(int $mailTemplateId): MailTemplate
     {
         $mailTemplate = $this->getMailTemplateRepository()->find($mailTemplateId);
@@ -100,10 +75,7 @@ class MailTemplateRepository
         return $mailTemplate;
     }
 
-    /**
-     * @return bool
-     */
-    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()
+    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject(): bool
     {
         $countOfEmptyTemplates = (int)$this->em->createQueryBuilder()
             ->select('COUNT(mt)')
@@ -116,10 +88,6 @@ class MailTemplateRepository
         return $countOfEmptyTemplates > 0;
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function createGridQueryBuilder(int $domainId): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder($domainId);

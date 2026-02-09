@@ -13,10 +13,6 @@ class EnvironmentType
 
     public const ALL = [self::DEVELOPMENT, self::PRODUCTION, self::TEST, self::ACCEPTANCE];
 
-    /**
-     * @param string $environment
-     * @return bool
-     */
     public static function isDebug(string $environment): bool
     {
         return $environment === self::DEVELOPMENT;

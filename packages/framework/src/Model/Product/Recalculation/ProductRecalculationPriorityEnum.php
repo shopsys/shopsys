@@ -11,9 +11,6 @@ class ProductRecalculationPriorityEnum extends AbstractEnum
     public const string HIGH = 'high';
     public const string REGULAR = 'regular';
 
-    /**
-     * @return string
-     */
     public function getPipeSeparatedValues(): string
     {
         return implode('|', $this->getAllCases());

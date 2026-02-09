@@ -20,15 +20,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class CurrentPromoCodeFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository $promoCodeProductRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator $promoCodeApplicableProductsTotalPriceCalculator
-     */
     public function __construct(
         protected readonly PromoCodeFacade $promoCodeFacade,
         protected readonly PromoCodeProductRepository $promoCodeProductRepository,
@@ -40,9 +31,6 @@ class CurrentPromoCodeFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     */
     protected function validatePromoCodeDatetime(PromoCode $promoCode): void
     {
         if ($promoCode->getDatetimeValidFrom() === null
@@ -72,9 +60,6 @@ class CurrentPromoCodeFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     */
     protected function validateRemainingUses(PromoCode $promoCode): void
     {
         $remainingCodeUses = $promoCode->getRemainingUses();
@@ -85,7 +70,6 @@ class CurrentPromoCodeFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return int[]
      */
@@ -122,17 +106,12 @@ class CurrentPromoCodeFacade
         return $allowedProductIds;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
-     */
     protected function validateLimit(PromoCode $promoCode, PriceInterface $price): void
     {
         $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($promoCode, $price);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return int[]
      */
@@ -164,8 +143,6 @@ class CurrentPromoCodeFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return array<int, \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode>
      */
     public function getPromoCodePerProductByDomainId(
@@ -180,9 +157,6 @@ class CurrentPromoCodeFacade
         return $this->productPromoCodeFiller->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId, $promoCode);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     */
     protected function validatePricingGroup(PromoCode $promoCode): void
     {
         $limitedPricingGroups = $this->promoCodePricingGroupRepository->getPricingGroupsByPromoCodeId(
@@ -202,9 +176,6 @@ class CurrentPromoCodeFacade
         throw new NotAvailableForCustomerUserPricingGroup($promoCode->getCode(), $this->currentCustomerUser->getPricingGroup()->getId());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     */
     protected function validateEnabled(PromoCode $promoCode): void
     {
         if (!$promoCode->isEnabled()) {
@@ -212,11 +183,6 @@ class CurrentPromoCodeFacade
         }
     }
 
-    /**
-     * @param string $enteredCode
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     */
     public function getValidatedPromoCode(string $enteredCode, Cart $cart): PromoCode
     {
         $promoCode = $this->promoCodeFacade->findPromoCodeByCodeAndDomain($enteredCode, $this->domain->getId());
@@ -234,8 +200,6 @@ class CurrentPromoCodeFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalProductPrice
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return int[]
      */

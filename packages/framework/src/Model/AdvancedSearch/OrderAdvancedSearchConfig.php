@@ -21,19 +21,6 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderWithdrawalRequ
 class OrderAdvancedSearchConfig extends AdvancedSearchConfig
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderNumberFilter $orderNumberFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCreateDateFilter $orderCreateDateFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderPriceFilterWithVatFilter $orderPriceFilterWithVatFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderStatusFilter $orderStatusFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderProductFilter $orderProductFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderPhoneNumberFilter $orderPhoneNumberFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderStreetFilter $orderStreetFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderNameFilter $orderNameFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderLastNameFilter $orderLastNameFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderEmailFilter $orderEmailFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCityFilter $orderCityFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCustomerIdFilter $orderCustomerIdFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderWithdrawalRequestFilter $orderWithdrawalFilter
      * @throws \Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterAlreadyExistsException
      */
     public function __construct(

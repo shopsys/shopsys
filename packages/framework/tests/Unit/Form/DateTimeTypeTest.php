@@ -18,9 +18,6 @@ use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DateTimeTypeTest extends TypeTestCase
 {
-    /**
-     * @return array
-     */
     public static function getConvertDateTimeToUtcData(): array
     {
         return [
@@ -35,10 +32,6 @@ class DateTimeTypeTest extends TypeTestCase
         ];
     }
 
-    /**
-     * @param string $input
-     * @param string $expected
-     */
     #[DataProvider('getConvertDateTimeToUtcData')]
     public function testConvertDateTimeToUtc(string $input, string $expected): void
     {
@@ -49,9 +42,6 @@ class DateTimeTypeTest extends TypeTestCase
         $this->assertEquals(new DatePoint($expected), $form->getData());
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function getExtensions(): array
     {
@@ -65,10 +55,6 @@ class DateTimeTypeTest extends TypeTestCase
         ];
     }
 
-    /**
-     * @param string $dateTimeZoneString
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     private function getMockedDomain(string $dateTimeZoneString): Domain
     {
         $settingMock = $this->getMockBuilder(Setting::class)

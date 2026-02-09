@@ -10,9 +10,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20170627144556 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -24,7 +21,7 @@ class Version20170627144556 extends AbstractMigration
         $this->sql('UPDATE product_domains SET short_description = short_description');
     }
 
-    private function replaceProductDomainFulltextTriggerOnProduct()
+    private function replaceProductDomainFulltextTriggerOnProduct(): void
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION update_product_domain_fulltext_tsvector_by_product() RETURNS trigger AS $$
@@ -52,7 +49,7 @@ class Version20170627144556 extends AbstractMigration
         ');
     }
 
-    private function replaceProductDomainFulltextTriggerOnProductTranslation()
+    private function replaceProductDomainFulltextTriggerOnProductTranslation(): void
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION update_product_domain_fulltext_tsvector_by_product_translation() RETURNS trigger AS $$
@@ -80,7 +77,7 @@ class Version20170627144556 extends AbstractMigration
         ');
     }
 
-    private function replaceProductDomainFulltextTriggerOnProductDomain()
+    private function replaceProductDomainFulltextTriggerOnProductDomain(): void
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION set_product_domain_fulltext_tsvector() RETURNS trigger AS $$

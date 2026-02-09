@@ -8,11 +8,7 @@ use Exception;
 
 class ProductIsAlreadyVariantException extends VariantException
 {
-    /**
-     * @param int $productId
-     * @param \Exception|null $previous
-     */
-    public function __construct($productId, ?Exception $previous = null)
+    public function __construct(int $productId, ?Exception $previous = null)
     {
         $message = 'Product with ID ' . $productId . ' is already variant.';
 

@@ -6,29 +6,22 @@ namespace Tests\FrameworkBundle\Unit\Component\Money;
 
 use DomainException;
 use Iterator;
-use Litipk\BigNumbers\DecimalConstants;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Money\Exception\InvalidNumericArgumentException;
 use Shopsys\FrameworkBundle\Component\Money\Exception\MoneyException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 final class MoneyTest extends TestCase
 {
-    /**
-     * @param int|string $value
-     * @param string $expectedAmount
-     */
     #[DataProvider('createProvider')]
-    public function testCreate($value, string $expectedAmount): void
+    public function testCreate(int|string $value, string $expectedAmount): void
     {
         $money = Money::create($value);
 
         $this->assertSame($expectedAmount, $money->getAmount());
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function createProvider(): Iterator
     {
         yield ['0', '0'];
@@ -70,20 +63,14 @@ final class MoneyTest extends TestCase
         yield [PHP_INT_MAX, (string)PHP_INT_MAX];
     }
 
-    /**
-     * @param int|string $value
-     */
     #[DataProvider('invalidValuesCreateProvider')]
-    public function testInvalidValuesInCreate($value): void
+    public function testInvalidValuesInCreate(int|string $value): void
     {
-        $this->expectException(MoneyException::class);
+        $this->expectException(InvalidNumericArgumentException::class);
 
         Money::create($value);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function invalidValuesCreateProvider(): Iterator
     {
         yield [''];
@@ -113,22 +100,8 @@ final class MoneyTest extends TestCase
         yield ['++1'];
 
         yield ['--1'];
-
-        yield [0.0];
-
-        yield [1.0];
-
-        yield [-1.0];
-
-        yield [DecimalConstants::zero()];
-
-        yield [Money::zero()];
     }
 
-    /**
-     * @param float $float
-     * @param int $scale
-     */
     #[DataProvider('invalidValuesCreateFromFloatProvider')]
     public function testInvalidValuesInCreateFromFloat(float $float, int $scale): void
     {
@@ -137,9 +110,6 @@ final class MoneyTest extends TestCase
         Money::createFromFloat($float, $scale);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function invalidValuesCreateFromFloatProvider(): Iterator
     {
         yield [NAN, 0];
@@ -157,11 +127,6 @@ final class MoneyTest extends TestCase
         yield [0.0, -1];
     }
 
-    /**
-     * @param float $float
-     * @param int $scale
-     * @param string $expectedAmount
-     */
     #[DataProvider('createFromFloatProvider')]
     public function testCreateFromFloat(float $float, int $scale, string $expectedAmount): void
     {
@@ -170,9 +135,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedAmount, $money->getAmount());
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function createFromFloatProvider(): Iterator
     {
         yield [0.0, 0, '0'];
@@ -214,11 +176,6 @@ final class MoneyTest extends TestCase
         $this->assertSame('1', $money->getAmount());
     }
 
-    /**
-     * @param string $a
-     * @param string $b
-     * @param string $expectedAmount
-     */
     #[DataProvider('addProvider')]
     public function testAdd(string $a, string $b, string $expectedAmount): void
     {
@@ -230,9 +187,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedAmount, $result->getAmount());
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function addProvider(): Iterator
     {
         yield ['1', '1', '2'];
@@ -267,11 +221,6 @@ final class MoneyTest extends TestCase
         $this->assertSame('1', $money->getAmount());
     }
 
-    /**
-     * @param string $a
-     * @param string $b
-     * @param string $expectedAmount
-     */
     #[DataProvider('subtractProvider')]
     public function testSubtract(string $a, string $b, string $expectedAmount): void
     {
@@ -283,9 +232,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedAmount, $result->getAmount());
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function subtractProvider(): Iterator
     {
         yield ['2', '1', '1'];
@@ -321,13 +267,8 @@ final class MoneyTest extends TestCase
         $this->assertSame('1', $money->getAmount());
     }
 
-    /**
-     * @param string $a
-     * @param int|string $b
-     * @param string $expectedAmount
-     */
     #[DataProvider('multiplyProvider')]
-    public function testMultiply(string $a, $b, string $expectedAmount): void
+    public function testMultiply(string $a, int|string $b, string $expectedAmount): void
     {
         $moneyA = Money::create($a);
 
@@ -336,9 +277,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedAmount, $result->getAmount());
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function multiplyProvider(): Iterator
     {
         yield ['2', '1', '2'];
@@ -372,11 +310,8 @@ final class MoneyTest extends TestCase
         yield ['0.5', 2, '1.0'];
     }
 
-    /**
-     * @param int|string $multiplier
-     */
     #[DataProvider('invalidMultipliersProvider')]
-    public function testInvalidMultipliers($multiplier): void
+    public function testInvalidMultipliers(int|string $multiplier): void
     {
         $money = Money::create(1);
 
@@ -385,9 +320,6 @@ final class MoneyTest extends TestCase
         $money->multiply($multiplier);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function invalidMultipliersProvider(): Iterator
     {
         yield from static::invalidValuesCreateProvider();
@@ -403,14 +335,8 @@ final class MoneyTest extends TestCase
         $this->assertSame('1', $money->getAmount());
     }
 
-    /**
-     * @param string $a
-     * @param int|string $b
-     * @param int $scale
-     * @param string $expectedAmount
-     */
     #[DataProvider('divideProvider')]
-    public function testDivide(string $a, $b, int $scale, string $expectedAmount): void
+    public function testDivide(string $a, int|string $b, int $scale, string $expectedAmount): void
     {
         $moneyA = Money::create($a);
 
@@ -419,9 +345,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedAmount, $result->getAmount());
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function divideProvider(): Iterator
     {
         yield ['1', '2', 0, '1'];
@@ -459,11 +382,8 @@ final class MoneyTest extends TestCase
         yield ['0.5', 2, 1, '0.3'];
     }
 
-    /**
-     * @param int|string $divisor
-     */
     #[DataProvider('invalidDivisorProvider')]
-    public function testInvalidDivisors($divisor): void
+    public function testInvalidDivisors(int|string $divisor): void
     {
         $money = Money::create(1);
 
@@ -472,19 +392,13 @@ final class MoneyTest extends TestCase
         $money->divide($divisor, 0);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function invalidDivisorProvider(): Iterator
     {
         yield from self::invalidValuesCreateProvider();
     }
 
-    /**
-     * @param int|string $divisor
-     */
     #[DataProvider('cannotDivideByZeroProvider')]
-    public function testCannotDivideByZero($divisor): void
+    public function testCannotDivideByZero(int|string $divisor): void
     {
         $money = Money::create(1);
 
@@ -493,9 +407,6 @@ final class MoneyTest extends TestCase
         $money->divide($divisor, 0);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function cannotDivideByZeroProvider(): Iterator
     {
         yield ['0'];
@@ -516,11 +427,6 @@ final class MoneyTest extends TestCase
         $this->assertSame('1.5', $money->getAmount());
     }
 
-    /**
-     * @param string $amount
-     * @param int $scale
-     * @param string $expectedAmount
-     */
     #[DataProvider('roundProvider')]
     public function testRound(string $amount, int $scale, string $expectedAmount): void
     {
@@ -531,9 +437,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedAmount, $result->getAmount());
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function roundProvider(): Iterator
     {
         yield ['0.4', 0, '0'];
@@ -571,11 +474,6 @@ final class MoneyTest extends TestCase
         yield ['1.999', 3, '1.999'];
     }
 
-    /**
-     * @param string $a
-     * @param string $b
-     * @param int $expectedResult
-     */
     #[DataProvider('compareProvider')]
     public function testCompare(string $a, string $b, int $expectedResult): void
     {
@@ -587,9 +485,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function compareProvider(): Iterator
     {
         yield ['0', '0', 0];
@@ -623,11 +518,6 @@ final class MoneyTest extends TestCase
         yield ['0', '0.000001', -1];
     }
 
-    /**
-     * @param string $a
-     * @param string $b
-     * @param bool $expectedResult
-     */
     #[DataProvider('equalsProvider')]
     public function testEquals(string $a, string $b, bool $expectedResult): void
     {
@@ -639,9 +529,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function equalsProvider(): Iterator
     {
         yield ['0', '0', true];
@@ -675,11 +562,6 @@ final class MoneyTest extends TestCase
         yield ['0', '0.000001', false];
     }
 
-    /**
-     * @param string $a
-     * @param string $b
-     * @param bool $expectedResult
-     */
     #[DataProvider('greaterThanProvider')]
     public function testGreaterThan(string $a, string $b, bool $expectedResult): void
     {
@@ -691,9 +573,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function greaterThanProvider(): Iterator
     {
         yield ['0', '0', false];
@@ -727,11 +606,6 @@ final class MoneyTest extends TestCase
         yield ['0', '0.000001', false];
     }
 
-    /**
-     * @param string $a
-     * @param string $b
-     * @param bool $expectedResult
-     */
     #[DataProvider('greaterThanOrEqualToProvider')]
     public function testGreaterThanOrEqualTo(string $a, string $b, bool $expectedResult): void
     {
@@ -743,9 +617,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function greaterThanOrEqualToProvider(): Iterator
     {
         yield ['0', '0', true];
@@ -779,11 +650,6 @@ final class MoneyTest extends TestCase
         yield ['0', '0.000001', false];
     }
 
-    /**
-     * @param string $a
-     * @param string $b
-     * @param bool $expectedResult
-     */
     #[DataProvider('lessThanProvider')]
     public function testLessThan(string $a, string $b, bool $expectedResult): void
     {
@@ -795,9 +661,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function lessThanProvider(): Iterator
     {
         yield ['0', '0', false];
@@ -831,11 +694,6 @@ final class MoneyTest extends TestCase
         yield ['0', '0.000001', true];
     }
 
-    /**
-     * @param string $a
-     * @param string $b
-     * @param bool $expectedResult
-     */
     #[DataProvider('lessThanOrEqualToProvider')]
     public function testLessThanOrEqualTo(string $a, string $b, bool $expectedResult): void
     {
@@ -847,9 +705,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function lessThanOrEqualToProvider(): Iterator
     {
         yield ['0', '0', true];
@@ -883,10 +738,6 @@ final class MoneyTest extends TestCase
         yield ['0', '0.000001', true];
     }
 
-    /**
-     * @param string $a
-     * @param bool $expectedResult
-     */
     #[DataProvider('isPositiveProvider')]
     public function testIsPositive(string $a, bool $expectedResult): void
     {
@@ -895,9 +746,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedResult, $moneyA->isPositive());
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function isPositiveProvider(): Iterator
     {
         yield ['0', false];
@@ -919,10 +767,6 @@ final class MoneyTest extends TestCase
         yield ['-0.55', false];
     }
 
-    /**
-     * @param string $a
-     * @param bool $expectedResult
-     */
     #[DataProvider('isNegativeProvider')]
     public function testIsNegative(string $a, bool $expectedResult): void
     {
@@ -931,9 +775,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedResult, $moneyA->isNegative());
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function isNegativeProvider(): Iterator
     {
         yield ['0', false];
@@ -955,10 +796,6 @@ final class MoneyTest extends TestCase
         yield ['-0.55', true];
     }
 
-    /**
-     * @param string $a
-     * @param bool $expectedResult
-     */
     #[DataProvider('isZeroProvider')]
     public function testIsZero(string $a, bool $expectedResult): void
     {
@@ -967,9 +804,6 @@ final class MoneyTest extends TestCase
         $this->assertSame($expectedResult, $moneyA->isZero());
     }
 
-    /**
-     * @return \Iterator
-     */
     public static function isZeroProvider(): Iterator
     {
         yield ['0', true];

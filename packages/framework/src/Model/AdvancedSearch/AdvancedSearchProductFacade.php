@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductNameFilter;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdvancedSearchProductFacade
 {
     public const RULES_FORM_NAME = 'as';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchFormFactory $advancedSearchFormFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade $productListAdminFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory $ruleFormViewDataFactory
-     */
     public function __construct(
         protected readonly ProductAdvancedSearchFormFactory $advancedSearchFormFactory,
         protected readonly AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
@@ -26,11 +22,7 @@ class AdvancedSearchProductFacade
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createAdvancedSearchForm(Request $request)
+    public function createAdvancedSearchForm(Request $request): FormInterface
     {
         $rulesData = $request->query->all(static::RULES_FORM_NAME);
         $rulesFormData = $this->ruleFormViewDataFactory->createFromRequestData(ProductNameFilter::NAME, $rulesData);
@@ -38,12 +30,7 @@ class AdvancedSearchProductFacade
         return $this->advancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesFormData);
     }
 
-    /**
-     * @param string $filterName
-     * @param string|int $index
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createRuleForm($filterName, $index)
+    public function createRuleForm(string $filterName, string $index): FormInterface
     {
         $rulesData = [
             $index => $this->ruleFormViewDataFactory->createDefault($filterName),
@@ -52,11 +39,7 @@ class AdvancedSearchProductFacade
         return $this->advancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesData);
     }
 
-    /**
-     * @param array $advancedSearchData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getQueryBuilderByAdvancedSearchData($advancedSearchData)
+    public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): QueryBuilder
     {
         $queryBuilder = $this->productListAdminFacade->getProductListQueryBuilder();
         $this->advancedSearchQueryBuilderExtender->extendByAdvancedSearchData($queryBuilder, $advancedSearchData);
@@ -64,11 +47,7 @@ class AdvancedSearchProductFacade
         return $queryBuilder;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
-     */
-    public function isAdvancedSearchFormSubmitted(Request $request)
+    public function isAdvancedSearchFormSubmitted(Request $request): bool
     {
         return $request->query->has(static::RULES_FORM_NAME);
     }

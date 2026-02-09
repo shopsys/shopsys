@@ -9,9 +9,7 @@ use Exception;
 class UnknownFeedTypeException extends Exception
 {
     /**
-     * @param string $type
      * @param string[] $knownTypes
-     * @param \Exception|null $previous
      */
     public function __construct(string $type, array $knownTypes, ?Exception $previous = null)
     {

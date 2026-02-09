@@ -13,10 +13,8 @@ use Symfony\Component\Form\DataTransformerInterface;
 final class RolesGridDataTransformer implements DataTransformerInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $context
      * @param string[] $excludedRoles
-     * @param bool $shouldGroupBySections
      */
     public function __construct(
         private readonly RoleRegistryInterface $roleRegistry,

@@ -12,9 +12,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterProductFeedConfigsCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function process(ContainerBuilder $container): void
     {
@@ -38,7 +35,6 @@ class RegisterProductFeedConfigsCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * @param string $domainIds
      * @return int[]
      */
     protected function splitDomainIdsFromString(string $domainIds): array

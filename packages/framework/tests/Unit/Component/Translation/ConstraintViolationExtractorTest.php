@@ -24,7 +24,7 @@ class ConstraintViolationExtractorTest extends TestCase
         $expectedCatalogue = new MessageCatalogue();
 
         $message = new Message('This message will be extracted into "validators" translation domain', 'validators');
-        $message->addSource(new FileSource($file->getFilename(), 16));
+        $message->addSource(new FileSource($file->getFilename(), 13));
         $expectedCatalogue->add($message);
 
         $this->assertEquals($expectedCatalogue, $actualCatalogue);
@@ -41,10 +41,6 @@ class ConstraintViolationExtractorTest extends TestCase
         $this->assertEquals($expectedCatalogue, $actualCatalogue);
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @return \JMS\TranslationBundle\Model\MessageCatalogue
-     */
     private function extract(SplFileInfo $file): MessageCatalogue
     {
         $extractor = new ConstraintViolationExtractor();

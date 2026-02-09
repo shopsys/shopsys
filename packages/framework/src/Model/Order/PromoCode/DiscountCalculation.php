@@ -14,11 +14,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 
 class DiscountCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         protected readonly Rounding $rounding,
         protected readonly PriceCalculation $priceCalculation,
@@ -27,10 +22,6 @@ class DiscountCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalItemPrice
-     * @param float $vatPercent
-     * @param float $discountPercent
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     public function calculatePercentageDiscountRoundedByCurrency(
@@ -68,13 +59,6 @@ class DiscountCalculation
         return new Price($priceWithoutVat, $priceWithVat);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $discount
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalPrice
-     * @param float $vatPercent
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function calculateNominalDiscount(
         Money $discount,
         PriceInterface $totalPrice,

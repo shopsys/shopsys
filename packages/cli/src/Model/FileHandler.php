@@ -9,18 +9,11 @@ use Symfony\Component\Filesystem\Filesystem;
 
 final class FileHandler
 {
-    /**
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     */
     public function __construct(
         private readonly Filesystem $filesystem,
     ) {
     }
 
-    /**
-     * @param string $path
-     * @return string
-     */
     public function readFile(string $path): string
     {
         if (!file_exists($path)) {
@@ -36,19 +29,12 @@ final class FileHandler
         return $content;
     }
 
-    /**
-     * @param string $path
-     * @param string $content
-     */
     public function writeFile(string $path, string $content): void
     {
         $this->ensureDirectory(dirname($path));
         $this->filesystem->dumpFile($path, $content);
     }
 
-    /**
-     * @param string $path
-     */
     public function ensureDirectory(string $path): void
     {
         if (!is_dir($path)) {
@@ -56,19 +42,12 @@ final class FileHandler
         }
     }
 
-    /**
-     * @param string $source
-     * @param string $destination
-     */
     public function copyFile(string $source, string $destination): void
     {
         $this->ensureDirectory(dirname($destination));
         $this->filesystem->copy($source, $destination, true);
     }
 
-    /**
-     * @param string $path
-     */
     public function deleteFile(string $path): void
     {
         if (file_exists($path)) {

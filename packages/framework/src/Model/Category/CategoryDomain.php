@@ -69,7 +69,6 @@ class CategoryDomain
     protected $description;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      */
     public function __construct(Category $category, $domainId)
@@ -131,7 +130,7 @@ class CategoryDomain
     /**
      * @param string|null $seoTitle
      */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle($seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
@@ -139,7 +138,7 @@ class CategoryDomain
     /**
      * @param string|null $seoMetaDescription
      */
-    public function setSeoMetaDescription($seoMetaDescription)
+    public function setSeoMetaDescription($seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
@@ -147,7 +146,7 @@ class CategoryDomain
     /**
      * @param string|null $seoH1
      */
-    public function setSeoH1($seoH1)
+    public function setSeoH1($seoH1): void
     {
         $this->seoH1 = $seoH1;
     }
@@ -155,7 +154,7 @@ class CategoryDomain
     /**
      * @param bool $enabled
      */
-    public function setEnabled($enabled)
+    public function setEnabled($enabled): void
     {
         $this->enabled = $enabled;
     }
@@ -163,7 +162,7 @@ class CategoryDomain
     /**
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = $description;
     }

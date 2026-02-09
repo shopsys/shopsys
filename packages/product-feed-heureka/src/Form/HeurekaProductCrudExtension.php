@@ -12,11 +12,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
 {
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade $heurekaProductDomainFacade
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactory $heurekaProductDomainDataFactory
-     */
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly HeurekaProductDomainFacade $heurekaProductDomainFacade,
@@ -24,30 +19,23 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return HeurekaProductFormType::class;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Heureka.cz product feed');
     }
 
     /**
-     * @param int $productId
-     * @return array
+     * {@inheritdoc}
      */
     #[Override]
-    public function getData($productId)
+    public function getData(int $productId): array
     {
         $heurekaProductDomains = $this->heurekaProductDomainFacade->findByProductId($productId);
 
@@ -63,11 +51,10 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param int $productId
-     * @param array $data
+     * {@inheritdoc}
      */
     #[Override]
-    public function saveData($productId, $data)
+    public function saveData(int $productId, mixed $data): void
     {
         $heurekaProductDomainsData = [];
 
@@ -87,10 +74,10 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param int $productId
+     * {@inheritdoc}
      */
     #[Override]
-    public function removeData($productId)
+    public function removeData(int $productId): void
     {
         $this->heurekaProductDomainFacade->delete($productId);
     }

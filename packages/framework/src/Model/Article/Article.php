@@ -120,9 +120,6 @@ class Article implements OrderableEntityInterface
     #[ORM\Column(type: 'string', nullable: true)]
     protected $url;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     */
     public function __construct(ArticleData $articleData)
     {
         $this->domainId = $articleData->domainId;
@@ -131,17 +128,11 @@ class Article implements OrderableEntityInterface
         $this->setData($articleData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     */
-    public function edit(ArticleData $articleData)
+    public function edit(ArticleData $articleData): void
     {
         $this->setData($articleData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     */
     protected function setData(ArticleData $articleData): void
     {
         $this->name = $articleData->name;
@@ -233,7 +224,7 @@ class Article implements OrderableEntityInterface
      * @param int $position
      */
     #[Override]
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
@@ -241,7 +232,7 @@ class Article implements OrderableEntityInterface
     /**
      * @param string $placement
      */
-    public function setPlacement($placement)
+    public function setPlacement($placement): void
     {
         $this->placement = $placement;
     }

@@ -8,11 +8,8 @@ use Nette\Utils\FileSystem;
 
 final class DockerfileVersionFileManipulator
 {
-    /**
-     * @param $versionString
-     */
     public function updateDockerFileVersion(
-        $versionString,
+        string $versionString,
     ): void {
         $dockerFilePath = getcwd() . '/project-base/app/docker/php-fpm/Dockerfile';
         $fileContent = FileSystem::read($dockerFilePath);

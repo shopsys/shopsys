@@ -15,7 +15,6 @@ class ProductTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translatable(targetEntity: Product::class)]
     protected $translatable;
@@ -55,7 +54,7 @@ class ProductTranslation extends AbstractTranslation
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
     }
@@ -71,7 +70,7 @@ class ProductTranslation extends AbstractTranslation
     /**
      * @param string|null $variantAlias
      */
-    public function setVariantAlias($variantAlias)
+    public function setVariantAlias($variantAlias): void
     {
         $this->variantAlias = TransformStringHelper::getTrimmedStringOrNullOnEmpty($variantAlias);
     }
@@ -87,7 +86,7 @@ class ProductTranslation extends AbstractTranslation
     /**
      * @param string|null $namePrefix
      */
-    public function setNamePrefix($namePrefix)
+    public function setNamePrefix($namePrefix): void
     {
         $this->namePrefix = $namePrefix;
     }
@@ -103,7 +102,7 @@ class ProductTranslation extends AbstractTranslation
     /**
      * @param string|null $nameSuffix
      */
-    public function setNameSuffix($nameSuffix)
+    public function setNameSuffix($nameSuffix): void
     {
         $this->nameSuffix = $nameSuffix;
     }

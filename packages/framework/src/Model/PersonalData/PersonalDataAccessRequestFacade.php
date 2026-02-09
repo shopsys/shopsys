@@ -10,13 +10,6 @@ use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 
 class PersonalDataAccessRequestFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestRepository $personalDataAccessRequestRepository
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactory $personalDataAccessRequestFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly HashGenerator $hashGenerator,
@@ -26,15 +19,10 @@ class PersonalDataAccessRequestFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestData $personalDataAccessRequestData
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest
-     */
     public function createPersonalDataAccessRequest(
         PersonalDataAccessRequestData $personalDataAccessRequestData,
-        $domainId,
-    ) {
+        int $domainId,
+    ): PersonalDataAccessRequest {
         $hash = $this->getUniqueHash();
 
         $personalDataAccessRequestData->hash = $hash;
@@ -49,20 +37,12 @@ class PersonalDataAccessRequestFacade
         return $dataAccessRequest;
     }
 
-    /**
-     * @param string $hash
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest|null
-     */
-    public function findByHashAndDomainId($hash, $domainId)
+    public function findByHashAndDomainId(string $hash, int $domainId): ?PersonalDataAccessRequest
     {
         return $this->personalDataAccessRequestRepository->findByHashAndDomainId($hash, $domainId);
     }
 
-    /**
-     * @return string
-     */
-    protected function getUniqueHash()
+    protected function getUniqueHash(): string
     {
         do {
             $hash = $this->hashGenerator->generateHash(20);

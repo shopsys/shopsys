@@ -11,11 +11,6 @@ use Shopsys\Releaser\Stage;
 
 final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -24,10 +19,6 @@ final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWork
         return '[Manually] Push and force-split your branch';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

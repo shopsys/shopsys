@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\NumberSequence\AbstractNumberSequenceRepositor
 class OrderNumberSequenceRepository extends AbstractNumberSequenceRepository
 {
     /**
-     * @return \Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Model\Order\OrderNumberSequence>
      */
     #[Override]
     protected function getNumberSequenceRepository(): EntityRepository

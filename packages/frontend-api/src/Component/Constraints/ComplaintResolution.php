@@ -24,10 +24,7 @@ class ComplaintResolution extends Constraint
 
     /**
      * @param array<string, mixed>|null $options
-     * @param string $selectedComplaintResolutionNotSupportedMessage
-     * @param string $selecteComplaintResolutionRequiresBankAccountFilledMessage
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

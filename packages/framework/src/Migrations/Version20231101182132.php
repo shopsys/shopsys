@@ -14,9 +14,6 @@ class Version20231101182132 extends AbstractMigration implements ContainerAwareI
 {
     use MultidomainMigrationTrait;
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -50,11 +47,6 @@ class Version20231101182132 extends AbstractMigration implements ContainerAwareI
         }
     }
 
-    /**
-     * @param string $settingName
-     * @param string $pageContent
-     * @param int $domainId
-     */
     private function setPageContent(string $settingName, string $pageContent, int $domainId): void
     {
         $paymentSuccessfulPageContent = $this->sql(

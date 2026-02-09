@@ -6,34 +6,24 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 
 class CartRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClockInterface $clock,
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getCartRepository()
+    protected function getCartRepository(): EntityRepository
     {
         return $this->em->getRepository(Cart::class);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
-     */
-    public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
+    public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): ?Cart
     {
         $criteria = [];
 
@@ -46,10 +36,7 @@ class CartRepository
         return $this->getCartRepository()->findOneBy($criteria, ['id' => 'desc']);
     }
 
-    /**
-     * @param int $daysLimit
-     */
-    public function deleteOldCartsForUnregisteredCustomerUsers($daysLimit)
+    public function deleteOldCartsForUnregisteredCustomerUsers(int $daysLimit): void
     {
         $this->em->getConnection()->executeStatement(
             'DELETE FROM cart_items WHERE cart_id IN (
@@ -75,10 +62,7 @@ class CartRepository
         );
     }
 
-    /**
-     * @param int $daysLimit
-     */
-    public function deleteOldCartsForRegisteredCustomerUsers($daysLimit)
+    public function deleteOldCartsForRegisteredCustomerUsers(int $daysLimit): void
     {
         $this->em->getConnection()->executeStatement(
             'DELETE FROM cart_items WHERE cart_id IN (

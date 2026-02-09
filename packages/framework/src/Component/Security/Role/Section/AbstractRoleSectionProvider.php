@@ -29,9 +29,6 @@ abstract class AbstractRoleSectionProvider
      */
     abstract public static function getTargetContext(): string;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Section\RoleSection $roleSection
-     */
     protected function addSection(RoleSection $roleSection): void
     {
         if (isset($this->definedSections[$roleSection->getIdentifier()])) {
@@ -44,10 +41,6 @@ abstract class AbstractRoleSectionProvider
         $this->definedSections[$roleSection->getIdentifier()] = $roleSection;
     }
 
-    /**
-     * @param string|null $sectionIdentifier
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Section\RoleSection
-     */
     public function getById(?string $sectionIdentifier): RoleSection
     {
         if ($sectionIdentifier === null || !isset($this->definedSections[$sectionIdentifier])) {
@@ -68,9 +61,6 @@ abstract class AbstractRoleSectionProvider
         return $sections;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Section\RoleSection
-     */
     public static function getDefaultSection(): RoleSection
     {
         return new RoleSection(self::OTHER, t('Other'), 999, null);

@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalcul
 
 class PaymentVisibilityCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation
-     */
     public function __construct(
         protected readonly IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation,
         protected readonly IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation,
@@ -20,10 +16,9 @@ class PaymentVisibilityCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function filterVisible(array $payments, $domainId)
+    public function filterVisible(array $payments, int $domainId): array
     {
         $visiblePayments = [];
 
@@ -36,12 +31,7 @@ class PaymentVisibilityCalculation
         return $visiblePayments;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param int $domainId
-     * @return bool
-     */
-    public function isVisible(Payment $payment, $domainId)
+    public function isVisible(Payment $payment, int $domainId): bool
     {
         if (!$this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, $domainId)) {
             return false;
@@ -50,12 +40,7 @@ class PaymentVisibilityCalculation
         return $this->hasIndependentlyVisibleTransport($payment, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param int $domainId
-     * @return bool
-     */
-    protected function hasIndependentlyVisibleTransport(Payment $payment, $domainId)
+    protected function hasIndependentlyVisibleTransport(Payment $payment, int $domainId): bool
     {
         foreach ($payment->getTransports() as $transport) {
             if ($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, $domainId)) {

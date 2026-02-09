@@ -12,12 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductManualInputPriceFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFactory $productManualInputPriceFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
@@ -26,11 +20,6 @@ class ProductManualInputPriceFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $inputPrice
-     */
     protected function refresh(Product $product, PricingGroup $pricingGroup, ?Money $inputPrice): void
     {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
@@ -47,7 +36,6 @@ class ProductManualInputPriceFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param array<int, \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceData> $productInputPriceDataByDomain
      */
     public function refreshProductManualInputPrices(Product $product, array $productInputPriceDataByDomain): void

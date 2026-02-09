@@ -18,15 +18,11 @@ use Shopsys\FrameworkBundle\Component\Image\ImageRepository as BaseImageReposito
 class ImageRepository extends BaseImageRepository
 {
     /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
+     * {@inheritdoc}
      */
     #[Override]
-    public function getImagesByEntityIndexedById($entityName, $entityId, $type): array
+    public function getImagesByEntityIndexedById(string $entityName, int $entityId, ?string $type): array
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Image\Image[] $images */
         $images = parent::getImagesByEntityIndexedById(
             $entityName,
             $entityId,
@@ -45,16 +41,9 @@ class ImageRepository extends BaseImageRepository
         return $images;
     }
 
-    /**
-     * @param $entityName
-     * @param $entityId
-     * @param $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
-     */
     #[Override]
-    public function getImageByEntity($entityName, $entityId, $type): Image
+    public function getImageByEntity(string $entityName, int $entityId, ?string $type): Image
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Image\Image $image */
         $image = parent::getImageByEntity($entityName, $entityId, $type);
         /** @var \Doctrine\ORM\PersistentCollection $translations */
         $translations = $image->getTranslations();
@@ -66,10 +55,6 @@ class ImageRepository extends BaseImageRepository
         return $image;
     }
 
-    /**
-     * @param int $imageId
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image|null
-     */
     public function findById(int $imageId): ?Image
     {
         return $this->getImageRepository()->find($imageId);

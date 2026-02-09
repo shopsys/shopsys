@@ -6,31 +6,22 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException;
 
 class PricingGroupRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getPricingGroupRepository()
+    protected function getPricingGroupRepository(): EntityRepository
     {
         return $this->em->getRepository(PricingGroup::class);
     }
 
-    /**
-     * @param int $pricingGroupId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    public function getById($pricingGroupId)
+    public function getById(int $pricingGroupId): PricingGroup
     {
         $pricingGroup = $this->getPricingGroupRepository()->find($pricingGroupId);
 
@@ -46,35 +37,28 @@ class PricingGroupRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getPricingGroupRepository()->findAll();
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getPricingGroupsByDomainId($domainId)
+    public function getPricingGroupsByDomainId(int $domainId): array
     {
         return $this->getPricingGroupRepository()->findBy(['domainId' => $domainId]);
     }
 
-    /**
-     * @param int $pricingGroupId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup|null
-     */
-    public function findById($pricingGroupId)
+    public function findById(int $pricingGroupId): ?PricingGroup
     {
         return $this->getPricingGroupRepository()->find($pricingGroupId);
     }
 
     /**
-     * @param int $pricingGroupId
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getAllExceptIdByDomainId($pricingGroupId, $domainId)
+    public function getAllExceptIdByDomainId(int $pricingGroupId, int $domainId): array
     {
         $qb = $this->getPricingGroupRepository()->createQueryBuilder('pg')
             ->where('pg.domainId = :domainId')
@@ -84,11 +68,7 @@ class PricingGroupRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return bool
-     */
-    public function existsCustomerUserWithPricingGroup(PricingGroup $pricingGroup)
+    public function existsCustomerUserWithPricingGroup(PricingGroup $pricingGroup): bool
     {
         $query = $this->em->createQuery('
             SELECT COUNT(u)

@@ -30,20 +30,8 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 {
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleCountByIdsBatchLoader
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
-     * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
-     * @param \Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader
-     * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -78,55 +66,31 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         );
     }
 
-    /**
-     * @param array $data
-     * @return string|null
-     */
     public function getPartNumber(array $data): ?string
     {
         return $data['partno'];
     }
 
-    /**
-     * @param array $data
-     * @return string
-     */
     public function getCatalogNumber(array $data): string
     {
         return $data['catnum'];
     }
 
-    /**
-     * @param array $data
-     * @return array
-     */
     public function getBreadcrumb(array $data): array
     {
         return $data['breadcrumb'];
     }
 
-    /**
-     * @param array $data
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function getCategoriesPromise(array $data): Promise
     {
         return $this->categoriesBatchLoader->load($data['categories']);
     }
 
-    /**
-     * @param array $data
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function getFlagsPromise(array $data): Promise
     {
         return $this->flagsBatchLoader->load($data['flags']);
     }
 
-    /**
-     * @param array $data
-     * @return \GraphQL\Executor\Promise\Promise|null
-     */
     public function getBrandPromise(array $data): ?Promise
     {
         $brandId = $data['brand'];
@@ -134,10 +98,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         return $brandId !== '' ? $this->brandsBatchLoader->load($brandId) : null;
     }
 
-    /**
-     * @param array $data
-     * @return bool
-     */
     public function isMainVariant(array $data): bool
     {
         return $data['is_main_variant'];

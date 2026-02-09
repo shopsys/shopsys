@@ -8,17 +8,10 @@ use Roave\BetterReflection\Reflection\ReflectionClass;
 
 class AnnotationsAdder
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer $fileContentReplacer
-     */
     public function __construct(protected readonly FileContentsReplacer $fileContentReplacer)
     {
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $betterReflectionClass
-     * @param string $propertyAndMethodAnnotationsLines
-     */
     public function addAnnotationToClass(
         ReflectionClass $betterReflectionClass,
         string $propertyAndMethodAnnotationsLines,
@@ -55,9 +48,6 @@ class AnnotationsAdder
      * Appends annotations to a doc block, annotation lines with colliding "name" will get replaced instead
      *
      * @see extractPropertyOrMethodAnnotationName() for explanation of how the "name" works
-     * @param string $classDocBlock
-     * @param string $propertyAndMethodAnnotationsLines
-     * @return string
      */
     protected function replaceInClassDocBlock(string $classDocBlock, string $propertyAndMethodAnnotationsLines): string
     {
@@ -84,8 +74,6 @@ class AnnotationsAdder
      * Otherwise it will return the whole annotation line, eg " * AnnotationsAdder constructor"
      *
      * @see \Tests\FrameworkBundle\Unit\Component\ClassExtension\AnnotationsAdderTest::testExtractPropertyOrMethodAnnotationName()
-     * @param string $annotationLine
-     * @return string
      */
     protected function extractPropertyOrMethodAnnotationName(string $annotationLine): string
     {
@@ -96,10 +84,6 @@ class AnnotationsAdder
         return $annotationLine;
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionClass
-     * @return string
-     */
     protected function getClassDeclarationString(ReflectionClass $reflectionClass): string
     {
         $parts = [];

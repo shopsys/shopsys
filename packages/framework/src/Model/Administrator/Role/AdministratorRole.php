@@ -26,9 +26,6 @@ class AdministratorRole
     #[ORM\Column(type: 'string')]
     protected $role;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleData $administratorRoleData
-     */
     public function __construct(AdministratorRoleData $administratorRoleData)
     {
         $this->administrator = $administratorRoleData->administrator;

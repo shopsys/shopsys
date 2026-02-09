@@ -15,21 +15,12 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculat
 
 class AddProductGiftsMiddleware implements OrderProcessorMiddlewareInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
-     */
     public function __construct(
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
-     */
     #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,
@@ -46,10 +37,6 @@ class AddProductGiftsMiddleware implements OrderProcessorMiddlewareInterface
         return $orderProcessingStack->processNext($orderProcessingData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     */
     protected function addProductGiftOrderItemData(
         OrderProcessingData $orderProcessingData,
         QuantifiedProduct $quantifiedProduct,

@@ -8,11 +8,6 @@ use Exception;
 
 class NotAvailableForCustomerUserPricingGroup extends PromoCodeException
 {
-    /**
-     * @param string $invalidPromoCode
-     * @param int $pricingGroupId
-     * @param \Exception|null $previous
-     */
     public function __construct(string $invalidPromoCode, int $pricingGroupId, ?Exception $previous = null)
     {
         parent::__construct(

@@ -13,12 +13,7 @@ class FieldsAreNotIdentical extends Constraint
 {
     /**
      * @param array<string, mixed>|null $options
-     * @param string $field1
-     * @param string $field2
-     * @param string $errorPath
-     * @param string $message
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

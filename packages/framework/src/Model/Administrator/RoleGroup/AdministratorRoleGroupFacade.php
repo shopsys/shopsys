@@ -11,9 +11,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\DuplicateNam
 class AdministratorRoleGroupFacade
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupRepository $administratorRoleGroupRepository
      * @param \Doctrine\ORM\EntityManager $entityManager
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFactory $administratorRoleGroupFactory
      */
     public function __construct(
         protected readonly AdministratorRoleGroupRepository $administratorRoleGroupRepository,
@@ -22,18 +20,11 @@ class AdministratorRoleGroupFacade
     ) {
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllNotSystemManagedQueryBuilder(): QueryBuilder
     {
         return $this->administratorRoleGroupRepository->getAllNotSystemManagedQueryBuilder();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData $roleGroupData
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
-     */
     public function create(AdministratorRoleGroupData $roleGroupData): AdministratorRoleGroup
     {
         $administratorRoleGroupByName = $this->administratorRoleGroupRepository->findByName($roleGroupData->name);
@@ -49,19 +40,11 @@ class AdministratorRoleGroupFacade
         return $administratorRoleGroup;
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
-     */
     public function getById(int $id): AdministratorRoleGroup
     {
         return $this->administratorRoleGroupRepository->getById($id);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
-     */
     public function edit(
         AdministratorRoleGroup $administratorRoleGroup,
         AdministratorRoleGroupData $administratorRoleGroupData,
@@ -71,10 +54,6 @@ class AdministratorRoleGroupFacade
         $this->entityManager->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
-     * @param string $name
-     */
     protected function checkUniqueName(AdministratorRoleGroup $administratorRoleGroup, string $name): void
     {
         $administratorRoleGroupByName = $this->administratorRoleGroupRepository->findByName($name);
@@ -87,9 +66,6 @@ class AdministratorRoleGroupFacade
         }
     }
 
-    /**
-     * @param int $id
-     */
     public function delete(int $id): void
     {
         $administratorRoleGroup = $this->administratorRoleGroupRepository->getById($id);
@@ -106,10 +82,6 @@ class AdministratorRoleGroupFacade
         return $this->administratorRoleGroupRepository->getAll();
     }
 
-    /**
-     * @param string $name
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
-     */
     public function getSystemManagedRoleGroup(string $name): AdministratorRoleGroup
     {
         return $this->administratorRoleGroupRepository->getSystemManagedRoleGroup($name);

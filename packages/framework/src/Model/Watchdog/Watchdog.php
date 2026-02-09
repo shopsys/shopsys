@@ -59,9 +59,6 @@ class Watchdog
     #[ORM\Column(type: 'datetime_immutable')]
     protected $validUntil;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogData $watchdogData
-     */
     public function __construct(WatchdogData $watchdogData)
     {
         $this->product = $watchdogData->product;
@@ -72,7 +69,7 @@ class Watchdog
         $this->validUntil = $watchdogData->validUntil ?? new DatePoint(static::VALIDITY_PERIOD);
     }
 
-    public function updateValidity()
+    public function updateValidity(): void
     {
         $this->updatedAt = new DatePoint();
         $this->validUntil = new DatePoint(static::VALIDITY_PERIOD);

@@ -53,9 +53,6 @@ class Version20240108154625 extends AbstractMigration implements ContainerAwareI
         ],
     ];
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -99,10 +96,6 @@ class Version20240108154625 extends AbstractMigration implements ContainerAwareI
         }
     }
 
-    /**
-     * @param int|string $seoPageId
-     * @param array $pageSlugsIndexedByLocale
-     */
     private function createSeoPageDomainsForSeoPage(int|string $seoPageId, array $pageSlugsIndexedByLocale): void
     {
         foreach ($this->getAllDomainIds() as $domainId) {

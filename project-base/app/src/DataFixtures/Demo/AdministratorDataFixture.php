@@ -20,8 +20,6 @@ class AdministratorDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \App\Model\Administrator\AdministratorFacade $administratorFacade
-     * @param \App\Model\Administrator\AdministratorDataFactory $administratorDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      */
     public function __construct(
         private readonly AdministratorFacade $administratorFacade,
@@ -30,9 +28,6 @@ class AdministratorDataFixture extends AbstractReferenceFixture
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -44,9 +39,6 @@ class AdministratorDataFixture extends AbstractReferenceFixture
     /**
      * Administrators are created (with specific ids) in database migration.
      *
-     * @param int $administratorId
-     * @param string $referenceName
-     * @return \App\Model\Administrator\Administrator
      * @see \Shopsys\FrameworkBundle\Migrations\Version20180702111015
      */
     private function createAdministratorReference(int $administratorId, string $referenceName): Administrator
@@ -57,9 +49,6 @@ class AdministratorDataFixture extends AbstractReferenceFixture
         return $administrator;
     }
 
-    /**
-     * @param \App\Model\Administrator\Administrator $administrator
-     */
     private function setRoleAllForAdministrator(Administrator $administrator): void
     {
         $administratorData = $this->administratorDataFactory->createFromAdministrator($administrator);

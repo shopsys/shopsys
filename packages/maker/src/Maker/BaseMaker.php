@@ -38,7 +38,6 @@ abstract class BaseMaker extends AbstractMaker
     /**
      * Set mandatory dependencies with setter injection to keep constructor clean for extending classes
      *
-     * @param \Shopsys\MakerBundle\Maker\BaseMakerDependency $baseMakerDependency
      * @internal This method is public only for the purpose of setter injection
      */
     #[Required]
@@ -92,10 +91,6 @@ abstract class BaseMaker extends AbstractMaker
         $this->writeSuccessMessage($io);
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\Generator $generator
-     * @return \Symfony\Bundle\MakerBundle\Util\ClassNameDetails
-     */
     protected function createClassNameDetails(Generator $generator): ClassNameDetails
     {
         return $generator->createClassNameDetails(
@@ -105,26 +100,16 @@ abstract class BaseMaker extends AbstractMaker
         );
     }
 
-    /**
-     * @return string
-     */
     protected function getGeneratedClassNamespace(): string
     {
         return $this->entityConfig->getEntityNamespace();
     }
 
-    /**
-     * @return string
-     */
     protected function getGeneratedClassNamespaceWithoutAppPrefix(): string
     {
         return preg_replace('/\bApp\\\\/', '', $this->getGeneratedClassNamespace(), 1);
     }
 
-    /**
-     * @param string $fileName
-     * @param bool $forceEntitiesDump
-     */
     protected function fixStandards(string $fileName, bool $forceEntitiesDump = false): void
     {
         if ($forceEntitiesDump || !file_exists($this->kernel->getCacheDir() . '/' . EntitiesDumpCommand::OUTPUT_FILE)) {
@@ -136,9 +121,6 @@ abstract class BaseMaker extends AbstractMaker
         $process->mustRun();
     }
 
-    /**
-     * @return \Symfony\Bundle\MakerBundle\Util\UseStatementGenerator
-     */
     protected function getUseStatementsGenerator(): UseStatementGenerator
     {
         return new UseStatementGenerator([
@@ -163,9 +145,6 @@ abstract class BaseMaker extends AbstractMaker
         return $formattedDependencies;
     }
 
-    /**
-     * @return string
-     */
     abstract protected function getTemplateName(): string;
 
     /**
@@ -178,9 +157,6 @@ abstract class BaseMaker extends AbstractMaker
      */
     abstract protected function getConstructorDependencies(): array;
 
-    /**
-     * @return string
-     */
     abstract protected function getGeneratedClassSuffix(): string;
 
     /**

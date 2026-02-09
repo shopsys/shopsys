@@ -8,11 +8,6 @@ use Closure;
 
 class ReferenceDataAccessor
 {
-    /**
-     * @param string $reference
-     * @param \Closure $callback
-     * @param int|null $domainId
-     */
     public function __construct(
         public readonly string $reference,
         public readonly Closure $callback,

@@ -18,13 +18,6 @@ class ProductAvailabilityFacade
 
     protected const string PRODUCT_AVAILABILITY_CACHE_NAMESPACE = 'productAvailabilityDomain';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly ProductStockFacade $productStockFacade,
@@ -34,11 +27,6 @@ class ProductAvailabilityFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     public function getProductAvailabilityInformationByDomainId(Product $product, int $domainId): string
     {
         $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
@@ -50,11 +38,6 @@ class ProductAvailabilityFacade
         return $this->getOutOfStockText($domainLocale);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return int
-     */
     public function getProductAvailabilityDaysForFeedsByDomainId(Product $product, int $domainId): int
     {
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
@@ -64,11 +47,6 @@ class ProductAvailabilityFacade
         return $this->setting->getForDomain(Setting::FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
     public function getProductAvailabilityStatusByDomainId(
         Product $product,
         int $domainId,
@@ -80,11 +58,6 @@ class ProductAvailabilityFacade
         return AvailabilityStatusEnum::OUT_OF_STOCK;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return int|null
-     */
     public function getAvailableStoresCount(Product $product, int $domainId): ?int
     {
         if ($product->isMainVariant()) {
@@ -104,11 +77,6 @@ class ProductAvailabilityFacade
         return $count;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return bool
-     */
     public function isProductAvailableOnDomainCached(Product $product, int $domainId): bool
     {
         return $this->inMemoryCache->getOrSaveValue(
@@ -120,8 +88,6 @@ class ProductAvailabilityFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\ProductStoreAvailabilityInformation[]
      */
     public function getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId(
@@ -175,11 +141,6 @@ class ProductAvailabilityFacade
         return $productStoresAvailabilityInformationList;
     }
 
-    /**
-     * @param int $weeks
-     * @param int $domainId
-     * @return string
-     */
     protected function getWeeksAvailabilityMessageByWeeks(int $weeks, int $domainId): string
     {
         $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
@@ -192,38 +153,21 @@ class ProductAvailabilityFacade
         );
     }
 
-    /**
-     * @param int $days
-     * @return int
-     */
     public function calculateDaysToWeeks(int $days): int
     {
         return (int)ceil($days / static::DAYS_IN_WEEK);
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     protected function getTransferWeeksByDomainId(int $domainId): int
     {
         return $this->calculateDaysToWeeks($this->getTransferDaysByDomainId($domainId));
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     public function getTransferDaysByDomainId(int $domainId): int
     {
         return $this->setting->getForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return int|null
-     */
     public function getGroupedStockQuantityByProductAndDomainId(Product $product, int $domainId): ?int
     {
         if ($product->isMainVariant()) {
@@ -237,7 +181,6 @@ class ProductAvailabilityFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStock[] $productStocksByDomainIdIndexedByStockId
-     * @return int
      */
     protected function sumProductStockQuantities(array $productStocksByDomainIdIndexedByStockId): int
     {
@@ -250,30 +193,16 @@ class ProductAvailabilityFacade
         return $totalProductStocksQuantity;
     }
 
-    /**
-     * @param string $domainLocale
-     * @return string
-     */
     public function getOnStockText(string $domainLocale): string
     {
         return t('In stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $domainLocale);
     }
 
-    /**
-     * @param string $domainLocale
-     * @return string
-     */
     public function getOutOfStockText(string $domainLocale): string
     {
         return t('Out of stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $domainLocale);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param int $quantityToAdd
-     * @return int|null
-     */
     public function getNotOnStockQuantity(Product $product, int $domainId, int $quantityToAdd): ?int
     {
         if ($product->isMainVariant()) {

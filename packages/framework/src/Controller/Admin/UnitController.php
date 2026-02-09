@@ -23,11 +23,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_UNIT)]
 class UnitController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitInlineEdit $unitInlineEdit
-     * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
-     */
     public function __construct(
         protected readonly UnitFacade $unitFacade,
         protected readonly UnitInlineEdit $unitInlineEdit,
@@ -35,9 +30,6 @@ class UnitController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/unit/list/')]
     #[CanView]
     public function listAction(): Response
@@ -51,10 +43,6 @@ class UnitController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/unit/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -97,11 +85,6 @@ class UnitController extends AdminBaseController
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/product/unit/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -138,10 +121,6 @@ class UnitController extends AdminBaseController
         return $this->redirectToRoute('admin_unit_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
     public function settingAction(Request $request): Response

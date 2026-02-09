@@ -9,13 +9,12 @@ use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlD
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Event\RolesCommandDetailEvent;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RolesCommandDetailSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlDataProviderInterface $routeAccessControlDataProvider
-     */
     public function __construct(
         private readonly AccessControlDataProviderInterface $routeAccessControlDataProvider,
     ) {
@@ -32,9 +31,6 @@ class RolesCommandDetailSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Event\RolesCommandDetailEvent $event
-     */
     public function onRoleDetail(RolesCommandDetailEvent $event): void
     {
         if ($event->getContext() !== AdminContext::class) {
@@ -44,7 +40,7 @@ class RolesCommandDetailSubscriber implements EventSubscriberInterface
         $routes = $this->getRoutesUsingRole($event->getRole()->getConstant());
 
         if (count($routes) > 0) {
-            $event->addRenderCallback(function ($io, $output) use ($routes) {
+            $event->addRenderCallback(function (SymfonyStyle $io, OutputInterface $output) use ($routes): void {
                 $io->text('Routes using this role:');
 
                 $table = new Table($output);
@@ -69,7 +65,6 @@ class RolesCommandDetailSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param string $roleConstant
      * @return array<array{name: string, controller: string, permissions: string}>
      */
     private function getRoutesUsingRole(string $roleConstant): array

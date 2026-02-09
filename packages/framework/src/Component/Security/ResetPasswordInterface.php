@@ -11,10 +11,6 @@ interface ResetPasswordInterface
      */
     public function getId();
 
-    /**
-     * @param string|null $hash
-     * @return bool
-     */
     public function isResetPasswordHashValid(?string $hash): bool;
 
     /**

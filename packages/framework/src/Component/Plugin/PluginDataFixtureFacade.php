@@ -6,14 +6,11 @@ namespace Shopsys\FrameworkBundle\Component\Plugin;
 
 class PluginDataFixtureFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginDataFixtureRegistry $pluginDataFixtureRegistry
-     */
     public function __construct(protected readonly PluginDataFixtureRegistry $pluginDataFixtureRegistry)
     {
     }
 
-    public function loadAll()
+    public function loadAll(): void
     {
         $pluginDataFixtures = $this->pluginDataFixtureRegistry->getDataFixtures();
 

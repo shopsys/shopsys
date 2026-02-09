@@ -19,11 +19,15 @@ use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotations
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass3;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass4;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass5;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass6;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass7;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass2;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass3;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass4;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass5;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass6;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass7;
 
 class MethodAnnotationsFactoryTest extends TestCase
 {
@@ -40,19 +44,20 @@ class MethodAnnotationsFactoryTest extends TestCase
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass3' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass3',
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass4' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass4',
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass5' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass5',
+            'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass6' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass6',
+            'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass7' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass7',
         ]);
 
         $docBlockParser = new DocBlockParser();
+        $typehintHelper = new TypehintHelper();
         $this->methodAnnotationsFactory = new MethodAnnotationsFactory(
             $replacementMap,
-            new AnnotationsReplacer($replacementMap, $docBlockParser, new TypehintHelper()),
+            new AnnotationsReplacer($replacementMap, $docBlockParser, $typehintHelper),
             $docBlockParser,
+            $typehintHelper,
         );
     }
 
-    /**
-     * @return array
-     */
     public static function getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider(): array
     {
         return [
@@ -74,10 +79,6 @@ class MethodAnnotationsFactoryTest extends TestCase
         ];
     }
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkReflectionClass
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectReflectionClass
-     */
     #[DataProvider('getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider')]
     public function testGetProjectClassNecessaryMethodAnnotationsLinesEmptyResult(
         ReflectionClass $frameworkReflectionClass,
@@ -103,7 +104,7 @@ class MethodAnnotationsFactoryTest extends TestCase
             $annotationLines,
         );
         $this->assertStringContainsString(
-            '@method setCategory(\App\Model\Category\Category $category)',
+            '@method void setCategory(\App\Model\Category\Category $category)',
             $annotationLines,
         );
     }
@@ -116,11 +117,43 @@ class MethodAnnotationsFactoryTest extends TestCase
         );
 
         $this->assertStringContainsString(
-            '@method setCategory(\App\Model\Category\Category|null $category = null)',
+            '@method void setCategory(\App\Model\Category\Category|null $category = null)',
             $annotationLines,
         );
         $this->assertStringContainsString(
-            '@method setCategoryWithStringWithDefaultParameters(\App\Model\Category\Category $category, string $string = "default", string $constant = \Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass5::DEFAULT_VALUE, bool $true = true, bool $false = false, ?string $null = null, array $emptyArray = [])',
+            '@method void setCategoryWithStringWithDefaultParameters(\App\Model\Category\Category $category, string $string = "default", string $constant = \Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass5::DEFAULT_VALUE, bool $true = true, bool $false = false, string|null $null = null, array $emptyArray = [])',
+            $annotationLines,
+        );
+    }
+
+    public function testGetProjectClassNecessaryMethodAnnotationsLinesWithReturnTypehintOnly(): void
+    {
+        $annotationLines = $this->methodAnnotationsFactory->getProjectClassNecessaryMethodAnnotationsLines(
+            ReflectionObject::createFromName(BaseClass6::class),
+            ReflectionObject::createFromName(ChildClass6::class),
+        );
+
+        $this->assertStringContainsString(
+            '@method \App\Model\Category\CategoryFacade getCategoryFacade()',
+            $annotationLines,
+        );
+    }
+
+    public function testAnnotationTakesPrecedenceOverTypehint(): void
+    {
+        $annotationLines = $this->methodAnnotationsFactory->getProjectClassNecessaryMethodAnnotationsLines(
+            ReflectionObject::createFromName(BaseClass7::class),
+            ReflectionObject::createFromName(ChildClass7::class),
+        );
+
+        // Annotation provides more specific type (Category[]) than typehint (array)
+        $this->assertStringContainsString(
+            '@method void setCategories(\App\Model\Category\Category[] $categories)',
+            $annotationLines,
+        );
+        // Annotation provides more specific type (CategoryFacade[]) than typehint (array)
+        $this->assertStringContainsString(
+            '@method \App\Model\Category\CategoryFacade[] getCategoryFacades()',
             $annotationLines,
         );
     }

@@ -23,10 +23,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 final class AccessControlCommand extends Command
 {
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Configuration\AccessControlConfiguration $accessControlConfiguration
-     * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider $routeAccessControlDataProvider
-     */
     public function __construct(
         private readonly AccessControlConfiguration $accessControlConfiguration,
         private readonly RouteAccessControlDataProvider $routeAccessControlDataProvider,
@@ -114,10 +110,7 @@ final class AccessControlCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData> $allRoutes
-     * @param string $filter
      */
     private function displayFilteredRoutes(
         SymfonyStyle $io,
@@ -137,7 +130,6 @@ final class AccessControlCommand extends Command
 
     /**
      * @param array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData> $routes
-     * @param string $filter
      * @return array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData>
      */
     private function filterRoutes(array $routes, string $filter): array
@@ -149,10 +141,6 @@ final class AccessControlCommand extends Command
         return array_filter($routes, $matchesFilter, ARRAY_FILTER_USE_BOTH);
     }
 
-    /**
-     * @param string $filter
-     * @return callable
-     */
     private function createWildcardMatcher(string $filter): callable
     {
         $pattern = str_replace('*', '.*', $filter);
@@ -161,10 +149,6 @@ final class AccessControlCommand extends Command
         return fn (RouteAccessControlData $routeData, string $routeName): bool => preg_match($regex, $routeName) || preg_match($regex, $routeData->formatControllerInfo());
     }
 
-    /**
-     * @param string $filter
-     * @return callable
-     */
     private function createContainsMatcher(string $filter): callable
     {
         $filterLower = strtolower($filter);
@@ -174,8 +158,6 @@ final class AccessControlCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData> $allRoutes
      * @return bool True if there are uncovered routes
      */
@@ -207,9 +189,6 @@ final class AccessControlCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $title
      * @param array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData> $routes
      */
     private function renderRoutesTable(SymfonyStyle $io, OutputInterface $output, string $title, array $routes): void
@@ -247,10 +226,6 @@ final class AccessControlCommand extends Command
         return $rows;
     }
 
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData $routeData
-     * @return string
-     */
     private function formatRequiredRoles(RouteAccessControlData $routeData): string
     {
         if (!$routeData->hasAnyRules()) {
@@ -271,9 +246,7 @@ final class AccessControlCommand extends Command
     }
 
     /**
-     * @param string $roleConstant
      * @param array<string|null> $permissions
-     * @return string
      */
     private function formatRoleWithPermissions(string $roleConstant, array $permissions): string
     {
@@ -286,11 +259,6 @@ final class AccessControlCommand extends Command
         return $this->colorizeRole($roleText, $roleConstant);
     }
 
-    /**
-     * @param string $roleText
-     * @param string $roleConstant
-     * @return string
-     */
     private function colorizeRole(string $roleText, string $roleConstant): string
     {
         return match ($roleConstant) {

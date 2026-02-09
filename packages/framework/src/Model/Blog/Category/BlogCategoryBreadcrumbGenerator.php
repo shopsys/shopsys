@@ -11,10 +11,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class BlogCategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryRepository $blogCategoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(protected BlogCategoryRepository $blogCategoryRepository, protected Domain $domain)
     {
     }
@@ -23,7 +19,7 @@ class BlogCategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         $blogCategory = $this->blogCategoryRepository->getById($routeParameters['id']);
 

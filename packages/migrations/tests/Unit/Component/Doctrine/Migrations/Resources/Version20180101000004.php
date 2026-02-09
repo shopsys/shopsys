@@ -13,9 +13,6 @@ use Override;
  */
 class Version20180101000004 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {

@@ -12,40 +12,26 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CategoryCrudExtension implements PluginCrudExtensionInterface
 {
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
-     */
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly HeurekaCategoryFacade $heurekaCategoryFacade,
     ) {
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return CategoryFormType::class;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Heureka.cz product feed');
     }
 
-    /**
-     * @param int $categoryId
-     * @return array
-     */
     #[Override]
-    public function getData($categoryId)
+    public function getData(int $categoryId): array
     {
         $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryId($categoryId);
 
@@ -58,12 +44,8 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
         return $pluginData;
     }
 
-    /**
-     * @param int $categoryId
-     * @param array $data
-     */
     #[Override]
-    public function saveData($categoryId, $data)
+    public function saveData(int $categoryId, mixed $data): void
     {
         if (isset($data['heureka_category']) && $data['heureka_category'] instanceof HeurekaCategory) {
             $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId($categoryId, $data['heureka_category']);
@@ -72,11 +54,8 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
         }
     }
 
-    /**
-     * @param int $categoryId
-     */
     #[Override]
-    public function removeData($categoryId)
+    public function removeData(int $categoryId): void
     {
         $this->heurekaCategoryFacade->removeHeurekaCategoryForCategoryId($categoryId);
     }

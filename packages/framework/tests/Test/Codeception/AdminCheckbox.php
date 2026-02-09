@@ -13,20 +13,13 @@ use Override;
  */
 class AdminCheckbox extends AbstractCheckbox
 {
-    /**
-     * @param \Tests\FrameworkBundle\Test\Codeception\ActorInterface $tester
-     * @param string $cssSelector
-     * @return \Tests\FrameworkBundle\Test\Codeception\AdminCheckbox
-     */
-    public static function createByCss(ActorInterface $tester, string $cssSelector): self
+    public static function createByCss(ActorInterface $tester, string $cssSelector): static
     {
         return new static($tester, $cssSelector);
     }
 
     /**
      * Method will mark the particular image element with a generated class via JS so it can be targeted by Selenium easily.
-     *
-     * @return string
      */
     #[Override]
     protected function getImageElementClass(): string

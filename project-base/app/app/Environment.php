@@ -13,10 +13,7 @@ class Environment
 {
     private static ?EnvironmentFileSetting $environmentFileSetting = null;
 
-    /**
-     * @param \Composer\Script\Event $event
-     */
-    public static function checkEnvironment(Event $event)
+    public static function checkEnvironment(Event $event): void
     {
         /** @var \Composer\IO\IOInterface $io */
         $io = $event->getIO();
@@ -32,26 +29,17 @@ class Environment
         self::printEnvironmentInfo($io);
     }
 
-    /**
-     * @return string
-     */
     public static function getEnvironment(): string
     {
         return self::getEnvironmentFileSetting()->getEnvironment();
     }
 
-    /**
-     * @param \Composer\IO\IOInterface $io
-     */
-    public static function printEnvironmentInfo(IOInterface $io)
+    public static function printEnvironmentInfo(IOInterface $io): void
     {
         $io->write("\nEnvironment is <info>" . self::getEnvironment() . "</info>\n");
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting
-     */
-    private static function getEnvironmentFileSetting()
+    private static function getEnvironmentFileSetting(): EnvironmentFileSetting
     {
         if (self::$environmentFileSetting === null) {
             self::$environmentFileSetting = new EnvironmentFileSetting(__DIR__ . '/..');

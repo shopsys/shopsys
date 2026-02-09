@@ -6,10 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\Mailer;
 
 class MailerHelper
 {
-    /**
-     * @param string|null $string
-     * @return string
-     */
     public function escapeOptionalString(?string $string): string
     {
         if ($string === null) {

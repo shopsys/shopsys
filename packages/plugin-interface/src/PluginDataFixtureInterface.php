@@ -9,5 +9,5 @@ interface PluginDataFixtureInterface
     /**
      * Loads plugin demo data
      */
-    public function load();
+    public function load(): void;
 }

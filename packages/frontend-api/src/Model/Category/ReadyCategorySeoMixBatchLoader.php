@@ -14,13 +14,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 
 class ReadyCategorySeoMixBatchLoader
 {
-    /**
-     * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
-     */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
@@ -32,7 +25,6 @@ class ReadyCategorySeoMixBatchLoader
 
     /**
      * @param int[] $categoryIds
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadByCategoryIds(array $categoryIds): Promise
     {

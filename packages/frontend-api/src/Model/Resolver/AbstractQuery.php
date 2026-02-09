@@ -20,9 +20,6 @@ abstract class AbstractQuery implements AliasedInterface, QueryInterface
 
     protected PageSizeValidator $pageSizeValidator;
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator $pageSizeValidator
-     */
     #[Required]
     public function autowirePageSizeValidator(PageSizeValidator $pageSizeValidator): void
     {
@@ -42,9 +39,6 @@ abstract class AbstractQuery implements AliasedInterface, QueryInterface
         return array_combine($filteredMethodNames, $filteredMethodNames);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     */
     protected function setDefaultFirstOffsetIfNecessary(Argument $argument): void
     {
         if ($argument->offsetExists('first') === false && $argument->offsetExists('last') === false) {

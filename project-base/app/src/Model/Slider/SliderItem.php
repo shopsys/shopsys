@@ -8,11 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem as BaseSliderItem;
+use Shopsys\FrameworkBundle\Model\Slider\SliderItemData as BaseSliderItemData;
 
 /**
  * SliderItem
  *
- * @method setData(\App\Model\Slider\SliderItemData $sliderItemData)
+ * @method void setData(\App\Model\Slider\SliderItemData $sliderItemData)
  */
 #[ORM\Table(name: 'slider_items')]
 #[ORM\Entity]
@@ -30,16 +31,13 @@ class SliderItem extends BaseSliderItem
     #[ORM\Column(type: 'text', nullable: true)]
     protected $gtmCreative;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'guid', unique: true)]
     protected string $uuid;
 
     /**
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      */
-    public function __construct($sliderItemData)
+    public function __construct(BaseSliderItemData $sliderItemData)
     {
         parent::__construct($sliderItemData);
 
@@ -52,7 +50,7 @@ class SliderItem extends BaseSliderItem
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      */
     #[Override]
-    public function edit($sliderItemData)
+    public function edit(BaseSliderItemData $sliderItemData): void
     {
         parent::edit($sliderItemData);
 
@@ -60,25 +58,16 @@ class SliderItem extends BaseSliderItem
         $this->gtmCreative = $sliderItemData->gtmCreative;
     }
 
-    /**
-     * @return string
-     */
     public function getGtmId(): string
     {
         return $this->gtmId;
     }
 
-    /**
-     * @return  string|null
-     */
     public function getGtmCreative(): ?string
     {
         return $this->gtmCreative;
     }
 
-    /**
-     * @return string
-     */
     public function getUuid(): string
     {
         return $this->uuid;

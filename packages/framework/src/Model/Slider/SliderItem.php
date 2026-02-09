@@ -92,25 +92,16 @@ class SliderItem implements OrderableEntityInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $routeName;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     */
     public function __construct(SliderItemData $sliderItemData)
     {
         $this->setData($sliderItemData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     */
-    public function edit(SliderItemData $sliderItemData)
+    public function edit(SliderItemData $sliderItemData): void
     {
         $this->setData($sliderItemData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     */
     protected function setData(SliderItemData $sliderItemData): void
     {
         $this->domainId = $sliderItemData->domainId;
@@ -168,7 +159,7 @@ class SliderItem implements OrderableEntityInterface
      * @param int $position
      */
     #[Override]
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
@@ -216,7 +207,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @param \DateTimeImmutable|null $datetimeVisibleFrom
      */
-    public function setDatetimeVisibleFrom($datetimeVisibleFrom)
+    public function setDatetimeVisibleFrom($datetimeVisibleFrom): void
     {
         $this->datetimeVisibleFrom = $datetimeVisibleFrom;
     }
@@ -232,7 +223,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @param \DateTimeImmutable|null $datetimeVisibleTo
      */
-    public function setDatetimeVisibleTo($datetimeVisibleTo)
+    public function setDatetimeVisibleTo($datetimeVisibleTo): void
     {
         $this->datetimeVisibleTo = $datetimeVisibleTo;
     }

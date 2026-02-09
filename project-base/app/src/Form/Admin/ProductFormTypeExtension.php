@@ -14,9 +14,6 @@ final class ProductFormTypeExtension extends AbstractTypeExtension
 {
     public const DISABLED_FIELDS = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
-     */
     public function __construct(
         private readonly FormBuilderHelper $formBuilderHelper,
     ) {
@@ -33,9 +30,6 @@ final class ProductFormTypeExtension extends AbstractTypeExtension
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
     private function setSeoGroup(FormBuilderInterface $builder): void
     {
         $builderSeoGroup = $builder->get('seoGroup');

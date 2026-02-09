@@ -11,9 +11,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class OpeningHourTimeToStringTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
-     */
     public function __construct(
         protected readonly DateTimeHelper $dateTimeHelper,
     ) {
@@ -21,7 +18,6 @@ class OpeningHourTimeToStringTransformer implements DataTransformerInterface
 
     /**
      * @param string|null $time
-     * @return \DateTimeImmutable|null
      */
     #[Override]
     public function transform($time): ?DateTimeImmutable
@@ -35,7 +31,6 @@ class OpeningHourTimeToStringTransformer implements DataTransformerInterface
 
     /**
      * @param \DateTimeImmutable|null $dateTime
-     * @return string|null
      */
     #[Override]
     public function reverseTransform($dateTime): ?string

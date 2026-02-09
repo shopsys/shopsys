@@ -17,11 +17,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class DispatchCollectedEnvelopesSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector $delayedEnvelopesCollector
-     * @param \Symfony\Component\Messenger\MessageBusInterface $messageBus
-     * @param \Psr\Log\LoggerInterface $logger
-     */
     public function __construct(
         protected readonly DelayedEnvelopesCollector $delayedEnvelopesCollector,
         protected readonly MessageBusInterface $messageBus,
@@ -41,9 +36,6 @@ class DispatchCollectedEnvelopesSubscriber implements EventSubscriberInterface
         $this->delayedEnvelopesCollector->resetEnvelopes();
     }
 
-    /**
-     * @param \Symfony\Component\Messenger\Envelope $envelope
-     */
     protected function redispatchEnvelopeIgnoringMailerException(Envelope $envelope): void
     {
         try {

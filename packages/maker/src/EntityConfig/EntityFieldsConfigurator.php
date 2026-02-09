@@ -20,20 +20,12 @@ use Symfony\Component\Console\Question\Question;
  */
 class EntityFieldsConfigurator
 {
-    /**
-     * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry
-     * @param \Shopsys\MakerBundle\Utils\EntityChoiceHelper $entityChoicesHelper
-     */
     public function __construct(
         protected readonly ManagerRegistry $managerRegistry,
         protected readonly EntityChoiceHelper $entityChoicesHelper,
     ) {
     }
 
-    /**
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityConfig $entityConfig
-     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
-     */
     public function configureEntityFields(EntityConfig $entityConfig, ConsoleStyle $io): void
     {
         $io->writeln($this->getConfigurePropertiesMessage($entityConfig));
@@ -53,12 +45,7 @@ class EntityFieldsConfigurator
     }
 
     /**
-     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
      * @param string[] $fields
-     * @param bool $isFirstField
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityConfig $entityConfig
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityTypeEnum $entityType
-     * @return \Shopsys\MakerBundle\EntityConfig\Property|null
      */
     protected function askForNextField(
         ConsoleStyle $io,
@@ -167,9 +154,6 @@ class EntityFieldsConfigurator
         return $entityProperty;
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
-     */
     protected function printAvailableTypes(ConsoleStyle $io): void
     {
         $allTypes = $this->getTypesMap();
@@ -201,7 +185,7 @@ class EntityFieldsConfigurator
             ],
         ];
 
-        $printSection = static function (array $sectionTypes) use ($io, &$allTypes) {
+        $printSection = static function (array $sectionTypes) use ($io, &$allTypes): void {
             foreach ($sectionTypes as $mainType => $subTypes) {
                 if (!array_key_exists($mainType, $allTypes)) {
                     // The type is not a valid DBAL Type - don't show it as an option
@@ -239,7 +223,7 @@ class EntityFieldsConfigurator
             $io->writeln('');
         };
 
-        $printRelationsSection = static function () use ($io) {
+        $printRelationsSection = static function () use ($io): void {
             if (getenv('TERM_PROGRAM') === 'Hyper') {
                 $wizard = 'wizard 🧙';
             } else {
@@ -285,7 +269,6 @@ class EntityFieldsConfigurator
     }
 
     /**
-     * @param string $class
      * @return string[]
      */
     protected function getPropertyNames(string $class): array
@@ -299,11 +282,6 @@ class EntityFieldsConfigurator
         return array_map(static fn (ReflectionProperty $prop) => $prop->getName(), $reflectionClass->getProperties());
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityConfig $entityConfig
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityTypeEnum $entityType
-     */
     protected function askForFields(
         ConsoleStyle $io,
         EntityConfig $entityConfig,
@@ -325,10 +303,6 @@ class EntityFieldsConfigurator
         }
     }
 
-    /**
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityConfig $entityConfig
-     * @return string
-     */
     protected function getConfigurePropertiesMessage(EntityConfig $entityConfig): string
     {
         $configurePropertiesMessage = sprintf('<info>Let\'s configure the properties of <comment>%s</comment> entity.</info>', $entityConfig->entityName);
@@ -362,14 +336,6 @@ class EntityFieldsConfigurator
         return $configurePropertiesMessage;
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
-     * @param string $generatedEntityClass
-     * @param string $type
-     * @param string $newFieldName
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityTypeEnum $entityType
-     * @return \Shopsys\MakerBundle\EntityConfig\RelationProperty
-     */
     protected function askRelationDetails(
         ConsoleStyle $io,
         string $generatedEntityClass,
@@ -451,12 +417,6 @@ class EntityFieldsConfigurator
         return $relation;
     }
 
-    /**
-     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
-     * @param string $entityClass
-     * @param string $targetEntityClass
-     * @return string
-     */
     protected function askRelationType(ConsoleStyle $io, string $entityClass, string $targetEntityClass): string
     {
         $io->writeln('What type of relationship is this?');

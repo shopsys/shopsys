@@ -24,10 +24,6 @@ class CategoryNestedSetCalculatorHelper
     }
 
     /**
-     * @param int|null $root
-     * @param int $count
-     * @param int $lvl
-     * @param int|null $parent
      * @param array<int, int|null> $parentIdByCategoryId
      * @param array<int, array{id: int|null, parent_id: int|null, depth: int, left: int, right: int}> $output
      */
@@ -61,7 +57,6 @@ class CategoryNestedSetCalculatorHelper
 
     /**
      * @param array<int, int|null> $parentIdByCategoryId
-     * @param int|null $parentId
      * @return array<int, int|null>
      */
     protected function getChildren(array $parentIdByCategoryId, ?int $parentId): array

@@ -32,13 +32,6 @@ class CronCommand extends Command
     protected const string OPTION_INSTANCE_NAME = 'instance-name';
     protected const string OPTION_RUN_ALL_SERIALLY = 'run-all-serially';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
-     * @param \NinjaMutex\Lock\LockInterface $lock
-     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
-     */
     public function __construct(
         protected readonly CronFacade $cronFacade,
         protected readonly MutexFactory $mutexFactory,
@@ -116,11 +109,6 @@ class CronCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     */
     protected function listAllCronModulesSortedByServiceId(
         InputInterface $input,
         OutputInterface $output,
@@ -146,7 +134,6 @@ class CronCommand extends Command
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[] $cronModuleConfigs
-     * @param bool $includeInstance
      * @return string[]
      */
     protected function getCronCommands(array $cronModuleConfigs, bool $includeInstance = false): array
@@ -178,12 +165,6 @@ class CronCommand extends Command
         return $commands;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
-     * @param string $instanceName
-     */
     protected function runCron(
         InputInterface $input,
         CronFacade $cronFacade,
@@ -219,11 +200,6 @@ class CronCommand extends Command
         $mutex->releaseLock();
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return string
-     */
     protected function chooseInstance(InputInterface $input, OutputInterface $output): string
     {
         $instanceNames = $this->cronFacade->getInstanceNames();
@@ -255,9 +231,6 @@ class CronCommand extends Command
         );
     }
 
-    /**
-     * @return \DateTimeZone
-     */
     protected function getCronTimeZone(): DateTimeZone
     {
         /** @var string|null $cronTimezone */

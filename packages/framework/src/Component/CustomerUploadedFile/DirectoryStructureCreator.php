@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUpload
 
 class DirectoryStructureCreator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig $customerUploadedFileConfig
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileLocator $customerUploadedFileLocator
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     */
     public function __construct(
         protected readonly CustomerUploadedFileConfig $customerUploadedFileConfig,
         protected readonly CustomerUploadedFileLocator $customerUploadedFileLocator,

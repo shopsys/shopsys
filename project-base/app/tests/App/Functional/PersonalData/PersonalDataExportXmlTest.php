@@ -105,11 +105,6 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $this->assertSame($expectedXml, $generatedXml);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
-     */
     private function createBillingAddress(Country $country, Customer $customer): BillingAddress
     {
         $billingAddressData = new BillingAddressData();
@@ -126,11 +121,6 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         return new BillingAddress($billingAddressData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
-     */
     private function createDeliveryAddress(Country $country, Customer $customer): DeliveryAddress
     {
         $deliveryAddressData = new DeliveryAddressData();
@@ -147,10 +137,6 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         return new DeliveryAddress($deliveryAddressData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \App\Model\Customer\User\CustomerUser
-     */
     private function createCustomerUser(Customer $customer): CustomerUser
     {
         $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID, PricingGroup::class);
@@ -168,13 +154,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         return new CustomerUser($customerUserData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \App\Model\Order\Status\OrderStatus $status
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
-     * @return \App\Model\Order\Order
-     */
-    private function createOrder(Currency $currency, OrderStatus $status, Country $country)
+    private function createOrder(Currency $currency, OrderStatus $status, Country $country): Order
     {
         $orderData = TestOrderProvider::getTestOrderData();
         $orderData->currency = $currency;
@@ -198,12 +178,6 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         return new Order($orderData, '1523596513', 'hash');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
-     */
     private function createComplaint(Country $country, Order $order, CustomerUser $customerUser): Complaint
     {
         $complaintStatus = $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW, ComplaintStatus::class);
@@ -229,11 +203,6 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         return new Complaint($complaintData, [$complaintItem]);
     }
 
-    /**
-     * @param string $email
-     * @param \App\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Watchdog\Watchdog
-     */
     private function createWatchdog(string $email, Product $product): Watchdog
     {
         $watchdogData = new WatchdogData();

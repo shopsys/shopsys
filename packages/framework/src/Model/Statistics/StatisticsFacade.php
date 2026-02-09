@@ -10,11 +10,6 @@ use Psr\Clock\ClockInterface;
 
 class StatisticsFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsRepository $statisticsRepository
-     * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly StatisticsRepository $statisticsRepository,
         protected readonly ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter,
@@ -68,11 +63,6 @@ class StatisticsFacade
         return $valueByDateTimeDataPoints;
     }
 
-    /**
-     * @param int $fromDays
-     * @param int|null $toDays
-     * @return int
-     */
     public function getNewCustomersCount(int $fromDays, ?int $toDays = null): int
     {
         $startDateTime = $this->clock->now()->modify('- ' . $fromDays . ' days');
@@ -81,11 +71,6 @@ class StatisticsFacade
         return $this->statisticsRepository->getNewCustomersCountBetweenDates($startDateTime, $endDateTime);
     }
 
-    /**
-     * @param int $fromDays
-     * @param int|null $toDays
-     * @return int
-     */
     public function getOrdersCount(int $fromDays, ?int $toDays = null): int
     {
         $startDateTime = $this->clock->now()->modify('- ' . $fromDays . ' days');
@@ -94,11 +79,6 @@ class StatisticsFacade
         return $this->statisticsRepository->getOrdersCountBetweenDates($startDateTime, $endDateTime);
     }
 
-    /**
-     * @param int $fromDays
-     * @param int|null $toDays
-     * @return int
-     */
     public function getOrdersValue(int $fromDays, ?int $toDays = null): int
     {
         $startDateTime = $this->clock->now()->modify('- ' . $fromDays . ' days');
@@ -107,10 +87,6 @@ class StatisticsFacade
         return $this->statisticsRepository->getOrdersValueBetweenDates($startDateTime, $endDateTime);
     }
 
-    /**
-     * @param int|null $toDays
-     * @return \DateTimeImmutable
-     */
     protected function getToDateTime(?int $toDays = null): DateTimeImmutable
     {
         if ($toDays === null) {

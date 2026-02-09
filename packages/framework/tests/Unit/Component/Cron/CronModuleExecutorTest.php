@@ -16,7 +16,7 @@ use Symfony\Component\Clock\Clock;
 
 class CronModuleExecutorTest extends TestCase
 {
-    public function testRunModuleSuspendAfterTimeout()
+    public function testRunModuleSuspendAfterTimeout(): void
     {
         $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
         $cronModuleServiceMock->expects($this->once())->method('sleep');
@@ -36,7 +36,7 @@ class CronModuleExecutorTest extends TestCase
         );
     }
 
-    public function testRunModuleAfterTimeout()
+    public function testRunModuleAfterTimeout(): void
     {
         $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
         $cronModuleServiceMock->expects($this->never())->method('iterate');
@@ -52,7 +52,7 @@ class CronModuleExecutorTest extends TestCase
         );
     }
 
-    public function testRunModule()
+    public function testRunModule(): void
     {
         $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
         $cronModuleServiceMock->expects($this->never())->method('wakeUp');
@@ -68,7 +68,7 @@ class CronModuleExecutorTest extends TestCase
         );
     }
 
-    public function testRunSuspendedModule()
+    public function testRunSuspendedModule(): void
     {
         $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
         $cronModuleServiceMock->expects($this->once())->method('wakeUp');
@@ -81,10 +81,6 @@ class CronModuleExecutorTest extends TestCase
         $cronModuleExecutor->runModule($cronModuleServiceMock, true);
     }
 
-    /**
-     * @param array $servicesIndexedById
-     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor
-     */
     private function getCronModuleExecutor(array $servicesIndexedById): CronModuleExecutor
     {
         $cronTimeResolver = new CronTimeResolver();

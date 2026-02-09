@@ -25,11 +25,6 @@ class Naming
      */
     private array $fqnClassNameByFilePathAndClassName = [];
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $classNameStartPosition
-     * @return string
-     */
     public function getClassName(File $file, int $classNameStartPosition): string
     {
         $tokens = $file->getTokens();
@@ -69,12 +64,6 @@ class Naming
         return $completeClassName;
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param string $className
-     * @param int $classTokenPosition
-     * @return string
-     */
     private function getFqnClassName(File $file, string $className, int $classTokenPosition): string
     {
         $referencedNames = $this->getReferencedNames($file);
@@ -100,20 +89,11 @@ class Naming
         return '';
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $position
-     * @return bool
-     */
     private function isClassName(File $file, int $position): bool
     {
         return (bool)$file->findPrevious(T_CLASS, $position, max(1, $position - 3));
     }
 
-    /**
-     * @param \PHP_CodeSniffer\Files\File $file
-     * @return array
-     */
     private function getReferencedNames(File $file): array
     {
         if (isset($this->referencedNamesByFilePath[$file->path])) {

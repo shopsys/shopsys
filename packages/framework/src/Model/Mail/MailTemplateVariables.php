@@ -62,19 +62,11 @@ class MailTemplateVariables
      */
     protected array $requiredSubjectVariables = [];
 
-    /**
-     * @param string $readableName
-     * @param string|null $type
-     */
     public function __construct(protected string $readableName, protected readonly ?string $type = null)
     {
     }
 
-    /**
-     * @param string $readableName
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
-    public function withNewName(string $readableName): self
+    public function withNewName(string $readableName): static
     {
         $clone = clone $this;
 
@@ -84,8 +76,6 @@ class MailTemplateVariables
     }
 
     /**
-     * @param string $variable
-     * @param string $label
      * @param int $context one of CONTEXT_* constants
      * @param int $required one of REQUIRED_* constants
      * @return $this
@@ -109,10 +99,6 @@ class MailTemplateVariables
         return $this;
     }
 
-    /**
-     * @param string $variable
-     * @param int $context
-     */
     protected function addVariableToSections(string $variable, int $context): void
     {
         switch ($context) {
@@ -136,11 +122,6 @@ class MailTemplateVariables
         }
     }
 
-    /**
-     * @param string $variable
-     * @param int $context
-     * @param int $required
-     */
     protected function addVariableToRequiredSections(string $variable, int $context, int $required): void
     {
         switch ($required) {
@@ -183,17 +164,11 @@ class MailTemplateVariables
         }
     }
 
-    /**
-     * @return string
-     */
     public function getReadableName(): string
     {
         return $this->readableName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getType(): ?string
     {
         return $this->type;
@@ -231,9 +206,6 @@ class MailTemplateVariables
         return $this->requiredBodyVariables;
     }
 
-    /**
-     * @return array
-     */
     public function getLabeledVariables(): array
     {
         return $this->variables;

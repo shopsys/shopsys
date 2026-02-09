@@ -13,15 +13,6 @@ use Shopsys\FrameworkBundle\Component\Router\UrlNormalizer;
 
 class SliderItemFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository $sliderItemRepository
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory $sliderItemFactory
-     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly SliderItemRepository $sliderItemRepository,
@@ -33,20 +24,12 @@ class SliderItemFacade
     ) {
     }
 
-    /**
-     * @param int $sliderItemId
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
-     */
-    public function getById($sliderItemId)
+    public function getById(int $sliderItemId): SliderItem
     {
         return $this->sliderItemRepository->getById($sliderItemId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
-     */
-    public function create(SliderItemData $sliderItemData)
+    public function create(SliderItemData $sliderItemData): SliderItem
     {
         $this->fixUrlInSliderItemData($sliderItemData);
 
@@ -62,13 +45,10 @@ class SliderItemFacade
         return $sliderItem;
     }
 
-    /**
-     * @param int $sliderItemId
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
-     */
-    public function edit($sliderItemId, SliderItemData $sliderItemData)
-    {
+    public function edit(
+        int $sliderItemId,
+        SliderItemData $sliderItemData,
+    ): SliderItem {
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
         $this->fixUrlInSliderItemData($sliderItemData);
 
@@ -83,10 +63,7 @@ class SliderItemFacade
         return $sliderItem;
     }
 
-    /**
-     * @param int $sliderItemId
-     */
-    public function delete($sliderItemId)
+    public function delete(int $sliderItemId): void
     {
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
 
@@ -99,23 +76,17 @@ class SliderItemFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
-    public function getAllVisibleOnCurrentDomain()
+    public function getAllVisibleOnCurrentDomain(): array
     {
         return $this->sliderItemRepository->getAllVisibleByDomainId($this->domain->getId());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     */
     protected function fixUrlInSliderItemData(SliderItemData $sliderItemData): void
     {
         $domainConfig = $this->domain->getDomainConfigById($sliderItemData->domainId);
         $sliderItemData->link = UrlNormalizer::normalizeUrl($sliderItemData->link, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItem $sliderItem
-     */
     protected function setSliderItemRouteName(SliderItem $sliderItem): void
     {
         $friendlyUrl = $this->friendlyUrlFacade->findByDomainIdAndSlug($sliderItem->getDomainId(), trim($sliderItem->getLink(), '/'));

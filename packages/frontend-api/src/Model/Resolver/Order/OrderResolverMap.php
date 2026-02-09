@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSettingFacade;
 
 class OrderResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSettingFacade $withdrawalSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly WithdrawalSettingFacade $withdrawalSettingFacade,
@@ -25,9 +20,6 @@ class OrderResolverMap extends ResolverMap
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

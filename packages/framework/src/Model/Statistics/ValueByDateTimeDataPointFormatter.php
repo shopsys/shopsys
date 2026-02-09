@@ -10,26 +10,19 @@ use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 
 class ValueByDateTimeDataPointFormatter
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
-     */
     public function __construct(protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension)
     {
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
-     * @param \DateTimeInterface $startDateTime
-     * @param \DateTimeInterface $endDateTime
-     * @param \DateInterval $interval
-     * @return array
      */
     public function normalizeDataPointsByDateTimeIntervals(
         array $valueByDateTimeDataPoints,
         DateTimeInterface $startDateTime,
         DateTimeInterface $endDateTime,
         DateInterval $interval,
-    ) {
+    ): array {
         $currentProcessedDateTime = $startDateTime;
         $returnStatisticCounts = [];
 
@@ -54,7 +47,7 @@ class ValueByDateTimeDataPointFormatter
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
      * @return string[]
      */
-    public function getDateTimesFormattedToLocaleFormat(array $valueByDateTimeDataPoints)
+    public function getDateTimesFormattedToLocaleFormat(array $valueByDateTimeDataPoints): array
     {
         $returnDates = [];
 
@@ -69,7 +62,7 @@ class ValueByDateTimeDataPointFormatter
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
      * @return \DateTimeInterface[]
      */
-    protected function getDateTimes(array $valueByDateTimeDataPoints)
+    protected function getDateTimes(array $valueByDateTimeDataPoints): array
     {
         $returnData = [];
 
@@ -84,7 +77,7 @@ class ValueByDateTimeDataPointFormatter
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
      * @return int[]
      */
-    public function getCounts(array $valueByDateTimeDataPoints)
+    public function getCounts(array $valueByDateTimeDataPoints): array
     {
         $returnData = [];
 

@@ -33,9 +33,6 @@ class NewsletterSubscribeFromOrderLoggedInTest extends GraphQlWithLoginTestCase
         $this->assertEquals(self::DEFAULT_USER_EMAIL, $subscriber->getEmail());
     }
 
-    /**
-     * @param bool $newsletterSubscription
-     */
     private function createOrder(bool $newsletterSubscription = true): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);

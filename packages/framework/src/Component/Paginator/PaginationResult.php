@@ -6,36 +6,18 @@ namespace Shopsys\FrameworkBundle\Component\Paginator;
 
 class PaginationResult
 {
-    protected int $page;
-
-    protected ?int $pageSize;
-
-    protected int $totalCount;
-
-    /**
-     * @var mixed[]
-     */
-    protected array $results;
-
     protected int $pageCount;
 
     protected int $fromItem;
 
     protected int $toItem;
 
-    /**
-     * @param int $page
-     * @param int|null $pageSize
-     * @param int $totalCount
-     * @param array $results
-     */
-    public function __construct($page, $pageSize, $totalCount, $results)
-    {
-        $this->page = $page;
-        $this->pageSize = $pageSize;
-        $this->totalCount = $totalCount;
-        $this->results = $results;
-
+    public function __construct(
+        protected int $page,
+        protected ?int $pageSize,
+        protected int $totalCount,
+        protected array $results,
+    ) {
         if ($pageSize === 0) {
             $this->pageCount = 0;
         } elseif ($pageSize === null) {
@@ -56,81 +38,51 @@ class PaginationResult
         }
     }
 
-    /**
-     * @return int
-     */
-    public function getPage()
+    public function getPage(): int
     {
         return $this->page;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getPageSize()
+    public function getPageSize(): ?int
     {
         return $this->pageSize;
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         return $this->totalCount;
     }
 
-    /**
-     * @return array
-     */
-    public function getResults()
+    public function getResults(): array
     {
         return $this->results;
     }
 
-    /**
-     * @return int
-     */
-    public function getPageCount()
+    public function getPageCount(): int
     {
         return $this->pageCount;
     }
 
-    /**
-     * @return int
-     */
-    public function getFromItem()
+    public function getFromItem(): int
     {
         return $this->fromItem;
     }
 
-    /**
-     * @return int
-     */
-    public function getToItem()
+    public function getToItem(): int
     {
         return $this->toItem;
     }
 
-    /**
-     * @return bool
-     */
     public function isFirstPage(): bool
     {
         return $this->page === 1;
     }
 
-    /**
-     * @return bool
-     */
     public function isLastPage(): bool
     {
         return $this->page === $this->pageCount;
     }
 
-    /**
-     * @return int|null
-     */
     public function getPreviousPage(): ?int
     {
         if ($this->isFirstPage()) {
@@ -140,9 +92,6 @@ class PaginationResult
         return $this->page - 1;
     }
 
-    /**
-     * @return int|null
-     */
     public function getNextPage(): ?int
     {
         if ($this->isLastPage()) {

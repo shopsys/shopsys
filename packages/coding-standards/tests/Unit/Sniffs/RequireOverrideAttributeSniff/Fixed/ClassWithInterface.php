@@ -10,9 +10,6 @@ use Tests\CodingStandards\Unit\Sniffs\RequireOverrideAttributeSniff\Base\TestInt
 
 class ClassWithInterface implements TestInterface, SecondInterface
 {
-    /**
-     * @return string
-     */
     #[Override]
     public function getName(): string
     {
@@ -24,9 +21,6 @@ class ClassWithInterface implements TestInterface, SecondInterface
     {
     }
 
-    /**
-     * @return string
-     */
     public function uniqueMethod(): string
     {
         return '';

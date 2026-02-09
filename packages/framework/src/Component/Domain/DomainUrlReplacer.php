@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder;
 
 class DomainUrlReplacer
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder $stringColumnsFinder
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter $sqlQuoter
-     */
     public function __construct(
         protected readonly StringColumnsFinder $stringColumnsFinder,
         protected readonly EntityManagerInterface $em,
@@ -22,11 +17,7 @@ class DomainUrlReplacer
     ) {
     }
 
-    /**
-     * @param string $domainConfigUrl
-     * @param string $domainSettingUrl
-     */
-    public function replaceUrlInStringColumns($domainConfigUrl, $domainSettingUrl)
+    public function replaceUrlInStringColumns(string $domainConfigUrl, string $domainSettingUrl): void
     {
         $stringColumnNames = $this->getAllStringColumnNamesIndexedByTableName();
 
@@ -45,7 +36,7 @@ class DomainUrlReplacer
     /**
      * @return string[][]
      */
-    protected function getAllStringColumnNamesIndexedByTableName()
+    protected function getAllStringColumnNamesIndexedByTableName(): array
     {
         $classesMetadata = $this->em->getMetadataFactory()->getAllMetadata();
 
@@ -53,14 +44,14 @@ class DomainUrlReplacer
     }
 
     /**
-     * @param string $tableName
      * @param string[] $columnNames
-     * @param string $domainSettingUrl
-     * @param string $domainConfigUrl
-     * @return string
      */
-    protected function getUrlReplacementSql($tableName, array $columnNames, $domainSettingUrl, $domainConfigUrl)
-    {
+    protected function getUrlReplacementSql(
+        string $tableName,
+        array $columnNames,
+        string $domainSettingUrl,
+        string $domainConfigUrl,
+    ): string {
         $sqlParts = [];
         $quotedTableName = $this->sqlQuoter->quoteIdentifier($tableName);
         $quotedColumnNames = $this->sqlQuoter->quoteIdentifiers($columnNames);

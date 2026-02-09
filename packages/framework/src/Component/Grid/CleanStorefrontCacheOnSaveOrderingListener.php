@@ -13,9 +13,6 @@ class CleanStorefrontCacheOnSaveOrderingListener
 {
     protected const string SAVE_ORDERING_URI = '/admin/_grid/save-ordering/';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
-     */
     public function __construct(
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
@@ -32,9 +29,6 @@ class CleanStorefrontCacheOnSaveOrderingListener
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $controllerEvent
-     */
     public function onKernelController(ControllerEvent $controllerEvent): void
     {
         if ($controllerEvent->getRequest()->getRequestUri() !== static::SAVE_ORDERING_URI) {

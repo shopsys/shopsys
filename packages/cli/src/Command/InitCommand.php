@@ -29,9 +29,6 @@ class InitCommand extends Command
     private const string OPTION_CONFIG = 'config';
     private const string BRANCH_STABLE = 'stable';
 
-    /**
-     * @param \Shopsys\Cli\Model\GitHandler $gitHandler
-     */
     public function __construct(
         private readonly GitHandler $gitHandler,
     ) {
@@ -83,11 +80,6 @@ HELP,
             );
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -119,7 +111,7 @@ HELP,
                 self::REPOSITORY_URL,
                 $projectName,
                 $branch,
-                function ($type, $buffer) use ($io) {
+                function ($type, $buffer) use ($io): void {
                     $io->write($buffer);
                 },
             );
@@ -144,10 +136,6 @@ HELP,
         return $this->getApplication()?->doRun(new ArrayInput($configureCommandParameters), $output);
     }
 
-    /**
-     * @param string $branch
-     * @return string
-     */
     private function resolveReference(string $branch): string
     {
         if ($branch === self::BRANCH_STABLE) {

@@ -16,21 +16,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class FilePickerController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Grid\FilePickerGridFactory $filePickerGridFactory
-     */
     public function __construct(
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly FilePickerGridFactory $filePickerGridFactory,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int|string $jsInstanceId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/file-picker/pick-multiple/{jsInstanceId}')]
     #[RequireRole(SystemRole::ADMIN)]
     public function pickMultipleAction(
@@ -40,11 +31,6 @@ class FilePickerController extends AdminBaseController
         return $this->getPickerResponse($request, $jsInstanceId, true);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $jsInstanceId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/file-picker/pick-single/{jsInstanceId}/', defaults: ['jsInstanceId' => '__js_instance_id__'])]
     #[RequireRole(SystemRole::ADMIN)]
     public function pickSingleAction(
@@ -54,12 +40,6 @@ class FilePickerController extends AdminBaseController
         return $this->getPickerResponse($request, $jsInstanceId, false);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $jsInstanceId
-     * @param bool $isMultiple
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     protected function getPickerResponse(
         Request $request,
         string $jsInstanceId,

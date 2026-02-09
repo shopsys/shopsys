@@ -8,19 +8,12 @@ use Exception;
 
 class InvalidFormDataException extends Exception
 {
-    /**
-     * @param array $formErrors
-     * @param \Exception|null $previous
-     */
     public function __construct(protected readonly array $formErrors, ?Exception $previous = null)
     {
         parent::__construct('Inline edit form is not valid', 0, $previous);
     }
 
-    /**
-     * @return array
-     */
-    public function getFormErrors()
+    public function getFormErrors(): array
     {
         return $this->formErrors;
     }

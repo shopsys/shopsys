@@ -11,16 +11,12 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class PromoCodeLimitTransformer implements DataTransformerInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitFactory $promoCodeLimitFactory
-     */
     public function __construct(protected PromoCodeLimitFactory $promoCodeLimitFactory)
     {
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit|null $promoCodeLimit
-     * @return array|null
      */
     #[Override]
     public function transform($promoCodeLimit): ?array
@@ -37,7 +33,6 @@ class PromoCodeLimitTransformer implements DataTransformerInterface
 
     /**
      * @param mixed $value
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit
      */
     #[Override]
     public function reverseTransform($value): PromoCodeLimit

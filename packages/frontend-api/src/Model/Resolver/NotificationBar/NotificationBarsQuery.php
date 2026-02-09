@@ -10,10 +10,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class NotificationBarsQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFacade $notificationBarFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly NotificationBarFacade $notificationBarFacade,
         protected readonly Domain $domain,

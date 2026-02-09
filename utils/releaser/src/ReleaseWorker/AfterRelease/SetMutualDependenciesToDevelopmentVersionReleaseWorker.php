@@ -14,11 +14,6 @@ use Shopsys\Releaser\Stage;
 
 final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
-     * @param \Shopsys\Releaser\FileManipulator\ComposerJsonFileManipulator $composerJsonFileManipulator
-     * @param \Shopsys\Releaser\FilesProvider\PackageNamesProvider $packageNamesProvider
-     */
     public function __construct(
         private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
         private readonly ComposerJsonFileManipulator $composerJsonFileManipulator,
@@ -26,11 +21,6 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
     ) {
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -42,10 +32,6 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
         );
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,
@@ -80,9 +66,6 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
 
     /**
      * Return new development version (e.g. from 7.3.1 to 7.3.x-dev)
-     *
-     * @param \PharIo\Version\Version $version
-     * @return string
      */
     private function getDevelopmentVersionString(Version $version): string
     {

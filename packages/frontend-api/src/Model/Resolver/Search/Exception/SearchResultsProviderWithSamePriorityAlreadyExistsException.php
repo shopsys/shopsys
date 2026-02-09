@@ -8,10 +8,6 @@ use Exception;
 
 class SearchResultsProviderWithSamePriorityAlreadyExistsException extends Exception
 {
-    /**
-     * @param string $serviceId
-     * @param int $priority
-     */
     public function __construct(string $serviceId, int $priority)
     {
         parent::__construct(

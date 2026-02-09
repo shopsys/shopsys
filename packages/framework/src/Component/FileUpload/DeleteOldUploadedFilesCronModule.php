@@ -12,16 +12,10 @@ class DeleteOldUploadedFilesCronModule implements SimpleCronModuleInterface
 {
     protected Logger $logger;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     */
     public function __construct(protected readonly FileUpload $fileUpload)
     {
     }
 
-    /**
-     * @param \Monolog\Logger $logger
-     */
     #[Override]
     public function setLogger(Logger $logger): void
     {

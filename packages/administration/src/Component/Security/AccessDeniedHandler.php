@@ -26,11 +26,6 @@ use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
  */
 final readonly class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
-    /**
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
         private ContextResolverInterface $contextResolver,
@@ -38,11 +33,6 @@ final readonly class AccessDeniedHandler implements AccessDeniedHandlerInterface
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AccessDeniedException $accessDeniedException
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Override]
     public function handle(Request $request, AccessDeniedException $accessDeniedException): Response
     {

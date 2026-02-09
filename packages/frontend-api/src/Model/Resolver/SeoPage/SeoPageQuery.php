@@ -14,11 +14,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\SeoPage\Exception\SeoPageNotFoundUs
 
 class SeoPageQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade $seoPageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageSlugTransformer $seoPageSlugTransformer
-     */
     public function __construct(
         protected readonly SeoPageFacade $seoPageFacade,
         protected readonly Domain $domain,
@@ -26,10 +21,6 @@ class SeoPageQuery extends AbstractQuery
     ) {
     }
 
-    /**
-     * @param string $pageSlug
-     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
-     */
     public function seoPageByPageSlugQuery(string $pageSlug): SeoPage
     {
         $domainId = $this->domain->getId();

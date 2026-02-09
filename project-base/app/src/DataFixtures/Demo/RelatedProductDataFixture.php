@@ -14,19 +14,12 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 
 class RelatedProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \App\Model\Product\ProductDataFactory $productDataFactory
-     * @param \App\Model\Product\ProductFacade $productFacade
-     */
     public function __construct(
         private readonly ProductDataFactory $productDataFactory,
         private readonly ProductFacade $productFacade,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {

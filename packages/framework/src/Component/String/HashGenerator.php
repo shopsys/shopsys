@@ -13,11 +13,7 @@ class HashGenerator
      */
     public string $charactersWithoutConfusingCharacters = 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789abcdefghijklmnpqrstuvwxyz';
 
-    /**
-     * @param int $length
-     * @return string
-     */
-    public function generateHash($length)
+    public function generateHash(int $length): string
     {
         $numberOfChars = strlen($this->characters);
 
@@ -31,10 +27,6 @@ class HashGenerator
         return $hash;
     }
 
-    /**
-     * @param int $length
-     * @return string
-     */
     public function generateHashWithoutConfusingCharacters(int $length): string
     {
         $numberOfChars = strlen($this->charactersWithoutConfusingCharacters);

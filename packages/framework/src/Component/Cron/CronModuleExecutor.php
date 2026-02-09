@@ -22,12 +22,6 @@ class CronModuleExecutor
 
     protected DateTimeImmutable $startedAt;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
-     * @param \Monolog\Logger $logger
-     * @param \Shopsys\FrameworkBundle\Component\Bytes\BytesHelper $bytesHelper
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly CronConfig $cronConfig,
         protected readonly Logger $logger,
@@ -37,13 +31,10 @@ class CronModuleExecutor
         $this->startedAt = $this->clock->now();
     }
 
-    /**
-     * @param \Shopsys\Plugin\Cron\SimpleCronModuleInterface|\Shopsys\Plugin\Cron\IteratedCronModuleInterface $cronModuleService
-     * @param bool $suspended
-     * @return string
-     */
-    public function runModule($cronModuleService, $suspended)
-    {
+    public function runModule(
+        SimpleCronModuleInterface|IteratedCronModuleInterface $cronModuleService,
+        bool $suspended,
+    ): string {
         $cronConfig = $this->cronConfig->getCronModuleConfigByServiceId(get_class($cronModuleService));
 
         if (!$this->canRun($cronConfig)) {
@@ -56,23 +47,19 @@ class CronModuleExecutor
             return self::RUN_STATUS_OK;
         }
 
-        if ($cronModuleService instanceof IteratedCronModuleInterface) {
-            if ($suspended) {
-                $cronModuleService->wakeUp();
-            }
-            $inProgress = true;
+        if ($suspended) {
+            $cronModuleService->wakeUp();
+        }
+        $inProgress = true;
 
-            while ($inProgress === true && $this->canRun($cronConfig)) {
-                $inProgress = $cronModuleService->iterate();
-            }
+        while ($inProgress === true && $this->canRun($cronConfig)) {
+            $inProgress = $cronModuleService->iterate();
+        }
 
-            if ($inProgress === true) {
-                $cronModuleService->sleep();
+        if ($inProgress === true) {
+            $cronModuleService->sleep();
 
-                return self::RUN_STATUS_SUSPENDED;
-            }
-
-            return self::RUN_STATUS_OK;
+            return self::RUN_STATUS_SUSPENDED;
         }
 
         return self::RUN_STATUS_OK;
@@ -80,8 +67,6 @@ class CronModuleExecutor
 
     /**
      * @phpstan-impure
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronConfig
-     * @return bool
      */
     public function canRun(CronModuleConfig $cronConfig): bool
     {

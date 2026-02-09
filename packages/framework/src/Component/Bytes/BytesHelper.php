@@ -8,9 +8,6 @@ use function intval;
 
 class BytesHelper
 {
-    /**
-     * @return int
-     */
     public function getPhpMemoryLimitInBytes(): int
     {
         $memoryLimit = ini_get('memory_limit');
@@ -22,10 +19,6 @@ class BytesHelper
         return $this->convertPhpStringByteDefinitionToBytes($memoryLimit);
     }
 
-    /**
-     * @param string $memoryLimit
-     * @return int
-     */
     public function convertPhpStringByteDefinitionToBytes(string $memoryLimit): int
     {
         $memoryLimit = strtolower($memoryLimit);
@@ -56,10 +49,6 @@ class BytesHelper
         return $max;
     }
 
-    /**
-     * @param int $bytes
-     * @return string
-     */
     public static function convertBytesToReadableString(int $bytes): string
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];

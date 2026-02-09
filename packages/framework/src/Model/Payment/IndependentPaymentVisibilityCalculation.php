@@ -9,22 +9,13 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 
 class IndependentPaymentVisibilityCalculation
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param int $domainId
-     * @return bool
-     */
-    public function isIndependentlyVisible(Payment $payment, $domainId)
+    public function isIndependentlyVisible(Payment $payment, int $domainId): bool
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 

@@ -8,11 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DownloadFileResponse extends Response
 {
-    /**
-     * @param string $filename
-     * @param string $fileContent
-     * @param string $mimeType
-     */
     public function __construct(string $filename, string $fileContent, string $mimeType)
     {
         parent::__construct($fileContent);

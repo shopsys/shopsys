@@ -13,9 +13,6 @@ class DetectionFacade
 
     protected ?string $userIdentifier = null;
 
-    /**
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
-     */
     public function __construct(
         protected readonly Security $security,
     ) {
@@ -33,9 +30,6 @@ class DetectionFacade
         }
     }
 
-    /**
-     * @return string
-     */
     public function getUserIdentifier(): string
     {
         if ($this->userIdentifier !== null) {
@@ -51,9 +45,6 @@ class DetectionFacade
         return EntityLogSourceEnum::SYSTEM;
     }
 
-    /**
-     * @return string
-     */
     public function getEntityLogSource(): string
     {
         if ($this->source !== null) {

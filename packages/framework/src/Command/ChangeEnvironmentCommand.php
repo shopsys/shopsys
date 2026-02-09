@@ -23,9 +23,6 @@ class ChangeEnvironmentCommand extends Command
 {
     private const ARG_ENVIRONMENT = 'environment';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting $environmentFileSetting
-     */
     public function __construct(private readonly EnvironmentFileSetting $environmentFileSetting)
     {
         parent::__construct();

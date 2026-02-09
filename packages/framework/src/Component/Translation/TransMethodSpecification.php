@@ -6,44 +6,24 @@ namespace Shopsys\FrameworkBundle\Component\Translation;
 
 class TransMethodSpecification
 {
-    protected string $methodName;
-
-    protected int $messageIdArgumentIndex;
-
-    protected ?int $domainArgumentIndex = null;
-
-    /**
-     * @param string $methodName
-     * @param int $messageIdArgumentIndex
-     * @param int|null $domainArgumentIndex
-     */
-    public function __construct($methodName, $messageIdArgumentIndex = 0, $domainArgumentIndex = null)
-    {
-        $this->methodName = $methodName;
-        $this->messageIdArgumentIndex = $messageIdArgumentIndex;
-        $this->domainArgumentIndex = $domainArgumentIndex;
+    public function __construct(
+        protected string $methodName,
+        protected int $messageIdArgumentIndex = 0,
+        protected ?int $domainArgumentIndex = null,
+    ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getMethodName()
+    public function getMethodName(): string
     {
         return $this->methodName;
     }
 
-    /**
-     * @return int
-     */
-    public function getMessageIdArgumentIndex()
+    public function getMessageIdArgumentIndex(): int
     {
         return $this->messageIdArgumentIndex;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getDomainArgumentIndex()
+    public function getDomainArgumentIndex(): ?int
     {
         return $this->domainArgumentIndex;
     }

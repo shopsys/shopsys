@@ -12,6 +12,7 @@ use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Performance\CustomerUserDataFixture as PerformanceUserDataFixture;
 use App\DataFixtures\Performance\ProductDataFixture as PerformanceProductDataFixture;
 use App\Model\Customer\User\CustomerUser;
+use App\Model\Order\OrderData;
 use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
@@ -51,20 +52,10 @@ class OrderDataFixture
     private array $performanceUserIds;
 
     /**
-     * @param int $orderTotalCount
-     * @param int $orderItemCountPerOrder
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      * @param \App\Model\Order\PlaceOrderFacade $placeOrderFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private int $orderTotalCount,
@@ -85,10 +76,7 @@ class OrderDataFixture
         $this->performanceProductIds = [];
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -113,7 +101,7 @@ class OrderDataFixture
         $this->sqlLoggerFacade->reenableLogging();
     }
 
-    private function createOrder()
+    private function createOrder(): void
     {
         $customerUser = $this->getRandomCustomerUserOrNull();
         $orderData = $this->createOrderData($customerUser);
@@ -142,11 +130,7 @@ class OrderDataFixture
         $this->placeOrderFacade->createOrderOnly($orderData);
     }
 
-    /**
-     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
-     * @return \App\Model\Order\OrderData
-     */
-    private function createOrderData(?CustomerUser $customerUser = null)
+    private function createOrderData(?CustomerUser $customerUser = null): OrderData
     {
         $orderData = $this->orderDataFactory->create();
 
@@ -199,7 +183,7 @@ class OrderDataFixture
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
-    private function createQuantifiedProducts()
+    private function createQuantifiedProducts(): array
     {
         $quantifiedProducts = [];
 
@@ -215,7 +199,7 @@ class OrderDataFixture
         return $quantifiedProducts;
     }
 
-    private function loadPerformanceProductIds()
+    private function loadPerformanceProductIds(): void
     {
         $firstPerformanceProduct = $this->persistentReferenceFacade->getReference(
             PerformanceProductDataFixture::FIRST_PERFORMANCE_PRODUCT,
@@ -234,15 +218,14 @@ class OrderDataFixture
     }
 
     /**
-     * @param int $count
      * @return int[]
      */
-    private function getRandomPerformanceProductIds($count)
+    private function getRandomPerformanceProductIds(int $count): array
     {
         return $this->faker->randomElements($this->performanceProductIds, $count);
     }
 
-    private function loadPerformanceUserIdsOnFirstDomain()
+    private function loadPerformanceUserIdsOnFirstDomain(): void
     {
         $firstPerformanceUser = $this->persistentReferenceFacade->getReference(
             PerformanceUserDataFixture::FIRST_PERFORMANCE_USER,
@@ -260,10 +243,7 @@ class OrderDataFixture
         $this->performanceUserIds = array_column($qb->getQuery()->getScalarResult(), 'id');
     }
 
-    /**
-     * @return \App\Model\Customer\User\CustomerUser|null
-     */
-    private function getRandomCustomerUserOrNull()
+    private function getRandomCustomerUserOrNull(): ?CustomerUser
     {
         $shouldBeRegisteredUser = $this->faker->boolean(self::PERCENTAGE_OF_ORDERS_BY_REGISTERED_USERS);
 
@@ -278,10 +258,7 @@ class OrderDataFixture
         return $customerUser;
     }
 
-    /**
-     * @return \App\Model\Transport\Transport
-     */
-    private function getRandomTransport()
+    private function getRandomTransport(): Transport
     {
         $randomTransportReferenceName = $this->faker->randomElement([
             TransportDataFixture::TRANSPORT_CZECH_POST,
@@ -294,10 +271,7 @@ class OrderDataFixture
         return $randomTransport;
     }
 
-    /**
-     * @return \App\Model\Payment\Payment
-     */
-    private function getRandomPayment()
+    private function getRandomPayment(): Payment
     {
         $randomPaymentReferenceName = $this->faker->randomElement([
             PaymentDataFixture::PAYMENT_CARD,
@@ -310,10 +284,7 @@ class OrderDataFixture
         return $randomPayment;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
-     */
-    private function getRandomCountryFromFirstDomain()
+    private function getRandomCountryFromFirstDomain(): Country
     {
         $randomCountryReferenceName = $this->faker->randomElement([
             CountryDataFixture::COUNTRY_CZECH_REPUBLIC,

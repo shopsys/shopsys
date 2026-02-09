@@ -13,20 +13,12 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Transport\Exception\TransportNotFou
 
 class TransportQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly TransportFacade $transportFacade,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
     public function transportByTransportUuidQuery(string $uuid): Transport
     {
         try {

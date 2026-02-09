@@ -52,9 +52,6 @@ class ParameterValue
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
     protected $rgbHex;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
-     */
     public function __construct(ParameterValueData $parameterData)
     {
         $this->text = $parameterData->text;
@@ -64,10 +61,7 @@ class ParameterValue
         $this->rgbHex = $parameterData->rgbHex;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
-     */
-    public function edit(ParameterValueData $parameterData)
+    public function edit(ParameterValueData $parameterData): void
     {
         $this->text = $parameterData->text;
         $this->numericValue = $parameterData->numericValue;
@@ -125,7 +119,7 @@ class ParameterValue
     /**
      * @param string $numericValue
      */
-    public function setNumericValue($numericValue)
+    public function setNumericValue($numericValue): void
     {
         Assert::numeric($numericValue);
 

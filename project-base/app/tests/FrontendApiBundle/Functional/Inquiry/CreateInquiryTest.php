@@ -10,16 +10,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CreateInquiryTest extends GraphQlTestCase
 {
-    /**
-     * @param string $telephone
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $email
-     * @param string|null $companyName
-     * @param string|null $companyNumber
-     * @param string|null $companyTaxNumber
-     * @param string|null $note
-     */
     #[DataProvider('createInquiryDataProvider')]
     public function testCreateInquiry(
         string $telephone,
@@ -52,16 +42,6 @@ class CreateInquiryTest extends GraphQlTestCase
         $this->assertTrue($data);
     }
 
-    /**
-     * @param string $telephone
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $email
-     * @param string|null $companyName
-     * @param string|null $companyNumber
-     * @param string|null $companyTaxNumber
-     * @param string|null $note
-     */
     #[DataProvider('createInquiryDataProvider')]
     public function testInvalidProductUuid(
         string $telephone,
@@ -93,9 +73,6 @@ class CreateInquiryTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfErrors($response);
     }
 
-    /**
-     * @return iterable
-     */
     public static function createInquiryDataProvider(): iterable
     {
         yield [

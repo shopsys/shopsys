@@ -21,19 +21,12 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
     public const string ORDER_STATUS_CANCELED = 'order_status_canceled';
     public const string ORDER_STATUS_WITHDRAWN = 'order_status_withdrawn';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory $orderStatusDataFactory
-     */
     public function __construct(
         private readonly OrderStatusFacade $orderStatusFacade,
         private readonly OrderStatusDataFactory $orderStatusDataFactory,
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -47,8 +40,6 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
     /**
      * Order statuses are created (with specific ids) in database migration.
      *
-     * @param int $orderStatusId
-     * @param string $referenceName
      * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135341
      */
     private function createOrderStatusReference(

@@ -20,10 +20,6 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
     protected const PRODUCT_ID_FOURTH = 4;
     protected const PRODUCT_ID_FIFTH = 5;
 
-    /**
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade $zboziProductDomainFacade
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactory $zboziProductDomainDataFactory
-     */
     public function __construct(
         private readonly ZboziProductDomainFacade $zboziProductDomainFacade,
         private readonly ZboziProductDomainDataFactory $zboziProductDomainDataFactory,
@@ -31,7 +27,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
     }
 
     #[Override]
-    public function load()
+    public function load(): void
     {
         $firstProductZboziDomainData = [];
         $zboziProductDomainData = $this->zboziProductDomainDataFactory->create();

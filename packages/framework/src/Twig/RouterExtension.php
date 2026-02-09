@@ -13,9 +13,6 @@ use Twig\TwigFunction;
 
 class RouterExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     */
     public function __construct(protected readonly DomainRouterFactory $domainRouterFactory)
     {
     }
@@ -24,7 +21,7 @@ class RouterExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -34,13 +31,7 @@ class RouterExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $route
-     * @param array $routeParams
-     * @param int $domainId
-     * @return string|null
-     */
-    public function findUrlByDomainId($route, array $routeParams, $domainId)
+    public function findUrlByDomainId(string $route, array $routeParams, int $domainId): ?string
     {
         $domainRouter = $this->domainRouterFactory->getRouter($domainId);
 
@@ -51,10 +42,7 @@ class RouterExtension extends AbstractExtension
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'router_extension';
     }

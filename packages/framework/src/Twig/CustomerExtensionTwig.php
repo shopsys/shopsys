@@ -12,9 +12,6 @@ use Twig\TwigFunction;
 
 class CustomerExtensionTwig extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider $loginAsCustomerUserUrlProvider
-     */
     public function __construct(protected readonly LoginAdministratorAsUserUrlProvider $loginAsCustomerUserUrlProvider)
     {
     }
@@ -23,17 +20,13 @@ class CustomerExtensionTwig extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getLoginAsUserUrl', $this->getLoginAsUserUrl(...)),
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return string|null
-     */
     protected function getLoginAsUserUrl(CustomerUser $customerUser): ?string
     {
         return $this->loginAsCustomerUserUrlProvider->getLoginAsCustomerUserUrl($customerUser);

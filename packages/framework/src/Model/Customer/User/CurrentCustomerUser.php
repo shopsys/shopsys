@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserIsNotLoggedException;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -14,12 +15,6 @@ class CurrentCustomerUser
 {
     protected const string CURRENT_CUSTOMER_USER_CACHE_NAMESPACE = 'currentCustomerUser';
 
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly TokenStorageInterface $tokenStorage,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -28,10 +23,7 @@ class CurrentCustomerUser
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    public function getPricingGroup()
+    public function getPricingGroup(): PricingGroup
     {
         $customerUser = $this->findCurrentCustomerUser();
 
@@ -42,10 +34,7 @@ class CurrentCustomerUser
         return $customerUser->getPricingGroup();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     */
-    public function findCurrentCustomerUser()
+    public function findCurrentCustomerUser(): ?CustomerUser
     {
         $token = $this->tokenStorage->getToken();
 
@@ -78,9 +67,6 @@ class CurrentCustomerUser
         return null;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     public function getCurrentCustomerUser(): CustomerUser
     {
         return $this->findCurrentCustomerUser() ?? throw new CustomerUserIsNotLoggedException();

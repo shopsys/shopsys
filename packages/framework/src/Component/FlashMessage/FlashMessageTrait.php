@@ -15,79 +15,46 @@ use Symfony\Component\HttpFoundation\Session\Session as Session;
  */
 trait FlashMessageTrait
 {
-    /**
-     * @param string $template
-     * @param array $parameters
-     */
     public function addSuccessFlashTwig(string $template, array $parameters = []): void
     {
         $this->addSuccessFlash($this->renderStringTwigTemplate($template, $parameters));
     }
 
-    /**
-     * @param string $template
-     * @param array $parameters
-     */
     public function addErrorFlashTwig(string $template, array $parameters = []): void
     {
         $this->addErrorFlash($this->renderStringTwigTemplate($template, $parameters));
     }
 
-    /**
-     * @param string $template
-     * @param array $parameters
-     */
     public function addInfoFlashTwig(string $template, array $parameters = []): void
     {
         $this->addInfoFlash($this->renderStringTwigTemplate($template, $parameters));
     }
 
-    /**
-     * @param string $message
-     */
     public function addErrorFlash(string $message): void
     {
         $this->addFlashMessage(FlashMessage::KEY_ERROR, $message);
     }
 
-    /**
-     * @param string $message
-     */
     public function addInfoFlash(string $message): void
     {
         $this->addFlashMessage(FlashMessage::KEY_INFO, $message);
     }
 
-    /**
-     * @param string $message
-     */
     public function addSuccessFlash(string $message): void
     {
         $this->addFlashMessage(FlashMessage::KEY_SUCCESS, $message);
     }
 
-    /**
-     * @param string $message
-     */
     public function addWarningFlash(string $message): void
     {
         $this->addFlashMessage(FlashMessage::KEY_WARNING, $message);
     }
 
-    /**
-     * @param string $type
-     * @param string $message
-     */
     protected function addFlashMessage(string $type, string $message): void
     {
         $this->getSession()->getFlashBag()->add($type, $message);
     }
 
-    /**
-     * @param string $template
-     * @param array $parameters
-     * @return string
-     */
     protected function renderStringTwigTemplate(string $template, array $parameters = []): string
     {
         /** @var \Twig\Environment $twigEnvironment */
@@ -97,9 +64,6 @@ trait FlashMessageTrait
         return $twigTemplate->render($parameters);
     }
 
-    /**
-     * @return bool
-     */
     public function isFlashMessageBagEmpty(): bool
     {
         $flashBag = $this->getSession()->getFlashBag();
@@ -113,7 +77,7 @@ trait FlashMessageTrait
     /**
      * @return string[]
      */
-    public function getErrorMessages()
+    public function getErrorMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_ERROR);
     }
@@ -121,7 +85,7 @@ trait FlashMessageTrait
     /**
      * @return string[]
      */
-    public function getInfoMessages()
+    public function getInfoMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_INFO);
     }
@@ -129,7 +93,7 @@ trait FlashMessageTrait
     /**
      * @return string[]
      */
-    public function getSuccessMessages()
+    public function getSuccessMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_SUCCESS);
     }
@@ -143,10 +107,9 @@ trait FlashMessageTrait
     }
 
     /**
-     * @param string $key
      * @return string[]
      */
-    protected function getMessages($key)
+    protected function getMessages(string $key): array
     {
         $flashBag = $this->getSession()->getFlashBag();
         $messages = $flashBag->get($key);
@@ -154,9 +117,6 @@ trait FlashMessageTrait
         return array_unique($messages);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Session
-     */
     protected function getSession(): Session
     {
         try {

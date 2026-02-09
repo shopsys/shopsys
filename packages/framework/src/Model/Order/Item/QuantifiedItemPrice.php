@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 final class QuantifiedItemPrice implements QuantifiedItemPriceInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $unitPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     */
     public function __construct(
         private readonly PriceInterface $unitPrice,
         private readonly PriceInterface $totalPrice,

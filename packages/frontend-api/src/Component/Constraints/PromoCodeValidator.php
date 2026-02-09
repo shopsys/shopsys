@@ -21,11 +21,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PromoCodeValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
@@ -33,10 +28,6 @@ class PromoCodeValidator extends ConstraintValidator
     ) {
     }
 
-    /**
-     * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
@@ -75,10 +66,6 @@ class PromoCodeValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param string $message
-     * @param string $code
-     */
     protected function addViolationWithCodeToContext(string $message, string $code): void
     {
         $this->context->buildViolation($message)

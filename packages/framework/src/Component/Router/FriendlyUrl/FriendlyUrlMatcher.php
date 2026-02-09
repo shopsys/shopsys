@@ -15,22 +15,12 @@ class FriendlyUrlMatcher
 {
     public const string IGNORED_INTERNAL_ROUTE = '/_fragment';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
-     */
     public function __construct(
         protected readonly FriendlyUrlRepository $friendlyUrlRepository,
         protected readonly ReadyCategorySeoMixRepository $readyCategorySeoMixRepository,
     ) {
     }
 
-    /**
-     * @param string $pathinfo
-     * @param \Symfony\Component\Routing\RouteCollection $routeCollection
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return array
-     */
     public function match(string $pathinfo, RouteCollection $routeCollection, DomainConfig $domainConfig): array
     {
         if ($pathinfo === self::IGNORED_INTERNAL_ROUTE) {
@@ -85,11 +75,6 @@ class FriendlyUrlMatcher
         return $matchedParameters;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $matchedParameters
-     * @return array
-     */
     protected function getMatchedParametersForMainFrontCategorySeoFriendlyUrl(
         FriendlyUrl $friendlyUrl,
         array $matchedParameters,
@@ -108,11 +93,6 @@ class FriendlyUrlMatcher
         return $matchedParameters;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $matchedParameters
-     * @return array
-     */
     protected function getMatchedParametersForNonMainFrontCategorySeoFriendlyUrl(
         FriendlyUrl $friendlyUrl,
         array $matchedParameters,

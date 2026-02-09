@@ -31,16 +31,6 @@ class LuigisBoxBatchLoader
 
     protected ?LuigisBoxBatchLoadData $mainBatchLoadData = null;
 
-    /**
-     * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient $luigisBoxClient
-     * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     */
     public function __construct(
         protected readonly LuigisBoxClient $luigisBoxClient,
         protected readonly PromiseAdapter $promiseAdapter,
@@ -53,10 +43,6 @@ class LuigisBoxBatchLoader
     ) {
     }
 
-    /**
-     * @param string $type
-     * @return int
-     */
     public static function getTotalByType(string $type): int
     {
         return static::$totalsByType[$type] ?? 0;
@@ -72,7 +58,6 @@ class LuigisBoxBatchLoader
 
     /**
      * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData[] $luigisBoxBatchLoadData
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadByBatchData(array $luigisBoxBatchLoadData): Promise
     {
@@ -97,9 +82,6 @@ class LuigisBoxBatchLoader
 
     /**
      * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[] $luigisBoxResults
-     * @param array $limitsByType
-     * @param string $endpoint
-     * @return array
      */
     protected function mapDataByTypes(array $luigisBoxResults, array $limitsByType, string $endpoint): array
     {
@@ -137,11 +119,6 @@ class LuigisBoxBatchLoader
         return $mappedData;
     }
 
-    /**
-     * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult $luigisBoxResult
-     * @param int $limit
-     * @return array
-     */
     protected function mapProductData(LuigisBoxResult $luigisBoxResult, int $limit): array
     {
         $filterQuery = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($luigisBoxResult->getIds(), $limit);
@@ -150,7 +127,6 @@ class LuigisBoxBatchLoader
     }
 
     /**
-     * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult $luigisBoxResult
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     protected function mapCategoryData(LuigisBoxResult $luigisBoxResult): array
@@ -160,10 +136,6 @@ class LuigisBoxBatchLoader
         return reset($categoryArray);
     }
 
-    /**
-     * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult $luigisBoxResult
-     * @return array
-     */
     protected function mapArticleData(LuigisBoxResult $luigisBoxResult): array
     {
         if (count($luigisBoxResult->getIdsWithPrefix()) === 0) {
@@ -185,7 +157,6 @@ class LuigisBoxBatchLoader
     }
 
     /**
-     * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult $luigisBoxResult
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     protected function mapBrandData(LuigisBoxResult $luigisBoxResult): array
@@ -193,10 +164,6 @@ class LuigisBoxBatchLoader
         return $this->brandFacade->getBrandsByIds($luigisBoxResult->getIds());
     }
 
-    /**
-     * @param array $luigisBoxBatchLoadData
-     * @return \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData
-     */
     protected function getMainBatchLoadData(array $luigisBoxBatchLoadData): LuigisBoxBatchLoadData
     {
         if ($this->mainBatchLoadData !== null) {
@@ -218,9 +185,6 @@ class LuigisBoxBatchLoader
         return $this->mainBatchLoadData;
     }
 
-    /**
-     * @return string
-     */
     protected function getMainType(): string
     {
         return $this->mainBatchLoadData->getType();

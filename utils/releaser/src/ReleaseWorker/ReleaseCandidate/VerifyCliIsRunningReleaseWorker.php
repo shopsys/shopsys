@@ -11,11 +11,6 @@ use Shopsys\Releaser\Stage;
 
 final class VerifyCliIsRunningReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -24,10 +19,6 @@ final class VerifyCliIsRunningReleaseWorker extends AbstractShopsysReleaseWorker
         return '[Manually] Verify that Shopsys Cli is able to run on the new version';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

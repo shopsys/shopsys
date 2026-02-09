@@ -8,11 +8,7 @@ use Exception;
 
 class UnableToResolveDomainException extends Exception
 {
-    /**
-     * @param string $url
-     * @param \Exception|null $previous
-     */
-    public function __construct($url, $previous = null)
+    public function __construct(string $url, ?Exception $previous = null)
     {
         $message = sprintf(
             'Unable to resolve domain for URL "%s". Check your configuration in "config/domains_urls.yaml".',

@@ -8,20 +8,11 @@ use Exception;
 
 class ImageTypeNotFoundException extends Exception
 {
-    protected string $entityClass;
-
-    protected string $imageType;
-
-    /**
-     * @param string $entityClass
-     * @param string $imageType
-     * @param \Exception|null $previous
-     */
-    public function __construct($entityClass, $imageType, ?Exception $previous = null)
-    {
-        $this->entityClass = $entityClass;
-        $this->imageType = $imageType;
-
+    public function __construct(
+        protected string $entityClass,
+        protected string $imageType,
+        ?Exception $previous = null,
+    ) {
         parent::__construct(
             'Image type "' . $imageType . '" not found for entity "' . $entityClass . '".',
             0,
@@ -29,18 +20,12 @@ class ImageTypeNotFoundException extends Exception
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }
 
-    /**
-     * @return string
-     */
-    public function getImageType()
+    public function getImageType(): string
     {
         return $this->imageType;
     }

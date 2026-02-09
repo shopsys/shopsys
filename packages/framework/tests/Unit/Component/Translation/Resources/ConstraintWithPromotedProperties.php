@@ -8,13 +8,6 @@ use Symfony\Component\Validator\Constraint;
 
 class ConstraintWithPromotedProperties extends Constraint
 {
-    /**
-     * @param string $message
-     * @param string $otherMessage
-     * @param string $differentProperty
-     * @param array|null $groups
-     * @param mixed|null $payload
-     */
     public function __construct(
         public string $message = 'Promoted message will be extracted.',
         public string $otherMessage = 'Another promoted message.',

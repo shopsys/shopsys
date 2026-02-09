@@ -51,12 +51,8 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
      */
     private StockFacade $stockFacade;
 
-    /**
-     * @param int $stockQuantity
-     * @param bool $expectedIsProductAvailableOnDomain
-     */
     #[DataProvider('getTestIsProductAvailableOnDomainProvider')]
-    public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain)
+    public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
@@ -79,9 +75,6 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($expectedIsProductAvailableOnDomain, $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @return array
-     */
     public static function getTestIsProductAvailableOnDomainProvider(): array
     {
         return [
@@ -96,7 +89,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         ];
     }
 
-    public function testGroupedStockQuantity()
+    public function testGroupedStockQuantity(): void
     {
         $stockQuantity = 5;
         $expected = count($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID)) * $stockQuantity;
@@ -122,9 +115,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param int $stockQuantity
      * @param int<-1,0> $expectedWeekCount
-     * @param int $transfer
      */
     #[DataProvider('getTestProductAvailabilityInformationByDomainIdProvider')]
     public function testProductAvailabilityInformationByDomainId(
@@ -164,9 +155,6 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($expected, $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @return array
-     */
     public static function getTestProductAvailabilityInformationByDomainIdProvider(): array
     {
         return [
@@ -220,9 +208,6 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->assertFalse($this->productAvailabilityFacade->isProductAvailableOnDomainCached($mainVariant, self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @param \App\Model\Product\Product $onlyAvailableVariant
-     */
     private function setProductOutOfStock(Product $onlyAvailableVariant): void
     {
         $productData = $this->productDataFactory->createFromProduct($onlyAvailableVariant);

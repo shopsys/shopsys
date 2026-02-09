@@ -11,9 +11,6 @@ use Twig\TwigFunction;
 
 class FileUploadExtension extends AbstractExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     */
     public function __construct(protected readonly FileUpload $fileUpload)
     {
     }
@@ -22,18 +19,14 @@ class FileUploadExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getLabelByTemporaryFilename', $this->getLabelByTemporaryFilename(...)),
         ];
     }
 
-    /**
-     * @param string $temporaryFilename
-     * @return string
-     */
-    public function getLabelByTemporaryFilename($temporaryFilename)
+    public function getLabelByTemporaryFilename(string $temporaryFilename): string
     {
         $filename = $this->fileUpload->getOriginalFilenameByTemporary($temporaryFilename);
         $filepath = $this->fileUpload->getTemporaryDirectory() . '/' . $temporaryFilename;
@@ -47,10 +40,7 @@ class FileUploadExtension extends AbstractExtension
         return '';
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'fileupload_extension';
     }

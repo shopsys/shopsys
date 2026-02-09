@@ -20,16 +20,6 @@ class ActionColumn
 
     protected bool $isAjaxConfirm = false;
 
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     * @param string $type
-     * @param string $title
-     * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
-     */
     public function __construct(
         protected readonly RouterInterface $router,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
@@ -42,82 +32,52 @@ class ActionColumn
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return string|null
-     */
     public function getClassAttribute(): ?string
     {
         return $this->classAttribute;
     }
 
-    /**
-     * @return string|null
-     */
     public function getConfirmMessage(): ?string
     {
         return $this->confirmMessage;
     }
 
-    /**
-     * @param string $classAttribute
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
-     */
-    public function setClassAttribute(string $classAttribute): self
+    public function setClassAttribute(string $classAttribute): static
     {
         $this->classAttribute = $classAttribute;
 
         return $this;
     }
 
-    /**
-     * @param string $confirmMessage
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
-     */
-    public function setConfirmMessage(string $confirmMessage): self
+    public function setConfirmMessage(string $confirmMessage): static
     {
         $this->confirmMessage = $confirmMessage;
 
         return $this;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
-     */
-    public function setAjaxConfirm(): self
+    public function setAjaxConfirm(): static
     {
         $this->isAjaxConfirm = true;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isAjaxConfirm(): bool
     {
         return $this->isAjaxConfirm;
     }
 
-    /**
-     * @param array $row
-     * @return string
-     */
     public function getTargetUrl(array $row): string
     {
         $parameters = $this->additionalRouteParams;

@@ -12,9 +12,6 @@ class DeleteOldCronModuleRunsCronModule implements SimpleCronModuleInterface
 {
     protected const DELETE_OLD_CRON_MODULE_RUNS_AFTER_DAYS = 30;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
-     */
     public function __construct(
         protected readonly CronModuleFacade $cronModuleFacade,
     ) {

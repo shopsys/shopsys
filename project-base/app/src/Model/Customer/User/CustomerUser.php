@@ -12,10 +12,10 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
 /**
  * @property \App\Model\Customer\DeliveryAddress|null $defaultDeliveryAddress
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Customer\User\CustomerUserRefreshTokenChain> $refreshTokenChain
- * @method addRefreshTokenChain(\App\Model\Customer\User\CustomerUserRefreshTokenChain $customerUserRefreshTokenChain)
+ * @method void addRefreshTokenChain(\App\Model\Customer\User\CustomerUserRefreshTokenChain $customerUserRefreshTokenChain)
  * @method \App\Model\Customer\DeliveryAddress|null getDefaultDeliveryAddress()
- * @method setData(\App\Model\Customer\User\CustomerUserData $customerUserData)
- * @method setDefaultDeliveryAddress(\App\Model\Customer\DeliveryAddress $defaultDeliveryAddress)
+ * @method void setData(\App\Model\Customer\User\CustomerUserData $customerUserData)
+ * @method void setDefaultDeliveryAddress(\App\Model\Customer\DeliveryAddress $defaultDeliveryAddress)
  */
 #[ORM\Table(name: 'customer_users')]
 #[ORM\Index(columns: ['email'])]
@@ -36,7 +36,7 @@ class CustomerUser extends BaseUser
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      */
     #[Override]
-    public function edit(BaseUserData $customerUserData)
+    public function edit(BaseUserData $customerUserData): void
     {
         parent::edit($customerUserData);
     }

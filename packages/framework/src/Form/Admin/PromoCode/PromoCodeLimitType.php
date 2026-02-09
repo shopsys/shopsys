@@ -14,16 +14,10 @@ use Symfony\Component\Validator\Constraints;
 
 final class PromoCodeLimitType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\PromoCode\Transformer\PromoCodeLimitTransformer $promoCodeLimitTransformer
-     */
     public function __construct(private PromoCodeLimitTransformer $promoCodeLimitTransformer)
     {
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -31,10 +25,6 @@ final class PromoCodeLimitType extends AbstractType
             ->addAllowedTypes('discount', 'array');
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

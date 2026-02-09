@@ -19,10 +19,6 @@ class CustomerActivationMail implements MessageFactoryInterface
     public const string VARIABLE_EMAIL = '{email}';
     public const string VARIABLE_ACTIVATION_URL = '{activation_url}';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Security\NewPasswordUrlProvider $newPasswordUrlProvider
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly NewPasswordUrlProvider $newPasswordUrlProvider,
@@ -30,12 +26,10 @@ class CustomerActivationMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
      * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     #[Override]
-    public function createMessage(MailTemplate $template, $customerUser)
+    public function createMessage(MailTemplate $template, mixed $customerUser): MessageData
     {
         $domainId = $template->getDomainId();
 
@@ -52,8 +46,6 @@ class CustomerActivationMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $customerUser
-     * @param int $domainId
      * @return string[]
      */
     protected function getBodyValuesIndexedByVariableName(ResetPasswordInterface $customerUser, int $domainId): array
@@ -65,8 +57,6 @@ class CustomerActivationMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $customerUser
-     * @param int $domainId
      * @return string[]
      */
     protected function getSubjectValuesIndexedByVariableName(

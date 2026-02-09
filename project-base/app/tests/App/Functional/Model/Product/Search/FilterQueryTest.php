@@ -301,37 +301,24 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
      * @param int[] $ids
-     * @param string $message
      */
     protected function assertIdsWithFilter(FilterQuery $filterQuery, array $ids, string $message = ''): void
     {
         $this->assertSame($ids, $this->getResultIds($filterQuery), $message);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @param int $id
-     * @param string $message
-     */
     protected function assertIdNotInResult(FilterQuery $filterQuery, int $id, string $message = ''): void
     {
         $this->assertNotContains($id, $this->getResultIds($filterQuery), $message);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @param int $id
-     * @param string $message
-     */
     protected function assertIdInResult(FilterQuery $filterQuery, int $id, string $message = ''): void
     {
         $this->assertContains($id, $this->getResultIds($filterQuery), $message);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
      * @return int[]
      */
     protected function getResultIds(FilterQuery $filterQuery): array
@@ -344,7 +331,6 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     }
 
     /**
-     * @param array $result
      * @return int[]
      */
     protected function extractIds(array $result): array
@@ -356,9 +342,6 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         }, $hits);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
     protected function createFilter(): FilterQuery
     {
         $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(

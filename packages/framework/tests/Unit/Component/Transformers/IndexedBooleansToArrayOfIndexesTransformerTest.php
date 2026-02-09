@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Form\Transformers\IndexedBooleansToArrayOfIndexesTra
 
 class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
 {
-    public static function transformValuesProvider()
+    public static function transformValuesProvider(): array
     {
         return [
             ['value' => [], 'expected' => []],
@@ -21,18 +21,14 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $value
-     * @param mixed $expected
-     */
     #[DataProvider('transformValuesProvider')]
-    public function testTransform($value, $expected)
+    public function testTransform(mixed $value, mixed $expected): void
     {
         $transformer = new IndexedBooleansToArrayOfIndexesTransformer();
         $this->assertSame($expected, $transformer->transform($value));
     }
 
-    public static function reverseTransformValuesProvider()
+    public static function reverseTransformValuesProvider(): array
     {
         return [
             ['value' => [], 'expected' => []],
@@ -45,12 +41,8 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $value
-     * @param mixed $expected
-     */
     #[DataProvider('reverseTransformValuesProvider')]
-    public function testReverseTransform($value, $expected)
+    public function testReverseTransform(mixed $value, mixed $expected): void
     {
         $transformer = new IndexedBooleansToArrayOfIndexesTransformer();
         $this->assertSame($expected, $transformer->reverseTransform($value));

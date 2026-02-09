@@ -17,12 +17,6 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 
 class CartMutation extends AbstractMutation
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade $cartWatcherFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
-     */
     public function __construct(
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -31,11 +25,6 @@ class CartMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\AddToCartResult
-     */
     public function addToCartMutation(Argument $argument, InputValidator $validator): AddToCartResult
     {
         $validator->validate();
@@ -63,11 +52,6 @@ class CartMutation extends AbstractMutation
         return new AddToCartResult($cartWithModifications, $addProductResult);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult|null
-     */
     public function removeFromCartMutation(Argument $argument, InputValidator $validator): ?CartWithModificationsResult
     {
         $validator->validate();
@@ -89,11 +73,6 @@ class CartMutation extends AbstractMutation
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult
-     */
     public function addOrderItemsToCartMutation(
         Argument $argument,
         InputValidator $validator,

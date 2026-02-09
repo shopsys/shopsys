@@ -11,10 +11,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class BrandSearchQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderResolver $brandSearchResultsProviderResolver
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly BrandSearchResultsProviderResolver $brandSearchResultsProviderResolver,
         protected readonly Domain $domain,
@@ -22,7 +18,6 @@ class BrandSearchQuery extends AbstractQuery
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \GraphQL\Executor\Promise\Promise|\Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function brandSearchQuery(Argument $argument): Promise|array

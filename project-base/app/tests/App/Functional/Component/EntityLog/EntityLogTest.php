@@ -274,9 +274,6 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertSame($expectedQuantity, $changeSet['quantity']['newReadableValue']);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
     private function getNewOrder(): Order
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);

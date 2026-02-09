@@ -18,14 +18,6 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
 {
     protected Logger $logger;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\GoPayFacade $goPayFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GoPayFacade $goPayFacade,
@@ -101,9 +93,6 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
         $this->em->flush();
     }
 
-    /**
-     * @param \Monolog\Logger $logger
-     */
     #[Override]
     public function setLogger(Logger $logger): void
     {

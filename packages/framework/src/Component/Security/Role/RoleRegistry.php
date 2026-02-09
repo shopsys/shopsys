@@ -27,7 +27,6 @@ final class RoleRegistry implements RoleRegistryInterface
 
     /**
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\RoleProviderInterface> $allRoleProviders
-     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
      */
     public function __construct(
         #[TaggedIterator('shopsys.role_provider')]
@@ -99,7 +98,6 @@ final class RoleRegistry implements RoleRegistryInterface
 
     /**
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $context
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection
      */
     private function getRoleCollection(string $context): RoleCollection
     {
@@ -112,10 +110,6 @@ final class RoleRegistry implements RoleRegistryInterface
         return $this->roleCollectionsByContext[$context];
     }
 
-    /**
-     * @param string $context
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection
-     */
     private function createRoleCollection(string $context): RoleCollection
     {
         $collection = new RoleCollection();
@@ -131,9 +125,6 @@ final class RoleRegistry implements RoleRegistryInterface
         return $collection;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleProviderInterface $provider
-     */
     private function validateProvider(RoleProviderInterface $provider): void
     {
         $this->contextResolver->validateContextClass($provider->getTargetContext());
@@ -160,7 +151,6 @@ final class RoleRegistry implements RoleRegistryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection $collection
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\RoleProviderInterface> $providers
      */
     private function processProviders(RoleCollection $collection, array $providers): void

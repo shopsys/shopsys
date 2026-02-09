@@ -13,11 +13,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GoogleProductCrudExtension implements PluginCrudExtensionInterface
 {
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainFacade $googleProductDomainFacade
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainDataFactory $googleProductDomainDataFactory
-     */
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly GoogleProductDomainFacade $googleProductDomainFacade,
@@ -25,30 +20,20 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return GoogleProductFormType::class;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Google Shopping product feed');
     }
 
-    /**
-     * @param int $productId
-     * @return array
-     */
     #[Override]
-    public function getData($productId)
+    public function getData(int $productId): array
     {
         $googleProductDomains = $this->googleProductDomainFacade->findByProductId($productId);
 
@@ -63,12 +48,8 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         return $pluginData;
     }
 
-    /**
-     * @param int $productId
-     * @param array $data
-     */
     #[Override]
-    public function saveData($productId, $data)
+    public function saveData(int $productId, mixed $data): void
     {
         $googleProductDomainsDataIndexedByDomainId = [];
 
@@ -95,16 +76,11 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         );
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
-     * @param string $propertyName
-     * @param bool $propertyValue
-     */
     private function setGoogleProductDomainDataProperty(
         GoogleProductDomainData $googleProductDomainData,
-        $propertyName,
-        $propertyValue,
-    ) {
+        string $propertyName,
+        bool $propertyValue,
+    ): void {
         switch ($propertyName) {
             case 'show':
                 $googleProductDomainData->show = $propertyValue;
@@ -113,11 +89,8 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         }
     }
 
-    /**
-     * @param int $productId
-     */
     #[Override]
-    public function removeData($productId)
+    public function removeData(int $productId): void
     {
         $this->googleProductDomainFacade->delete($productId);
     }

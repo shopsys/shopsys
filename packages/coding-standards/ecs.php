@@ -95,8 +95,6 @@ use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
 use Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer;
 use Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\InheritDocFormatFixer;
-use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
-use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineDefaultValueSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
@@ -127,7 +125,9 @@ use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
 use SlevomatCodingStandard\Sniffs\PHP\ForbiddenClassesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\NullableTypeForNullDefaultValueSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
@@ -154,6 +154,10 @@ return ECSConfig::configure()
             'GraphQL\Error\UserError' => null,
         ],
     ])
+    ->withConfiguredRule(NoSuperfluousPhpdocTagsFixer::class, [
+        'allow_mixed' => true,
+        'remove_inheritdoc' => false,
+    ])
     ->withRules([
         InlineDocCommentDeclarationSniff::class,
         NullableTypeForNullDefaultValueSniff::class,
@@ -170,9 +174,6 @@ return ECSConfig::configure()
         ForbiddenDoctrineDefaultValueSniff::class,
         // method arguments and variables should be $camelCase
         ValidVariableNameSniff::class,
-        // add all @param, @return and @var annotations, in FQN
-        MissingParamAnnotationsFixer::class,
-        MissingReturnAnnotationFixer::class,
         PhpdocParamOrderFixer::class,
         FullyQualifiedClassNameInAnnotationSniff::class,
         EmptyStatementSniff::class,
@@ -259,6 +260,8 @@ return ECSConfig::configure()
         ParentCallSpacingSniff::class,
         UselessIfConditionWithReturnSniff::class,
         RequireOverrideAttributeSniff::class,
+        ParameterTypeHintSniff::class,
+        ReturnTypeHintSniff::class,
     ])
     ->withConfiguredRule(CyclomaticComplexitySniff::class, [
         'absoluteComplexity' => CyclomaticComplexitySniffSetting::DEFAULT_ABSOLUTE_COMPLEXITY,
@@ -352,10 +355,12 @@ return ECSConfig::configure()
         // rule is applied via `docblock` set, but we do not want to use it for now
         // remove variable name from @var and @type annotations
         PhpdocVarWithoutNameFixer::class => null,
-        // rule is applied via `docblock` set, but we do not want to use it for now
-        // remove inheritdoc
-        NoSuperfluousPhpdocTagsFixer::class => null,
         // rule breaks jms/translation-bundle as it fails on this usage: `[, $b] = $var`
         // won't do any changes after upgrade
         ListSyntaxFixer::class => null,
+        ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_MISSING_TRAVERSABLE_TYPE_HINT_SPECIFICATION,
+        ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_USELESS_SUPPRESS,
+        ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_MISSING_TRAVERSABLE_TYPE_HINT_SPECIFICATION,
+        ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_USELESS_SUPPRESS,
+        ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_LESS_SPECIFIC_NATIVE_TYPE_HINT,
     ]);

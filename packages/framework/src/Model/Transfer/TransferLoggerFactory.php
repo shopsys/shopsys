@@ -16,12 +16,6 @@ class TransferLoggerFactory
      */
     protected array $transferLoggers = [];
 
-    /**
-     * @param \Monolog\Logger $defaultLogger
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferFacade $transferFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueDataFactory $transferIssueDataFactory
-     */
     public function __construct(
         protected readonly Logger $defaultLogger,
         protected readonly TransferFacade $transferFacade,
@@ -30,10 +24,6 @@ class TransferLoggerFactory
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferIdentificationInterface $transferIdentification
-     * @return \Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface
-     */
     public function getTransferLoggerByIdentifier(
         TransferIdentificationInterface $transferIdentification,
     ): TransferLoggerInterface {

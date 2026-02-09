@@ -15,12 +15,6 @@ use Shopsys\FrameworkBundle\Component\Utils\Utils;
 
 class CustomerUploadedFilesBatchLoader
 {
-    /**
-     * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \Shopsys\FrontendApiBundle\Component\CustomerUploadedFile\CustomerUploadedFileApiFacade $customerUploadedFileApiFacade
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly CustomerUploadedFileApiFacade $customerUploadedFileApiFacade,
@@ -31,7 +25,6 @@ class CustomerUploadedFilesBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\CustomerUploadedFile\CustomerUploadedFileBatchLoadData[] $customerUploadedFileBatchLoadData
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadByBatchData(array $customerUploadedFileBatchLoadData): Promise
     {
@@ -57,8 +50,6 @@ class CustomerUploadedFilesBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\CustomerUploadedFile\CustomerUploadedFileBatchLoadData[] $customerUploadedFileBatchLoadData
-     * @param string $entityName
-     * @param string $type
      * @return array<string, array|null>
      */
     protected function getCustomerUploadedFilesByEntityNameAndTypeIndexedByDataId(
@@ -146,7 +137,6 @@ class CustomerUploadedFilesBatchLoader
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
      * @return array{url: string, anchorText: string|null}
      */
     protected function getResolvedFile(CustomerUploadedFile $customerUploadedFile): array

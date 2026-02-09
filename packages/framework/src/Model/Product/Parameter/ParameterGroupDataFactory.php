@@ -6,17 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 class ParameterGroupDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData
-     */
     protected function createInstance(): ParameterGroupData
     {
         return new ParameterGroupData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData
-     */
     public function create(): ParameterGroupData
     {
         $parameterGroupData = $this->createInstance();
@@ -25,18 +19,11 @@ class ParameterGroupDataFactory
         return $parameterGroupData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData $parameterGroupData
-     */
     public function fillNew(ParameterGroupData $parameterGroupData): void
     {
         $parameterGroupData->position = 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup $parameterGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData
-     */
     public function createFromParameterGroup(ParameterGroup $parameterGroup): ParameterGroupData
     {
         $parameterGroupData = $this->createInstance();
@@ -45,10 +32,6 @@ class ParameterGroupDataFactory
         return $parameterGroupData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData $parameterGroupData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup $parameterGroup
-     */
     public function fillFromParameterGroup(
         ParameterGroupData $parameterGroupData,
         ParameterGroup $parameterGroup,

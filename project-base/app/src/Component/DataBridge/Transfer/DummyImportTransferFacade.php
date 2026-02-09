@@ -9,9 +9,6 @@ use Override;
 
 class DummyImportTransferFacade extends AbstractBridgeImportTransfer
 {
-    /**
-     * @param array $bridgeData
-     */
     #[Override]
     protected function processItem(array $bridgeData): void
     {
@@ -30,27 +27,18 @@ class DummyImportTransferFacade extends AbstractBridgeImportTransfer
         // Implement doAfterTransfer() method.
     }
 
-    /**
-     * @return \Generator
-     */
     #[Override]
     protected function getData(): Generator
     {
         yield '';
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getTransferName(): string
     {
         return 'Dummy transfer';
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getTransferIdentifier(): string
     {

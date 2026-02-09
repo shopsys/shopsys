@@ -31,12 +31,6 @@ class ImportPoFilesCommand extends Command
 
     private SymfonyLoaderAdapter $fileLoader;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Translation\PoFileLoader $fileLoader
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Translation\PoDumper $poDumper
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     */
     public function __construct(
         PoFileLoader $fileLoader,
         private Domain $domain,
@@ -60,11 +54,6 @@ class ImportPoFilesCommand extends Command
             ->addArgument(self::INPUT_FILES_TO_PROCESS, InputArgument::IS_ARRAY, 'Files to upload and process (messages, validators, etc...)');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

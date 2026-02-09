@@ -10,10 +10,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class NotMoneyTypeException extends UnexpectedTypeException
 {
-    /**
-     * @param mixed $value
-     */
-    public function __construct($value)
+    public function __construct(mixed $value)
     {
         parent::__construct($value, Money::class);
 

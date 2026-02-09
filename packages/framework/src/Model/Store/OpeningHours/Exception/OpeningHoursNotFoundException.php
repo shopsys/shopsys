@@ -8,10 +8,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class OpeningHoursNotFoundException extends NotFoundHttpException
 {
-    /**
-     * @param int $storeId
-     * @param int $dayOfWeek
-     */
     public function __construct(int $storeId, int $dayOfWeek)
     {
         parent::__construct(sprintf(

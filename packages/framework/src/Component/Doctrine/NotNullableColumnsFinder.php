@@ -13,7 +13,7 @@ class NotNullableColumnsFinder
      * @param \Doctrine\Persistence\Mapping\ClassMetadata[] $classesMetadata
      * @return string[][]
      */
-    public function getAllNotNullableColumnNamesIndexedByTableName(array $classesMetadata)
+    public function getAllNotNullableColumnNamesIndexedByTableName(array $classesMetadata): array
     {
         $notNullableColumnNamesIndexedByTableName = [];
 
@@ -34,10 +34,9 @@ class NotNullableColumnsFinder
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadataInfo
      * @return string[]
      */
-    protected function getNotNullableFieldColumnNames(ClassMetadataInfo $classMetadataInfo)
+    protected function getNotNullableFieldColumnNames(ClassMetadataInfo $classMetadataInfo): array
     {
         $notNullableFieldNames = [];
 
@@ -51,10 +50,9 @@ class NotNullableColumnsFinder
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadataInfo
      * @return string[]
      */
-    protected function getNotNullableAssociationColumnNames(ClassMetadataInfo $classMetadataInfo)
+    protected function getNotNullableAssociationColumnNames(ClassMetadataInfo $classMetadataInfo): array
     {
         $notNullableAssociationNames = [];
 

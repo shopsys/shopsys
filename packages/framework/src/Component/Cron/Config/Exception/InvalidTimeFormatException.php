@@ -8,13 +8,7 @@ use Exception;
 
 class InvalidTimeFormatException extends Exception
 {
-    /**
-     * @param string $timeString
-     * @param int $maxValue
-     * @param int $divisibleBy
-     * @param \Exception $previous
-     */
-    public function __construct($timeString, $maxValue, $divisibleBy, ?Exception $previous = null)
+    public function __construct(string $timeString, int $maxValue, int $divisibleBy, ?Exception $previous = null)
     {
         parent::__construct(
             'Time configuration "' . $timeString . '" is invalid. '

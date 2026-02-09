@@ -12,10 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPrio
 
 class ProductMassActionFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionRepository $productMassActionRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     */
     public function __construct(
         protected readonly ProductMassActionRepository $productMassActionRepository,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
@@ -23,15 +19,13 @@ class ProductMassActionFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionData $productMassActionData
-     * @param \Doctrine\ORM\QueryBuilder $selectQueryBuilder
      * @param int[] $checkedProductIds
      */
     public function doMassAction(
         ProductMassActionData $productMassActionData,
         QueryBuilder $selectQueryBuilder,
         array $checkedProductIds,
-    ) {
+    ): void {
         $selectedProductIds = $this->getSelectedProductIds(
             $productMassActionData,
             $selectQueryBuilder,
@@ -54,8 +48,6 @@ class ProductMassActionFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionData $productMassActionData
-     * @param \Doctrine\ORM\QueryBuilder $selectQueryBuilder
      * @param int[] $checkedProductIds
      * @return int[]
      */
@@ -63,7 +55,7 @@ class ProductMassActionFacade
         ProductMassActionData $productMassActionData,
         QueryBuilder $selectQueryBuilder,
         array $checkedProductIds,
-    ) {
+    ): array {
         $selectedProductIds = [];
 
         if ($productMassActionData->selectType === ProductMassActionData::SELECT_TYPE_ALL_RESULTS) {

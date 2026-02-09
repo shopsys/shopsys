@@ -16,9 +16,6 @@ class PacketeryConfig
 
     protected string $sender;
 
-    /**
-     * @param array $packeteryConfig
-     */
     public function __construct(array $packeteryConfig)
     {
         $optionsResolver = new OptionsResolver();
@@ -58,41 +55,26 @@ class PacketeryConfig
         $this->sender = $packeteryConfig['sender'];
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @return string
-     */
     public function getRestApiUrl(): string
     {
         return $this->restApiUrl;
     }
 
-    /**
-     * @return string
-     */
     public function getApiPassword(): string
     {
         return $this->apiPassword;
     }
 
-    /**
-     * @return string
-     */
     public function getSender(): string
     {
         return $this->sender;
     }
 
-    /**
-     * @return bool
-     */
     public function isApiAllowed(): bool
     {
         return $this->isEnabled() &&

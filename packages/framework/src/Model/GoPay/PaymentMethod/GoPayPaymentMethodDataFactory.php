@@ -6,18 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod;
 
 class GoPayPaymentMethodDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData
-     */
     public function createInstance(): GoPayPaymentMethodData
     {
         return new GoPayPaymentMethodData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $paymentMethod
-     * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData
-     */
     public function createFromGoPayPaymentMethod(GoPayPaymentMethod $paymentMethod): GoPayPaymentMethodData
     {
         $goPayPaymentMethodData = $this->createInstance();

@@ -12,19 +12,12 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 
 class ComplaintResolverMap extends ResolverMap
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
-     */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ComplaintResolutionEnum $complaintResolutionEnum,
     ) {
     }
 
-    /**
-     * @return array
-     */
     #[Override]
     protected function map(): array
     {

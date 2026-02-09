@@ -10,47 +10,26 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class ImageDeleteDoctrineListener
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     */
     public function __construct(
         protected readonly ImageConfig $imageConfig,
         protected readonly ImageFacade $imageFacade,
     ) {
     }
 
-    /**
-     * Prevent ServiceCircularReferenceException (DoctrineListener cannot be dependent on the EntityManager)
-     *
-     * @return \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected function getImageFacade()
-    {
-        return $this->imageFacade;
-    }
-
-    /**
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     */
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
 
         if ($this->imageConfig->hasImageConfig($entity)) {
             $this->deleteEntityImages($entity, $args->getEntityManager());
         } elseif ($entity instanceof Image) {
-            $this->getImageFacade()->deleteImageFiles($entity);
+            $this->imageFacade->deleteImageFiles($entity);
         }
     }
 
-    /**
-     * @param object $entity
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
-    protected function deleteEntityImages($entity, EntityManagerInterface $em)
+    protected function deleteEntityImages(object $entity, EntityManagerInterface $em): void
     {
-        $images = $this->getImageFacade()->getAllImagesByEntity($entity);
+        $images = $this->imageFacade->getAllImagesByEntity($entity);
 
         foreach ($images as $image) {
             $em->remove($image);

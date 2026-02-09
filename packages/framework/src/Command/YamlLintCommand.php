@@ -103,12 +103,6 @@ EOF,
         return $this->display($io, $filesInfo);
     }
 
-    /**
-     * @param string $content
-     * @param int $flags
-     * @param \SplFileInfo|null $file
-     * @return array
-     */
     protected function validate(string $content, int $flags, ?SplFileInfo $file = null): array
     {
         $prevErrorHandler = set_error_handler(function ($level, $message, $file, $line) use (&$prevErrorHandler) {
@@ -130,11 +124,6 @@ EOF,
         return ['file' => $file, 'valid' => true];
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param array $files
-     * @return int
-     */
     protected function display(SymfonyStyle $io, array $files): int
     {
         switch ($this->format) {
@@ -147,11 +136,6 @@ EOF,
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param array $filesInfo
-     * @return int
-     */
     protected function displayTxt(SymfonyStyle $io, array $filesInfo): int
     {
         $countFiles = count($filesInfo);
@@ -182,16 +166,11 @@ EOF,
         return min($erroredFiles, 1);
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param array $filesInfo
-     * @return int
-     */
     protected function displayJson(SymfonyStyle $io, array $filesInfo): int
     {
         $errors = 0;
 
-        array_walk($filesInfo, function (&$v) use (&$errors) {
+        array_walk($filesInfo, function (&$v) use (&$errors): void {
             $v['file'] = (string)$v['file'];
 
             if (!$v['valid']) {
@@ -204,11 +183,6 @@ EOF,
         return min($errors, 1);
     }
 
-    /**
-     * @param string $fileOrDirectory
-     * @param string|null $excludeRegex
-     * @return \Traversable
-     */
     protected function getFiles(string $fileOrDirectory, ?string $excludeRegex = null): Traversable
     {
         if (is_file($fileOrDirectory) && $this->isFileInExcludePath($fileOrDirectory, $excludeRegex) === false) {
@@ -229,11 +203,6 @@ EOF,
         }
     }
 
-    /**
-     * @param string $file
-     * @param string|null $excludeRegex
-     * @return bool
-     */
     protected function isFileInExcludePath(string $file, ?string $excludeRegex): bool
     {
         if ($excludeRegex === null) {
@@ -243,9 +212,6 @@ EOF,
         return preg_match($excludeRegex, $file) === 1;
     }
 
-    /**
-     * @return string|null
-     */
     protected function getStdin(): ?string
     {
         if (ftell(STDIN) !== 0) {
@@ -261,9 +227,6 @@ EOF,
         return $inputs;
     }
 
-    /**
-     * @return \Symfony\Component\Yaml\Parser
-     */
     protected function getParser(): Parser
     {
         if ($this->parser === null) {
@@ -273,10 +236,6 @@ EOF,
         return $this->parser;
     }
 
-    /**
-     * @param string $directory
-     * @return \RecursiveIteratorIterator
-     */
     protected function getDirectoryIterator(string $directory): RecursiveIteratorIterator
     {
         $default = function (string $directory) {
@@ -292,10 +251,6 @@ EOF,
         return $default($directory);
     }
 
-    /**
-     * @param string $fileOrDirectory
-     * @return bool
-     */
     protected function isReadable(string $fileOrDirectory): bool
     {
         $default = function ($fileOrDirectory) {

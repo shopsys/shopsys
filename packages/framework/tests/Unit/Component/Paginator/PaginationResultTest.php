@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class PaginationResultTest extends TestCase
 {
-    public static function getTestPageCountData()
+    public static function getTestPageCountData(): array
     {
         return [
             [1, 10, 40, [], 4],
@@ -25,22 +25,20 @@ class PaginationResultTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $page
-     * @param mixed $pageSize
-     * @param mixed $totalCount
-     * @param mixed $results
-     * @param mixed $expectedPageCount
-     */
     #[DataProvider('getTestPageCountData')]
-    public function testGetPageCount($page, $pageSize, $totalCount, $results, $expectedPageCount)
-    {
+    public function testGetPageCount(
+        mixed $page,
+        mixed $pageSize,
+        mixed $totalCount,
+        mixed $results,
+        mixed $expectedPageCount,
+    ): void {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, $results);
 
         $this->assertSame($expectedPageCount, $paginationResult->getPageCount());
     }
 
-    public static function getTestIsFirstPageData()
+    public static function getTestIsFirstPageData(): iterable
     {
         yield [1, 10, 20, true];
 
@@ -49,21 +47,15 @@ class PaginationResultTest extends TestCase
         yield [1, null, 20, true];
     }
 
-    /**
-     * @param int $page
-     * @param int|null $pageSize
-     * @param int $totalCount
-     * @param bool $expectedIsFirst
-     */
     #[DataProvider('getTestIsFirstPageData')]
-    public function testIsFirstPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsFirst)
+    public function testIsFirstPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsFirst): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 
         $this->assertSame($expectedIsFirst, $paginationResult->isFirstPage());
     }
 
-    public static function getTestIsLastPageData()
+    public static function getTestIsLastPageData(): iterable
     {
         yield [1, 10, 20, false];
 
@@ -78,21 +70,15 @@ class PaginationResultTest extends TestCase
         yield [1, null, 20, true];
     }
 
-    /**
-     * @param int $page
-     * @param int|null $pageSize
-     * @param int $totalCount
-     * @param bool $expectedIsLast
-     */
     #[DataProvider('getTestIsLastPageData')]
-    public function testIsLastPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsLast)
+    public function testIsLastPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsLast): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 
         $this->assertSame($expectedIsLast, $paginationResult->isLastPage());
     }
 
-    public static function getTestGetPreviousPageData()
+    public static function getTestGetPreviousPageData(): iterable
     {
         yield [1, 10, 20, null];
 
@@ -103,21 +89,15 @@ class PaginationResultTest extends TestCase
         yield [1, null, 20, null];
     }
 
-    /**
-     * @param int $page
-     * @param int|null $pageSize
-     * @param int $totalCount
-     * @param int|null $expectedPrevious
-     */
     #[DataProvider('getTestGetPreviousPageData')]
-    public function testGetPreviousPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedPrevious)
+    public function testGetPreviousPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedPrevious): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 
         $this->assertSame($expectedPrevious, $paginationResult->getPreviousPage());
     }
 
-    public static function getTestGetNextPageData()
+    public static function getTestGetNextPageData(): iterable
     {
         yield [1, 10, 20, 2];
 
@@ -130,14 +110,8 @@ class PaginationResultTest extends TestCase
         yield [1, null, 20, null];
     }
 
-    /**
-     * @param int $page
-     * @param int|null $pageSize
-     * @param int $totalCount
-     * @param int|null $expectedNext
-     */
     #[DataProvider('getTestGetNextPageData')]
-    public function testGetNextPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedNext)
+    public function testGetNextPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedNext): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 

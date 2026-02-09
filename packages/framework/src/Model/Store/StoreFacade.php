@@ -15,17 +15,6 @@ use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeFactory;
 
 class StoreFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreRepository $storeRepository
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFactory $storeFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory $openingHoursFactory
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHoursDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeFactory $openingHoursRangeFactory
-     */
     public function __construct(
         protected readonly StoreRepository $storeRepository,
         protected readonly StoreFactory $storeFactory,
@@ -39,10 +28,6 @@ class StoreFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store
-     */
     public function create(StoreData $storeData): Store
     {
         $store = $this->storeFactory->create($storeData);
@@ -60,11 +45,6 @@ class StoreFacade
         return $store;
     }
 
-    /**
-     * @param int $id
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store
-     */
     public function edit(int $id, StoreData $storeData): Store
     {
         $store = $this->getById($id);
@@ -81,9 +61,6 @@ class StoreFacade
         return $store;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     */
     protected function createFriendlyUrl(Store $store): void
     {
         $this->friendlyUrlFacade->createFriendlyUrlForDomain(
@@ -94,18 +71,11 @@ class StoreFacade
         );
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store
-     */
     public function getById(int $id): Store
     {
         return $this->storeRepository->getById($id);
     }
 
-    /**
-     * @param int $storeId
-     */
     public function delete(int $storeId): void
     {
         $store = $this->getById($storeId);
@@ -113,27 +83,17 @@ class StoreFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     */
     public function changeDefaultStore(Store $store): void
     {
         $this->storeRepository->changeDefaultStore($store);
     }
 
-    /**
-     * @param string $externalId
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store|null
-     */
     public function findStoreByExternalId(string $externalId): ?Store
     {
         return $this->storeRepository->findStoreByExternalId($externalId);
     }
 
     /**
-     * @param int $domainId
-     * @param int|null $limit
-     * @param int|null $offset
      * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
      */
     public function getStoresByDomainId(int $domainId, ?int $limit = null, ?int $offset = null): array
@@ -141,21 +101,11 @@ class StoreFacade
         return $this->storeRepository->getStoresByDomainId($domainId, $limit, $offset);
     }
 
-    /**
-     * @param string $uuid
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store
-     */
     public function getByUuidAndDomainId(string $uuid, int $domainId): Store
     {
         return $this->storeRepository->getByUuidAndDomainId($uuid, $domainId);
     }
 
-    /**
-     * @param int $id
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store
-     */
     public function getByIdAndDomainId(int $id, int $domainId): Store
     {
         return $this->storeRepository->getByIdAndDomainId($id, $domainId);
@@ -170,10 +120,6 @@ class StoreFacade
         return $this->storeRepository->getStoresByIds($storeIds);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getStoresByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->storeRepository->getStoresByDomainIdQueryBuilder($domainId);
@@ -181,7 +127,6 @@ class StoreFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[] $openingHoursDataArray
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours[]
      */
     protected function createFullWeekOpeningHours(array $openingHoursDataArray, Store $store): array
@@ -209,10 +154,6 @@ class StoreFacade
         return $openingHours;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
-     */
     protected function refreshStoreOpeningHours(Store $store, StoreData $storeData): void
     {
         foreach ($store->getOpeningHours() as $openingHours) {

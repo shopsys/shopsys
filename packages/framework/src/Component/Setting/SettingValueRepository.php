@@ -6,29 +6,23 @@ namespace Shopsys\FrameworkBundle\Component\Setting;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 class SettingValueRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getSettingValueRepository()
+    protected function getSettingValueRepository(): EntityRepository
     {
         return $this->em->getRepository(SettingValue::class);
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Setting\SettingValue[]
      */
-    public function getAllByDomainId($domainId)
+    public function getAllByDomainId(int $domainId): array
     {
         return $this->getSettingValueRepository()->findBy(['domainId' => $domainId]);
     }
@@ -41,11 +35,7 @@ class SettingValueRepository
         return $this->getSettingValueRepository()->findAll();
     }
 
-    /**
-     * @param int $fromDomainId
-     * @param int $toDomainId
-     */
-    public function copyAllMultidomainSettings($fromDomainId, $toDomainId)
+    public function copyAllMultidomainSettings(int $fromDomainId, int $toDomainId): void
     {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO setting_values (name, value, type, domain_id)
@@ -76,9 +66,6 @@ class SettingValueRepository
         );
     }
 
-    /**
-     * @param string $name
-     */
     public function deleteByName(string $name): void
     {
         $this->getSettingValueRepository()->createQueryBuilder('sv')

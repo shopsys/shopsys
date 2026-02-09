@@ -9,6 +9,7 @@ use App\Model\Product\ProductRepository;
 use Override;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository as BasePriceRangeRepository;
 
 /**
@@ -18,10 +19,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository as BasePri
  */
 class PriceRangeRepository extends BasePriceRangeRepository
 {
-    /**
-     * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
-     */
     public function __construct(
         ProductRepository $productRepository,
         QueryBuilderExtender $queryBuilderExtender,
@@ -30,14 +27,14 @@ class PriceRangeRepository extends BasePriceRangeRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param \App\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
     #[Override]
-    public function getPriceRangeInCategory($domainId, PricingGroup $pricingGroup, Category $category)
-    {
+    public function getPriceRangeInCategory(
+        int $domainId,
+        PricingGroup $pricingGroup,
+        Category $category,
+    ): PriceRange {
         $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -47,16 +44,13 @@ class PriceRangeRepository extends BasePriceRangeRepository
         return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
-     * @param string|null $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
-     */
     #[Override]
-    public function getPriceRangeForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText)
-    {
+    public function getPriceRangeForSearch(
+        int $domainId,
+        PricingGroup $pricingGroup,
+        string $locale,
+        ?string $searchText,
+    ): PriceRange {
         $productsQueryBuilder = $this->productRepository
             ->getSellableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
 

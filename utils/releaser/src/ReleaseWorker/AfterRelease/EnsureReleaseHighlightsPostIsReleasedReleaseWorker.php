@@ -11,11 +11,6 @@ use Shopsys\Releaser\Stage;
 
 final class EnsureReleaseHighlightsPostIsReleasedReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -24,10 +19,6 @@ final class EnsureReleaseHighlightsPostIsReleasedReleaseWorker extends AbstractS
         return '[Manually] Ensure "Release highlights" is released and information about the new release will be shared with the community on social networks.';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

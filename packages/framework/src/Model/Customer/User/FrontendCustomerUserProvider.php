@@ -16,11 +16,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class FrontendCustomerUserProvider implements UserProviderInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly CustomerUserRepository $customerUserRepository,
         protected readonly Domain $domain,
@@ -28,11 +23,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
     ) {
     }
 
-    /**
-     * @param string $email
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
-    public function loadUserByUsername($email)
+    public function loadUserByUsername(string $email): CustomerUser
     {
         $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
             mb_strtolower($email),
@@ -51,10 +42,6 @@ class FrontendCustomerUserProvider implements UserProviderInterface
         return $customerUser;
     }
 
-    /**
-     * @param string $identifier
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
     #[Override]
     public function loadUserByIdentifier(string $identifier): CustomerUser
     {
@@ -62,7 +49,6 @@ class FrontendCustomerUserProvider implements UserProviderInterface
     }
 
     /**
-     * @param \Symfony\Component\Security\Core\User\UserInterface $userInterface
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     #[Override]
@@ -102,10 +88,6 @@ class FrontendCustomerUserProvider implements UserProviderInterface
         return $freshCustomerUser;
     }
 
-    /**
-     * @param string $class
-     * @return bool
-     */
     #[Override]
     public function supportsClass(string $class): bool
     {

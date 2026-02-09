@@ -11,11 +11,6 @@ use Shopsys\Releaser\Stage;
 
 final class VerifyMinorUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     * @return string
-     */
     #[Override]
     public function getDescription(
         Version $version,
@@ -24,10 +19,6 @@ final class VerifyMinorUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         return '[Manually] Verify there are no BC-breaks when releasing a minor version';
     }
 
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
     #[Override]
     public function work(
         Version $version,

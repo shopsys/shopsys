@@ -16,10 +16,6 @@ class ProductDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
 {
     protected const ROUTE_NAME = 'front_product_detail';
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory $friendlyUrlDataFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly FriendlyUrlDataFactory $friendlyUrlDataFactory,
@@ -27,7 +23,6 @@ class ProductDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
     #[Override]
@@ -60,9 +55,6 @@ class ProductDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
         return $friendlyUrlsData;
     }
 
-    /**
-     * @return string
-     */
     #[Override]
     public function getRouteName(): string
     {

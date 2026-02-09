@@ -14,8 +14,6 @@ interface RoleProviderInterface
      * Providers with lower priority are processed first, so higher priority providers can override roles
      *
      * Core roles are processed by Shopsys\AdministrationBundle\Component\Security\Role\CoreAdminRoleProvider and are always processed first.
-     *
-     * @return int
      */
     public function getPriority(): int;
 
@@ -29,8 +27,6 @@ interface RoleProviderInterface
     /**
      * Configure roles in the collection.
      * This method is called in priority order (lower priority first).
-     *
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection $roleCollection
      */
     public function configureRoles(RoleCollection $roleCollection): void;
 }

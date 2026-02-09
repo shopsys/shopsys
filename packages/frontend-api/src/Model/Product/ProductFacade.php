@@ -12,11 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 
 class ProductFacade
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
-     */
     public function __construct(
         protected readonly ProductRepository $productRepository,
         protected readonly FilterQueryFactory $filterQueryFactory,
@@ -24,22 +19,11 @@ class ProductFacade
     ) {
     }
 
-    /**
-     * @param string $uuid
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
     public function getSellableByUuid(string $uuid, int $domainId, PricingGroup $pricingGroup): Product
     {
         return $this->productRepository->getSellableByUuid($uuid, $domainId, $pricingGroup);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $search
-     * @return int
-     */
     public function getFilteredProductsCountOnCurrentDomain(
         ProductFilterData $productFilterData,
         string $search = '',
@@ -53,14 +37,6 @@ class ProductFacade
         return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
     }
 
-    /**
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $search
-     * @return array
-     */
     public function getFilteredProductsOnCurrentDomain(
         int $limit,
         int $offset,
@@ -84,11 +60,6 @@ class ProductFacade
         return $productsResult->getHits();
     }
 
-    /**
-     * @param array $productIds
-     * @param int|null $limit
-     * @return array
-     */
     public function getSellableProductsByIds(array $productIds, ?int $limit = null): array
     {
         $filterQuery = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds, $limit);

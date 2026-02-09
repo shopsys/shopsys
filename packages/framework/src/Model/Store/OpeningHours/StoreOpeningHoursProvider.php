@@ -23,20 +23,12 @@ class StoreOpeningHoursProvider
         7 => 'sunday',
     ];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     */
     public function __construct(
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @return \Spatie\OpeningHours\OpeningHours
-     */
     public function getOpeningHoursSetting(Store $store): SpatieOpeningHours
     {
         return $this->inMemoryCache->getOrSaveValue(
@@ -49,10 +41,6 @@ class StoreOpeningHoursProvider
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @return array
-     */
     protected function getWeekSetting(Store $store): array
     {
         $weekSetting = [];
@@ -73,7 +61,6 @@ class StoreOpeningHoursProvider
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[] $openingHoursData
-     * @return \Spatie\OpeningHours\OpeningHours
      */
     public function getOpeningHoursSettingFromData(array $openingHoursData): SpatieOpeningHours
     {
@@ -81,7 +68,6 @@ class StoreOpeningHoursProvider
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return array[][]
      */
     protected function getExceptions(Store $store): array
@@ -96,20 +82,11 @@ class StoreOpeningHoursProvider
         return $exceptions;
     }
 
-    /**
-     * @param int $dayNumber
-     * @return string
-     */
     protected function getEnglishDayNameFromDayNumber(int $dayNumber): string
     {
         return static::DAY_NUMBERS_TO_ENGLISH_NAMES_MAP[$dayNumber] ?? throw new InvalidArgumentException(sprintf('Day number "%s" is not valid. (expected a value in range 1-7)', $dayNumber));
     }
 
-    /**
-     * @param string $openingTime
-     * @param string $closingTime
-     * @return string
-     */
     protected function formatOpeningHours(string $openingTime, string $closingTime): string
     {
         return $openingTime . '-' . $closingTime;

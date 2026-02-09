@@ -14,17 +14,12 @@ class StatisticsRepository
 {
     protected EntityManagerInterface $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
     }
 
     /**
-     * @param \DateTimeImmutable $start
-     * @param \DateTimeImmutable $end
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
     public function getCustomersRegistrationsCountByDayBetweenTwoDateTimes(
@@ -56,8 +51,6 @@ class StatisticsRepository
     }
 
     /**
-     * @param \DateTimeImmutable $start
-     * @param \DateTimeImmutable $end
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
     public function getNewOrdersCountByDayBetweenTwoDateTimes(DateTimeImmutable $start, DateTimeImmutable $end): array
@@ -88,11 +81,6 @@ class StatisticsRepository
         );
     }
 
-    /**
-     * @param \DateTimeImmutable $startDateTime
-     * @param \DateTimeImmutable $endDateTime
-     * @return int
-     */
     public function getNewCustomersCountBetweenDates(
         DateTimeImmutable $startDateTime,
         DateTimeImmutable $endDateTime,
@@ -113,11 +101,6 @@ class StatisticsRepository
         return (int)$query->getSingleScalarResult();
     }
 
-    /**
-     * @param \DateTimeImmutable $startDateTime
-     * @param \DateTimeImmutable $endDateTime
-     * @return int
-     */
     public function getOrdersCountBetweenDates(DateTimeImmutable $startDateTime, DateTimeImmutable $endDateTime): int
     {
         $resultSetMapping = new ResultSetMapping();
@@ -138,11 +121,6 @@ class StatisticsRepository
         return (int)$query->getSingleScalarResult();
     }
 
-    /**
-     * @param \DateTimeImmutable $startDateTime
-     * @param \DateTimeImmutable $endDateTime
-     * @return int
-     */
     public function getOrdersValueBetweenDates(DateTimeImmutable $startDateTime, DateTimeImmutable $endDateTime): int
     {
         $resultSetMapping = new ResultSetMapping();

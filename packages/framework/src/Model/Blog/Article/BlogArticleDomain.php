@@ -49,10 +49,6 @@ class BlogArticleDomain
     #[ORM\Column(type: 'boolean')]
     protected $visible;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle $blogArticle
-     * @param int $domainId
-     */
     public function __construct(BlogArticle $blogArticle, int $domainId)
     {
         $this->blogArticle = $blogArticle;

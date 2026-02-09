@@ -9,6 +9,7 @@ use Override;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\Exception\NotSupportedException;
+use Stringable;
 use function GuzzleHttp\json_decode;
 use function GuzzleHttp\json_encode;
 
@@ -19,18 +20,11 @@ class ElasticsearchTracer extends AbstractLogger
 {
     protected ?string $lastRequestCurl = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection $elasticsearchRequestCollection
-     */
     public function __construct(protected readonly ElasticsearchRequestCollection $elasticsearchRequestCollection)
     {
     }
 
-    /**
-     * @param string $requestMessage
-     * @return mixed
-     */
-    protected function extractData(string $requestMessage)
+    protected function extractData(string $requestMessage): mixed
     {
         $matches = null;
 
@@ -41,22 +35,16 @@ class ElasticsearchTracer extends AbstractLogger
         return json_decode($matches['json'], true);
     }
 
-    /**
-     * @param mixed $requestData
-     * @return string
-     */
-    protected function formatData($requestData): string
+    protected function formatData(mixed $requestData): string
     {
         return json_encode($requestData, JSON_PRETTY_PRINT);
     }
 
     /**
-     * @param mixed $level
-     * @param string $message
-     * @param array $context
+     * {@inheritdoc}
      */
     #[Override]
-    public function log($level, $message, array $context = []): void
+    public function log($level, string|Stringable $message, array $context = []): void
     {
         if ($level === LogLevel::INFO) {
             $this->lastRequestCurl = $message;
@@ -75,11 +63,7 @@ class ElasticsearchTracer extends AbstractLogger
         throw new NotSupportedException($exceptionMessage);
     }
 
-    /**
-     * @param string $message
-     * @param array $context
-     */
-    protected function logRequest($message, array $context = []): void
+    protected function logRequest(string $message, array $context = []): void
     {
         if ($message !== 'Response:') {
             $exceptionMessage = sprintf('Not supported message `%s`, It supports only exactly `Response:`', $message);

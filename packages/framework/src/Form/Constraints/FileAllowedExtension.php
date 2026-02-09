@@ -14,9 +14,7 @@ class FileAllowedExtension extends Constraint
     /**
      * @param array<string, mixed>|null $options
      * @param array<string> $extensions
-     * @param string $message
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

@@ -13,15 +13,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BrandFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository $brandRepository
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactory $brandFactory
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly BrandRepository $brandRepository,
@@ -33,20 +24,12 @@ class BrandFacade
     ) {
     }
 
-    /**
-     * @param int $brandId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
-    public function getById($brandId)
+    public function getById(int $brandId): Brand
     {
         return $this->brandRepository->getById($brandId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
-    public function create(BrandData $brandData)
+    public function create(BrandData $brandData): Brand
     {
         $domains = $this->domain->getAll();
         $brand = $this->brandFactory->create($brandData);
@@ -69,12 +52,7 @@ class BrandFacade
         return $brand;
     }
 
-    /**
-     * @param int $brandId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
-    public function edit($brandId, BrandData $brandData)
+    public function edit(int $brandId, BrandData $brandData): Brand
     {
         $domains = $this->domain->getAll();
         $brand = $this->brandRepository->getById($brandId);
@@ -103,9 +81,6 @@ class BrandFacade
         return $brand;
     }
 
-    /**
-     * @param int $brandId
-     */
     public function deleteById(int $brandId): void
     {
         $brand = $this->brandRepository->getById($brandId);
@@ -118,14 +93,12 @@ class BrandFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->brandRepository->getAll();
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @param string $eventType
      * @see \Shopsys\FrameworkBundle\Model\Product\Brand\BrandEvent class
      */
     protected function dispatchBrandEvent(Brand $brand, string $eventType): void
@@ -133,10 +106,6 @@ class BrandFacade
         $this->eventDispatcher->dispatch(new BrandEvent($brand), $eventType);
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
     public function getByUuid(string $uuid): Brand
     {
         return $this->brandRepository->getOneByUuid($uuid);
@@ -161,7 +130,6 @@ class BrandFacade
     }
 
     /**
-     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function getBrandsBySearchText(string $searchText): array
@@ -170,7 +138,6 @@ class BrandFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function getAllWithDomainsAndTranslations(DomainConfig $domainConfig): array
@@ -180,7 +147,6 @@ class BrandFacade
 
     /**
      * @param int[] $brandIds
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null>
      */
     public function getByIds(array $brandIds, DomainConfig $domainConfig): array

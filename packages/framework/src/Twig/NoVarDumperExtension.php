@@ -17,16 +17,13 @@ class NoVarDumperExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('d', function () {
+            new TwigFunction('d', function (): void {
             }),
-            new TwigFunction('dump', function () {
+            new TwigFunction('dump', function (): void {
             }),
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'no_var_dumper_extension';

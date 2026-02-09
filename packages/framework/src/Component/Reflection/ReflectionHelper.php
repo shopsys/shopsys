@@ -17,7 +17,6 @@ class ReflectionHelper
     protected static array $constantsIndexedByFqcn = [];
 
     /**
-     * @param string $fqcn
      * @return string[]
      */
     public static function getAllPublicClassConstants(string $fqcn): array
@@ -31,7 +30,6 @@ class ReflectionHelper
 
     /**
      * @param class-string $fqcn
-     * @return string
      */
     public static function getShortClassName(string $fqcn): string
     {
@@ -40,7 +38,6 @@ class ReflectionHelper
 
     /**
      * @template T of object
-     * @param \ReflectionMethod $method
      * @param class-string<T> $attributeClass
      * @return T|null
      */

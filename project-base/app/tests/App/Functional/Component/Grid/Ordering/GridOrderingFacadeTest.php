@@ -11,12 +11,11 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 
 class GridOrderingFacadeTest extends TransactionFunctionalTestCase
 {
-    public function testSetPositionWrongEntity()
+    public function testSetPositionWrongEntity(): void
     {
         $gridOrderingFacade = new GridOrderingFacade($this->em);
         $entity = new stdClass();
         $this->expectException(EntityIsNotOrderableException::class);
-        /** @phpstan-ignore-next-line */
-        $gridOrderingFacade->saveOrdering($entity, []);
+        $gridOrderingFacade->saveOrdering($entity::class, []);
     }
 }

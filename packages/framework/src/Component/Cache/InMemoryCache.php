@@ -22,11 +22,6 @@ class InMemoryCache implements ResettableInterface
         $this->namespacesCache = new ArrayAdapter(0, false);
     }
 
-    /**
-     * @param string $namespace
-     * @param mixed $keyParts
-     * @return mixed
-     */
     public function getItem(string $namespace, mixed ...$keyParts): mixed
     {
         $key = $this->generateKey($keyParts);
@@ -46,10 +41,6 @@ class InMemoryCache implements ResettableInterface
         return $this->getNamespaceCache($namespace)->getItem($key)->get();
     }
 
-    /**
-     * @param string $namespace
-     * @return array
-     */
     public function getValuesByNamespace(string $namespace): array
     {
         $namespace = $this->replaceNotAllowedCharactersInKey($namespace);
@@ -61,20 +52,11 @@ class InMemoryCache implements ResettableInterface
         return $this->getNamespaceCache($namespace)->getValues();
     }
 
-    /**
-     * @param string $namespace
-     * @return \Symfony\Component\Cache\Adapter\ArrayAdapter
-     */
     protected function getNamespaceCache(string $namespace): ArrayAdapter
     {
         return $this->namespacesCache->getItem($namespace)->get();
     }
 
-    /**
-     * @param string $namespace
-     * @param mixed $keyParts
-     * @return bool
-     */
     public function hasItem(string $namespace, mixed ...$keyParts): bool
     {
         $key = $this->generateKey($keyParts);
@@ -90,10 +72,6 @@ class InMemoryCache implements ResettableInterface
         return false;
     }
 
-    /**
-     * @param string $namespace
-     * @return bool
-     */
     protected function hasNamespaceCache(string $namespace): bool
     {
         return $this->namespacesCache->hasItem($namespace);
@@ -105,10 +83,6 @@ class InMemoryCache implements ResettableInterface
         $this->namespacesCache->reset();
     }
 
-    /**
-     * @param string $namespace
-     * @param mixed $keyParts
-     */
     public function deleteItem(string $namespace, mixed ...$keyParts): void
     {
         $key = $this->generateKey($keyParts);
@@ -124,9 +98,6 @@ class InMemoryCache implements ResettableInterface
         $namespaceCache->deleteItem($key);
     }
 
-    /**
-     * @param string $namespace
-     */
     public function deleteAllItemsInNamespace(string $namespace): void
     {
         $namespace = $this->replaceNotAllowedCharactersInKey($namespace);
@@ -139,11 +110,6 @@ class InMemoryCache implements ResettableInterface
         $namespaceCache->clear();
     }
 
-    /**
-     * @param string $namespace
-     * @param mixed $value
-     * @param mixed $keyParts
-     */
     public function save(string $namespace, mixed $value, mixed ...$keyParts): void
     {
         $key = $this->generateKey($keyParts);
@@ -169,10 +135,6 @@ class InMemoryCache implements ResettableInterface
         $namespaceCache->save($valueItem);
     }
 
-    /**
-     * @param string $key
-     * @return string
-     */
     protected function replaceNotAllowedCharactersInKey(string $key): string
     {
         foreach (str_split(static::NOT_ALLOWED_CHARS) as $char) {
@@ -184,9 +146,7 @@ class InMemoryCache implements ResettableInterface
 
     /**
      * @template T
-     * @param string $namespace
      * @param T|callable(): T $value
-     * @param mixed $keyParts
      * @return T
      */
     public function getOrSaveValue(string $namespace, mixed $value, mixed ...$keyParts): mixed
@@ -206,10 +166,6 @@ class InMemoryCache implements ResettableInterface
         return $value;
     }
 
-    /**
-     * @param array $keyParts
-     * @return string
-     */
     protected function generateKey(array $keyParts): string
     {
         $key = implode('~', $keyParts);
@@ -217,10 +173,6 @@ class InMemoryCache implements ResettableInterface
         return $this->replaceNotAllowedCharactersInKey($key);
     }
 
-    /**
-     * @param mixed $keyParts
-     * @return string
-     */
     public function getKey(mixed ...$keyParts): string
     {
         return $this->generateKey($keyParts);

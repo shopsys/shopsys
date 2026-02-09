@@ -22,9 +22,6 @@ class ScheduleFeedsCommand extends Command
     private const OPTION_FEED_NAME = 'feed-name';
     private const OPTION_ALL = 'all';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedFacade $feedFacade
-     */
     public function __construct(
         protected readonly FeedFacade $feedFacade,
     ) {

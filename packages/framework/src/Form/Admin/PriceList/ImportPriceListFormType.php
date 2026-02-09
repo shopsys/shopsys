@@ -25,12 +25,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class ImportPriceListFormType extends AbstractType
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade $priceListFacade
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum $priceListCsvColumnsEnum
-     */
     public function __construct(
         protected readonly PriceListFacade $priceListFacade,
         protected readonly UrlGeneratorInterface $urlGenerator,
@@ -39,10 +33,6 @@ final class ImportPriceListFormType extends AbstractType
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -128,9 +118,6 @@ final class ImportPriceListFormType extends AbstractType
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -143,10 +130,6 @@ final class ImportPriceListFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param array $priceListData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function checkDateValidity(array $priceListData, ExecutionContextInterface $context): void
     {
         if (!array_key_exists('validTo', $priceListData) || !array_key_exists('validFrom', $priceListData)) {

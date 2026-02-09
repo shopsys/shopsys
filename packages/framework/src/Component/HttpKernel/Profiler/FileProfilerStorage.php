@@ -68,9 +68,6 @@ class FileProfilerStorage extends BaseFileProfilerStorage
         return true;
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Profiler\Profile $profile
-     */
     protected function updateProfileUrlForGqlRequests(Profile $profile): void
     {
         if (str_ends_with($profile->getUrl(), '/graphql/') && $profile->hasCollector('request')) {
@@ -96,10 +93,6 @@ class FileProfilerStorage extends BaseFileProfilerStorage
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Profiler\Profile $profile
-     * @return string
-     */
     protected function getDataByProfile(Profile $profile): string
     {
         $profileToken = $profile->getToken();

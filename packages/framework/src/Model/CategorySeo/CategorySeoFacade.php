@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
 class CategorySeoFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
-     */
     public function __construct(
         protected readonly ParameterRepository $parameterRepository,
         protected readonly FlagFacade $flagFacade,
@@ -26,8 +21,6 @@ class CategorySeoFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getParametersUsedByProductsInCategoryWithoutSlider(Category $category, int $domainId): array
@@ -36,10 +29,6 @@ class CategorySeoFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
-     * @param int $domainId
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoMix[]
      */
     public function getCategorySeoMixes(
@@ -73,10 +62,6 @@ class CategorySeoFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoMix[] $categorySeoMixes
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
-     * @param int $domainId
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoMix[]
      */
     protected function getSeoCategoryMixesFromParameters(
@@ -97,7 +82,7 @@ class CategorySeoFacade
             $categorySeoMixes = $this->getNewSeoCategoryMixes(
                 $categorySeoMixes,
                 $parameterValues,
-                function (CategorySeoMix $categorySeoMix, ParameterValue $parameterValue) {
+                function (CategorySeoMix $categorySeoMix, ParameterValue $parameterValue): void {
                     $categorySeoMix->addParameterValue($parameterValue);
                 },
             );
@@ -108,7 +93,6 @@ class CategorySeoFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoMix[] $categorySeoMixes
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoMix[]
      */
     protected function getSeoCategoryMixesFromFlags(
@@ -119,7 +103,7 @@ class CategorySeoFacade
             $categorySeoMixes = $this->getNewSeoCategoryMixes(
                 $categorySeoMixes,
                 $this->flagFacade->getAll(),
-                function (CategorySeoMix $categorySeoMix, Flag $flag) {
+                function (CategorySeoMix $categorySeoMix, Flag $flag): void {
                     $categorySeoMix->setFlag($flag);
                 },
             );
@@ -130,7 +114,6 @@ class CategorySeoFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoMix[] $categorySeoMixes
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoMix[]
      */
     protected function getSeoCategoryMixesFromOrderings(
@@ -145,7 +128,7 @@ class CategorySeoFacade
             $categorySeoMixes = $this->getNewSeoCategoryMixes(
                 $categorySeoMixes,
                 $orderings,
-                function (CategorySeoMix $categorySeoMix, string $ordering) {
+                function (CategorySeoMix $categorySeoMix, string $ordering): void {
                     $categorySeoMix->setOrdering($ordering);
                 },
             );
@@ -157,7 +140,6 @@ class CategorySeoFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoMix[] $categorySeoMixes
      * @param object[]|string[] $newValues
-     * @param callable $categorySeoMixCallback
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoMix[]
      */
     protected function getNewSeoCategoryMixes(

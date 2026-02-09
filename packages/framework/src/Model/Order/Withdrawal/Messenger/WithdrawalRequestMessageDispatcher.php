@@ -8,9 +8,6 @@ use Shopsys\FrameworkBundle\Component\Messenger\AbstractMessageDispatcher;
 
 class WithdrawalRequestMessageDispatcher extends AbstractMessageDispatcher
 {
-    /**
-     * @param int $withdrawalId
-     */
     public function dispatchWithdrawalCreatedMessage(int $withdrawalId): void
     {
         $this->messageBus->dispatch(new WithdrawalRequestMessage($withdrawalId));

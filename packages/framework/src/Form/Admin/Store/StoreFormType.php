@@ -36,12 +36,6 @@ final class StoreFormType extends AbstractType
 {
     private ?Store $store = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider $storeOpeningHoursProvider
-     */
     public function __construct(
         private readonly StockFacade $stockFacade,
         private readonly StoreFacade $storeFacade,
@@ -72,11 +66,6 @@ final class StoreFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store|null $store
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createBasicInformationGroup(FormBuilderInterface $builder, ?Store $store): FormBuilderInterface
     {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
@@ -144,10 +133,6 @@ final class StoreFormType extends AbstractType
         return $builderBasicInformationGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createUserInformationGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderUserInformationGroup = $builder->create('userInformation', GroupType::class, [
@@ -181,10 +166,6 @@ final class StoreFormType extends AbstractType
         return $builderUserInformationGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createMapGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderMapGroup = $builder->create('map', GroupType::class, [
@@ -204,10 +185,6 @@ final class StoreFormType extends AbstractType
         return $builderMapGroup;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createAddressGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderAddressGroup = $builder->create('address', GroupType::class, [
@@ -278,10 +255,6 @@ final class StoreFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param string|null $externalId
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function sameStoreExternalIdValidation(?string $externalId, ExecutionContextInterface $context): void
     {
         if ($externalId === null) {
@@ -299,11 +272,6 @@ final class StoreFormType extends AbstractType
         }
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     private function createImagesGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         return $builder->create('imageGroup', GroupType::class, [
@@ -326,10 +294,6 @@ final class StoreFormType extends AbstractType
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function validateOpeningHours(StoreData $storeData, ExecutionContextInterface $context): void
     {
         try {

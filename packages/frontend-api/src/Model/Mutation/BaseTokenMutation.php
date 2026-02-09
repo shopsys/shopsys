@@ -10,17 +10,11 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class BaseTokenMutation extends AbstractMutation
 {
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     */
     public function __construct(
         protected readonly TokenStorageInterface $tokenStorage,
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser
-     */
     protected function runCheckUserIsLogged(): FrontendApiUser
     {
         $token = $this->tokenStorage->getToken();

@@ -14,13 +14,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TransferIssueFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueRepository $transferIssueRepository
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferRepository $transferRepository
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFactory $transferIssueFactory
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly TransferIssueRepository $transferIssueRepository,
@@ -30,10 +23,6 @@ class TransferIssueFacade
     ) {
     }
 
-    /**
-     * @param array $transferIssuesData
-     * @param string $serviceTransferIdentifier
-     */
     public function saveTransferIssues(array $transferIssuesData, string $serviceTransferIdentifier): void
     {
         foreach ($transferIssuesData as $transferIssueData) {
@@ -44,9 +33,6 @@ class TransferIssueFacade
         $this->em->flush();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getTransferIssuesQueryBuilderForDataGrid(): QueryBuilder
     {
         $fromDateTime = $this->clock->now()->modify('-7 days');
@@ -54,18 +40,11 @@ class TransferIssueFacade
         return $this->transferIssueRepository->getTransferIssuesQueryBuilderForDataGrid($fromDateTime);
     }
 
-    /**
-     * @param \DateTimeImmutable $fromDateTime
-     * @return int
-     */
     public function getTransferIssuesCountFrom(DateTimeImmutable $fromDateTime): int
     {
         return $this->transferIssueRepository->getTransferIssuesCountFrom($fromDateTime);
     }
 
-    /**
-     * @param int $id
-     */
     public function deleteById(int $id): void
     {
         $transferIssue = $this->transferIssueRepository->findById($id);
@@ -78,11 +57,6 @@ class TransferIssueFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueData $transferIssueData
-     * @param \Shopsys\FrameworkBundle\Model\Transfer\Transfer $transfer
-     * @return \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssue
-     */
     public function create(TransferIssueData $transferIssueData, Transfer $transfer): TransferIssue
     {
         $transferIssue = $this->transferIssueFactory->create($transfer, $transferIssueData);

@@ -25,14 +25,6 @@ class ImageExtension extends AbstractExtension
 
     protected string $frontDesignImageUrlPrefix;
 
-    /**
-     * @param string $frontDesignImageUrlPrefix
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Twig\Environment $twigEnvironment
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
-     */
     public function __construct(
         string $frontDesignImageUrlPrefix,
         protected readonly Domain $domain,
@@ -57,8 +49,6 @@ class ImageExtension extends AbstractExtension
 
     /**
      * @param object|\Shopsys\FrameworkBundle\Component\Image\Image $imageOrEntity
-     * @param string|null $type
-     * @return bool
      */
     public function imageExists(object $imageOrEntity, ?string $type = null): bool
     {
@@ -73,9 +63,6 @@ class ImageExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
-     * @param array $attributes
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
      */
     protected function getImageUrl(object $imageOrEntity, array $attributes, DomainConfig $domainConfig): string
     {
@@ -103,9 +90,6 @@ class ImageExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
-     * @param array $attributes
-     * @param int $domainId
-     * @return string
      */
     public function getImageHtml(
         object $imageOrEntity,
@@ -128,11 +112,6 @@ class ImageExtension extends AbstractExtension
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param array $attributes
-     * @return string
-     */
     protected function getNoimageHtml(DomainConfig $domainConfig, array $attributes = []): string
     {
         $this->preventDefault($attributes);
@@ -143,20 +122,11 @@ class ImageExtension extends AbstractExtension
         return $this->getImageHtmlByEntityName($attributes, $entityName);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     protected function getEmptyImageUrl(DomainConfig $domainConfig): string
     {
         return $domainConfig->getBaseUrl() . $this->frontDesignImageUrlPrefix . '/' . static::NOIMAGE_FILENAME;
     }
 
-    /**
-     * @param string $entityName
-     * @param string|null $type
-     * @return string
-     */
     protected function getImageCssClass(string $entityName, ?string $type): string
     {
         $allClassParts = [
@@ -169,17 +139,11 @@ class ImageExtension extends AbstractExtension
         return implode('-', $classParts);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'image_extension';
     }
 
-    /**
-     * @param array $attributes
-     */
     protected function preventDefault(array &$attributes): void
     {
         Utils::setArrayDefaultValue($attributes, 'type');
@@ -187,11 +151,6 @@ class ImageExtension extends AbstractExtension
         Utils::setArrayDefaultValue($attributes, 'title', $attributes['alt']);
     }
 
-    /**
-     * @param array $attributes
-     * @param string $entityName
-     * @return string
-     */
     protected function getImageHtmlByEntityName(array $attributes, string $entityName): string
     {
         $htmlAttributes = $this->extractHtmlAttributesFromAttributes($attributes);
@@ -202,10 +161,6 @@ class ImageExtension extends AbstractExtension
         ]);
     }
 
-    /**
-     * @param array $attributes
-     * @return array
-     */
     protected function extractHtmlAttributesFromAttributes(array $attributes): array
     {
         $htmlAttributes = $attributes;

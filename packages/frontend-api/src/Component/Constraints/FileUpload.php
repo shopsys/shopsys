@@ -27,12 +27,7 @@ class FileUpload extends Constraint
     /**
      * @param array<string, mixed>|null $options
      * @param array<string>|string $mimeTypes
-     * @param int|null $maxSize
-     * @param string $mimeTypesMessage
-     * @param string $maxSizeMessage
-     * @param string $uploadErrorMessage
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

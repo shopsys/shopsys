@@ -17,11 +17,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation;
 
 class ReadyCategorySeoMixGridFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly EntityManagerInterface $em,
@@ -30,10 +25,7 @@ class ReadyCategorySeoMixGridFactory
     }
 
     /**
-     * @param int $domainId
-     * @param string $locale
      * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     public function create(int $domainId, string $locale): Grid
     {
@@ -62,11 +54,6 @@ class ReadyCategorySeoMixGridFactory
         return $grid;
     }
 
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllByDomainIdQueryBuilder(int $domainId, string $locale): QueryBuilder
     {
         return $this->em->createQueryBuilder()

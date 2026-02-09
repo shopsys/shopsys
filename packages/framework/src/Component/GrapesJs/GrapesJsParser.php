@@ -15,10 +15,6 @@ class GrapesJsParser
 {
     protected const GJS_PRODUCTS_SEPARATOR = '|||';
 
-    /**
-     * @param string|null $text
-     * @return string|null
-     */
     public function parse(?string $text): ?string
     {
         if ($text === null) {
@@ -27,13 +23,13 @@ class GrapesJsParser
 
         $crawler = new Crawler($text);
 
-        $crawler->filter('.gjs-product')->each(function (Crawler $node) {
+        $crawler->filter('.gjs-product')->each(function (Crawler $node): void {
             foreach ($node as $domElement) {
                 $domElement->parentNode->removeChild($domElement);
             }
         });
 
-        $crawler->filter('.gjs-products')->each(function (Crawler $node) {
+        $crawler->filter('.gjs-products')->each(function (Crawler $node): void {
             $dataProducts = $node->attr('data-products');
 
             if ($dataProducts === null) {
@@ -58,9 +54,6 @@ class GrapesJsParser
         return $this->getConfiguredSanitizer()->sanitize($newText);
     }
 
-    /**
-     * @return \Symfony\Component\HtmlSanitizer\HtmlSanitizer
-     */
     protected function getConfiguredSanitizer(): HtmlSanitizer
     {
         $config = (new HtmlSanitizerConfig())

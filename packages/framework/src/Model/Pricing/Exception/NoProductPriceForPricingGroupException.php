@@ -8,10 +8,6 @@ use Exception;
 
 class NoProductPriceForPricingGroupException extends Exception
 {
-    /**
-     * @param int $productId
-     * @param int $pricingGroupId
-     */
     public function __construct(int $productId, int $pricingGroupId)
     {
         $message = sprintf(

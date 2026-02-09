@@ -26,17 +26,6 @@ class CreateOrderMutation extends AbstractMutation
     public const string VALIDATION_GROUP_ON_COMPANY_BEHALF = 'onCompanyBehalf';
     public const string VALIDATION_GROUP_ANONYMOUS_USER = 'anonymousUser';
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Order\CreateOrderResultFactory $createOrderResultFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade $cartWatcherFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     * @param \Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade $placeOrderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
-     */
     public function __construct(
         protected readonly OrderDataFactory $orderDataFactory,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -50,11 +39,6 @@ class CreateOrderMutation extends AbstractMutation
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return \Shopsys\FrontendApiBundle\Model\Order\CreateOrderResult
-     */
     public function createOrderMutation(Argument $argument, InputValidator $validator): CreateOrderResult
     {
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
@@ -94,8 +78,6 @@ class CreateOrderMutation extends AbstractMutation
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $currentCustomerUser
      * @return string[]
      */
     protected function computeValidationGroups(Argument $argument, ?CustomerUser $currentCustomerUser): array

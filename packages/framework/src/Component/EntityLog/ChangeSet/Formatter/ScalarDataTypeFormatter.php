@@ -8,7 +8,6 @@ class ScalarDataTypeFormatter
 {
     /**
      * @param array{oldReadableValue: mixed, newReadableValue: mixed, oldValue: mixed, newValue: mixed} $changes
-     * @return string
      */
     public function formatChanges(array $changes): string
     {

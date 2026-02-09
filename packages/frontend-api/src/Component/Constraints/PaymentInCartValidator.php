@@ -17,11 +17,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PaymentInCartValidator extends ConstraintValidator
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade $paymentValidationFacade
-     */
     public function __construct(
         protected readonly PaymentFacade $paymentFacade,
         protected readonly Domain $domain,
@@ -30,7 +25,6 @@ class PaymentInCartValidator extends ConstraintValidator
     }
 
     /**
-     * @param mixed $value
      * @param \Shopsys\FrontendApiBundle\Component\Constraints\PaymentInCart $constraint
      */
     #[Override]
@@ -56,11 +50,6 @@ class PaymentInCartValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param string|null $cartUuid
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\PaymentInCart $constraint
-     */
     protected function checkPaymentTransportRelation(
         Payment $payment,
         ?string $cartUuid,

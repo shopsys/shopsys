@@ -111,9 +111,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @return array
-     */
     private function categoryNoFilterTestCase(): array
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS, Category::class);
@@ -178,9 +175,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @return array
-     */
     private function categoryOneFlagTestCase(): array
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS, Category::class);
@@ -243,9 +237,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @return array
-     */
     private function categoryPriceTestCase(): array
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
@@ -323,9 +314,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @return array
-     */
     private function categoryFlagBrandAndParametersTestCase(): array
     {
         $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
@@ -401,9 +389,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @return array
-     */
     private function categoryParametersTestCase(): array
     {
         $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
@@ -485,13 +470,10 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @param array $namesByLocale
-     * @param array $valuesTextsByLocales
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
-     */
-    private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales)
-    {
+    private function createParameterFilterData(
+        array $namesByLocale,
+        array $valuesTextsByLocales,
+    ): ParameterFilterData {
         $parameter = $this->parameterRepository->findParameterByNames($namesByLocale);
         $parameterValues = $this->getParameterValuesByLocalesAndTexts($valuesTextsByLocales);
 
@@ -506,7 +488,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
      * @param array[] $valuesTextsByLocales
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales)
+    private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales): array
     {
         $parameterValues = [];
 
@@ -523,9 +505,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         return $parameterValues;
     }
 
-    /**
-     * @return array
-     */
     private function searchNoFilterTestCase(): array
     {
         $filterData = new ProductFilterData();
@@ -548,9 +527,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @return array
-     */
     private function searchOneFlagTestCase(): array
     {
         $filterData = new ProductFilterData();
@@ -570,9 +546,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @return array
-     */
     private function searchOneBrandTestCase(): array
     {
         $filterData = new ProductFilterData();
@@ -596,9 +569,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @return array
-     */
     private function searchPriceTestCase(): array
     {
         $filterData = new ProductFilterData();
@@ -627,9 +597,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @return array
-     */
     private function searchStockTestCase(): array
     {
         $filterData = new ProductFilterData();
@@ -652,9 +619,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @return array
-     */
     private function searchPriceStockFlagBrandsTestCase(): array
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
@@ -684,10 +648,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $countData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
     private function removeEmptyParameters(ProductFilterCountData $countData): ProductFilterCountData
     {
         $result = clone $countData;

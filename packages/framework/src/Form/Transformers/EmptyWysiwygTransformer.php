@@ -11,7 +11,6 @@ class EmptyWysiwygTransformer implements DataTransformerInterface
 {
     /**
      * @param mixed $value
-     * @return mixed
      */
     #[Override]
     public function reverseTransform($value): mixed
@@ -21,7 +20,6 @@ class EmptyWysiwygTransformer implements DataTransformerInterface
 
     /**
      * @param mixed $value
-     * @return mixed
      */
     #[Override]
     public function transform($value): mixed

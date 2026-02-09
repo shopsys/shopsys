@@ -21,7 +21,6 @@ class Country extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -38,7 +37,6 @@ class Country extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Country\CountryTranslation>
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     #[Prezent\Translations(targetEntity: CountryTranslation::class)]
     protected $translations;
@@ -49,9 +47,6 @@ class Country extends AbstractTranslatableEntity
     #[ORM\OneToMany(targetEntity: CountryDomain::class, mappedBy: 'country', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     protected $domains;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     */
     public function __construct(CountryData $countryData)
     {
         $this->translations = new ArrayCollection();
@@ -60,27 +55,18 @@ class Country extends AbstractTranslatableEntity
         $this->setData($countryData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     */
     public function edit(CountryData $countryData): void
     {
         $this->setDomains($countryData);
         $this->setData($countryData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     */
     protected function setData(CountryData $countryData): void
     {
         $this->code = $countryData->code;
         $this->setTranslations($countryData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     */
     protected function setTranslations(CountryData $countryData): void
     {
         foreach ($countryData->names as $locale => $name) {
@@ -91,17 +77,12 @@ class Country extends AbstractTranslatableEntity
     #[EntityLogIdentify(EntityLogIdentify::IS_LOCALIZED)]
     /**
      * @param string|null $locale
-     * @return string
      */
     public function getName($locale = null): string
     {
         return $this->translation($locale)->getName();
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
     public function isEnabled(int $domainId): bool
     {
         return $this->getCountryDomain($domainId)->isEnabled();
@@ -123,27 +104,17 @@ class Country extends AbstractTranslatableEntity
         return $this->code;
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
     public function getPriority(int $domainId): int
     {
         return $this->getCountryDomain($domainId)->getPriority();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\CountryTranslation
-     */
     #[Override]
     protected function createTranslation(): CountryTranslation
     {
         return new CountryTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     */
     protected function setDomains(CountryData $countryData): void
     {
         foreach ($this->domains as $countryDomain) {
@@ -153,9 +124,6 @@ class Country extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     */
     protected function createDomains(CountryData $countryData): void
     {
         $domainIds = array_keys($countryData->enabled);
@@ -168,10 +136,6 @@ class Country extends AbstractTranslatableEntity
         $this->setDomains($countryData);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Country\CountryDomain
-     */
     protected function getCountryDomain(int $domainId): CountryDomain
     {
         foreach ($this->domains as $countryDomain) {

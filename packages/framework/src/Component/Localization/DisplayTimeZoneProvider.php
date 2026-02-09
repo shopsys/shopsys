@@ -10,29 +10,18 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class DisplayTimeZoneProvider implements DisplayTimeZoneProviderInterface
 {
-    /**
-     * @param string $adminDisplayTimeZone
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly string $adminDisplayTimeZone,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @param int $domainId
-     * @return \DateTimeZone
-     */
     #[Override]
     public function getDisplayTimeZoneByDomainId(int $domainId): DateTimeZone
     {
         return $this->domain->getDomainConfigById($domainId)->getDateTimeZone();
     }
 
-    /**
-     * @return \DateTimeZone
-     */
     #[Override]
     public function getDisplayTimeZoneForAdmin(): DateTimeZone
     {

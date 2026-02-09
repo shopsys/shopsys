@@ -16,7 +16,7 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
 {
     use OrderTestTrait;
 
-    public function testCreateOrderWithPersonalPickupStore()
+    public function testCreateOrderWithPersonalPickupStore(): void
     {
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
 
@@ -54,10 +54,6 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
         $this->assertQueryWithExpectedArray($this->getMutation($cartUuid), $expected);
     }
 
-    /**
-     * @param string $cartUuid
-     * @return string
-     */
     private function getMutation(string $cartUuid): string
     {
         return 'mutation {
@@ -93,10 +89,6 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
                 }';
     }
 
-    /**
-     * @param string $cartUuid
-     * @param string $pickupPlaceIdentifier
-     */
     private function addPersonalPickupTransportToCart(string $cartUuid, string $pickupPlaceIdentifier): void
     {
         $transportPersonalPickup = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);

@@ -82,9 +82,6 @@ class ProductTest extends GraphQlTestCase
         $this->assertEmpty($unexpectedFields, sprintf('Unexpected fields in response: %s', implode(', ', $unexpectedFields)));
     }
 
-    /**
-     * @return array
-     */
     private function getExpectedProductDetailWithAllAttributes(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -469,7 +466,6 @@ class ProductTest extends GraphQlTestCase
     }
 
     /**
-     * @param string $firstDomainLocale
      * @return array[]
      */
     private function getExpectedRelatedProducts(string $firstDomainLocale): array
@@ -510,10 +506,6 @@ class ProductTest extends GraphQlTestCase
         ];
     }
 
-    /**
-     * @param string $locale
-     * @return array
-     */
     private function getRedColorExpectedFile(string $locale): array
     {
         $redColorParameterValue = $this->getReference(ParameterColorValueDataFixture::PARAMETER_VALUE_RED_REFERENCE_PREFIX . $locale, ParameterValue::class);

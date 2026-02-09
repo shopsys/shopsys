@@ -22,7 +22,6 @@ class StringType extends ScalarType
 {
     /**
      * @param mixed $value
-     * @return string|null
      */
     #[Override]
     public function serialize($value): ?string
@@ -43,7 +42,6 @@ class StringType extends ScalarType
     /**
      * @param mixed $value
      * @throws \GraphQL\Error\Error
-     * @return string|null
      */
     #[Override]
     public function parseValue($value): ?string
@@ -57,11 +55,6 @@ class StringType extends ScalarType
         return TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
     }
 
-    /**
-     * @param \GraphQL\Language\AST\Node $valueNode
-     * @param array|null $variables
-     * @return string|null
-     */
     #[Override]
     public function parseLiteral(Node $valueNode, ?array $variables = null): ?string
     {

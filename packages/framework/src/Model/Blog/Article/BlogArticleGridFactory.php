@@ -13,12 +13,6 @@ use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 
 class BlogArticleGridFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
-     */
     public function __construct(
         protected readonly BlogArticleRepository $blogArticleRepository,
         protected readonly GridFactory $gridFactory,
@@ -27,10 +21,6 @@ class BlogArticleGridFactory
     ) {
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
     public function create(QueryBuilder $queryBuilder): Grid
     {
         $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'ba.id');

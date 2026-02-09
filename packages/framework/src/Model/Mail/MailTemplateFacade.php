@@ -13,16 +13,6 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
 class MailTemplateFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository $mailTemplateRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory $mailTemplateFactory
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateBuilder $mailTemplateBuilder
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly MailTemplateRepository $mailTemplateRepository,
@@ -35,11 +25,6 @@ class MailTemplateFacade
     ) {
     }
 
-    /**
-     * @param string $templateName
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
     public function getWrappedWithGrapesJsBody(string $templateName, int $domainId): MailTemplate
     {
         $mailTemplate = $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
@@ -47,20 +32,11 @@ class MailTemplateFacade
         return $this->getTemplateWrappedWithGrapesBody($mailTemplate);
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
     public function getById(int $id): MailTemplate
     {
         return $this->mailTemplateRepository->getById($id);
     }
 
-    /**
-     * @param int $id
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
     public function edit(int $id, MailTemplateData $mailTemplateData): MailTemplate
     {
         $mailTemplate = $this->getById($id);
@@ -73,11 +49,6 @@ class MailTemplateFacade
         return $mailTemplate;
     }
 
-    /**
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null $orderStatus
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null $complaintStatus
-     */
     public function createMailTemplateForAllDomains(
         string $name,
         ?OrderStatus $orderStatus = null,
@@ -94,27 +65,16 @@ class MailTemplateFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $attachment
-     * @return string
-     */
-    public function getMailTemplateAttachmentFilepath(UploadedFile $attachment)
+    public function getMailTemplateAttachmentFilepath(UploadedFile $attachment): string
     {
         return $this->mailTemplateAttachmentFilepathProvider->getTemporaryFilepath($attachment);
     }
 
-    /**
-     * @return bool
-     */
-    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()
+    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject(): bool
     {
         return $this->mailTemplateRepository->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
     public function getTemplateWrappedWithGrapesBody(MailTemplate $mailTemplate): MailTemplate
     {
         $mailTemplate->setBody($this->mailTemplateBuilder->getMailTemplateWithContent($mailTemplate->getDomainId(), $mailTemplate->getBody()));

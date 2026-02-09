@@ -15,28 +15,20 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class AutomaticBestsellingProductRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(protected readonly ProductRepository $productRepository)
     {
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \DateTimeImmutable $ordersCreatedAtLimit
-     * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getOfferedProductsByCategory(
-        $domainId,
+        int $domainId,
         Category $category,
         PricingGroup $pricingGroup,
         DateTimeImmutable $ordersCreatedAtLimit,
-        $maxResults,
-    ) {
+        int $maxResults,
+    ): array {
         $queryBuilder = $this->productRepository->getOfferedInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,

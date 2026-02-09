@@ -19,7 +19,6 @@ class RolesCommandDetailEvent extends Event
     protected array $renderCallbacks = [];
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Role $role
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $context
      */
     public function __construct(
@@ -28,9 +27,6 @@ class RolesCommandDetailEvent extends Event
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Role
-     */
     public function getRole(): Role
     {
         return $this->role;

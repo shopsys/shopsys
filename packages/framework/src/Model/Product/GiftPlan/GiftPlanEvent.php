@@ -12,9 +12,6 @@ class GiftPlanEvent extends Event
     public const string UPDATE = 'giftPlan.update';
     public const string DELETE = 'giftPlan.delete';
 
-    /**
-     * @param array $mainProducts
-     */
     public function __construct(
         protected readonly array $mainProducts,
     ) {

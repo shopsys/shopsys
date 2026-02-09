@@ -21,9 +21,6 @@ class DistanceFunction extends FunctionNode
 
     protected Node $longitudeTo;
 
-    /**
-     * @param \Doctrine\ORM\Query\Parser $parser
-     */
     #[Override]
     public function parse(Parser $parser): void
     {
@@ -41,10 +38,6 @@ class DistanceFunction extends FunctionNode
         $parser->match(TokenType::T_CLOSE_PARENTHESIS);
     }
 
-    /**
-     * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
-     * @return string
-     */
     #[Override]
     public function getSql(SqlWalker $sqlWalker): string
     {

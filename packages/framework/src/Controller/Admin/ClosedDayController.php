@@ -30,15 +30,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[ForRole(AdminRoleConstant::ROLE_CLOSED_DAYS)]
 class ClosedDayController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\Grid\ClosedDayGridFactory $closedDayGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory $closedDayDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Holiday\HolidaysImportDataFactory $holidaysImportDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Holiday\HolidaysImportFacade $holidaysImportFacade
-     */
     public function __construct(
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly ClosedDayGridFactory $closedDayGridFactory,
@@ -50,9 +41,6 @@ class ClosedDayController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/closed-day/list/')]
     #[CanView]
     public function listAction(): Response
@@ -62,10 +50,6 @@ class ClosedDayController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/closed-day/new/')]
     #[CanCreate]
     public function newAction(Request $request): Response
@@ -99,11 +83,6 @@ class ClosedDayController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/closed-day/edit/{id}', requirements: ['id' => '\d+'])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
@@ -148,10 +127,6 @@ class ClosedDayController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/closed-day/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -178,10 +153,6 @@ class ClosedDayController extends AdminBaseController
         return $this->redirectToRoute('admin_closedday_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/closed-day/holidays-import')]
     #[CanEdit]
     public function holidaysImportAction(Request $request): Response

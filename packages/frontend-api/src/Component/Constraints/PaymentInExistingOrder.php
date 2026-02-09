@@ -26,11 +26,7 @@ class PaymentInExistingOrder extends Constraint
 
     /**
      * @param array<string, mixed>|null $options
-     * @param string $unavailablePaymentMessage
-     * @param string $unchangeablePaymentMessage
-     * @param string $invalidPaymentSwiftMessage
      * @param array<string>|null $groups
-     * @param mixed $payload
      */
     #[HasNamedArguments]
     public function __construct(

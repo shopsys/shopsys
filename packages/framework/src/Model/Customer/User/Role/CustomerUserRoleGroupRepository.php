@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -12,17 +13,11 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\Exception\CustomerUserRoleG
 
 class CustomerUserRoleGroupRepository
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getCustomerUserRoleGroupRepository()
+    protected function getCustomerUserRoleGroupRepository(): EntityRepository
     {
         return $this->em->getRepository(CustomerUserRoleGroup::class);
     }
@@ -35,10 +30,6 @@ class CustomerUserRoleGroupRepository
         return $this->getCustomerUserRoleGroupRepository()->findAll();
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
-     */
     public function getById(int $id): CustomerUserRoleGroup
     {
         $roleGroup = $this->getCustomerUserRoleGroupRepository()->findOneBy(['id' => $id]);
@@ -50,10 +41,6 @@ class CustomerUserRoleGroupRepository
         return $roleGroup;
     }
 
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
-     */
     public function getByUuid(string $uuid): CustomerUserRoleGroup
     {
         $roleGroup = $this->getCustomerUserRoleGroupRepository()->findOneBy(['uuid' => $uuid]);
@@ -65,18 +52,11 @@ class CustomerUserRoleGroupRepository
         return $roleGroup;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getAllQueryBuilder(): QueryBuilder
     {
         return $this->getCustomerUserRoleGroupRepository()->createQueryBuilder('cug');
     }
 
-    /**
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getAllQueryBuilderByLocale(string $locale): QueryBuilder
     {
         $queryBuilder = $this->getAllQueryBuilder();
@@ -85,10 +65,6 @@ class CustomerUserRoleGroupRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string $locale
-     */
     protected function addTranslation(QueryBuilder $queryBuilder, string $locale): void
     {
         $queryBuilder
@@ -97,10 +73,6 @@ class CustomerUserRoleGroupRepository
             ->setParameter('locale', $locale);
     }
 
-    /**
-     * @param int $id
-     * @return int
-     */
     public function getCustomerUserCountByRoleGroup(int $id): int
     {
         $queryBuilder = $this->getCustomerUsersByRoleGroupIdQueryBuilder($id);
@@ -110,7 +82,6 @@ class CustomerUserRoleGroupRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup $customerUserRoleGroup
      * @return iterable<int, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser>
      */
     public function iterateAllCustomerUsersByRoleGroup(CustomerUserRoleGroup $customerUserRoleGroup): iterable
@@ -120,10 +91,6 @@ class CustomerUserRoleGroupRepository
             ->toIterable();
     }
 
-    /**
-     * @param int $customerUserRoleGroupId
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     protected function getCustomerUsersByRoleGroupIdQueryBuilder(int $customerUserRoleGroupId): QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder();

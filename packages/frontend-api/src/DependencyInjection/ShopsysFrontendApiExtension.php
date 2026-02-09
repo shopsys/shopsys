@@ -14,9 +14,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class ShopsysFrontendApiExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function prepend(ContainerBuilder $container): void
     {
@@ -42,10 +39,6 @@ class ShopsysFrontendApiExtension extends Extension implements PrependExtensionI
         ]);
     }
 
-    /**
-     * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
     public function load(array $config, ContainerBuilder $container): void
     {

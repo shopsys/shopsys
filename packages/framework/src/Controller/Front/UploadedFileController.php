@@ -12,21 +12,12 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
 class UploadedFileController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     */
     public function __construct(
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly FilesystemOperator $filesystem,
     ) {
     }
 
-    /**
-     * @param int $uploadedFileId
-     * @param string $uploadedFilename
-     * @return \Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse
-     */
     public function downloadAction(int $uploadedFileId, string $uploadedFilename): DownloadFileResponse
     {
         try {

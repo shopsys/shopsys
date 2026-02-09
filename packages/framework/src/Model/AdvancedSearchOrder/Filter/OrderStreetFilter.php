@@ -16,9 +16,6 @@ class OrderStreetFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'customerStreet';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
-     */
     public function __construct(
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
@@ -84,10 +81,6 @@ class OrderStreetFilter implements AdvancedSearchFilterInterface
         }
     }
 
-    /**
-     * @param string $operator
-     * @return string
-     */
     protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {

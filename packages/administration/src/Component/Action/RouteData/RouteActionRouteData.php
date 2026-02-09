@@ -9,7 +9,6 @@ use Closure;
 class RouteActionRouteData implements ActionRouteInterface
 {
     /**
-     * @param string $routeName
      * @param array|\Closure(mixed): array $routeParameters
      */
     public function __construct(
@@ -18,18 +17,11 @@ class RouteActionRouteData implements ActionRouteInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getRouteName(): string
     {
         return $this->routeName;
     }
 
-    /**
-     * @param mixed $data
-     * @return array
-     */
     public function getRouteParameters(mixed $data = null): array
     {
         if (is_array($this->routeParameters)) {

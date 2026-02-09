@@ -10,12 +10,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class TransportDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesDataFactory $transportInputPricesDataFactory
-     */
     public function __construct(
         protected readonly VatFacade $vatFacade,
         protected readonly Domain $domain,
@@ -24,17 +18,11 @@ class TransportDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportData
-     */
     protected function createInstance(): TransportData
     {
         return new TransportData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportData
-     */
     public function create(): TransportData
     {
         $transportData = $this->createInstance();
@@ -43,9 +31,6 @@ class TransportDataFactory
         return $transportData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     */
     protected function fillNew(TransportData $transportData): void
     {
         $transportData->daysUntilDelivery = 0;
@@ -64,10 +49,6 @@ class TransportDataFactory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportData
-     */
     public function createFromTransport(Transport $transport): TransportData
     {
         $transportData = $this->createInstance();
@@ -76,10 +57,6 @@ class TransportDataFactory
         return $transportData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     */
     protected function fillFromTransport(TransportData $transportData, Transport $transport): void
     {
         $names = [];

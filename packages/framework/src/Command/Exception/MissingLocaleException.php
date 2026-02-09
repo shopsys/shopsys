@@ -11,11 +11,7 @@ class MissingLocaleException extends Exception
 {
     private string $locale;
 
-    /**
-     * @param mixed $missingLocale
-     * @param \Throwable|null $previous
-     */
-    public function __construct($missingLocale, ?Throwable $previous = null)
+    public function __construct(mixed $missingLocale, ?Throwable $previous = null)
     {
         $message = sprintf(
             'It looks like your operating system does not support locale "%s". '
@@ -28,10 +24,7 @@ class MissingLocaleException extends Exception
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }

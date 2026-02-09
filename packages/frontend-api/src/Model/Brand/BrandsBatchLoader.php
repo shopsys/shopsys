@@ -11,11 +11,6 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 
 class BrandsBatchLoader
 {
-    /**
-     * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly Domain $domain,
@@ -25,7 +20,6 @@ class BrandsBatchLoader
 
     /**
      * @param int[] $brandIds
-     * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadByIds(array $brandIds): Promise
     {

@@ -13,12 +13,6 @@ use Twig\TwigFunction;
 
 class LocalizationExtension extends AbstractExtension
 {
-    /**
-     * @param string $webDir
-     * @param \Symfony\Component\Asset\Packages $assetPackages
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
-     */
     public function __construct(
         protected readonly string $webDir,
         protected readonly Packages $assetPackages,
@@ -31,7 +25,7 @@ class LocalizationExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('localeFlag', $this->getLocaleFlagHtml(...), ['is_safe' => ['html']]),
@@ -48,14 +42,6 @@ class LocalizationExtension extends AbstractExtension
         return $this->administratorLocalizationFacade->getAllowedAdminLocales();
     }
 
-    /**
-     * @param string $locale
-     * @param string|null $displayLocale
-     * @param bool $showTitle
-     * @param int $width
-     * @param int $height
-     * @return string
-     */
     public function getLocaleFlagHtml(
         string $locale,
         ?string $displayLocale = null,
@@ -91,20 +77,12 @@ class LocalizationExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @param string $locale
-     * @param string|null $displayLocale
-     * @return string
-     */
     public function getTitle(string $locale, ?string $displayLocale = null): string
     {
         return $this->localization->getLanguageName($locale, $displayLocale);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'localization';
     }

@@ -10,10 +10,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Search\SearchResultsProviderInterfa
 
 interface ArticlesSearchResultsProviderInterface extends SearchResultsProviderInterface
 {
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \GraphQL\Executor\Promise\Promise|array
-     */
     public function getArticlesSearchResults(
         Argument $argument,
     ): Promise|array;

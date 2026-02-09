@@ -13,10 +13,6 @@ class VatDeletionCronModule implements IteratedCronModuleInterface
 {
     protected Logger $logger;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
-     */
     public function __construct(
         protected readonly VatFacade $vatFacade,
         protected readonly ProductInputPriceFacade $productInputPriceFacade,
@@ -27,20 +23,20 @@ class VatDeletionCronModule implements IteratedCronModuleInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
 
     #[Override]
-    public function sleep()
+    public function sleep(): void
     {
         $deletedVatsCount = $this->vatFacade->deleteAllReplacedVats();
         $this->logger->info('Deleted ' . $deletedVatsCount . ' vats');
     }
 
     #[Override]
-    public function wakeUp()
+    public function wakeUp(): void
     {
     }
 
@@ -48,7 +44,7 @@ class VatDeletionCronModule implements IteratedCronModuleInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function iterate()
+    public function iterate(): bool
     {
         $batchResult = $this->productInputPriceFacade->replaceBatchVatAndRecalculateInputPrices();
 

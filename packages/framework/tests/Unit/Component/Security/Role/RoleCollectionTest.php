@@ -54,7 +54,7 @@ class RoleCollectionTest extends TestCase
         $role = new Role('ROLE_TEST', 'Test Role');
         $collection->add($role);
 
-        $collection->edit('ROLE_TEST', function (Role $role) {
+        $collection->edit('ROLE_TEST', function (Role $role): void {
             $role->setName('Updated Role');
             $role->setAvailablePermissions([Permission::EDIT]);
         });
@@ -71,7 +71,7 @@ class RoleCollectionTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Role with constant "ROLE_TEST" does not exist.');
 
-        $collection->edit('ROLE_TEST', function (Role $role) {
+        $collection->edit('ROLE_TEST', function (Role $role): void {
             $role->setName('Updated Role');
         });
     }
@@ -84,7 +84,7 @@ class RoleCollectionTest extends TestCase
 
         $this->expectException(RoleCannotBeOverwrittenException::class);
 
-        $collection->edit('ROLE_TEST', function (Role $role) {
+        $collection->edit('ROLE_TEST', function (Role $role): void {
             $role->setName('Updated Role');
         });
     }

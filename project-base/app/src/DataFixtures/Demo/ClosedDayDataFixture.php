@@ -17,11 +17,6 @@ use Symfony\Component\Clock\DatePoint;
 
 class ClosedDayDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory $closedDayDataFactory
-     */
     public function __construct(
         private readonly StoreFacade $storeFacade,
         private readonly ClosedDayFacade $closedDayFacade,
@@ -29,9 +24,6 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -56,7 +48,6 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return iterable<array{\DateTimeImmutable, string, bool}>
      */
     private function getClosedDays(DomainConfig $domainConfig): iterable

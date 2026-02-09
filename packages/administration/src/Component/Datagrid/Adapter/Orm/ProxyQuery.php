@@ -29,11 +29,6 @@ final class ProxyQuery
      */
     private array $joins = [];
 
-    /**
-     * @param string $entityClass
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param string $locale
-     */
     public function __construct(
         private readonly string $entityClass,
         private readonly EntityManagerInterface $entityManager,
@@ -52,9 +47,6 @@ final class ProxyQuery
         $this->queryBuilder = clone $this->queryBuilder;
     }
 
-    /**
-     * @param string $select
-     */
     public function addSelect(string $select): void
     {
         if (array_key_exists($select, $this->selects)) {
@@ -66,7 +58,6 @@ final class ProxyQuery
     }
 
     /**
-     * @param string $string
      * @return string Returns alias of the select
      */
     private function processDotNotation(string $string): string
@@ -122,20 +113,11 @@ final class ProxyQuery
         );
     }
 
-    /**
-     * @param mixed $part
-     * @return string
-     */
-    private function getAlias($part): string
+    private function getAlias(mixed $part): string
     {
         return strtr($part, ['.' => '__']);
     }
 
-    /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
-     * @param string $field
-     * @return \Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PartType
-     */
     private function getPartType(ClassMetadata $classMetadata, string $field): PartType
     {
         if ($classMetadata->hasField($field)) {
@@ -159,8 +141,6 @@ final class ProxyQuery
 
     /**
      * @param string[] $parts
-     * @param int $currentIndex
-     * @return bool
      */
     private function isLastPart(array $parts, int $currentIndex): bool
     {
@@ -169,9 +149,6 @@ final class ProxyQuery
 
     /**
      * @param string[] $parts
-     * @param int $currentIndex
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
-     * @return bool
      */
     private function isNextPartLastAndIdentity(array $parts, int $currentIndex, ClassMetadata $classMetadata): bool
     {
@@ -187,23 +164,11 @@ final class ProxyQuery
         return in_array($nextPart, $associationClassMetadata->getIdentifier(), true) !== false;
     }
 
-    /**
-     * @param string $part
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $currentClassMetadata
-     * @return \Doctrine\ORM\Mapping\ClassMetadata
-     */
     private function getClassMetadataForTarget(string $part, ClassMetadata $currentClassMetadata): ClassMetadata
     {
         return $this->entityManager->getClassMetadata($currentClassMetadata->getAssociationTargetClass($part));
     }
 
-    /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
-     * @param string $pathToJoin
-     * @param string $fieldName
-     * @param string $currentAlias
-     * @param string $joinAlias
-     */
     private function joinAssociation(
         ClassMetadata $classMetadata,
         string $pathToJoin,
@@ -236,9 +201,6 @@ final class ProxyQuery
         $this->queryBuilder->leftJoin($associationMapping['targetEntity'], $joinAlias, Join::WITH, "{$currentAlias}.{$fieldName} = {$joinAlias}.id");
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getQueryBuilder(): QueryBuilder
     {
         return $this->queryBuilder;

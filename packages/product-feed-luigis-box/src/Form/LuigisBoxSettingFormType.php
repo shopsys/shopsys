@@ -14,10 +14,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class LuigisBoxSettingFormType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

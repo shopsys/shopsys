@@ -13,10 +13,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class FileUploadValidator extends ConstraintValidator
 {
-    /**
-     * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
-     */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
@@ -38,10 +34,6 @@ class FileUploadValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param mixed $value
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\FileUpload $constraint
-     */
     protected function checkUploadedFile(mixed $value, FileUpload $constraint): void
     {
         if (!($value instanceof UploadedFile) || !$value->isValid()) {
@@ -54,10 +46,6 @@ class FileUploadValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\FileUpload $constraint
-     */
     protected function checkFileSize(UploadedFile $uploadedFile, FileUpload $constraint): void
     {
         if ($constraint->maxSize !== null && $uploadedFile->getSize() > $constraint->maxSize) {
@@ -73,10 +61,6 @@ class FileUploadValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\FileUpload $constraint
-     */
     protected function checkMimeType(UploadedFile $uploadedFile, FileUpload $constraint): void
     {
         $fileMimeType = $uploadedFile->getMimeType();

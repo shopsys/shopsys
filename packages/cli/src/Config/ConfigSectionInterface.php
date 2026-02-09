@@ -8,15 +8,11 @@ interface ConfigSectionInterface
 {
     /**
      * Unique key for YAML mapping (e.g., 'map_settings')
-     *
-     * @return string
      */
     public static function getKey(): string;
 
     /**
      * Order for interactive questions (higher = earlier)
-     *
-     * @return int
      */
     public static function getPriority(): int;
 

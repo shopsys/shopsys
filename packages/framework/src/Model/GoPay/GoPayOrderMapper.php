@@ -13,21 +13,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class GoPayOrderMapper
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
-     */
     public function __construct(
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly GoPayPaymentMethodFacade $goPayPaymentMethodFacade,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string|null $goPayBankSwift
-     * @return array
-     */
     public function createGoPayPaymentData(Order $order, ?string $goPayBankSwift): array
     {
         $orderPayment = $order->getPayment();
@@ -77,19 +68,12 @@ class GoPayOrderMapper
 
     /**
      * GoPay requires prices in cents.
-     *
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @return int
      */
     public function formatPriceForGoPay(Money $price): int
     {
         return (int)round((float)$price->multiply(100)->getAmount());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return array
-     */
     protected function createGoPayPaymentItemsData(Order $order): array
     {
         $orderItems = [];
@@ -106,7 +90,6 @@ class GoPayOrderMapper
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string[]
      */
     protected function createContactData(Order $order): array

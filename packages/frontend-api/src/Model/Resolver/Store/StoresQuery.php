@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Store;
 
+use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Relay\Connection\Output\Connection;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -14,22 +16,15 @@ use Shopsys\FrontendApiBundle\Model\Store\StoresFilterOptions;
 
 class StoresQuery extends AbstractQuery
 {
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Store\StoreFacade $storeFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
         protected readonly Domain $domain,
     ) {
     }
 
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
-     */
-    public function storesQuery(Argument $argument)
-    {
+    public function storesQuery(
+        Argument $argument,
+    ): Connection|Promise {
         $this->pageSizeValidator->checkMaxPageSize($argument);
         $domainId = $this->domain->getId();
 
@@ -52,13 +47,10 @@ class StoresQuery extends AbstractQuery
         return $paginator->auto($argument, $storesCount);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object|null
-     */
-    public function storesByTransportQuery(Transport $transport, Argument $argument)
-    {
+    public function storesByTransportQuery(
+        Transport $transport,
+        Argument $argument,
+    ): Connection|Promise|null {
         if ($transport->isPersonalPickup()) {
             return $this->storesQuery($argument);
         }

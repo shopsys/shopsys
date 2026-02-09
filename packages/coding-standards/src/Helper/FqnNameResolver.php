@@ -9,18 +9,10 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class FqnNameResolver
 {
-    /**
-     * @param \PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer $namespaceUsesAnalyzer
-     */
     public function __construct(private readonly NamespaceUsesAnalyzer $namespaceUsesAnalyzer)
     {
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param string $className
-     * @return string
-     */
     public function resolve(Tokens $tokens, string $className): string
     {
         if ($className === '') {
@@ -51,10 +43,6 @@ final class FqnNameResolver
      *
      * use SomeNamespace\AnotherClass;
      * use SomeNamespace\SomeClass;
-     *
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param string $className
-     * @return string|null
      */
     private function matchUseImports(Tokens $tokens, string $className): ?string
     {
@@ -69,19 +57,11 @@ final class FqnNameResolver
         return null;
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @return bool
-     */
     private function hasNamespace(Tokens $tokens): bool
     {
         return (bool)$tokens->findGivenKind([T_NAMESPACE], 0);
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @return string
-     */
     private function getNamespaceAsString(Tokens $tokens): string
     {
         $namespaceTokens = $tokens->findGivenKind([T_NAMESPACE], 0);

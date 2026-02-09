@@ -28,9 +28,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class GenerateEntityAgendaCommand extends Command
 {
-    /**
-     * @param \Shopsys\MakerBundle\EntityConfig\EntityConfigFactory $entityConfigFactory
-     */
     public function __construct(protected readonly EntityConfigFactory $entityConfigFactory)
     {
         parent::__construct();

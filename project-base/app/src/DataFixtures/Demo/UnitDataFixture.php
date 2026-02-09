@@ -39,10 +39,7 @@ class UnitDataFixture extends AbstractReferenceFixture
     public const string UNIT_YEARS = 'unit_years';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory $unitDataFactory
      * @param \App\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly UnitFacade $unitFacade,
@@ -52,9 +49,6 @@ class UnitDataFixture extends AbstractReferenceFixture
     ) {
     }
 
-    /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     */
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -163,10 +157,6 @@ class UnitDataFixture extends AbstractReferenceFixture
         $this->setPiecesAsDefaultUnit();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     * @param string|null $referenceName
-     */
     private function createUnit(UnitData $unitData, ?string $referenceName = null): void
     {
         $unit = $this->unitFacade->create($unitData);

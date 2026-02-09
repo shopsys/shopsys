@@ -13,7 +13,6 @@ class CopyTotalPricesOfOrderItemTransformer implements DataTransformerInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null $value
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null
      */
     #[Override]
     public function transform($value): ?OrderItemData
@@ -45,7 +44,6 @@ class CopyTotalPricesOfOrderItemTransformer implements DataTransformerInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null $value
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null
      */
     #[Override]
     public function reverseTransform($value): ?OrderItemData

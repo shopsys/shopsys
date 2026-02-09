@@ -36,18 +36,11 @@ class OrderInput
      */
     protected array $additionalData = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     public function __construct(
         protected readonly DomainConfig $domainConfig,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $quantity
-     */
     public function addProduct(Product $product, int $quantity): void
     {
         $quantifiedProduct = new QuantifiedProduct($product, $quantity);
@@ -56,9 +49,6 @@ class OrderInput
         $this->addQuantifiedProduct($quantifiedProduct);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     */
     public function addQuantifiedProduct(QuantifiedProduct $quantifiedProduct): void
     {
         $this->products[] = $quantifiedProduct;
@@ -69,25 +59,16 @@ class OrderInput
         $this->products = [];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport|null $transport
-     */
     public function setTransport(?Transport $transport): void
     {
         $this->transport = $transport;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
-     */
     public function setPayment(?Payment $payment): void
     {
         $this->payment = $payment;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     */
     public function addPromoCode(PromoCode $promoCode): void
     {
         $this->promoCodes[] = $promoCode;
@@ -101,43 +82,26 @@ class OrderInput
         return $this->products;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
-     */
     public function getPayment(): ?Payment
     {
         return $this->payment;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport|null
-     */
     public function getTransport(): ?Transport
     {
         return $this->transport;
     }
 
-    /**
-     * @param string $key
-     * @return mixed
-     */
     public function findAdditionalData(string $key): mixed
     {
         return $this->additionalData[$key] ?? null;
     }
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     */
     public function addAdditionalData(string $key, mixed $value): void
     {
         $this->additionalData[$key] = $value;
     }
 
-    /**
-     * @param string $key
-     */
     public function cleanAdditionalData(string $key): void
     {
         unset($this->additionalData[$key]);
@@ -151,33 +115,21 @@ class OrderInput
         return $this->promoCodes;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     */
     public function getCustomerUser(): ?CustomerUser
     {
         return $this->customerUser;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     */
     public function setCustomerUser(?CustomerUser $customerUser): void
     {
         $this->customerUser = $customerUser;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function getDomainConfig(): DomainConfig
     {
         return $this->domainConfig;
     }
 
-    /**
-     * @return bool
-     */
     public function isFreeTransportAndPaymentPromoCodeApplied(): bool
     {
         foreach ($this->getPromoCodes() as $appliedPromoCode) {

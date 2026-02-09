@@ -19,14 +19,6 @@ class GiftPlanSettingFacade
 {
     public const string GIFT_INPUT_PRICE = 'giftInputPrice';
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly CurrencyFacade $currencyFacade,
@@ -37,19 +29,11 @@ class GiftPlanSettingFacade
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
-     * @param int $domainId
-     */
     public function setInputGiftPrice(Money $inputPrice, int $domainId): void
     {
         $this->setting->setForDomain(static::GIFT_INPUT_PRICE, $inputPrice->getAmount(), $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function getInputGiftPrice(int $domainId): Money
     {
         $value = $this->inMemoryCache->getOrSaveValue(self::GIFT_INPUT_PRICE, fn () => $this->setting->getForDomain(static::GIFT_INPUT_PRICE, $domainId), self::GIFT_INPUT_PRICE);
@@ -61,11 +45,6 @@ class GiftPlanSettingFacade
         return Money::create((string)$value);
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function calculateBaseGiftPrice(int $domainId, Vat $vat): PriceInterface
     {
         $inputPrice = $this->getInputGiftPrice($domainId);
@@ -79,11 +58,6 @@ class GiftPlanSettingFacade
         );
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
     public function calculateProductGiftPrice(int $domainId, Vat $vat): ProductPrice
     {
         $pricingGroup = $this->currentCustomerUser->getPricingGroup();

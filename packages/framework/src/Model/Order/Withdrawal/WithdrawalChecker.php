@@ -12,11 +12,6 @@ use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalDeadlineP
 
 class WithdrawalChecker
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestRepository $withdrawalRequestRepository
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation,
         protected readonly WithdrawalRequestRepository $withdrawalRequestRepository,
@@ -24,9 +19,6 @@ class WithdrawalChecker
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function checkOrderWithdrawal(Order $order): void
     {
         if ($order->isCancelled()) {

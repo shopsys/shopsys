@@ -8,13 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class AutocompleteFavoriteFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteRepository $autocompleteFavoriteRepository
-     * @param \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteProductFactory $autocompleteFavoriteProductFactory
-     * @param \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteCategoryFactory $autocompleteFavoriteCategoryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteBrandFactory $autocompleteFavoriteBrandFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AutocompleteFavoriteRepository $autocompleteFavoriteRepository,
@@ -25,7 +18,6 @@ class AutocompleteFavoriteFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getProductsForDomain(int $domainId): array
@@ -34,7 +26,6 @@ class AutocompleteFavoriteFacade
     }
 
     /**
-     * @param int $domainId
      * @return int[]
      */
     public function getProductIdsForDomain(int $domainId): array
@@ -43,7 +34,6 @@ class AutocompleteFavoriteFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getCategoriesForDomain(int $domainId): array
@@ -52,8 +42,6 @@ class AutocompleteFavoriteFacade
     }
 
     /**
-     * @param int $domainId
-     * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getVisibleCategoriesForDomain(int $domainId, int $limit): array
@@ -62,8 +50,6 @@ class AutocompleteFavoriteFacade
     }
 
     /**
-     * @param int $domainId
-     * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function getBrandsForDomain(int $domainId, ?int $limit = null): array
@@ -71,10 +57,6 @@ class AutocompleteFavoriteFacade
         return $this->autocompleteFavoriteRepository->getBrandsForDomain($domainId, $limit);
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Autocomplete\AutocompleteFavoriteData $autocompleteFavoriteData
-     */
     public function saveAllForDomain(int $domainId, AutocompleteFavoriteData $autocompleteFavoriteData): void
     {
         $this->saveProductsForDomain($domainId, $autocompleteFavoriteData->products);
@@ -83,7 +65,6 @@ class AutocompleteFavoriteFacade
     }
 
     /**
-     * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      */
     protected function saveProductsForDomain(int $domainId, array $products): void
@@ -106,7 +87,6 @@ class AutocompleteFavoriteFacade
     }
 
     /**
-     * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      */
     protected function saveCategoriesForDomain(int $domainId, array $categories): void
@@ -129,7 +109,6 @@ class AutocompleteFavoriteFacade
     }
 
     /**
-     * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brands
      */
     protected function saveBrandsForDomain(int $domainId, array $brands): void

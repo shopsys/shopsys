@@ -35,7 +35,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
      */
     private TransportDataFactory $transportDataFactory;
 
-    public function testVisibleTransport()
+    public function testVisibleTransport(): void
     {
         $enabledForDomains = [
             Domain::FIRST_DOMAIN_ID => true,
@@ -57,7 +57,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $this->assertContains($transport, $visibleTransports);
     }
 
-    public function testVisibleTransportHiddenTransport()
+    public function testVisibleTransportHiddenTransport(): void
     {
         $enabledOnDomains = [
             1 => true,
@@ -78,7 +78,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $this->assertNotContains($transport, $visibleTransports);
     }
 
-    public function testVisibleTransportHiddenPayment()
+    public function testVisibleTransportHiddenPayment(): void
     {
         $transportEnabledForDomains = [
             1 => true,
@@ -104,7 +104,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $this->assertNotContains($transport, $visibleTransports);
     }
 
-    public function testVisibleTransportNoPayment()
+    public function testVisibleTransportNoPayment(): void
     {
         $enabledForDomains = [
             1 => true,
@@ -121,7 +121,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $this->assertNotContains($transport, $visibleTransports);
     }
 
-    public function testVisibleTransportOnDifferentDomain()
+    public function testVisibleTransportOnDifferentDomain(): void
     {
         $paymentEnabledForDomains = [
             1 => true,
@@ -147,7 +147,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $this->assertNotContains($transport, $visibleTransports);
     }
 
-    public function testVisibleTransportPaymentOnDifferentDomain()
+    public function testVisibleTransportPaymentOnDifferentDomain(): void
     {
         $paymentEnabledForDomains = [
             1 => false,
@@ -171,7 +171,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $this->assertNotContains($transport, $visibleTransports);
     }
 
-    public function testVisiblePayment()
+    public function testVisiblePayment(): void
     {
         $enabledForDomains = [
             1 => true,
@@ -191,7 +191,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $this->assertContains($payment, $visiblePayments);
     }
 
-    public function testVisiblePaymentHiddenTransport()
+    public function testVisiblePaymentHiddenTransport(): void
     {
         $enabledForDomains = [
             1 => true,
@@ -211,7 +211,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $this->assertNotContains($payment, $visiblePayments);
     }
 
-    public function testVisiblePaymentHiddenPayment()
+    public function testVisiblePaymentHiddenPayment(): void
     {
         $enabledForDomains = [
             1 => true,
@@ -231,7 +231,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $this->assertNotContains($payment, $visiblePayments);
     }
 
-    public function testVisiblePaymentNoTransport()
+    public function testVisiblePaymentNoTransport(): void
     {
         $enabledForDomains = [
             1 => true,
@@ -247,7 +247,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $this->assertNotContains($payment, $visiblePayments);
     }
 
-    public function testVisiblePaymentOnDifferentDomain()
+    public function testVisiblePaymentOnDifferentDomain(): void
     {
         $transportEnabledForDomains = [
             1 => true,
@@ -270,7 +270,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $this->assertNotContains($payment, $visiblePayments);
     }
 
-    public function testVisiblePaymentTransportOnDifferentDomain()
+    public function testVisiblePaymentTransportOnDifferentDomain(): void
     {
         $transportEnabledForDomains = [
             1 => true,
@@ -296,10 +296,8 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     /**
      * @param bool[] $enabledForDomains
-     * @param bool $hidden
-     * @return \App\Model\Payment\Payment
      */
-    public function getDefaultPayment($enabledForDomains, $hidden)
+    public function getDefaultPayment(array $enabledForDomains, bool $hidden): Payment
     {
         $paymentDataFactory = $this->paymentDataFactory;
 
@@ -318,10 +316,8 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     /**
      * @param bool[] $enabledForDomains
-     * @param bool $hidden
-     * @return \App\Model\Transport\Transport
      */
-    public function getDefaultTransport($enabledForDomains, $hidden)
+    public function getDefaultTransport(array $enabledForDomains, bool $hidden): Transport
     {
         $transportDataFactory = $this->transportDataFactory;
 

@@ -10,9 +10,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20200921071900 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     #[Override]
     public function up(Schema $schema): void
     {
@@ -28,12 +25,7 @@ class Version20200921071900 extends AbstractMigration
         $this->createMailTemplateIfNotExist('order_status_5', 1, 'false');
     }
 
-    /**
-     * @param string $mailTemplateName
-     * @param int $domainId
-     * @param string $sendMail
-     */
-    private function createMailTemplateIfNotExist($mailTemplateName, $domainId, $sendMail)
+    private function createMailTemplateIfNotExist(string $mailTemplateName, int $domainId, string $sendMail): void
     {
         $mailTemplateCount = $this->sql('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName AND domain_id = :domainId', [
             'mailTemplateName' => $mailTemplateName,

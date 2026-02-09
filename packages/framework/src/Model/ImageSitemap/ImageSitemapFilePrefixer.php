@@ -6,11 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\ImageSitemap;
 
 class ImageSitemapFilePrefixer
 {
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getSitemapFilePrefixForDomain($domainId): string
+    public function getSitemapFilePrefixForDomain(int $domainId): string
     {
         return 'domain_' . $domainId . '_sitemap_image';
     }

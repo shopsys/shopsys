@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use Doctrine\ORM\Internal\Hydration\IterableResult;
+use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -18,8 +20,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
  * @method \Doctrine\ORM\QueryBuilder getListableForBrandQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Product\Brand\Brand $brand)
  * @method \Doctrine\ORM\QueryBuilder getSellableInCategoryQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
  * @method \Doctrine\ORM\QueryBuilder getOfferedInCategoryQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
- * @method filterByCategory(\Doctrine\ORM\QueryBuilder $queryBuilder, \App\Model\Category\Category $category, int $domainId)
- * @method filterByBrand(\Doctrine\ORM\QueryBuilder $queryBuilder, \App\Model\Product\Brand\Brand $brand)
+ * @method void filterByCategory(\Doctrine\ORM\QueryBuilder $queryBuilder, \App\Model\Category\Category $category, int $domainId)
+ * @method void filterByBrand(\Doctrine\ORM\QueryBuilder $queryBuilder, \App\Model\Product\Brand\Brand $brand)
  * @method \App\Model\Product\Product getById(int $id)
  * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)
  * @method \App\Model\Product\Product getSellableById(int $id, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
@@ -37,9 +39,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
 class ProductRepository extends BaseProductRepository
 {
     /**
-     * @param array $productCatnums
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \App\Model\Product\Product[]
      */
     public function getVisibleProductsByCatnumsAndDomainId(
@@ -59,7 +58,7 @@ class ProductRepository extends BaseProductRepository
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][]
      */
     #[Override]
-    public function getProductIteratorForReplaceVat()
+    public function getProductIteratorForReplaceVat(): IterableResult|array
     {
         $query = $this->em->createQuery('
             SELECT distinct p
@@ -72,19 +71,12 @@ class ProductRepository extends BaseProductRepository
         return $query->iterate();
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
-     * @param string|null $searchText
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getSellableBySearchTextQueryBuilder(
-        $domainId,
+        int $domainId,
         PricingGroup $pricingGroup,
-        $locale,
-        $searchText,
-    ) {
+        string $locale,
+        ?string $searchText,
+    ): QueryBuilder {
         $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
 
         $this->addTranslation($queryBuilder, $locale);

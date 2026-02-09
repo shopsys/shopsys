@@ -19,20 +19,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class SeoController extends AdminBaseController
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     */
     public function __construct(
         protected readonly SeoSettingFacade $seoSettingFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/')]
     #[CanView(AdminRoleConstant::ROLE_SEO, methods: [HttpMethod::GET])]
     #[CanEdit(AdminRoleConstant::ROLE_SEO, methods: [HttpMethod::POST])]
@@ -69,10 +61,6 @@ class SeoController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/robots/')]
     #[CanView(AdminRoleConstant::ROLE_ROBOTS, methods: [HttpMethod::GET])]
     #[CanEdit(AdminRoleConstant::ROLE_ROBOTS, methods: [HttpMethod::POST])]
@@ -101,10 +89,6 @@ class SeoController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(path: '/seo/hreflang/')]
     #[CanView(AdminRoleConstant::ROLE_HREFLANG, methods: [HttpMethod::GET])]
     #[CanEdit(AdminRoleConstant::ROLE_HREFLANG, methods: [HttpMethod::POST])]

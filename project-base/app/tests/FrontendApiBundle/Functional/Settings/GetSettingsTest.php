@@ -22,10 +22,6 @@ final class GetSettingsTest extends GraphQlTestCase
      */
     private TransformStringHelper $transformStringHelper;
 
-    /**
-     * @param string|null $robotsTxtContent
-     * @param string|null $robotsTxtData
-     */
     #[DataProvider('dataProvider')]
     public function testGetSettings(?string $robotsTxtContent, ?string $robotsTxtData): void
     {
@@ -39,9 +35,6 @@ final class GetSettingsTest extends GraphQlTestCase
         self::assertSame($expectedSettingsData, $responseData);
     }
 
-    /**
-     * @return array
-     */
     public static function dataProvider(): array
     {
         return [
@@ -63,10 +56,6 @@ CONTENT,
         ];
     }
 
-    /**
-     * @param string|null $data
-     * @return array
-     */
     private function getExpectedSettings(?string $data): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();

@@ -15,19 +15,11 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 
 class PriceInfoFactory
 {
-    /**
-     * @param \Psr\Clock\ClockInterface $clock
-     */
     public function __construct(
         protected readonly ClockInterface $clock,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface $basicProductPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null $specialPrice
-     * @return \Shopsys\FrontendApiBundle\Model\Price\PriceInfo
-     */
     public function create(
         ProductPriceInterface $basicProductPrice,
         ?SpecialPrice $specialPrice,
@@ -55,10 +47,6 @@ class PriceInfoFactory
         return $priceInfo;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrontendApiBundle\Model\Price\PriceInfo
-     */
     public function createHiddenPriceInfo(PricingGroup $pricingGroup): PriceInfo
     {
         return $this->create(
@@ -67,10 +55,6 @@ class PriceInfoFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice $specialPrice
-     * @return \DateTimeInterface
-     */
     protected function determineNextPriceChange(SpecialPrice $specialPrice): DateTimeInterface
     {
         $now = $this->clock->now();
@@ -92,11 +76,6 @@ class PriceInfoFactory
         return min($futureDates);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basicPriceWithVat
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $specialPriceWithVat
-     * @return float
-     */
     protected function calculatePercentageDiscount(
         Money $basicPriceWithVat,
         Money $specialPriceWithVat,

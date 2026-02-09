@@ -8,62 +8,25 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 interface PriceInterface
 {
-    /**
-     * @return self
-     */
-    public static function zero(): self;
+    public static function zero(): static;
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function getPriceWithoutVat(): Money;
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function getPriceWithVat(): Money;
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public function getVatAmount(): Money;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $priceToAdd
-     * @return self
-     */
-    public function add(self $priceToAdd): self;
+    public function add(self $priceToAdd): static;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $priceToSubtract
-     * @return self
-     */
-    public function subtract(self $priceToSubtract): self;
+    public function subtract(self $priceToSubtract): static;
 
-    /**
-     * @param int|string $multiplier
-     * @return self
-     */
-    public function multiply(int|string $multiplier): self;
+    public function multiply(int|string $multiplier): static;
 
-    /**
-     * @return self
-     */
-    public function inverse(): self;
+    public function inverse(): static;
 
-    /**
-     * @param self $price
-     * @return bool
-     */
     public function equals(self $price): bool;
 
-    /**
-     * @return bool
-     */
     public function isZero(): bool;
 
-    /**
-     * @return self
-     */
-    public static function createHiddenPrice(): self;
+    public static function createHiddenPrice(): static;
 }

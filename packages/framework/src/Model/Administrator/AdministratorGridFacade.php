@@ -11,32 +11,20 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\RememberGridLimitExcep
 
 class AdministratorGridFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactory $administratorGridLimitFactory
-     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorGridLimitFactory $administratorGridLimitFactory,
     ) {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
-     */
-    public function restoreAndRememberGridLimit(Administrator $administrator, Grid $grid)
+    public function restoreAndRememberGridLimit(Administrator $administrator, Grid $grid): void
     {
         $administrator->restoreGridLimit($grid);
         $this->rememberGridLimit($administrator, $grid);
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
-     */
-    protected function rememberGridLimit(Administrator $administrator, Grid $grid)
+    protected function rememberGridLimit(Administrator $administrator, Grid $grid): void
     {
         if (!$grid->isEnabledPaging()) {
             throw new RememberGridLimitException($grid->getId());

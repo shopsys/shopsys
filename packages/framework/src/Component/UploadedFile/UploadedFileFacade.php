@@ -26,17 +26,6 @@ use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData;
  */
 class UploadedFileFacade extends AbstractUploadedFileFacade
 {
-    /**
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory $uploadedFileFactory
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationFactory $uploadedFileRelationFactory
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationRepository $uploadedFileRelationRepository
-     */
     public function __construct(
         FilesystemOperator $filesystem,
         EntityManagerInterface $em,
@@ -51,11 +40,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         parent::__construct($filesystem, $em, $transformStringHelper);
     }
 
-    /**
-     * @param object $entity
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
-     * @param string $type
-     */
     public function manageFiles(
         object $entity,
         UploadedFileData $uploadedFileData,
@@ -94,11 +78,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
-     * @param object $entity
-     * @param string $entityName
-     * @param string $type
-     * @param string $temporaryFilename
-     * @param string $uploadedFilename
      * @param array<string, string> $namesIndexedByLocale
      */
     protected function uploadFile(
@@ -120,12 +99,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
-     * @param object $entity
-     * @param string $entityName
-     * @param string $type
-     * @param array $temporaryFilenames
-     * @param array $uploadedFilenames
-     * @param int $existingFilesCount
      * @param array<int, array<string, string>> $namesIndexedByFileIdAndLocale
      */
     public function uploadFiles(
@@ -159,7 +132,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData $uploadedFileFormData
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     public function create(UploadedFileFormData $uploadedFileFormData): array
@@ -176,8 +148,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
-     * @param array $temporaryFilenames
-     * @param array $uploadedFilenames
      * @param array<int, array<string, string>> $namesIndexedByFileIdAndLocale
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
@@ -208,7 +178,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param string $type
      */
     protected function assignFilesToProducts(
         array $uploadedFiles,
@@ -233,9 +202,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
-     * @param string $entityName
      * @param int[] $entityIds
-     * @param string $type
      * @return array<int, int>
      */
     protected function getMaxPositionsForEntities(string $entityName, array $entityIds, string $type): array
@@ -247,9 +214,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
-     * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
-     * @param string $type
      */
     public function deleteRelationsByEntityAndUploadedFiles(object $entity, array $uploadedFiles, string $type): void
     {
@@ -273,11 +238,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         return $this->uploadedFileRepository->getByIdsIndexedById($uploadedFileIds);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return string
-     */
     public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
     {
         return $this->uploadedFileLocator->getUploadedFileUrl($domainConfig, $uploadedFile);
@@ -317,13 +277,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         }
     }
 
-    /**
-     * @param object $entity
-     * @param string $entityName
-     * @param string $type
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
-     * @return int
-     */
     protected function handleMultipleFiles(
         object $entity,
         string $entityName,
@@ -343,13 +296,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         return count($uploadedFileData->orderedFiles) + count($uploadedFileData->uploadedFiles);
     }
 
-    /**
-     * @param object $entity
-     * @param string $entityName
-     * @param string $type
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
-     * @return int
-     */
     protected function handleSingleFile(
         object $entity,
         string $entityName,
@@ -385,12 +331,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         return 0;
     }
 
-    /**
-     * @param int $uploadedFileId
-     * @param string $uploadedFileSlug
-     * @param string $uploadedFileExtension
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
-     */
     public function getByIdSlugAndExtension(
         int $uploadedFileId,
         string $uploadedFileSlug,
@@ -403,13 +343,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         );
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $file
-     * @param int $position
-     * @param string $type
-     */
     protected function createRelation(
         string $entityName,
         int $entityId,
@@ -422,10 +355,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $file
-     * @param \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData $uploadedFileFormData
-     */
     public function edit(UploadedFile $file, UploadedFileFormData $uploadedFileFormData): void
     {
         $uploadedFiles = $uploadedFileFormData->files->uploadedFiles;
@@ -453,9 +382,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     */
     public function deleteFile(UploadedFile $uploadedFile): void
     {
         $this->em->remove($uploadedFile);
@@ -463,9 +389,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @param string $entityClass
-     * @param string $type
      * @return int[]
      */
     public function getEntityIdsForUploadedFile(UploadedFile $uploadedFile, string $entityClass, string $type): array
@@ -476,10 +399,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $file
-     * @param string $entityClass
      * @param object[] $entities
-     * @param string $type
      */
     protected function updateRelationsForUploadedFileByEntities(
         UploadedFile $file,
@@ -524,13 +444,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelation[] $currentRelations
-     * @param string $entityName
-     * @param object $entity
-     * @param int $startPosition
-     * @param string $type
-     * @param bool $isMultiple
      */
     protected function createRelations(
         UploadedFileData $uploadedFileData,
@@ -596,27 +510,18 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         return $this->uploadedFileRepository->getTranslationsIndexedByFileIdAndLocale($uploadedFileIds);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface
-     */
     #[Override]
     protected function getRepository(): UploadedFileRepositoryInterface
     {
         return $this->uploadedFileRepository;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileLocator
-     */
     #[Override]
     protected function getFileLocator(): AbstractUploadedFileLocator
     {
         return $this->uploadedFileLocator;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface
-     */
     #[Override]
     protected function getUploadedFileConfig(): UploadedFileConfigInterface
     {
@@ -625,9 +530,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
 
     /**
      * @param int[] $entityIds
-     * @param string $entityName
-     * @param string|null $requiredLocale
-     * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[][]
      */
     public function getAllFilesIndexedByEntityId(

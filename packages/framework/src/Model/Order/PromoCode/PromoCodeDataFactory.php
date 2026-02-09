@@ -13,14 +13,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProd
 
 class PromoCodeDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository $promoCodeLimitRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryRepository $promoCodeCategoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository $promoCodeProductRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandRepository $promoCodeBrandRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
-     */
     public function __construct(
         protected readonly PromoCodeLimitRepository $promoCodeLimitRepository,
         protected readonly PromoCodeCategoryRepository $promoCodeCategoryRepository,
@@ -31,26 +23,16 @@ class PromoCodeDataFactory
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData
-     */
     protected function createInstance(): PromoCodeData
     {
         return new PromoCodeData();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData
-     */
     public function create(): PromoCodeData
     {
         return $this->createInstance();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData
-     */
     public function createFromPromoCode(PromoCode $promoCode): PromoCodeData
     {
         $promoCodeData = $this->createInstance();
@@ -59,10 +41,6 @@ class PromoCodeDataFactory
         return $promoCodeData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     */
     protected function fillFromPromoCode(PromoCodeData $promoCodeData, PromoCode $promoCode): void
     {
         $promoCodeData->code = $promoCode->getCode();

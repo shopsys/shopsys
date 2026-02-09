@@ -28,11 +28,8 @@ class ShopsysFrameworkBundle extends Bundle
      */
     public const string VERSION = '19.0.0-dev';
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     #[Override]
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
