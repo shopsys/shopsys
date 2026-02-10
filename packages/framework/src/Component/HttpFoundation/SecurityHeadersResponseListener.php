@@ -24,7 +24,7 @@ class SecurityHeadersResponseListener
         $response = $event->getResponse();
 
         $response->headers->set('X-Frame-Options', 'sameorigin');
-        $response->headers->set('X-XSS-Protection', '1; mode=block');
+        $response->headers->set('X-XSS-Protection', '0');
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('X-Powered-By', 'Shopsys Platform');
         $response->headers->set('Referrer-Policy', 'same-origin');
