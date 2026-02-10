@@ -66,7 +66,6 @@ context('Smoke tests', () => {
         },
         ['/customer/users']: { skip: true },
         ['/order/contact-information']: { skip: true },
-        ['/order/payment-status-notify']: { skip: true },
         ['/order/transport-and-payment']: { skip: true },
         ['/order-detail/:urlHash']: { skip: true },
         ['/brands-overview']: {
