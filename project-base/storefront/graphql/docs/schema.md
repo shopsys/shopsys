@@ -5959,15 +5959,6 @@ Whether the product is currently out of stock (but may be back in stock later), 
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="mainvariant.link">link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product link
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="mainvariant.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
@@ -8947,15 +8938,6 @@ Whether the product is currently out of stock (but may be back in stock later), 
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="regularproduct.link">link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product link
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
@@ -10317,15 +10299,6 @@ Whether the product is currently out of stock (but may be back in stock later), 
 <td colspan="2" valign="top"><strong id="variant.isvisible">isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="variant.link">link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product link
-
-</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="variant.mainimage">mainImage</strong></td>
@@ -14392,15 +14365,6 @@ Whether the product is currently out of stock (but may be back in stock later), 
 <td colspan="2" valign="top"><strong id="product.isvisible">isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="product.link">link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product link
-
-</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="product.mainimage">mainImage</strong></td>

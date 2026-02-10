@@ -1443,8 +1443,6 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
-  /** Product link */
-  link: Scalars['String']['output'];
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
   /** Localized product name (domain dependent) */
@@ -2536,8 +2534,6 @@ export type TypeProduct = {
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
-  /** Product link */
-  link: Scalars['String']['output'];
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
   /** Localized product name (domain dependent) */
@@ -3317,8 +3313,6 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
-  /** Product link */
-  link: Scalars['String']['output'];
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
   /** Localized product name (domain dependent) */
@@ -3743,8 +3737,6 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
-  /** Product link */
-  link: Scalars['String']['output'];
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
   mainVariant: Maybe<TypeMainVariant>;
