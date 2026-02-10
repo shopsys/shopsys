@@ -55,7 +55,6 @@ class PromotedProductsTest extends GraphQlTestCase
                     seoH1
                     seoTitle
                     seoMetaDescription
-                    link
                     unit {
                         name
                     }
@@ -126,7 +125,6 @@ class PromotedProductsTest extends GraphQlTestCase
                     seoH1
                     seoTitle
                     seoMetaDescription
-                    link
                     unit {
                         name
                     }

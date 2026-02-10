@@ -54,16 +54,6 @@ class ProductEntityFieldMapper
         return $product->getShortDescription($this->domain->getId());
     }
 
-    public function getLink(Product $product): string
-    {
-        $absoluteUrlsIndexedByProductId = $this->productCollectionFacade->getAbsoluteUrlsIndexedByProductId(
-            [$product->getId()],
-            $this->domain->getCurrentDomainConfig(),
-        );
-
-        return $absoluteUrlsIndexedByProductId[$product->getId()];
-    }
-
     public function getSlug(Product $product): string
     {
         return '/' . $this->friendlyUrlFacade->getMainFriendlyUrlSlug($this->domain->getId(), 'front_product_detail', $product->getId());

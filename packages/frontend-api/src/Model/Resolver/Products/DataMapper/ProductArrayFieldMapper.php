@@ -41,11 +41,6 @@ class ProductArrayFieldMapper
         return $data['short_description'];
     }
 
-    public function getLink(array $data): string
-    {
-        return $this->domain->getUrl() . '/' . $data['slug'];
-    }
-
     public function getSlug(array $data): string
     {
         return '/' . $data['slug'];

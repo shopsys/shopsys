@@ -6,7 +6,6 @@ query Product($uuid: Uuid) {
         seoH1
         seoTitle
         seoMetaDescription
-        link
         unit {
             name
         }

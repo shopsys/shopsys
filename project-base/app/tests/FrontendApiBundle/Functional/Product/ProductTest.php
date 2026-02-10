@@ -129,7 +129,6 @@ class ProductTest extends GraphQlTestCase
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $firstDomainLocale,
             ),
-            'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 1]),
             'unit' => [
                 'name' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ],

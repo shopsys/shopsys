@@ -59,7 +59,6 @@ class ProductSourceEqualityTest extends GraphQlTestCase
             seoH1
             seoTitle
             seoMetaDescription
-            link
             unit {
                 name
             }

@@ -49,7 +49,6 @@ class ProductsTest extends ProductsGraphQlTestCase
                             seoH1
                             seoTitle
                             seoMetaDescription
-                            link
                             unit {
                                 name
                             }
@@ -139,7 +138,6 @@ class ProductsTest extends ProductsGraphQlTestCase
                 'seoH1' => null,
                 'seoTitle' => null,
                 'seoMetaDescription' => null,
-                'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 77]),
                 'unit' => [
                     'name' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 ],
