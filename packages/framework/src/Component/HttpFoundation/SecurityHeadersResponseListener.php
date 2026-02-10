@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Component\Domain;
+namespace Shopsys\FrameworkBundle\Component\HttpFoundation;
 
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-class DomainAwareSecurityHeadersSetter
+class SecurityHeadersResponseListener
 {
     public function __construct(
         protected readonly Setting $setting,
@@ -17,8 +18,17 @@ class DomainAwareSecurityHeadersSetter
     ) {
     }
 
+    #[AsEventListener]
     public function onKernelResponse(ResponseEvent $event): void
     {
+        $response = $event->getResponse();
+
+        $response->headers->set('X-Frame-Options', 'sameorigin');
+        $response->headers->set('X-XSS-Protection', '1; mode=block');
+        $response->headers->set('X-Content-Type-Options', 'nosniff');
+        $response->headers->set('X-Powered-By', 'Shopsys Platform');
+        $response->headers->set('Referrer-Policy', 'same-origin');
+
         if (!$event->isMainRequest()) {
             return;
         }
@@ -28,7 +38,7 @@ class DomainAwareSecurityHeadersSetter
         }
 
         $cspHeaderValue = $this->sanitizeCspHeaderValue($this->setting->get(Setting::CSP_HEADER));
-        $event->getResponse()->headers->set('Content-Security-Policy', $cspHeaderValue);
+        $response->headers->set('Content-Security-Policy', $cspHeaderValue);
     }
 
     protected function sanitizeCspHeaderValue(string $cspHeaderValue): string

@@ -187,10 +187,6 @@ services:
         lazy: true
         public: true
 
-    Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-
     Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator: ~
 
     Shopsys\FrameworkBundle\Component\Domain\DomainFacade:
@@ -310,9 +306,6 @@ services:
     Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry:
         arguments: [!tagged_iterator shopsys.grid_inline_edit]
 
-    Shopsys\FrameworkBundle\Component\HttpFoundation\ResponseListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     Shopsys\FrameworkBundle\Component\HttpFoundation\SubRequestListener:
         tags:
