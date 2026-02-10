@@ -23,11 +23,8 @@ class SecurityHeadersResponseListener
     {
         $response = $event->getResponse();
 
-        $response->headers->set('X-Frame-Options', 'sameorigin');
-        $response->headers->set('X-XSS-Protection', '0');
-        $response->headers->set('X-Content-Type-Options', 'nosniff');
+        // X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and X-XSS-Protection are set by nginx for all responses
         $response->headers->set('X-Powered-By', 'Shopsys Platform');
-        $response->headers->set('Referrer-Policy', 'same-origin');
 
         if (!$event->isMainRequest()) {
             return;
