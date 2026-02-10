@@ -40,12 +40,12 @@ class LoginController extends AdminBaseController
 
         if ($lastAuthenticationError !== null) {
             $error = match (true) {
-                $lastAuthenticationError->getPrevious() instanceof LoginWithDefaultPasswordException => t(
+                $lastAuthenticationError instanceof LoginWithDefaultPasswordException => t(
                     'Oh, you just tried to log in using default credentials. We do not allow that on production'
                     . ' environment. If you are random hacker, please go somewhere else. If you are authorized user,'
                     . ' please use another account or contact developers and change password during deployment.',
                 ),
-                $lastAuthenticationError->getPrevious() instanceof TooManyLoginAttemptsAuthenticationException => t(
+                $lastAuthenticationError instanceof TooManyLoginAttemptsAuthenticationException => t(
                     'Too many login attempts. Please try again later.',
                 ),
                 default => t('Log in failed.'),
