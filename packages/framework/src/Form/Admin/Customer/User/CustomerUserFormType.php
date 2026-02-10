@@ -8,11 +8,8 @@ use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
-use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
-use Shopsys\FrameworkBundle\Form\Constraints\NotIdenticalToEmailLocalPart;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
-use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -20,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLoginInformationProvider;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
@@ -69,24 +65,14 @@ final class CustomerUserFormType extends AbstractType
                 'label' => 'Active',
                 'data' => $this->customerUser->isActivated() ? t('Yes') : t('No'),
             ]);
-            $builderSystemDataGroup->add('domainIcon', DisplayOnlyDomainIconType::class, [
-                'label' => 'Domain',
-                'data' => $this->customerUser->getDomainId(),
-            ]);
-            $pricingGroups = $this->pricingGroupFacade->getByDomainId($this->customerUser->getDomainId());
-        } else {
-            $builderSystemDataGroup
-                ->add('domainId', DomainType::class, [
-                    'required' => true,
-                    'data' => $options['domain_id'],
-                    'label' => 'Domain',
-                    'attr' => [
-                        'class' => 'js-toggle-opt-group-control',
-                    ],
-                    'disabled' => !$options['allowEditSystemData'],
-                ]);
-            $pricingGroups = $this->pricingGroupFacade->getAll();
         }
+
+        $domainId = $this->customerUser?->getDomainId() ?? $options['domain_id'];
+        $builderSystemDataGroup->add('domainIcon', DisplayOnlyDomainIconType::class, [
+            'label' => 'Domain',
+            'data' => $domainId,
+        ]);
+        $pricingGroups = $this->pricingGroupFacade->getByDomainId($domainId);
 
         $builderSystemDataGroup
             ->add('pricingGroup', ChoiceType::class, [
@@ -94,15 +80,7 @@ final class CustomerUserFormType extends AbstractType
                 'choices' => $pricingGroups,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'choice_attr' => function (PricingGroup $pricingGroup) {
-                    return [
-                        'data-js-toggle-option' => $pricingGroup->getDomainId(),
-                    ];
-                },
                 'label' => 'Pricing group',
-                'attr' => [
-                    'data-js-toggle-opt-group-control' => '.js-toggle-opt-group-control',
-                ],
                 'disabled' => !$options['allowEditSystemData'],
             ]);
 

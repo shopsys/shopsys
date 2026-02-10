@@ -51,7 +51,6 @@ import './PromoCodeGroup';
 import './PromoCodeLimits';
 import './RoleGroups';
 import './SelectAdminDomains';
-import './SelectToggle';
 import './SortableValues';
 import './Statistics';
 import './TransportPriceWithWeightLimitCollection';
