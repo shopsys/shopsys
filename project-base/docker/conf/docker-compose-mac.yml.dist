@@ -23,7 +23,6 @@ services:
             - ./app/docker/postgres/postgres.conf:/etc/postgresql/postgresql.conf:delegated
             - postgres-data:/var/lib/postgresql
         environment:
-            - PGDATA=/var/lib/postgresql/18/docker
             - POSTGRES_USER=root
             - POSTGRES_PASSWORD=root
             - POSTGRES_DB=shopsys
