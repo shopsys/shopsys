@@ -242,20 +242,6 @@ final class CustomerUserFormType extends AbstractType
                 'data_class' => CustomerUserData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'renders_in_own_card' => true,
-                'constraints' => [
-                    new FieldsAreNotIdentical(
-                        field1: 'email',
-                        field2: 'password',
-                        errorPath: 'password',
-                        message: 'Password cannot be same as email',
-                    ),
-                    new NotIdenticalToEmailLocalPart(
-                        password: 'password',
-                        email: 'email',
-                        errorPath: 'password',
-                        message: 'Password cannot be same as part of email before at sign',
-                    ),
-                ],
                 'renderSaveButton' => false,
                 'allowEditSystemData' => true,
                 'back_url' => null,
