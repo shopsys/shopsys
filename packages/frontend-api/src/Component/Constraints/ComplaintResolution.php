@@ -30,7 +30,7 @@ class ComplaintResolution extends Constraint
     public function __construct(
         ?array $options = null,
         public string $selectedComplaintResolutionNotSupportedMessage = 'Selected complaint resolution is not supported',
-        public string $selecteComplaintResolutionRequiresBankAccountFilledMessage = 'Selected complaint resolution requires bank account number to be filled',
+        public string $selectedComplaintResolutionRequiresBankAccountFilledMessage = 'Selected complaint resolution requires bank account number to be filled',
         ?array $groups = null,
         mixed $payload = null,
     ) {
