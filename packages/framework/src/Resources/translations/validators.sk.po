@@ -94,9 +94,6 @@ msgstr "Externé bridge ID nemôže byť dlhšie ako {{ limit }} znakov"
 msgid "Field must contain {{ needle }}."
 msgstr "Pole musí obsahovať {{ needle }}."
 
-msgid "Fields must not be identical"
-msgstr "Polia nesmú byť identické"
-
 msgid "File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}."
 msgstr "Prípona súboru {{ value }} nie je medzi povolenými príponami. Povolené prípony sú {{ extensions }}."
 
@@ -192,15 +189,6 @@ msgstr "Parameter {{ parameterName }} je použitý viackrát"
 
 msgid "Part number cannot be longer than {{ limit }} characters"
 msgstr "Číslo dielu nemôže byť dlhšie ako {{ limit }} znakov"
-
-msgid "Password cannot be local part of email."
-msgstr "Heslo nemôže byť miestnou časťou e-mailu."
-
-msgid "Password cannot be same as email"
-msgstr "Heslo nemôže byť rovnaké ako e-mail"
-
-msgid "Password cannot be same as part of email before at sign"
-msgstr "Heslo nemôže byť rovnaké ako časť e-mailu pred znakom @"
 
 msgid "Passwords do not match"
 msgstr "Heslá sa nezhodujú"
