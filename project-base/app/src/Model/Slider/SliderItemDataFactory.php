@@ -11,9 +11,9 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory as BaseSliderItem
 
 /**
  * @method \App\Model\Slider\SliderItemData createFromSliderItem(\App\Model\Slider\SliderItem $sliderItem)
- * @method setImageFacade(\App\Component\Image\ImageFacade $imageFacade)
- * @property \App\Component\Image\ImageFacade $imageFacade
- * @method __construct(\App\Component\Image\ImageFacade $imageFacade)
+ * @method setImageFacade(\Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade)
+ * @property \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+ * @method __construct(\Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade)
  */
 class SliderItemDataFactory extends BaseSliderItemDataFactory
 {

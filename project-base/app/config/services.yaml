@@ -37,11 +37,6 @@ services:
 
     App\Component\Doctrine\QueryBuilderExtender: ~
 
-    App\Component\Image\ImageFacade:
-        arguments:
-            $imageUrlPrefix: '%shopsys.image_url_prefix%'
-            $cache: '@image_cache'
-
     App\Component\Setting\Setting: ~
 
     App\Controller\:
@@ -164,12 +159,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
         alias: App\Model\MultidomainEntityClassProvider
-
-    Shopsys\FrameworkBundle\Component\Image\ImageFacade:
-        alias: App\Component\Image\ImageFacade
-
-    Shopsys\FrameworkBundle\Component\Image\ImageRepository:
-        alias: App\Component\Image\ImageRepository
 
     Shopsys\FrameworkBundle\Component\Setting\Setting:
         alias: App\Component\Setting\Setting

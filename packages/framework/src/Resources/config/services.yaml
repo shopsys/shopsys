@@ -338,7 +338,9 @@ services:
             - { name: doctrine.event_listener, event: preRemove }
 
     Shopsys\FrameworkBundle\Component\Image\ImageFacade:
-        arguments: ['%shopsys.image_url_prefix%']
+        arguments:
+            $imageUrlPrefix: '%shopsys.image_url_prefix%'
+            $cache: '@image_cache'
 
     Shopsys\FrameworkBundle\Component\Image\ImageLocator:
         arguments: ['%shopsys.image_dir%']

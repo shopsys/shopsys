@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade as BaseTransportFaca
 /**
  * @property \App\Model\Transport\TransportRepository $transportRepository
  * @property \App\Model\Payment\PaymentRepository $paymentRepository
- * @property \App\Component\Image\ImageFacade $imageFacade
+ * @property \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
  * @method \App\Model\Transport\Transport create(\App\Model\Transport\TransportData $transportData)
  * @method void edit(\App\Model\Transport\Transport $transport, \App\Model\Transport\TransportData $transportData)
  * @method \App\Model\Transport\Transport getById(int $id)
@@ -23,7 +23,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade as BaseTransportFaca
  * @method \App\Model\Transport\Transport getEnabledOnDomainByUuid(string $uuid, int $domainId)
  * @method bool isTransportVisibleAndEnabledOnCurrentDomain(\App\Model\Transport\Transport $transport)
  * @property \App\Model\Payment\PaymentFacade $paymentFacade
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Transport\TransportRepository $transportRepository, \App\Model\Payment\PaymentRepository $paymentRepository, \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation, \Shopsys\FrameworkBundle\Model\Transport\TransportFactory $transportFactory, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactory $transportPriceFactory, \App\Model\Payment\PaymentFacade $paymentFacade)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Transport\TransportRepository $transportRepository, \App\Model\Payment\PaymentRepository $paymentRepository, \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation, \Shopsys\FrameworkBundle\Model\Transport\TransportFactory $transportFactory, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactory $transportPriceFactory, \App\Model\Payment\PaymentFacade $paymentFacade)
  * @method \App\Model\Transport\Transport[] getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(\App\Model\Cart\Cart|null $cart = null)
  * @method void deleteAllPricesByTransport(\App\Model\Transport\Transport $transport)
  * @method \App\Model\Transport\Transport[] getAll()
