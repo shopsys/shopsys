@@ -1,8 +1,6 @@
-{% block image_html %}
+{%- block image_html -%}
     <picture>
-        {% apply spaceless %}
-            {% set attr = attr|merge({'class': (attr.class|default('') ~ ' ' ~ imageCssClass)|trim}) %}
-            <img {% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %} itemprop="image" />
-        {% endapply %}
+        {% set attr = attr|merge({'class': (attr.class|default('') ~ ' ' ~ imageCssClass)|trim}) %}
+        <img {% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %} itemprop="image" />
     </picture>
-{% endblock %}
+{%- endblock -%}
