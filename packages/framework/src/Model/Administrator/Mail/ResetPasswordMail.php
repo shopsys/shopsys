@@ -48,18 +48,18 @@ class ResetPasswordMail implements MessageFactoryInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string, \Closure>
      */
     protected function getBodyValuesIndexedByVariableName(ResetPasswordInterface $administrator, int $domainId): array
     {
         return [
-            self::VARIABLE_EMAIL => htmlspecialchars($administrator->getEmail(), ENT_QUOTES),
-            self::VARIABLE_NEW_PASSWORD_URL => $this->newPasswordUrlProvider->getNewPasswordUrl($administrator, $domainId, 'admin_administrator_set-new-password'),
+            self::VARIABLE_EMAIL => fn () => htmlspecialchars($administrator->getEmail(), ENT_QUOTES),
+            self::VARIABLE_NEW_PASSWORD_URL => fn () => $this->newPasswordUrlProvider->getNewPasswordUrl($administrator, $domainId, 'admin_administrator_set-new-password'),
         ];
     }
 
     /**
-     * @return string[]
+     * @return array<string, \Closure>
      */
     protected function getSubjectValuesIndexedByVariableName(
         ResetPasswordInterface $administrator,

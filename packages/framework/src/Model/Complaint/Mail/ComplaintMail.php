@@ -62,28 +62,30 @@ class ComplaintMail implements MessageFactoryInterface
         return static::MAIL_TEMPLATE_NAME_PREFIX . $complaintStatus->getId();
     }
 
+    /**
+     * @return array<string, \Closure>
+     */
     protected function getVariablesReplacementsForBody(Complaint $complaint): array
     {
-        $complaintDomainId = $complaint->getDomainId();
-
-        $router = $this->domainRouterFactory->getRouter($complaintDomainId);
-
         return [
-            self::VARIABLE_COMPLAINT_NUMBER => htmlspecialchars($complaint->getNumber(), ENT_QUOTES),
-            self::VARIABLE_COMPLAINT_DETAIL_URL => $this->getComplaintDetailUrl($complaint),
-            self::VARIABLE_ORDER_NUMBER => htmlspecialchars($complaint->getOrderNumberOrManualDocumentNumber(), ENT_QUOTES),
-            self::VARIABLE_DATE => $this->getFormattedDateTime($complaint),
-            self::VARIABLE_URL => $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            self::VARIABLE_COMPLAINT_RESOLUTION => array_search($complaint->getResolution(), $this->complaintResolutionEnum->getAllIndexedByTranslationsForCustomer(), true),
+            self::VARIABLE_COMPLAINT_NUMBER => fn () => htmlspecialchars($complaint->getNumber(), ENT_QUOTES),
+            self::VARIABLE_COMPLAINT_DETAIL_URL => fn () => $this->getComplaintDetailUrl($complaint),
+            self::VARIABLE_ORDER_NUMBER => fn () => htmlspecialchars($complaint->getOrderNumberOrManualDocumentNumber(), ENT_QUOTES),
+            self::VARIABLE_DATE => fn () => $this->getFormattedDateTime($complaint),
+            self::VARIABLE_URL => fn () => $this->domainRouterFactory->getRouter($complaint->getDomainId())->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            self::VARIABLE_COMPLAINT_RESOLUTION => fn () => array_search($complaint->getResolution(), $this->complaintResolutionEnum->getAllIndexedByTranslationsForCustomer(), true),
         ];
     }
 
+    /**
+     * @return array<string, \Closure>
+     */
     protected function getVariablesReplacementsForSubject(Complaint $complaint): array
     {
         return [
-            self::VARIABLE_COMPLAINT_NUMBER => $complaint->getNumber(),
-            self::VARIABLE_ORDER_NUMBER => $complaint->getOrderNumberOrManualDocumentNumber(),
-            self::VARIABLE_DATE => $this->getFormattedDateTime($complaint),
+            self::VARIABLE_COMPLAINT_NUMBER => fn () => $complaint->getNumber(),
+            self::VARIABLE_ORDER_NUMBER => fn () => $complaint->getOrderNumberOrManualDocumentNumber(),
+            self::VARIABLE_DATE => fn () => $this->getFormattedDateTime($complaint),
         ];
     }
 

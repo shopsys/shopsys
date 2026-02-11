@@ -75,43 +75,43 @@ class InquiryMail
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, \Closure>
      */
     protected function getSubjectVariablesReplacements(Inquiry $inquiry): array
     {
         return [
-            self::VARIABLE_FULL_NAME => htmlspecialchars($inquiry->getFullName(), ENT_QUOTES),
-            self::VARIABLE_EMAIL => htmlspecialchars($inquiry->getEmail(), ENT_QUOTES),
-            self::VARIABLE_TELEPHONE => htmlspecialchars($inquiry->getTelephone(), ENT_QUOTES),
-            self::VARIABLE_COMPANY_NAME => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyName()),
-            self::VARIABLE_COMPANY_NUMBER => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyNumber()),
-            self::VARIABLE_COMPANY_TAX_NUMBER => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyTaxNumber()),
-            self::VARIABLE_PRODUCT_NAME => $this->mailerHelper->escapeOptionalString($inquiry->getProduct()?->getName()),
-            self::VARIABLE_PRODUCT_CATALOG_NUMBER => htmlspecialchars($inquiry->getProductCatnum(), ENT_QUOTES),
+            self::VARIABLE_FULL_NAME => fn () => htmlspecialchars($inquiry->getFullName(), ENT_QUOTES),
+            self::VARIABLE_EMAIL => fn () => htmlspecialchars($inquiry->getEmail(), ENT_QUOTES),
+            self::VARIABLE_TELEPHONE => fn () => htmlspecialchars($inquiry->getTelephone(), ENT_QUOTES),
+            self::VARIABLE_COMPANY_NAME => fn () => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyName()),
+            self::VARIABLE_COMPANY_NUMBER => fn () => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyNumber()),
+            self::VARIABLE_COMPANY_TAX_NUMBER => fn () => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyTaxNumber()),
+            self::VARIABLE_PRODUCT_NAME => fn () => $this->mailerHelper->escapeOptionalString($inquiry->getProduct()?->getName()),
+            self::VARIABLE_PRODUCT_CATALOG_NUMBER => fn () => htmlspecialchars($inquiry->getProductCatnum(), ENT_QUOTES),
         ];
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, \Closure>
      */
     protected function getBodyVariablesReplacements(Inquiry $inquiry): array
     {
         return [
             ...$this->getSubjectVariablesReplacements($inquiry),
-            self::VARIABLE_NOTE => $this->mailerHelper->escapeOptionalString($inquiry->getNote()),
-            self::VARIABLE_PRODUCT_URL => $this->getProductUrl($inquiry),
-            self::VARIABLE_PRODUCT_IMAGE => $this->productImageFacade->getProductImageUrl($inquiry->getProduct(), $inquiry->getDomainId()),
+            self::VARIABLE_NOTE => fn () => $this->mailerHelper->escapeOptionalString($inquiry->getNote()),
+            self::VARIABLE_PRODUCT_URL => fn () => $this->getProductUrl($inquiry),
+            self::VARIABLE_PRODUCT_IMAGE => fn () => $this->productImageFacade->getProductImageUrl($inquiry->getProduct(), $inquiry->getDomainId()),
         ];
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, \Closure>
      */
     protected function getBodyVariablesReplacementsForAdmin(Inquiry $inquiry): array
     {
         return [
             ...$this->getBodyVariablesReplacements($inquiry),
-            self::VARIABLE_ADMIN_INQUIRY_DETAIL_URL => $this->administrationRouter->generate(
+            self::VARIABLE_ADMIN_INQUIRY_DETAIL_URL => fn () => $this->administrationRouter->generate(
                 'admin_inquiry_detail',
                 ['id' => $inquiry->getId()],
                 UrlGeneratorInterface::ABSOLUTE_URL,

@@ -46,18 +46,18 @@ class CustomerActivationMail implements MessageFactoryInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string, \Closure>
      */
     protected function getBodyValuesIndexedByVariableName(ResetPasswordInterface $customerUser, int $domainId): array
     {
         return [
-            self::VARIABLE_EMAIL => htmlspecialchars($customerUser->getEmail(), ENT_QUOTES),
-            self::VARIABLE_ACTIVATION_URL => $this->newPasswordUrlProvider->getNewPasswordUrl($customerUser, $domainId, 'front_registration_set_new_password'),
+            self::VARIABLE_EMAIL => fn () => htmlspecialchars($customerUser->getEmail(), ENT_QUOTES),
+            self::VARIABLE_ACTIVATION_URL => fn () => $this->newPasswordUrlProvider->getNewPasswordUrl($customerUser, $domainId, 'front_registration_set_new_password'),
         ];
     }
 
     /**
-     * @return string[]
+     * @return array<string, \Closure>
      */
     protected function getSubjectValuesIndexedByVariableName(
         ResetPasswordInterface $customerUser,

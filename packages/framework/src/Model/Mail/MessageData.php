@@ -7,15 +7,15 @@ namespace Shopsys\FrameworkBundle\Model\Mail;
 class MessageData
 {
     /**
-     * @var string[]
+     * @var array<string, string|\Closure>
      */
     public array $variablesReplacementsForSubject;
 
     /**
      * @param string|array<string> $toEmail
      * @param string|array<string>|null $bccEmail
-     * @param string[] $variablesReplacementsForBody
-     * @param string[] $variablesReplacementsForSubject
+     * @param array<string, string|\Closure> $variablesReplacementsForBody
+     * @param array<string, string|\Closure> $variablesReplacementsForSubject
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $attachments
      */
     public function __construct(

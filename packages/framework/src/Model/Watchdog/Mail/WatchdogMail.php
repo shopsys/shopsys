@@ -66,17 +66,17 @@ class WatchdogMail
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, \Closure>
      */
     protected function getSubjectVariablesReplacements(Product $product, string $locale): array
     {
         return [
-            self::VARIABLE_PRODUCT_NAME => $this->mailerHelper->escapeOptionalString($product->getName($locale)),
+            self::VARIABLE_PRODUCT_NAME => fn () => $this->mailerHelper->escapeOptionalString($product->getName($locale)),
         ];
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, \Closure>
      */
     protected function getBodyVariablesReplacements(Product $product, int $domainId): array
     {
@@ -84,9 +84,9 @@ class WatchdogMail
 
         return [
             ...$this->getSubjectVariablesReplacements($product, $locale),
-            self::VARIABLE_PRODUCT_URL => $this->getProductUrl($product, $domainId),
-            self::VARIABLE_PRODUCT_IMAGE => $this->productImageFacade->getProductImageUrl($product, $domainId),
-            self::VARIABLE_PRODUCT_QUANTITY => $this->getProductQuantity($product, $domainId, $locale),
+            self::VARIABLE_PRODUCT_URL => fn () => $this->getProductUrl($product, $domainId),
+            self::VARIABLE_PRODUCT_IMAGE => fn () => $this->productImageFacade->getProductImageUrl($product, $domainId),
+            self::VARIABLE_PRODUCT_QUANTITY => fn () => $this->getProductQuantity($product, $domainId, $locale),
         ];
     }
 

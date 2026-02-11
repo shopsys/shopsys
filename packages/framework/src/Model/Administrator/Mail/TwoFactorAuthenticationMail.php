@@ -38,7 +38,9 @@ class TwoFactorAuthenticationMail implements MessageFactoryInterface
             $template->getSubject(),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $template->getDomainId()),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $template->getDomainId()),
-            [self::VARIABLE_AUTHENTICATION_CODE => $administrator->getEmailAuthCode()],
+            [
+                self::VARIABLE_AUTHENTICATION_CODE => fn () => $administrator->getEmailAuthCode(),
+            ],
         );
     }
 }

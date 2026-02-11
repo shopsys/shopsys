@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Mail\MessageFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
+use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PersonalDataAccessMail implements MessageFactoryInterface
@@ -42,30 +43,30 @@ class PersonalDataAccessMail implements MessageFactoryInterface
             $template->getSubject(),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $this->domain->getId()),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $this->domain->getId()),
-            $this->getBodyValuesIndexedByVariableName(
-                $this->getVariablePersonalDataAccessUrl(
-                    $personalDataAccessRequest->getHash(),
-                ),
-                $personalDataAccessRequest->getEmail(),
-                $this->domain->getName(),
-            ),
-            $this->getSubjectValuesIndexedByVariableName($this->domain->getName()),
+            $this->getBodyValuesIndexedByVariableName($personalDataAccessRequest),
+            $this->getSubjectValuesIndexedByVariableName(),
         );
     }
 
-    protected function getBodyValuesIndexedByVariableName(string $url, string $email, string $domainName): array
+    /**
+     * @return array<string, \Closure>
+     */
+    protected function getBodyValuesIndexedByVariableName(PersonalDataAccessRequest $personalDataAccessRequest): array
     {
         return [
-            self::VARIABLE_URL => $url,
-            self::VARIABLE_EMAIL => htmlspecialchars($email, ENT_QUOTES),
-            self::VARIABLE_DOMAIN => htmlspecialchars($domainName, ENT_QUOTES),
+            self::VARIABLE_URL => fn () => $this->getVariablePersonalDataAccessUrl($personalDataAccessRequest->getHash()),
+            self::VARIABLE_EMAIL => fn () => htmlspecialchars($personalDataAccessRequest->getEmail(), ENT_QUOTES),
+            self::VARIABLE_DOMAIN => fn () => htmlspecialchars($this->domain->getName(), ENT_QUOTES),
         ];
     }
 
-    protected function getSubjectValuesIndexedByVariableName(string $domainName): array
+    /**
+     * @return array<string, \Closure>
+     */
+    protected function getSubjectValuesIndexedByVariableName(): array
     {
         return [
-            self::VARIABLE_DOMAIN => $domainName,
+            self::VARIABLE_DOMAIN => fn () => $this->domain->getName(),
         ];
     }
 
