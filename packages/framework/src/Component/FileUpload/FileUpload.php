@@ -84,6 +84,13 @@ class FileUpload
         return $this->getTemporaryDirectory() . '/' . $this->transformStringHelper->safeFilename($temporaryFilename);
     }
 
+    public function getTemporaryFilepathForMountManager(string $temporaryFilename): string
+    {
+        return $this->transformStringHelper->removeDriveLetterFromPath(
+            $this->getTemporaryFilepath($temporaryFilename),
+        );
+    }
+
     public function getAbsoluteTemporaryFilepath(string $temporaryFilename): string
     {
         return $this->parameterBag->get('kernel.project_dir') . $this->getTemporaryDirectory() . '/' . $this->transformStringHelper->safeFilename($temporaryFilename);
@@ -140,9 +147,7 @@ class FileUpload
         $filesForUpload = $entity->getTemporaryFilesForUpload();
 
         foreach ($filesForUpload as $key => $fileForUpload) {
-            $sourceFilepath = $this->transformStringHelper->removeDriveLetterFromPath(
-                $this->getTemporaryFilepath($fileForUpload->getTemporaryFilename()),
-            );
+            $sourceFilepath = $this->getTemporaryFilepathForMountManager($fileForUpload->getTemporaryFilename());
             $originalFilename = $this->fileNamingConvention->getFilenameByNamingConvention(
                 $fileForUpload->getNameConventionType(),
                 $fileForUpload->getTemporaryFilename(),
