@@ -8,6 +8,7 @@ use Override;
 use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Symfony\Component\Config\Loader\Loader;
+use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\RouteCollection;
 
 final class CrudControllerRouteLoader extends Loader
@@ -45,15 +46,6 @@ final class CrudControllerRouteLoader extends Loader
     public function supports(mixed $resource, ?string $type = null): bool
     {
         return $type === 'crud_controller';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getResolver(): ?LoaderResolverInterface
-    {
-        return null;
     }
 
     /**
