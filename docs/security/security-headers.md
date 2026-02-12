@@ -19,9 +19,9 @@ Static security headers (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-
 
 | Response type | nginx location | Inherits server-level headers? | Additional headers set by application                         |
 |---------------|----------------|-------------------------------|---------------------------------------------------------------|
-| Admin pages | `@app` | No — has own `add_header`, so must redeclare them | PHP: CSP (dynamic) + X-Powered-By                             |
+| Admin pages | `@app` | No — has own `add_header`, so must redeclare them | PHP: CSP (dynamic) + X-Powered-By; CORS headers intentionally not set |
 | Storefront pages | `@storefront` | Yes | Next.js: CSP only (dynamic, obtained via GraphQL)             |
-| Frontend API (GraphQL) | `@app` | No — same as admin | PHP: X-Powered-By only (CSP is **not** set for API responses) |
+| Frontend API (GraphQL) | `@app` | No — same as admin | PHP: X-Powered-By only (CSP is **not** set for API responses); CORS headers intentionally not set |
 | Static files | `try_files` | Yes | —                                                             |
 | Image resizer | `@imageResizer` | Yes | —                                                             |
 
@@ -128,10 +128,17 @@ Note: browsers only honor this header when received over a valid HTTPS connectio
 
 | Property | Value |
 |----------|-------|
-| **Value** | `*` (nginx server level), `""` (overridden for `@app` location) |
+| **Value** | `*` (nginx server level on responses that inherit it), no header on `@app` responses |
 | **Set by** | nginx |
 
-The `@storefront` location strips this header from the Next.js upstream via `proxy_hide_header`, then nginx's server-level `*` is applied instead.
+The `@storefront` location strips this header from the Next.js upstream via `proxy_hide_header`, then nginx's server-level `*` is applied instead.  
+The `@app` location defines its own `add_header` directives, so it does not inherit the server-level CORS headers.
+
+**Why CORS is intentionally disabled on `@app`:**
+
+- In production, storefront and GraphQL/admin are served under the same origin, so CORS is not needed for normal browser traffic.
+- `@app` serves sensitive backend endpoints (GraphQL, admin, authenticated PHP routes); omitting CORS headers prevents accidental cross-origin access.
+- Keeping CORS off on `@app` also avoids conflicting behavior when multiple layers (application, nginx, CDN/proxy) try to set CORS headers.
 
 ### Access-Control-Allow-Credentials
 
@@ -139,7 +146,7 @@ The `@storefront` location strips this header from the Next.js upstream via `pro
 
 | Property | Value |
 |----------|-------|
-| **Value** | `false` |
+| **Value** | `false` (nginx server level on responses that inherit it), no header on `@app` responses |
 | **Set by** | nginx |
 
 ### Additional nginx security settings
