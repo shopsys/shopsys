@@ -11,7 +11,6 @@ security:
         # File manager access
         - { path: ^/efconnect, roles: ROLE_ADMIN }
         - { path: ^/elfinder, roles: ROLE_ADMIN }
-    enable_authenticator_manager: true
     password_hashers:
         Symfony\Component\Security\Core\User\UserInterface:
             algorithm: bcrypt
@@ -49,7 +48,7 @@ security:
             logout:
                 path: admin_logout
                 csrf_parameter: _csrf_token
-                csrf_token_generator: security.csrf.token_manager
+                csrf_token_manager: security.csrf.token_manager
                 csrf_token_id: admin_logout
                 invalidate_session: false
             two_factor:

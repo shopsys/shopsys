@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Security;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +16,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\TooManyLoginAttemptsAuthenticationException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, AuthenticationFailureHandlerInterface
 {
@@ -58,7 +58,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
 
             return new JsonResponse($responseData);
         }
-        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+        $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
 
         return new RedirectResponse($this->router->generate('front_login'));
     }

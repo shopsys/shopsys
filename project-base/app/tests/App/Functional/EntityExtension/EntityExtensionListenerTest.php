@@ -9,7 +9,7 @@ use Tests\App\Functional\EntityExtension\Model\DummyEntity;
 use Tests\App\Functional\EntityExtension\Model\ExtendedDummyEntity;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
-class EntityExtensionSubscriberTest extends TransactionFunctionalTestCase
+class EntityExtensionListenerTest extends TransactionFunctionalTestCase
 {
     /**
      * @inject

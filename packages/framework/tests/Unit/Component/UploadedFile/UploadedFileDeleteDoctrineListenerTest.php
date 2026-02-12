@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\UploadedFile;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
@@ -27,11 +28,8 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
             $this->equalTo($uploadedFile),
         );
 
-        $args = $this->getMockBuilder(LifecycleEventArgs::class)
-            ->onlyMethods(['getEntity'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $args->method('getEntity')->willReturn($uploadedFile);
+        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
+        $args = new PreRemoveEventArgs($uploadedFile, $entityManagerMock);
 
         $doctrineListener = new UploadedFileDeleteDoctrineListener($uploadedFileConfig, $uploadedFileFacadeMock);
 

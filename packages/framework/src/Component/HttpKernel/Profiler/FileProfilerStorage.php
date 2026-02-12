@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\HttpKernel\Profiler;
 
 use GuzzleHttp\Exception\InvalidArgumentException;
+use Nette\Utils\Json;
 use Override;
 use RuntimeException;
 use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
@@ -12,7 +13,6 @@ use Symfony\Component\HttpKernel\Profiler\FileProfilerStorage as BaseFileProfile
 use Symfony\Component\HttpKernel\Profiler\Profile;
 use function dirname;
 use function function_exists;
-use function GuzzleHttp\json_decode;
 use const LOCK_EX;
 
 class FileProfilerStorage extends BaseFileProfilerStorage
@@ -75,7 +75,7 @@ class FileProfilerStorage extends BaseFileProfilerStorage
 
             if ($collector instanceof RequestDataCollector) {
                 try {
-                    $content = json_decode($collector->getContent(), true);
+                    $content = Json::decode($collector->getContent(), true);
 
                     if (is_array($content) && array_key_exists('query', $content) && strpos($content['query'], '{')) {
                         $queryString = $content['query'];

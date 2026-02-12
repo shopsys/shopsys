@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Image;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class ImageDeleteDoctrineListener
@@ -16,12 +16,12 @@ class ImageDeleteDoctrineListener
     ) {
     }
 
-    public function preRemove(LifecycleEventArgs $args): void
+    public function preRemove(PreRemoveEventArgs $args): void
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
 
         if ($this->imageConfig->hasImageConfig($entity)) {
-            $this->deleteEntityImages($entity, $args->getEntityManager());
+            $this->deleteEntityImages($entity, $args->getObjectManager());
         } elseif ($entity instanceof Image) {
             $this->imageFacade->deleteImageFiles($entity);
         }

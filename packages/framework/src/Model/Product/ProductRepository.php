@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
@@ -248,9 +247,9 @@ class ProductRepository
     }
 
     /**
-     * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]
+     * @return iterable<\Shopsys\FrameworkBundle\Model\Product\Product>
      */
-    public function getProductIteratorForReplaceVat(): IterableResult|array
+    public function getProductIteratorForReplaceVat(): iterable
     {
         $query = $this->em->createQuery('
             SELECT DISTINCT p
@@ -260,7 +259,7 @@ class ProductRepository
             WHERE v.replaceWith IS NOT NULL
         ');
 
-        return $query->iterate();
+        return $query->toIterable();
     }
 
     /**

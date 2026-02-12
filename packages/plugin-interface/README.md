@@ -194,7 +194,7 @@ acme.data_download_cron_module:
 class AcmeDataDownloadCronModule implements SimpleCronModuleInterface
 {
     /**
-     * @var \Symfony\Bridge\Monolog\Logger
+     * @var \Monolog\Logger
      */
     private $logger;
 

@@ -25,7 +25,7 @@ class ComposerJsonFileManipulator
                 $jsonContent = $this->replaceVersion($jsonContent, $packageName, $version);
             }
 
-            $fileContent = Json::encode($jsonContent, Json::PRETTY) . PHP_EOL;
+            $fileContent = Json::encode($jsonContent, pretty: true) . PHP_EOL;
             FileSystem::write($fileInfo->getRealPath(), $fileContent);
         }
     }

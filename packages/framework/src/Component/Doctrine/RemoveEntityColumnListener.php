@@ -4,26 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
-use Doctrine\Common\EventSubscriber;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\Attribute\RemoveColumn;
 
-class RemoveEntityColumnSubscriber implements EventSubscriber
+#[AsDoctrineListener(event: Events::loadClassMetadata, priority: -100)]
+class RemoveEntityColumnListener
 {
-    /**
-     * @return string[]
-     */
-    #[Override]
-    public function getSubscribedEvents(): array
-    {
-        return [
-            Events::loadClassMetadata,
-        ];
-    }
-
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs): void
     {
         $classMetadata = $eventArgs->getClassMetadata();
@@ -41,7 +30,6 @@ class RemoveEntityColumnSubscriber implements EventSubscriber
     {
         $classMetadata->associationMappings = $this->removeMappingByKey($propertyName, $classMetadata->associationMappings);
         $classMetadata->fieldMappings = $this->removeMappingByKey($propertyName, $classMetadata->fieldMappings);
-        $classMetadata->columnNames = $this->removeMappingByKey($propertyName, $classMetadata->columnNames);
         $classMetadata->fieldNames = $this->removeMappingByValue($propertyName, $classMetadata->fieldNames);
     }
 

@@ -163,9 +163,7 @@ services:
 
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: ~
 
-    Shopsys\FrameworkBundle\Component\Doctrine\RemoveEntityColumnSubscriber:
-        tags:
-            - { name: doctrine.event_subscriber, priority: -100 }
+    Shopsys\FrameworkBundle\Component\Doctrine\RemoveEntityColumnListener: ~
 
     Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter: ~
 
@@ -212,16 +210,11 @@ services:
         arguments:
             $indexes: !tagged elasticsearch.index
 
-    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionParentMetadataCleanerEventSubscriber:
-        class: Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionParentMetadataCleanerEventSubscriber
-        tags:
-            - { name: doctrine.event_subscriber, priority: 10 }
-
-    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber:
+    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionListener:
         arguments:
             $entityExtensionMap: '%shopsys.entity_extension.map%'
-        tags:
-            - { name: doctrine.event_subscriber, priority: -10 }
+
+    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionParentMetadataCleanerEventListener: ~
 
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator:
         arguments:
@@ -533,6 +526,11 @@ services:
     Shopsys\FrameworkBundle\Form\RolesType:
         arguments:
             $useSimplePermissions: '%shopsys.administration.roles.simple_permissions%'
+
+    Shopsys\FrameworkBundle\Migrations\MigrationFactory:
+        arguments:
+            $migrationFactory: '@.inner'
+        decorates: doctrine.migrations.migrations_factory
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
@@ -922,9 +920,6 @@ services:
 
     profiler.storage:
         alias: Shopsys\FrameworkBundle\Component\HttpKernel\Profiler\FileProfilerStorage
-
-    routing.loader.annotation:
-        class: Shopsys\FrameworkBundle\Component\AttributeRouteControllerLoader
 
     routing.loader.attribute:
         class: Shopsys\FrameworkBundle\Component\AttributeRouteControllerLoader

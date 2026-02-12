@@ -31,11 +31,11 @@ services:
 
     Tests\App\Functional\EntityExtension\EntityExtensionTestHelper: ~
 
-    Tests\App\Functional\EntityExtension\OverwritableEntityExtensionSubscriber:
+    Tests\App\Functional\EntityExtension\OverwritableEntityExtensionListener:
         arguments:
             $entityExtensionMap: '%shopsys.entity_extension.map%'
         tags:
-            - { name: doctrine.event_subscriber, priority: -10 }
+            - { name: doctrine.event_listener, event: loadClassMetadata, priority: -10 }
 
     Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver:
         alias: Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver

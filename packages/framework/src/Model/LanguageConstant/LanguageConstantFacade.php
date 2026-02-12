@@ -9,9 +9,9 @@ use Exception;
 use GuzzleHttp\Client;
 use InvalidArgumentException;
 use League\Flysystem\FilesystemOperator;
+use Nette\Utils\Json;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
-use function GuzzleHttp\json_decode;
 
 class LanguageConstantFacade
 {
@@ -41,7 +41,7 @@ class LanguageConstantFacade
 
         $url = sprintf($this->translationNamespaces[$namespace], $locale);
 
-        return json_decode((new Client())->get($url)->getBody()->getContents(), true);
+        return Json::decode((new Client())->get($url)->getBody()->getContents(), true);
     }
 
     /**

@@ -41,10 +41,10 @@ class DispatchCollectedEnvelopesSubscriber implements EventSubscriberInterface
         try {
             $this->messageBus->dispatch($envelope);
         } catch (HandlerFailedException $e) {
-            foreach ($e->getNestedExceptions() as $nested) {
-                if ($nested instanceof TransportExceptionInterface) {
+            foreach ($e->getWrappedExceptions() as $wrappedException) {
+                if ($wrappedException instanceof TransportExceptionInterface) {
                     $this->logger->error('There was a failure while sending emails', [
-                        'exception' => $nested,
+                        'exception' => $wrappedException,
                     ]);
 
                     return;

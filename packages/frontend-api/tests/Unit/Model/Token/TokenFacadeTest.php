@@ -54,7 +54,7 @@ class TokenFacadeTest extends TestCase
         ?InMemory $privateKey,
         ?DateTimeImmutable $expiresAt,
     ): UnencryptedToken {
-        $builder = (new Builder(new JoseEncoder(), ChainedFormatter::default()))
+        $builder = Builder::new(new JoseEncoder(), ChainedFormatter::default())
             ->issuedBy(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL)
             ->permittedFor(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL)
             ->issuedAt(new DatePoint())

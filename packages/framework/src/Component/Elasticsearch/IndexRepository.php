@@ -57,7 +57,7 @@ class IndexRepository
     {
         $indexes = $this->elasticsearchClient->indices();
 
-        foreach ($indexes->getAliases() as $indexName => ['aliases' => $aliases]) {
+        foreach ($indexes->getAlias() as $indexName => ['aliases' => $aliases]) {
             if (array_key_exists($indexDefinition->getIndexAlias(), $aliases)) {
                 $this->deleteIndex($indexName);
             }

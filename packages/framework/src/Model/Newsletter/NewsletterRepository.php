@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Newsletter;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -36,16 +35,18 @@ class NewsletterRepository
         return $count > 0;
     }
 
-    public function getAllEmailsDataIteratorByDomainId(int $domainId): IterableResult
+    /**
+     * @return iterable<array{email: string, createdAt: \DateTimeInterface}>
+     */
+    public function getAllEmailsDataIteratorByDomainId(int $domainId): iterable
     {
-        $query = $this->getNewsletterSubscriberRepository()
+        return $this->getNewsletterSubscriberRepository()
             ->createQueryBuilder('ns')
             ->select('ns.email, ns.createdAt')
             ->where('ns.domainId = :domainId')
             ->setParameter('domainId', $domainId)
-            ->getQuery();
-
-        return $query->iterate(null, AbstractQuery::HYDRATE_SCALAR);
+            ->getQuery()
+            ->toIterable([], AbstractQuery::HYDRATE_SCALAR);
     }
 
     public function getQueryBuilderForQuickSearch(int $domainId, QuickSearchFormData $searchData): QueryBuilder

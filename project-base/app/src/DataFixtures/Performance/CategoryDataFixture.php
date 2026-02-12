@@ -12,6 +12,7 @@ use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -32,6 +33,7 @@ class CategoryDataFixture
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
         private readonly Faker $faker,
         private readonly ProgressBarFactory $progressBarFactory,
+        private readonly Domain $domain,
     ) {
         $this->categoriesCreated = 0;
     }
@@ -86,14 +88,15 @@ class CategoryDataFixture
     {
         $categoryData = $this->categoryDataFactory->create();
         $categoryName = $this->faker->word . ' #' . $this->categoriesCreated;
-        $categoryData->name = [
-            'cs' => $categoryName,
-            'en' => $categoryName,
-        ];
-        $categoryData->descriptions = [
-            1 => $this->faker->paragraph(3, false),
-            2 => $this->faker->paragraph(3, false),
-        ];
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $categoryData->name[$locale] = $categoryName;
+        }
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $categoryData->descriptions[$domainId] = $this->faker->paragraph(3, false);
+        }
+
         $categoryData->parent = $parentCategory;
 
         return $categoryData;

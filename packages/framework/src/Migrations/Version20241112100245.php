@@ -5,16 +5,24 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Override;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20241112100245 extends AbstractMigration implements ContainerAwareInterface
+class Version20241112100245 extends AbstractMigration implements DomainAwareInterface, EntityManagerAwareInterface
 {
     use MultidomainMigrationTrait;
+
+    protected ?EntityManagerInterface $entityManager = null;
+
+    #[Override]
+    public function setEntityManager(EntityManagerInterface $entityManager): void
+    {
+        $this->entityManager = $entityManager;
+    }
 
     #[Override]
     public function up(Schema $schema): void
@@ -32,8 +40,7 @@ class Version20241112100245 extends AbstractMigration implements ContainerAwareI
                 $this->sql('UPDATE blog_categories SET level = level -1');
             }
 
-            $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-            $repository = $entityManager->getRepository(BlogCategory::class);
+            $repository = $this->entityManager->getRepository(BlogCategory::class);
 
             if ($repository instanceof NestedTreeRepository) {
                 $repository->recover();

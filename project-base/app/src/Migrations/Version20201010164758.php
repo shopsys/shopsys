@@ -7,11 +7,11 @@ namespace App\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Override;
 
+use Shopsys\FrameworkBundle\Migrations\DomainAwareInterface;
 use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-final class Version20201010164758 extends AbstractMigration implements ContainerAwareInterface
+final class Version20201010164758 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

@@ -11,29 +11,35 @@ class SchemaDiffFilter
 {
     public function getFilteredSchemaDiff(SchemaDiff $schemaDiff): SchemaDiff
     {
-        $filteredSchemaDiff = new SchemaDiff();
+        $filteredChangedTables = [];
 
-        $filteredSchemaDiff->changedSequences = $schemaDiff->changedSequences;
-        $filteredSchemaDiff->newSequences = $schemaDiff->newSequences;
-        $filteredSchemaDiff->newNamespaces = $schemaDiff->newNamespaces;
-        $filteredSchemaDiff->newTables = $schemaDiff->newTables;
-        $filteredSchemaDiff->orphanedForeignKeys = $schemaDiff->orphanedForeignKeys;
-
-        foreach ($schemaDiff->changedTables as $tableDiff) {
-            $filteredTableDiff = new TableDiff($tableDiff->name);
-            $filteredTableDiff->addedColumns = $tableDiff->addedColumns;
-            $filteredTableDiff->addedForeignKeys = $tableDiff->addedForeignKeys;
-            $filteredTableDiff->addedIndexes = $tableDiff->addedIndexes;
-            $filteredTableDiff->changedColumns = $tableDiff->changedColumns;
-            $filteredTableDiff->changedForeignKeys = $tableDiff->changedForeignKeys;
-            $filteredTableDiff->changedIndexes = $tableDiff->changedIndexes;
-            $filteredTableDiff->renamedColumns = $tableDiff->renamedColumns;
-            $filteredTableDiff->renamedIndexes = $tableDiff->renamedIndexes;
-            $filteredTableDiff->newName = $tableDiff->newName;
-
-            $filteredSchemaDiff->changedTables[] = $filteredTableDiff;
+        foreach ($schemaDiff->getAlteredTables() as $tableDiff) {
+            $filteredChangedTables[] = new TableDiff(
+                tableName: $tableDiff->getOldTable()?->getName() ?? '',
+                addedColumns: $tableDiff->getAddedColumns(),
+                modifiedColumns: $tableDiff->getModifiedColumns(),
+                droppedColumns: [],
+                addedIndexes: $tableDiff->getAddedIndexes(),
+                changedIndexes: $tableDiff->getModifiedIndexes(),
+                removedIndexes: [],
+                fromTable: $tableDiff->getOldTable(),
+                addedForeignKeys: $tableDiff->getAddedForeignKeys(),
+                changedForeignKeys: $tableDiff->getModifiedForeignKeys(),
+                removedForeignKeys: [],
+                renamedColumns: $tableDiff->getRenamedColumns(),
+                renamedIndexes: $tableDiff->getRenamedIndexes(),
+            );
         }
 
-        return $filteredSchemaDiff;
+        return new SchemaDiff(
+            newTables: $schemaDiff->getCreatedTables(),
+            changedTables: $filteredChangedTables,
+            removedTables: [],
+            createdSchemas: $schemaDiff->getCreatedSchemas(),
+            droppedSchemas: [],
+            createdSequences: $schemaDiff->getCreatedSequences(),
+            alteredSequences: $schemaDiff->getAlteredSequences(),
+            droppedSequences: [],
+        );
     }
 }

@@ -8,9 +8,8 @@ use Doctrine\DBAL\Schema\Schema;
 use Override;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20240108154625 extends AbstractMigration implements ContainerAwareInterface
+class Version20240108154625 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

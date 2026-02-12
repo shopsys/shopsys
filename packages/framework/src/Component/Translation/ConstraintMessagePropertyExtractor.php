@@ -123,7 +123,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
                 $messageId = $this->phpParserNodeHelper->getConcatenatedStringValue($propertyProperty->default, $this->file);
 
                 $message = new Message($messageId, $this->getTranslationDomain());
-                $message->addSource(new FileSource($this->file->getFilename(), $propertyProperty->getLine()));
+                $message->addSource(new FileSource($this->file->getFilename(), $propertyProperty->getStartLine()));
 
                 $this->catalogue->add($message);
             }
@@ -153,7 +153,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
             }
 
             $message = new Message($messageId, $this->getTranslationDomain());
-            $message->addSource(new FileSource($this->file->getFilename(), $param->getLine()));
+            $message->addSource(new FileSource($this->file->getFilename(), $param->getStartLine()));
 
             $this->catalogue->add($message);
         }

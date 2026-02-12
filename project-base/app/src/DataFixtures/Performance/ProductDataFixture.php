@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -54,6 +55,7 @@ class ProductDataFixture
         private readonly Faker $faker,
         private readonly ProgressBarFactory $progressBarFactory,
         private readonly ProductDataFactory $productDataFactory,
+        private readonly UploadedFileDataFactory $uploadedFileDataFactory,
     ) {
         $this->countImported = 0;
         $this->demoDataIterationCounter = 0;
@@ -78,6 +80,7 @@ class ProductDataFixture
                 $productTemplate = reset($this->productTemplates);
             }
             $productData = $this->productDataFactory->createFromProduct($productTemplate);
+            $productData->files = $this->uploadedFileDataFactory->create();
             $this->makeProductDataUnique($productData);
 
             $this->setRandomPerformanceCategoriesToProductData($productData);

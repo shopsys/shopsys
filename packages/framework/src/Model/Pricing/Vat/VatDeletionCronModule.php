@@ -31,6 +31,7 @@ class VatDeletionCronModule implements IteratedCronModuleInterface
     #[Override]
     public function sleep(): void
     {
+        $this->vatFacade->replaceVatInPaymentsAndTransportsForVatsMarkedForDeletion();
         $deletedVatsCount = $this->vatFacade->deleteAllReplacedVats();
         $this->logger->info('Deleted ' . $deletedVatsCount . ' vats');
     }
@@ -51,6 +52,7 @@ class VatDeletionCronModule implements IteratedCronModuleInterface
         if ($batchResult) {
             $this->logger->debug('Batch is done');
         } else {
+            $this->vatFacade->replaceVatInPaymentsAndTransportsForVatsMarkedForDeletion();
             $deletedVatsCount = $this->vatFacade->deleteAllReplacedVats();
             $this->logger->debug('All vats are replaced');
             $this->logger->info('Deleted ' . $deletedVatsCount . ' vats');

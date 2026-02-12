@@ -21,3 +21,11 @@ services:
         arguments:
             $hub: '@Sentry\State\HubInterface'
             $level: !php/const Monolog\Logger::INFO
+
+    # Configure the Sentry handler to capture messages as events
+    Sentry\Monolog\Handler:
+        arguments:
+            $hub: '@Sentry\State\HubInterface'
+            $level: !php/const Monolog\Logger::ERROR # Configures the level of messages to capture as events
+            $bubble: true
+            $fillExtraContext: true # Enables sending monolog context to Sentry

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Newsletter;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -36,7 +35,10 @@ class NewsletterFacade
         $this->em->flush();
     }
 
-    public function getAllEmailsDataIteratorByDomainId(int $domainId): IterableResult
+    /**
+     * @return iterable<array{email: string, createdAt: \DateTimeInterface}>
+     */
+    public function getAllEmailsDataIteratorByDomainId(int $domainId): iterable
     {
         return $this->newsletterRepository->getAllEmailsDataIteratorByDomainId($domainId);
     }

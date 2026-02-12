@@ -101,7 +101,7 @@ class MyService
 To solve this problem, the caches should be cleared after each message.
 Everything you need to do is use `Shopsys\FrameworkBundle\Component\Cache\InMemoryCache` that implements the `Symfony\Contracts\Service\ResettableInterface`.
 
-Thanks to the messenger configuration, namely the `reset_on_message: true`, the `reset()` method is called automatically after each processed message.
+The `reset()` method is called automatically after each processed message (this is the default behavior in Symfony Messenger).
 
 So the proper code could look like this:
 

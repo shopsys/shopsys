@@ -96,23 +96,23 @@ So, everything has to be consistent for all associations, new objects, repositor
 
 ## How does it work?
 
-The solution is based on Doctrine event subscribers and metadata manipulation.
+The solution is based on Doctrine event listeners and metadata manipulation.
 
-It is important that the **EntityExtensionParentMetadataCleanerEventSubscriber** runs first and the **EntityExtensionSubscriber** runs last.
-Otherwise, a conflict with other subscribers modifying the metadata would occur.
+It is important that the **EntityExtensionParentMetadataCleanerEventListener** runs first and the **EntityExtensionListener** runs last.
+Otherwise, a conflict with other listeners modifying the metadata would occur.
 
-The correct order of relevant Doctrine event subscribers:
+The correct order of relevant Doctrine event listeners:
 
-- EntityExtensionParentMetadataCleanerEventSubscriber
-- Gedmo subscribers (_from [gedmo/doctrine-extensions](https://github.com/gedmo/doctrine-extensions)_)
+- EntityExtensionParentMetadataCleanerEventListener
+- Gedmo listeners (_from [gedmo/doctrine-extensions](https://github.com/gedmo/doctrine-extensions)_)
 - TranslatableListener (_from [prezent/doctrine-translatable](https://github.com/prezent/doctrine-translatable)_)
-- EntityExtensionSubscriber
+- EntityExtensionListener
 
 `EntityManagerDecorator` is then responsible for using the extended entities instead of their parents in EntityManager, Repositories and QueryBuilders.
 
-### EntityExtensionParentMetadataCleanerEventSubscriber
+### EntityExtensionParentMetadataCleanerEventListener
 
-EntityExtensionSubscriber (which must be executed last) turns the parent entities into MappedSuperclass.
+EntityExtensionListener (which must be executed last) turns the parent entities into MappedSuperclass.
 It is better for the parent entities to be turned into MappedSuperclass before any other metadata manipulation is done.
 Along with this, it strips all metadata from the parent entities.
 This is basically to avoid other event subscribers to consider the parent entities to be real hydratable entities.
@@ -121,9 +121,9 @@ The only real problem we encountered was Gedmo's TreeListener which is used for 
 This event subscriber also clears metadata about inheritance from parent entities because,
 in Doctrine, a MappedSuperclass entity cannot also be a root entity of true mapped inheritance.
 
-### EntityExtensionSubscriber
+### EntityExtensionListener
 
-This is the subscriber that extends entities.
+This is the listener that extends entities.
 It turns the parent entities into MappedSuperclass and adds parents' metadata into the extended entities.
 Also, it replaces all associations with parent entities by extended entities.
 It must have low priority, so it runs after Gedmo and Prezent extensions.

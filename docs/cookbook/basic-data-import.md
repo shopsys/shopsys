@@ -65,7 +65,7 @@ because they can be scheduled, run in the background, and even iterated when nec
 namespace App\Model\Product;
 
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
+use Monolog\Logger;
 
 class ImportProductsCronModule implements SimpleCronModuleInterface
 {

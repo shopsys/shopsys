@@ -39,7 +39,7 @@ class PhpParserNodeHelper
                 static::TRANSLATOR_CLASS_FQN,
                 get_class($node),
                 $fileInfo,
-                $node->getLine(),
+                $node->getStartLine(),
             ),
         );
     }

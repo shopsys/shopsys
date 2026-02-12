@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -55,10 +54,10 @@ class ProductRepository extends BaseProductRepository
     }
 
     /**
-     * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][]
+     * @return iterable<\App\Model\Product\Product>
      */
     #[Override]
-    public function getProductIteratorForReplaceVat(): IterableResult|array
+    public function getProductIteratorForReplaceVat(): iterable
     {
         $query = $this->em->createQuery('
             SELECT distinct p
@@ -68,7 +67,7 @@ class ProductRepository extends BaseProductRepository
             WHERE v.replaceWith IS NOT NULL
         ');
 
-        return $query->iterate();
+        return $query->toIterable();
     }
 
     public function getSellableBySearchTextQueryBuilder(

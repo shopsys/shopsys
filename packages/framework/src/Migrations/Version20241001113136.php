@@ -9,9 +9,8 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMail;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20241001113136 extends AbstractMigration implements ContainerAwareInterface
+class Version20241001113136 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

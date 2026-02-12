@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\EntityExtension;
 
-use Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionListener;
 
-class OverwritableEntityExtensionSubscriber extends EntityExtensionSubscriber
+class OverwritableEntityExtensionListener extends EntityExtensionListener
 {
     /**
      * @param string[] $entityExtensionMap
