@@ -1,5 +1,5 @@
 sentry:
-    dsn: '%env(SENTRY_DSN)%'
+    dsn: '%env(default::SENTRY_DSN)%'
     messenger:
         capture_soft_fails: true # captures exceptions marked for retry too
         enabled: true # flushes Sentry messages at the end of each message handling
