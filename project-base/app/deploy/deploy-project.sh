@@ -55,6 +55,7 @@ function deploy() {
         ["CDN_DOMAIN"]=${CDN_DOMAIN}
         ["CDN_API_KEY"]=${CDN_API_KEY}
         ["CDN_API_SALT"]=${CDN_API_SALT}
+        ["CDN_RESIZE_DISABLE"]=${CDN_RESIZE_DISABLE}
 
         ["PACKETERY_ENABLED"]=${PACKETERY_ENABLED}
         ["PACKETERY_REST_API_URL"]=${PACKETERY_REST_API_URL}
