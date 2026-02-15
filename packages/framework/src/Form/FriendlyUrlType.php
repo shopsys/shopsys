@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints;
 
 final class FriendlyUrlType extends AbstractType
 {
-    protected const string SLUG_REGEX = '/^[\w_\-\/]+$/';
+    public const string SLUG_REGEX = '/^(?:[A-Za-z0-9_\-\/]|%[0-9A-Fa-f]{2})+$/';
 
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -30,9 +30,13 @@ final class FriendlyUrlType extends AbstractType
             'attr' => [
                 'placeholder' => 'slug',
             ],
+            'help' => t('If the slug contains non-ASCII characters (e.g. "café"), encode it as URL-encoded form (e.g. "caf%C3%A9"). You can use https://www.urlencoder.org/.'),
             'constraints' => [
                 new Constraints\NotBlank(),
-                new Constraints\Regex(static::SLUG_REGEX),
+                new Constraints\Regex(
+                    pattern: static::SLUG_REGEX,
+                    message: 'Slug containing non-ASCII characters must be URL-encoded. You can use https://www.urlencoder.org/.',
+                ),
             ],
         ]);
     }

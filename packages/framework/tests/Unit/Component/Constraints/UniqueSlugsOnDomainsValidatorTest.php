@@ -102,12 +102,74 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
+    public function testValidateDuplicateEncodedAndDecodedSlugsOnSameDomain(): void
+    {
+        $values = [
+            [
+                UrlListData::FIELD_DOMAIN => 1,
+                UrlListData::FIELD_SLUG => 'new-%75rl/',
+            ],
+            [
+                UrlListData::FIELD_DOMAIN => 1,
+                UrlListData::FIELD_SLUG => 'new-url/',
+            ],
+        ];
+        $constraint = new UniqueSlugsOnDomains();
+        $constraint->messageDuplicate = 'myMessage';
+
+        $this->validator->validate($values, $constraint);
+
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ url }}', 'http://example.cz/new-url/')
+            ->assertRaised();
+    }
+
+    public function testValidateDuplicateSlugsWithDifferentEncodingCaseOnSameDomain(): void
+    {
+        $values = [
+            [
+                UrlListData::FIELD_DOMAIN => 1,
+                UrlListData::FIELD_SLUG => 'new-caf%C3%A9/',
+            ],
+            [
+                UrlListData::FIELD_DOMAIN => 1,
+                UrlListData::FIELD_SLUG => 'new-caf%c3%a9/',
+            ],
+        ];
+        $constraint = new UniqueSlugsOnDomains();
+        $constraint->messageDuplicate = 'myMessage';
+
+        $this->validator->validate($values, $constraint);
+
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ url }}', 'http://example.cz/new-caf%C3%A9/')
+            ->assertRaised();
+    }
+
     public function testValidateExistingSlug(): void
     {
         $values = [
             [
                 UrlListData::FIELD_DOMAIN => 1,
                 UrlListData::FIELD_SLUG => 'existing-url/',
+            ],
+        ];
+        $constraint = new UniqueSlugsOnDomains();
+        $constraint->message = 'myMessage';
+
+        $this->validator->validate($values, $constraint);
+
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ url }}', 'http://example.cz/existing-url/')
+            ->assertRaised();
+    }
+
+    public function testValidateExistingEncodedSlug(): void
+    {
+        $values = [
+            [
+                UrlListData::FIELD_DOMAIN => 1,
+                UrlListData::FIELD_SLUG => 'existing-%75rl/',
             ],
         ];
         $constraint = new UniqueSlugsOnDomains();

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlSlugNormalizer;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Validator\Constraint;
@@ -60,7 +61,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
         foreach ($values as $urlData) {
             $domainId = $urlData[UrlListData::FIELD_DOMAIN];
             $domainConfig = $this->domain->getDomainConfigById($domainId);
-            $slug = $urlData[UrlListData::FIELD_SLUG];
+            $slug = FriendlyUrlSlugNormalizer::normalize((string)$urlData[UrlListData::FIELD_SLUG]);
 
             $domainRouter = $this->domainRouterFactory->getRouter($domainId);
 
@@ -88,7 +89,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
 
         foreach ($values as $urlData) {
             $domainId = $urlData[UrlListData::FIELD_DOMAIN];
-            $slug = $urlData[UrlListData::FIELD_SLUG];
+            $slug = FriendlyUrlSlugNormalizer::normalize((string)$urlData[UrlListData::FIELD_SLUG]);
 
             if (!array_key_exists($domainId, $slugsCountByDomainId)) {
                 $slugsCountByDomainId[$domainId] = [];
