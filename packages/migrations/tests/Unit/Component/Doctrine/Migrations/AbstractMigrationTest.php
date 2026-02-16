@@ -13,9 +13,7 @@ class AbstractMigrationTest extends TestCase
 {
     public function testAddSqlException(): void
     {
-        $abstractMigrationMock = $this->getMockBuilder(AbstractMigration::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $abstractMigrationStub = $this->createStub(AbstractMigration::class);
 
         $reflectionClass = new ReflectionClass(AbstractMigration::class);
         $addSqlMethod = $reflectionClass->getMethod('addSql');
@@ -23,6 +21,6 @@ class AbstractMigrationTest extends TestCase
 
         $this->expectException(MethodIsNotAllowedException::class);
 
-        $addSqlMethod->invokeArgs($abstractMigrationMock, ['']);
+        $addSqlMethod->invokeArgs($abstractMigrationStub, ['']);
     }
 }

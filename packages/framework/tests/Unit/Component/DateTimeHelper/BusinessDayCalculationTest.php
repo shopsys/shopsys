@@ -86,7 +86,7 @@ class BusinessDayCalculationTest extends TestCase
      */
     private function createCalculation(array $publicHolidays): BusinessDayCalculation
     {
-        $closedDayFacade = $this->createMock(ClosedDayFacade::class);
+        $closedDayFacade = $this->createStub(ClosedDayFacade::class);
         $closedDayFacade->method('getPublicHolidays')
             ->willReturn($publicHolidays);
 

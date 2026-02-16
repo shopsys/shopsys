@@ -42,7 +42,7 @@ class SubRequestListenerTest extends TestCase
     public function testOnKernelResponseOneMasterResponse(): void
     {
         $event = new ResponseEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::MAIN_REQUEST,
             new Response(),
@@ -55,14 +55,14 @@ class SubRequestListenerTest extends TestCase
     public function testOnKernelResponseManyRedirectResponses(): void
     {
         $event1 = new ResponseEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
             $this->getRedirectResponseMock(),
         );
 
         $event2 = new ResponseEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
             $this->getResponseMock(),
@@ -75,7 +75,7 @@ class SubRequestListenerTest extends TestCase
         $this->expectException(TooManyRedirectResponsesException::class);
 
         $event3 = new ResponseEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
             $this->getRedirectResponseMock(),
@@ -87,21 +87,21 @@ class SubRequestListenerTest extends TestCase
     public function testOnKernelResponse(): void
     {
         $event1 = new ResponseEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
             $this->getRedirectResponseMock(true),
         );
 
         $event2 = new ResponseEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
             $this->getResponseMock(),
         );
 
         $event3 = new ResponseEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::MAIN_REQUEST,
             new Response(),
@@ -138,14 +138,14 @@ class SubRequestListenerTest extends TestCase
         ]);
 
         $event1 = new ControllerEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             fn () => null,
             $masterRequestMock,
             HttpKernelInterface::MAIN_REQUEST,
         );
 
         $event2 = new ControllerEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             fn () => null,
             $subRequestMock,
             HttpKernelInterface::SUB_REQUEST,

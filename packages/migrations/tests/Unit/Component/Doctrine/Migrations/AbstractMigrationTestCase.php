@@ -12,9 +12,9 @@ abstract class AbstractMigrationTestCase extends TestCase
 {
     protected function createMockedAvailableMigration(string $className): AvailableMigration
     {
-        /** @var \Doctrine\Migrations\AbstractMigration|\PHPUnit\Framework\MockObject\MockObject $migrationMock */
-        $migrationMock = $this->createMock($className);
+        /** @var \Doctrine\Migrations\AbstractMigration&\PHPUnit\Framework\MockObject\Stub $migrationStub */
+        $migrationStub = $this->createStub($className);
 
-        return new AvailableMigration(new Version($className), $migrationMock);
+        return new AvailableMigration(new Version($className), $migrationStub);
     }
 }

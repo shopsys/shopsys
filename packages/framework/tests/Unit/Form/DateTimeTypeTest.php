@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Symfony\Component\Clock\DatePoint;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
@@ -43,6 +44,14 @@ class DateTimeTypeTest extends TypeTestCase
     }
 
     #[Override]
+    protected function setUp(): void
+    {
+        $this->dispatcher = $this->createStub(EventDispatcherInterface::class);
+
+        parent::setUp();
+    }
+
+    #[Override]
     protected function getExtensions(): array
     {
         $displayTimeZone = DomainConfigHelper::DEFAULT_TIMEZONE_STRING;
@@ -57,18 +66,16 @@ class DateTimeTypeTest extends TypeTestCase
 
     private function getMockedDomain(string $dateTimeZoneString): Domain
     {
-        $settingMock = $this->getMockBuilder(Setting::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $settingStub = $this->createStub(Setting::class);
         $domainConfig = DomainConfigHelper::getDomainConfig(
             dateTimeZoneString: $dateTimeZoneString,
         );
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         return new Domain(
             [$domainConfig],
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
     }
 }

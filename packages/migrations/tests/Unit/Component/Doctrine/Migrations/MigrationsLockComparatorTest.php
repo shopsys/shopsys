@@ -26,9 +26,9 @@ class MigrationsLockComparatorTest extends TestCase
         Version $versionB,
         string $expectedResult,
     ): void {
-        $migrationsLockMock = $this->createMock(MigrationsLock::class);
-        $migrationsLockMock->method('getOrderedInstalledMigrationClasses')->willReturn($orderedMigrationClassesFromLock);
-        $migrationsLockComparator = new MigrationsLockComparator($migrationsLockMock);
+        $migrationsLockStub = $this->createStub(MigrationsLock::class);
+        $migrationsLockStub->method('getOrderedInstalledMigrationClasses')->willReturn($orderedMigrationClassesFromLock);
+        $migrationsLockComparator = new MigrationsLockComparator($migrationsLockStub);
         $actualResult = $migrationsLockComparator->compare($versionA, $versionB);
 
         if ($expectedResult === self::EXPECTED_RESULT_LESS_THAN_ZERO) {

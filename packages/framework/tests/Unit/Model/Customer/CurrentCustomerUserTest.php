@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -24,18 +23,18 @@ class CurrentCustomerUserTest extends TestCase
         $pricingGroupData->name = 'name';
         $expectedPricingGroup = new PricingGroup($pricingGroupData, 1);
 
-        $tokenStorageMock = $this->createMock(TokenStorage::class);
-        $pricingGroupSettingFacadeMock = $this->getPricingGroupSettingFacadeMockReturningDefaultPricingGroup(
+        $tokenStorageStub = $this->createStub(TokenStorage::class);
+        $pricingGroupSettingFacadeStub = $this->getPricingGroupSettingFacadeStubReturningDefaultPricingGroup(
             $expectedPricingGroup,
         );
-        $customerUserFacadeMock = $this->createMock(CustomerUserFacade::class);
-        $inMemoryCache = $this->createMock(InMemoryCache::class);
+        $customerUserFacadeStub = $this->createStub(CustomerUserFacade::class);
+        $inMemoryCacheStub = $this->createStub(InMemoryCache::class);
 
         $currentCustomerUser = new CurrentCustomerUser(
-            $tokenStorageMock,
-            $pricingGroupSettingFacadeMock,
-            $customerUserFacadeMock,
-            $inMemoryCache,
+            $tokenStorageStub,
+            $pricingGroupSettingFacadeStub,
+            $customerUserFacadeStub,
+            $inMemoryCacheStub,
         );
 
         $pricingGroup = $currentCustomerUser->getPricingGroup();
@@ -47,40 +46,37 @@ class CurrentCustomerUserTest extends TestCase
         $customerUser = TestCustomerProvider::getTestCustomerUser();
         $expectedPricingGroup = $customerUser->getPricingGroup();
 
-        $tokenStorageMock = $this->getTokenStorageMockForCustomerUser($customerUser);
-        $pricingGroupFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
-        $customerUserFacadeMock = $this->createMock(CustomerUserFacade::class);
-        $inMemoryCache = $this->createMock(InMemoryCache::class);
+        $tokenStorageStub = $this->getTokenStorageStubForCustomerUser($customerUser);
+        $pricingGroupFacadeStub = $this->createStub(PricingGroupSettingFacade::class);
+        $customerUserFacadeStub = $this->createStub(CustomerUserFacade::class);
+        $inMemoryCacheStub = $this->createStub(InMemoryCache::class);
 
         $currentCustomerUser = new CurrentCustomerUser(
-            $tokenStorageMock,
-            $pricingGroupFacadeMock,
-            $customerUserFacadeMock,
-            $inMemoryCache,
+            $tokenStorageStub,
+            $pricingGroupFacadeStub,
+            $customerUserFacadeStub,
+            $inMemoryCacheStub,
         );
 
         $pricingGroup = $currentCustomerUser->getPricingGroup();
         $this->assertSame($expectedPricingGroup, $pricingGroup);
     }
 
-    private function getPricingGroupSettingFacadeMockReturningDefaultPricingGroup(
+    private function getPricingGroupSettingFacadeStubReturningDefaultPricingGroup(
         PricingGroup $defaultPricingGroup,
-    ): MockObject|PricingGroupSettingFacade {
-        $pricingGroupSettingFacadeMock = $this->getMockBuilder(PricingGroupSettingFacade::class)
-            ->onlyMethods(['getDefaultPricingGroupByCurrentDomain'])
-            ->disableOriginalConstructor()
-            ->getMock();
+    ): PricingGroupSettingFacade {
+        $pricingGroupSettingFacadeStub = $this->createStub(PricingGroupSettingFacade::class);
 
-        $pricingGroupSettingFacadeMock
+        $pricingGroupSettingFacadeStub
             ->method('getDefaultPricingGroupByCurrentDomain')
             ->willReturn($defaultPricingGroup);
 
-        return $pricingGroupSettingFacadeMock;
+        return $pricingGroupSettingFacadeStub;
     }
 
-    private function getTokenStorageMockForCustomerUser(
+    private function getTokenStorageStubForCustomerUser(
         CustomerUser $customerUser,
-    ): MockObject|TokenStorage {
+    ): TokenStorage {
         /**
          * Until version 6 of symfony, the TokenInterface mock needs to be mocked manually.
          * The function getUserIdentifier() is included in the interface only with annotation and therefore cannot be mocked using the phpunit tool.
@@ -94,12 +90,9 @@ class CurrentCustomerUserTest extends TestCase
 
         $tokenMock = new TokenMock($customerUser);
 
-        $tokenStorageMock = $this->getMockBuilder(TokenStorage::class)
-            ->onlyMethods(['getToken'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $tokenStorageMock->method('getToken')->willReturn($tokenMock);
+        $tokenStorageStub = $this->createStub(TokenStorage::class);
+        $tokenStorageStub->method('getToken')->willReturn($tokenMock);
 
-        return $tokenStorageMock;
+        return $tokenStorageStub;
     }
 }

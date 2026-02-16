@@ -22,15 +22,15 @@ class BlogArticleElasticsearchRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQueryFactory|\PHPUnit\Framework\MockObject\MockObject $filterQueryFactoryMock */
-        $filterQueryFactoryMock = $this->createMock(FilterQueryFactory::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher|\PHPUnit\Framework\MockObject\MockObject $blogArticleElasticsearchDataFetcherMock */
-        $blogArticleElasticsearchDataFetcherMock = $this->createMock(BlogArticleElasticsearchDataFetcher::class);
-        $blogArticleElasticsearchDataFetcherMock
+        /** @var \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQueryFactory|\PHPUnit\Framework\MockObject\Stub $filterQueryFactoryStub */
+        $filterQueryFactoryStub = $this->createStub(FilterQueryFactory::class);
+        /** @var \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher|\PHPUnit\Framework\MockObject\Stub $blogArticleElasticsearchDataFetcherStub */
+        $blogArticleElasticsearchDataFetcherStub = $this->createStub(BlogArticleElasticsearchDataFetcher::class);
+        $blogArticleElasticsearchDataFetcherStub
             ->method('getSingleResult')->willThrowException(new ElasticsearchNoResultException());
         $this->blogArticleElasticsearchRepository = new BlogArticleElasticsearchRepository(
-            $filterQueryFactoryMock,
-            $blogArticleElasticsearchDataFetcherMock,
+            $filterQueryFactoryStub,
+            $blogArticleElasticsearchDataFetcherStub,
             new TransformStringHelper(),
         );
         $this->expectException(BlogArticleNotFoundException::class);

@@ -43,7 +43,7 @@ class MergadoFeedItemTest extends TestCase
 
     private DomainConfig $defaultDomain;
 
-    private Product|MockObject $defaultProduct;
+    private Product $defaultProduct;
 
     #[DataProvider('mergadoFeedItemDataProvider')]
     public function testMergadoFeedItem(
@@ -105,38 +105,38 @@ class MergadoFeedItemTest extends TestCase
     private function doSetUp(bool $isProductAvailableOnStock): void
     {
         $this->productPriceCalculationForCustomerUserMock = $this->createMock(ProductPriceCalculationForCustomerUser::class);
-        $productParametersBatchLoaderMock = $this->createMock(ProductParametersBatchLoader::class);
-        $categoryFacadeMock = $this->createMock(CategoryFacade::class);
-        $categoryFacadeMock->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')->willReturn(['category1', 'category2']);
+        $productParametersBatchLoaderStub = $this->createStub(ProductParametersBatchLoader::class);
+        $categoryFacadeStub = $this->createStub(CategoryFacade::class);
+        $categoryFacadeStub->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')->willReturn(['category1', 'category2']);
         $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
-        $imageFacadeMock = $this->createMock(ImageFacade::class);
+        $imageFacadeStub = $this->createStub(ImageFacade::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
-        $loggerMock = $this->createMock(LoggerInterface::class);
+        $loggerStub = $this->createStub(LoggerInterface::class);
 
-        $productAvailabilityFacadeMock = $this->createMock(ProductAvailabilityFacade::class);
-        $productAvailabilityFacadeMock->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
-        $productAvailabilityFacadeMock->method('getProductAvailabilityDaysForFeedsByDomainId')->willReturn($isProductAvailableOnStock ? 0 : self::MOCKED_SETTING_FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS);
+        $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
+        $productAvailabilityFacadeStub->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
+        $productAvailabilityFacadeStub->method('getProductAvailabilityDaysForFeedsByDomainId')->willReturn($isProductAvailableOnStock ? 0 : self::MOCKED_SETTING_FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS);
 
         $this->mergadoFeedItemFactory = new MergadoFeedItemFactory(
             $this->productUrlsBatchLoaderMock,
-            $productParametersBatchLoaderMock,
-            $categoryFacadeMock,
-            $productAvailabilityFacadeMock,
+            $productParametersBatchLoaderStub,
+            $categoryFacadeStub,
+            $productAvailabilityFacadeStub,
             $this->productPriceCalculationForCustomerUserMock,
-            $imageFacadeMock,
+            $imageFacadeStub,
             $this->currencyFacadeMock,
-            $loggerMock,
+            $loggerStub,
         );
 
-        $defaultCurrency = $this->createCurrencyMock(1, 'EUR');
-        $this->defaultDomain = $this->createDomainConfigMock(
+        $defaultCurrency = $this->createCurrencyStub(1, 'EUR');
+        $this->defaultDomain = $this->createDomainConfigStub(
             Domain::FIRST_DOMAIN_ID,
             'https://example.com',
             'en',
             $defaultCurrency,
         );
 
-        $this->defaultProduct = $this->createMock(Product::class);
+        $this->defaultProduct = $this->createStub(Product::class);
         $this->defaultProduct->method('getId')->willReturn(1);
         $this->defaultProduct->method('getCatnum')->willReturn('catnum');
         $this->defaultProduct->method('getFullName')->willReturn('product name');
@@ -148,28 +148,28 @@ class MergadoFeedItemTest extends TestCase
         $this->mockProductImageUrl($this->defaultProduct, $this->defaultDomain, 'https://example.com/img/product/1');
     }
 
-    private function createCurrencyMock(int $id, string $code): Currency
+    private function createCurrencyStub(int $id, string $code): Currency
     {
-        $currencyMock = $this->createMock(Currency::class);
+        $currencyStub = $this->createStub(Currency::class);
 
-        $currencyMock->method('getId')->willReturn($id);
-        $currencyMock->method('getCode')->willReturn($code);
+        $currencyStub->method('getId')->willReturn($id);
+        $currencyStub->method('getCode')->willReturn($code);
 
-        return $currencyMock;
+        return $currencyStub;
     }
 
-    private function createDomainConfigMock(int $id, string $url, string $locale, Currency $currency): DomainConfig
+    private function createDomainConfigStub(int $id, string $url, string $locale, Currency $currency): DomainConfig
     {
-        $domainConfigMock = $this->createMock(DomainConfig::class);
+        $domainConfigStub = $this->createStub(DomainConfig::class);
 
-        $domainConfigMock->method('getId')->willReturn($id);
-        $domainConfigMock->method('getUrl')->willReturn($url);
-        $domainConfigMock->method('getLocale')->willReturn($locale);
+        $domainConfigStub->method('getId')->willReturn($id);
+        $domainConfigStub->method('getUrl')->willReturn($url);
+        $domainConfigStub->method('getLocale')->willReturn($locale);
 
-        $this->currencyFacadeMock->method('getDomainDefaultCurrencyByDomainId')
+        $this->currencyFacadeMock->expects($this->any())->method('getDomainDefaultCurrencyByDomainId')
             ->with($id)->willReturn($currency);
 
-        return $domainConfigMock;
+        return $domainConfigStub;
     }
 
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
@@ -179,19 +179,19 @@ class MergadoFeedItemTest extends TestCase
         $productPrice = new ProductPrice($price, $pricingGroup, false);
         $productPricesResult = new ProductPricesResult($productPrice, $productPrice);
 
-        $this->productPriceCalculationForCustomerUserMock->method('calculatePricesForCustomerUserAndDomainId')
+        $this->productPriceCalculationForCustomerUserMock->expects($this->any())->method('calculatePricesForCustomerUserAndDomainId')
             ->with($product, $domainId, null)->willReturn($productPricesResult);
     }
 
     private function mockProductUrl(Product $product, DomainConfig $domain, string $url): void
     {
-        $this->productUrlsBatchLoaderMock->method('getProductUrl')
+        $this->productUrlsBatchLoaderMock->expects($this->any())->method('getProductUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
     private function mockProductImageUrl(Product $product, DomainConfig $domain, string $url): void
     {
-        $this->productUrlsBatchLoaderMock->method('getProductImageUrl')
+        $this->productUrlsBatchLoaderMock->expects($this->any())->method('getProductImageUrl')
             ->with($product, $domain)->willReturn($url);
     }
 }

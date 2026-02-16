@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -50,7 +49,7 @@ class OrderFacadeHeurekaTest extends TestCase
     public function testNotSendHeurekaOrderInfoWhenShopCertificationIsNotActivated(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
-        $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(false);
+        $heurekaFacade->expects($this->any())->method('isHeurekaShopCertificationActivated')->willReturn(false);
 
         $heurekaFacade->expects($this->never())->method('sendOrderInfo');
 
@@ -60,8 +59,8 @@ class OrderFacadeHeurekaTest extends TestCase
     public function testNotSendHeurekaOrderInfoWhenDomainLocaleNotSupported(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
-        $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(true);
-        $heurekaFacade->method('isDomainLocaleSupported')->willReturn(false);
+        $heurekaFacade->expects($this->any())->method('isHeurekaShopCertificationActivated')->willReturn(true);
+        $heurekaFacade->expects($this->any())->method('isDomainLocaleSupported')->willReturn(false);
 
         $heurekaFacade->expects($this->never())->method('sendOrderInfo');
 
@@ -71,8 +70,8 @@ class OrderFacadeHeurekaTest extends TestCase
     public function testNotSendHeurekaOrderInfoForOrderWithoutAgreement(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
-        $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(true);
-        $heurekaFacade->method('isDomainLocaleSupported')->willReturn(true);
+        $heurekaFacade->expects($this->any())->method('isHeurekaShopCertificationActivated')->willReturn(true);
+        $heurekaFacade->expects($this->any())->method('isDomainLocaleSupported')->willReturn(true);
 
         $heurekaFacade->expects($this->never())->method('sendOrderInfo');
 
@@ -82,8 +81,8 @@ class OrderFacadeHeurekaTest extends TestCase
     public function testSendHeurekaOrderInfo(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
-        $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(true);
-        $heurekaFacade->method('isDomainLocaleSupported')->willReturn(true);
+        $heurekaFacade->expects($this->any())->method('isHeurekaShopCertificationActivated')->willReturn(true);
+        $heurekaFacade->expects($this->any())->method('isDomainLocaleSupported')->willReturn(true);
 
         $heurekaFacade->expects($this->once())->method('sendOrderInfo');
 
@@ -92,50 +91,50 @@ class OrderFacadeHeurekaTest extends TestCase
 
     private function createOrderFacade(HeurekaFacade $heurekaFacade, Order $order): OrderFacade
     {
-        $orderRepositoryMock = $this->createMock(OrderRepository::class);
-        $orderRepositoryMock->method('getById')->willReturn($order);
+        $orderRepositoryStub = $this->createStub(OrderRepository::class);
+        $orderRepositoryStub->method('getById')->willReturn($order);
 
         return new OrderFacade(
-            $this->createMock(EntityManagerInterface::class),
-            $this->createMock(OrderNumberSequenceRepository::class),
-            $orderRepositoryMock,
-            $this->createMock(OrderUrlGenerator::class),
-            $this->createMock(OrderStatusFacade::class),
-            $this->createMock(OrderMailFacade::class),
-            $this->createMock(OrderHashGeneratorRepository::class),
-            $this->createMock(Setting::class),
-            $this->createMock(Localization::class),
-            $this->createMock(AdministratorFrontSecurityFacade::class),
-            $this->createMock(CurrentPromoCodeFacade::class),
-            $this->createMock(CartFacade::class),
-            $this->createMock(CustomerUserFacade::class),
-            $this->createMock(CurrentCustomerUser::class),
+            $this->createStub(EntityManagerInterface::class),
+            $this->createStub(OrderNumberSequenceRepository::class),
+            $orderRepositoryStub,
+            $this->createStub(OrderUrlGenerator::class),
+            $this->createStub(OrderStatusFacade::class),
+            $this->createStub(OrderMailFacade::class),
+            $this->createStub(OrderHashGeneratorRepository::class),
+            $this->createStub(Setting::class),
+            $this->createStub(Localization::class),
+            $this->createStub(AdministratorFrontSecurityFacade::class),
+            $this->createStub(CurrentPromoCodeFacade::class),
+            $this->createStub(CartFacade::class),
+            $this->createStub(CustomerUserFacade::class),
+            $this->createStub(CurrentCustomerUser::class),
             $heurekaFacade,
             $this->createDomain(),
-            $this->createMock(OrderFactory::class),
-            $this->createMock(OrderPriceCalculation::class),
-            $this->createMock(OrderItemPriceCalculation::class),
-            $this->createMock(NumberFormatterExtension::class),
-            $this->createMock(PaymentPriceCalculation::class),
-            $this->createMock(TransportPriceCalculation::class),
-            $this->createMock(OrderItemFactory::class),
-            $this->createMock(PaymentTransactionFacade::class),
-            $this->createMock(PaymentTransactionDataFactory::class),
-            $this->createMock(PaymentServiceFacade::class),
-            $this->createMock(OrderItemDataFactory::class),
-            $this->createMock(OrderDataFactory::class),
-            $this->createMock(PricingSetting::class),
-            $this->createMock(OrderInputFactory::class),
-            $this->createMock(OrderProcessor::class),
-            $this->createMock(PaymentFacade::class),
-            $this->createMock(OrderDeliveryDateFacade::class),
-            $this->createMock(WithdrawalRequestFacade::class),
+            $this->createStub(OrderFactory::class),
+            $this->createStub(OrderPriceCalculation::class),
+            $this->createStub(OrderItemPriceCalculation::class),
+            $this->createStub(NumberFormatterExtension::class),
+            $this->createStub(PaymentPriceCalculation::class),
+            $this->createStub(TransportPriceCalculation::class),
+            $this->createStub(OrderItemFactory::class),
+            $this->createStub(PaymentTransactionFacade::class),
+            $this->createStub(PaymentTransactionDataFactory::class),
+            $this->createStub(PaymentServiceFacade::class),
+            $this->createStub(OrderItemDataFactory::class),
+            $this->createStub(OrderDataFactory::class),
+            $this->createStub(PricingSetting::class),
+            $this->createStub(OrderInputFactory::class),
+            $this->createStub(OrderProcessor::class),
+            $this->createStub(PaymentFacade::class),
+            $this->createStub(OrderDeliveryDateFacade::class),
+            $this->createStub(WithdrawalRequestFacade::class),
         );
     }
 
     private function runHeurekaTest(HeurekaFacade $heurekaFacade, bool $heurekaAgreement = true): void
     {
-        $order = $this->createOrderMock($heurekaAgreement);
+        $order = $this->createOrderStub($heurekaAgreement);
         $orderFacade = $this->createOrderFacade($heurekaFacade, $order);
         $orderFacade->sendHeurekaOrderInfo($order->getId());
     }
@@ -143,21 +142,21 @@ class OrderFacadeHeurekaTest extends TestCase
     private function createDomain(): Domain
     {
         $domainConfig = DomainConfigHelper::getDomainConfig();
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         return new Domain(
             [$domainConfig],
-            $this->createMock(Setting::class),
-            $currentAdministratorMock,
+            $this->createStub(Setting::class),
+            $currentAdministratorStub,
         );
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
+     * @return \PHPUnit\Framework\MockObject\Stub|\Shopsys\FrameworkBundle\Model\Order\Order
      */
-    private function createOrderMock(bool $heurekaAgreement): MockObject
+    private function createOrderStub(bool $heurekaAgreement): Order
     {
-        $order = $this->createMock(Order::class);
+        $order = $this->createStub(Order::class);
         $order->method('getId')->willReturn(1);
         $order->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);
         $order->method('isHeurekaAgreement')->willReturn($heurekaAgreement);

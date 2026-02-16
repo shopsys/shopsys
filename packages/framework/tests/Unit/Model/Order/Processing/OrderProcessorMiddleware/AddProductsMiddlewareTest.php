@@ -36,7 +36,7 @@ class AddProductsMiddlewareTest extends MiddlewareTestCase
         foreach ($productsProviderInput as $productProviderInput) {
             $productData = new ProductData();
             $productData->name = ['en' => $productProviderInput['name']];
-            $productData->unit = $this->createMock(Unit::class);
+            $productData->unit = $this->createStub(Unit::class);
             $product = Product::create($productData);
 
             $orderProcessingData->orderInput->addProduct($product, $productProviderInput['quantity']);
@@ -150,7 +150,7 @@ class AddProductsMiddlewareTest extends MiddlewareTestCase
      */
     private function createAddProductsMiddleware(array $quantifiedItemPrices): AddProductsMiddleware
     {
-        $quantifiedProductPriceCalculation = $this->createMock(QuantifiedProductPriceCalculation::class);
+        $quantifiedProductPriceCalculation = $this->createStub(QuantifiedProductPriceCalculation::class);
 
         $quantifiedProductPricesResult = array_values(array_map(
             static fn ($quantifiedItemPrice) => new QuantifiedProductPricesResult($quantifiedItemPrice, $quantifiedItemPrice),

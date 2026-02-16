@@ -32,32 +32,22 @@ class ProductPriceCalculationTest extends TestCase
         int $inputPriceType,
         array $variants,
     ): ProductPriceCalculation {
-        $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->onlyMethods(['getInputPriceType', 'getDomainDefaultCurrencyIdByDomainId'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $pricingSettingMock
-            ->expects($this->any())->method('getInputPriceType')
+        $pricingSettingStub = $this->createStub(PricingSetting::class);
+        $pricingSettingStub
+            ->method('getInputPriceType')
                 ->willReturn($inputPriceType);
-        $pricingSettingMock
-            ->expects($this->any())->method('getDomainDefaultCurrencyIdByDomainId')
+        $pricingSettingStub
+            ->method('getDomainDefaultCurrencyIdByDomainId')
                 ->willReturn(1);
 
-        $productManualInputPriceRepositoryMock = $this->getMockBuilder(ProductManualInputPriceRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $productManualInputPriceRepositoryStub = $this->createStub(ProductManualInputPriceRepository::class);
 
-        $productRepositoryMock = $this->getMockBuilder(ProductRepository::class)
-            ->onlyMethods(['getAllSellableVariantsByMainVariant'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $productRepositoryMock
-            ->expects($this->any())->method('getAllSellableVariantsByMainVariant')
+        $productRepositoryStub = $this->createStub(ProductRepository::class);
+        $productRepositoryStub
+            ->method('getAllSellableVariantsByMainVariant')
             ->willReturn($variants);
 
-        $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $currencyFacadeStub = $this->createStub(CurrencyFacade::class);
 
         $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
@@ -65,10 +55,10 @@ class ProductPriceCalculationTest extends TestCase
 
         return new ProductPriceCalculation(
             $basePriceCalculation,
-            $pricingSettingMock,
-            $productManualInputPriceRepositoryMock,
-            $productRepositoryMock,
-            $currencyFacadeMock,
+            $pricingSettingStub,
+            $productManualInputPriceRepositoryStub,
+            $productRepositoryStub,
+            $currencyFacadeStub,
         );
     }
 

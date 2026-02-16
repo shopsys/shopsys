@@ -41,12 +41,12 @@ class MiddlewareTestCase extends TestCase
     protected function createOrderProcessingData(): OrderProcessingData
     {
         $orderItemTypeEnum = new OrderItemTypeEnum();
-        $paymentTransactionRefundDataFactory = $this->createMock(PaymentTransactionRefundDataFactory::class);
-        $orderItemDataFactory = $this->createMock(OrderItemDataFactory::class);
-        $clockMock = $this->createMock(ClockInterface::class);
+        $paymentTransactionRefundDataFactory = $this->createStub(PaymentTransactionRefundDataFactory::class);
+        $orderItemDataFactory = $this->createStub(OrderItemDataFactory::class);
+        $clockStub = $this->createStub(ClockInterface::class);
 
-        $withdrawalRequestDataFactory = $this->createMock(WithdrawalRequestDataFactory::class);
-        $withdrawalRequestFacade = $this->createMock(WithdrawalRequestFacade::class);
+        $withdrawalRequestDataFactory = $this->createStub(WithdrawalRequestDataFactory::class);
+        $withdrawalRequestFacade = $this->createStub(WithdrawalRequestFacade::class);
 
         $orderDataFactory = new OrderDataFactory(
             $orderItemDataFactory,
@@ -54,30 +54,30 @@ class MiddlewareTestCase extends TestCase
             $orderItemTypeEnum,
             $withdrawalRequestDataFactory,
             $withdrawalRequestFacade,
-            $clockMock,
+            $clockStub,
         );
         $orderData = $orderDataFactory->create();
 
-        $orderInput = new OrderInput($this->createDomainConfigMock());
+        $orderInput = new OrderInput($this->createDomainConfigStub());
 
         return new OrderProcessingData($orderInput, $orderData);
     }
 
     protected function createOrderItemDataFactory(): OrderItemDataFactory
     {
-        $orderItemPriceCalculation = $this->createMock(OrderItemPriceCalculation::class);
-        $pricingSettingMock = $this->createMock(PricingSetting::class);
+        $orderItemPriceCalculation = $this->createStub(OrderItemPriceCalculation::class);
+        $pricingSettingStub = $this->createStub(PricingSetting::class);
 
-        return new OrderItemDataFactory($orderItemPriceCalculation, $pricingSettingMock);
+        return new OrderItemDataFactory($orderItemPriceCalculation, $pricingSettingStub);
     }
 
     protected function createCurrencyFacade(
         string $currencyCode = Currency::CODE_EUR,
         string $roundingType = Currency::ROUNDING_TYPE_HUNDREDTHS,
     ): CurrencyFacade {
-        $currencyFacade = $this->createMock(CurrencyFacade::class);
+        $currencyFacade = $this->createStub(CurrencyFacade::class);
 
-        $currency = $this->createMock(Currency::class);
+        $currency = $this->createStub(Currency::class);
         $currency->method('getCode')->willReturn($currencyCode);
         $currency->method('getRoundingType')->willReturn($roundingType);
 
@@ -89,16 +89,16 @@ class MiddlewareTestCase extends TestCase
 
     protected function createVat(): Vat
     {
-        return $this->createMock(Vat::class);
+        return $this->createStub(Vat::class);
     }
 
-    protected function createDomainConfigMock(): DomainConfig
+    protected function createDomainConfigStub(): DomainConfig
     {
-        $domainConfigMock = $this->createMock(DomainConfig::class);
+        $domainConfigStub = $this->createStub(DomainConfig::class);
 
-        $domainConfigMock->method('getId')->willReturn(1);
-        $domainConfigMock->method('getLocale')->willReturn('en');
+        $domainConfigStub->method('getId')->willReturn(1);
+        $domainConfigStub->method('getLocale')->willReturn('en');
 
-        return $domainConfigMock;
+        return $domainConfigStub;
     }
 }

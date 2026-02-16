@@ -21,12 +21,12 @@ class FreeTransportAndPaymentInformationMiddlewareTest extends MiddlewareTestCas
     #[DataProvider('freeTransportAndPaymentInformationProvider')]
     public function testFreeTransportAndPaymentInformationIsProperlySet(bool $expectedValue): void
     {
-        $freeTransportAndPaymentFacadeMock = $this->createMock(FreeTransportAndPaymentFacade::class);
-        $freeTransportAndPaymentFacadeMock
+        $freeTransportAndPaymentFacadeStub = $this->createStub(FreeTransportAndPaymentFacade::class);
+        $freeTransportAndPaymentFacadeStub
             ->method('isFreeTransportAndPaymentApplied')
             ->willReturn($expectedValue);
 
-        $freeTransportAndPaymentInformationMiddleware = new FreeTransportAndPaymentInformationMiddleware($freeTransportAndPaymentFacadeMock);
+        $freeTransportAndPaymentInformationMiddleware = new FreeTransportAndPaymentInformationMiddleware($freeTransportAndPaymentFacadeStub);
 
         $orderProcessingData = $this->createOrderProcessingData();
 

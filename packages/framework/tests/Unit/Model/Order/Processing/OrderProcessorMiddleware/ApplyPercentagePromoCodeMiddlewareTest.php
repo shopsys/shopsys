@@ -159,16 +159,16 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
     private function createApplyPercentagePromoCodeMiddleware(
         array $discountPrices,
     ): ApplyPercentagePromoCodeMiddleware {
-        $currentPromoCodeFacade = $this->createMock(CurrentPromoCodeFacade::class);
+        $currentPromoCodeFacade = $this->createStub(CurrentPromoCodeFacade::class);
         $currentPromoCodeFacade->method('validatePromoCode')->willReturn([1, 2]);
 
-        $promoCodeFacade = $this->createMock(PromoCodeFacade::class);
+        $promoCodeFacade = $this->createStub(PromoCodeFacade::class);
         $promoCodeFacade->method('getHighestLimitByPromoCodeAndTotalPrice')->willReturn(new PromoCodeLimit('1', '10'));
 
-        $discountCalculation = $this->createMock(DiscountCalculation::class);
+        $discountCalculation = $this->createStub(DiscountCalculation::class);
         $discountCalculation->method('calculatePercentageDiscountRoundedByCurrency')->willReturnOnConsecutiveCalls(...array_values($discountPrices));
 
-        $numberFormatterExtension = $this->createMock(NumberFormatterExtension::class);
+        $numberFormatterExtension = $this->createStub(NumberFormatterExtension::class);
         $numberFormatterExtension->method('formatPercent')->willReturn('10%');
 
         return new ApplyPercentagePromoCodeMiddleware(
@@ -201,7 +201,7 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
             $productItemData->quantity = $quantity;
             $productItemData->unitName = 'pcs';
             $productItemData->catnum = (string)$productId;
-            $productItemData->product = $this->createMock(Product::class);
+            $productItemData->product = $this->createStub(Product::class);
             $productItemData->product->method('getId')->willReturn($productId);
 
             $orderData->addItem($productItemData);

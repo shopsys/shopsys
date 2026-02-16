@@ -27,11 +27,9 @@ class ImageFactoryTest extends TestCase
     {
         $imageEntityConfig = new ImageEntityConfig('entityName', 'entityClass', [], ['type' => false]);
 
-        $imageProcessorMock = $this->getMockBuilder(ImageProcessor::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $imageProcessorStub = $this->createStub(ImageProcessor::class);
 
-        $imageFactory = new ImageFactory($imageProcessorMock, $this->getFileUpload(), new EntityNameResolver([]));
+        $imageFactory = new ImageFactory($imageProcessorStub, $this->getFileUpload(), new EntityNameResolver([]));
 
         $this->expectException(EntityMultipleImageException::class);
         $imageFactory->createMultiple($imageEntityConfig, 1, ['test1.png', 'test2.png'], ['test1_tmp.png', 'test2_tmp.png'], 'type');
@@ -42,16 +40,13 @@ class ImageFactoryTest extends TestCase
         $imageEntityConfig = new ImageEntityConfig('entityName', 'entityClass', [], ['type' => true]);
         $filenames = ['filename1.jpg', 'filename2.png'];
 
-        $imageProcessorMock = $this->getMockBuilder(ImageProcessor::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['convertToShopFormatAndGetNewFilename'])
-            ->getMock();
-        $imageProcessorMock->expects($this->any())->method('convertToShopFormatAndGetNewFilename')
+        $imageProcessorStub = $this->createStub(ImageProcessor::class);
+        $imageProcessorStub->method('convertToShopFormatAndGetNewFilename')
             ->willReturnCallback(function ($filepath) {
                 return pathinfo($filepath, PATHINFO_BASENAME);
             });
 
-        $imageFactory = new ImageFactory($imageProcessorMock, $this->getFileUpload(), new EntityNameResolver([]));
+        $imageFactory = new ImageFactory($imageProcessorStub, $this->getFileUpload(), new EntityNameResolver([]));
         $images = $imageFactory->createMultiple($imageEntityConfig, 1, [], $filenames, 'type');
 
         $this->assertCount(2, $images);
@@ -68,11 +63,11 @@ class ImageFactoryTest extends TestCase
     {
         $fileNamingConvention = new FileNamingConvention();
         $mountManager = new MountManager();
-        $abstractFilesystem = $this->createMock(FilesystemOperator::class);
+        $abstractFilesystem = $this->createStub(FilesystemOperator::class);
         $parameterBag = new ParameterBag();
         $parameterBag->set('kernel.project_dir', sys_get_temp_dir());
-        $imageRepositoryMock = $this->createMock(ImageRepository::class);
-        $customerUploadedFileRepositoryMock = $this->createMock(CustomerUploadedFileRepository::class);
+        $imageRepositoryStub = $this->createStub(ImageRepository::class);
+        $customerUploadedFileRepositoryStub = $this->createStub(CustomerUploadedFileRepository::class);
         $inMemoryCache = new InMemoryCache();
         $transformStringHelper = new TransformStringHelper();
 
@@ -83,8 +78,8 @@ class ImageFactoryTest extends TestCase
             $mountManager,
             $abstractFilesystem,
             $parameterBag,
-            $imageRepositoryMock,
-            $customerUploadedFileRepositoryMock,
+            $imageRepositoryStub,
+            $customerUploadedFileRepositoryStub,
             $inMemoryCache,
             $transformStringHelper,
         );

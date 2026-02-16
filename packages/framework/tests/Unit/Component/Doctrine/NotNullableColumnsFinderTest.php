@@ -14,19 +14,19 @@ class NotNullableColumnsFinderTest extends TestCase
 {
     public function testGetAllNotNullableColumnNamesIndexedByTableName(): void
     {
-        $classMetadataInfoMock = $this->createMock(ClassMetadataInfo::class);
-        $classMetadataInfoMock
+        $classMetadataInfoStub = $this->createStub(ClassMetadataInfo::class);
+        $classMetadataInfoStub
             ->method('getTableName')
             ->willReturn('EntityName');
-        $classMetadataInfoMock
+        $classMetadataInfoStub
             ->method('getFieldNames')
             ->willReturn(['notNullableField', 'nullableField']);
-        $classMetadataInfoMock
+        $classMetadataInfoStub
             ->method('isNullable')
             ->willReturnCallback(function ($fieldName) {
                 return $fieldName === 'nullableField';
             });
-        $classMetadataInfoMock
+        $classMetadataInfoStub
             ->method('getColumnName')
             ->willReturnCallback(function ($fieldName) {
                 if ($fieldName === 'notNullableField') {
@@ -34,7 +34,7 @@ class NotNullableColumnsFinderTest extends TestCase
                 }
             });
 
-        $classMetadataInfoMock
+        $classMetadataInfoStub
             ->method('getAssociationMappings')
             ->willReturn($this->getAssociationMappings());
 
@@ -47,7 +47,7 @@ class NotNullableColumnsFinderTest extends TestCase
 
         $notNullableColumnsFinder = new NotNullableColumnsFinder();
         $actualResult = $notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName(
-            [$classMetadataInfoMock],
+            [$classMetadataInfoStub],
         );
 
         $this->assertSame($expectedResult, $actualResult);
@@ -76,10 +76,10 @@ class NotNullableColumnsFinderTest extends TestCase
 
     public function testGetAllNotNullableColumnNamesIndexedByTableNameException(): void
     {
-        $classMetadataMock = $this->createMock(ClassMetadata::class);
+        $classMetadataStub = $this->createStub(ClassMetadata::class);
         $this->expectException(UnexpectedTypeException::class);
 
         $notNullableColumnsFinder = new NotNullableColumnsFinder();
-        $notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName([$classMetadataMock]);
+        $notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName([$classMetadataStub]);
     }
 }

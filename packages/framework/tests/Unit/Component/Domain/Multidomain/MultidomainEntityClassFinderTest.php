@@ -12,30 +12,30 @@ class MultidomainEntityClassFinderTest extends TestCase
 {
     public function testGetMultidomainEntitiesNames(): void
     {
-        $classMetadataMock1 = $this->createMock(ClassMetadata::class);
-        $classMetadataMock1
+        $classMetadataStub1 = $this->createStub(ClassMetadata::class);
+        $classMetadataStub1
             ->method('getIdentifierFieldNames')
             ->willReturn(['id', 'testId']);
-        $classMetadataMock1
+        $classMetadataStub1
             ->method('getName')
             ->willReturn('NonMultidomainClass1');
 
-        $classMetadataMock2 = $this->createMock(ClassMetadata::class);
-        $classMetadataMock2
+        $classMetadataStub2 = $this->createStub(ClassMetadata::class);
+        $classMetadataStub2
             ->method('getIdentifierFieldNames')
             ->willReturn(['domainId']);
-        $classMetadataMock2
+        $classMetadataStub2
             ->method('getName')
             ->willReturn('NonMultidomainClass2');
 
-        $classMetadataMock3 = $this->createMock(ClassMetadata::class);
-        $classMetadataMock3
+        $classMetadataStub3 = $this->createStub(ClassMetadata::class);
+        $classMetadataStub3
             ->method('getIdentifierFieldNames')
             ->willReturn(['id', 'domainId']);
-        $classMetadataMock3
+        $classMetadataStub3
             ->method('getName')
             ->willReturn('MultidomainClass');
-        $allClassesMetadata = [$classMetadataMock1, $classMetadataMock2, $classMetadataMock3];
+        $allClassesMetadata = [$classMetadataStub1, $classMetadataStub2, $classMetadataStub3];
 
         $multidomainEntityClassFinder = new MultidomainEntityClassFinder();
         $multidomainEntitiesNames = $multidomainEntityClassFinder->getMultidomainEntitiesNames(

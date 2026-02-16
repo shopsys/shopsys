@@ -23,7 +23,7 @@ class ApplyFreeTransportAndPaymentPromoCodeMiddlewareTest extends MiddlewareTest
         $promoCodeData->discountType = PromoCodeTypeEnum::DISCOUNT_TYPE_FREE_TRANSPORT_PAYMENT;
         $promoCode = new PromoCode($promoCodeData);
 
-        $currentPromoCodeFacade = $this->createMock(CurrentPromoCodeFacade::class);
+        $currentPromoCodeFacade = $this->createStub(CurrentPromoCodeFacade::class);
 
         $applyFreeTransportAndPaymentPromoCodeMiddleware = new ApplyFreeTransportAndPaymentPromoCodeMiddleware($currentPromoCodeFacade);
         $orderProcessingData->orderInput->addPromoCode($promoCode);
@@ -44,7 +44,7 @@ class ApplyFreeTransportAndPaymentPromoCodeMiddlewareTest extends MiddlewareTest
         $promoCodeData->discountType = $promoCodeType;
         $promoCode = new PromoCode($promoCodeData);
 
-        $currentPromoCodeFacade = $this->createMock(CurrentPromoCodeFacade::class);
+        $currentPromoCodeFacade = $this->createStub(CurrentPromoCodeFacade::class);
 
         $applyFreeTransportAndPaymentPromoCodeMiddleware = new ApplyFreeTransportAndPaymentPromoCodeMiddleware($currentPromoCodeFacade);
         $orderProcessingData->orderInput->addPromoCode($promoCode);

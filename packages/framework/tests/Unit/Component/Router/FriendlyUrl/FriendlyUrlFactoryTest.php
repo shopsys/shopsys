@@ -28,7 +28,7 @@ class FriendlyUrlFactoryTest extends TestCase
         ];
 
         $friendlyUrlFactory = $this->getFriendlyUrlFactory();
-        $friendlyUrlFactory->method('isRouteMultidomain')->willReturn(true);
+        $friendlyUrlFactory->expects($this->atLeastOnce())->method('isRouteMultidomain')->willReturn(true);
 
         $friendlyUrls = $friendlyUrlFactory->createForAllDomains($routeName, $entityId, $namesByLocale);
 
@@ -58,7 +58,7 @@ class FriendlyUrlFactoryTest extends TestCase
         $this->expectException(FriendlyUrlIsNotMultidomainException::class);
 
         $friendlyUrlFactory = $this->getFriendlyUrlFactory();
-        $friendlyUrlFactory->method('isRouteMultidomain')->willReturn(false);
+        $friendlyUrlFactory->expects($this->atLeastOnce())->method('isRouteMultidomain')->willReturn(false);
 
         $friendlyUrlFactory->createForAllDomains($routeName, $entityId, $namesByLocale);
     }
@@ -72,19 +72,19 @@ class FriendlyUrlFactoryTest extends TestCase
                 locale: 'en',
             ),
         ];
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
-        $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
+        $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
         $friendlyUrlFactory = $this->getMockBuilder(FriendlyUrlFactory::class)
-            ->setConstructorArgs([$domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock])
+            ->setConstructorArgs([$domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryStub])
             ->onlyMethods(['isRouteMultidomain'])
             ->getMock();
 

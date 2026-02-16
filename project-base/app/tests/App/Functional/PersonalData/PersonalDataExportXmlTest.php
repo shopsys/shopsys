@@ -74,7 +74,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
         $status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
         $order = $this->createOrder($currency, $status, $country);
-        $product = $this->createMock(Product::class);
+        $product = $this->createStub(Product::class);
         $price = new Price(Money::create(1), Money::create(1));
         $orderItem = new OrderItem($order, 'test', $price, '1', 1, OrderItemTypeEnum::TYPE_PRODUCT, 'ks', 'cat');
         $orderItem->setProduct($product);
@@ -198,7 +198,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $complaintData->deliveryCountry = $country;
         $complaintData->status = $complaintStatus;
 
-        $complaintItem = $this->createMock(ComplaintItem::class);
+        $complaintItem = $this->createStub(ComplaintItem::class);
 
         return new Complaint($complaintData, [$complaintItem]);
     }

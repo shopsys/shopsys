@@ -23,30 +23,25 @@ class FeedCronModuleTest extends TestCase
 {
     public function testSleepExactBetweenFeeds(): void
     {
-        $feedInfoMock = $this->getMockBuilder(FeedInfoInterface::class)->getMock();
+        $feedInfoStub = $this->createStub(FeedInfoInterface::class);
 
-        $settingMock = $this->getMockBuilder(Setting::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $settingStub = $this->createStub(Setting::class);
 
-        $feedModuleRepositoryMock = $this->getMockBuilder(FeedModuleRepository::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getAllScheduledFeedModules', 'getFeedModuleByNameAndDomainId'])
-            ->getMock();
+        $feedModuleRepositoryStub = $this->createStub(FeedModuleRepository::class);
 
         $feedModule1 = new FeedModule('feed1', 1);
         $feedModule2 = new FeedModule('feed2', 1);
 
-        $feedModuleRepositoryMock->expects($this->any())->method('getAllScheduledFeedModules')->willReturn([$feedModule1, $feedModule2]);
-        $feedModuleRepositoryMock->expects($this->any())->method('getFeedModuleByNameAndDomainId')->willReturn($feedModule1);
+        $feedModuleRepositoryStub->method('getAllScheduledFeedModules')->willReturn([$feedModule1, $feedModule2]);
+        $feedModuleRepositoryStub->method('getFeedModuleByNameAndDomainId')->willReturn($feedModule1);
 
         $domainConfig = DomainConfigHelper::getDomainConfig();
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             [$domainConfig],
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
         $feedExportMock = $this->getMockBuilder(FeedExport::class)
@@ -55,7 +50,7 @@ class FeedCronModuleTest extends TestCase
             ->getMock();
         $feedExportMock->expects($this->atLeastOnce())->method('isFinished')->willReturn(true);
         $feedExportMock->expects($this->any())->method('generateBatch');
-        $feedExportMock->expects($this->any())->method('getFeedInfo')->willReturn($feedInfoMock);
+        $feedExportMock->expects($this->any())->method('getFeedInfo')->willReturn($feedInfoStub);
         $feedExportMock->expects($this->any())->method('getDomainConfig')->willReturn($domainConfig);
 
         $this->setValueOfProtectedProperty($feedExportMock, 'lastSeekId', null);
@@ -63,22 +58,16 @@ class FeedCronModuleTest extends TestCase
         $logger = new Logger('loggerName');
         $logger->setHandlers([new NullHandler()]);
 
-        $feedFacadeMock = $this->getMockBuilder(FeedFacade::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getFeedNames', 'createFeedExport', 'getFeedFilepath', 'scheduleFeedsForCurrentTime', 'markFeedModuleAsUnscheduled'])
-            ->getMock();
-        $feedFacadeMock->expects($this->any())->method('getFeedNames')->willReturn(['feed1', 'feed2']);
-        $feedFacadeMock->expects($this->any())->method('createFeedExport')->willReturn($feedExportMock);
-        $feedFacadeMock->expects($this->any())->method('getFeedFilepath')->willReturn('path');
-        $feedFacadeMock->expects($this->any())->method('scheduleFeedsForCurrentTime');
-        $feedFacadeMock->expects($this->any())->method('markFeedModuleAsUnscheduled');
+        $feedFacadeStub = $this->createStub(FeedFacade::class);
+        $feedFacadeStub->method('getFeedNames')->willReturn(['feed1', 'feed2']);
+        $feedFacadeStub->method('createFeedExport')->willReturn($feedExportMock);
+        $feedFacadeStub->method('getFeedFilepath')->willReturn('path');
+        $feedFacadeStub->method('scheduleFeedsForCurrentTime');
+        $feedFacadeStub->method('markFeedModuleAsUnscheduled');
 
-        $feedModuleFacadeMock = $this->getMockBuilder(FeedModuleFacade::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['deleteFeedCronModulesByName'])
-            ->getMock();
+        $feedModuleFacadeStub = $this->createStub(FeedModuleFacade::class);
 
-        $feedCronModule = new FeedCronModule($feedFacadeMock, $domain, $settingMock, $feedModuleRepositoryMock, $feedModuleFacadeMock);
+        $feedCronModule = new FeedCronModule($feedFacadeStub, $domain, $settingStub, $feedModuleRepositoryStub, $feedModuleFacadeStub);
         $feedCronModule->setLogger($logger);
 
         $feedCronModule->iterate();

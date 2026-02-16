@@ -86,9 +86,9 @@ class AddPaymentMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    private function createPaymentPriceCalculationMock(Price $paymentPrice): PaymentPriceCalculation
+    private function createPaymentPriceCalculationStub(Price $paymentPrice): PaymentPriceCalculation
     {
-        $paymentPriceCalculation = $this->createMock(PaymentPriceCalculation::class);
+        $paymentPriceCalculation = $this->createStub(PaymentPriceCalculation::class);
         $paymentPriceCalculation->method('calculatePrice')->willReturn($paymentPrice);
 
         return $paymentPriceCalculation;
@@ -97,7 +97,7 @@ class AddPaymentMiddlewareTest extends MiddlewareTestCase
     private function createAddPaymentMiddleware(Price $paymentPrice): AddPaymentMiddleware
     {
         return new AddPaymentMiddleware(
-            $this->createPaymentPriceCalculationMock($paymentPrice),
+            $this->createPaymentPriceCalculationStub($paymentPrice),
             $this->createCurrencyFacade(),
             $this->createOrderItemDataFactory(),
         );

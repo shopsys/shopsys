@@ -23,9 +23,9 @@ final class CheckRedisCommandTest extends TestCase
 
         yield [true, ['createRedisMockExpectingPing', 'createRedisMockExpectingPing', 'createRedisMockExpectingPing']];
 
-        yield [false, ['createRedisMockThrowingException']];
+        yield [false, ['createRedisStubThrowingException']];
 
-        yield [false, ['createRedisMockExpectingPing', 'createRedisMockThrowingException']];
+        yield [false, ['createRedisMockExpectingPing', 'createRedisStubThrowingException']];
     }
 
     #[DataProvider('pingAllRedisClientsProvider')]
@@ -59,12 +59,12 @@ final class CheckRedisCommandTest extends TestCase
         return $redisMock;
     }
 
-    private function createRedisMockThrowingException(): Redis
+    private function createRedisStubThrowingException(): Redis
     {
-        /** @var \Redis|\PHPUnit\Framework\MockObject\MockObject $redisMock */
-        $redisMock = $this->createMock(Redis::class);
-        $redisMock->method('ping')->willThrowException(new RedisException());
+        /** @var \Redis|\PHPUnit\Framework\MockObject\Stub $redisStub */
+        $redisStub = $this->createStub(Redis::class);
+        $redisStub->method('ping')->willThrowException(new RedisException());
 
-        return $redisMock;
+        return $redisStub;
     }
 }

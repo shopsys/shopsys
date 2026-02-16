@@ -86,9 +86,9 @@ class AddTransportMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    private function createTransportPriceCalculationMock(Price $transportPrice): TransportPriceCalculation
+    private function createTransportPriceCalculationStub(Price $transportPrice): TransportPriceCalculation
     {
-        $transportPriceCalculation = $this->createMock(TransportPriceCalculation::class);
+        $transportPriceCalculation = $this->createStub(TransportPriceCalculation::class);
         $transportPriceCalculation->method('calculatePrice')->willReturn($transportPrice);
 
         return $transportPriceCalculation;
@@ -97,7 +97,7 @@ class AddTransportMiddlewareTest extends MiddlewareTestCase
     private function createAddTransportMiddleware(Price $transportPrice): AddTransportMiddleware
     {
         return new AddTransportMiddleware(
-            $this->createTransportPriceCalculationMock($transportPrice),
+            $this->createTransportPriceCalculationStub($transportPrice),
             $this->createCurrencyFacade(),
             $this->createOrderItemDataFactory(),
         );

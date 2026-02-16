@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\AdministrationBundle\Unit\Component\Security\AccessControl;
 
 use Override;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory;
@@ -23,55 +23,53 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class RouteAccessControlDataProviderTest extends TestCase
 {
-    private CacheInterface&MockObject $cache;
+    private CacheInterface&Stub $cache;
 
-    private AdministrationRouterFactory&MockObject $administrationRouterFactory;
+    private AdministrationRouterFactory&Stub $administrationRouterFactory;
 
-    private LoggerInterface&MockObject $logger;
+    private LoggerInterface&Stub $logger;
 
     private AttributeProcessor $attributeProcessor;
 
-    private AdministrationRouter&MockObject $router;
+    private AdministrationRouter&Stub $router;
 
     private RouteCollection $routeCollection;
 
-    private RoleRegistryInterface&MockObject $roleRegistry;
+    private RoleRegistryInterface&Stub $roleRegistry;
 
     private AccessControlRuleFactory $accessControlRuleFactory;
 
     #[Override]
     protected function setUp(): void
     {
-        $this->cache = $this->createMock(CacheInterface::class);
-        $this->administrationRouterFactory = $this->createMock(AdministrationRouterFactory::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
-        $this->router = $this->createMock(AdministrationRouter::class);
+        $this->cache = $this->createStub(CacheInterface::class);
+        $this->administrationRouterFactory = $this->createStub(AdministrationRouterFactory::class);
+        $this->logger = $this->createStub(LoggerInterface::class);
+        $this->router = $this->createStub(AdministrationRouter::class);
         $this->routeCollection = new RouteCollection(); // Use real RouteCollection
-        $this->roleRegistry = $this->createMock(RoleRegistryInterface::class);
+        $this->roleRegistry = $this->createStub(RoleRegistryInterface::class);
 
         // Create real AttributeProcessor with mocked dependencies
         $accessControlRuleFactory = new AccessControlRuleFactory($this->roleRegistry);
         $this->accessControlRuleFactory = $accessControlRuleFactory;
         $this->attributeProcessor = new AttributeProcessor($accessControlRuleFactory);
 
-        // Set up role registry to return mock roles for any identifier
+        // Set up role registry to return stub roles for any identifier
         $this->roleRegistry
             ->method('getRole')
             ->willReturnCallback(function (string $identifier, string $context) {
-                $role = $this->createMock(Role::class);
+                $role = $this->createStub(Role::class);
                 $role->method('getConstant')->willReturn($identifier);
 
                 return $role;
             });
 
         $this->administrationRouterFactory
-            ->expects($this->any())
             ->method('getAdministrationRouter')
             ->willReturn($this->router);
 
         // Router will return the current route collection (updated by setupRouteCollection)
         $this->router
-            ->expects($this->any())
             ->method('getRouteCollection')
             ->willReturnCallback(function () {
                 return $this->routeCollection;
@@ -99,13 +97,15 @@ class RouteAccessControlDataProviderTest extends TestCase
             'admin_cached' => new RouteAccessControlData('admin_cached', [], 'CachedController', 'cachedAction'),
         ];
 
-        $this->cache
+        $cacheMock = $this->createMock(CacheInterface::class);
+        $cacheMock
             ->expects($this->once())
             ->method('get')
             ->with('shopsys_access_control_rules')
             ->willReturn($cachedData);
 
-        $provider = $this->createProvider(EnvironmentType::PRODUCTION);
+        $provider = $this->createProvider(EnvironmentType::PRODUCTION, $cacheMock);
+
         $result = $provider->getAll();
 
         $this->assertSame($cachedData, $result);
@@ -180,7 +180,8 @@ class RouteAccessControlDataProviderTest extends TestCase
             'admin_invalid' => $this->createRoute('/admin/invalid', 'invalid_controller_format'),
         ]);
 
-        $this->logger
+        $loggerMock = $this->createMock(LoggerInterface::class);
+        $loggerMock
             ->expects($this->once())
             ->method('error')
             ->with(
@@ -193,7 +194,7 @@ class RouteAccessControlDataProviderTest extends TestCase
                 }),
             );
 
-        $provider = $this->createProvider(EnvironmentType::DEVELOPMENT);
+        $provider = $this->createProvider(EnvironmentType::DEVELOPMENT, logger: $loggerMock);
         $result = $provider->getAll();
 
         $routeData = $result['admin_invalid'];
@@ -223,7 +224,8 @@ class RouteAccessControlDataProviderTest extends TestCase
             'admin_reflection_error' => $this->createRoute('/admin/reflection', 'Tests\\AdministrationBundle\\Unit\\Component\\Security\\AccessControl\\RouteAccessControlDataProviderTest::nonExistentMethod'),
         ]);
 
-        $this->logger
+        $loggerMock = $this->createMock(LoggerInterface::class);
+        $loggerMock
             ->expects($this->once())
             ->method('error')
             ->with(
@@ -234,7 +236,7 @@ class RouteAccessControlDataProviderTest extends TestCase
                 }),
             );
 
-        $provider = $this->createProvider(EnvironmentType::DEVELOPMENT);
+        $provider = $this->createProvider(EnvironmentType::DEVELOPMENT, logger: $loggerMock);
         $result = $provider->getAll();
 
         $routeData = $result['admin_reflection_error'];
@@ -279,7 +281,8 @@ class RouteAccessControlDataProviderTest extends TestCase
             'admin_bundle_format' => $this->createRoute('/admin/bundle', 'AppBundle:Controller:action'),
         ]);
 
-        $this->logger
+        $loggerMock = $this->createMock(LoggerInterface::class);
+        $loggerMock
             ->expects($this->once())
             ->method('error')
             ->with(
@@ -289,7 +292,7 @@ class RouteAccessControlDataProviderTest extends TestCase
                 }),
             );
 
-        $provider = $this->createProvider(EnvironmentType::DEVELOPMENT);
+        $provider = $this->createProvider(EnvironmentType::DEVELOPMENT, logger: $loggerMock);
         $result = $provider->getAll();
 
         $routeData = $result['admin_bundle_format'];
@@ -298,13 +301,16 @@ class RouteAccessControlDataProviderTest extends TestCase
         $this->assertEmpty($routeData->accessControlRules);
     }
 
-    private function createProvider(string $environment): RouteAccessControlDataProvider
-    {
+    private function createProvider(
+        string $environment,
+        ?CacheInterface $cache = null,
+        ?LoggerInterface $logger = null,
+    ): RouteAccessControlDataProvider {
         return new RouteAccessControlDataProvider(
-            $this->cache,
+            $cache ?? $this->cache,
             $environment,
             $this->administrationRouterFactory,
-            $this->logger,
+            $logger ?? $this->logger,
             'admin',
             $this->attributeProcessor,
             $this->accessControlRuleFactory,

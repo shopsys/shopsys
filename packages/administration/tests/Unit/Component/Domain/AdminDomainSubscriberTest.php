@@ -37,14 +37,14 @@ class AdminDomainSubscriberTest extends TestCase
 
     public function testOnKernelRequestIgnoresNonAdminContext(): void
     {
-        $adminUrlProvider = $this->createMock(AdminUrlProvider::class);
+        $adminUrlProvider = $this->createStub(AdminUrlProvider::class);
         $domain = $this->createMock(Domain::class);
         $contextResolver = $this->createMock(ContextResolverInterface::class);
 
         $subscriber = new AdminDomainSubscriber($adminUrlProvider, $domain, $contextResolver);
 
         $request = new Request();
-        $kernel = $this->createMock(HttpKernelInterface::class);
+        $kernel = $this->createStub(HttpKernelInterface::class);
         $event = new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);
 
         $contextResolver
@@ -69,26 +69,26 @@ class AdminDomainSubscriberTest extends TestCase
         string $expectedRedirectUrl,
         ?string $queryString = null,
     ): void {
-        $adminUrlProvider = $this->createMock(AdminUrlProvider::class);
+        $adminUrlProvider = $this->createStub(AdminUrlProvider::class);
         $adminUrlProvider
             ->method('getAdminUrl')
             ->willReturn('admin');
 
-        $domain = $this->createMock(Domain::class);
-        $domain
-            ->method('getDomainConfigById')
+        $domainMock = $this->createMock(Domain::class);
+        $domainMock
+            ->expects($this->any())->method('getDomainConfigById')
             ->with(Domain::FIRST_DOMAIN_ID)
             ->willReturn($this->createFirstDomainConfig());
 
-        $contextResolver = $this->createMock(ContextResolverInterface::class);
-        $contextResolver
-            ->method('isCurrentContext')
+        $contextResolverMock = $this->createMock(ContextResolverInterface::class);
+        $contextResolverMock
+            ->expects($this->any())->method('isCurrentContext')
             ->with(AdminContext::class)
             ->willReturn(true);
 
-        $subscriber = new AdminDomainSubscriber($adminUrlProvider, $domain, $contextResolver);
+        $subscriber = new AdminDomainSubscriber($adminUrlProvider, $domainMock, $contextResolverMock);
 
-        $request = $this->createMock(Request::class);
+        $request = $this->createStub(Request::class);
         $request
             ->method('getUri')
             ->willReturn($requestUri);
@@ -99,7 +99,7 @@ class AdminDomainSubscriberTest extends TestCase
             ->method('getQueryString')
             ->willReturn($queryString);
 
-        $kernel = $this->createMock(HttpKernelInterface::class);
+        $kernel = $this->createStub(HttpKernelInterface::class);
         $event = new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);
 
         $subscriber->onKernelRequest($event);
@@ -144,26 +144,26 @@ class AdminDomainSubscriberTest extends TestCase
 
     public function testOnKernelRequestWithFirstDomainPostfixRedirectsToBaseUrl(): void
     {
-        $adminUrlProvider = $this->createMock(AdminUrlProvider::class);
+        $adminUrlProvider = $this->createStub(AdminUrlProvider::class);
         $adminUrlProvider
             ->method('getAdminUrl')
             ->willReturn('admin');
 
-        $domain = $this->createMock(Domain::class);
-        $domain
-            ->method('getDomainConfigById')
+        $domainMock = $this->createMock(Domain::class);
+        $domainMock
+            ->expects($this->any())->method('getDomainConfigById')
             ->with(Domain::FIRST_DOMAIN_ID)
             ->willReturn($this->createFirstDomainConfigWithPostfix());
 
-        $contextResolver = $this->createMock(ContextResolverInterface::class);
-        $contextResolver
-            ->method('isCurrentContext')
+        $contextResolverMock = $this->createMock(ContextResolverInterface::class);
+        $contextResolverMock
+            ->expects($this->any())->method('isCurrentContext')
             ->with(AdminContext::class)
             ->willReturn(true);
 
-        $subscriber = new AdminDomainSubscriber($adminUrlProvider, $domain, $contextResolver);
+        $subscriber = new AdminDomainSubscriber($adminUrlProvider, $domainMock, $contextResolverMock);
 
-        $request = $this->createMock(Request::class);
+        $request = $this->createStub(Request::class);
         $request
             ->method('getUri')
             ->willReturn('http://other-domain.com/admin/users');
@@ -174,7 +174,7 @@ class AdminDomainSubscriberTest extends TestCase
             ->method('getQueryString')
             ->willReturn(null);
 
-        $kernel = $this->createMock(HttpKernelInterface::class);
+        $kernel = $this->createStub(HttpKernelInterface::class);
         $event = new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);
 
         $subscriber->onKernelRequest($event);
@@ -187,26 +187,26 @@ class AdminDomainSubscriberTest extends TestCase
 
     public function testOnKernelRequestDoesNotRedirectWhenAlreadyOnCorrectUrl(): void
     {
-        $adminUrlProvider = $this->createMock(AdminUrlProvider::class);
+        $adminUrlProvider = $this->createStub(AdminUrlProvider::class);
         $adminUrlProvider
             ->method('getAdminUrl')
             ->willReturn('admin');
 
-        $domain = $this->createMock(Domain::class);
-        $domain
-            ->method('getDomainConfigById')
+        $domainMock = $this->createMock(Domain::class);
+        $domainMock
+            ->expects($this->any())->method('getDomainConfigById')
             ->with(Domain::FIRST_DOMAIN_ID)
             ->willReturn($this->createFirstDomainConfig());
 
-        $contextResolver = $this->createMock(ContextResolverInterface::class);
-        $contextResolver
-            ->method('isCurrentContext')
+        $contextResolverMock = $this->createMock(ContextResolverInterface::class);
+        $contextResolverMock
+            ->expects($this->any())->method('isCurrentContext')
             ->with(AdminContext::class)
             ->willReturn(true);
 
-        $subscriber = new AdminDomainSubscriber($adminUrlProvider, $domain, $contextResolver);
+        $subscriber = new AdminDomainSubscriber($adminUrlProvider, $domainMock, $contextResolverMock);
 
-        $request = $this->createMock(Request::class);
+        $request = $this->createStub(Request::class);
         $request
             ->method('getUri')
             ->willReturn(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin/users');
@@ -217,7 +217,7 @@ class AdminDomainSubscriberTest extends TestCase
             ->method('getQueryString')
             ->willReturn(null);
 
-        $kernel = $this->createMock(HttpKernelInterface::class);
+        $kernel = $this->createStub(HttpKernelInterface::class);
         $event = new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);
 
         $subscriber->onKernelRequest($event);

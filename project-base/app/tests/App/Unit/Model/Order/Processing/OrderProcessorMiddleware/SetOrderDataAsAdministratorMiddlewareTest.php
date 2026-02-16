@@ -18,7 +18,7 @@ class SetOrderDataAsAdministratorMiddlewareTest extends MiddlewareTestCase
     {
         $orderProcessingData = $this->createOrderProcessingData();
 
-        $loginAsUserFacade = $this->createMock(LoginAsUserFacade::class);
+        $loginAsUserFacade = $this->createStub(LoginAsUserFacade::class);
         $loginAsUserFacade->method('getCurrentAdministratorLoggedAsCustomer')->willReturn($expectedAdministrator);
 
         $setOrderDataAsAdministratorMiddleware = new SetOrderDataAsAdministratorMiddleware($loginAsUserFacade);

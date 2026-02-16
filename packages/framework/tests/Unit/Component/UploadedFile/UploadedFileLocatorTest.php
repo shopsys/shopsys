@@ -14,26 +14,20 @@ class UploadedFileLocatorTest extends TestCase
 {
     public function testFileExists(): void
     {
-        $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->onlyMethods(['getFilename'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $uploadedFileMock->method('getFilename')->willReturn('dummy.txt');
+        $uploadedFileStub = $this->createStub(UploadedFile::class);
+        $uploadedFileStub->method('getFilename')->willReturn('dummy.txt');
 
         $uploadedFileLocator = $this->createUploadedFileLocator();
-        $this->assertTrue($uploadedFileLocator->fileExists($uploadedFileMock));
+        $this->assertTrue($uploadedFileLocator->fileExists($uploadedFileStub));
     }
 
     public function testFileNotExists(): void
     {
-        $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->onlyMethods(['getFilename'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $uploadedFileMock->method('getFilename')->willReturn('non-existent.txt');
+        $uploadedFileStub = $this->createStub(UploadedFile::class);
+        $uploadedFileStub->method('getFilename')->willReturn('non-existent.txt');
 
         $uploadedFileLocator = $this->createUploadedFileLocator(false);
-        $this->assertFalse($uploadedFileLocator->fileExists($uploadedFileMock));
+        $this->assertFalse($uploadedFileLocator->fileExists($uploadedFileStub));
     }
 
     public function testGetAbsoluteFilePath(): void
@@ -50,31 +44,25 @@ class UploadedFileLocatorTest extends TestCase
     public function testGetAbsoluteUploadedFileFilepath(): void
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
-        $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->onlyMethods(['getFilename'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $uploadedFileMock->method('getFilename')->willReturn('dummy.txt');
+        $uploadedFileStub = $this->createStub(UploadedFile::class);
+        $uploadedFileStub->method('getFilename')->willReturn('dummy.txt');
 
         $uploadedFileLocator = $this->createUploadedFileLocator();
         $this->assertSame(
             $uploadedFileDir . 'dummy.txt',
-            $uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFileMock),
+            $uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFileStub),
         );
     }
 
     public function testGetRelativeUploadedFileFilepath(): void
     {
-        $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->onlyMethods(['getFilename'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $uploadedFileMock->method('getFilename')->willReturn('dummy.txt');
+        $uploadedFileStub = $this->createStub(UploadedFile::class);
+        $uploadedFileStub->method('getFilename')->willReturn('dummy.txt');
 
         $uploadedFileLocator = $this->createUploadedFileLocator();
         $this->assertSame(
             'dummy.txt',
-            $uploadedFileLocator->getRelativeUploadedFileFilepath($uploadedFileMock),
+            $uploadedFileLocator->getRelativeUploadedFileFilepath($uploadedFileStub),
         );
     }
 
@@ -83,14 +71,11 @@ class UploadedFileLocatorTest extends TestCase
     ): UploadedFileLocator {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
 
-        $filesystemMock = $this->createMock(FilesystemOperator::class);
-        $filesystemMock->method('has')->willReturn($has);
+        $filesystemStub = $this->createStub(FilesystemOperator::class);
+        $filesystemStub->method('has')->willReturn($has);
 
-        $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)
-            ->onlyMethods(['__construct', 'getRouter'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
-        return new UploadedFileLocator($uploadedFileDir, $filesystemMock, $domainRouterFactoryMock);
+        return new UploadedFileLocator($uploadedFileDir, $filesystemStub, $domainRouterFactoryStub);
     }
 }

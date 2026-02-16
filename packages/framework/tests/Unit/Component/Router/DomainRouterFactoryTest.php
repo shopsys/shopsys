@@ -29,21 +29,17 @@ class DomainRouterFactoryTest extends TestCase
             locale: 'en',
         );
 
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             [$domainConfig],
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
-        $localizedRouterMock = $this->getMockBuilder(Router::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $friendlyUrlRouterMock = $this->getMockBuilder(FriendlyUrlRouter::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $localizedRouterStub = $this->createStub(Router::class);
+        $friendlyUrlRouterStub = $this->createStub(FriendlyUrlRouter::class);
 
         $localizedRouterFactoryMock = $this->getMockBuilder(LocalizedRouterFactory::class)
             ->disableOriginalConstructor()
@@ -52,11 +48,11 @@ class DomainRouterFactoryTest extends TestCase
         $localizedRouterFactoryMock
             ->expects($this->once())
             ->method('getRouter')
-            ->willReturnCallback(function ($locale, RequestContext $context) use ($localizedRouterMock) {
+            ->willReturnCallback(function ($locale, RequestContext $context) use ($localizedRouterStub) {
                 $this->assertSame('en', $locale);
                 $this->assertSame('example.com', $context->getHost());
 
-                return $localizedRouterMock;
+                return $localizedRouterStub;
             });
 
         $friendlyUrlRouterFactoryMock = $this->getMockBuilder(FriendlyUrlRouterFactory::class)
@@ -67,17 +63,17 @@ class DomainRouterFactoryTest extends TestCase
             ->expects($this->once())
             ->method('createRouter')
             ->willReturnCallback(
-                function (DomainConfig $actualDomainConfig, RequestContext $context) use ($domainConfig, $friendlyUrlRouterMock) {
+                function (DomainConfig $actualDomainConfig, RequestContext $context) use ($domainConfig, $friendlyUrlRouterStub) {
                     $this->assertSame($domainConfig, $actualDomainConfig);
                     $this->assertSame('example.com', $context->getHost());
 
-                    return $friendlyUrlRouterMock;
+                    return $friendlyUrlRouterStub;
                 },
             );
 
-        $requestStackMock = $this->createMock(RequestStack::class);
-        $containerMock = $this->createMock(ContainerInterface::class);
-        $transformStringHelper = $this->createMock(TransformStringHelper::class);
+        $requestStackStub = $this->createStub(RequestStack::class);
+        $containerStub = $this->createStub(ContainerInterface::class);
+        $transformStringHelper = $this->createStub(TransformStringHelper::class);
 
         $domainRouterFactory = new DomainRouterFactory(
             'routerConfiguration',
@@ -85,8 +81,8 @@ class DomainRouterFactoryTest extends TestCase
             $friendlyUrlRouterFactoryMock,
             $domain,
             $transformStringHelper,
-            $requestStackMock,
-            $containerMock,
+            $requestStackStub,
+            $containerStub,
             __DIR__,
         );
 

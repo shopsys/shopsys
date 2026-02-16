@@ -20,7 +20,7 @@ class ProductIdToProductTransformerTest extends TestCase
             ->getMock();
         $product->expects($this->atLeastOnce())->method('getId')->willReturn($productId);
 
-        $productRepository = $this->createMock(ProductRepository::class);
+        $productRepository = $this->createStub(ProductRepository::class);
         $productIdToProductTransformer = new ProductIdToProductTransformer($productRepository);
 
         $this->assertSame($productId, $productIdToProductTransformer->transform($product));
@@ -30,7 +30,7 @@ class ProductIdToProductTransformerTest extends TestCase
     public function testReverseTransform(): void
     {
         $productId = 1;
-        $product = $this->createMock(Product::class);
+        $product = $this->createStub(Product::class);
 
         $productsRepositoryGetByIdValues = [
             [$productId, $product],

@@ -10,7 +10,7 @@ trait SetTranslatorTrait
 {
     public function setTranslator(): void
     {
-        $translator = $this->createMock(Translator::class);
+        $translator = $this->createStub(Translator::class);
         $translator->method('trans')->willReturnArgument(0);
 
         Translator::injectSelf($translator);

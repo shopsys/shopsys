@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\PreloadedExtension;
@@ -123,14 +124,16 @@ class CountryFormTypeTest extends TypeTestCase
     #[Override]
     protected function setUp(): void
     {
+        $this->dispatcher = $this->createStub(EventDispatcherInterface::class);
+
         $this->setTranslator();
 
-        $this->localization = $this->createMock(Localization::class);
+        $this->localization = $this->createStub(Localization::class);
         $this->localization->method('getLocalesOfAllDomains')->willReturn(['cs', 'en']);
         $this->localization->method('getAdminEnabledLocales')->willReturn(['cs', 'en']);
         $this->localization->method('getCurrentLocaleForTranslatableEntities')->willReturn('en');
 
-        $this->domain = $this->createMock(Domain::class);
+        $this->domain = $this->createStub(Domain::class);
 
         $domainConfigs = [
             DomainConfigHelper::getDomainConfig(),
@@ -158,11 +161,11 @@ class CountryFormTypeTest extends TypeTestCase
         $property->setAccessible(true);
         $property->setValue($country, 1);
 
-        $this->countryFacade = $this->createMock(CountryFacade::class);
+        $this->countryFacade = $this->createStub(CountryFacade::class);
         $this->countryFacade->method('findByCode')->willReturnMap([['CZ', null], ['UZ', $country]]);
         $this->countryFacade->method('getAll')->willReturn([$country]);
 
-        $this->urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+        $this->urlGenerator = $this->createStub(UrlGeneratorInterface::class);
         $this->urlGenerator->method('generate')->willReturn(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL);
 
         $this->formTypeLayout = new FormTypeLayout();

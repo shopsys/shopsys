@@ -39,32 +39,32 @@ class DomainDataCreatorTest extends TestCase
             ->method('getForDomain')
             ->with($this->equalTo(Setting::DOMAIN_DATA_CREATED), $this->equalTo(1))
             ->willReturn(true);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
-            $currentAdministratorMock,
+            $currentAdministratorStub,
         );
 
-        $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);
-        $multidomainEntityDataCreatorMock = $this->createMock(MultidomainEntityDataCreator::class);
-        $translatableEntityDataCreatorMock = $this->createMock(TranslatableEntityDataCreator::class);
-        $pricingGroupDataFactoryMock = $this->createMock(PricingGroupDataFactory::class);
-        $pricingGroupFacadeMock = $this->createMock(PricingGroupFacade::class);
-        $vatDataFactoryMock = $this->createMock(VatDataFactory::class);
-        $vatFacadeMock = $this->createMock(VatFacade::class);
+        $settingValueRepositoryStub = $this->createStub(SettingValueRepository::class);
+        $multidomainEntityDataCreatorStub = $this->createStub(MultidomainEntityDataCreator::class);
+        $translatableEntityDataCreatorStub = $this->createStub(TranslatableEntityDataCreator::class);
+        $pricingGroupDataFactoryStub = $this->createStub(PricingGroupDataFactory::class);
+        $pricingGroupFacadeStub = $this->createStub(PricingGroupFacade::class);
+        $vatDataFactoryStub = $this->createStub(VatDataFactory::class);
+        $vatFacadeStub = $this->createStub(VatFacade::class);
 
         $domainDataCreator = new DomainDataCreator(
             $domain,
             $settingMock,
-            $settingValueRepositoryMock,
-            $multidomainEntityDataCreatorMock,
-            $translatableEntityDataCreatorMock,
-            $pricingGroupDataFactoryMock,
-            $pricingGroupFacadeMock,
-            $vatDataFactoryMock,
-            $vatFacadeMock,
+            $settingValueRepositoryStub,
+            $multidomainEntityDataCreatorStub,
+            $translatableEntityDataCreatorStub,
+            $pricingGroupDataFactoryStub,
+            $pricingGroupFacadeStub,
+            $vatDataFactoryStub,
+            $vatFacadeStub,
         );
         $newDomainsDataCreated = $domainDataCreator->createNewDomainsData();
 
@@ -88,8 +88,8 @@ class DomainDataCreatorTest extends TestCase
             ),
         ];
 
-        $settingMock = $this->createMock(Setting::class);
-        $settingMock
+        $settingStub = $this->createStub(Setting::class);
+        $settingStub
             ->method('getForDomain')
             ->willReturnCallback(function ($key, $domainId) {
                 $this->assertEquals(Setting::DOMAIN_DATA_CREATED, $key);
@@ -100,12 +100,12 @@ class DomainDataCreatorTest extends TestCase
 
                 throw new SettingValueNotFoundException();
             });
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
         $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);
@@ -116,16 +116,17 @@ class DomainDataCreatorTest extends TestCase
 
         $multidomainEntityDataCreatorMock = $this->createMock(MultidomainEntityDataCreator::class);
         $multidomainEntityDataCreatorMock
+            ->expects($this->atLeastOnce())
             ->method('copyAllMultidomainDataForNewDomain')
             ->with($this->equalTo(DomainDataCreator::TEMPLATE_DOMAIN_ID), $this->equalTo(2));
 
-        $translatableEntityDataCreatorMock = $this->createMock(TranslatableEntityDataCreator::class);
+        $translatableEntityDataCreatorStub = $this->createStub(TranslatableEntityDataCreator::class);
 
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'Default';
 
-        $pricingGroupDataFactoryMock = $this->createMock(PricingGroupDataFactory::class);
-        $pricingGroupDataFactoryMock
+        $pricingGroupDataFactoryStub = $this->createStub(PricingGroupDataFactory::class);
+        $pricingGroupDataFactoryStub
             ->method('create')
             ->willReturn($pricingGroupData);
 
@@ -135,23 +136,23 @@ class DomainDataCreatorTest extends TestCase
 
         $pricingGroupFacadeMock = $this->createMock(PricingGroupFacade::class);
         $pricingGroupFacadeMock
-            ->method('create')
+            ->expects($this->any())->method('create')
             ->with($pricingGroupData, 2)
             ->willReturn($pricingGroup);
 
-        $vatDataFactoryMock = $this->createMock(VatDataFactory::class);
-        $vatFacadeMock = $this->createMock(VatFacade::class);
+        $vatDataFactoryStub = $this->createStub(VatDataFactory::class);
+        $vatFacadeStub = $this->createStub(VatFacade::class);
 
         $domainDataCreator = new DomainDataCreator(
             $domain,
-            $settingMock,
+            $settingStub,
             $settingValueRepositoryMock,
             $multidomainEntityDataCreatorMock,
-            $translatableEntityDataCreatorMock,
-            $pricingGroupDataFactoryMock,
+            $translatableEntityDataCreatorStub,
+            $pricingGroupDataFactoryStub,
             $pricingGroupFacadeMock,
-            $vatDataFactoryMock,
-            $vatFacadeMock,
+            $vatDataFactoryStub,
+            $vatFacadeStub,
         );
 
         $tFunctionMock->enable();
@@ -173,8 +174,8 @@ class DomainDataCreatorTest extends TestCase
             $domainConfigWithNewLocale,
         ];
 
-        $settingMock = $this->createMock(Setting::class);
-        $settingMock
+        $settingStub = $this->createStub(Setting::class);
+        $settingStub
             ->method('get')
             ->willReturnCallback(function ($key, $domainId) {
                 $this->assertEquals(Setting::DOMAIN_DATA_CREATED, $key);
@@ -186,44 +187,41 @@ class DomainDataCreatorTest extends TestCase
                 throw new SettingValueNotFoundException();
             });
 
-        $domainMock = $this->createMock(Domain::class);
-        $domainMock
-            ->expects($this->any())
+        $domainStub = $this->createStub(Domain::class);
+        $domainStub
             ->method('getAllIncludingDomainConfigsWithoutDataCreated')
             ->willReturn($domainConfigs);
-        $domainMock
-            ->expects($this->any())
+        $domainStub
             ->method('getAll')
             ->willReturn([$domainConfigWithDataCreated]);
-        $domainMock
-            ->expects($this->any())
+        $domainStub
             ->method('getDomainConfigById')
             ->willReturn($domainConfigWithDataCreated);
 
-        $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);
-        $multidomainEntityDataCreatorMock = $this->createMock(MultidomainEntityDataCreator::class);
+        $settingValueRepositoryStub = $this->createStub(SettingValueRepository::class);
+        $multidomainEntityDataCreatorStub = $this->createStub(MultidomainEntityDataCreator::class);
         $translatableEntityDataCreatorMock = $this->createMock(TranslatableEntityDataCreator::class);
         $translatableEntityDataCreatorMock
             ->expects($this->any())
             ->method('copyAllTranslatableDataForNewLocale')
             ->with($domainConfigWithDataCreated->getLocale(), $domainConfigWithNewLocale->getLocale());
 
-        $pricingGroupDataFactoryMock = $this->createMock(PricingGroupDataFactory::class);
-        $pricingGroupFacadeMock = $this->createMock(PricingGroupFacade::class);
+        $pricingGroupDataFactoryStub = $this->createStub(PricingGroupDataFactory::class);
+        $pricingGroupFacadeStub = $this->createStub(PricingGroupFacade::class);
 
-        $vatDataFactoryMock = $this->createMock(VatDataFactory::class);
-        $vatFacadeMock = $this->createMock(VatFacade::class);
+        $vatDataFactoryStub = $this->createStub(VatDataFactory::class);
+        $vatFacadeStub = $this->createStub(VatFacade::class);
 
         $domainDataCreator = new DomainDataCreator(
-            $domainMock,
-            $settingMock,
-            $settingValueRepositoryMock,
-            $multidomainEntityDataCreatorMock,
+            $domainStub,
+            $settingStub,
+            $settingValueRepositoryStub,
+            $multidomainEntityDataCreatorStub,
             $translatableEntityDataCreatorMock,
-            $pricingGroupDataFactoryMock,
-            $pricingGroupFacadeMock,
-            $vatDataFactoryMock,
-            $vatFacadeMock,
+            $pricingGroupDataFactoryStub,
+            $pricingGroupFacadeStub,
+            $vatDataFactoryStub,
+            $vatFacadeStub,
         );
 
         $domainDataCreator->createNewDomainsData();

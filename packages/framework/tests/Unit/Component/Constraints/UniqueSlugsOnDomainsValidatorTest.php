@@ -38,19 +38,17 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
                 locale: 'en',
             ),
         ];
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
-        $routerMock = $this->getMockBuilder(DomainRouter::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $routerMock->method('match')->willReturnCallback(function ($path) {
+        $routerStub = $this->createStub(DomainRouter::class);
+        $routerStub->method('match')->willReturnCallback(function ($path) {
             if ($path !== '/existing-url/') {
                 throw new ResourceNotFoundException();
             }
@@ -58,13 +56,10 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
             return [];
         });
 
-        $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)
-            ->onlyMethods(['getRouter'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $domainRouterFactoryMock->method('getRouter')->willReturn($routerMock);
+        $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
+        $domainRouterFactoryStub->method('getRouter')->willReturn($routerStub);
 
-        return new UniqueSlugsOnDomainsValidator($domain, $domainRouterFactoryMock);
+        return new UniqueSlugsOnDomainsValidator($domain, $domainRouterFactoryStub);
     }
 
     public function testValidateSameSlugsOnDifferentDomains(): void

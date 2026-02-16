@@ -6,7 +6,7 @@ namespace Tests\AdministrationBundle\Unit\Component\Security\Attribute;
 
 use InvalidArgumentException;
 use Override;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory;
@@ -30,12 +30,12 @@ class AttributeProcessorTest extends TestCase
 {
     private AttributeProcessor $processor;
 
-    private RoleRegistryInterface&MockObject $roleRegistry;
+    private RoleRegistryInterface&Stub $roleRegistry;
 
     #[Override]
     protected function setUp(): void
     {
-        $this->roleRegistry = $this->createMock(RoleRegistryInterface::class);
+        $this->roleRegistry = $this->createStub(RoleRegistryInterface::class);
         $accessControlRuleFactory = new AccessControlRuleFactory($this->roleRegistry);
         $this->processor = new AttributeProcessor($accessControlRuleFactory);
     }
@@ -52,7 +52,7 @@ class AttributeProcessorTest extends TestCase
                     throw new InvalidArgumentException("Role not found: {$identifier}");
                 }
 
-                $role = $this->createMock(Role::class);
+                $role = $this->createStub(Role::class);
                 $role->method('getConstant')->willReturn($roleMappings[$identifier]);
 
                 return $role;

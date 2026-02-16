@@ -22,7 +22,7 @@ class ProductsBatchLoaderTest extends TestCase
 
     private ProductElasticsearchBatchProvider|MockObject $productElasticsearchBatchProvider;
 
-    private Domain|MockObject $domain;
+    private Domain $domainStub;
 
     private GiftPlanFacade|MockObject $giftPlanFacade;
 
@@ -33,10 +33,10 @@ class ProductsBatchLoaderTest extends TestCase
 
         $this->promiseAdapter = new SyncPromiseAdapter();
         $this->productElasticsearchBatchProvider = $this->createMock(ProductElasticsearchBatchProvider::class);
-        $this->domain = $this->createMock(Domain::class);
+        $this->domainStub = $this->createStub(Domain::class);
         $this->giftPlanFacade = $this->createMock(GiftPlanFacade::class);
 
-        $this->domain->method('getId')->willReturn(1);
+        $this->domainStub->method('getId')->willReturn(1);
     }
 
     public function testNoGiftsReturnsEmptyArraysInOrder(): void
@@ -46,7 +46,7 @@ class ProductsBatchLoaderTest extends TestCase
         $productIds = [10, 20, 30];
 
         // The facade returns a map without gifts for all input products
-        $this->giftPlanFacade->method('findActiveGiftProductIdsByMainProductIds')
+        $this->giftPlanFacade->expects($this->any())->method('findActiveGiftProductIdsByMainProductIds')
             ->with($productIds, 1)
             ->willReturn([
                 10 => [],
@@ -74,7 +74,7 @@ class ProductsBatchLoaderTest extends TestCase
         $productIds = [50, 40, 60];
 
         // 100 is a shared gift for 50 and 40, 110 only for 60
-        $this->giftPlanFacade->method('findActiveGiftProductIdsByMainProductIds')
+        $this->giftPlanFacade->expects($this->any())->method('findActiveGiftProductIdsByMainProductIds')
             ->with($productIds, 1)
             ->willReturn([
                 50 => [100],
@@ -126,7 +126,7 @@ class ProductsBatchLoaderTest extends TestCase
         $productIds = [70];
 
         // The facade returns gift ID 200, but the provider does not "know" it
-        $this->giftPlanFacade->method('findActiveGiftProductIdsByMainProductIds')
+        $this->giftPlanFacade->expects($this->any())->method('findActiveGiftProductIdsByMainProductIds')
             ->with($productIds, 1)
             ->willReturn([
                 70 => [200, 210],
@@ -165,7 +165,7 @@ class ProductsBatchLoaderTest extends TestCase
         $productIds = [1, 2, 3, 4];
 
         // The facade returns an empty map (edge case)
-        $this->giftPlanFacade->method('findActiveGiftProductIdsByMainProductIds')
+        $this->giftPlanFacade->expects($this->any())->method('findActiveGiftProductIdsByMainProductIds')
             ->with($productIds, 1)
             ->willReturn([]);
 
@@ -184,7 +184,7 @@ class ProductsBatchLoaderTest extends TestCase
         return new ProductsBatchLoader(
             $this->promiseAdapter,
             $this->productElasticsearchBatchProvider,
-            $this->domain,
+            $this->domainStub,
             $this->giftPlanFacade,
         );
     }

@@ -18,18 +18,16 @@ class DomainRouterTest extends TestCase
     public function testGetRouter(): void
     {
         $context = new RequestContext();
-        $basicRouterMock = $this->getMockBuilder(RouterInterface::class)->getMock();
-        $localizedRouterMock = $this->getMockBuilder(RouterInterface::class)->getMock();
-        $friendlyUrlRouterMock = $this->getMockBuilder(FriendlyUrlRouter::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $transformStringHelper = $this->createMock(TransformStringHelper::class);
+        $basicRouterStub = $this->createStub(RouterInterface::class);
+        $localizedRouterStub = $this->createStub(RouterInterface::class);
+        $friendlyUrlRouterStub = $this->createStub(FriendlyUrlRouter::class);
+        $transformStringHelper = $this->createStub(TransformStringHelper::class);
 
         $domainRouter = new DomainRouter(
             $context,
-            $basicRouterMock,
-            $localizedRouterMock,
-            $friendlyUrlRouterMock,
+            $basicRouterStub,
+            $localizedRouterStub,
+            $friendlyUrlRouterStub,
             DomainConfigHelper::getDomainConfig(),
             $transformStringHelper,
         );

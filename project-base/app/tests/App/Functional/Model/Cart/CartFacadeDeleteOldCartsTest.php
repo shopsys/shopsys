@@ -9,7 +9,6 @@ use App\Model\Cart\Item\CartItem;
 use App\Model\Customer\User\CurrentCustomerUser;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
-use PHPUnit\Framework\MockObject\MockObject;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
@@ -168,7 +167,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
             $this->em,
             $this->cartFactory,
             $this->productRepository,
-            $this->getCustomerUserIdentifierFactoryMock($customerUserIdentifier),
+            $this->getCustomerUserIdentifierFactoryStub($customerUserIdentifier),
             $this->domain,
             $this->currentCustomerUser,
             $this->currentPromoCodeFacade,
@@ -180,16 +179,14 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         );
     }
 
-    private function getCustomerUserIdentifierFactoryMock(
+    private function getCustomerUserIdentifierFactoryStub(
         CustomerUserIdentifier $customerUserIdentifier,
-    ): MockObject|CustomerUserIdentifierFactory {
-        $customerUserIdentifierFactoryMock = $this->getMockBuilder(CustomerUserIdentifierFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+    ): CustomerUserIdentifierFactory {
+        $customerUserIdentifierFactoryStub = $this->createStub(CustomerUserIdentifierFactory::class);
 
-        $customerUserIdentifierFactoryMock->method('get')->willReturn($customerUserIdentifier);
+        $customerUserIdentifierFactoryStub->method('get')->willReturn($customerUserIdentifier);
 
-        return $customerUserIdentifierFactoryMock;
+        return $customerUserIdentifierFactoryStub;
     }
 
     private function assertCartIsDeleted(

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Order;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -24,10 +23,10 @@ class OrderPriceCalculationTest extends TestCase
     public function testGetOrderTotalPrice(): void
     {
         $orderItems = [
-            $this->createOrderProductMock(),
-            $this->createOrderProductMock(),
-            $this->createOrderPaymentMock(),
-            $this->createOrderTransportMock(),
+            $this->createOrderProductStub(),
+            $this->createOrderProductStub(),
+            $this->createOrderPaymentStub(),
+            $this->createOrderTransportStub(),
         ];
 
         $pricesMap = [
@@ -37,7 +36,7 @@ class OrderPriceCalculationTest extends TestCase
             [$orderItems[3], new Price(Money::create(0), Money::create(0))],
         ];
 
-        $roundingMock = $this->createMock(Rounding::class);
+        $roundingStub = $this->createStub(Rounding::class);
 
         $orderItemPriceCalculationMock = $this->getMockBuilder(OrderItemPriceCalculation::class)
             ->onlyMethods(['__construct', 'calculateTotalPrice'])
@@ -48,7 +47,7 @@ class OrderPriceCalculationTest extends TestCase
             ->method('calculateTotalPrice')
             ->willReturnMap($pricesMap);
 
-        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationMock, $roundingMock);
+        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationMock, $roundingStub);
 
         $orderMock = $this->getMockBuilder(Order::class)
             ->onlyMethods(['__construct', 'getItems'])
@@ -76,10 +75,10 @@ class OrderPriceCalculationTest extends TestCase
         $currency = new Currency($currencyData);
         $orderTotalPrice = new Price(Money::create(100), Money::create(120));
 
-        $roundingMock = $this->createMock(Rounding::class);
-        $orderItemPriceCalculationMock = $this->createMock(OrderItemPriceCalculation::class);
+        $roundingStub = $this->createStub(Rounding::class);
+        $orderItemPriceCalculationStub = $this->createStub(OrderItemPriceCalculation::class);
 
-        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationMock, $roundingMock);
+        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, $roundingStub);
         $roundingPrice = $priceCalculation->calculateOrderRoundingPrice($payment, $currency, $orderTotalPrice);
 
         $this->assertNull($roundingPrice);
@@ -98,10 +97,10 @@ class OrderPriceCalculationTest extends TestCase
         $currency = new Currency($currencyData);
         $orderTotalPrice = new Price(Money::create(100), Money::create(120));
 
-        $roundingMock = $this->createMock(Rounding::class);
-        $orderItemPriceCalculationMock = $this->createMock(OrderItemPriceCalculation::class);
+        $roundingStub = $this->createStub(Rounding::class);
+        $orderItemPriceCalculationStub = $this->createStub(OrderItemPriceCalculation::class);
 
-        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationMock, $roundingMock);
+        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, $roundingStub);
         $roundingPrice = $priceCalculation->calculateOrderRoundingPrice($payment, $currency, $orderTotalPrice);
 
         $this->assertNull($roundingPrice);
@@ -120,11 +119,8 @@ class OrderPriceCalculationTest extends TestCase
         $currency = new Currency($currencyData);
         $orderTotalPrice = new Price(Money::create(100), Money::create('120.3'));
 
-        $roundingMock = $this->getMockBuilder(Rounding::class)
-            ->onlyMethods(['roundPriceWithVatByCurrency'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $roundingMock->expects($this->any())->method(
+        $roundingStub = $this->createStub(Rounding::class);
+        $roundingStub->method(
             'roundPriceWithVatByCurrency',
         )->willReturnCallback(
             function (Money $value) {
@@ -132,9 +128,9 @@ class OrderPriceCalculationTest extends TestCase
             },
         );
 
-        $orderItemPriceCalculationMock = $this->createMock(OrderItemPriceCalculation::class);
+        $orderItemPriceCalculationStub = $this->createStub(OrderItemPriceCalculation::class);
 
-        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationMock, $roundingMock);
+        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, $roundingStub);
         $roundingPrice = $priceCalculation->calculateOrderRoundingPrice(
             $payment,
             $currency,
@@ -157,11 +153,8 @@ class OrderPriceCalculationTest extends TestCase
         $currency = new Currency($currencyData);
         $orderTotalPrice = new Price(Money::create(100), Money::create('120.9'));
 
-        $roundingMock = $this->getMockBuilder(Rounding::class)
-            ->onlyMethods(['roundPriceWithVatByCurrency'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $roundingMock->expects($this->any())->method(
+        $roundingStub = $this->createStub(Rounding::class);
+        $roundingStub->method(
             'roundPriceWithVatByCurrency',
         )->willReturnCallback(
             function (Money $value) {
@@ -169,9 +162,9 @@ class OrderPriceCalculationTest extends TestCase
             },
         );
 
-        $orderItemPriceCalculationMock = $this->createMock(OrderItemPriceCalculation::class);
+        $orderItemPriceCalculationStub = $this->createStub(OrderItemPriceCalculation::class);
 
-        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationMock, $roundingMock);
+        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, $roundingStub);
         $roundingPrice = $priceCalculation->calculateOrderRoundingPrice(
             $payment,
             $currency,
@@ -181,30 +174,30 @@ class OrderPriceCalculationTest extends TestCase
         $this->assertThat($roundingPrice, new IsMoneyEqual(Money::create('0.1')));
     }
 
-    protected function createOrderProductMock(): MockObject
+    protected function createOrderProductStub(): OrderItem
     {
-        $orderProductMock = $this->createMock(OrderItem::class);
+        $orderProductStub = $this->createStub(OrderItem::class);
 
-        $orderProductMock->method('isTypeProduct')->willReturn(true);
+        $orderProductStub->method('isTypeProduct')->willReturn(true);
 
-        return $orderProductMock;
+        return $orderProductStub;
     }
 
-    protected function createOrderPaymentMock(): MockObject
+    protected function createOrderPaymentStub(): OrderItem
     {
-        $orderProductMock = $this->createMock(OrderItem::class);
+        $orderProductStub = $this->createStub(OrderItem::class);
 
-        $orderProductMock->method('isTypePayment')->willReturn(true);
+        $orderProductStub->method('isTypePayment')->willReturn(true);
 
-        return $orderProductMock;
+        return $orderProductStub;
     }
 
-    protected function createOrderTransportMock(): MockObject
+    protected function createOrderTransportStub(): OrderItem
     {
-        $orderProductMock = $this->createMock(OrderItem::class);
+        $orderProductStub = $this->createStub(OrderItem::class);
 
-        $orderProductMock->method('isTypeTransport')->willReturn(true);
+        $orderProductStub->method('isTypeTransport')->willReturn(true);
 
-        return $orderProductMock;
+        return $orderProductStub;
     }
 }

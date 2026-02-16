@@ -78,47 +78,47 @@ class LuigisBoxFeedItemTest extends TestCase
         $this->doSetUp(true);
     }
 
-    private function createCurrencyMock(int $id, string $code): Currency
+    private function createCurrencyStub(int $id, string $code): Currency
     {
-        $currencyMock = $this->createMock(Currency::class);
+        $currencyStub = $this->createStub(Currency::class);
 
-        $currencyMock->method('getId')->willReturn($id);
-        $currencyMock->method('getCode')->willReturn($code);
+        $currencyStub->method('getId')->willReturn($id);
+        $currencyStub->method('getCode')->willReturn($code);
 
-        return $currencyMock;
+        return $currencyStub;
     }
 
-    private function createDomainConfigMock(int $id, string $url, string $locale, Currency $currency): DomainConfig
+    private function createDomainConfigStub(int $id, string $url, string $locale, Currency $currency): DomainConfig
     {
-        $domainConfigMock = $this->createMock(DomainConfig::class);
+        $domainConfigStub = $this->createStub(DomainConfig::class);
 
-        $domainConfigMock->method('getId')->willReturn($id);
-        $domainConfigMock->method('getUrl')->willReturn($url);
-        $domainConfigMock->method('getLocale')->willReturn($locale);
+        $domainConfigStub->method('getId')->willReturn($id);
+        $domainConfigStub->method('getUrl')->willReturn($url);
+        $domainConfigStub->method('getLocale')->willReturn($locale);
 
-        $this->currencyFacadeMock->method('getDomainDefaultCurrencyByDomainId')
+        $this->currencyFacadeMock->expects($this->any())->method('getDomainDefaultCurrencyByDomainId')
             ->with($id)->willReturn($currency);
 
-        return $domainConfigMock;
+        return $domainConfigStub;
     }
 
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
-        $productPrice = new ProductPrice($price, $this->createMock(PricingGroup::class), false);
+        $productPrice = new ProductPrice($price, $this->createStub(PricingGroup::class), false);
         $productPricesResult = new ProductPricesResult($productPrice, $productPrice);
-        $this->productPriceCalculationForCustomerUserMock->method('calculatePricesForCustomerUserAndDomainId')
+        $this->productPriceCalculationForCustomerUserMock->expects($this->any())->method('calculatePricesForCustomerUserAndDomainId')
             ->with($product, $domain->getId(), null)->willReturn($productPricesResult);
     }
 
     private function mockProductUrl(Product $product, DomainConfig $domain, string $url): void
     {
-        $this->productUrlsBatchLoaderMock->method('getProductUrl')
+        $this->productUrlsBatchLoaderMock->expects($this->any())->method('getProductUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
     private function mockProductImageUrl(Product $product, DomainConfig $domain, string $url): void
     {
-        $this->productUrlsBatchLoaderMock->method('getProductImageUrl')
+        $this->productUrlsBatchLoaderMock->expects($this->any())->method('getProductImageUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
@@ -152,10 +152,9 @@ class LuigisBoxFeedItemTest extends TestCase
 
     public function testLuigisBoxFeedItemWithBrand(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
-        $brand = $this->createMock(Brand::class);
+        $brand = $this->createStub(Brand::class);
         $brand->method('getName')->willReturn(self::BRAND_NAME);
-        $this->defaultProduct->method('getBrand')->willReturn($brand);
+        $this->defaultProduct->expects($this->any())->method('getBrand')->willReturn($brand);
 
         $luigisBoxProductFeedItem = $this->luigisBoxProductFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
@@ -164,7 +163,7 @@ class LuigisBoxFeedItemTest extends TestCase
 
     public function testLuigisBoxFeedItemWithDescription(): void
     {
-        $this->defaultProduct->method('getDescriptionAsPlainText')
+        $this->defaultProduct->expects($this->any())->method('getDescriptionAsPlainText')
             ->with($this->defaultDomain->getId())->willReturn(self::PRODUCT_DESCRIPTION);
 
         $luigisBoxProductFeedItem = $this->luigisBoxProductFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
@@ -188,74 +187,74 @@ class LuigisBoxFeedItemTest extends TestCase
             ProductPriceCalculationForCustomerUser::class,
         );
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
-        $this->defaultCurrency = $this->createCurrencyMock(1, self::EUR);
-        $this->defaultDomain = $this->createDomainConfigMock(
+        $this->defaultCurrency = $this->createCurrencyStub(1, self::EUR);
+        $this->defaultDomain = $this->createDomainConfigStub(
             Domain::FIRST_DOMAIN_ID,
             'https://example.com',
             self::DEFAULT_LOCALE,
             $this->defaultCurrency,
         );
 
-        $translator = $this->createMock(Translator::class);
+        $translator = $this->createStub(Translator::class);
         $translator->method('staticTrans')->willReturnArgument(0);
         Translator::injectSelf($translator);
 
-        $flag = $this->createMock(Flag::class);
+        $flag = $this->createStub(Flag::class);
         $flag->method('getName')->willReturn(self::FLAG_NAME);
         $flag->method('isVisible')->willReturn('true');
 
         $mainCategory = $this->createMock(Category::class);
-        $mainCategory->method('getId')->willReturn(self::MAIN_CATEGORY_ID);
-        $mainCategory->method('getName')->with(self::DEFAULT_LOCALE)->willReturn(self::MAIN_CATEGORY_NAME);
+        $mainCategory->expects($this->any())->method('getId')->willReturn(self::MAIN_CATEGORY_ID);
+        $mainCategory->expects($this->any())->method('getName')->with(self::DEFAULT_LOCALE)->willReturn(self::MAIN_CATEGORY_NAME);
 
         $this->defaultProduct = $this->createMock(Product::class);
-        $this->defaultProduct->method('getId')->willReturn(self::PRODUCT_ID);
-        $this->defaultProduct->method('getFullName')->with(self::DEFAULT_LOCALE)->willReturn(self::PRODUCT_NAME);
-        $this->defaultProduct->method('getFlags')->willReturn([$flag]);
-        $this->defaultProduct->method('getCategoriesIndexedByDomainId')->willReturn([self::MAIN_CATEGORY_ID => [$mainCategory]]);
-        $this->defaultProduct->method('isMainVariant')->willReturn(false);
-        $this->defaultProduct->method('isVariant')->willReturn(false);
-        $this->defaultProduct->method('getEan')->willReturn(self::PRODUCT_EAN);
-        $this->defaultProduct->method('getPartNo')->willReturn(self::PRODUCT_PART_NO);
-        $this->defaultProduct->method('getCatnum')->willReturn(self::PRODUCT_SKU);
+        $this->defaultProduct->expects($this->any())->method('getId')->willReturn(self::PRODUCT_ID);
+        $this->defaultProduct->expects($this->any())->method('getFullName')->with(self::DEFAULT_LOCALE)->willReturn(self::PRODUCT_NAME);
+        $this->defaultProduct->expects($this->any())->method('getFlags')->willReturn([$flag]);
+        $this->defaultProduct->expects($this->any())->method('getCategoriesIndexedByDomainId')->willReturn([self::MAIN_CATEGORY_ID => [$mainCategory]]);
+        $this->defaultProduct->expects($this->any())->method('isMainVariant')->willReturn(false);
+        $this->defaultProduct->expects($this->any())->method('isVariant')->willReturn(false);
+        $this->defaultProduct->expects($this->any())->method('getEan')->willReturn(self::PRODUCT_EAN);
+        $this->defaultProduct->expects($this->any())->method('getPartNo')->willReturn(self::PRODUCT_PART_NO);
+        $this->defaultProduct->expects($this->any())->method('getCatnum')->willReturn(self::PRODUCT_SKU);
 
         $this->mockProductPrice($this->defaultProduct, $this->defaultDomain, Price::zero());
         $this->mockProductUrl($this->defaultProduct, $this->defaultDomain, self::PRODUCT_URL);
 
-        $categoryRepositoryMock = $this->createMock(CategoryRepository::class);
-        $categoryRepositoryMock->method('getProductMainCategoryOnDomain')->willReturn($mainCategory);
+        $categoryRepositoryStub = $this->createStub(CategoryRepository::class);
+        $categoryRepositoryStub->method('getProductMainCategoryOnDomain')->willReturn($mainCategory);
 
-        $parameter = $this->createMock(Parameter::class);
+        $parameter = $this->createStub(Parameter::class);
         $parameter->method('getName')->willReturn(self::PARAMETER_NAME);
 
-        $parameterValue = $this->createMock(ParameterValue::class);
+        $parameterValue = $this->createStub(ParameterValue::class);
         $parameterValue->method('getLocale')->willReturn(self::DEFAULT_LOCALE);
         $parameterValue->method('getText')->willReturn(self::PARAMETER_VALUE);
 
         $productParameterValue = new ProductParameterValue($this->defaultProduct, $parameter, $parameterValue);
 
-        $productCachedAttributesFacade = $this->createMock(ProductCachedAttributesFacade::class);
+        $productCachedAttributesFacade = $this->createStub(ProductCachedAttributesFacade::class);
         $productCachedAttributesFacade->method('getProductParameterValues')->willReturn([$productParameterValue]);
 
-        $productAvailabilityFacade = $this->createMock(ProductAvailabilityFacade::class);
+        $productAvailabilityFacade = $this->createStub(ProductAvailabilityFacade::class);
         $productAvailabilityFacade->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
 
-        $settingMock = $this->createMock(Setting::class);
-        $settingMock->method('getForDomain')->willReturn(self::MOCKED_LUIGIS_BOX_RANK_SETTING);
+        $settingStub = $this->createStub(Setting::class);
+        $settingStub->method('getForDomain')->willReturn(self::MOCKED_LUIGIS_BOX_RANK_SETTING);
 
-        $pricingSettingMock = $this->createMock(PricingSetting::class);
-        $pricingSettingMock->method('getSellingPriceType')->willReturn(PricingSetting::PRICE_TYPE_WITH_VAT);
+        $pricingSettingStub = $this->createStub(PricingSetting::class);
+        $pricingSettingStub->method('getSellingPriceType')->willReturn(PricingSetting::PRICE_TYPE_WITH_VAT);
 
         $this->luigisBoxProductFeedItemFactory = new LuigisBoxProductFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
             $this->currencyFacadeMock,
             $this->productUrlsBatchLoaderMock,
-            $categoryRepositoryMock,
+            $categoryRepositoryStub,
             $productCachedAttributesFacade,
             $productAvailabilityFacade,
-            $settingMock,
+            $settingStub,
             new ImageUrlWithSizeHelper(),
-            $pricingSettingMock,
+            $pricingSettingStub,
         );
     }
 

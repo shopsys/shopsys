@@ -180,11 +180,11 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
             new BillingAddressDataFactory(),
             new DeliveryAddressDataFactory(),
             new CustomerUserDataFactory(
-                $this->createMock(PricingGroupSettingFacade::class),
-                $this->createMock(CustomerUserRoleGroupFacade::class),
-                $this->createMock(CustomerRepository::class),
-                $this->createMock(NewsletterFacade::class),
-                $this->createMock(ClockInterface::class),
+                $this->createStub(PricingGroupSettingFacade::class),
+                $this->createStub(CustomerUserRoleGroupFacade::class),
+                $this->createStub(CustomerRepository::class),
+                $this->createStub(NewsletterFacade::class),
+                $this->createStub(ClockInterface::class),
             ),
         );
     }

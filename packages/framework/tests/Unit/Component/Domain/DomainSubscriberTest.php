@@ -20,30 +20,30 @@ class DomainSubscriberTest extends TestCase
     public function testOnKernelRequestWithoutMasterRequest(): void
     {
         $event = new RequestEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
         );
 
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
-        $contextResolverMock = $this->createMock(ContextResolverInterface::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
+        $contextResolverStub = $this->createStub(ContextResolverInterface::class);
 
         $domain = new Domain(
             [],
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
 
-        $domainSubscriber = new DomainSubscriber($domain, $contextResolverMock);
+        $domainSubscriber = new DomainSubscriber($domain, $contextResolverStub);
         $domainSubscriber->onKernelRequest($event);
     }
 
     public function testOnKernelRequestWithMasterRequestAndSetDomain(): void
     {
         $event = new RequestEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::MAIN_REQUEST,
         );
@@ -53,16 +53,16 @@ class DomainSubscriberTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $domainMock->expects($this->once())->method('getId');
-        $contextResolverMock = $this->createMock(ContextResolverInterface::class);
+        $contextResolverStub = $this->createStub(ContextResolverInterface::class);
 
-        $domainSubscriber = new DomainSubscriber($domainMock, $contextResolverMock);
+        $domainSubscriber = new DomainSubscriber($domainMock, $contextResolverStub);
         $domainSubscriber->onKernelRequest($event);
     }
 
     public function testOnKernelRequestWithMasterRequest(): void
     {
         $event = new RequestEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::MAIN_REQUEST,
         );
@@ -75,9 +75,9 @@ class DomainSubscriberTest extends TestCase
         $domainMock->expects($this->once())->method('getId')->willThrowException($exception);
         $domainMock->expects($this->once())->method('switchDomainByRequest')->with($this->equalTo(new Request()));
 
-        $contextResolverMock = $this->createMock(ContextResolverInterface::class);
+        $contextResolverStub = $this->createStub(ContextResolverInterface::class);
 
-        $domainSubscriber = new DomainSubscriber($domainMock, $contextResolverMock);
+        $domainSubscriber = new DomainSubscriber($domainMock, $contextResolverStub);
         $domainSubscriber->onKernelRequest($event);
     }
 }

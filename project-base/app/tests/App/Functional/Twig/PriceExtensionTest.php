@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -201,40 +200,27 @@ class PriceExtensionTest extends FunctionalTestCase
         $domain1DefaultCurrency = $this->currencyFactory->create($domain1DefaultCurrencyData);
         $domain2DefaultCurrency = $this->currencyFactory->create($domain2DefaultCurrencyData);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|\PHPUnit\Framework\MockObject\MockObject $currencyFacadeMock */
-        $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getDomainDefaultCurrencyByDomainId', 'getDefaultCurrency'])
-            ->getMock();
-        $currencyFacadeMock
+        $currencyFacadeStub = $this->createStub(CurrencyFacade::class);
+        $currencyFacadeStub
             ->method('getDomainDefaultCurrencyByDomainId')
             ->willReturnMap([
                 [Domain::FIRST_DOMAIN_ID, $domain1DefaultCurrency],
                 [Domain::SECOND_DOMAIN_ID, $domain2DefaultCurrency],
             ]);
-        $currencyFacadeMock
+        $currencyFacadeStub
             ->method('getDefaultCurrency')
             ->willReturn($domain1DefaultCurrency);
-        $administratorFrontSecurityFacadeMock = $this->getMockBuilder(AdministratorFrontSecurityFacade::class)
-            ->disableOriginalConstructor()
-            ->getMock();
 
-        $domain = $this->getMockBuilder(Domain::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $domainStub = $this->createStub(Domain::class);
+        $domainStub->method('getId')->willReturn($domainId);
 
-        $domain->method('getId')->willReturn($domainId);
-
-        $localizationMock = $this->getMockBuilder(Localization::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $localizationMock->method('getRequestLocale')->willReturn($locale);
+        $localizationStub = $this->createStub(Localization::class);
+        $localizationStub->method('getRequestLocale')->willReturn($locale);
 
         return new PriceExtension(
-            $currencyFacadeMock,
-            $domain,
-            $localizationMock,
+            $currencyFacadeStub,
+            $domainStub,
+            $localizationStub,
             $this->intlCurrencyRepository,
             $this->currencyFormatterFactory,
             $this->adminDomainTabsFacade,

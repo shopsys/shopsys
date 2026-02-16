@@ -6,7 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Payment;
 
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
@@ -19,25 +19,25 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
 {
     use SetTranslatorTrait;
 
-    private Domain|MockObject $domainMock;
+    private Domain|Stub $domainStub;
 
-    private CustomerUserRoleResolver|MockObject $customerUserRoleResolverMock;
+    private CustomerUserRoleResolver|Stub $customerUserRoleResolverStub;
 
     private IndependentPaymentVisibilityCalculation $paymentVisibilityCalculation;
 
     #[Override]
     protected function setUp(): void
     {
-        $this->domainMock = $this->createMock(Domain::class);
-        $this->domainMock->method('getDomainConfigById')
+        $this->domainStub = $this->createStub(Domain::class);
+        $this->domainStub->method('getDomainConfigById')
             ->willReturn(
                 DomainConfigHelper::getDomainConfig(),
             );
 
-        $this->customerUserRoleResolverMock = $this->createMock(CustomerUserRoleResolver::class);
+        $this->customerUserRoleResolverStub = $this->createStub(CustomerUserRoleResolver::class);
         $this->paymentVisibilityCalculation = new IndependentPaymentVisibilityCalculation(
-            $this->domainMock,
-            $this->customerUserRoleResolverMock,
+            $this->domainStub,
+            $this->customerUserRoleResolverStub,
         );
     }
 
@@ -52,17 +52,17 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
         bool $isEnabled,
         bool $expectedResult,
     ): void {
-        $paymentMock = $this->createMock(Payment::class);
-        $paymentMock->method('isOnlinePayment')->willReturn($isOnlinePayment);
-        $paymentMock->method('isHidden')->willReturn($isHidden);
-        $paymentMock->method('isDeleted')->willReturn($isDeleted);
-        $paymentMock->method('isHiddenByGoPayByDomainId')->willReturn($isHiddenByGoPay);
-        $paymentMock->method('getName')->willReturn($name);
-        $paymentMock->method('isEnabled')->willReturn($isEnabled);
+        $paymentStub = $this->createStub(Payment::class);
+        $paymentStub->method('isOnlinePayment')->willReturn($isOnlinePayment);
+        $paymentStub->method('isHidden')->willReturn($isHidden);
+        $paymentStub->method('isDeleted')->willReturn($isDeleted);
+        $paymentStub->method('isHiddenByGoPayByDomainId')->willReturn($isHiddenByGoPay);
+        $paymentStub->method('getName')->willReturn($name);
+        $paymentStub->method('isEnabled')->willReturn($isEnabled);
 
-        $this->customerUserRoleResolverMock->method('canCurrentCustomerUserSeePrices')->willReturn($canSeePrices);
+        $this->customerUserRoleResolverStub->method('canCurrentCustomerUserSeePrices')->willReturn($canSeePrices);
 
-        $this->assertEquals($expectedResult, $this->paymentVisibilityCalculation->isIndependentlyVisible($paymentMock, 1));
+        $this->assertEquals($expectedResult, $this->paymentVisibilityCalculation->isIndependentlyVisible($paymentStub, 1));
     }
 
     public static function paymentVisibilityProvider(): array

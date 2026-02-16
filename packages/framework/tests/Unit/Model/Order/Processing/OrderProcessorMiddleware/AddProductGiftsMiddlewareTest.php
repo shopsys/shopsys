@@ -25,7 +25,7 @@ class AddProductGiftsMiddlewareTest extends MiddlewareTestCase
         $orderProcessingData = $this->createOrderProcessingData();
         $productData = new ProductData();
         $productData->name = ['en' => 'Some product'];
-        $productData->unit = $this->createMock(Unit::class);
+        $productData->unit = $this->createStub(Unit::class);
         $product = Product::create($productData);
         $quantifiedProduct = new QuantifiedProduct($product, 2);
         $quantifiedProduct->setAdditionalData(QuantifiedProduct::CART_ITEM_TYPE_KEY, CartItemTypeEnum::TYPE_PRODUCT);
@@ -40,7 +40,7 @@ class AddProductGiftsMiddlewareTest extends MiddlewareTestCase
 
         $productData = new ProductData();
         $productData->name = ['en' => 'Some gift'];
-        $productData->unit = $this->createMock(Unit::class);
+        $productData->unit = $this->createStub(Unit::class);
         $product = Product::create($productData);
         $quantifiedProduct = new QuantifiedProduct($product, 2);
         $quantifiedProduct->setAdditionalData(QuantifiedProduct::CART_ITEM_TYPE_KEY, CartItemTypeEnum::TYPE_PRODUCT_GIFT);
@@ -71,7 +71,7 @@ class AddProductGiftsMiddlewareTest extends MiddlewareTestCase
     private function createAddProductGiftsMiddleware(
         QuantifiedItemPrice $quantifiedItemPrice,
     ): AddProductGiftsMiddleware {
-        $quantifiedProductPriceCalculation = $this->createMock(QuantifiedProductPriceCalculation::class);
+        $quantifiedProductPriceCalculation = $this->createStub(QuantifiedProductPriceCalculation::class);
         $quantifiedProductPriceCalculation->method('calculateGiftPrice')->willReturn($quantifiedItemPrice);
 
         return new AddProductGiftsMiddleware(
@@ -82,7 +82,7 @@ class AddProductGiftsMiddlewareTest extends MiddlewareTestCase
 
     private function createAddProductsMiddleware(QuantifiedItemPrice $quantifiedItemPrice): AddProductsMiddleware
     {
-        $quantifiedProductPriceCalculation = $this->createMock(QuantifiedProductPriceCalculation::class);
+        $quantifiedProductPriceCalculation = $this->createStub(QuantifiedProductPriceCalculation::class);
         $quantifiedProductPriceResult = new QuantifiedProductPricesResult($quantifiedItemPrice, $quantifiedItemPrice);
         $quantifiedProductPriceCalculation->method('calculateQuantifiedBasicAndSellingPrice')->willReturn($quantifiedProductPriceResult);
 

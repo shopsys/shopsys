@@ -22,11 +22,11 @@ class IndexFacadeTest extends TestCase
 {
     private IndexRepository|MockObject $indexRepositoryMock;
 
-    private ProgressBarFactory $progressBarFactoryMock;
+    private ProgressBarFactory $progressBarFactoryStub;
 
-    private SqlLoggerFacade $sqlLoggerFacadeMock;
+    private SqlLoggerFacade $sqlLoggerFacadeStub;
 
-    private EntityManager $entityManagerMock;
+    private EntityManager $entityManagerStub;
 
     #[Override]
     protected function setUp(): void
@@ -34,27 +34,27 @@ class IndexFacadeTest extends TestCase
         parent::setUp();
 
         $this->indexRepositoryMock = $this->createMock(IndexRepository::class);
-        $this->progressBarFactoryMock = $this->createMock(ProgressBarFactory::class);
-        $this->sqlLoggerFacadeMock = $this->createMock(SqlLoggerFacade::class);
-        $this->entityManagerMock = $this->createMock(EntityManager::class);
+        $this->progressBarFactoryStub = $this->createStub(ProgressBarFactory::class);
+        $this->sqlLoggerFacadeStub = $this->createStub(SqlLoggerFacade::class);
+        $this->entityManagerStub = $this->createStub(EntityManager::class);
     }
 
-    private function getIndexDefinitionMockReturningDomainId(): IndexDefinition
+    private function getIndexDefinitionStubReturningDomainId(): IndexDefinition
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\MockObject $indexDefinitionMock */
-        $indexDefinitionMock = $this->createMock(IndexDefinition::class);
-        $indexDefinitionMock->method('getDomainId')->willReturn(1);
+        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\Stub $indexDefinitionStub */
+        $indexDefinitionStub = $this->createStub(IndexDefinition::class);
+        $indexDefinitionStub->method('getDomainId')->willReturn(1);
 
-        return $indexDefinitionMock;
+        return $indexDefinitionStub;
     }
 
     private function createIndexFacadeInstance(): IndexFacade
     {
         return new IndexFacade(
             $this->indexRepositoryMock,
-            $this->progressBarFactoryMock,
-            $this->sqlLoggerFacadeMock,
-            $this->entityManagerMock,
+            $this->progressBarFactoryStub,
+            $this->sqlLoggerFacadeStub,
+            $this->entityManagerStub,
         );
     }
 
@@ -63,18 +63,18 @@ class IndexFacadeTest extends TestCase
         $oldIndexName = 'index_old';
         $newIndexName = 'index_new';
 
-        $this->indexRepositoryMock->method('findCurrentIndexNameForAlias')->willReturn($oldIndexName);
+        $this->indexRepositoryMock->expects($this->any())->method('findCurrentIndexNameForAlias')->willReturn($oldIndexName);
         $this->indexRepositoryMock->expects($this->once())->method('createIndex');
         $this->indexRepositoryMock->expects($this->once())->method('reindex')->with($oldIndexName, $newIndexName);
         $this->indexRepositoryMock->expects($this->once())->method('createAlias');
         $this->indexRepositoryMock->expects($this->once())->method('deleteIndex')->with($oldIndexName);
 
-        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\MockObject $indexDefinitionMock */
-        $indexDefinitionMock = $this->getIndexDefinitionMockReturningDomainId();
-        $indexDefinitionMock->method('getVersionedIndexName')->willReturn($newIndexName);
+        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\Stub $indexDefinitionStub */
+        $indexDefinitionStub = $this->getIndexDefinitionStubReturningDomainId();
+        $indexDefinitionStub->method('getVersionedIndexName')->willReturn($newIndexName);
 
         $indexFacade = $this->createIndexFacadeInstance();
-        $indexFacade->migrate($indexDefinitionMock, new NullOutput());
+        $indexFacade->migrate($indexDefinitionStub, new NullOutput());
     }
 
     public function testMigrateWhenMigrationIsNotNecessary(): void
@@ -82,18 +82,18 @@ class IndexFacadeTest extends TestCase
         $oldIndexName = 'index_old';
         $newIndexName = 'index_new';
 
-        $this->indexRepositoryMock->method('findCurrentIndexNameForAlias')->willReturn($oldIndexName);
+        $this->indexRepositoryMock->expects($this->any())->method('findCurrentIndexNameForAlias')->willReturn($oldIndexName);
         $this->indexRepositoryMock->expects($this->never())->method('createIndex');
         $this->indexRepositoryMock->expects($this->never())->method('reindex')->with($oldIndexName, $newIndexName);
         $this->indexRepositoryMock->expects($this->never())->method('createAlias');
         $this->indexRepositoryMock->expects($this->never())->method('deleteIndex')->with($oldIndexName);
 
-        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\MockObject $indexDefinitionMock */
-        $indexDefinitionMock = $this->getIndexDefinitionMockReturningDomainId();
-        $indexDefinitionMock->method('getVersionedIndexName')->willReturn($oldIndexName);
+        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\Stub $indexDefinitionStub */
+        $indexDefinitionStub = $this->getIndexDefinitionStubReturningDomainId();
+        $indexDefinitionStub->method('getVersionedIndexName')->willReturn($oldIndexName);
 
         $indexFacade = $this->createIndexFacadeInstance();
-        $indexFacade->migrate($indexDefinitionMock, new NullOutput());
+        $indexFacade->migrate($indexDefinitionStub, new NullOutput());
     }
 
     #[DataProvider('exportIdsDataProvider')]
@@ -103,14 +103,14 @@ class IndexFacadeTest extends TestCase
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex|\PHPUnit\Framework\MockObject\MockObject $indexMock */
         $indexMock = $this->createMock(ProductIndex::class);
-        $indexMock->method('getExportDataForIds')->with(Domain::FIRST_DOMAIN_ID, $affectedIds)->willReturn(
+        $indexMock->expects($this->any())->method('getExportDataForIds')->with(Domain::FIRST_DOMAIN_ID, $affectedIds)->willReturn(
             $exportData,
         );
-        $indexMock->method('getExportBatchSize')->willReturn(100);
+        $indexMock->expects($this->any())->method('getExportBatchSize')->willReturn(100);
 
-        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\MockObject $indexDefinitionMock */
-        $indexDefinitionMock = $this->getIndexDefinitionMockReturningDomainId();
-        $indexDefinitionMock->method('getIndexAlias')->willReturn($indexAlias);
+        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\Stub $indexDefinitionStub */
+        $indexDefinitionStub = $this->getIndexDefinitionStubReturningDomainId();
+        $indexDefinitionStub->method('getIndexAlias')->willReturn($indexAlias);
 
         if (count($exportData) === 0) {
             $this->indexRepositoryMock->expects($this->never())->method('bulkUpdate');
@@ -128,7 +128,7 @@ class IndexFacadeTest extends TestCase
         }
 
         $indexFacade = $this->createIndexFacadeInstance();
-        $indexFacade->exportIds($indexMock, $indexDefinitionMock, $affectedIds);
+        $indexFacade->exportIds($indexMock, $indexDefinitionStub, $affectedIds);
     }
 
     public static function exportIdsDataProvider(): array
