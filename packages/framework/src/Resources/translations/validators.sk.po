@@ -625,6 +625,9 @@ msgstr "SEO stránka so slugom {{ pageSlug }} už existuje"
 msgid "Slug can contain only letters, numbers, hyphens, underscores and slashes"
 msgstr "Slug môže obsahovať len písmená, čísla, pomlčky, podčiarkovníky a lomítka"
 
+msgid "Slug containing non-ASCII characters must be URL-encoded. You can use https://www.urlencoder.org/."
+msgstr "Slug obsahujúci iné ako ASCII znaky musí byť URL-zakódovaný. Môžete použiť https://www.urlencoder.org/."
+
 msgid "Status name cannot be longer than {{ limit }} characters"
 msgstr "Názov stavu nemôže byť dlhší ako {{ limit }} znakov"
 
