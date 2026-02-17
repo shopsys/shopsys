@@ -115,6 +115,8 @@ class ImageFacade
         foreach ($images as $image) {
             $this->em->remove($image);
         }
+
+        $this->em->flush();
     }
 
     public function getImageByEntity(object $entity, ?string $type): Image

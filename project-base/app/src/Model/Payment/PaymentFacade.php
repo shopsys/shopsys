@@ -20,10 +20,10 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
  * @method \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] getPricesIndexedByDomainId(\App\Model\Payment\Payment|null $payment)
  * @method \App\Model\Payment\Payment getByUuid(string $uuid)
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
- * @property \App\Component\Image\ImageFacade $imageFacade
+ * @property \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
  * @property \App\Model\Transport\TransportRepository $transportRepository
  * @method \App\Model\Payment\Payment getEnabledOnDomainByUuid(string $uuid, int $domainId)
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Payment\PaymentRepository $paymentRepository, \App\Model\Transport\TransportRepository $transportRepository, \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation, \Shopsys\FrameworkBundle\Model\Payment\PaymentFactory $paymentFactory, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory $paymentPriceFactory)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Payment\PaymentRepository $paymentRepository, \App\Model\Transport\TransportRepository $transportRepository, \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation, \Shopsys\FrameworkBundle\Model\Payment\PaymentFactory $paymentFactory, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory $paymentPriceFactory)
  * @method \App\Model\Payment\Payment[] getVisibleOnCurrentDomainByTransport(\App\Model\Transport\Transport $transport)
  * @method \App\Model\Payment\Payment[] getVisibleForOrder(\App\Model\Order\Order $order)
  * @method \App\Model\Payment\Payment[] getVisibleOnDomainByTransport(int $domainId, \App\Model\Transport\Transport $transport)
