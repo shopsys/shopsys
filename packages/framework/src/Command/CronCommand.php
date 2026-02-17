@@ -46,25 +46,32 @@ class CronCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addOption(self::OPTION_LIST, null, InputOption::VALUE_NONE, 'List all Service commands')
-            ->addOption(self::OPTION_MODULE, null, InputOption::VALUE_OPTIONAL, 'Service ID')
+            ->addOption(
+                self::OPTION_LIST,
+                null,
+                InputOption::VALUE_NONE,
+                'List all Service commands',
+            )
+            ->addOption(
+                self::OPTION_MODULE,
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Run only specific module (service ID)',
+            )
             ->addOption(
                 self::OPTION_INSTANCE_NAME,
                 null,
                 InputOption::VALUE_REQUIRED,
-                'specific cron instance identifier',
+                'Specific cron instance identifier',
             )
             ->addOption(
                 self::OPTION_RUN_ALL_SERIALLY,
                 null,
                 InputOption::VALUE_NONE,
-                'run all crons serially (this is not safe to run in production environment)',
+                'Run all cron jobs serially (this is not safe to run in production environment)',
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

@@ -37,7 +37,16 @@ class CronConfig
         $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);
         $this->cronTimeResolver->validateTimeString($timeMinutes, 55, 1);
 
-        $cronModuleConfig = new CronModuleConfig($service, $serviceId, $timeHours, $timeMinutes, $readableName, $readableFrequency, $runEveryMin, $timeoutIteratedCronSec);
+        $cronModuleConfig = new CronModuleConfig(
+            $service,
+            $serviceId,
+            $timeHours,
+            $timeMinutes,
+            $readableName,
+            $readableFrequency,
+            $runEveryMin,
+            $timeoutIteratedCronSec,
+        );
         $cronModuleConfig->assignToInstance($instanceName);
 
         $this->cronModuleConfigs[] = $cronModuleConfig;

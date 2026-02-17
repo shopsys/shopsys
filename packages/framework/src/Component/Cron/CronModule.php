@@ -11,9 +11,9 @@ use Symfony\Component\Clock\DatePoint;
 #[ORM\Entity]
 class CronModule
 {
-    public const CRON_STATUS_OK = 'ok';
-    public const CRON_STATUS_ERROR = 'error';
-    public const CRON_STATUS_RUNNING = 'running';
+    public const string CRON_STATUS_OK = 'ok';
+    public const string CRON_STATUS_ERROR = 'error';
+    public const string CRON_STATUS_RUNNING = 'running';
 
     /**
      * @var string
