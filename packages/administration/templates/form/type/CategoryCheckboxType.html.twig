@@ -1,9 +1,9 @@
 {% block category_checkbox_widget %}
     {% set attr = attr|merge({'class': attr.class|default('') ~ ' js-category-tree-form-item-checkbox'}) %}
     <div class="tree-item-content">
-        <div class="tree-item-label text-truncate">
+        <div class="tree-item-label">
             <div class="d-flex gap-2 align-items-baseline">
-                <div class="w-3 h-3 ">
+                <div class="w-3 h-3 flex-shrink-0">
                     <div class="js-category-tree-form-item-icon"></div>
                 </div>
                 {{ block('checkbox_widget') }}
