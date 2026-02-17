@@ -145,13 +145,6 @@ class CronCommand extends Command
      */
     protected function getCronCommands(array $cronModuleConfigs, bool $includeInstance = false): array
     {
-        uasort(
-            $cronModuleConfigs,
-            function (CronModuleConfig $cronModuleConfigA, CronModuleConfig $cronModuleConfigB) {
-                return strcmp($cronModuleConfigA->getServiceId(), $cronModuleConfigB->getServiceId());
-            },
-        );
-
         $commands = [];
 
         foreach ($cronModuleConfigs as $cronModuleConfig) {
