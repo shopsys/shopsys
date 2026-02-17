@@ -278,6 +278,9 @@
             "overblog/graphql-bundle": {
                 "Remove kernel.reset tag from Executor to prevent schema clearing": "project-base/app/patch/overblog-executor-reset.patch",
                 "Use customerValidators translation domain in InputValidator": "project-base/app/patch/overblog-validator.patch"
+            },
+            "symfony/type-info": {
+                "https://github.com/symfony/symfony/pull/63416": "project-base/app/patch/symfony-type-info-phpstan-template.patch"
             }
         }
     },
