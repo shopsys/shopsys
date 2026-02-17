@@ -21,8 +21,52 @@ function initSelect($container) {
             settings.plugins.remove_button = { title: Translator.trans('Remove') };
         }
 
-        new TomSelect(el, settings);
+        const ts = new TomSelect(el, settings);
+
+        ts.control_input.addEventListener('keydown', evt => {
+            if (evt.key === 'Tab') {
+                evt.preventDefault();
+                focusNextTabableElement(ts.wrapper, evt.shiftKey);
+            }
+        });
     });
+}
+
+function focusNextTabableElement(referenceElement, reverse) {
+    const selector =
+        'a[href]:not([tabindex="-1"]), button:not(:disabled):not([tabindex="-1"]), input:not(:disabled):not([type="hidden"]):not([tabindex="-1"]), select:not(:disabled):not([tabindex="-1"]), textarea:not(:disabled):not([tabindex="-1"]), [tabindex]:not([tabindex="-1"]):not(:disabled)';
+
+    const tabbable = [...document.querySelectorAll(selector)].filter(el => {
+        if (!el.offsetParent && getComputedStyle(el).position !== 'fixed') {
+            return false;
+        }
+        if (el.closest('.ts-dropdown')) {
+            return false;
+        }
+        const tsWrapper = el.closest('.ts-wrapper');
+        if (tsWrapper && !el.classList.contains('ts-control')) {
+            return false;
+        }
+        return true;
+    });
+
+    const flag = reverse ? Node.DOCUMENT_POSITION_PRECEDING : Node.DOCUMENT_POSITION_FOLLOWING;
+
+    if (reverse) {
+        for (let i = tabbable.length - 1; i >= 0; i--) {
+            if (referenceElement.compareDocumentPosition(tabbable[i]) & flag) {
+                tabbable[i].focus();
+                return;
+            }
+        }
+    } else {
+        for (const el of tabbable) {
+            if (referenceElement.compareDocumentPosition(el) & flag) {
+                el.focus();
+                return;
+            }
+        }
+    }
 }
 
 function initTooltip($container) {
