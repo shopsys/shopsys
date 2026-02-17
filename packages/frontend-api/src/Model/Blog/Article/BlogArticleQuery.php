@@ -32,6 +32,6 @@ class BlogArticleQuery extends AbstractQuery
             throw new BlogArticleNotFoundUserError($blogArticleNotFoundException->getMessage());
         }
 
-        return $blogArticleData;
+        return $this->sanitizeDraggableAttribute($blogArticleData);
     }
 }

@@ -51,7 +51,7 @@ export default class GrapesWebEditor {
             noticeOnUnload: false,
             avoidInlineStyle: false,
             forceClass: false,
-            nativeDnD: true,
+            nativeDnD: false,
             plugins: plugins,
             canvas: {
                 styles: ['/tailwind-for-admin/style.css'],

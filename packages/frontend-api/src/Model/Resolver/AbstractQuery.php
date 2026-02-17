@@ -17,6 +17,7 @@ abstract class AbstractQuery implements AliasedInterface, QueryInterface
 {
     protected const string QUERY_SUFFIX = 'Query';
     protected const int DEFAULT_FIRST_LIMIT = 10;
+    protected const string DRAGGABLE_ATTRIBUTE_REGEX = '/\sdraggable=(?:"[^"]*"|\'[^\']*\'|[^\s>]+)/i';
 
     protected PageSizeValidator $pageSizeValidator;
 
@@ -44,5 +45,24 @@ abstract class AbstractQuery implements AliasedInterface, QueryInterface
         if ($argument->offsetExists('first') === false && $argument->offsetExists('last') === false) {
             $argument->offsetSet('first', static::DEFAULT_FIRST_LIMIT);
         }
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    protected function sanitizeDraggableAttribute(array $data, string $key = 'text'): array
+    {
+        if (!isset($data[$key]) || !is_string($data[$key])) {
+            return $data;
+        }
+
+        $sanitizedValue = preg_replace(static::DRAGGABLE_ATTRIBUTE_REGEX, '', $data[$key]);
+
+        if ($sanitizedValue !== null) {
+            $data[$key] = $sanitizedValue;
+        }
+
+        return $data;
     }
 }

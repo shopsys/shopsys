@@ -4,6 +4,9 @@ import grapesjs from 'grapesjs';
 
 const BUTTON_CLOSE = Translator.trans('Close');
 const BUTTON_SAVE = Translator.trans('Save');
+const DRAGGABLE_ATTRIBUTE_REGEX = /\sdraggable=(?:"[^"]*"|'[^']*'|[^\s>]+)/gi;
+
+const stripDraggableAttributes = html => html.replace(DRAGGABLE_ATTRIBUTE_REGEX, '');
 
 const resetBody = editor => {
     if ($('body').hasClass('grapes-js-editor-opened')) {
@@ -33,7 +36,7 @@ export default grapesjs.plugins.add('buttons', (editor, options) => {
 
     commands.add('save-template', {
         run(editor) {
-            const template = editor.runCommand('export-inlined-html');
+            const template = stripDraggableAttributes(editor.runCommand('export-inlined-html'));
             $(`#${textareaId}`).val(template);
 
             FormChangeInfo.showInfo();
