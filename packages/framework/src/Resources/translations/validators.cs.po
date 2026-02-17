@@ -94,9 +94,6 @@ msgstr "Externí ID můstku nesmí být delší než {{ limit }} znaků"
 msgid "Field must contain {{ needle }}."
 msgstr "Pole musí obsahovat {{ needle }}."
 
-msgid "Fields must not be identical"
-msgstr "Pole se musí shodovat."
-
 msgid "File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}."
 msgstr "Přípona souboru {{ value }} není mezi povolenými příponami. Povolené přípony jsou {{ extensions }}."
 
@@ -192,15 +189,6 @@ msgstr "Parametr {{ parameterName }} je použit více než jednou"
 
 msgid "Part number cannot be longer than {{ limit }} characters"
 msgstr "Výrobní číslo nesmí být delší než {{ limit }} znaků"
-
-msgid "Password cannot be local part of email."
-msgstr "Heslo nesmí být stejné jako první část e-mailu."
-
-msgid "Password cannot be same as email"
-msgstr "Heslo nesmí být stejné jako přihlašovací e-mail."
-
-msgid "Password cannot be same as part of email before at sign"
-msgstr "Heslo nesmí být stejné jako část e-mailu před zavináčem."
 
 msgid "Passwords do not match"
 msgstr "Hesla se neshodují"

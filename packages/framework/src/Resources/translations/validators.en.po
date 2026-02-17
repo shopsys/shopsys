@@ -94,9 +94,6 @@ msgstr ""
 msgid "Field must contain {{ needle }}."
 msgstr ""
 
-msgid "Fields must not be identical"
-msgstr ""
-
 msgid "File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}."
 msgstr ""
 
@@ -191,15 +188,6 @@ msgid "Parameter {{ parameterName }} is used more than once"
 msgstr ""
 
 msgid "Part number cannot be longer than {{ limit }} characters"
-msgstr ""
-
-msgid "Password cannot be local part of email."
-msgstr ""
-
-msgid "Password cannot be same as email"
-msgstr ""
-
-msgid "Password cannot be same as part of email before at sign"
 msgstr ""
 
 msgid "Passwords do not match"
