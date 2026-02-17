@@ -23,7 +23,7 @@ function initSelect($container) {
 
         const ts = new TomSelect(el, settings);
 
-        ts.control_input.addEventListener('keydown', (evt) => {
+        ts.control_input.addEventListener('keydown', evt => {
             if (evt.key === 'Tab') {
                 evt.preventDefault();
                 focusNextTabableElement(ts.wrapper, evt.shiftKey);
@@ -36,7 +36,7 @@ function focusNextTabableElement(referenceElement, reverse) {
     const selector =
         'a[href]:not([tabindex="-1"]), button:not(:disabled):not([tabindex="-1"]), input:not(:disabled):not([type="hidden"]):not([tabindex="-1"]), select:not(:disabled):not([tabindex="-1"]), textarea:not(:disabled):not([tabindex="-1"]), [tabindex]:not([tabindex="-1"]):not(:disabled)';
 
-    const tabbable = [...document.querySelectorAll(selector)].filter((el) => {
+    const tabbable = [...document.querySelectorAll(selector)].filter(el => {
         if (!el.offsetParent && getComputedStyle(el).position !== 'fixed') {
             return false;
         }
