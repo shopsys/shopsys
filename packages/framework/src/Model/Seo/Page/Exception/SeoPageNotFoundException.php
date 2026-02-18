@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Seo\Page\Exception;
 
-use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class SeoPageNotFoundException extends Exception
+class SeoPageNotFoundException extends NotFoundHttpException
 {
 }
