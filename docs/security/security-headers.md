@@ -7,23 +7,23 @@ This document describes each header, where it is set, and how it is configured.
 
 Security headers are applied at three layers:
 
-| Layer                        | Scope                                                  | Configuration                                                                                                                                                                  |
-| ---------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **nginx**                    | All responses (including static files and error pages) | `project-base/docker/nginx/nginx.conf` (dev), [deployment nginx.yaml](https://github.com/shopsys/deployment/blob/main/kubernetes/configmap/nginx.yaml) (production Kubernetes) |
-| **PHP (Symfony)**            | All PHP-served responses (admin, backend routes)       | `SecurityHeadersResponseListener`                                                                                                                                              |
-| **Storefront (Next.js SSR)** | All storefront HTML pages                              | `initServerSideProps.ts`                                                                                                                                                       |
+| Layer                        | Scope                                                               | Configuration                                                                                                                                                                  |
+| ---------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **nginx**                    | All responses (including static files and error pages)              | `project-base/docker/nginx/nginx.conf` (dev), [deployment nginx.yaml](https://github.com/shopsys/deployment/blob/main/kubernetes/configmap/nginx.yaml) (production Kubernetes) |
+| **PHP (Symfony)**            | Dynamic CSP on admin/backend main requests (excluding Frontend API) | `SecurityHeadersResponseListener`                                                                                                                                              |
+| **Storefront (Next.js SSR)** | All storefront HTML pages                                           | `initServerSideProps.ts`                                                                                                                                                       |
 
 ### How headers reach each response type
 
 Static security headers (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `X-XSS-Protection`, `Strict-Transport-Security`) are set at the nginx **server level**.
 
-| Response type          | nginx location  | Inherits server-level headers?                    | Additional headers set by application                                                             |
-| ---------------------- | --------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Admin pages            | `@app`          | No — has own `add_header`, so must redeclare them | PHP: CSP (dynamic) + X-Powered-By; CORS headers intentionally not set                             |
-| Storefront pages       | `@storefront`   | Yes                                               | Next.js: CSP only (dynamic, obtained via GraphQL)                                                 |
-| Frontend API (GraphQL) | `@app`          | No — same as admin                                | PHP: X-Powered-By only (CSP is **not** set for API responses); CORS headers intentionally not set |
-| Static files           | `try_files`     | Yes                                               | —                                                                                                 |
-| Image resizer          | `@imageResizer` | Yes                                               | —                                                                                                 |
+| Response type          | nginx location  | Inherits server-level headers?                    | Additional headers beyond server-level defaults                                                            |
+| ---------------------- | --------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Admin pages            | `@app`          | No — has own `add_header`, so must redeclare them | PHP: CSP (dynamic); nginx `@app`: X-Powered-By; CORS headers intentionally not set                         |
+| Storefront pages       | `@storefront`   | Yes                                               | Next.js: CSP only (dynamic, obtained via GraphQL)                                                          |
+| Frontend API (GraphQL) | `@app`          | No — same as admin                                | nginx `@app`: X-Powered-By only (CSP is **not** set for API responses); CORS headers intentionally not set |
+| Static files           | `try_files`     | Yes                                               | —                                                                                                          |
+| Image resizer          | `@imageResizer` | Yes                                               | —                                                                                                          |
 
 Important nginx rule: if a location block defines _any_ `add_header` directive, it does **not** inherit server-level `add_header` directives.
 This is why the `@app` location explicitly redeclares the security headers, while `@storefront` does not need to — it inherits them automatically.
@@ -117,10 +117,10 @@ Note: browsers only honor this header when received over a valid HTTPS connectio
 
 **In plain English:** PHP normally tells the world "I'm PHP version 8.x" in every response. Attackers use this to find servers running vulnerable versions. We replace it with a generic "Shopsys Platform" label — no useful version info for attackers. Only set on PHP-served responses (admin, API), not on static files or storefront pages.
 
-| Property   | Value                                 |
-| ---------- | ------------------------------------- |
-| **Value**  | `Shopsys Platform`                    |
-| **Set by** | PHP `SecurityHeadersResponseListener` |
+| Property   | Value                                                      |
+| ---------- | ---------------------------------------------------------- |
+| **Value**  | `Shopsys Platform`                                         |
+| **Set by** | nginx (`@app` location in dev and production nginx config) |
 
 ### Access-Control-Allow-Origin (CORS)
 

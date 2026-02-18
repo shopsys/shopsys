@@ -21,11 +21,6 @@ class SecurityHeadersResponseListener
     #[AsEventListener]
     public function onKernelResponse(ResponseEvent $event): void
     {
-        $response = $event->getResponse();
-
-        // X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and X-XSS-Protection are set by nginx for all responses
-        $response->headers->set('X-Powered-By', 'Shopsys Platform');
-
         if (!$event->isMainRequest()) {
             return;
         }
@@ -34,6 +29,6 @@ class SecurityHeadersResponseListener
             return;
         }
 
-        $response->headers->set('Content-Security-Policy', $this->setting->get(Setting::CSP_HEADER));
+        $event->getResponse()->headers->set('Content-Security-Policy', $this->setting->get(Setting::CSP_HEADER));
     }
 }
