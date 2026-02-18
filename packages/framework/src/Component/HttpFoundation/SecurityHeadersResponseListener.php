@@ -34,12 +34,6 @@ class SecurityHeadersResponseListener
             return;
         }
 
-        $cspHeaderValue = $this->sanitizeCspHeaderValue($this->setting->get(Setting::CSP_HEADER));
-        $response->headers->set('Content-Security-Policy', $cspHeaderValue);
-    }
-
-    protected function sanitizeCspHeaderValue(string $cspHeaderValue): string
-    {
-        return str_replace(["\r", "\n"], '', $cspHeaderValue);
+        $response->headers->set('Content-Security-Policy', $this->setting->get(Setting::CSP_HEADER));
     }
 }

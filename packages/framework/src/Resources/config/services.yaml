@@ -306,6 +306,8 @@ services:
     Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry:
         arguments: [!tagged_iterator shopsys.grid_inline_edit]
 
+    Shopsys\FrameworkBundle\Component\HttpFoundation\CspHeaderSanitizer: ~
+
 
     Shopsys\FrameworkBundle\Component\HttpFoundation\SubRequestListener:
         tags:

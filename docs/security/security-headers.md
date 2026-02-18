@@ -57,7 +57,7 @@ The application appends `'unsafe-eval'` (for storefront) and `http://localhost:3
 
 **Sanitization:**
 
-The CSP value is sanitized before being set as a response header. Both the PHP and TypeScript implementations strip carriage return (`\r`) and line feed (`\n`) characters to prevent HTTP response splitting attacks.
+The CSP value is sanitized when saved in Admin (carriage return `\r` and line feed `\n` are normalized to spaces) to prevent HTTP response splitting attacks.
 
 ### X-Frame-Options
 
@@ -175,7 +175,7 @@ After saving a new CSP value, the storefront GraphQL query cache is automaticall
 ```
 1. Superadmin saves CSP value in Admin UI
    |
-2. Value stored in DB (setting_values table)
+2. Value is sanitized (`\r`, `\n` normalized to spaces) and stored in DB (setting_values table)
    |
    +--> 3a. PHP SecurityHeadersResponseListener reads from DB
    |         and sets Content-Security-Policy header on admin responses
