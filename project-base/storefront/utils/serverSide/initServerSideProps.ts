@@ -34,6 +34,7 @@ import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
 import { CookiesStoreState } from 'utils/cookies/cookiesStore';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
+import { isEnvironment } from 'utils/isEnvironment';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
 import { getServerSideInternationalizedStaticUrl } from 'utils/staticUrls/getServerSideInternationalizedStaticUrl';
@@ -148,9 +149,13 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     );
 
     const settingsResult = resolvedQueries.find((query) => query.data?.settings?.cspHeader !== undefined);
-    const cspHeaderValue = settingsResult?.data?.settings?.cspHeader;
+    let cspHeaderValue = settingsResult?.data?.settings?.cspHeader;
 
     if (cspHeaderValue) {
+        if (isEnvironment('development')) {
+            cspHeaderValue += " 'unsafe-eval'";
+        }
+
         context.res.setHeader('Content-Security-Policy', cspHeaderValue);
     }
 
