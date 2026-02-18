@@ -6,8 +6,12 @@
     processIsolation="false"
     stopOnFailure="false"
     failOnWarning="true"
+    failOnNotice="true"
+    displayDetailsOnTestsThatTriggerNotices="true"
+    failOnPhpunitNotice="true"
+    displayDetailsOnPhpunitNotices="true"
     beStrictAboutTestsThatDoNotTestAnything="false"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.2/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.5/phpunit.xsd"
     cacheDirectory=".phpunit.cache"
     backupStaticProperties="false"
 >

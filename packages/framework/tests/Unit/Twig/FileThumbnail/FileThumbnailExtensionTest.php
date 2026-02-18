@@ -16,11 +16,8 @@ class FileThumbnailExtensionTest extends TestCase
     {
         $temporaryFilename = 'filename.jpg';
 
-        $fileUploadMock = $this->getMockBuilder(FileUpload::class)
-            ->onlyMethods(['getTemporaryFilepath'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $fileUploadMock->expects($this->any())->method('getTemporaryFilepath')->willReturn(
+        $fileUploadStub = $this->createStub(FileUpload::class);
+        $fileUploadStub->method('getTemporaryFilepath')->willReturn(
             'dir/' . $temporaryFilename,
         );
 
@@ -33,7 +30,7 @@ class FileThumbnailExtensionTest extends TestCase
             $exception,
         );
 
-        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadMock, $imageProcessorMock);
+        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadStub, $imageProcessorMock);
         $fileThumbnailInfo = $fileThumbnailExtension->getFileThumbnailInfoByTemporaryFilename($temporaryFilename);
 
         $this->assertSame(FileThumbnailExtension::DEFAULT_ICON_TYPE, $fileThumbnailInfo->getIconType());
@@ -45,11 +42,8 @@ class FileThumbnailExtensionTest extends TestCase
         $temporaryFilename = 'filename.jpg';
         $encodedData = 'encodedData';
 
-        $fileUploadMock = $this->getMockBuilder(FileUpload::class)
-            ->onlyMethods(['getTemporaryFilepath'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $fileUploadMock->expects($this->any())->method('getTemporaryFilepath')->willReturn(
+        $fileUploadStub = $this->createStub(FileUpload::class);
+        $fileUploadStub->method('getTemporaryFilepath')->willReturn(
             'dir/' . $temporaryFilename,
         );
 
@@ -61,7 +55,7 @@ class FileThumbnailExtensionTest extends TestCase
             $encodedData,
         );
 
-        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadMock, $imageProcessorMock);
+        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadStub, $imageProcessorMock);
         $fileThumbnailInfo = $fileThumbnailExtension->getFileThumbnailInfoByTemporaryFilename($temporaryFilename);
 
         $this->assertNull($fileThumbnailInfo->getIconType());
@@ -72,11 +66,8 @@ class FileThumbnailExtensionTest extends TestCase
     {
         $temporaryFilename = 'filename.doc';
 
-        $fileUploadMock = $this->getMockBuilder(FileUpload::class)
-            ->onlyMethods(['getTemporaryFilepath'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $fileUploadMock->expects($this->any())->method('getTemporaryFilepath')->willReturn(
+        $fileUploadStub = $this->createStub(FileUpload::class);
+        $fileUploadStub->method('getTemporaryFilepath')->willReturn(
             'dir/' . $temporaryFilename,
         );
 
@@ -89,7 +80,7 @@ class FileThumbnailExtensionTest extends TestCase
             $exception,
         );
 
-        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadMock, $imageProcessorMock);
+        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadStub, $imageProcessorMock);
         $fileThumbnailInfo = $fileThumbnailExtension->getFileThumbnailInfoByTemporaryFilename($temporaryFilename);
 
         $this->assertSame('word', $fileThumbnailInfo->getIconType());

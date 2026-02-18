@@ -13,11 +13,11 @@ class CronFilterTest extends TestCase
 {
     public function testFilterScheduledCronModuleConfigs(): void
     {
-        $cronModuleMock = $this->getMockBuilder(SimpleCronModuleInterface::class)->getMock();
+        $cronModuleStub = $this->createStub(SimpleCronModuleInterface::class);
 
-        $scheduledCronModuleConfig1 = new CronModuleConfig($cronModuleMock, 'scheduled1', '', '');
-        $skippedCronModuleConfig = new CronModuleConfig($cronModuleMock, 'skipped', '', '');
-        $scheduledCronModuleConfig2 = new CronModuleConfig($cronModuleMock, 'scheduled2', '', '');
+        $scheduledCronModuleConfig1 = new CronModuleConfig($cronModuleStub, 'scheduled1', '', '');
+        $skippedCronModuleConfig = new CronModuleConfig($cronModuleStub, 'skipped', '', '');
+        $scheduledCronModuleConfig2 = new CronModuleConfig($cronModuleStub, 'scheduled2', '', '');
         $cronModuleConfigs = [
             0 => $scheduledCronModuleConfig1,
             1 => $skippedCronModuleConfig,

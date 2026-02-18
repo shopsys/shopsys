@@ -86,14 +86,12 @@ class CronTimeResolverTest extends TestCase
         mixed $dateTimeString,
         mixed $isValid,
     ): void {
-        $cronTimeMock = $this->getMockBuilder(CronTimeInterface::class)
-            ->onlyMethods(['getTimeHours', 'getTimeMinutes'])
-            ->getMock();
-        $cronTimeMock->expects($this->any())->method('getTimeHours')->willReturn($timeHours);
-        $cronTimeMock->expects($this->any())->method('getTimeMinutes')->willReturn($timeMinutes);
+        $cronTimeStub = $this->createStub(CronTimeInterface::class);
+        $cronTimeStub->method('getTimeHours')->willReturn($timeHours);
+        $cronTimeStub->method('getTimeMinutes')->willReturn($timeMinutes);
 
         $cronTimeResolver = new CronTimeResolver();
 
-        $this->assertSame($isValid, $cronTimeResolver->isValidAtTime($cronTimeMock, new DatePoint($dateTimeString)));
+        $this->assertSame($isValid, $cronTimeResolver->isValidAtTime($cronTimeStub, new DatePoint($dateTimeString)));
     }
 }

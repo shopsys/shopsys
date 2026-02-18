@@ -10,13 +10,11 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\JumbledIncrementerSnif
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UnconditionalIfStatementSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\FixmeSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\NoSpaceAfterCastSniff;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\CallTimePassByReferenceSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterCastSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DiscourageGotoSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
-use PHP_CodeSniffer\Standards\MySource\Sniffs\PHP\GetRequestDataSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\InlineCommentSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions\ValidClassNameSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods\CamelCapsMethodNameSniff;
@@ -34,7 +32,7 @@ use PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope\StaticThisUsageSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Strings\DoubleQuoteUsageSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\CastSpacingSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\ControlStructureSpacingSniff;
-use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LogicalOperatorSpacingSniff;
 use PhpCsFixer\Fixer\Alias\EregToPregFixer;
 use PhpCsFixer\Fixer\Alias\NoAliasFunctionsFixer;
@@ -96,14 +94,14 @@ use Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer;
 use Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\InheritDocFormatFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
-use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineDefaultValueSniff;
-use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
-use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
-use Shopsys\CodingStandards\Sniffs\ForbiddenExitSniff;
-use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
-use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
-use Shopsys\CodingStandards\Sniffs\RequireOverrideAttributeSniff;
-use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForbiddenDoctrineDefaultValueSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForbiddenDoctrineInheritanceSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForbiddenDumpSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForbiddenExitSniff;
+use Shopsys\CodingStandards\Sniffs\General\ForbiddenSuperGlobalSniff;
+use Shopsys\CodingStandards\Sniffs\General\ObjectIsCreatedByFactorySniff;
+use Shopsys\CodingStandards\Sniffs\General\RequireOverrideAttributeSniff;
+use Shopsys\CodingStandards\Sniffs\General\ValidVariableNameSniff;
 use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
@@ -183,12 +181,9 @@ return ECSConfig::configure()
         UnconditionalIfStatementSniff::class,
         TodoSniff::class,
         FixmeSniff::class,
-        NoSpaceAfterCastSniff::class,
-        CallTimePassByReferenceSniff::class,
         CamelCapsFunctionNameSniff::class,
         DiscourageGotoSniff::class,
         NoSilencedErrorsSniff::class,
-        GetRequestDataSniff::class,
         InlineCommentSniff::class,
         ValidClassNameSniff::class,
         CamelCapsMethodNameSniff::class,
@@ -265,6 +260,9 @@ return ECSConfig::configure()
     ])
     ->withConfiguredRule(CyclomaticComplexitySniff::class, [
         'absoluteComplexity' => CyclomaticComplexitySniffSetting::DEFAULT_ABSOLUTE_COMPLEXITY,
+    ])
+    ->withConfiguredRule(SpaceAfterCastSniff::class, [
+        'spacing' => 0,
     ])
     ->withConfiguredRule(ArraySyntaxFixer::class, [
         'syntax' => 'short',

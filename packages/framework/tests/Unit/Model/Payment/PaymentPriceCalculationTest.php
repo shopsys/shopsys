@@ -88,21 +88,18 @@ class PaymentPriceCalculationTest extends TestCase
         Money $priceWithoutVat,
         Money $priceWithVat,
     ): void {
-        $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->onlyMethods(['getInputPriceType'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $pricingSettingMock
-            ->expects($this->any())->method('getInputPriceType')
+        $pricingSettingStub = $this->createStub(PricingSetting::class);
+        $pricingSettingStub
+            ->method('getInputPriceType')
                 ->willReturn($inputPriceType);
-        $freeTransportAndPaymentFacadeMock = $this->createMock(FreeTransportAndPaymentFacade::class);
+        $freeTransportAndPaymentFacadeStub = $this->createStub(FreeTransportAndPaymentFacade::class);
 
         $rounding = new Rounding();
 
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
 
-        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingMock, $freeTransportAndPaymentFacadeMock);
+        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingStub, $freeTransportAndPaymentFacadeStub);
 
         $vatData = new VatData();
         $vatData->name = 'vat';
@@ -151,20 +148,14 @@ class PaymentPriceCalculationTest extends TestCase
         bool $forceFreePrice,
     ): void {
         $priceLimit = Money::create(1000);
-        $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->onlyMethods(['getInputPriceType', 'getFreeTransportAndPaymentPriceLimit'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $pricingSettingMock
-            ->expects($this->any())->method('getInputPriceType')
+        $pricingSettingStub = $this->createStub(PricingSetting::class);
+        $pricingSettingStub
+            ->method('getInputPriceType')
                 ->willReturn($inputPriceType);
-        $freeTransportAndPaymentFacadeMock = $this->getMockBuilder(FreeTransportAndPaymentFacade::class)
-            ->onlyMethods(['isFree'])
-            ->disableOriginalConstructor()
-            ->getMock();
         $priceShouldBeFree = $forceFreePrice || $productsPrice->getPriceWithVat()->isGreaterThan($priceLimit);
-        $freeTransportAndPaymentFacadeMock
-            ->expects($this->any())->method('isFree')
+        $freeTransportAndPaymentFacadeStub = $this->createStub(FreeTransportAndPaymentFacade::class);
+        $freeTransportAndPaymentFacadeStub
+            ->method('isFree')
             ->willReturn($priceShouldBeFree);
 
         $rounding = new Rounding();
@@ -172,7 +163,7 @@ class PaymentPriceCalculationTest extends TestCase
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
 
-        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingMock, $freeTransportAndPaymentFacadeMock);
+        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingStub, $freeTransportAndPaymentFacadeStub);
 
         $vatData = new VatData();
         $vatData->name = 'vat';

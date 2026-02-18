@@ -63,14 +63,14 @@ class MigrationsLockRepositoryTest extends AbstractMigrationLockTestCase
      */
     private function getMigrationsLockRepository(array $foundMigrationClasses): MigrationsLockRepository
     {
-        $dependencyFactoryMock = $this->createMock(DependencyFactory::class);
-        $migrationFinderMock = $this->createMock(MigrationFinder::class);
-        $migrationFinderMock->method('findMigrations')->willReturn($foundMigrationClasses);
+        $dependencyFactoryStub = $this->createStub(DependencyFactory::class);
+        $migrationFinderStub = $this->createStub(MigrationFinder::class);
+        $migrationFinderStub->method('findMigrations')->willReturn($foundMigrationClasses);
         $configuration = new Configuration();
         $configuration->addMigrationsDirectory('namespace', 'path');
-        $dependencyFactoryMock->method('getMigrationsFinder')->willReturn($migrationFinderMock);
-        $dependencyFactoryMock->method('getConfiguration')->willReturn($configuration);
+        $dependencyFactoryStub->method('getMigrationsFinder')->willReturn($migrationFinderStub);
+        $dependencyFactoryStub->method('getConfiguration')->willReturn($configuration);
 
-        return new MigrationsLockRepository($this->migrationsLock, $dependencyFactoryMock);
+        return new MigrationsLockRepository($this->migrationsLock, $dependencyFactoryStub);
     }
 }

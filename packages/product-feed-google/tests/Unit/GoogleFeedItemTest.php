@@ -45,30 +45,27 @@ class GoogleFeedItemTest extends TestCase
 
     private function doSetUp(bool $isProductAvailableOnStock): void
     {
-        $productPriceCalculation = $this->createProductPriceCalculationMock(Price::zero());
+        $productPriceCalculation = $this->createProductPriceCalculationStub(Price::zero());
 
         $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
-        $productAvailabilityFacadeMock = $this->getMockBuilder(ProductAvailabilityFacade::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['isProductAvailableOnDomainCached'])
-            ->getMock();
-        $productAvailabilityFacadeMock->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
-        $specialPriceFacade = $this->createMock(SpecialPriceFacade::class);
-        $pricingGroupSettingFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
-        $pricingGroupSettingFacadeMock->method('getDefaultPricingGroupByDomainId')->willReturn($this->createMock(PricingGroup::class));
+        $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
+        $productAvailabilityFacadeStub->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
+        $specialPriceFacade = $this->createStub(SpecialPriceFacade::class);
+        $pricingGroupSettingFacadeStub = $this->createStub(PricingGroupSettingFacade::class);
+        $pricingGroupSettingFacadeStub->method('getDefaultPricingGroupByDomainId')->willReturn($this->createStub(PricingGroup::class));
 
         $this->googleFeedItemFactory = new GoogleFeedItemFactory(
             $productPriceCalculation,
             $this->currencyFacadeMock,
             $this->productUrlsBatchLoaderMock,
-            $productAvailabilityFacadeMock,
+            $productAvailabilityFacadeStub,
             $specialPriceFacade,
-            $pricingGroupSettingFacadeMock,
+            $pricingGroupSettingFacadeStub,
         );
 
-        $defaultCurrency = $this->createCurrencyMock(1, 'EUR');
-        $this->defaultDomain = $this->createDomainConfigMock(
+        $defaultCurrency = $this->createCurrencyStub(1, 'EUR');
+        $this->defaultDomain = $this->createDomainConfigStub(
             Domain::FIRST_DOMAIN_ID,
             'https://example.com',
             'en',
@@ -76,56 +73,56 @@ class GoogleFeedItemTest extends TestCase
         );
 
         $this->defaultProduct = $this->createMock(Product::class);
-        $this->defaultProduct->method('getId')->willReturn(1);
-        $this->defaultProduct->method('getFullName')->with('en')->willReturn('product name');
+        $this->defaultProduct->expects($this->any())->method('getId')->willReturn(1);
+        $this->defaultProduct->expects($this->any())->method('getFullName')->with('en')->willReturn('product name');
 
         $this->mockProductUrl($this->defaultProduct, $this->defaultDomain, 'https://example.com/product-1');
     }
 
-    private function createCurrencyMock(int $id, string $code): Currency
+    private function createCurrencyStub(int $id, string $code): Currency
     {
-        $currencyMock = $this->createMock(Currency::class);
+        $currencyStub = $this->createStub(Currency::class);
 
-        $currencyMock->method('getId')->willReturn($id);
-        $currencyMock->method('getCode')->willReturn($code);
+        $currencyStub->method('getId')->willReturn($id);
+        $currencyStub->method('getCode')->willReturn($code);
 
-        return $currencyMock;
+        return $currencyStub;
     }
 
-    private function createDomainConfigMock(int $id, string $url, string $locale, Currency $currency): DomainConfig
+    private function createDomainConfigStub(int $id, string $url, string $locale, Currency $currency): DomainConfig
     {
-        $domainConfigMock = $this->createMock(DomainConfig::class);
+        $domainConfigStub = $this->createStub(DomainConfig::class);
 
-        $domainConfigMock->method('getId')->willReturn($id);
-        $domainConfigMock->method('getUrl')->willReturn($url);
-        $domainConfigMock->method('getLocale')->willReturn($locale);
+        $domainConfigStub->method('getId')->willReturn($id);
+        $domainConfigStub->method('getUrl')->willReturn($url);
+        $domainConfigStub->method('getLocale')->willReturn($locale);
 
-        $this->currencyFacadeMock->method('getDomainDefaultCurrencyByDomainId')
+        $this->currencyFacadeMock->expects($this->any())->method('getDomainDefaultCurrencyByDomainId')
             ->with($id)->willReturn($currency);
 
-        return $domainConfigMock;
+        return $domainConfigStub;
     }
 
-    private function createProductPriceCalculationMock(Price $price): ProductPriceCalculation
+    private function createProductPriceCalculationStub(Price $price): ProductPriceCalculation
     {
-        $productPrice = new ProductPrice($price, $this->createMock(PricingGroup::class), false);
+        $productPrice = new ProductPrice($price, $this->createStub(PricingGroup::class), false);
 
-        $productPriceCalculationMock = $this->createMock(ProductPriceCalculation::class);
+        $productPriceCalculationStub = $this->createStub(ProductPriceCalculation::class);
 
-        $productPriceCalculationMock->method('calculatePrice')->willReturn($productPrice);
+        $productPriceCalculationStub->method('calculatePrice')->willReturn($productPrice);
 
-        return $productPriceCalculationMock;
+        return $productPriceCalculationStub;
     }
 
     private function mockProductUrl(Product $product, DomainConfig $domain, string $url): void
     {
-        $this->productUrlsBatchLoaderMock->method('getProductUrl')
+        $this->productUrlsBatchLoaderMock->expects($this->any())->method('getProductUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
     private function mockProductImageUrl(Product $product, DomainConfig $domain, string $url): void
     {
-        $this->productUrlsBatchLoaderMock->method('getProductImageUrl')
+        $this->productUrlsBatchLoaderMock->expects($this->any())->method('getProductImageUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
@@ -149,10 +146,9 @@ class GoogleFeedItemTest extends TestCase
 
     public function testGoogleFeedItemWithBrand(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
-        $brand = $this->createMock(Brand::class);
+        $brand = $this->createStub(Brand::class);
         $brand->method('getName')->willReturn('brand name');
-        $this->defaultProduct->method('getBrand')->willReturn($brand);
+        $this->defaultProduct->expects($this->any())->method('getBrand')->willReturn($brand);
 
         $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
@@ -161,7 +157,7 @@ class GoogleFeedItemTest extends TestCase
 
     public function testGoogleFeedItemWithDescription(): void
     {
-        $this->defaultProduct->method('getDescriptionAsPlainText')
+        $this->defaultProduct->expects($this->any())->method('getDescriptionAsPlainText')
             ->with(1)->willReturn('product description');
 
         $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
@@ -189,7 +185,7 @@ class GoogleFeedItemTest extends TestCase
 
     public function testGoogleFeedItemWithEan(): void
     {
-        $this->defaultProduct->method('getEan')->willReturn('1234567890123');
+        $this->defaultProduct->expects($this->any())->method('getEan')->willReturn('1234567890123');
 
         $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
@@ -198,7 +194,7 @@ class GoogleFeedItemTest extends TestCase
 
     public function testGoogleFeedItemWithPartno(): void
     {
-        $this->defaultProduct->method('getPartno')->willReturn('HSC0424PP');
+        $this->defaultProduct->expects($this->any())->method('getPartno')->willReturn('HSC0424PP');
 
         $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
@@ -207,8 +203,8 @@ class GoogleFeedItemTest extends TestCase
 
     public function testGoogleFeedItemWithEanAndPartno(): void
     {
-        $this->defaultProduct->method('getEan')->willReturn('1234567890123');
-        $this->defaultProduct->method('getPartno')->willReturn('HSC0424PP');
+        $this->defaultProduct->expects($this->any())->method('getEan')->willReturn('1234567890123');
+        $this->defaultProduct->expects($this->any())->method('getPartno')->willReturn('HSC0424PP');
 
         $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 

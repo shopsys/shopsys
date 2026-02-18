@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Domain;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -91,13 +92,13 @@ class DomainTest extends TestCase
 
     public function testGetIdNotSet(): void
     {
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             self::getDomainConfigs(),
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
         $this->expectException(NoDomainSelectedException::class);
@@ -105,9 +106,9 @@ class DomainTest extends TestCase
     }
 
     /**
-     * @dataProvider switchDomainByRequestDataProvider
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
      */
+    #[DataProvider('switchDomainByRequestDataProvider')]
     public function testSwitchDomainByRequest(
         array $domainConfigs,
         string $requestHost,
@@ -116,24 +117,24 @@ class DomainTest extends TestCase
         string $expectedLocale,
         string $description = '',
     ): void {
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
-        $requestMock = $this->createMock(Request::class);
-        $requestMock
+        $requestStub = $this->createStub(Request::class);
+        $requestStub
             ->method('getSchemeAndHttpHost')
             ->willReturn($requestHost);
-        $requestMock
+        $requestStub
             ->method('getPathInfo')
             ->willReturn($requestPath);
 
-        $domain->switchDomainByRequest($requestMock);
+        $domain->switchDomainByRequest($requestStub);
 
         $this->assertSame($expectedDomainId, $domain->getId(), $description);
         $this->assertSame($expectedLocale, $domain->getLocale(), $description);
@@ -243,13 +244,13 @@ class DomainTest extends TestCase
     public function testGetAllIncludingDomainConfigsWithoutDataCreated(): void
     {
         $domainConfigs = self::getDomainConfigs();
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
         $this->assertSame($domainConfigs, $domain->getAllIncludingDomainConfigsWithoutDataCreated());
@@ -277,12 +278,12 @@ class DomainTest extends TestCase
                 throw new SettingValueNotFoundException();
             });
 
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
-            $currentAdministratorMock,
+            $currentAdministratorStub,
         );
 
         $this->assertSame([1 => $domainConfigWithDataCreated], $domain->getAll());
@@ -291,13 +292,13 @@ class DomainTest extends TestCase
     public function testGetDomainConfigById(): void
     {
         $domainConfigs = self::getDomainConfigs();
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
         $this->assertSame($domainConfigs[0], $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
@@ -320,13 +321,13 @@ class DomainTest extends TestCase
                 baseUrl: 'http://example.cz:8080',
             ),
         ];
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             $domainConfigs,
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
         $expectedLocales = [
@@ -338,24 +339,24 @@ class DomainTest extends TestCase
 
     public function testSwitchDomainByRequestThrowsExceptionWhenNoDomainMatches(): void
     {
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             self::getDomainConfigs(),
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
-        $requestMock = $this->createMock(Request::class);
-        $requestMock
+        $requestStub = $this->createStub(Request::class);
+        $requestStub
             ->method('getSchemeAndHttpHost')
             ->willReturn('http://unknown-host.com:8080');
-        $requestMock
+        $requestStub
             ->method('getPathInfo')
             ->willReturn('/any/path');
 
         $this->expectException(UnableToResolveDomainException::class);
-        $domain->switchDomainByRequest($requestMock);
+        $domain->switchDomainByRequest($requestStub);
     }
 }

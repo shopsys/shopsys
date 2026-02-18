@@ -33,7 +33,7 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
         $expectedStreet = 'street';
         $expectedCity = 'city';
         $expectedPostCode = '12312';
-        $expectedCountry = $this->createMock(Country::class);
+        $expectedCountry = $this->createStub(Country::class);
 
         $deliveryAddressData = new DeliveryAddressData();
         $deliveryAddressData->firstName = $expectedFirstName;
@@ -80,7 +80,7 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
         }
 
         if ($createDeliveryAddress) {
-            $deliveryAddress = $this->createMock(DeliveryAddress::class);
+            $deliveryAddress = $this->createStub(DeliveryAddress::class);
         }
 
         $orderProcessingData = $this->createOrderProcessingData();
@@ -136,6 +136,7 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
         $deliveryAddressFacadeMock = $this->createMock(DeliveryAddressFacade::class);
 
         $deliveryAddressFacadeMock
+            ->expects($this->any())
             ->method('findByUuidAndCustomer')
             ->with($deliveryAddressUuid, $customerUser?->getCustomer())
             ->willReturn($deliveryAddress);
@@ -145,8 +146,8 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
 
     private function createCustomerUser(): CustomerUser
     {
-        $customerUser = $this->createMock(CustomerUser::class);
-        $customerUser->method('getCustomer')->willReturn($this->createMock(Customer::class));
+        $customerUser = $this->createStub(CustomerUser::class);
+        $customerUser->method('getCustomer')->willReturn($this->createStub(Customer::class));
 
         return $customerUser;
     }

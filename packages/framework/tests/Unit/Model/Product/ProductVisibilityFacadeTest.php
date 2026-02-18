@@ -17,10 +17,10 @@ class ProductVisibilityFacadeTest extends TestCase
         $productVisibilityRepositoryMock = $this->createMock(ProductVisibilityRepository::class);
         $productVisibilityRepositoryMock->expects($this->once())->method('refreshProductsVisibility');
 
-        $domainMock = $this->createMock(Domain::class);
-        $pricingGroupSettingFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
+        $domainStub = $this->createStub(Domain::class);
+        $pricingGroupSettingFacadeStub = $this->createStub(PricingGroupSettingFacade::class);
 
-        $productVisibilityFacade = new ProductVisibilityFacade($productVisibilityRepositoryMock, $domainMock, $pricingGroupSettingFacadeMock);
+        $productVisibilityFacade = new ProductVisibilityFacade($productVisibilityRepositoryMock, $domainStub, $pricingGroupSettingFacadeStub);
         $productVisibilityFacade->calculateProductVisibilityForAll();
     }
 
@@ -34,10 +34,10 @@ class ProductVisibilityFacadeTest extends TestCase
             ->method('refreshProductsVisibility')
             ->with($this->equalTo($productIds));
 
-        $domainMock = $this->createMock(Domain::class);
-        $pricingGroupSettingFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
+        $domainStub = $this->createStub(Domain::class);
+        $pricingGroupSettingFacadeStub = $this->createStub(PricingGroupSettingFacade::class);
 
-        $productVisibilityFacade = new ProductVisibilityFacade($productVisibilityRepositoryMock, $domainMock, $pricingGroupSettingFacadeMock);
+        $productVisibilityFacade = new ProductVisibilityFacade($productVisibilityRepositoryMock, $domainStub, $pricingGroupSettingFacadeStub);
         $productVisibilityFacade->calculateProductVisibilityForIds($productIds);
     }
 }

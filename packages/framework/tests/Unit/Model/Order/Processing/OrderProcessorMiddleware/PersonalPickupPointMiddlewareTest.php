@@ -35,7 +35,7 @@ class PersonalPickupPointMiddlewareTest extends MiddlewareTestCase
         $expectedPersonalPickupPoint = 'personalPickupPoint';
         $orderProcessingData = $this->createOrderProcessingData();
 
-        $transport = $this->createMock(Transport::class);
+        $transport = $this->createStub(Transport::class);
         $transport->method('isPersonalPickup')->willReturn(true);
 
         $orderProcessingData->orderInput->setTransport($transport);
@@ -46,7 +46,7 @@ class PersonalPickupPointMiddlewareTest extends MiddlewareTestCase
         $city = 'city';
         $street = 'street';
         $postcode = '12345';
-        $country = $this->createMock(Country::class);
+        $country = $this->createStub(Country::class);
 
         $storeData = new StoreData();
         $storeData->city = $city;
@@ -76,7 +76,7 @@ class PersonalPickupPointMiddlewareTest extends MiddlewareTestCase
         $expectedPersonalPickupPoint = 'personalPickupPoint';
         $orderProcessingData = $this->createOrderProcessingData();
 
-        $transport = $this->createMock(Transport::class);
+        $transport = $this->createStub(Transport::class);
         $transport->method('isPersonalPickup')->willReturn(false);
 
         $orderProcessingData->orderInput->setTransport($transport);
@@ -112,14 +112,14 @@ class PersonalPickupPointMiddlewareTest extends MiddlewareTestCase
 
     private function createPersonalPickupPointMiddleware(?Store $store = null): PersonalPickupPointMiddleware
     {
-        $storeFacadeMock = $this->createMock(StoreFacade::class);
+        $storeFacadeStub = $this->createStub(StoreFacade::class);
 
         if ($store !== null) {
-            $storeFacadeMock->method('getByUuidAndDomainId')
+            $storeFacadeStub->method('getByUuidAndDomainId')
                 ->willReturn($store);
         }
 
-        return new PersonalPickupPointMiddleware($storeFacadeMock);
+        return new PersonalPickupPointMiddleware($storeFacadeStub);
     }
 
     private function addTransportItemToOrderProcessingData(

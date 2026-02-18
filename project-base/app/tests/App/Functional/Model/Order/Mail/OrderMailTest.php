@@ -60,51 +60,36 @@ class OrderMailTest extends TransactionFunctionalTestCase
 
     public function testGetMessageByOrder(): void
     {
-        $routerMock = $this->getMockBuilder(DomainRouter::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $routerMock->expects($this->any())->method('generate')->willReturn('generatedUrl');
+        $routerStub = $this->createStub(DomainRouter::class);
+        $routerStub->method('generate')->willReturn('generatedUrl');
 
-        $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)
-            ->onlyMethods(['getRouter'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $domainRouterFactoryMock->expects($this->any())->method('getRouter')->willReturn($routerMock);
+        $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
+        $domainRouterFactoryStub->method('getRouter')->willReturn($routerStub);
 
-        $twigMock = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
-        $settingMock = $this->getMockBuilder(Setting::class)->disableOriginalConstructor()->getMock();
-        $settingMock->expects($this->any())->method('getForDomain')->willReturn('no-reply@shopsys.com');
-        $priceExtensionMock = $this->getMockBuilder(PriceExtension::class)->disableOriginalConstructor()->getMock();
-        $dateTimeFormatterExtensionMock = $this->getMockBuilder(
-            DateTimeFormatterExtension::class,
-        )->disableOriginalConstructor()->getMock();
-        $orderUrlGeneratorMock = $this->getMockBuilder(
-            OrderUrlGenerator::class,
-        )->disableOriginalConstructor()->getMock();
-        $hiddenPriceExtensionMock = $this->getMockBuilder(
-            HiddenPriceExtension::class,
-        )->disableOriginalConstructor()->getMock();
-        $paymentInstructionFacadeMock = $this->getMockBuilder(PaymentInstructionFacade::class)
-            ->disableOriginalConstructor()->getMock();
-        $mailDisplayPriceResolverMock = $this->getMockBuilder(MailDisplayPriceResolver::class)
-            ->disableOriginalConstructor()->getMock();
-        $withdrawalRequestFacadeMock = $this->getMockBuilder(
-            WithdrawalRequestFacade::class,
-        )->disableOriginalConstructor()->getMock();
+        $twigStub = $this->createStub(Environment::class);
+        $settingStub = $this->createStub(Setting::class);
+        $settingStub->method('getForDomain')->willReturn('no-reply@shopsys.com');
+        $priceExtensionStub = $this->createStub(PriceExtension::class);
+        $dateTimeFormatterExtensionStub = $this->createStub(DateTimeFormatterExtension::class);
+        $orderUrlGeneratorStub = $this->createStub(OrderUrlGenerator::class);
+        $hiddenPriceExtensionStub = $this->createStub(HiddenPriceExtension::class);
+        $paymentInstructionFacadeStub = $this->createStub(PaymentInstructionFacade::class);
+        $mailDisplayPriceResolverStub = $this->createStub(MailDisplayPriceResolver::class);
+        $withdrawalRequestFacadeStub = $this->createStub(WithdrawalRequestFacade::class);
 
         $orderMail = new OrderMail(
-            $settingMock,
-            $domainRouterFactoryMock,
-            $twigMock,
+            $settingStub,
+            $domainRouterFactoryStub,
+            $twigStub,
             $this->orderItemPriceCalculation,
             $this->domain,
-            $priceExtensionMock,
-            $dateTimeFormatterExtensionMock,
-            $orderUrlGeneratorMock,
-            $hiddenPriceExtensionMock,
-            $paymentInstructionFacadeMock,
-            $mailDisplayPriceResolverMock,
-            $withdrawalRequestFacadeMock,
+            $priceExtensionStub,
+            $dateTimeFormatterExtensionStub,
+            $orderUrlGeneratorStub,
+            $hiddenPriceExtensionStub,
+            $paymentInstructionFacadeStub,
+            $mailDisplayPriceResolverStub,
+            $withdrawalRequestFacadeStub,
         );
 
         $order = $this->getReference('order_1', Order::class);

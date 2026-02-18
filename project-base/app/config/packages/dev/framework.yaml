@@ -1,6 +1,7 @@
 framework:
     profiler:
         collect: true
+        collect_serializer_data: true
         enabled: true
         only_exceptions: false
         only_main_requests: true

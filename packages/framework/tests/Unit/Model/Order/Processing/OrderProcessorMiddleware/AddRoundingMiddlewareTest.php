@@ -154,8 +154,8 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
     private function createAddRoundingMiddleware(
         string $currencyCode = Currency::CODE_EUR,
     ): AddRoundingMiddleware {
-        $orderItemPriceCalculationMock = $this->createMock(OrderItemPriceCalculation::class);
-        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationMock, new Rounding());
+        $orderItemPriceCalculationStub = $this->createStub(OrderItemPriceCalculation::class);
+        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, new Rounding());
 
         return new AddRoundingMiddleware(
             $this->createCurrencyFacade($currencyCode),

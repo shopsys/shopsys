@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
@@ -40,9 +41,7 @@ class ProductsSearchTest extends ProductsGraphQlTestCase
         }
     }
 
-    /**
-     * @dataProvider shortSearchTermDataProvider
-     */
+    #[DataProvider('shortSearchTermDataProvider')]
     public function testSearchWorksForShortSearchTerms(string $searchTerm): void
     {
         $firstDomainLocale = $this->getFirstDomainLocale();

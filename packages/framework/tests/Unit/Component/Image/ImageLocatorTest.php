@@ -66,8 +66,8 @@ class ImageLocatorTest extends TestCase
     #[DataProvider('getRelativeImagePathProvider')]
     public function testGetRelativeImagePath(string $entityName, ?string $type, string $expectedPath): void
     {
-        $filesystemMock = $this->createMock(FilesystemOperator::class);
-        $imageLocator = new ImageLocator('imageDir', $this->getBaseImageConfig(), $filesystemMock);
+        $filesystemStub = $this->createStub(FilesystemOperator::class);
+        $imageLocator = new ImageLocator('imageDir', $this->getBaseImageConfig(), $filesystemStub);
 
         $this->assertSame($expectedPath, $imageLocator->getRelativeImagePath($entityName, $type));
     }
@@ -91,8 +91,8 @@ class ImageLocatorTest extends TestCase
     #[DataProvider('getRelativeImagePathExceptionProvider')]
     public function testGetRelativeImagePathException(string $entityName, ?string $type, string $exceptionClass): void
     {
-        $filesystemMock = $this->createMock(FilesystemOperator::class);
-        $imageLocator = new ImageLocator('imageDir', $this->getBaseImageConfig(), $filesystemMock);
+        $filesystemStub = $this->createStub(FilesystemOperator::class);
+        $imageLocator = new ImageLocator('imageDir', $this->getBaseImageConfig(), $filesystemStub);
 
         $this->expectException($exceptionClass);
         $imageLocator->getRelativeImagePath($entityName, $type);

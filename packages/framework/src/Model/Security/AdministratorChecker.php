@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Security;
 use Override;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginWithDefaultPasswordException;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\InMemoryUserChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -22,7 +23,7 @@ class AdministratorChecker extends InMemoryUserChecker
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $user
      */
     #[Override]
-    public function checkPostAuth(UserInterface $user): void
+    public function checkPostAuth(UserInterface $user, ?TokenInterface $token = null): void
     {
         if ($this->environment === EnvironmentType::PRODUCTION
             && !$this->ignoreDefaultAdminPasswordCheck
@@ -32,6 +33,6 @@ class AdministratorChecker extends InMemoryUserChecker
             throw new LoginWithDefaultPasswordException();
         }
 
-        parent::checkPostAuth($user);
+        parent::checkPostAuth($user, $token);
     }
 }

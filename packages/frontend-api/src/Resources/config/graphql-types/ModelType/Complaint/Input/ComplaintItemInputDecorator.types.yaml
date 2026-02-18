@@ -9,7 +9,7 @@ ComplaintItemInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Order item is required"
-                            groups: "withOrder"
+                            groups: ["withOrder"]
             manualComplaintItemName:
                 type: "String"
                 defaultValue: null
@@ -17,7 +17,7 @@ ComplaintItemInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Complaint item name is required"
-                            groups: "withoutOrder"
+                            groups: ["withoutOrder"]
                     -   Length:
                             max: 255
                             maxMessage: "Complaint item name cannot be longer than {{ limit }} characters"

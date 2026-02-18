@@ -6,6 +6,7 @@ namespace Tests\ProductFeed\HeurekaBundle\Unit;
 
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -37,9 +38,9 @@ class HeurekaFeedItemTest extends TestCase
 
     private HeurekaProductDataBatchLoader|MockObject $heurekaProductDataBatchLoaderMock;
 
-    private HeurekaCategoryFacade|MockObject $heurekaCategoryFacadeMock;
+    private Stub|HeurekaCategoryFacade $heurekaCategoryFacadeStub;
 
-    private CategoryFacade|MockObject $categoryFacadeMock;
+    private Stub|CategoryFacade $categoryFacadeStub;
 
     private HeurekaFeedItemFactory $heurekaFeedItemFactory;
 
@@ -47,9 +48,9 @@ class HeurekaFeedItemTest extends TestCase
 
     private Product|MockObject $defaultProduct;
 
-    private ProductAvailabilityFacade|MockObject $productAvailabilityFacadeMock;
+    private ProductAvailabilityFacade $productAvailabilityFacadeStub;
 
-    private Setting|MockObject $settingMock;
+    private Stub|Setting $settingStub;
 
     #[Override]
     protected function setUp(): void
@@ -57,15 +58,15 @@ class HeurekaFeedItemTest extends TestCase
         $this->doSetUp(true);
     }
 
-    private function createDomainConfigMock(int $id, string $url, string $locale): DomainConfig
+    private function createDomainConfigStub(int $id, string $url, string $locale): DomainConfig
     {
-        $domainConfigMock = $this->createMock(DomainConfig::class);
+        $domainConfigStub = $this->createStub(DomainConfig::class);
 
-        $domainConfigMock->method('getId')->willReturn($id);
-        $domainConfigMock->method('getUrl')->willReturn($url);
-        $domainConfigMock->method('getLocale')->willReturn($locale);
+        $domainConfigStub->method('getId')->willReturn($id);
+        $domainConfigStub->method('getUrl')->willReturn($url);
+        $domainConfigStub->method('getLocale')->willReturn($locale);
 
-        return $domainConfigMock;
+        return $domainConfigStub;
     }
 
     public function testMinimalHeurekaFeedItemIsCreatable(): void
@@ -91,10 +92,10 @@ class HeurekaFeedItemTest extends TestCase
 
     public function testHeurekaFeedItemWithGroupId(): void
     {
-        $mainVariantMock = $this->createMock(Product::class);
-        $mainVariantMock->method('getId')->willReturn(2);
-        $this->defaultProduct->method('isVariant')->willReturn(true);
-        $this->defaultProduct->method('getMainVariant')->willReturn($mainVariantMock);
+        $mainVariantStub = $this->createStub(Product::class);
+        $mainVariantStub->method('getId')->willReturn(2);
+        $this->defaultProduct->expects($this->any())->method('isVariant')->willReturn(true);
+        $this->defaultProduct->expects($this->any())->method('getMainVariant')->willReturn($mainVariantStub);
 
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
@@ -103,7 +104,7 @@ class HeurekaFeedItemTest extends TestCase
 
     public function testHeurekaFeedItemWithDescription(): void
     {
-        $this->defaultProduct->method('getDescriptionAsPlainText')
+        $this->defaultProduct->expects($this->any())->method('getDescriptionAsPlainText')
             ->with(1)->willReturn('product description');
 
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
@@ -113,7 +114,7 @@ class HeurekaFeedItemTest extends TestCase
 
     public function testHeurekaFeedItemWithImgUrl(): void
     {
-        $this->heurekaProductDataBatchLoaderMock->method('getProductImageUrl')
+        $this->heurekaProductDataBatchLoaderMock->expects($this->any())->method('getProductImageUrl')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn('https://example.com/img/product/1');
 
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
@@ -123,7 +124,7 @@ class HeurekaFeedItemTest extends TestCase
 
     public function testHeurekaFeedItemWithEan(): void
     {
-        $this->defaultProduct->method('getEan')->willReturn('1234567890123');
+        $this->defaultProduct->expects($this->any())->method('getEan')->willReturn('1234567890123');
 
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
@@ -132,10 +133,9 @@ class HeurekaFeedItemTest extends TestCase
 
     public function testHeurekaFeedItemWithManufacturer(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
-        $brand = $this->createMock(Brand::class);
+        $brand = $this->createStub(Brand::class);
         $brand->method('getName')->willReturn('manufacturer name');
-        $this->defaultProduct->method('getBrand')->willReturn($brand);
+        $this->defaultProduct->expects($this->any())->method('getBrand')->willReturn($brand);
 
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
@@ -144,19 +144,21 @@ class HeurekaFeedItemTest extends TestCase
 
     public function testHeurekaFeedItemWithCategoryText(): void
     {
-        /** @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory|\PHPUnit\Framework\MockObject\MockObject $heurekaCategoryMock */
-        $heurekaCategoryMock = $this->createMock(HeurekaCategory::class);
-        $heurekaCategoryMock->method('getFullName')->willReturn('heureka category full text');
+        $heurekaCategoryStub = $this->createStub(HeurekaCategory::class);
+        $heurekaCategoryStub->method('getFullName')->willReturn('heureka category full text');
 
-        /** @var \Shopsys\FrameworkBundle\Model\Category\Category|\PHPUnit\Framework\MockObject\MockObject $categoryMock */
-        $categoryMock = $this->createMock(Category::class);
-        $categoryMock->method('getId')->willReturn(1);
+        $categoryStub = $this->createStub(Category::class);
+        $categoryStub->method('getId')->willReturn(1);
 
-        $this->categoryFacadeMock->method('findProductMainCategoryByDomainId')
-            ->with($this->defaultProduct, $this->defaultDomain->getId())->willReturn($categoryMock);
+        $this->categoryFacadeStub->method('findProductMainCategoryByDomainId')
+            ->willReturnMap([
+                [$this->defaultProduct, $this->defaultDomain->getId(), $categoryStub],
+            ]);
 
-        $this->heurekaCategoryFacadeMock->method('findByCategoryId')
-            ->with(1)->willReturn($heurekaCategoryMock);
+        $this->heurekaCategoryFacadeStub->method('findByCategoryId')
+            ->willReturnMap([
+                [1, $heurekaCategoryStub],
+            ]);
 
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
@@ -165,7 +167,7 @@ class HeurekaFeedItemTest extends TestCase
 
     public function testHeurekaFeedItemWithParams(): void
     {
-        $this->heurekaProductDataBatchLoaderMock->method('getProductParametersByName')
+        $this->heurekaProductDataBatchLoaderMock->expects($this->any())->method('getProductParametersByName')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn(['color' => 'black']);
 
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
@@ -175,7 +177,7 @@ class HeurekaFeedItemTest extends TestCase
 
     public function testHeurekaFeedItemWithCpc(): void
     {
-        $this->heurekaProductDataBatchLoaderMock->method('getProductCpc')
+        $this->heurekaProductDataBatchLoaderMock->expects($this->any())->method('getProductCpc')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn(Money::create(5));
 
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
@@ -197,38 +199,40 @@ class HeurekaFeedItemTest extends TestCase
             ProductPriceCalculationForCustomerUser::class,
         );
         $this->heurekaProductDataBatchLoaderMock = $this->createMock(HeurekaProductDataBatchLoader::class);
-        $this->heurekaCategoryFacadeMock = $this->createMock(HeurekaCategoryFacade::class);
-        $this->categoryFacadeMock = $this->createMock(CategoryFacade::class);
-        $this->productAvailabilityFacadeMock = $this->createMock(ProductAvailabilityFacade::class);
-        $this->productAvailabilityFacadeMock->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnDomain);
-        $this->settingMock = $this->createMock(Setting::class);
+        $this->heurekaCategoryFacadeStub = $this->createStub(HeurekaCategoryFacade::class);
+        $this->categoryFacadeStub = $this->createStub(CategoryFacade::class);
+        $this->productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
+        $this->productAvailabilityFacadeStub->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnDomain);
+        $this->settingStub = $this->createStub(Setting::class);
 
         if ($isProductAvailableOnDomain === false) {
-            $this->settingMock->method('getForDomain')->with(HeurekaFeedSettingEnum::HEUREKA_FEED_DELIVERY_DAYS, Domain::FIRST_DOMAIN_ID)->willReturn(self::MOCKED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS);
+            $this->settingStub->method('getForDomain')->willReturnMap([
+                [HeurekaFeedSettingEnum::HEUREKA_FEED_DELIVERY_DAYS, Domain::FIRST_DOMAIN_ID, self::MOCKED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS],
+            ]);
         }
 
         $this->heurekaFeedItemFactory = new HeurekaFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
             $this->heurekaProductDataBatchLoaderMock,
-            $this->heurekaCategoryFacadeMock,
-            $this->categoryFacadeMock,
-            $this->productAvailabilityFacadeMock,
+            $this->heurekaCategoryFacadeStub,
+            $this->categoryFacadeStub,
+            $this->productAvailabilityFacadeStub,
             new InMemoryCache(),
-            $this->settingMock,
+            $this->settingStub,
         );
 
-        $this->defaultDomain = $this->createDomainConfigMock(Domain::FIRST_DOMAIN_ID, 'https://example.cz', 'cs');
+        $this->defaultDomain = $this->createDomainConfigStub(Domain::FIRST_DOMAIN_ID, 'https://example.cz', 'cs');
 
         $this->defaultProduct = $this->createMock(Product::class);
-        $this->defaultProduct->method('getId')->willReturn(1);
-        $this->defaultProduct->method('getFullName')->with('cs')->willReturn('product name');
+        $this->defaultProduct->expects($this->any())->method('getId')->willReturn(1);
+        $this->defaultProduct->expects($this->any())->method('getFullName')->with('cs')->willReturn('product name');
 
-        $productPrice = new ProductPrice(Price::zero(), $this->createMock(PricingGroup::class), false);
+        $productPrice = new ProductPrice(Price::zero(), $this->createStub(PricingGroup::class), false);
         $productPricesResult = new ProductPricesResult($productPrice, $productPrice);
-        $this->productPriceCalculationForCustomerUserMock->method('calculatePricesForCustomerUserAndDomainId')
+        $this->productPriceCalculationForCustomerUserMock->expects($this->any())->method('calculatePricesForCustomerUserAndDomainId')
             ->with($this->defaultProduct, Domain::FIRST_DOMAIN_ID, null)->willReturn($productPricesResult);
 
-        $this->heurekaProductDataBatchLoaderMock->method('getProductUrl')
+        $this->heurekaProductDataBatchLoaderMock->expects($this->any())->method('getProductUrl')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn('https://example.com/product-1');
     }
 }

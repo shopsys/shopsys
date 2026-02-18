@@ -21,9 +21,7 @@ class QueryBuilderExtenderTest extends TestCase
 {
     public function testAddFirstJoinToQueryBuilder(): void
     {
-        $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $entityManager = $this->createStub(EntityManagerInterface::class);
         $queryBuilder = new QueryBuilder($entityManager);
 
         $entityNameResolver = new EntityNameResolver([]);
@@ -42,9 +40,7 @@ class QueryBuilderExtenderTest extends TestCase
         string $expectedJoinedEntity,
         array $extensionMap,
     ): void {
-        $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $entityManager = $this->createStub(EntityManagerInterface::class);
         $queryBuilder = new QueryBuilder($entityManager);
 
         $entityNameResolver = new EntityNameResolver($extensionMap);
@@ -88,9 +84,7 @@ class QueryBuilderExtenderTest extends TestCase
 
     public function testDifferentAlias(): void
     {
-        $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $entityManager = $this->createStub(EntityManagerInterface::class);
 
         $queryBuilder = new QueryBuilder($entityManager);
         $queryBuilder
@@ -118,9 +112,7 @@ class QueryBuilderExtenderTest extends TestCase
 
     public function testAddSameAliasForDifferentEntity(): void
     {
-        $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $entityManager = $this->createStub(EntityManagerInterface::class);
 
         $queryBuilder = new QueryBuilder($entityManager);
         $queryBuilder

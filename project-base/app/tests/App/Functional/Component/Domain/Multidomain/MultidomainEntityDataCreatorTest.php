@@ -27,12 +27,9 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
                 VALUES (1, 'asdf', 'qwer')
         ");
 
-        $multidomainEntityClassFinderFacadeMock = $this->getMockBuilder(MultidomainEntityClassFinderFacade::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getAllNotNullableColumnNamesIndexedByTableName'])
-            ->getMock();
+        $multidomainEntityClassFinderFacadeStub = $this->createStub(MultidomainEntityClassFinderFacade::class);
 
-        $multidomainEntityClassFinderFacadeMock
+        $multidomainEntityClassFinderFacadeStub
             ->method('getAllNotNullableColumnNamesIndexedByTableName')
             ->willReturn([
                 '_test_table' => ['title'],
@@ -41,7 +38,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
         $sqlQuoter = new SqlQuoter($this->em);
 
         $multidomainEntityDataCreator = new MultidomainEntityDataCreator(
-            $multidomainEntityClassFinderFacadeMock,
+            $multidomainEntityClassFinderFacadeStub,
             $this->em,
             $sqlQuoter,
         );
@@ -84,12 +81,9 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
                 VALUES (1, 'asdf')
         ");
 
-        $multidomainEntityClassFinderFacadeMock = $this->getMockBuilder(MultidomainEntityClassFinderFacade::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getAllNotNullableColumnNamesIndexedByTableName'])
-            ->getMock();
+        $multidomainEntityClassFinderFacadeStub = $this->createStub(MultidomainEntityClassFinderFacade::class);
 
-        $multidomainEntityClassFinderFacadeMock
+        $multidomainEntityClassFinderFacadeStub
             ->method('getAllNotNullableColumnNamesIndexedByTableName')
             ->willReturn([
                 '_test_table' => ['domain_id', 'title'],
@@ -98,7 +92,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
         $sqlQuoter = new SqlQuoter($this->em);
 
         $multidomainEntityDataCreator = new MultidomainEntityDataCreator(
-            $multidomainEntityClassFinderFacadeMock,
+            $multidomainEntityClassFinderFacadeStub,
             $this->em,
             $sqlQuoter,
         );

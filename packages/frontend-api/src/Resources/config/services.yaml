@@ -62,7 +62,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProviderResolver:
         arguments:
-            $articlesSearchResultsProviders: !tagged 'shopsys.frontend_api.articles_search_results_provider'
+            $articlesSearchResultsProviders: !tagged_iterator 'shopsys.frontend_api.articles_search_results_provider'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProvider:
         tags:
@@ -70,7 +70,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderResolver:
         arguments:
-            $brandSearchResultsProviders: !tagged 'shopsys.frontend_api.brands_search_results_provider'
+            $brandSearchResultsProviders: !tagged_iterator 'shopsys.frontend_api.brands_search_results_provider'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap:
         arguments:
@@ -85,7 +85,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderResolver:
         arguments:
-            $categoriesSearchResultsProviders: !tagged 'shopsys.frontend_api.categories_search_results_provider'
+            $categoriesSearchResultsProviders: !tagged_iterator 'shopsys.frontend_api.categories_search_results_provider'
 
     Shopsys\FrontendApiBundle\Model\Resolver\ConsumerUploadedFile\CustomerUploadedFileQuery:
         arguments:
@@ -181,7 +181,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderResolver:
         arguments:
-            $productSearchResultsProviders: !tagged 'shopsys.frontend_api.products_search_results_provider'
+            $productSearchResultsProviders: !tagged_iterator 'shopsys.frontend_api.products_search_results_provider'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Store\StoreAvailabilityResolverMap:
         arguments:

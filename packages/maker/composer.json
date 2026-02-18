@@ -38,27 +38,27 @@
         "shopsys/framework": "19.0.x-dev",
         "shopsys/migrations": "19.0.x-dev",
         "shopsys/plugin-interface": "19.0.x-dev",
-        "symfony/console": "^6.4",
-        "symfony/dependency-injection": "^6.4",
-        "symfony/filesystem": "^6.4",
-        "symfony/framework-bundle": "^6.4",
-        "symfony/http-kernel": "^6.4",
+        "symfony/console": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/filesystem": "^7.4",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/http-kernel": "^7.4",
         "symfony/maker-bundle": "^1.62",
-        "symfony/process": "^6.4",
-        "symfony/service-contracts": "^2.5.2",
-        "symfony/yaml": "^6.4"
+        "symfony/process": "^7.4",
+        "symfony/service-contracts": "^3.5",
+        "symfony/yaml": "^7.4"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1.16",
         "phpstan/phpstan-doctrine": "^2.0.3",
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-symfony": "^2.0.6",
-        "phpunit/phpunit": "^11.2.1",
+        "phpunit/phpunit": "^12.5",
         "shopsys/coding-standards": "19.0.x-dev"
     },
     "extra": {
         "symfony": {
-            "require": "^6.4",
+            "require": "^7.4",
             "docker": false
         }
     },

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Router;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -31,11 +32,13 @@ class AdministrationRouterFactory extends AbstractRouterFactory
             $requestContext->setPathInfo(str_replace($domainConfig->getPostfix(), '', $requestContext->getPathInfo()));
         }
 
-        return new AdministrationRouter(
+        $router = new Router(
             $this->container,
             $this->routerConfiguration,
             $this->getRouterOptions(),
             $requestContext,
         );
+
+        return new AdministrationRouter($router);
     }
 }

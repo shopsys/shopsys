@@ -162,19 +162,19 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
         array $executedMigrationClasses = [],
     ): MigrationLockPlanCalculator {
         $availableMigrationsSet = $this->getAvailableMigrationsSet($availableMigrationClasses);
-        $migrationsLockRepositoryMock = $this->createMock(MigrationsLockRepository::class);
-        $migrationsLockRepositoryMock->method('getMigrations')->willReturn($availableMigrationsSet);
+        $migrationsLockRepositoryStub = $this->createStub(MigrationsLockRepository::class);
+        $migrationsLockRepositoryStub->method('getMigrations')->willReturn($availableMigrationsSet);
 
-        $migrationsLockMock = $this->createMock(MigrationsLock::class);
-        $migrationsLockMock->method('getOrderedInstalledMigrationClasses')->willReturn($orderedMigrationClassesFromLock);
+        $migrationsLockStub = $this->createStub(MigrationsLock::class);
+        $migrationsLockStub->method('getOrderedInstalledMigrationClasses')->willReturn($orderedMigrationClassesFromLock);
 
-        $migrationsLockComparator = new MigrationsLockComparator($migrationsLockMock);
-        $metadataStorageMock = $this->createMock(MetadataStorage::class);
-        $metadataStorageMock->method('getExecutedMigrations')->willReturn($this->getExecutedMigrationsList($executedMigrationClasses));
-        $dependencyFactoryMock = $this->createMock(DependencyFactory::class);
-        $dependencyFactoryMock->method('getMetadataStorage')->willReturn($metadataStorageMock);
+        $migrationsLockComparator = new MigrationsLockComparator($migrationsLockStub);
+        $metadataStorageStub = $this->createStub(MetadataStorage::class);
+        $metadataStorageStub->method('getExecutedMigrations')->willReturn($this->getExecutedMigrationsList($executedMigrationClasses));
+        $dependencyFactoryStub = $this->createStub(DependencyFactory::class);
+        $dependencyFactoryStub->method('getMetadataStorage')->willReturn($metadataStorageStub);
 
-        return new MigrationLockPlanCalculator($migrationsLockRepositoryMock, $migrationsLockComparator, $dependencyFactoryMock);
+        return new MigrationLockPlanCalculator($migrationsLockRepositoryStub, $migrationsLockComparator, $dependencyFactoryStub);
     }
 
     /**

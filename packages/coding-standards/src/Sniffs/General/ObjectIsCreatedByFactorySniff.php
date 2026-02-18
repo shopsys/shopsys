@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\CodingStandards\Sniffs;
+namespace Shopsys\CodingStandards\Sniffs\General;
 
 use Override;
 use PHP_CodeSniffer\Files\File;
@@ -13,7 +13,7 @@ use SlevomatCodingStandard\Helpers\ClassHelper;
 final class ObjectIsCreatedByFactorySniff implements Sniff
 {
     /**
-     * @return int[]
+     * @return array<int|string>
      */
     #[Override]
     public function register(): array
@@ -27,17 +27,31 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
     #[Override]
     public function process(File $file, $position): void
     {
-        $endPosition = $file->findEndOfStatement($position);
-        $instantiatedClassNamePosition = $file->findNext(T_STRING, $position, $endPosition);
+        $tokens = $file->getTokens();
 
-        if ($instantiatedClassNamePosition === false) {
-            // eg. new $className; cannot be resolved
+        $classNameTokenTypes = [T_STRING];
+
+        if (defined('T_NAME_QUALIFIED')) {
+            $classNameTokenTypes[] = T_NAME_QUALIFIED;
+        }
+
+        if (defined('T_NAME_FULLY_QUALIFIED')) {
+            $classNameTokenTypes[] = T_NAME_FULLY_QUALIFIED;
+        }
+
+        $nextPosition = $file->findNext(T_WHITESPACE, $position + 1, null, true);
+
+        if ($nextPosition === false) {
+            return;
+        }
+
+        if (!in_array($tokens[$nextPosition]['code'], $classNameTokenTypes, true)) {
             return;
         }
 
         $naming = new Naming();
 
-        $instantiatedClassName = $naming->getClassName($file, $instantiatedClassNamePosition);
+        $instantiatedClassName = $naming->getClassName($file, $nextPosition);
         $factoryClassName = $instantiatedClassName . 'Factory';
         $currentClassName = $this->getFirstClassNameInFile($file);
 

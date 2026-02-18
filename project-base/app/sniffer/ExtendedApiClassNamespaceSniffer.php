@@ -14,50 +14,71 @@ class ExtendedApiClassNamespaceSniffer implements Sniff
     private const FRONTEND_API_NAMESPACE_PART = 'FrontendApi';
     private const FRONTEND_API_BUNDLE_NAME = 'FrontendApiBundle';
 
-    public function register()
+    /**
+     * @return array<int|string>
+     */
+    public function register(): array
     {
         return [
             T_EXTENDS
         ];
     }
 
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr): void
     {
-        $parentClassNameFromExtend = $this->getParentClassNameFromExtend($phpcsFile, $stackPtr);
+        $tokens = $phpcsFile->getTokens();
+        $numTokens = count($tokens);
+
+        $parentClassNameFromExtend = $this->getParentClassNameFromExtend($phpcsFile, $stackPtr, $numTokens);
+
+        if ($parentClassNameFromExtend === '') {
+            return;
+        }
 
         $classPosition = $phpcsFile->findNext([T_CLASS], 0);
+
+        if ($classPosition === false) {
+            return;
+        }
+
         $foundUsePosition = false;
         for(
             $usePosition = $this->findNextUsePosition($phpcsFile, 0);
             $usePosition > 0 && $usePosition < $classPosition && $foundUsePosition === false;
-            $usePosition = $this->findNextUsePosition($phpcsFile, ++$usePosition)
+            $usePosition = $this->findNextUsePosition($phpcsFile, $usePosition + 1)
         ) {
+            $useClassName = $this->getUseClassName($phpcsFile, $usePosition, $numTokens);
 
-            $useClassName = $this->getUseClassName($phpcsFile, $usePosition);
             if($parentClassNameFromExtend === $useClassName){
                 $foundUsePosition = $usePosition;
             }
         }
 
         if($foundUsePosition !== false){
-            $this->checkNamespacesFromFrontendApi($phpcsFile, $foundUsePosition);
+            $this->checkNamespacesFromFrontendApi($phpcsFile, $foundUsePosition, $numTokens);
         }
     }
 
     /**
      * @param \PHP_CodeSniffer\Files\File $phpcsFile
      * @param int $usePosition
+     * @param int $numTokens
      */
-    private function checkNamespacesFromFrontendApi(File $phpcsFile, int $usePosition): void
+    private function checkNamespacesFromFrontendApi(File $phpcsFile, int $usePosition, int $numTokens): void
     {
         $parentClassNamespaceParts = [];
-        $this->getNamespacePartsArray($phpcsFile, $usePosition, $parentClassNamespaceParts);
+        $this->getNamespacePartsArray($phpcsFile, $usePosition, $parentClassNamespaceParts, $numTokens);
 
         if (in_array(self::FRONTEND_API_BUNDLE_NAME, $parentClassNamespaceParts)) {
 
             $namespacePosition = $phpcsFile->findNext([T_NAMESPACE], 0);
+
+            if ($namespacePosition === false) {
+                return;
+            }
+
             $currentClassNamespaceParts = [];
-            $this->getNamespacePartsArray($phpcsFile, $namespacePosition, $currentClassNamespaceParts);
+            $this->getNamespacePartsArray($phpcsFile, $namespacePosition, $currentClassNamespaceParts, $numTokens);
 
             if (in_array(self::FRONTEND_API_NAMESPACE_PART, $currentClassNamespaceParts)) {
                 return;
@@ -74,35 +95,53 @@ class ExtendedApiClassNamespaceSniffer implements Sniff
     /**
      * @param \PHP_CodeSniffer\Files\File $phpcsFile
      * @param int $stackPtr
-     * @param array $result
+     * @param array<string> $result
+     * @param int $numTokens
      */
-    private function getNamespacePartsArray(File $phpcsFile, int $stackPtr, array &$result): void
+    private function getNamespacePartsArray(File $phpcsFile, int $stackPtr, array &$result, int $numTokens): void
     {
+        if ($stackPtr >= $numTokens - 1) {
+            return;
+        }
+
         if ($this->isNextSpace($phpcsFile, $stackPtr)) {
             $stackPtr++;
+        }
+
+        if ($stackPtr >= $numTokens - 1) {
+            return;
         }
 
         if ($this->isNextString($phpcsFile, $stackPtr)) {
             $stackPtr++;
             $result[] = $this->getContent($phpcsFile, $stackPtr);
-            $this->getNamespacePartsArray($phpcsFile, $stackPtr, $result);
+            $this->getNamespacePartsArray($phpcsFile, $stackPtr, $result, $numTokens);
             return;
         }
 
         if ($this->isNextNsSeparator($phpcsFile, $stackPtr)) {
-            $this->getNamespacePartsArray($phpcsFile, ++$stackPtr, $result);
+            $this->getNamespacePartsArray($phpcsFile, $stackPtr + 1, $result, $numTokens);
         }
     }
 
     /**
      * @param \PHP_CodeSniffer\Files\File $phpcsFile
      * @param int $stackPtr
+     * @param int $numTokens
      * @return string
      */
-    private function getUseClassName(File $phpcsFile, int $stackPtr): string
+    private function getUseClassName(File $phpcsFile, int $stackPtr, int $numTokens): string
     {
+        if ($stackPtr >= $numTokens - 1) {
+            return '';
+        }
+
         if ($this->isNextSpace($phpcsFile, $stackPtr)) {
             $stackPtr++;
+        }
+
+        if ($stackPtr >= $numTokens - 1) {
+            return '';
         }
 
         if ($this->isNextString($phpcsFile, $stackPtr)) {
@@ -113,7 +152,7 @@ class ExtendedApiClassNamespaceSniffer implements Sniff
             }
         }
 
-        return $this->getUseClassName($phpcsFile, ++$stackPtr);
+        return $this->getUseClassName($phpcsFile, $stackPtr + 1, $numTokens);
     }
 
     /**
@@ -134,22 +173,27 @@ class ExtendedApiClassNamespaceSniffer implements Sniff
     /**
      * @param \PHP_CodeSniffer\Files\File $phpcsFile
      * @param int $stackPtr
+     * @param int $numTokens
      * @return string
      */
-    private function getParentClassNameFromExtend(File $phpcsFile, int $stackPtr): string
+    private function getParentClassNameFromExtend(File $phpcsFile, int $stackPtr, int $numTokens): string
     {
+        if ($stackPtr >= $numTokens - 1) {
+            return '';
+        }
+
         if ($this->isNextString($phpcsFile, $stackPtr)) {
             $stackPtr++;
 
             if ($this->isNextNsSeparator($phpcsFile, $stackPtr)) {
                 $stackPtr++;
-                return $this->getParentClassNameFromExtend($phpcsFile, $stackPtr);
+                return $this->getParentClassNameFromExtend($phpcsFile, $stackPtr, $numTokens);
             }
 
             return $this->getContent($phpcsFile, $stackPtr);
         }
 
-        return $this->getParentClassNameFromExtend($phpcsFile, ++$stackPtr);
+        return $this->getParentClassNameFromExtend($phpcsFile, $stackPtr + 1, $numTokens);
     }
 
 

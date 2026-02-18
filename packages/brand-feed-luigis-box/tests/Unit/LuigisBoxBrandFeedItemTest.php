@@ -23,22 +23,22 @@ class LuigisBoxBrandFeedItemTest extends TestCase
 
     public function testBrandFeedItemCreation(): void
     {
-        $defaultDomain = $this->createDomainConfigMock(
+        $defaultDomain = $this->createDomainConfigStub(
             Domain::FIRST_DOMAIN_ID,
             'https://example.com',
             'en',
         );
 
-        $brand = $this->createMock(Brand::class);
+        $brand = $this->createStub(Brand::class);
         $brand->method('getId')->willReturn(self::BRAND_ID);
         $brand->method('getName')->willReturn(self::BRAND_NAME);
 
         $friendlyUrlFacadeMock = $this->createMock(FriendlyUrlFacade::class);
-        $friendlyUrlFacadeMock->method('getAbsoluteUrlByRouteNameAndEntityId')
+        $friendlyUrlFacadeMock->expects($this->any())->method('getAbsoluteUrlByRouteNameAndEntityId')
             ->with(Domain::FIRST_DOMAIN_ID, 'front_brand_detail', self::BRAND_ID)->willReturn(self::BRAND_URL);
 
         $imageFacadeMock = $this->createMock(ImageFacade::class);
-        $imageFacadeMock->method('getImageUrl')
+        $imageFacadeMock->expects($this->any())->method('getImageUrl')
             ->with($defaultDomain, $brand)->willReturn(self::BRAND_IMAGE_URL);
 
         $luigisBoxBrandFeedItemFactory = new LuigisBoxBrandFeedItemFactory($friendlyUrlFacadeMock, $imageFacadeMock, new ImageUrlWithSizeHelper());
@@ -50,14 +50,14 @@ class LuigisBoxBrandFeedItemTest extends TestCase
         $this->assertSame(self::BRAND_IMAGE_URL . '?width=100&height=100', $luigisBoxBrandFeedItem->getImageUrl());
     }
 
-    private function createDomainConfigMock(int $id, string $url, string $locale): DomainConfig
+    private function createDomainConfigStub(int $id, string $url, string $locale): DomainConfig
     {
-        $domainConfigMock = $this->createMock(DomainConfig::class);
+        $domainConfigStub = $this->createStub(DomainConfig::class);
 
-        $domainConfigMock->method('getId')->willReturn($id);
-        $domainConfigMock->method('getUrl')->willReturn($url);
-        $domainConfigMock->method('getLocale')->willReturn($locale);
+        $domainConfigStub->method('getId')->willReturn($id);
+        $domainConfigStub->method('getUrl')->willReturn($url);
+        $domainConfigStub->method('getLocale')->willReturn($locale);
 
-        return $domainConfigMock;
+        return $domainConfigStub;
     }
 }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\CodingStandards\Sniffs;
+namespace Shopsys\CodingStandards\Sniffs\General;
 
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 
-final class ForbiddenExitSniff extends ForbiddenFunctionsSniff
+final class ForbiddenDumpSniff extends ForbiddenFunctionsSniff
 {
     /**
      * A list of forbidden functions with their alternatives.
@@ -18,6 +18,10 @@ final class ForbiddenExitSniff extends ForbiddenFunctionsSniff
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     public $forbiddenFunctions = [
-        'exit' => null,
+        'd' => null,
+        'dump' => null,
+        'print_r' => null,
+        'var_dump' => null,
+        'var_export' => null,
     ];
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Order\Item;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
@@ -33,7 +32,7 @@ class OrderItemPriceCalculationTest extends TestCase
         $priceCalculationMock->expects($this->once())->method('getVatAmountByPriceWithVat')->willReturn(
             Money::create(100),
         );
-        $pricingSettingMock = $this->createMock(PricingSetting::class);
+        $pricingSettingStub = $this->createStub(PricingSetting::class);
 
         $orderItemData = new OrderItemData();
         $orderItemData->unitPriceWithVat = Money::create(1000);
@@ -43,9 +42,9 @@ class OrderItemPriceCalculationTest extends TestCase
             $priceCalculationMock,
             new VatFactory(new EntityNameResolver([])),
             new VatDataFactory(),
-            $pricingSettingMock,
+            $pricingSettingStub,
             new Rounding(),
-            $this->createCurrencyFacadeMock(),
+            $this->createCurrencyFacadeStub(),
         );
         $priceWithoutVat = $orderItemPriceCalculation->calculatePriceWithoutVatForInputPriceWithVat(
             $orderItemData,
@@ -78,7 +77,7 @@ class OrderItemPriceCalculationTest extends TestCase
             new VatDataFactory(),
             $pricingSettingMock,
             new Rounding(),
-            $this->createCurrencyFacadeMock(),
+            $this->createCurrencyFacadeStub(),
         );
 
         $order = $this->getMockBuilder(Order::class)
@@ -86,7 +85,7 @@ class OrderItemPriceCalculationTest extends TestCase
             ->onlyMethods(['getDomainId', 'getCurrency'])
             ->getMock();
         $order->expects($this->once())->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);
-        $order->expects($this->once())->method('getCurrency')->willReturn($this->createCurrencyMock());
+        $order->expects($this->once())->method('getCurrency')->willReturn($this->createCurrencyStub());
 
         $orderItem = $this->getMockBuilder(OrderItem::class)
             ->disableOriginalConstructor()
@@ -105,9 +104,9 @@ class OrderItemPriceCalculationTest extends TestCase
         $this->assertThat($totalPrice->getVatAmount(), new IsMoneyEqual(Money::create(10)));
     }
 
-    private function createCurrencyMock(): Currency|MockObject
+    private function createCurrencyStub(): Currency
     {
-        $currency = $this->createMock(Currency::class);
+        $currency = $this->createStub(Currency::class);
         $currency->method('getCode')->willReturn('CZK');
         $currency->method('getRoundingType')->willReturn(Currency::DEFAULT_ROUNDING_TYPE);
         $currency->method('getRoundingPlacesPriceWithoutVat')->willReturn(Currency::DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT);
@@ -115,17 +114,14 @@ class OrderItemPriceCalculationTest extends TestCase
         return $currency;
     }
 
-    private function createCurrencyFacadeMock(): CurrencyFacade|MockObject
+    private function createCurrencyFacadeStub(): CurrencyFacade
     {
-        $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)
-            ->onlyMethods(['getDomainDefaultCurrencyByDomainId'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $currencyFacadeStub = $this->createStub(CurrencyFacade::class);
 
-        $currencyFacadeMock->method('getDomainDefaultCurrencyByDomainId')->willReturn(
-            $this->createCurrencyMock(),
+        $currencyFacadeStub->method('getDomainDefaultCurrencyByDomainId')->willReturn(
+            $this->createCurrencyStub(),
         );
 
-        return $currencyFacadeMock;
+        return $currencyFacadeStub;
     }
 }

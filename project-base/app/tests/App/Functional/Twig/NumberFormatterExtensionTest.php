@@ -41,15 +41,12 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
     #[DataProvider('formatNumberDataProvider')]
     public function testFormatNumber(mixed $input, mixed $locale, mixed $result): void
     {
-        $localizationMock = $this->getMockBuilder(Localization::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getRequestLocale'])
-            ->getMock();
-        $localizationMock->expects($this->any())->method('getRequestLocale')
+        $localizationStub = $this->createStub(Localization::class);
+        $localizationStub->method('getRequestLocale')
             ->willReturn($locale);
 
         $numberFormatterExtension = new NumberFormatterExtension(
-            $localizationMock,
+            $localizationStub,
             new NumberFormatRepository(),
         );
 

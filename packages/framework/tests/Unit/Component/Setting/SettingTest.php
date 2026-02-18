@@ -138,7 +138,7 @@ class SettingTest extends TestCase
             [3, []],
         ];
 
-        $entityManagerMock = $this->createDummyEntityManagerMock();
+        $entityManagerStub = $this->createDummyEntityManagerStub();
 
         $settingValueRepositoryMock = $this->getMockBuilder(SettingValueRepository::class)
             ->disableOriginalConstructor()
@@ -147,19 +147,19 @@ class SettingTest extends TestCase
         $settingValueRepositoryMock->expects($this->atLeastOnce())
             ->method('getAllByDomainId')->willReturnMap($settingValueArrayByDomainIdMap);
 
-        $setting = new Setting($entityManagerMock, $settingValueRepositoryMock);
+        $setting = new Setting($entityManagerStub, $settingValueRepositoryMock);
 
         $this->assertSame('value', $setting->getForDomain('key', 1));
     }
 
     public function testCannotSetNonexistentCommonValue(): void
     {
-        $entityManagerMock = $this->createDummyEntityManagerMock();
+        $entityManagerStub = $this->createDummyEntityManagerStub();
 
-        $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);
-        $settingValueRepositoryMock->expects($this->any())->method('getAllByDomainId')->willReturn([]);
+        $settingValueRepositoryStub = $this->createStub(SettingValueRepository::class);
+        $settingValueRepositoryStub->method('getAllByDomainId')->willReturn([]);
 
-        $setting = new Setting($entityManagerMock, $settingValueRepositoryMock);
+        $setting = new Setting($entityManagerStub, $settingValueRepositoryStub);
 
         $this->expectException(SettingValueNotFoundException::class);
         $setting->set('nonexistentKey', 'anyValue');
@@ -167,21 +167,19 @@ class SettingTest extends TestCase
 
     public function testCannotSetNonexistentValueForDomain(): void
     {
-        $entityManagerMock = $this->createDummyEntityManagerMock();
+        $entityManagerStub = $this->createDummyEntityManagerStub();
 
-        $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);
-        $settingValueRepositoryMock->expects($this->any())->method('getAllByDomainId')->willReturn([]);
+        $settingValueRepositoryStub = $this->createStub(SettingValueRepository::class);
+        $settingValueRepositoryStub->method('getAllByDomainId')->willReturn([]);
 
-        $setting = new Setting($entityManagerMock, $settingValueRepositoryMock);
+        $setting = new Setting($entityManagerStub, $settingValueRepositoryStub);
 
         $this->expectException(SettingValueNotFoundException::class);
         $setting->setForDomain('nonexistentKey', 'anyValue', 1);
     }
 
-    private function createDummyEntityManagerMock(): EntityManager
+    private function createDummyEntityManagerStub(): EntityManager
     {
-        return $this->getMockBuilder(EntityManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createStub(EntityManager::class);
     }
 }

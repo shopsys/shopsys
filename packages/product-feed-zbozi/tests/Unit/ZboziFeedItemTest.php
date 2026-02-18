@@ -6,6 +6,7 @@ namespace Tests\ProductFeed\ZboziBundle\Unit;
 
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -32,7 +33,7 @@ class ZboziFeedItemTest extends TestCase
 
     private ProductUrlsBatchLoader|MockObject $productUrlsBatchLoaderMock;
 
-    private ProductParametersBatchLoader|MockObject $productParametersBatchLoaderMock;
+    private Stub|ProductParametersBatchLoader $productParametersBatchLoaderStub;
 
     private CategoryFacade|MockObject $categoryFacadeMock;
 
@@ -49,48 +50,48 @@ class ZboziFeedItemTest extends TestCase
             ProductPriceCalculationForCustomerUser::class,
         );
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
-        $this->productParametersBatchLoaderMock = $this->createMock(ProductParametersBatchLoader::class);
+        $this->productParametersBatchLoaderStub = $this->createStub(ProductParametersBatchLoader::class);
         $this->categoryFacadeMock = $this->createMock(CategoryFacade::class);
-        $productAvailabilityFacadeMock = $this->createMock(ProductAvailabilityFacade::class);
-        $productAvailabilityFacadeMock->method('getProductAvailabilityDaysForFeedsByDomainId')->willReturn(0);
+        $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
+        $productAvailabilityFacadeStub->method('getProductAvailabilityDaysForFeedsByDomainId')->willReturn(0);
 
         $this->zboziFeedItemFactory = new ZboziFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
             $this->productUrlsBatchLoaderMock,
-            $this->productParametersBatchLoaderMock,
+            $this->productParametersBatchLoaderStub,
             $this->categoryFacadeMock,
-            $productAvailabilityFacadeMock,
+            $productAvailabilityFacadeStub,
         );
 
-        $this->defaultDomain = $this->createDomainConfigMock(Domain::FIRST_DOMAIN_ID, 'https://example.cz', 'cs');
+        $this->defaultDomain = $this->createDomainConfigStub(Domain::FIRST_DOMAIN_ID, 'https://example.cz', 'cs');
 
         $this->defaultProduct = $this->createMock(Product::class);
-        $this->defaultProduct->method('getId')->willReturn(1);
-        $this->defaultProduct->method('getFullName')->with('cs')->willReturn('product name');
+        $this->defaultProduct->expects($this->any())->method('getId')->willReturn(1);
+        $this->defaultProduct->expects($this->any())->method('getFullName')->with('cs')->willReturn('product name');
 
-        $productPrice = new ProductPrice(Price::zero(), $this->createMock(PricingGroup::class), false);
+        $productPrice = new ProductPrice(Price::zero(), $this->createStub(PricingGroup::class), false);
         $productPricesResult = new ProductPricesResult($productPrice, $productPrice);
-        $this->productPriceCalculationForCustomerUserMock->method('calculatePricesForCustomerUserAndDomainId')
+        $this->productPriceCalculationForCustomerUserMock->expects($this->any())->method('calculatePricesForCustomerUserAndDomainId')
             ->with($this->defaultProduct, Domain::FIRST_DOMAIN_ID, null)->willReturn($productPricesResult);
 
-        $this->productUrlsBatchLoaderMock->method('getProductUrl')
+        $this->productUrlsBatchLoaderMock->expects($this->any())->method('getProductUrl')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn('https://example.com/product-1');
 
-        $this->categoryFacadeMock->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')
+        $this->categoryFacadeMock->expects($this->any())->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn(
                 ['category A', 'category B', 'category C'],
             );
     }
 
-    private function createDomainConfigMock(int $id, string $url, string $locale): DomainConfig
+    private function createDomainConfigStub(int $id, string $url, string $locale): DomainConfig
     {
-        $domainConfigMock = $this->createMock(DomainConfig::class);
+        $domainConfigStub = $this->createStub(DomainConfig::class);
 
-        $domainConfigMock->method('getId')->willReturn($id);
-        $domainConfigMock->method('getUrl')->willReturn($url);
-        $domainConfigMock->method('getLocale')->willReturn($locale);
+        $domainConfigStub->method('getId')->willReturn($id);
+        $domainConfigStub->method('getUrl')->willReturn($url);
+        $domainConfigStub->method('getLocale')->willReturn($locale);
 
-        return $domainConfigMock;
+        return $domainConfigStub;
     }
 
     public function testMinimalZboziFeedItemIsCreatable(): void
@@ -118,10 +119,10 @@ class ZboziFeedItemTest extends TestCase
 
     public function testZboziFeedItemWithGroupId(): void
     {
-        $mainVariantMock = $this->createMock(Product::class);
-        $mainVariantMock->method('getId')->willReturn(2);
-        $this->defaultProduct->method('isVariant')->willReturn(true);
-        $this->defaultProduct->method('getMainVariant')->willReturn($mainVariantMock);
+        $mainVariantStub = $this->createStub(Product::class);
+        $mainVariantStub->method('getId')->willReturn(2);
+        $this->defaultProduct->expects($this->any())->method('isVariant')->willReturn(true);
+        $this->defaultProduct->expects($this->any())->method('getMainVariant')->willReturn($mainVariantStub);
 
         $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);
 
@@ -130,7 +131,7 @@ class ZboziFeedItemTest extends TestCase
 
     public function testZboziFeedItemWithDescription(): void
     {
-        $this->defaultProduct->method('getDescriptionAsPlainText')
+        $this->defaultProduct->expects($this->any())->method('getDescriptionAsPlainText')
             ->with(1)->willReturn('product description');
 
         $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);
@@ -140,7 +141,7 @@ class ZboziFeedItemTest extends TestCase
 
     public function testZboziFeedItemWithImgUrl(): void
     {
-        $this->productUrlsBatchLoaderMock->method('getProductImageUrl')
+        $this->productUrlsBatchLoaderMock->expects($this->any())->method('getProductImageUrl')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn('https://example.com/img/product/1');
 
         $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);
@@ -150,7 +151,7 @@ class ZboziFeedItemTest extends TestCase
 
     public function testZboziFeedItemWithEan(): void
     {
-        $this->defaultProduct->method('getEan')->willReturn('1234567890123');
+        $this->defaultProduct->expects($this->any())->method('getEan')->willReturn('1234567890123');
 
         $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);
 
@@ -159,7 +160,7 @@ class ZboziFeedItemTest extends TestCase
 
     public function testZboziFeedItemWithProductno(): void
     {
-        $this->defaultProduct->method('getPartno')->willReturn('PN01-B');
+        $this->defaultProduct->expects($this->any())->method('getPartno')->willReturn('PN01-B');
 
         $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);
 
@@ -168,10 +169,9 @@ class ZboziFeedItemTest extends TestCase
 
     public function testZboziFeedItemWithManufacturer(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
-        $brand = $this->createMock(Brand::class);
+        $brand = $this->createStub(Brand::class);
         $brand->method('getName')->willReturn('manufacturer name');
-        $this->defaultProduct->method('getBrand')->willReturn($brand);
+        $this->defaultProduct->expects($this->any())->method('getBrand')->willReturn($brand);
 
         $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);
 
@@ -180,8 +180,10 @@ class ZboziFeedItemTest extends TestCase
 
     public function testZboziFeedItemWithParams(): void
     {
-        $this->productParametersBatchLoaderMock->method('getProductParametersByName')
-            ->with($this->defaultProduct, $this->defaultDomain)->willReturn(['color' => 'black']);
+        $this->productParametersBatchLoaderStub->method('getProductParametersByName')
+            ->willReturnMap([
+                [$this->defaultProduct, $this->defaultDomain, ['color' => 'black']],
+            ]);
 
         $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);
 

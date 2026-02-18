@@ -17,9 +17,9 @@ use Symfony\Component\Messenger\Worker;
 
 class CloseIdleConnectionSubscriberTest extends TestCase
 {
-    private ManagerRegistry|MockObject $managerRegistry;
+    private ManagerRegistry|MockObject $managerRegistryMock;
 
-    private RedisFacade|MockObject $redisFacade;
+    private RedisFacade|MockObject $redisFacadeMock;
 
     private CloseIdleConnectionSubscriber $subscriber;
 
@@ -28,13 +28,16 @@ class CloseIdleConnectionSubscriberTest extends TestCase
     {
         parent::setUp();
 
-        $this->managerRegistry = $this->createMock(ManagerRegistry::class);
-        $this->redisFacade = $this->createMock(RedisFacade::class);
-        $this->subscriber = new CloseIdleConnectionSubscriber($this->managerRegistry, $this->redisFacade);
+        $this->managerRegistryMock = $this->createMock(ManagerRegistry::class);
+        $this->redisFacadeMock = $this->createMock(RedisFacade::class);
+        $this->subscriber = new CloseIdleConnectionSubscriber($this->managerRegistryMock, $this->redisFacadeMock);
     }
 
     public function testGetSubscribedEvents(): void
     {
+        $this->managerRegistryMock->expects($this->never())->method('getConnections');
+        $this->redisFacadeMock->expects($this->never())->method('getConnections');
+
         $expected = [
             WorkerRunningEvent::class => 'onWorkerRunning',
         ];
@@ -49,12 +52,12 @@ class CloseIdleConnectionSubscriberTest extends TestCase
 
         $redisConnection = $this->createMock(Redis::class);
 
-        $this->managerRegistry
+        $this->managerRegistryMock
             ->expects($this->once())
             ->method('getConnections')
             ->willReturn([$dbConnection1, $dbConnection2]);
 
-        $this->redisFacade
+        $this->redisFacadeMock
             ->expects($this->once())
             ->method('getConnections')
             ->willReturn([$redisConnection]);
@@ -71,7 +74,7 @@ class CloseIdleConnectionSubscriberTest extends TestCase
             ->expects($this->once())
             ->method('close');
 
-        $worker = $this->createMock(Worker::class);
+        $worker = $this->createStub(Worker::class);
         $event = new WorkerRunningEvent($worker, true);
 
         $this->subscriber->onWorkerRunning($event);
@@ -79,15 +82,15 @@ class CloseIdleConnectionSubscriberTest extends TestCase
 
     public function testWhenWorkerIsNotIdle(): void
     {
-        $this->managerRegistry
+        $this->managerRegistryMock
             ->expects($this->never())
             ->method('getConnections');
 
-        $this->redisFacade
+        $this->redisFacadeMock
             ->expects($this->never())
             ->method('getConnections');
 
-        $worker = $this->createMock(Worker::class);
+        $worker = $this->createStub(Worker::class);
         $event = new WorkerRunningEvent($worker, false);
 
         $this->subscriber->onWorkerRunning($event);

@@ -57,27 +57,24 @@ class TransportPriceCalculationTest extends TestCase
         Money $priceWithoutVat,
         Money $priceWithVat,
     ): void {
-        $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->onlyMethods(['getInputPriceType'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $pricingSettingMock
-            ->expects($this->any())->method('getInputPriceType')
+        $pricingSettingStub = $this->createStub(PricingSetting::class);
+        $pricingSettingStub
+            ->method('getInputPriceType')
                 ->willReturn($inputPriceType);
 
         $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
-        $currencyFacadeMock = $this->createMock(CurrencyFacade::class);
+        $currencyFacadeStub = $this->createStub(CurrencyFacade::class);
         $currencyData = new CurrencyData();
         $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
-        $currencyFacadeMock
-            ->expects($this->any())->method('getDomainDefaultCurrencyByDomainId')
+        $currencyFacadeStub
+            ->method('getDomainDefaultCurrencyByDomainId')
             ->willReturn(new Currency($currencyData));
-        $transportPriceFacadeMock = $this->createMock(TransportPriceFacade::class);
-        $freeTransportAndPaymentFacadeMock = $this->createMock(FreeTransportAndPaymentFacade::class);
+        $transportPriceFacadeStub = $this->createStub(TransportPriceFacade::class);
+        $freeTransportAndPaymentFacadeStub = $this->createStub(FreeTransportAndPaymentFacade::class);
 
-        $transportPriceCalculation = new TransportPriceCalculation($basePriceCalculation, $pricingSettingMock, $currencyFacadeMock, $transportPriceFacadeMock, $freeTransportAndPaymentFacadeMock);
+        $transportPriceCalculation = new TransportPriceCalculation($basePriceCalculation, $pricingSettingStub, $currencyFacadeStub, $transportPriceFacadeStub, $freeTransportAndPaymentFacadeStub);
 
         $vatData = new VatData();
         $vatData->name = 'vat';

@@ -28,14 +28,11 @@ class PersistentReferenceFacadeTest extends TestCase
         $emMock->expects($this->never())->method('persist');
         $emMock->expects($this->never())->method('flush');
 
-        $persistentReferenceRepositoryMock = $this->getMockBuilder(PersistentReferenceRepository::class)
-            ->onlyMethods(['__construct'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $persistentReferenceRepositoryStub = $this->createStub(PersistentReferenceRepository::class);
 
         $persistentReferenceFacade = new PersistentReferenceFacade(
             $emMock,
-            $persistentReferenceRepositoryMock,
+            $persistentReferenceRepositoryStub,
             new PersistentReferenceFactory(new EntityNameResolver([])),
         );
         $this->expectException(MethodGetIdDoesNotExistException::class);
@@ -51,27 +48,20 @@ class PersistentReferenceFacadeTest extends TestCase
         $emMock->expects($this->atLeastOnce())->method('persist');
         $emMock->expects($this->atLeastOnce())->method('flush');
 
-        $persistentReferenceRepositoryMock = $this->getMockBuilder(PersistentReferenceRepository::class)
-            ->onlyMethods(['__construct', 'getByReferenceName'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $persistentReferenceRepositoryStub = $this->createStub(PersistentReferenceRepository::class);
 
         $expectedException = new PersistentReferenceNotFoundException('newReferenceName');
-        $persistentReferenceRepositoryMock->method('getByReferenceName')->willThrowException($expectedException);
+        $persistentReferenceRepositoryStub->method('getByReferenceName')->willThrowException($expectedException);
 
-        $productMock = $this->getMockBuilder(Product::class)
-            ->onlyMethods(['getId'])
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $productMock->expects($this->any())->method('getId')->willReturn(1);
+        $productStub = $this->createStub(Product::class);
+        $productStub->method('getId')->willReturn(1);
 
         $persistentReferenceFacade = new PersistentReferenceFacade(
             $emMock,
-            $persistentReferenceRepositoryMock,
+            $persistentReferenceRepositoryStub,
             new PersistentReferenceFactory(new EntityNameResolver([])),
         );
-        $persistentReferenceFacade->persistReference('newReferenceName', $productMock);
+        $persistentReferenceFacade->persistReference('newReferenceName', $productStub);
     }
 
     public function testGetReference(): void

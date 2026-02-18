@@ -33,25 +33,22 @@ class DateTimeFormatterExtensionTest extends TestCase
     #[DataProvider('formatDateDataProvider')]
     public function testFormatDate(mixed $input, mixed $locale, mixed $result): void
     {
-        $localizationMock = $this->createLocalizationMock($locale);
+        $localizationStub = $this->createLocalizationStub($locale);
         $dateTimeFormatter = $this->createDateTimeFormatter();
 
-        $dateTimeFormatterExtension = new DateTimeFormatterExtension($dateTimeFormatter, $localizationMock);
+        $dateTimeFormatterExtension = new DateTimeFormatterExtension($dateTimeFormatter, $localizationStub);
 
         $this->assertSame($result, $dateTimeFormatterExtension->formatDate($input));
     }
 
-    protected function createLocalizationMock(string $locale): Localization
+    protected function createLocalizationStub(string $locale): Localization
     {
-        $localizationMock = $this->getMockBuilder(Localization::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getRequestLocale'])
-            ->getMock();
+        $localizationStub = $this->createStub(Localization::class);
 
-        $localizationMock->expects($this->any())->method('getRequestLocale')
+        $localizationStub->method('getRequestLocale')
             ->willReturn($locale);
 
-        return $localizationMock;
+        return $localizationStub;
     }
 
     protected function createDateTimeFormatter(): DateTimeFormatter
@@ -64,16 +61,14 @@ class DateTimeFormatterExtensionTest extends TestCase
 
     private function getMockedDomain(): Domain
     {
-        $settingMock = $this->getMockBuilder(Setting::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $settingStub = $this->createStub(Setting::class);
         $domainConfig = DomainConfigHelper::getDomainConfig();
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         return new Domain(
             [$domainConfig],
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
     }
 }

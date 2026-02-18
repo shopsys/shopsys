@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Order\Processing\OrderProcessorMiddleware;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\MockObject\MockObject;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\ApplyNominalPromoCodeMiddleware;
@@ -114,15 +113,15 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
 
     private function createApplyNominalPromoCodeMiddleware(?Price $discountPrice): ApplyNominalPromoCodeMiddleware
     {
-        $currentPromoCodeFacade = $this->createMock(CurrentPromoCodeFacade::class);
+        $currentPromoCodeFacade = $this->createStub(CurrentPromoCodeFacade::class);
 
-        $promoCodeFacade = $this->createMock(PromoCodeFacade::class);
+        $promoCodeFacade = $this->createStub(PromoCodeFacade::class);
         $promoCodeFacade->method('getHighestLimitByPromoCodeAndTotalPrice')->willReturn(new PromoCodeLimit('1', '10'));
 
-        $discountCalculation = $this->createMock(DiscountCalculation::class);
+        $discountCalculation = $this->createStub(DiscountCalculation::class);
         $discountCalculation->method('calculateNominalDiscount')->willReturn($discountPrice);
 
-        $vatFacade = $this->createMock(VatFacade::class);
+        $vatFacade = $this->createStub(VatFacade::class);
 
         return new ApplyNominalPromoCodeMiddleware(
             $currentPromoCodeFacade,
@@ -130,13 +129,13 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
             $discountCalculation,
             $this->createOrderItemDataFactory(),
             $vatFacade,
-            $this->createCurrencyFacadeMock(),
+            $this->createCurrencyFacadeStub(),
         );
     }
 
-    private function createCurrencyMock(): Currency|MockObject
+    private function createCurrencyStub(): Currency
     {
-        $currency = $this->createMock(Currency::class);
+        $currency = $this->createStub(Currency::class);
         $currency->method('getCode')->willReturn('CZK');
         $currency->method('getRoundingType')->willReturn(Currency::DEFAULT_ROUNDING_TYPE);
         $currency->method('getRoundingPlacesPriceWithoutVat')->willReturn(Currency::DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT);
@@ -144,17 +143,14 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
         return $currency;
     }
 
-    private function createCurrencyFacadeMock(): CurrencyFacade|MockObject
+    private function createCurrencyFacadeStub(): CurrencyFacade
     {
-        $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)
-            ->onlyMethods(['getDomainDefaultCurrencyByDomainId'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $currencyFacadeStub = $this->createStub(CurrencyFacade::class);
 
-        $currencyFacadeMock->method('getDomainDefaultCurrencyByDomainId')->willReturn(
-            $this->createCurrencyMock(),
+        $currencyFacadeStub->method('getDomainDefaultCurrencyByDomainId')->willReturn(
+            $this->createCurrencyStub(),
         );
 
-        return $currencyFacadeMock;
+        return $currencyFacadeStub;
     }
 }

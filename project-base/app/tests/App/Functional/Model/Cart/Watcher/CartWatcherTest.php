@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory;
@@ -97,17 +98,15 @@ class CartWatcherTest extends TransactionFunctionalTestCase
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
-        $cartItemMock = $this->getMockBuilder(CartItem::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods([])
-            ->getMock();
+        $cartItemStub = $this->createStub(CartItem::class);
+        $cartItemStub->method('getProduct')->willThrowException(new ProductNotFoundException());
 
-        $currentCustomerUserMock = $this->createCustomerUserMock();
+        $currentCustomerUserStub = $this->createCustomerUserStub();
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
-        $cart->addItem($cartItemMock);
+        $cart->addItem($cartItemStub);
 
-        $notListableItems = $this->cartWatcher->getNotListableItems($cart, $currentCustomerUserMock);
+        $notListableItems = $this->cartWatcher->getNotListableItems($cart, $currentCustomerUserStub);
         $this->assertCount(1, $notListableItems);
     }
 
@@ -120,23 +119,23 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $productData->name = [];
         $this->setVatsAndPrices($productData);
 
-        $cartItemMock = $this->createCartItemMock($productData);
+        $cartItemStub = $this->createCartItemStub($productData);
 
-        $currentCustomerUserMock = $this->createCustomerUserMock();
+        $currentCustomerUserStub = $this->createCustomerUserStub();
 
-        $productVisibilityFacadeMock = $this->createProductVisibilityFacadeMock();
+        $productVisibilityFacadeStub = $this->createProductVisibilityFacadeStub();
 
         $cartWatcher = new CartWatcher(
             $this->productPriceCalculationForCustomerUser,
-            $productVisibilityFacadeMock,
+            $productVisibilityFacadeStub,
             $this->domain,
             $this->giftPlanSettingFacade,
         );
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
-        $cart->addItem($cartItemMock);
+        $cart->addItem($cartItemStub);
 
-        $notListableItems = $cartWatcher->getNotListableItems($cart, $currentCustomerUserMock);
+        $notListableItems = $cartWatcher->getNotListableItems($cart, $currentCustomerUserStub);
         $this->assertCount(1, $notListableItems);
     }
 
@@ -150,23 +149,20 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         }
     }
 
-    public function createCartItemMock(ProductData $productData): CartItem
+    public function createCartItemStub(ProductData $productData): CartItem
     {
         $product = Product::create($productData);
 
-        $cartItemMock = $this->getMockBuilder(CartItem::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getProduct'])
-            ->getMock();
+        $cartItemStub = $this->createStub(CartItem::class);
 
-        $cartItemMock
+        $cartItemStub
             ->method('getProduct')
             ->willReturn($product);
 
-        return $cartItemMock;
+        return $cartItemStub;
     }
 
-    public function createCustomerUserMock(): CurrentCustomerUser
+    public function createCustomerUserStub(): CurrentCustomerUser
     {
         $expectedPricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
@@ -174,38 +170,29 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             PricingGroup::class,
         );
 
-        $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getPricingGroup'])
-            ->getMock();
+        $currentCustomerUserStub = $this->createStub(CurrentCustomerUser::class);
 
-        $currentCustomerUserMock
+        $currentCustomerUserStub
             ->method('getPricingGroup')
             ->willReturn($expectedPricingGroup);
 
-        return $currentCustomerUserMock;
+        return $currentCustomerUserStub;
     }
 
-    public function createProductVisibilityFacadeMock(): ProductVisibilityFacade
+    public function createProductVisibilityFacadeStub(): ProductVisibilityFacade
     {
-        $productVisibilityMock = $this->getMockBuilder(ProductVisibility::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['isVisible'])
-            ->getMock();
+        $productVisibilityStub = $this->createStub(ProductVisibility::class);
 
-        $productVisibilityMock
+        $productVisibilityStub
             ->method('isVisible')
             ->willReturn(true);
 
-        $productVisibilityFacadeMock = $this->getMockBuilder(ProductVisibilityFacade::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getProductVisibility'])
-            ->getMock();
+        $productVisibilityFacadeStub = $this->createStub(ProductVisibilityFacade::class);
 
-        $productVisibilityFacadeMock
+        $productVisibilityFacadeStub
             ->method('getProductVisibility')
-            ->willReturn($productVisibilityMock);
+            ->willReturn($productVisibilityStub);
 
-        return $productVisibilityFacadeMock;
+        return $productVisibilityFacadeStub;
     }
 }

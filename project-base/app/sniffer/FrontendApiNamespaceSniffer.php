@@ -18,7 +18,7 @@ class FrontendApiNamespaceSniffer implements Sniff
     private const FRONTEND_API_NAMESPACE_PART = 'FrontendApi';
 
     /**
-     * @return array
+     * @return array<int|string>
      */
     public function register(): array
     {

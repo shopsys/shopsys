@@ -16,7 +16,7 @@ class OrderProcessingTest extends TestCase
 {
     public function testAllMiddlewaresAreCalledInStack(): void
     {
-        $orderProcessingData = $this->createMock(OrderProcessingData::class);
+        $orderProcessingData = $this->createStub(OrderProcessingData::class);
 
         $nullMiddleware = $this->createMiddlewareInstance($orderProcessingData, 3);
 
@@ -31,7 +31,7 @@ class OrderProcessingTest extends TestCase
 
     public function testProcessingStackIsRewindOnConsecutiveCalls(): void
     {
-        $orderProcessingData = $this->createMock(OrderProcessingData::class);
+        $orderProcessingData = $this->createStub(OrderProcessingData::class);
 
         // the handle method is called 3 times for each process() call
         $nullMiddleware = $this->createMiddlewareInstance($orderProcessingData, 6);
@@ -43,8 +43,8 @@ class OrderProcessingTest extends TestCase
         ]);
 
         $orderProcessor = new OrderProcessor($orderProcessingStack);
-        $orderInput = $this->createMock(OrderInput::class);
-        $orderData = $this->createMock(OrderData::class);
+        $orderInput = $this->createStub(OrderInput::class);
+        $orderData = $this->createStub(OrderData::class);
 
         $orderProcessor->process($orderInput, $orderData);
         $orderProcessor->process($orderInput, $orderData);
@@ -55,7 +55,7 @@ class OrderProcessingTest extends TestCase
         int $expectedHandleMethodCalls,
     ): OrderProcessorMiddlewareInterface {
         $nullMiddleware = $this->createMock(OrderProcessorMiddlewareInterface::class);
-        $nullMiddleware->method('handle')
+        $nullMiddleware->expects($this->any())->method('handle')
             ->with($this->isInstanceOf(OrderProcessingData::class), $this->isInstanceOf(OrderProcessingStack::class))
             ->willReturnCallback(function (OrderProcessingData $orderProcessingData, OrderProcessingStack $orderProcessingStack) {
                 return $orderProcessingStack->processNext($orderProcessingData);

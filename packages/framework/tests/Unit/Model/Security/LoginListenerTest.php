@@ -37,35 +37,25 @@ class LoginListenerTest extends TestCase
 
     protected function callOnSecurityInteractiveLogin(Administrator $administratorMock): LoginListener
     {
-        $emMock = $this->getMockBuilder(EntityManager::class)
-            ->onlyMethods(['__construct', 'persist', 'flush'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $emStub = $this->createStub(EntityManager::class);
 
         $tokenMock = $this->createMock(TokenInterface::class);
         $tokenMock->expects($this->once())->method('getUser')->willReturn($administratorMock);
 
-        $administratorActivityFacadeMock = $this->getMockBuilder(AdministratorActivityFacade::class)
-            ->onlyMethods(['create'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $administratorActivityFacadeStub = $this->createStub(AdministratorActivityFacade::class);
 
-        $clockMock = $this->createMock(ClockInterface::class);
+        $clockStub = $this->createStub(ClockInterface::class);
 
-        $loginListener = new LoginListener($emMock, $administratorActivityFacadeMock, $clockMock);
+        $loginListener = new LoginListener($emStub, $administratorActivityFacadeStub, $clockStub);
 
-        $authenticatorMock = $this->getMockBuilder(AuthenticatorInterface::class)
-            ->getMock();
+        $authenticatorStub = $this->createStub(AuthenticatorInterface::class);
 
-        $passportMock = $this->getMockBuilder(Passport::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $passportStub = $this->createStub(Passport::class);
 
-        $responseMock = $this->getMockBuilder(Response::class)
-            ->getMock();
+        $responseStub = $this->createStub(Response::class);
 
         $request = new Request([], [], [], [], [], ['REMOTE_ADDR' => '127.0.0.1']);
-        $loginListener->onSecurityInteractiveLogin(new LoginSuccessEvent($authenticatorMock, $passportMock, $tokenMock, $request, $responseMock, 'test-firewall'));
+        $loginListener->onSecurityInteractiveLogin(new LoginSuccessEvent($authenticatorStub, $passportStub, $tokenMock, $request, $responseStub, 'test-firewall'));
 
         return $loginListener;
     }

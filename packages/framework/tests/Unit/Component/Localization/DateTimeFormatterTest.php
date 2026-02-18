@@ -64,19 +64,17 @@ class DateTimeFormatterTest extends TestCase
 
     private function getMockedDomain(string $dateTimeZoneString): Domain
     {
-        $settingMock = $this->getMockBuilder(Setting::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $settingStub = $this->createStub(Setting::class);
         $domainConfig = DomainConfigHelper::getDomainConfig(
             dateTimeZoneString: $dateTimeZoneString,
         );
 
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         return new Domain(
             [$domainConfig],
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
     }
 }

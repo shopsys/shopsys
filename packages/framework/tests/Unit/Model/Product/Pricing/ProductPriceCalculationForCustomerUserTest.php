@@ -25,9 +25,9 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
 {
     public function testCalculatePriceByUserAndDomainIdWithUser(): void
     {
-        $customerMock = $this->createMock(Customer::class);
+        $customerStub = $this->createStub(Customer::class);
 
-        $product = $this->createMock(Product::class);
+        $product = $this->createStub(Product::class);
 
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
@@ -37,15 +37,15 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
         $customerUserData->pricingGroup = $pricingGroup;
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
-        $customerUserData->customer = $customerMock;
+        $customerUserData->customer = $customerStub;
         $customerUserData->firstName = 'firstName';
         $customerUserData->lastName = 'lastName';
 
         $customerUser = new CustomerUser($customerUserData);
         $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), $pricingGroup, false);
 
-        $currentCustomerUserMock = $this->createMock(CurrentCustomerUser::class);
-        $pricingGroupSettingFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
+        $currentCustomerUserStub = $this->createStub(CurrentCustomerUser::class);
+        $pricingGroupSettingFacadeStub = $this->createStub(PricingGroupSettingFacade::class);
 
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
             ->onlyMethods(['calculatePrice'])
@@ -55,16 +55,16 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $expectedProductPrice,
         );
 
-        $specialPriceFacadeMock = $this->createMock(SpecialPriceFacade::class);
+        $specialPriceFacadeStub = $this->createStub(SpecialPriceFacade::class);
 
-        $domainMock = $this->createMock(Domain::class);
+        $domainStub = $this->createStub(Domain::class);
 
         $productPriceCalculationForCustomerUser = new ProductPriceCalculationForCustomerUser(
             $productPriceCalculationMock,
-            $currentCustomerUserMock,
-            $pricingGroupSettingFacadeMock,
-            $domainMock,
-            $specialPriceFacadeMock,
+            $currentCustomerUserStub,
+            $pricingGroupSettingFacadeStub,
+            $domainStub,
+            $specialPriceFacadeStub,
         );
 
         $productPrice = $productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
@@ -78,13 +78,13 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
     public function testCalculatePriceByUserAndDomainIdWithoutUser(): void
     {
         $domainId = Domain::FIRST_DOMAIN_ID;
-        $product = $this->createMock(Product::class);
+        $product = $this->createStub(Product::class);
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
         $pricingGroup = new PricingGroup($pricingGroupData, $domainId);
         $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), $pricingGroup, false);
 
-        $currentCustomerUserMock = $this->createMock(CurrentCustomerUser::class);
+        $currentCustomerUserStub = $this->createStub(CurrentCustomerUser::class);
 
         $pricingGroupFacadeMock = $this->getMockBuilder(PricingGroupSettingFacade::class)
             ->onlyMethods(['getDefaultPricingGroupByDomainId'])
@@ -104,16 +104,16 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $expectedProductPrice,
         );
 
-        $specialPriceFacadeMock = $this->createMock(SpecialPriceFacade::class);
+        $specialPriceFacadeStub = $this->createStub(SpecialPriceFacade::class);
 
-        $domainMock = $this->createMock(Domain::class);
+        $domainStub = $this->createStub(Domain::class);
 
         $productPriceCalculationForCustomerUser = new ProductPriceCalculationForCustomerUser(
             $productPriceCalculationMock,
-            $currentCustomerUserMock,
+            $currentCustomerUserStub,
             $pricingGroupFacadeMock,
-            $domainMock,
-            $specialPriceFacadeMock,
+            $domainStub,
+            $specialPriceFacadeStub,
         );
 
         $productPrice = $productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(

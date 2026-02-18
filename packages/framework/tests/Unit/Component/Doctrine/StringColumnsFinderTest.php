@@ -14,14 +14,14 @@ class StringColumnsFinderTest extends TestCase
 {
     public function testGetAllStringColumnNamesIndexedByTableName(): void
     {
-        $classMetadataInfoMock = $this->createMock(ClassMetadataInfo::class);
-        $classMetadataInfoMock
+        $classMetadataInfoStub = $this->createStub(ClassMetadataInfo::class);
+        $classMetadataInfoStub
             ->method('getTableName')
             ->willReturn('EntityName');
-        $classMetadataInfoMock
+        $classMetadataInfoStub
             ->method('getFieldNames')
             ->willReturn(['stringField', 'textField', 'otherField']);
-        $classMetadataInfoMock
+        $classMetadataInfoStub
             ->method('getTypeOfField')
             ->willReturnCallback(function ($fieldName) {
                 if ($fieldName === 'stringField') {
@@ -34,7 +34,7 @@ class StringColumnsFinderTest extends TestCase
 
                 return 'other';
             });
-        $classMetadataInfoMock
+        $classMetadataInfoStub
             ->method('getColumnName')
             ->willReturnCallback(function ($fieldName) {
                 if ($fieldName === 'stringField') {
@@ -54,17 +54,17 @@ class StringColumnsFinderTest extends TestCase
         ];
 
         $stringColumnsFinder = new StringColumnsFinder();
-        $actualResult = $stringColumnsFinder->getAllStringColumnNamesIndexedByTableName([$classMetadataInfoMock]);
+        $actualResult = $stringColumnsFinder->getAllStringColumnNamesIndexedByTableName([$classMetadataInfoStub]);
 
         $this->assertSame($expectedResult, $actualResult);
     }
 
     public function testGetAllStringColumnNamesIndexedByTableNameException(): void
     {
-        $classMetadataMock = $this->createMock(ClassMetadata::class);
+        $classMetadataStub = $this->createStub(ClassMetadata::class);
         $this->expectException(UnexpectedTypeException::class);
 
         $stringColumnsFinder = new StringColumnsFinder();
-        $stringColumnsFinder->getAllStringColumnNamesIndexedByTableName([$classMetadataMock]);
+        $stringColumnsFinder->getAllStringColumnNamesIndexedByTableName([$classMetadataStub]);
     }
 }

@@ -37,11 +37,11 @@ class AccessCheckerTest extends TestCase
             ->with($expectedRoleIdentifier);
 
         $roleRegistry = $this->createMock(RoleRegistryInterface::class);
-        $roleRegistry->method('getRole')
+        $roleRegistry->expects($this->any())->method('getRole')
             ->with($roleConstant, AdminContext::class)
             ->willReturn($role);
 
-        $routeAccessChecker = $this->createMock(RouteAccessCheckerInterface::class);
+        $routeAccessChecker = $this->createStub(RouteAccessCheckerInterface::class);
 
         $accessChecker = new AccessChecker($authorizationChecker, $roleRegistry, $routeAccessChecker);
 

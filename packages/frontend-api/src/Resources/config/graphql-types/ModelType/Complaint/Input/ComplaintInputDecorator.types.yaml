@@ -12,7 +12,7 @@ ComplaintInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Order is required"
-                            groups: "withOrder"
+                            groups: ["withOrder"]
             manualDocumentNumber:
                 type: "String"
                 defaultValue: null
@@ -20,7 +20,7 @@ ComplaintInputDecorator:
                 validation:
                     -   NotBlank:
                             message: "Order or document number is required"
-                            groups: "withoutOrder"
+                            groups: ["withoutOrder"]
                     -   Length:
                             max: 255
                             maxMessage: "Order or document number cannot be longer than {{ limit }} characters"

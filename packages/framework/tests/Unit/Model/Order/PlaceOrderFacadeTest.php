@@ -27,7 +27,7 @@ class PlaceOrderFacadeTest extends TestCase
     public function testTwoItemsWithSamePromoCodeDecreasesOnlyOnce(): void
     {
         $promoCode = $this->createMock(PromoCode::class);
-        $promoCode->method('getId')->willReturn(1);
+        $promoCode->expects($this->any())->method('getId')->willReturn(1);
         $promoCode->expects($this->once())->method('decreaseRemainingUses');
 
         $discountItem1 = new OrderItemData();
@@ -49,11 +49,11 @@ class PlaceOrderFacadeTest extends TestCase
     public function testTwoItemsWithDifferentPromoCodesDecreasesBoth(): void
     {
         $promoCode1 = $this->createMock(PromoCode::class);
-        $promoCode1->method('getId')->willReturn(1);
+        $promoCode1->expects($this->any())->method('getId')->willReturn(1);
         $promoCode1->expects($this->once())->method('decreaseRemainingUses');
 
         $promoCode2 = $this->createMock(PromoCode::class);
-        $promoCode2->method('getId')->willReturn(2);
+        $promoCode2->expects($this->any())->method('getId')->willReturn(2);
         $promoCode2->expects($this->once())->method('decreaseRemainingUses');
 
         $discountItem1 = new OrderItemData();
@@ -75,11 +75,11 @@ class PlaceOrderFacadeTest extends TestCase
     public function testThreeItemsWithTwoPromoCodesDecreasesBothOnce(): void
     {
         $promoCode1 = $this->createMock(PromoCode::class);
-        $promoCode1->method('getId')->willReturn(1);
+        $promoCode1->expects($this->any())->method('getId')->willReturn(1);
         $promoCode1->expects($this->once())->method('decreaseRemainingUses');
 
         $promoCode2 = $this->createMock(PromoCode::class);
-        $promoCode2->method('getId')->willReturn(2);
+        $promoCode2->expects($this->any())->method('getId')->willReturn(2);
         $promoCode2->expects($this->once())->method('decreaseRemainingUses');
 
         $discountItem1 = new OrderItemData();
@@ -104,27 +104,27 @@ class PlaceOrderFacadeTest extends TestCase
 
     private function createPlaceOrderFacadeMock(): PlaceOrderFacade
     {
-        $order = $this->createMock(Order::class);
+        $order = $this->createStub(Order::class);
         $order->method('getId')->willReturn(1);
         $order->method('getCustomerUser')->willReturn(null);
 
         $placeOrderFacade = $this->getMockBuilder(PlaceOrderFacade::class)
             ->setConstructorArgs([
-                $this->createMock(OrderStatusRepository::class),
-                $this->createMock(OrderNumberSequenceRepository::class),
-                $this->createMock(OrderHashGeneratorRepository::class),
-                $this->createMock(OrderFactory::class),
-                $this->createMock(EntityManagerInterface::class),
-                $this->createMock(OrderItemFactory::class),
-                $this->createMock(PlacedOrderMessageDispatcher::class),
-                $this->createMock(NewsletterFacade::class),
-                $this->createMock(CustomerUserFacade::class),
-                $this->createMock(PromoCodeFacade::class),
+                $this->createStub(OrderStatusRepository::class),
+                $this->createStub(OrderNumberSequenceRepository::class),
+                $this->createStub(OrderHashGeneratorRepository::class),
+                $this->createStub(OrderFactory::class),
+                $this->createStub(EntityManagerInterface::class),
+                $this->createStub(OrderItemFactory::class),
+                $this->createStub(PlacedOrderMessageDispatcher::class),
+                $this->createStub(NewsletterFacade::class),
+                $this->createStub(CustomerUserFacade::class),
+                $this->createStub(PromoCodeFacade::class),
             ])
             ->onlyMethods(['createOrderOnly'])
             ->getMock();
 
-        $placeOrderFacade->method('createOrderOnly')->willReturn($order);
+        $placeOrderFacade->expects($this->atLeastOnce())->method('createOrderOnly')->willReturn($order);
 
         return $placeOrderFacade;
     }

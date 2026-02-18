@@ -60,9 +60,9 @@ class OrderDeliveryDateFacadeTest extends TestCase
 
     private function createOrderDeliveryDateFacade(): OrderDeliveryDateFacade
     {
-        $emMock = $this->createMock(EntityManagerInterface::class);
+        $emStub = $this->createStub(EntityManagerInterface::class);
 
-        return new OrderDeliveryDateFacade($emMock, Clock::get());
+        return new OrderDeliveryDateFacade($emStub, Clock::get());
     }
 
     private function createOrderStatus(string $type): OrderStatus
@@ -78,8 +78,8 @@ class OrderDeliveryDateFacadeTest extends TestCase
         bool $expectSetDeliveredAtCall,
     ): Order|MockObject {
         $orderMock = $this->createMock(Order::class);
-        $orderMock->method('getStatus')->willReturn($orderStatus);
-        $orderMock->method('getDeliveredAt')->willReturn($deliveredAt);
+        $orderMock->expects($this->any())->method('getStatus')->willReturn($orderStatus);
+        $orderMock->expects($this->any())->method('getDeliveredAt')->willReturn($deliveredAt);
 
         if ($expectSetDeliveredAtCall) {
             $orderMock->expects($this->once())->method('setDeliveredAt');

@@ -64,14 +64,12 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
             ->getMock();
         $inputPriceRecalculatorMock->expects($this->never())->method('recalculateToInputPricesWithoutVat');
         $inputPriceRecalculatorMock->expects($this->never())->method('recalculateToInputPricesWithVat');
-        $productRecalculationDispatcherMock = $this->getMockBuilder(ProductRecalculationDispatcher::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $productRecalculationDispatcherStub = $this->createStub(ProductRecalculationDispatcher::class);
 
         $inputPriceRecalculationScheduler = new InputPriceRecalculationScheduler(
             $inputPriceRecalculatorMock,
             $this->setting,
-            $productRecalculationDispatcherMock,
+            $productRecalculationDispatcherStub,
         );
 
         $responseEvent = new ResponseEvent(

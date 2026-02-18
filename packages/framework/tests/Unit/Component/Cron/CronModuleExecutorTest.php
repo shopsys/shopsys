@@ -20,7 +20,7 @@ class CronModuleExecutorTest extends TestCase
     {
         $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
         $cronModuleServiceMock->expects($this->once())->method('sleep');
-        $cronModuleServiceMock->method('iterate')->willReturnCallback(function () {
+        $cronModuleServiceMock->expects($this->any())->method('iterate')->willReturnCallback(function () {
             usleep(1000);
 
             return true;
@@ -72,7 +72,7 @@ class CronModuleExecutorTest extends TestCase
     {
         $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
         $cronModuleServiceMock->expects($this->once())->method('wakeUp');
-        $cronModuleServiceMock->method('iterate')->willReturn(false);
+        $cronModuleServiceMock->expects($this->any())->method('iterate')->willReturn(false);
 
         $cronModuleExecutor = $this->getCronModuleExecutor([
             get_class($cronModuleServiceMock) => $cronModuleServiceMock,
@@ -86,7 +86,7 @@ class CronModuleExecutorTest extends TestCase
         $cronTimeResolver = new CronTimeResolver();
         $cronConfig = new CronConfig($cronTimeResolver);
 
-        $loggerMock = $this->createMock(Logger::class);
+        $loggerStub = $this->createStub(Logger::class);
         $bytesHelper = new BytesHelper();
 
         foreach ($servicesIndexedById as $serviceId => $service) {
@@ -103,6 +103,6 @@ class CronModuleExecutorTest extends TestCase
             );
         }
 
-        return new CronModuleExecutor($cronConfig, $loggerMock, $bytesHelper, Clock::get());
+        return new CronModuleExecutor($cronConfig, $loggerStub, $bytesHelper, Clock::get());
     }
 }

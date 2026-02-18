@@ -33,20 +33,20 @@ class DirectoryStructureCreatorTest extends TestCase
             ),
         ];
         $imageConfig = new ImageConfig($imageEntityConfigByClass, new EntityNameResolver([]));
-        $filesystemMock = $this->createMock(FilesystemOperator::class);
-        $filesystemMock
+        $filesystemStub = $this->createStub(FilesystemOperator::class);
+        $filesystemStub
             ->method('createDirectory')
             ->willReturnMap([
                 ['imageDir/entityName1'],
                 ['imageDir/entityName2/type'],
             ]);
-        $imageLocator = new ImageLocator($imageDir, $imageConfig, $filesystemMock);
+        $imageLocator = new ImageLocator($imageDir, $imageConfig, $filesystemStub);
         $creator = new DirectoryStructureCreator(
             $imageDir,
             $domainImageDir,
             $imageConfig,
             $imageLocator,
-            $filesystemMock,
+            $filesystemStub,
         );
         $creator->makeImageDirectories();
     }

@@ -13,11 +13,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'shopsys:entities:dump',
+    name: EntitiesDumpCommand::COMMAND_NAME,
     description: 'Dump entities filepaths for use in coding standards',
 )]
 class EntitiesDumpCommand extends Command
 {
+    public const string COMMAND_NAME = 'shopsys:entities:dump';
     public const string OUTPUT_FILE = 'entities-dump.json';
 
     public function __construct(

@@ -114,22 +114,20 @@ class TokenFacadeTest extends TestCase
     {
         $domain = $this->createDomain();
 
-        $customerUserFacade = $this->createMock(CustomerUserFacade::class);
-        $jwtConfigurationProvider = $this->getMockBuilder(JwtConfigurationProvider::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $jwtConfigurationProvider->method('getConfiguration')
+        $customerUserFacadeStub = $this->createStub(CustomerUserFacade::class);
+        $jwtConfigurationProviderStub = $this->createStub(JwtConfigurationProvider::class);
+        $jwtConfigurationProviderStub->method('getConfiguration')
             ->willReturn($this->createJwtConfiguration());
 
-        $clock = $this->createMock(ClockInterface::class);
-        $clock->method('now')->willReturn(new DatePoint());
+        $clockStub = $this->createStub(ClockInterface::class);
+        $clockStub->method('now')->willReturn(new DatePoint());
 
         return new TokenFacade(
             $domain,
-            $customerUserFacade,
-            $jwtConfigurationProvider,
+            $customerUserFacadeStub,
+            $jwtConfigurationProviderStub,
             new TokenCustomerUserTransformer(),
-            $clock,
+            $clockStub,
         );
     }
 
@@ -144,13 +142,13 @@ class TokenFacadeTest extends TestCase
     private function createDomain(): Domain
     {
         $domainConfig = DomainConfigHelper::getDomainConfig();
-        $setting = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             [$domainConfig],
-            $setting,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
         $domain->switchDomainById(1);

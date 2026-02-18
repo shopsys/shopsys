@@ -20,19 +20,19 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
 {
     public function testCreateNewUnique(): void
     {
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             [DomainConfigHelper::getDomainConfig()],
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
-        $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
+        $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryStub),
             $domain,
         );
 
@@ -52,19 +52,19 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
 
     public function testCreateOldUnique(): void
     {
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             [DomainConfigHelper::getDomainConfig()],
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
-        $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
+        $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryStub),
             $domain,
         );
 
@@ -87,19 +87,19 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
 
     public function testCreateNotUnique(): void
     {
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             [DomainConfigHelper::getDomainConfig()],
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
-        $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
+        $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryStub),
             $domain,
         );
 
@@ -126,8 +126,8 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
 
     public function testCreateNotUniqueWhenSlugConflictsWithAnotherDomainPostfix(): void
     {
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             [
@@ -140,14 +140,14 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
                     postfix: '/sk',
                 ),
             ],
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
-        $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
+        $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryStub),
             $domain,
         );
 

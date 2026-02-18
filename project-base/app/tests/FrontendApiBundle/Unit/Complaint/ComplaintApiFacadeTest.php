@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
@@ -35,46 +36,46 @@ class ComplaintApiFacadeTest extends TestCase
 
     private MockObject $em;
 
-    private MockObject $complaintFactory;
+    private Stub $complaintFactory;
 
-    private MockObject $customerUploadedFileFacade;
+    private Stub $customerUploadedFileFacade;
 
-    private MockObject $complaintItemFactory;
+    private Stub $complaintItemFactory;
 
-    private MockObject $complaintNumberSequenceRepository;
+    private Stub $complaintNumberSequenceRepository;
 
     private MockObject $orderApiFacade;
 
     private MockObject $orderItemApiFacade;
 
-    private MockObject $currentCustomerUser;
+    private Stub $currentCustomerUser;
 
-    private MockObject $complaintDataApiFactory;
+    private Stub $complaintDataApiFactory;
 
-    private MockObject $complaintItemDataApiFactory;
+    private Stub $complaintItemDataApiFactory;
 
-    private MockObject $complaintMailFacade;
+    private Stub $complaintMailFacade;
 
-    private MockObject $complaintRepository;
+    private Stub $complaintRepository;
 
-    private MockObject $withdrawalRequestFacade;
+    private Stub $withdrawalRequestFacade;
 
     #[Override]
     protected function setUp(): void
     {
         $this->em = $this->createMock(EntityManagerInterface::class);
-        $this->complaintFactory = $this->createMock(ComplaintFactory::class);
-        $this->customerUploadedFileFacade = $this->createMock(CustomerUploadedFileFacade::class);
-        $this->complaintItemFactory = $this->createMock(ComplaintItemFactory::class);
-        $this->complaintNumberSequenceRepository = $this->createMock(ComplaintNumberSequenceRepository::class);
+        $this->complaintFactory = $this->createStub(ComplaintFactory::class);
+        $this->customerUploadedFileFacade = $this->createStub(CustomerUploadedFileFacade::class);
+        $this->complaintItemFactory = $this->createStub(ComplaintItemFactory::class);
+        $this->complaintNumberSequenceRepository = $this->createStub(ComplaintNumberSequenceRepository::class);
         $this->orderApiFacade = $this->createMock(OrderApiFacade::class);
         $this->orderItemApiFacade = $this->createMock(OrderItemApiFacade::class);
-        $this->currentCustomerUser = $this->createMock(CurrentCustomerUser::class);
-        $this->complaintDataApiFactory = $this->createMock(ComplaintDataApiFactory::class);
-        $this->complaintItemDataApiFactory = $this->createMock(ComplaintItemDataApiFactory::class);
-        $this->complaintMailFacade = $this->createMock(ComplaintMailFacade::class);
-        $this->complaintRepository = $this->createMock(ComplaintRepository::class);
-        $this->withdrawalRequestFacade = $this->createMock(WithdrawalRequestFacade::class);
+        $this->currentCustomerUser = $this->createStub(CurrentCustomerUser::class);
+        $this->complaintDataApiFactory = $this->createStub(ComplaintDataApiFactory::class);
+        $this->complaintItemDataApiFactory = $this->createStub(ComplaintItemDataApiFactory::class);
+        $this->complaintMailFacade = $this->createStub(ComplaintMailFacade::class);
+        $this->complaintRepository = $this->createStub(ComplaintRepository::class);
+        $this->withdrawalRequestFacade = $this->createStub(WithdrawalRequestFacade::class);
 
         $this->complaintApiFacade = new ComplaintApiFacade(
             $this->em,
@@ -97,22 +98,22 @@ class ComplaintApiFacadeTest extends TestCase
     {
         $argument = self::getCreateFromComplaintInputArgument();
 
-        $order = $this->createMock(Order::class);
-        $customerUser = $this->createMock(CustomerUser::class);
-        $complaintData = $this->createMock(ComplaintData::class);
-        $complaint = $this->createMock(Complaint::class);
+        $order = $this->createStub(Order::class);
+        $customerUser = $this->createStub(CustomerUser::class);
+        $complaintData = $this->createStub(ComplaintData::class);
+        $complaint = $this->createStub(Complaint::class);
 
-        $this->orderApiFacade->method('getByUuid')->with('order-uuid')->willReturn($order);
+        $this->orderApiFacade->expects($this->any())->method('getByUuid')->with('order-uuid')->willReturn($order);
         $this->currentCustomerUser->method('findCurrentCustomerUser')->willReturn($customerUser);
         $order->method('getCustomerUser')->willReturn($customerUser);
 
         $this->complaintNumberSequenceRepository->method('getNextNumber')->willReturn('123');
-        $orderItemMock = $this->createMock(OrderItem::class);
-        $orderItemMock->method('getOrder')->willReturn($order);
-        $orderItemMock->method('getQuantity')->willReturn(1);
+        $orderItemStub = $this->createStub(OrderItem::class);
+        $orderItemStub->method('getOrder')->willReturn($order);
+        $orderItemStub->method('getQuantity')->willReturn(1);
 
-        $this->orderItemApiFacade->method('findMappedByUuid')->with(['item-uuid'])
-            ->willReturn(['item-uuid' => $orderItemMock]);
+        $this->orderItemApiFacade->expects($this->any())->method('findMappedByUuid')
+            ->with(['item-uuid'])->willReturn(['item-uuid' => $orderItemStub]);
 
         $this->complaintDataApiFactory->method('createFromComplaintInputArgument')
             ->willReturn($complaintData);
@@ -129,29 +130,29 @@ class ComplaintApiFacadeTest extends TestCase
     {
         $argument = self::getCreateFromComplaintInputArgument();
 
-        $order = $this->createMock(Order::class);
-        $customerUser = $this->createMock(CustomerUser::class);
-        $customer = $this->createMock(Customer::class);
-        $orderCustomerUser = $this->createMock(CustomerUser::class);
+        $order = $this->createStub(Order::class);
+        $customerUser = $this->createStub(CustomerUser::class);
+        $customer = $this->createStub(Customer::class);
+        $orderCustomerUser = $this->createStub(CustomerUser::class);
 
-        $complaintData = $this->createMock(ComplaintData::class);
-        $complaint = $this->createMock(Complaint::class);
+        $complaintData = $this->createStub(ComplaintData::class);
+        $complaint = $this->createStub(Complaint::class);
 
         $customerUser->method('getCustomer')->willReturn($customer);
 
-        $this->orderApiFacade->method('getByUuid')->with('order-uuid')->willReturn($order);
+        $this->orderApiFacade->expects($this->any())->method('getByUuid')->with('order-uuid')->willReturn($order);
         $this->currentCustomerUser->method('findCurrentCustomerUser')->willReturn($customerUser);
 
         $order->method('getCustomerUser')->willReturn($orderCustomerUser);
         $order->method('getCustomer')->willReturn($customer);
 
         $this->complaintNumberSequenceRepository->method('getNextNumber')->willReturn('123');
-        $orderItemMock = $this->createMock(OrderItem::class);
-        $orderItemMock->method('getOrder')->willReturn($order);
-        $orderItemMock->method('getQuantity')->willReturn(1);
+        $orderItemStub = $this->createStub(OrderItem::class);
+        $orderItemStub->method('getOrder')->willReturn($order);
+        $orderItemStub->method('getQuantity')->willReturn(1);
 
-        $this->orderItemApiFacade->method('findMappedByUuid')->with(['item-uuid'])
-            ->willReturn(['item-uuid' => $orderItemMock]);
+        $this->orderItemApiFacade->expects($this->any())->method('findMappedByUuid')
+            ->with(['item-uuid'])->willReturn(['item-uuid' => $orderItemStub]);
 
         $this->complaintDataApiFactory->method('createFromComplaintInputArgument')
             ->willReturn($complaintData);

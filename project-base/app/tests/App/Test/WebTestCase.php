@@ -184,9 +184,9 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
 
         $this->dispatchFakeKernelResponseEventToTriggerSendMessageToTransport();
 
-        /** @var \Symfony\Component\Messenger\Transport\InMemoryTransport $regularPriorityTransport */
+        /** @var \Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport $regularPriorityTransport */
         $regularPriorityTransport = self::getContainer()->get('messenger.transport.product_recalculation_priority_regular');
-        /** @var \Symfony\Component\Messenger\Transport\InMemoryTransport $highPriorityTransport */
+        /** @var \Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport $highPriorityTransport */
         $highPriorityTransport = self::getContainer()->get('messenger.transport.product_recalculation_priority_high');
         $productRecalculationMessageHandler = $this->productRecalculationMessageHandler;
         $dispatchAllProductsMessageHandler = $this->dispatchAllProductsMessageHandler;

@@ -25,7 +25,7 @@ class WithdrawalCheckerTest extends TestCase
             withdrawalDeadline: $deadline,
         );
 
-        $order = $this->createMock(Order::class);
+        $order = $this->createStub(Order::class);
         $order->method('isCancelled')->willReturn(false);
 
         $checker->checkOrderWithdrawal($order);
@@ -43,7 +43,7 @@ class WithdrawalCheckerTest extends TestCase
             withdrawalDeadline: $deadline,
         );
 
-        $order = $this->createMock(Order::class);
+        $order = $this->createStub(Order::class);
         $order->method('isCancelled')->willReturn(false);
 
         $this->expectException(WithdrawalDeadlinePassedException::class);
@@ -55,13 +55,13 @@ class WithdrawalCheckerTest extends TestCase
         DateTimeImmutable $currentDate,
         DateTimeImmutable $withdrawalDeadline,
     ): WithdrawalChecker {
-        $clock = $this->createMock(ClockInterface::class);
+        $clock = $this->createStub(ClockInterface::class);
         $clock->method('now')->willReturn($currentDate);
 
-        $withdrawalDeadlineCalculation = $this->createMock(WithdrawalDeadlineCalculation::class);
+        $withdrawalDeadlineCalculation = $this->createStub(WithdrawalDeadlineCalculation::class);
         $withdrawalDeadlineCalculation->method('getWithdrawalDeadline')->willReturn($withdrawalDeadline);
 
-        $withdrawalRequestRepository = $this->createMock(WithdrawalRequestRepository::class);
+        $withdrawalRequestRepository = $this->createStub(WithdrawalRequestRepository::class);
         $withdrawalRequestRepository->method('findByOrder')->willReturn(null);
 
         return new WithdrawalChecker(

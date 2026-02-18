@@ -21,7 +21,7 @@ class WithdrawalDeadlineCalculationTest extends TestCase
 
     public function testWithdrawalDeadlineIsNullWhenOrderNotDelivered(): void
     {
-        $order = $this->createMock(Order::class);
+        $order = $this->createStub(Order::class);
         $order->method('getDeliveredAt')->willReturn(null);
 
         $calculation = $this->createWithdrawalDeadlineCalculation();
@@ -33,7 +33,7 @@ class WithdrawalDeadlineCalculationTest extends TestCase
     {
         $deliveredAt = new DateTimeImmutable('2025-01-01 14:30:00', new DateTimeZone(self::DISPLAY_TIMEZONE));
 
-        $order = $this->createMock(Order::class);
+        $order = $this->createStub(Order::class);
         $order->method('getDeliveredAt')->willReturn($deliveredAt);
         $order->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);
 
@@ -51,7 +51,7 @@ class WithdrawalDeadlineCalculationTest extends TestCase
         // Delivered at 23:55 UTC, which is 00:55 the next day in Europe/Prague
         $deliveredAt = new DateTimeImmutable('2025-01-01 23:55:00', new DateTimeZone('UTC'));
 
-        $order = $this->createMock(Order::class);
+        $order = $this->createStub(Order::class);
         $order->method('getDeliveredAt')->willReturn($deliveredAt);
         $order->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);
 
@@ -67,14 +67,14 @@ class WithdrawalDeadlineCalculationTest extends TestCase
 
     private function createWithdrawalDeadlineCalculation(): WithdrawalDeadlineCalculation
     {
-        $withdrawalSetting = $this->createMock(WithdrawalSetting::class);
+        $withdrawalSetting = $this->createStub(WithdrawalSetting::class);
         $withdrawalSetting->method('getDeadlineDays')->willReturn(self::WITHDRAWAL_DEADLINE_DAYS);
 
-        $businessDayCalculation = $this->createMock(BusinessDayCalculation::class);
+        $businessDayCalculation = $this->createStub(BusinessDayCalculation::class);
         $businessDayCalculation->method('getClosestBusinessDay')
             ->willReturnArgument(0);
 
-        $displayTimeZoneProvider = $this->createMock(DisplayTimeZoneProviderInterface::class);
+        $displayTimeZoneProvider = $this->createStub(DisplayTimeZoneProviderInterface::class);
         $displayTimeZoneProvider->method('getDisplayTimeZoneByDomainId')
             ->willReturn(new DateTimeZone(self::DISPLAY_TIMEZONE));
 

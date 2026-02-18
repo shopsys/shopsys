@@ -6,7 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Form\DataTransformer;
 
 use InvalidArgumentException;
 use Override;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
@@ -22,7 +22,7 @@ class RolesGridDataTransformerTest extends TestCase
 
     private RolesGridDataTransformer $simpleTransformer;
 
-    private RoleRegistryInterface&MockObject $roleRegistry;
+    private Stub|RoleRegistryInterface $roleRegistryStub;
 
     protected const string ORDER_SECTION = 'orders_customers';
     protected const string PRODUCT_SECTION = 'products_catalog';
@@ -30,16 +30,16 @@ class RolesGridDataTransformerTest extends TestCase
     #[Override]
     protected function setUp(): void
     {
-        $this->roleRegistry = $this->createMock(RoleRegistryInterface::class);
+        $this->roleRegistryStub = $this->createStub(RoleRegistryInterface::class);
         $this->transformer = new RolesGridDataTransformer(
-            $this->roleRegistry,
+            $this->roleRegistryStub,
             AdminContext::class,
             ['ROLE_SUPER_ADMIN'],
             true, // shouldGroupBySections
         );
 
         $this->simpleTransformer = new RolesGridDataTransformer(
-            $this->roleRegistry,
+            $this->roleRegistryStub,
             AdminContext::class,
             ['ROLE_SUPER_ADMIN'],
             false, // shouldGroupBySections - use virtual section when false
@@ -49,7 +49,7 @@ class RolesGridDataTransformerTest extends TestCase
     public function testTransformRoleIdentifiers(): void
     {
         $role = new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]);
-        $this->prepareRolesMock([$role]);
+        $this->prepareRolesStub([$role]);
 
         $roleIdentifiers = ['ROLE_ORDER_VIEW'];
 
@@ -62,7 +62,7 @@ class RolesGridDataTransformerTest extends TestCase
     public function testTransformWithFullPermission(): void
     {
         $role = new Role('ROLE_ORDER', 'Order Role', [Permission::FULL]);
-        $this->prepareRolesMock([$role]);
+        $this->prepareRolesStub([$role]);
 
         $roleIdentifiers = ['ROLE_ORDER_FULL'];
 
@@ -75,7 +75,7 @@ class RolesGridDataTransformerTest extends TestCase
     public function testTransformWithVirtualSection(): void
     {
         $role = new Role('ROLE_ORDER', 'Order Role', [Permission::EDIT]);
-        $this->prepareRolesMock([$role]);
+        $this->prepareRolesStub([$role]);
 
         $roleIdentifiers = ['ROLE_ORDER_EDIT', 'ROLE_ORDER_VIEW'];
 
@@ -115,7 +115,7 @@ class RolesGridDataTransformerTest extends TestCase
 
     public function testTransformExcludesExcludedRoles(): void
     {
-        $this->prepareRolesMock([
+        $this->prepareRolesStub([
             new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]),
             new Role('ROLE_SUPER_ADMIN', 'Super Admin Role', [Permission::FULL]),
         ]);
@@ -145,7 +145,7 @@ class RolesGridDataTransformerTest extends TestCase
 
     public function testTransformWithInvalidIdentifier(): void
     {
-        $this->prepareRolesMock([
+        $this->prepareRolesStub([
             new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]),
         ]);
 
@@ -177,7 +177,7 @@ class RolesGridDataTransformerTest extends TestCase
         $productRole = new Role('ROLE_PRODUCT', 'Product Role', [Permission::FULL]);
         $productRole->setRoleSection(self::PRODUCT_SECTION);
 
-        $this->prepareRolesMock([$orderRole, $productRole]);
+        $this->prepareRolesStub([$orderRole, $productRole]);
 
         $roleIdentifiers = ['ROLE_ORDER_VIEW', 'ROLE_PRODUCT_FULL'];
 
@@ -215,7 +215,7 @@ class RolesGridDataTransformerTest extends TestCase
     public function testTransformWithNonStringIdentifiers(): void
     {
         $role = new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]);
-        $this->prepareRolesMock([$role]);
+        $this->prepareRolesStub([$role]);
 
         $roleIdentifiers = ['ROLE_ORDER_VIEW', 123, null, false, ['array']];
 
@@ -228,14 +228,15 @@ class RolesGridDataTransformerTest extends TestCase
     /**
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $roles
      */
-    private function prepareRolesMock(array $roles): void
+    private function prepareRolesStub(array $roles): void
     {
-        $this->roleRegistry
+        $this->roleRegistryStub
             ->method('getRoles')
-            ->with(AdminContext::class)
-            ->willReturn($roles);
+            ->willReturnMap([
+                [AdminContext::class, $roles],
+            ]);
 
-        $this->roleRegistry
+        $this->roleRegistryStub
             ->method('getRole')
             ->willReturnCallback(function (string $roleIdentifier, string $context) use ($roles) {
                 $roleConstant = RoleIdentifierHelper::getRoleConstantFromIdentifier($roleIdentifier);
@@ -256,7 +257,7 @@ class RolesGridDataTransformerTest extends TestCase
     {
         $orderRole = new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]);
         $productRole = new Role('ROLE_PRODUCT', 'Product Role', [Permission::FULL]);
-        $this->prepareRolesMock([$orderRole, $productRole]);
+        $this->prepareRolesStub([$orderRole, $productRole]);
 
         $roleIdentifiers = ['ROLE_ORDER_VIEW', 'ROLE_PRODUCT_FULL'];
 

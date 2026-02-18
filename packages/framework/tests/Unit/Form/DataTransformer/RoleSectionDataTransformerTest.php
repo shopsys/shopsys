@@ -6,7 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Form\DataTransformer;
 
 use InvalidArgumentException;
 use Override;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
@@ -19,7 +19,7 @@ class RoleSectionDataTransformerTest extends TestCase
 {
     private RoleSectionDataTransformer $transformer;
 
-    private RoleRegistryInterface&MockObject $roleRegistry;
+    private Stub|RoleRegistryInterface $roleRegistryStub;
 
     /**
      * @var array<\Shopsys\FrameworkBundle\Component\Security\Role\Role>
@@ -29,7 +29,7 @@ class RoleSectionDataTransformerTest extends TestCase
     #[Override]
     protected function setUp(): void
     {
-        $this->roleRegistry = $this->createMock(RoleRegistryInterface::class);
+        $this->roleRegistryStub = $this->createStub(RoleRegistryInterface::class);
 
         // Create test roles for the section
         $this->sectionRoles = [
@@ -39,14 +39,14 @@ class RoleSectionDataTransformerTest extends TestCase
 
         $this->transformer = new RoleSectionDataTransformer(
             $this->sectionRoles,
-            $this->roleRegistry,
+            $this->roleRegistryStub,
             AdminContext::class,
         );
     }
 
     public function testTransformFiltersIdentifiersForSectionRoles(): void
     {
-        $this->prepareRolesMock();
+        $this->prepareRolesStub();
 
         // Input contains identifiers for roles in and outside the section
         $roleIdentifiers = [
@@ -92,7 +92,7 @@ class RoleSectionDataTransformerTest extends TestCase
 
     public function testTransformIgnoresInvalidIdentifiers(): void
     {
-        $this->prepareRolesMock();
+        $this->prepareRolesStub();
 
         $roleIdentifiers = [
             'ROLE_ORDER_VIEW',
@@ -116,7 +116,7 @@ class RoleSectionDataTransformerTest extends TestCase
 
     public function testReverseTransformCombinesRoleData(): void
     {
-        $this->prepareRolesMock();
+        $this->prepareRolesStub();
 
         $formData = [
             'ROLE_ORDER' => ['ROLE_ORDER_VIEW', 'ROLE_ORDER_EDIT'],
@@ -168,7 +168,7 @@ class RoleSectionDataTransformerTest extends TestCase
 
     public function testTransformReverseTransformRoundTrip(): void
     {
-        $this->prepareRolesMock();
+        $this->prepareRolesStub();
 
         $originalIdentifiers = ['ROLE_ORDER_VIEW', 'ROLE_ORDER_EDIT', 'ROLE_CUSTOMER_FULL'];
 
@@ -182,14 +182,15 @@ class RoleSectionDataTransformerTest extends TestCase
         $this->assertEqualsCanonicalizing($originalIdentifiers, $result);
     }
 
-    private function prepareRolesMock(): void
+    private function prepareRolesStub(): void
     {
-        $this->roleRegistry
+        $this->roleRegistryStub
             ->method('getRoles')
-            ->with(AdminContext::class)
-            ->willReturn($this->sectionRoles);
+            ->willReturnMap([
+                [AdminContext::class, $this->sectionRoles],
+            ]);
 
-        $this->roleRegistry
+        $this->roleRegistryStub
             ->method('getRole')
             ->willReturnCallback(function (string $roleIdentifier, string $context) {
                 $roleConstant = RoleIdentifierHelper::getRoleConstantFromIdentifier($roleIdentifier);

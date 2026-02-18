@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
@@ -39,8 +40,12 @@ class CreateWithdrawalVoter extends Voter
      * {@inheritdoc}
      */
     #[Override]
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
-    {
+    protected function voteOnAttribute(
+        string $attribute,
+        mixed $subject,
+        TokenInterface $token,
+        ?Vote $vote = null,
+    ): bool {
         if ($subject !== null && !$subject instanceof Argument) {
             throw new UnexpectedTypeException($subject, Argument::class);
         }

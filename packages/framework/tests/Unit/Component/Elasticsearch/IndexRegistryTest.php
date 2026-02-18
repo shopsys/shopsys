@@ -23,11 +23,11 @@ class IndexRegistryTest extends TestCase
     {
         parent::setUp();
 
-        $domainMock = $this->createMock(Domain::class);
-        $productExportRepositoryMock = $this->createMock(ProductExportRepository::class);
+        $domainStub = $this->createStub(Domain::class);
+        $productExportRepositoryStub = $this->createStub(ProductExportRepository::class);
 
         $this->indexRegistry = new IndexRegistry([
-            new ProductIndex($domainMock, $productExportRepositoryMock),
+            new ProductIndex($domainStub, $productExportRepositoryStub),
             new CategoryIndex(),
         ]);
     }

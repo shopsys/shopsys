@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\CodingStandards\Sniffs;
+namespace Shopsys\CodingStandards\Sniffs\General;
 
 use Override;
 use PHP_CodeSniffer\Files\File;
@@ -18,7 +18,7 @@ use const T_SELF;
 class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
 {
     /**
-     * {@inheritdoc}
+     * @return array<int|string>
      */
     #[Override]
     public function register(): array
@@ -27,10 +27,10 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
     }
 
     /**
-     * {@inheritdoc}
+     * @param int $classPosition
      */
     #[Override]
-    public function process(File $file, $classPosition)
+    public function process(File $file, $classPosition): void
     {
         $protectedConstants = $this->getAllProtectedConstantsInClass($file);
 

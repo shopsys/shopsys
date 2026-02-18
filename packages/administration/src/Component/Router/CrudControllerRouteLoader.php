@@ -7,11 +7,11 @@ namespace Shopsys\AdministrationBundle\Component\Router;
 use Override;
 use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
-use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\RouteCollection;
 
-final class CrudControllerRouteLoader implements LoaderInterface
+final class CrudControllerRouteLoader extends Loader
 {
     public const string IS_CRUD_CONTROLLER = '_crud_controller';
     public const string CRUD_ACTION = '_crud_action';
@@ -21,6 +21,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
         private readonly CrudControllerRegistry $crudControllerRegistry,
         private readonly CrudRouteProvider $crudRouteProvider,
     ) {
+        parent::__construct();
     }
 
     /**
@@ -45,15 +46,6 @@ final class CrudControllerRouteLoader implements LoaderInterface
     public function supports(mixed $resource, ?string $type = null): bool
     {
         return $type === 'crud_controller';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getResolver(): ?LoaderResolverInterface
-    {
-        return null;
     }
 
     /**

@@ -114,7 +114,7 @@ abstract class BaseMaker extends AbstractMaker
     {
         if ($forceEntitiesDump || !file_exists($this->kernel->getCacheDir() . '/' . EntitiesDumpCommand::OUTPUT_FILE)) {
             $application = new Application($this->kernel);
-            $application->find(EntitiesDumpCommand::getDefaultName())->run(new ArrayInput([]), new NullOutput());
+            $application->find(EntitiesDumpCommand::COMMAND_NAME)->run(new ArrayInput([]), new NullOutput());
         }
 
         $process = new Process(['php', 'vendor/bin/ecs', 'check', '--fix', $fileName]);

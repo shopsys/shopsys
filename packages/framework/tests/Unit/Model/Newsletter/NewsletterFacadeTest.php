@@ -7,6 +7,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Newsletter;
 use Doctrine\ORM\EntityManager;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
@@ -19,7 +20,7 @@ class NewsletterFacadeTest extends TestCase
 {
     private EntityManager|MockObject $em;
 
-    private NewsletterRepository|MockObject $newsletterRepository;
+    private NewsletterRepository|Stub $newsletterRepository;
 
     private NewsletterFacade $newsletterFacade;
 
@@ -29,8 +30,8 @@ class NewsletterFacadeTest extends TestCase
         parent::setUp();
 
         $this->em = $this->createMock(EntityManager::class);
-        $this->newsletterRepository = $this->createMock(NewsletterRepository::class);
-        $clock = $this->createMock(ClockInterface::class);
+        $this->newsletterRepository = $this->createStub(NewsletterRepository::class);
+        $clock = $this->createStub(ClockInterface::class);
 
         $this->newsletterFacade = new NewsletterFacade(
             $this->em,
@@ -56,10 +57,9 @@ class NewsletterFacadeTest extends TestCase
 
     public function testDeleteSubscribedEmail(): void
     {
-        $newsletterSubscriberInstance = $this->createMock(NewsletterSubscriber::class);
+        $newsletterSubscriberInstance = $this->createStub(NewsletterSubscriber::class);
 
         $this->newsletterRepository
-            ->expects($this->any())
             ->method('findNewsletterSubscriberById')
             ->willReturn($newsletterSubscriberInstance);
 

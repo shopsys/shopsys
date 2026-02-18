@@ -6,7 +6,7 @@ namespace Tests\CodingStandards\Unit\Sniffs\RequireOverrideAttributeSniff;
 
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\CodingStandards\Sniffs\RequireOverrideAttributeSniff;
+use Shopsys\CodingStandards\Sniffs\General\RequireOverrideAttributeSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
 final class RequireOverrideAttributeSniffTest extends AbstractSniffTestCase

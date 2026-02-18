@@ -28,7 +28,7 @@ class RoleRegistryTest extends TestCase
     #[Override]
     protected function setUp(): void
     {
-        $this->contextResolver = $this->createMock(ContextResolverInterface::class);
+        $this->contextResolver = $this->createStub(ContextResolverInterface::class);
         $this->contextResolver
             ->method('validateContextClass')
             ->willReturnCallback(function (string $context): void {
@@ -40,7 +40,7 @@ class RoleRegistryTest extends TestCase
 
     public function testConstructorValidatesProviders(): void
     {
-        $invalidProvider = $this->createMock(RoleProviderInterface::class);
+        $invalidProvider = $this->createStub(RoleProviderInterface::class);
         $invalidProvider->method('getTargetContext')->willReturn('InvalidContext');
         $invalidProvider->method('getPriority')->willReturn(10);
 
@@ -52,19 +52,19 @@ class RoleRegistryTest extends TestCase
 
     public function testConstructorValidatesProviderPriority(): void
     {
-        $invalidProvider = $this->createMock(RoleProviderInterface::class);
+        $invalidProvider = $this->createStub(RoleProviderInterface::class);
         $invalidProvider->method('getTargetContext')->willReturn(self::TEST_ADMIN_CONTEXT);
         $invalidProvider->method('getPriority')->willReturn(0);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Role provider "MockObject_RoleProviderInterface_');
+        $this->expectExceptionMessage('Role provider "TestStub_RoleProviderInterface_');
 
         new RoleRegistry([$invalidProvider], $this->contextResolver);
     }
 
     public function testConstructorAllowsCoreProviderWithZeroPriority(): void
     {
-        $coreProvider = $this->createMock(CoreRoleProviderInterface::class);
+        $coreProvider = $this->createStub(CoreRoleProviderInterface::class);
         $coreProvider->method('getTargetContext')->willReturn(self::TEST_ADMIN_CONTEXT);
         $coreProvider->method('getPriority')->willReturn(0);
         $coreProvider->method('configureRoles')->willReturnCallback(function (): void {});
@@ -214,7 +214,7 @@ class RoleRegistryTest extends TestCase
         $registry = new RoleRegistry([$provider], $this->contextResolver);
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Error processing role provider "MockObject_RoleProviderInterface_');
+        $this->expectExceptionMessage('Error processing role provider "TestStub_RoleProviderInterface_');
 
         $registry->getRoles(self::TEST_ADMIN_CONTEXT);
     }
@@ -249,7 +249,7 @@ class RoleRegistryTest extends TestCase
 
     public function testCoreProviderCanHaveNegativePriority(): void
     {
-        $coreProvider = $this->createMock(CoreRoleProviderInterface::class);
+        $coreProvider = $this->createStub(CoreRoleProviderInterface::class);
         $coreProvider->method('getTargetContext')->willReturn(self::TEST_ADMIN_CONTEXT);
         $coreProvider->method('getPriority')->willReturn(-10);
         $coreProvider->method('configureRoles')->willReturnCallback(function (RoleCollection $collection): void {
@@ -317,7 +317,7 @@ class RoleRegistryTest extends TestCase
 
     private function createProvider(string $context, int $priority, callable $configureCallback): RoleProviderInterface
     {
-        $provider = $this->createMock(RoleProviderInterface::class);
+        $provider = $this->createStub(RoleProviderInterface::class);
         $provider->method('getTargetContext')->willReturn($context);
         $provider->method('getPriority')->willReturn($priority);
         $provider->method('configureRoles')->willReturnCallback($configureCallback);

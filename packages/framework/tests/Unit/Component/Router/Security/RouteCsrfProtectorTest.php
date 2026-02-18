@@ -20,32 +20,32 @@ class RouteCsrfProtectorTest extends TestCase
     #[DoesNotPerformAssertions]
     public function testSubRequest(): void
     {
-        $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
+        $tokenManagerStub = $this->createStub(CsrfTokenManager::class);
 
         $event = new ControllerEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new ControllerProtected(),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
         );
 
-        $routeCsrfProtector = new RouteCsrfProtector($tokenManagerMock, new InMemoryCache());
+        $routeCsrfProtector = new RouteCsrfProtector($tokenManagerStub, new InMemoryCache());
         $routeCsrfProtector->onKernelController($event);
     }
 
     #[DoesNotPerformAssertions]
     public function testRequestWithoutProtection(): void
     {
-        $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
+        $tokenManagerStub = $this->createStub(CsrfTokenManager::class);
 
         $event = new ControllerEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new ControllerNotProtected(),
             new Request(),
             HttpKernelInterface::MAIN_REQUEST,
         );
 
-        $routeCsrfProtector = new RouteCsrfProtector($tokenManagerMock, new InMemoryCache());
+        $routeCsrfProtector = new RouteCsrfProtector($tokenManagerStub, new InMemoryCache());
         $routeCsrfProtector->onKernelController($event);
     }
 
@@ -72,7 +72,7 @@ class RouteCsrfProtectorTest extends TestCase
             ->willReturn(true);
 
         $event = new ControllerEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new ControllerProtected(),
             $request,
             HttpKernelInterface::MAIN_REQUEST,
@@ -85,16 +85,16 @@ class RouteCsrfProtectorTest extends TestCase
     public function testRequestWithProtectionWithoutCsrfToken(): void
     {
         $request = new Request();
-        $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
+        $tokenManagerStub = $this->createStub(CsrfTokenManager::class);
 
         $event = new ControllerEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new ControllerProtected(),
             $request,
             HttpKernelInterface::MAIN_REQUEST,
         );
 
-        $routeCsrfProtector = new RouteCsrfProtector($tokenManagerMock, new InMemoryCache());
+        $routeCsrfProtector = new RouteCsrfProtector($tokenManagerStub, new InMemoryCache());
 
         $this->expectException(BadRequestHttpException::class);
         $routeCsrfProtector->onKernelController($event);
@@ -123,7 +123,7 @@ class RouteCsrfProtectorTest extends TestCase
             ->willReturn(false);
 
         $event = new ControllerEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new ControllerProtected(),
             $request,
             HttpKernelInterface::MAIN_REQUEST,

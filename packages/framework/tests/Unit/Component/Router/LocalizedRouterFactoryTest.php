@@ -16,12 +16,12 @@ class LocalizedRouterFactoryTest extends TestCase
 
     public function testGetRouterRouterNotResolvedException(): void
     {
-        $containerMock = $this->createMock(ContainerInterface::class);
+        $containerStub = $this->createStub(ContainerInterface::class);
         $context = new RequestContext();
 
         $localizedRouterFactory = new LocalizedRouterFactory(
             static::LOCALE_ROUTERS_CONFIGURATION_MASK,
-            $containerMock,
+            $containerStub,
             __DIR__,
         );
         $this->expectException(LocalizedRoutingConfigFileNotFoundException::class);
@@ -30,7 +30,7 @@ class LocalizedRouterFactoryTest extends TestCase
 
     public function testGetRouter(): void
     {
-        $containerMock = $this->createMock(ContainerInterface::class);
+        $containerStub = $this->createStub(ContainerInterface::class);
         $context1 = new RequestContext();
         $context1->setHost('host1');
         $context2 = new RequestContext();
@@ -38,7 +38,7 @@ class LocalizedRouterFactoryTest extends TestCase
 
         $localizedRouterFactory = new LocalizedRouterFactory(
             static::LOCALE_ROUTERS_CONFIGURATION_MASK,
-            $containerMock,
+            $containerStub,
             __DIR__,
         );
 

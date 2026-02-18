@@ -20,13 +20,13 @@ class CurrentDomainRouterTest extends TestCase
 {
     public function testDelegateRouter(): void
     {
-        $settingMock = $this->createMock(Setting::class);
-        $currentAdministratorMock = $this->createMock(CurrentAdministrator::class);
+        $settingStub = $this->createStub(Setting::class);
+        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
 
         $domain = new Domain(
             [DomainConfigHelper::getDomainConfig()],
-            $settingMock,
-            $currentAdministratorMock,
+            $settingStub,
+            $currentAdministratorStub,
         );
 
         $domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
@@ -52,12 +52,12 @@ class CurrentDomainRouterTest extends TestCase
             ->getMock();
         $domainRouterFactoryMock->expects($this->exactly(3))->method('getRouter')->willReturn($routerMock);
 
-        $contextResolverMock = $this->createMock(ContextResolverInterface::class);
+        $contextResolverStub = $this->createStub(ContextResolverInterface::class);
 
         $currentDomainRouter = new CurrentDomainRouter(
             $domain,
             $domainRouterFactoryMock,
-            $contextResolverMock,
+            $contextResolverStub,
         );
 
         $currentDomainRouter->setContext(new RequestContext());

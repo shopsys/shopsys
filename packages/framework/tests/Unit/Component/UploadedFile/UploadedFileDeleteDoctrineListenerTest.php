@@ -28,8 +28,8 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
             $this->equalTo($uploadedFile),
         );
 
-        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
-        $args = new PreRemoveEventArgs($uploadedFile, $entityManagerMock);
+        $entityManagerStub = $this->createStub(EntityManagerInterface::class);
+        $args = new PreRemoveEventArgs($uploadedFile, $entityManagerStub);
 
         $doctrineListener = new UploadedFileDeleteDoctrineListener($uploadedFileConfig, $uploadedFileFacadeMock);
 

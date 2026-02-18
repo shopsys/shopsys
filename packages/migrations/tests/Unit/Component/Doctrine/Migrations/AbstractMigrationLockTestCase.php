@@ -30,8 +30,8 @@ abstract class AbstractMigrationLockTestCase extends AbstractMigrationTestCase
 
     protected function createNewMigrationsLock(): MigrationsLock
     {
-        $loggerMock = $this->createMock(LoggerInterface::class);
+        $loggerStub = $this->createStub(LoggerInterface::class);
 
-        return new MigrationsLock(static::MIGRATION_LOCK, $loggerMock);
+        return new MigrationsLock(static::MIGRATION_LOCK, $loggerStub);
     }
 }

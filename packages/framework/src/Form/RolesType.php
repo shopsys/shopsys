@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionP
 use Shopsys\FrameworkBundle\Component\Security\Role\Section\RoleSection;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\DataTransformer\RolesGridDataTransformer;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -31,7 +31,7 @@ final class RolesType extends AbstractType
     public function __construct(
         private readonly RoleRegistryInterface $roleRegistry,
         private readonly bool $useSimplePermissions,
-        #[TaggedIterator('shopsys.role_section_provider', defaultIndexMethod: 'getTargetContext')]
+        #[AutowireIterator('shopsys.role_section_provider', defaultIndexMethod: 'getTargetContext')]
         iterable $roleSectionsProviders = [],
     ) {
         $this->roleSectionsProvidersByContext = iterator_to_array($roleSectionsProviders);

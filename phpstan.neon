@@ -51,6 +51,14 @@ parameters:
         -
             message: '#^Service "test.service_container" is not registered in the container.#'
             path: %currentWorkingDirectory%/packages/http-smoke-testing/src/HttpSmokeTestCase.php
+        -
+            # PHPStan inference issue with Yaml::parse flags in Symfony 7 - runtime behavior is correct
+            message: '#^Parameter \#2 \$flags of method Symfony\\Component\\Yaml\\Parser::parse\(\) expects#'
+            path: %currentWorkingDirectory%/packages/framework/src/Command/YamlLintCommand.php
+        -
+            # Symfony 7.4 forward compatibility - parent method will require 2 parameters in Symfony 8.0
+            message: '#^Method Symfony\\Component\\Security\\Core\\User\\InMemoryUserChecker::checkPostAuth\(\) invoked with 2 parameters, 1 required\.$#'
+            path: %currentWorkingDirectory%/packages/framework/src/Model/Security/AdministratorChecker.php
     excludePaths:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*

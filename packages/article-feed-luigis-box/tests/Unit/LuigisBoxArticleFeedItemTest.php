@@ -6,14 +6,9 @@ namespace Tests\ArticleFeed\LuigisBoxBundle\Unit;
 
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItemFactory;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
-use Shopsys\FrameworkBundle\Model\Article\Article;
 
 class LuigisBoxArticleFeedItemTest extends TestCase
 {
@@ -24,46 +19,18 @@ class LuigisBoxArticleFeedItemTest extends TestCase
 
     private LuigisBoxArticleFeedItemFactory $luigisBoxArticleFeedItemFactory;
 
-    private Article|MockObject $defaultArticle;
-
-    private DomainConfig $defaultDomain;
-
-    private ImageFacade|MockObject $imageFacadeMock;
-
     #[Override]
     protected function setUp(): void
     {
         $this->luigisBoxArticleFeedItemFactory = new LuigisBoxArticleFeedItemFactory(new ImageUrlWithSizeHelper());
-        $this->imageFacadeMock = $this->createMock(ImageFacade::class);
-
-        $this->defaultDomain = $this->createDomainConfigMock(
-            Domain::FIRST_DOMAIN_ID,
-            'https://example.com',
-            'en',
-        );
-
-        $this->defaultArticle = $this->createMock(Article::class);
-        $this->defaultArticle->method('getName')->with('en')->willReturn(self::ARTICLE_NAME);
 
         parent::setUp();
-    }
-
-    private function createDomainConfigMock(int $id, string $url, string $locale): DomainConfig
-    {
-        $domainConfigMock = $this->createMock(DomainConfig::class);
-
-        $domainConfigMock->method('getId')->willReturn($id);
-        $domainConfigMock->method('getUrl')->willReturn($url);
-        $domainConfigMock->method('getLocale')->willReturn($locale);
-
-        return $domainConfigMock;
     }
 
     #[DataProvider('articleFeedItemCreationDataProvider')]
     public function testArticleFeedItemCreation(array $articleData): void
     {
-        $luigisBoxArticleFeedItemFactory = new LuigisBoxArticleFeedItemFactory(new ImageUrlWithSizeHelper());
-        $luigisBoxArticleFeedItem = $luigisBoxArticleFeedItemFactory->create($articleData);
+        $luigisBoxArticleFeedItem = $this->luigisBoxArticleFeedItemFactory->create($articleData);
 
         $this->assertSame($articleData['index'] . '-' . $articleData['id'], $luigisBoxArticleFeedItem->getIdentity());
         $this->assertSame($articleData['name'], $luigisBoxArticleFeedItem->getName());
@@ -73,19 +40,11 @@ class LuigisBoxArticleFeedItemTest extends TestCase
         $this->assertLuigisBoxCategoryFeedItemWithImageLink($articleData);
     }
 
-    private function mockImageUrl(Article $article, DomainConfig $domain, string $url): void
-    {
-        $this->imageFacadeMock->method('getImageUrl')
-            ->with($domain, $article)->willReturn($url);
-    }
-
     public function assertLuigisBoxCategoryFeedItemWithImageLink(array $articleData): void
     {
         if ($articleData['imageUrl'] === null) {
             return;
         }
-
-        $this->mockImageUrl($this->defaultArticle, $this->defaultDomain, $articleData['imageUrl']);
 
         $luigisBoxArticleFeedItem = $this->luigisBoxArticleFeedItemFactory->create($articleData);
 

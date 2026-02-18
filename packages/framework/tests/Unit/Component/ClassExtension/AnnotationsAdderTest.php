@@ -124,8 +124,8 @@ class AnnotationsAdderTest extends TestCase
     #[DataProvider('extractPropertyOrMethodAnnotationNameDataProvider')]
     public function testExtractPropertyOrMethodAnnotationName(string $expectedPropertyName, string $propertyLine): void
     {
-        $fileContentsReplacerMock = $this->createMock(FileContentsReplacer::class);
-        $annotationsAdder = (new class($fileContentsReplacerMock) extends AnnotationsAdder {
+        $fileContentsReplacerStub = $this->createStub(FileContentsReplacer::class);
+        $annotationsAdder = (new class($fileContentsReplacerStub) extends AnnotationsAdder {
             /**
              * Method overridden to make it public and thus testable
              */

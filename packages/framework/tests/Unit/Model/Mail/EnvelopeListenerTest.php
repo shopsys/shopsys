@@ -32,17 +32,15 @@ class EnvelopeListenerTest extends TestCase
         array $expectedRecipients,
         bool $expectedIsRejected,
     ): void {
-        $mailSettingFacadeMock = $this->getMockBuilder(MailSettingFacade::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $mailSettingFacadeStub = $this->createStub(MailSettingFacade::class);
 
-        $mailSettingFacadeMock->method('getMailWhitelist')->willReturn($deliveryWhitelist);
-        $mailSettingFacadeMock->method('isWhitelistEnabled')->willReturn($isWhitelistEnabled);
+        $mailSettingFacadeStub->method('getMailWhitelist')->willReturn($deliveryWhitelist);
+        $mailSettingFacadeStub->method('isWhitelistEnabled')->willReturn($isWhitelistEnabled);
 
         $mailerSettingProvider = new MailerSettingProvider(
             'dsn',
             $isWhitelistForced,
-            $mailSettingFacadeMock,
+            $mailSettingFacadeStub,
         );
         $envelopeListener = new EnvelopeListener($mailerSettingProvider);
         $messageEvent = $this->getMessageEvent($mailsTo, $mailCc, $mailBcc);

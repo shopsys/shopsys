@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Order\Item;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\MainVariantCannotBeOrderedException;
@@ -27,7 +26,7 @@ class OrderItemTest extends TestCase
         $orderItem = $this->createOrderPayment();
 
         $this->expectException(WrongItemTypeException::class);
-        $orderItem->setTransport($this->createTransportMock());
+        $orderItem->setTransport($this->createTransportStub());
     }
 
     public function testTransportCannotBeGottenFromWrongType(): void
@@ -48,8 +47,7 @@ class OrderItemTest extends TestCase
         $orderItemData->unitPriceWithoutVat = Money::zero();
         $orderItemData->vatPercent = '0';
         $orderItemData->quantity = 1;
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport|\PHPUnit\Framework\MockObject\MockObject $transport */
-        $transport = $this->createTransportMock();
+        $transport = $this->createTransportStub();
         $orderItemData->transport = $transport;
         $orderItem->edit($orderItemData);
 
@@ -61,7 +59,7 @@ class OrderItemTest extends TestCase
         $orderItem = $this->createOrderProduct();
 
         $this->expectException(WrongItemTypeException::class);
-        $orderItem->setPayment($this->createPaymentMock());
+        $orderItem->setPayment($this->createPaymentStub());
     }
 
     public function testPaymentCannotBeGottenFromWrongType(): void
@@ -82,8 +80,7 @@ class OrderItemTest extends TestCase
         $orderItemData->unitPriceWithoutVat = Money::zero();
         $orderItemData->vatPercent = '0';
         $orderItemData->quantity = 1;
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment|\PHPUnit\Framework\MockObject\MockObject $payment */
-        $payment = $this->createPaymentMock();
+        $payment = $this->createPaymentStub();
         $orderItemData->payment = $payment;
         $orderItem->edit($orderItemData);
 
@@ -95,7 +92,7 @@ class OrderItemTest extends TestCase
         $orderItem = $this->createOrderTransport();
 
         $this->expectException(WrongItemTypeException::class);
-        $orderItem->setProduct($this->createProductMock());
+        $orderItem->setProduct($this->createProductStub());
     }
 
     public function testProductCannotBeGottenFromWrongType(): void
@@ -122,7 +119,7 @@ class OrderItemTest extends TestCase
         $orderItemData->quantity = 2;
         $orderItemData->vatPercent = '10';
 
-        $orderItem = $this->createOrderProduct($this->createProductMock());
+        $orderItem = $this->createOrderProduct($this->createProductStub());
         $orderItem->edit($orderItemData);
 
         $this->assertSame('newName', $orderItem->getName());
@@ -164,7 +161,7 @@ class OrderItemTest extends TestCase
     private function createOrderPayment(): OrderItem
     {
         $orderPayment = new OrderItem(
-            $this->createOrderMock(),
+            $this->createOrderStub(),
             '',
             new Price(Money::create(10), Money::create(12)),
             '0.2',
@@ -174,8 +171,8 @@ class OrderItemTest extends TestCase
             null,
         );
 
-        $paymentMock = $this->createPaymentMock();
-        $orderPayment->setPayment($paymentMock);
+        $paymentStub = $this->createPaymentStub();
+        $orderPayment->setPayment($paymentStub);
 
         return $orderPayment;
     }
@@ -183,7 +180,7 @@ class OrderItemTest extends TestCase
     private function createOrderTransport(): OrderItem
     {
         $orderTransport = new OrderItem(
-            $this->createOrderMock(),
+            $this->createOrderStub(),
             '',
             new Price(Money::create(10), Money::create(12)),
             '0.2',
@@ -192,7 +189,7 @@ class OrderItemTest extends TestCase
             null,
             null,
         );
-        $orderTransport->setTransport($this->createTransportMock());
+        $orderTransport->setTransport($this->createTransportStub());
 
         return $orderTransport;
     }
@@ -200,7 +197,7 @@ class OrderItemTest extends TestCase
     private function createOrderProduct(?Product $product = null): OrderItem
     {
         $orderProduct = new OrderItem(
-            $this->createOrderMock(),
+            $this->createOrderStub(),
             '',
             new Price(Money::create(10), Money::create(12)),
             '0.2',
@@ -214,35 +211,23 @@ class OrderItemTest extends TestCase
         return $orderProduct;
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
-     */
-    private function createOrderMock(): MockObject
+    private function createOrderStub(): Order
     {
-        return $this->createMock(Order::class);
+        return $this->createStub(Order::class);
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    private function createTransportMock(): MockObject
+    private function createTransportStub(): Transport
     {
-        return $this->createMock(Transport::class);
+        return $this->createStub(Transport::class);
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    private function createPaymentMock(): MockObject
+    private function createPaymentStub(): Payment
     {
-        return $this->createMock(Payment::class);
+        return $this->createStub(Payment::class);
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    private function createProductMock(): MockObject
+    private function createProductStub(): Product
     {
-        return $this->createMock(Product::class);
+        return $this->createStub(Product::class);
     }
 }

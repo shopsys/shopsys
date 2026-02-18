@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy;
 use InvalidArgumentException;
 use Override;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Security\Core\Role\RoleHierarchy;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
@@ -27,7 +27,7 @@ final class ContextAwareRoleHierarchy implements RoleHierarchyInterface
      * @param iterable<string, \Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\AbstractRoleHierarchyProvider> $hierarchyProviders
      */
     public function __construct(
-        #[TaggedIterator('shopsys.role_hierarchy_provider')]
+        #[AutowireIterator('shopsys.role_hierarchy_provider')]
         iterable $hierarchyProviders,
         private readonly ContextResolverInterface $contextResolver,
     ) {

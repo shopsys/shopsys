@@ -21,7 +21,7 @@ class UserFactoryTest extends TestCase
 
     private function getUserFactory(): CustomerUserFactory
     {
-        $customerUserPasswordFacade = $this->createMock(CustomerUserPasswordFacade::class);
+        $customerUserPasswordFacade = $this->createStub(CustomerUserPasswordFacade::class);
 
         return new CustomerUserFactory(new EntityNameResolver([]), $customerUserPasswordFacade);
     }

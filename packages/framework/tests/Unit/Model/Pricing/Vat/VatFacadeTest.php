@@ -25,7 +25,7 @@ class VatFacadeTest extends TestCase
         $vatData->name = 'vat name';
 
         $expected = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
-        $emMock = $this->createMock(EntityManager::class);
+        $emStub = $this->createStub(EntityManager::class);
 
         $settingMock = $this->getMockBuilder(Setting::class)
             ->onlyMethods(['getForDomain', '__construct'])
@@ -47,20 +47,17 @@ class VatFacadeTest extends TestCase
             ->with($this->equalTo(1))
             ->willReturn($expected);
 
-        $domainMock = $this->getMockBuilder(Domain::class)
-            ->onlyMethods(['__construct'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $domainStub = $this->createStub(Domain::class);
 
-        $productRecalculationDispatcherMock = $this->createMock(ProductRecalculationDispatcher::class);
+        $productRecalculationDispatcherStub = $this->createStub(ProductRecalculationDispatcher::class);
 
         $vatFacade = new VatFacade(
-            $emMock,
+            $emStub,
             $vatRepositoryMock,
             $settingMock,
             new VatFactory(new EntityNameResolver([])),
-            $domainMock,
-            $productRecalculationDispatcherMock,
+            $domainStub,
+            $productRecalculationDispatcherStub,
         );
 
         $defaultVat = $vatFacade->getDefaultVatForDomain(Domain::FIRST_DOMAIN_ID);
@@ -70,8 +67,8 @@ class VatFacadeTest extends TestCase
 
     public function testSetDefaultVatForFirstDomain(): void
     {
-        $emMock = $this->createMock(EntityManager::class);
-        $vatRepositoryMock = $this->createMock(VatRepository::class);
+        $emStub = $this->createStub(EntityManager::class);
+        $vatRepositoryStub = $this->createStub(VatRepository::class);
 
         $vatMock = $this->getMockBuilder(Vat::class)
             ->onlyMethods(['getId', '__construct'])
@@ -88,20 +85,17 @@ class VatFacadeTest extends TestCase
             ->method('setForDomain')
             ->with($this->equalTo(Vat::SETTING_DEFAULT_VAT), $this->equalTo(1));
 
-        $domainMock = $this->getMockBuilder(Domain::class)
-            ->onlyMethods(['__construct'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $domainStub = $this->createStub(Domain::class);
 
-        $productRecalculationDispatcherMock = $this->createMock(ProductRecalculationDispatcher::class);
+        $productRecalculationDispatcherStub = $this->createStub(ProductRecalculationDispatcher::class);
 
         $vatFacade = new VatFacade(
-            $emMock,
-            $vatRepositoryMock,
+            $emStub,
+            $vatRepositoryStub,
             $settingMock,
             new VatFactory(new EntityNameResolver([])),
-            $domainMock,
-            $productRecalculationDispatcherMock,
+            $domainStub,
+            $productRecalculationDispatcherStub,
         );
         $vatFacade->setDefaultVatForDomain($vatMock, Domain::FIRST_DOMAIN_ID);
     }

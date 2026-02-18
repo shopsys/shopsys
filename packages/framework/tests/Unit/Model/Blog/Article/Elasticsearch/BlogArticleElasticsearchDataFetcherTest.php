@@ -66,10 +66,10 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
     private function getBlogArticleElasticsearchDataFetcherWithMockedClient(
         array $mockedResultArray,
     ): BlogArticleElasticsearchDataFetcher {
-        $clientMock = $this->createMock(Client::class);
-        $clientMock->method('search')->willReturn($mockedResultArray);
+        $clientStub = $this->createStub(Client::class);
+        $clientStub->method('search')->willReturn($mockedResultArray);
 
-        return new BlogArticleElasticsearchDataFetcher($clientMock);
+        return new BlogArticleElasticsearchDataFetcher($clientStub);
     }
 
     private function getBlogArticleDataDefaultValues(): array

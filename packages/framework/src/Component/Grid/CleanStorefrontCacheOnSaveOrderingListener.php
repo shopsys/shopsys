@@ -35,7 +35,7 @@ class CleanStorefrontCacheOnSaveOrderingListener
             return;
         }
 
-        $entityClass = $controllerEvent->getRequest()->get('entityClass');
+        $entityClass = $controllerEvent->getRequest()->request->getString('entityClass');
 
         if (array_key_exists($entityClass, $this->getEntityClassWithQueryKeyMap())) {
             $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache($this->getEntityClassWithQueryKeyMap()[$entityClass]);
