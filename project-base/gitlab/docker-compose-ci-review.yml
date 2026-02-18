@@ -1,7 +1,7 @@
 services:
     webserver:
         restart: always
-        image: nginx:1.27-alpine
+        image: nginx:1.29-alpine
         depends_on:
             - php-fpm
             - storefront

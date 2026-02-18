@@ -31,7 +31,7 @@ License: PostgreSQL License
 https://www.postgresql.org/about/licence/
 
 ### Nginx
-Image: `nginx:1.27-alpine`  
+Image: `nginx:1.29-alpine`  
 License: BSD-2-Clause  
 http://nginx.org/LICENSE
 
