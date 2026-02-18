@@ -129,6 +129,14 @@ services:
         arguments:
             $logger: '@monolog.logger.cron'
 
+    Shopsys\FrameworkBundle\Component\Cron\CronModuleProcessRunner:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    Shopsys\FrameworkBundle\Component\Cron\CronModuleRunnerFacade:
+        arguments:
+            - '@monolog.logger.cron'
+
     Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig:
         arguments:
             - '%shopsys.customer_uploaded_file_config_filepath%'

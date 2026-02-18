@@ -113,6 +113,7 @@ class CronModule
 
     public function suspend(): void
     {
+        $this->scheduled = true;
         $this->suspended = true;
     }
 

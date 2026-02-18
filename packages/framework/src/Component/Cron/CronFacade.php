@@ -8,8 +8,7 @@ use DateTimeInterface;
 use Monolog\Logger;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
-use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
-use Throwable;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class CronFacade
 {
@@ -17,7 +16,8 @@ class CronFacade
         protected readonly Logger $logger,
         protected readonly CronConfig $cronConfig,
         protected readonly CronModuleFacade $cronModuleFacade,
-        protected readonly CronModuleExecutor $cronModuleExecutor,
+        protected readonly ParameterBagInterface $parameterBag,
+        protected readonly CronModuleProcessRunner $cronModuleProcessRunner,
     ) {
     }
 
@@ -27,19 +27,32 @@ class CronFacade
         $this->cronModuleFacade->scheduleModules($cronModuleConfigsToSchedule);
     }
 
-    public function runScheduledModulesForInstance(string $instanceName): void
-    {
+    public function runScheduledModulesForInstance(
+        string $instanceName,
+        callable $processOutputCallback,
+        bool $isOutputDecorated,
+    ): void {
         $cronModuleConfigs = $this->cronConfig->getCronModuleConfigsForInstance($instanceName);
 
         $scheduledCronModuleConfigs = $this->cronModuleFacade->getOnlyScheduledCronModuleConfigs($cronModuleConfigs);
-        $this->runModules($scheduledCronModuleConfigs, $instanceName);
+
+        $this->runModules(
+            $scheduledCronModuleConfigs,
+            $instanceName,
+            $processOutputCallback,
+            $isOutputDecorated,
+        );
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[] $cronModuleConfigs
      */
-    protected function runModules(array $cronModuleConfigs, string $instanceName): void
-    {
+    protected function runModules(
+        array $cronModuleConfigs,
+        string $instanceName,
+        callable $processOutputCallback,
+        bool $isOutputDecorated,
+    ): void {
         $unique = uniqid(more_entropy: true);
 
         $this->logger->pushProcessor(function ($record) use ($instanceName, $unique) {
@@ -52,79 +65,49 @@ class CronFacade
         $this->logger->info('Start of cron instance');
 
         try {
-            foreach ($cronModuleConfigs as $cronModuleConfig) {
-                $this->runSingleModule($cronModuleConfig);
+            $stopOnFailure = $this->shouldInstanceStopOnFailure($instanceName);
 
-                if ($this->cronModuleExecutor->canRun($cronModuleConfig) === false) {
+            foreach ($cronModuleConfigs as $cronModuleConfig) {
+                if ($this->cronModuleFacade->isModuleDisabled($cronModuleConfig)) {
+                    $this->cronModuleFacade->unscheduleModule($cronModuleConfig);
+
+                    continue;
+                }
+
+                $result = $this->runSingleModule(
+                    $cronModuleConfig->getServiceId(),
+                    $instanceName,
+                    $processOutputCallback,
+                    $isOutputDecorated,
+                    $unique,
+                );
+
+                if ($result !== CronModuleProcessRunner::RESULT_SUCCESS && $stopOnFailure) {
+                    $this->logger->error('Stopping cron instance execution due to failure of a module');
+
                     break;
                 }
             }
-        } catch (Throwable $throwable) {
-            $this->logger->error('End of cron instance with error', [
-                'exception' => $throwable,
-            ]);
+        } finally {
+            $this->logger->info('End of cron instance');
             $this->logger->popProcessor();
-
-            return;
         }
-
-        $this->logger->info('End of cron instance');
-
-        $this->logger->popProcessor();
     }
 
-    public function runModuleByServiceId(string $serviceId): void
-    {
-        $cronModuleConfig = $this->cronConfig->getCronModuleConfigByServiceId($serviceId);
-
-        $this->runSingleModule($cronModuleConfig);
-    }
-
-    protected function runSingleModule(CronModuleConfig $cronModuleConfig): void
-    {
-        if ($this->cronModuleFacade->isModuleDisabled($cronModuleConfig) === true) {
-            return;
-        }
-
-        $shortServiceId = ReflectionHelper::getShortClassName($cronModuleConfig->getServiceId());
-        $this->logger->pushProcessor(function ($record) use ($shortServiceId) {
-            $record->extra['module'] = $shortServiceId;
-
-            return $record;
-        });
-
-        $this->logger->info('Cron module started');
-        $cronModuleService = $cronModuleConfig->getService();
-        $cronModuleService->setLogger($this->logger);
-        $this->cronModuleFacade->markCronAsStarted($cronModuleConfig);
-
-        try {
-            $status = $this->cronModuleExecutor->runModule(
-                $cronModuleService,
-                $this->cronModuleFacade->isModuleSuspended($cronModuleConfig),
-            );
-        } catch (Throwable $throwable) {
-            $this->cronModuleFacade->markCronAsFailed($cronModuleConfig);
-            $this->logger->error('Cron module ended with error', [
-                'exception' => $throwable,
-            ]);
-
-            throw $throwable;
-        }
-
-        $this->cronModuleFacade->markCronAsEnded($cronModuleConfig);
-
-        if ($status === CronModuleExecutor::RUN_STATUS_OK) {
-            $this->cronModuleFacade->unscheduleModule($cronModuleConfig);
-        } elseif ($status === CronModuleExecutor::RUN_STATUS_SUSPENDED) {
-            $this->cronModuleFacade->suspendModule($cronModuleConfig);
-        }
-
-        $this->logger->info('Cron module ended', [
-            'status' => $status,
-        ]);
-
-        $this->logger->popProcessor();
+    public function runSingleModule(
+        string $serviceId,
+        string $instanceName,
+        callable $processOutputCallback,
+        bool $isOutputDecorated,
+        ?string $runId = null,
+    ): string {
+        return $this->cronModuleProcessRunner->runModule(
+            $serviceId,
+            $instanceName,
+            $processOutputCallback,
+            $isOutputDecorated,
+            $runId,
+        );
     }
 
     /**
@@ -148,8 +131,18 @@ class CronFacade
      */
     public function getInstanceNames(): array
     {
-        return array_unique(array_map(function (CronModuleConfig $config) {
-            return $config->getInstanceName();
-        }, $this->getAll()));
+        return array_unique(
+            array_map(
+                static fn (CronModuleConfig $config) => $config->getInstanceName(),
+                $this->getAll(),
+            ),
+        );
+    }
+
+    public function shouldInstanceStopOnFailure(string $instanceName): bool
+    {
+        $cronInstances = $this->parameterBag->get('cron_instances');
+
+        return $cronInstances[$instanceName]['stop_on_failure'] ?? true;
     }
 }

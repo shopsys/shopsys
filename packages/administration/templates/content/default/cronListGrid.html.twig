@@ -1,5 +1,14 @@
 {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
+{% block grid_multiple_drag_and_drop_title %}
+    {{ grid_title }}
+    {% if stopOnFailure %}
+        <span class="badge badge-sm bg-warning text-warning-fg ms-2">{{ 'Stops on first failure'|trans }}</span>
+    {% else %}
+        <span class="badge badge-sm bg-info text-info-fg ms-2">{{ 'Continues on failure'|trans }}</span>
+    {% endif %}
+{% endblock %}
+
 {% block grid_no_data %}
     {{ 'No crons found.'|trans }}
 {% endblock %}
