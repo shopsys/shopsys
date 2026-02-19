@@ -75,7 +75,7 @@ License: MIT
 https://github.com/nodejs/docker-node/blob/main/LICENSE
 
 ### Php
-Image: `php:8.3-fpm-bullseye`  
+Image: `php:8.5-fpm-alpine`  
 License: The PHP License  
 http://php.net/license/
 

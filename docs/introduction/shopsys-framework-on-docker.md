@@ -69,7 +69,7 @@ kind of recipe by which final image is cooked.
 Dockerfile example command:
 
 ```dockerfile
-FROM php:8.3-fpm-bullseye
+FROM php:8.5-fpm-alpine
 ```
 
 !!! note

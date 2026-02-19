@@ -25,13 +25,13 @@ printf "${GREEN}Installing docker compose${NC}\n"
 sudo curl -L "https://github.com/docker/compose/releases/download/2.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-printf "${GREEN}Installing PHP 8.3${NC}\n"
+printf "${GREEN}Installing PHP 8.5${NC}\n"
 
 wget https://packages.sury.org/php/apt.gpg
 sudo apt-key add apt.gpg
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php7.list
 sudo apt update
-sudo apt install -y php8.3
+sudo apt install -y php8.5
 
 printf "${GREEN}Installing Composer${NC}\n"
 
