@@ -4,7 +4,7 @@ import { CustomerUserAreaEnum } from 'types/customer';
 import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
 const domainsConfig: DomainConfigType[] = getPublicConfigProperty('domains', []) as DomainConfigType[];
-const cdnDomain: string = getPublicConfigProperty('cdnDomain', '') as string;
+const cdnDomain = getPublicConfigProperty('cdnDomain', '');
 
 export type DomainConfigType = {
     url: string;

@@ -1,6 +1,6 @@
 import getConfig from 'next/config';
 import { getNextConfig, getPublicConfigProperty, getServerConfigProperty } from 'utils/config/getNextConfig';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach, expectTypeOf } from 'vitest';
 
 vi.mock('next/config');
 
@@ -74,6 +74,12 @@ describe('getNextConfig utilities', () => {
             expect(result).toBe('default.com');
         });
 
+        it('should have return type without undefined when default value is provided', () => {
+            const result = getPublicConfigProperty('userSnapEnabledDefaultValue', false);
+
+            expectTypeOf(result).toEqualTypeOf<boolean>();
+        });
+
         it('should return undefined when property and default are not provided', () => {
             mockGetConfig.mockReturnValue({
                 publicRuntimeConfig: {},
@@ -106,6 +112,12 @@ describe('getNextConfig utilities', () => {
             const result = getServerConfigProperty('internalGraphqlEndpoint', 'http://default');
 
             expect(result).toBe('http://default');
+        });
+
+        it('should have return type without undefined when default value is provided', () => {
+            const result = getServerConfigProperty('internalGraphqlEndpoint', 'http://default');
+
+            expectTypeOf(result).toEqualTypeOf<string>();
         });
     });
 });

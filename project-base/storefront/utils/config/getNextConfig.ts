@@ -65,7 +65,7 @@ export function getPublicConfigProperty<K extends keyof NextConfigPublicRuntimeC
 export function getPublicConfigProperty<K extends keyof NextConfigPublicRuntimeConfig, T>(
     key: K,
     defaultValue: T,
-): NextConfigPublicRuntimeConfig[K] | T;
+): Exclude<NextConfigPublicRuntimeConfig[K], undefined> | T;
 
 export function getPublicConfigProperty<K extends keyof NextConfigPublicRuntimeConfig, T>(
     key: K,
@@ -83,7 +83,7 @@ export function getServerConfigProperty<K extends keyof NextConfigServerRuntimeC
 export function getServerConfigProperty<K extends keyof NextConfigServerRuntimeConfig, T>(
     key: K,
     defaultValue: T,
-): NextConfigServerRuntimeConfig[K] | T;
+): Exclude<NextConfigServerRuntimeConfig[K], undefined> | T;
 
 export function getServerConfigProperty<K extends keyof NextConfigServerRuntimeConfig, T>(
     key: K,
