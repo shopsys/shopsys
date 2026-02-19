@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Image\Config\Exception;
 
 use Exception;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 
-class ImageTypeNotFoundException extends Exception
+class ImageTypeNotFoundException extends ImageNotFoundException
 {
     public function __construct(
         protected string $entityClass,
@@ -15,7 +16,6 @@ class ImageTypeNotFoundException extends Exception
     ) {
         parent::__construct(
             'Image type "' . $imageType . '" not found for entity "' . $entityClass . '".',
-            0,
             $previous,
         );
     }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User\Role\Exception;
 
-use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class CustomerUserRoleGroupNotFoundException extends Exception
+class CustomerUserRoleGroupNotFoundException extends NotFoundHttpException
 {
 }
