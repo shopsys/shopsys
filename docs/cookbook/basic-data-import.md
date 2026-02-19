@@ -12,7 +12,7 @@ After completing this cookbook, you should know:
 ## Example: Products import step by step
 
 Let us create simple products import from an external source.
-The source is mocked with [apiari.io service](http://docs.ssfwbasicdataimportdemo.apiary.io/) which returns example products data in JSON format:
+The source is mocked with an external service which returns example products data in JSON format:
 
 ```json
 [
@@ -122,7 +122,7 @@ use App\Model\Product\ProductFacade;
 
 // ...
 
-const PRODUCT_DATA_URL = 'https://private-anon-38d0154157-ssfwbasicdataimportdemo.apiary-mock.com/products';
+const PRODUCT_DATA_URL = 'https://example.com/api/products';
 
 // ...
 

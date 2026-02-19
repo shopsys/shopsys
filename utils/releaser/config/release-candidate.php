@@ -12,7 +12,6 @@ use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckReleaseBlogPostReleaseW
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckShopsysInstallReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CreateBranchReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ForceYourBranchSplitReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\GenerateApiaryBlueprintReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ResolveDocsTodoReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\SendBranchForReviewAndTestsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\SetFrameworkBundleVersionReleaseWorker;
@@ -39,7 +38,6 @@ return [
     StopMergingReleaseWorker::class,
     ValidateRequireFormatInComposerJsonReleaseWorker::class,
     ValidateConflictsInComposerJsonReleaseWorker::class,
-    GenerateApiaryBlueprintReleaseWorker::class,
     SetFrameworkBundleVersionReleaseWorker::class,
     ResolveDocsTodoReleaseWorker::class,
     UpdateChangelogReleaseWorker::class,
