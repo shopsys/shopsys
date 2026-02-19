@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Feed;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter;
@@ -23,6 +24,7 @@ class FeedExportFactory
         protected readonly MountManager $mountManager,
         protected readonly ServicesResetter $servicesResetter,
         protected readonly TransformStringHelper $transformStringHelper,
+        protected readonly LoggerInterface $logger,
     ) {
     }
 
@@ -44,6 +46,7 @@ class FeedExportFactory
             $feedFilepath,
             $feedLocalFilepath,
             $this->servicesResetter,
+            $this->logger,
             $lastSeekId,
         );
     }
