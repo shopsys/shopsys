@@ -64,7 +64,6 @@ class EntityNameResolver
         $reflection = new ReflectionObject($object);
 
         foreach ($reflection->getProperties() as $property) {
-            $property->setAccessible(true);
             $value = $property->getValue($object);
             $resolvedValue = $this->resolveIn($value);
             $property->setValue($object, $resolvedValue);

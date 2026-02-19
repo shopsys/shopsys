@@ -170,7 +170,6 @@ class FilterQueryTest extends TestCase
         $blogCategory = new BlogCategory($blogCategoryData);
         $reflection = new ReflectionClass($blogCategory);
         $property = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($blogCategory, 1);
 
         return $blogCategory;

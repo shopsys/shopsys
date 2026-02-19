@@ -96,8 +96,6 @@ function getImageFromUrl(string $url): void
     $image = curl_exec($ch);
     $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
     $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
     if ($statusCode !== 200 || !$image) {
         render404();
         exit;

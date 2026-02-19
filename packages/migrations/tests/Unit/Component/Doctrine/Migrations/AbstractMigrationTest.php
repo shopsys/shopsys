@@ -17,8 +17,6 @@ class AbstractMigrationTest extends TestCase
 
         $reflectionClass = new ReflectionClass(AbstractMigration::class);
         $addSqlMethod = $reflectionClass->getMethod('addSql');
-        $addSqlMethod->setAccessible(true);
-
         $this->expectException(MethodIsNotAllowedException::class);
 
         $addSqlMethod->invokeArgs($abstractMigrationStub, ['']);
