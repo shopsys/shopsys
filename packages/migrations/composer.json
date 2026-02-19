@@ -41,7 +41,6 @@
         "symfony/filesystem": "^7.4",
         "symfony/framework-bundle": "^7.4",
         "symfony/http-kernel": "^7.4",
-        "symfony/templating": "^7.4",
         "symfony/yaml": "^7.4"
     },
     "require-dev": {
