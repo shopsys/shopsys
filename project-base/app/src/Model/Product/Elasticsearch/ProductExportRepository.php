@@ -139,7 +139,10 @@ class ProductExportRepository extends BaseProductExportRepository
                 $variantCatnums[] = $variant->getCatnum();
             }
 
-            return trim(implode(' ', array_unique($variantCatnums)));
+            return $variantCatnums
+                |> array_unique(...)
+                |> (fn ($v) => implode(' ', $v))
+                |> trim(...);
         }
 
         return $product->getCatnum();
@@ -156,7 +159,10 @@ class ProductExportRepository extends BaseProductExportRepository
                 $variantEans[] = $variant->getEan() ?? '';
             }
 
-            return trim(implode(' ', array_unique($variantEans)));
+            return $variantEans
+                |> array_unique(...)
+                |> (fn ($v) => implode(' ', $v))
+                |> trim(...);
         }
 
         return $product->getEan() ?? '';
@@ -173,7 +179,10 @@ class ProductExportRepository extends BaseProductExportRepository
                 $variantEans[] = $variant->getPartno() ?? '';
             }
 
-            return trim(implode(' ', array_unique($variantEans)));
+            return $variantEans
+                |> array_unique(...)
+                |> (fn ($v) => implode(' ', $v))
+                |> trim(...);
         }
 
         return $product->getPartno() ?? '';

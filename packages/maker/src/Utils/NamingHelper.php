@@ -10,7 +10,10 @@ final class NamingHelper
 {
     public static function convertEntityNameToTableName(string $entityName): string
     {
-        return Str::asSnakeCase(Str::singularCamelCaseToPluralCamelCase(Str::getShortClassName($entityName)));
+        return $entityName
+            |> Str::getShortClassName(...)
+            |> Str::singularCamelCaseToPluralCamelCase(...)
+            |> Str::asSnakeCase(...);
     }
 
     public static function getJoinTableName(string $entityName, string $relatedEntityName): string

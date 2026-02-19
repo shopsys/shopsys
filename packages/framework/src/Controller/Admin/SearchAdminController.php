@@ -60,7 +60,10 @@ class SearchAdminController extends AdminBaseController
 
     protected function convertStringWithDiacritics(string $string): string
     {
-        return strtolower(preg_replace('~[\p{M}-]+~u', '', Normalizer::normalize($string, Normalizer::FORM_D)));
+        return $string
+            |> (fn ($v) => Normalizer::normalize($v, Normalizer::FORM_D))
+            |> (fn ($v) => preg_replace('~[\p{M}-]+~u', '', $v))
+            |> strtolower(...);
     }
 
     protected function buildPathByItem(ItemInterface $item): array
