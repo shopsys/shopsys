@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Cron;
 
 use Monolog\Logger;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
@@ -45,6 +46,61 @@ class CronFacadeTest extends TestCase
             $invalidServiceId => $invalidCronModuleServiceStub,
         ], $cronTimeResolverStub);
         $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->scheduleModulesByTime(new DatePoint());
+    }
+
+    /**
+     * @return iterable<string, array{cronInstances: array<string, array<string, bool>>, expectedRunModuleCalls: int}>
+     */
+    public static function getStopOnFailureData(): iterable
+    {
+        yield 'stops after first failure when stop_on_failure is enabled' => [
+            'cronInstances' => [
+                CronModuleConfig::DEFAULT_INSTANCE_NAME => [
+                    'stop_on_failure' => true,
+                ],
+            ],
+            'expectedRunModuleCalls' => 1,
+        ];
+
+        yield 'continues after failure when stop_on_failure is disabled' => [
+            'cronInstances' => [
+                CronModuleConfig::DEFAULT_INSTANCE_NAME => [
+                    'stop_on_failure' => false,
+                ],
+            ],
+            'expectedRunModuleCalls' => 2,
+        ];
+
+        yield 'stops after first failure when instance is not configured (defaults to true)' => [
+            'cronInstances' => [],
+            'expectedRunModuleCalls' => 1,
+        ];
+    }
+
+    #[DataProvider('getStopOnFailureData')]
+    public function testRunScheduledModulesRespectsStopOnFailureConfiguration(
+        array $cronInstances,
+        int $expectedRunModuleCalls,
+    ): void {
+        $moduleStub = $this->createStub(SimpleCronModuleInterface::class);
+
+        $cronModuleFacadeStub = $this->createStub(CronModuleFacade::class);
+        $cronModuleFacadeStub->method('getOnlyScheduledCronModuleConfigs')
+            ->willReturnArgument(0);
+        $cronModuleFacadeStub->method('isModuleDisabled')->willReturn(false);
+
+        $cronModuleProcessRunnerMock = $this->createMock(CronModuleProcessRunner::class);
+        $cronModuleProcessRunnerMock->expects($this->exactly($expectedRunModuleCalls))
+            ->method('runModule')
+            ->willReturn(CronModuleProcessRunner::RESULT_FAILED);
+
+        $parameterBagStub = $this->createStub(ParameterBagInterface::class);
+        $parameterBagStub->method('get')->willReturn($cronInstances);
+
+        $cronConfig = $this->createCronConfigWithRegisteredServices(['first' => $moduleStub, 'second' => $moduleStub]);
+
+        $this->createCronFacade($cronConfig, $cronModuleFacadeStub, $parameterBagStub, $cronModuleProcessRunnerMock)
+            ->runScheduledModulesForInstance(CronModuleConfig::DEFAULT_INSTANCE_NAME, static function (): void {}, false);
     }
 
     public function testRunSingleModuleDelegatesToProcessRunner(): void
