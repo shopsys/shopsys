@@ -625,7 +625,7 @@ msgstr ""
 msgid "Slug can contain only letters, numbers, hyphens, underscores and slashes"
 msgstr ""
 
-msgid "Slug containing non-ASCII characters must be URL-encoded. You can use https://www.urlencoder.org/."
+msgid "Slug containing non-ASCII characters must be URL-encoded. The encoded value of \"%enteredValue%\" is \"%normalizedValue%\"."
 msgstr ""
 
 msgid "Status name cannot be longer than {{ limit }} characters"
