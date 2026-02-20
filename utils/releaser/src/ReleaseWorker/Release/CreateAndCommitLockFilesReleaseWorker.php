@@ -16,7 +16,7 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return 'Create or update and commit composer.lock, symfony.lock, package-lock.json, and migrations-lock.yml and [Manually] push it';
+        return 'Create or update and commit composer.lock, symfony.lock, package-lock.json, patches.lock.json, and migrations-lock.yml and [Manually] push it';
     }
 
     #[Override]
@@ -38,16 +38,18 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
         $this->processRunner->run(sprintf('cd %s/project-base/app && composer update && npm install', $tempDirectory));
         $this->processRunner->run(sprintf('cd %s/project-base/app && php phing db-rebuild', $tempDirectory));
 
-        $this->symfonyStyle->note('Committing changes in composer.lock, symfony.lock, package-lock.json, and migrations-lock.yml');
+        $this->symfonyStyle->note('Committing changes in composer.lock, symfony.lock, package-lock.json, patches.lock.json, and migrations-lock.yml');
         $this->processRunner->run(sprintf('cp %s/project-base/app/composer.lock %s/project-base/app/composer.lock', $tempDirectory, $currentDir));
         $this->processRunner->run(sprintf('cp %s/project-base/app/symfony.lock %s/project-base/app/symfony.lock', $tempDirectory, $currentDir));
         $this->processRunner->run(sprintf('cp %s/project-base/app/package-lock.json %s/project-base/app/package-lock.json', $tempDirectory, $currentDir));
         $this->processRunner->run(sprintf('cp %s/project-base/app/migrations-lock.yml %s/project-base/app/migrations-lock.yml', $tempDirectory, $currentDir));
+        $this->processRunner->run(sprintf('cp %s/project-base/app/patches.lock.json %s/project-base/app/patches.lock.json', $tempDirectory, $currentDir));
 
         $this->processRunner->run('git add -f project-base/app/composer.lock');
         $this->processRunner->run('git add project-base/app/symfony.lock');
         $this->processRunner->run('git add -f project-base/app/package-lock.json');
         $this->processRunner->run('git add -f project-base/app/migrations-lock.yml');
+        $this->processRunner->run('git add -f project-base/app/patches.lock.json');
 
         $message = sprintf('locked versions of dependencies for %s release', $version->getVersionString());
         $this->commit($message);
@@ -59,7 +61,7 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
 
         $this->symfonyStyle->confirm(
             sprintf(
-                'confirm that composer.lock, symfony.lock, package-lock.json, and migrations-lock.yml are pushed to "%s" branch',
+                'confirm that composer.lock, symfony.lock, package-lock.json, patches.lock.json, and migrations-lock.yml are pushed to "%s" branch',
                 $this->currentBranchName,
             ),
         );
