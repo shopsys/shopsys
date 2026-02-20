@@ -1,4 +1,15 @@
 @layer base {
+    /* Keep SSR content visible when JavaScript is disabled (Tailwind v4 + React streaming). */
+    @media (scripting: none) {
+        div[hidden][id^='S:'] {
+            display: contents !important;
+        }
+
+        #__next:has(template[id^='B:']) {
+            display: none !important;
+        }
+    }
+
     html {
         @apply h-full min-h-full;
     }
@@ -230,7 +241,7 @@
 
     a:focus-visible,
     button:focus-visible {
-        @apply text-text-default! bg-orange-500! outline-none!;
+        @apply text-text-default! bg-orange-500! outline-hidden!;
     }
 
     a:focus-visible svg,
