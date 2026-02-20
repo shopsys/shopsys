@@ -20,7 +20,7 @@ const compat = new FlatCompat({
 });
 
 export default [
-    reactHooks.configs['recommended-latest'],
+    reactHooks.configs.flat.recommended,
     {
         ignores: [
             'node_modules/*',
@@ -39,6 +39,7 @@ export default [
             '**/tsconfig.json',
             '.pnpm-store/*',
             '**/eslint-rules',
+            'next-env.d.ts',
         ],
     },
     ...compat.extends(
@@ -299,6 +300,8 @@ export default [
                     aspects: ['invalidHref', 'preferButton'],
                 },
             ],
+
+            'react-hooks/set-state-in-effect': 'off',
         },
     },
 ];
