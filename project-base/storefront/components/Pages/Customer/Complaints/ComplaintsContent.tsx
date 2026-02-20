@@ -36,7 +36,9 @@ export const ComplaintsContent: FC<ComplaintsContentProps> = ({
                 <SkeletonModuleCustomerComplaints />
             ) : (
                 <div className="flex flex-col gap-5">
-                    {items?.map((item) => <ComplaintItem key={item.uuid} complaintItem={item} />)}
+                    {items?.map((item) => (
+                        <ComplaintItem key={item.uuid} complaintItem={item} />
+                    ))}
                 </div>
             )}
 

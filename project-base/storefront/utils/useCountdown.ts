@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect, useRef } from 'react';
+import { startTransition, useState, useEffect, useEffectEvent } from 'react';
 
 interface TimeState {
     days: string;
@@ -41,8 +41,9 @@ export const useCountdown = (endTime: CountdownTime, callback?: () => void, inte
         isLoading: true,
     });
 
-    const onCompleteRef = useRef<() => void>(undefined);
-    onCompleteRef.current = callback ?? router.reload;
+    const onComplete = useEffectEvent(() => {
+        (callback ?? router.reload)();
+    });
 
     useEffect(() => {
         const endTimeMs = parseDate(endTime);
@@ -61,13 +62,15 @@ export const useCountdown = (endTime: CountdownTime, callback?: () => void, inte
                 if (intervalId) {
                     clearInterval(intervalId);
                 }
-                onCompleteRef.current?.();
+                onComplete();
                 return;
             }
 
-            setTime({
-                ...calculateTimeLeft(durationMs),
-                isLoading: false,
+            startTransition(() => {
+                setTime({
+                    ...calculateTimeLeft(durationMs),
+                    isLoading: false,
+                });
             });
         };
 

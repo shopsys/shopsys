@@ -14,12 +14,11 @@ import {
 } from 'graphql/requests/search/queries/SearchQuery.generated';
 import { Maybe, TypeProductFilter, TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { Client, useClient } from 'urql';
 import { isExpectedPriceFilterError } from 'utils/errors/expectedErrors';
 import { mapParametersFilter } from 'utils/filterOptions/mapParametersFilter';
-import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
 import { getPageSizeInfo } from 'utils/loadMore/getPageSizeInfo';
 import { hasReadAllItemsFromCache } from 'utils/loadMore/hasReadAllItemsFromCache';
 import { mergeItemEdges } from 'utils/loadMore/mergeItemEdges';
@@ -42,7 +41,6 @@ export const useSearchProductsData = (totalProductCount?: number) => {
 
     const previousLoadMoreRef = useRef(currentLoadMore);
     const previousPageRef = useRef(currentPage);
-    const initialPageSizeRef = useRef(calculatePageSize(currentLoadMore));
 
     const [searchProductsData, setSearchProductsData] = useState<TypeSearchProductsQuery | undefined>();
     const [areSearchProductsFetching, setAreSearchProductsFetching] = useState(!searchProductsData);
@@ -50,49 +48,11 @@ export const useSearchProductsData = (totalProductCount?: number) => {
 
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
 
-    const fetchProducts = async (
-        variables: TypeSearchProductsQueryVariables,
-        previouslyQueriedProductsFromCache: TypeListedProductConnectionFragment['edges'] | undefined,
-    ) => {
-        const searchProductsResponse = await client
-            .query<TypeSearchProductsQuery, TypeSearchProductsQueryVariables>(SearchProductsQueryDocument, variables)
-            .toPromise();
-
-        if (!searchProductsResponse.data?.productsSearch) {
-            return;
-        }
-
-        setSearchProductsData({
-            ...searchProductsResponse.data,
-            productsSearch: {
-                ...searchProductsResponse.data.productsSearch,
-                edges: mergeItemEdges(
-                    previouslyQueriedProductsFromCache,
-                    searchProductsResponse.data.productsSearch.edges,
-                ) as TypeListedProductConnectionFragment['edges'],
-            },
-        });
-        stopFetching();
-    };
-
-    const startFetching = () => {
-        if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
-            setAreSearchProductsFetching(true);
-        } else {
-            setIsLoadingMoreSearchProducts(true);
-            previousLoadMoreRef.current = currentLoadMore;
-        }
-    };
-
-    const stopFetching = () => {
-        setAreSearchProductsFetching(false);
-        setIsLoadingMoreSearchProducts(false);
-    };
+    const currentFilterSerialized = JSON.stringify(currentFilter);
 
     useEffect(() => {
         if (previousPageRef.current !== currentPage) {
             previousPageRef.current = currentPage;
-            initialPageSizeRef.current = DEFAULT_PAGE_SIZE;
         }
 
         const previousProductsFromCache = getPreviousProductsFromCache(
@@ -116,21 +76,57 @@ export const useSearchProductsData = (totalProductCount?: number) => {
         const { pageSize, isMoreThanOnePage } = getPageSizeInfo(!!previousProductsFromCache, currentLoadMore);
         const endCursor = getEndCursor(currentPage, isMoreThanOnePage ? undefined : currentLoadMore);
 
-        startFetching();
-        fetchProducts(
-            {
-                endCursor,
-                filter: mappedFilter,
-                orderingMode: currentSort,
-                search: currentSearchString ?? '',
-                pageSize,
-                isAutocomplete: false,
-                userIdentifier,
-                parameters,
-            },
-            previousProductsFromCache,
-        );
-    }, [currentSearchString, currentSort, JSON.stringify(currentFilter), currentPage, currentLoadMore]);
+        if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
+            setAreSearchProductsFetching(true);
+        } else {
+            setIsLoadingMoreSearchProducts(true);
+            previousLoadMoreRef.current = currentLoadMore;
+        }
+
+        const fetchProducts = async () => {
+            const searchProductsResponse = await client
+                .query<TypeSearchProductsQuery, TypeSearchProductsQueryVariables>(SearchProductsQueryDocument, {
+                    endCursor,
+                    filter: mappedFilter,
+                    orderingMode: currentSort,
+                    search: currentSearchString ?? '',
+                    pageSize,
+                    isAutocomplete: false,
+                    userIdentifier,
+                    parameters,
+                })
+                .toPromise();
+
+            if (!searchProductsResponse.data?.productsSearch) {
+                return;
+            }
+
+            setSearchProductsData({
+                ...searchProductsResponse.data,
+                productsSearch: {
+                    ...searchProductsResponse.data.productsSearch,
+                    edges: mergeItemEdges(
+                        previousProductsFromCache,
+                        searchProductsResponse.data.productsSearch.edges,
+                    ) as TypeListedProductConnectionFragment['edges'],
+                },
+            });
+            setAreSearchProductsFetching(false);
+            setIsLoadingMoreSearchProducts(false);
+        };
+
+        fetchProducts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- mappedFilter and parameters are derived from currentFilter (tracked via currentFilterSerialized)
+    }, [
+        currentSearchString,
+        currentSort,
+        currentFilterSerialized,
+        currentPage,
+        currentLoadMore,
+        client,
+        userIdentifier,
+        totalProductCount,
+    ]);
 
     return {
         searchProductsData: searchProductsData?.productsSearch,
@@ -260,7 +256,9 @@ export const useSearchQuery = (searchString: string | undefined) => {
         });
     };
 
-    useEffect(() => {
+    const currentFilterSerialized = JSON.stringify(currentFilter);
+
+    const onSearch = useEffectEvent(() => {
         if (searchString && userIdentifier) {
             setIsSearchFetching(true);
 
@@ -275,7 +273,11 @@ export const useSearchQuery = (searchString: string | undefined) => {
                 setIsSearchFetching(false);
             });
         }
-    }, [searchString, userIdentifier]);
+    });
+
+    useEffect(() => {
+        onSearch();
+    }, [searchString, userIdentifier, currentSort, currentFilterSerialized]);
 
     return {
         searchData,

@@ -7,7 +7,7 @@ import getConfig from 'next/config';
  * so this utility provides safe access with proper error handling and defaults.
  */
 
-export interface NextConfigPublicRuntimeConfig {
+interface NextConfigPublicRuntimeConfig {
     domains?: Array<{
         url: string;
         publicGraphqlEndpoint: string;
@@ -39,12 +39,12 @@ export interface NextConfigPublicRuntimeConfig {
     [key: string]: any;
 }
 
-export interface NextConfigServerRuntimeConfig {
+interface NextConfigServerRuntimeConfig {
     internalGraphqlEndpoint?: string;
     [key: string]: any;
 }
 
-export interface NextConfig {
+interface NextConfig {
     publicRuntimeConfig?: NextConfigPublicRuntimeConfig;
     serverRuntimeConfig?: NextConfigServerRuntimeConfig;
 }

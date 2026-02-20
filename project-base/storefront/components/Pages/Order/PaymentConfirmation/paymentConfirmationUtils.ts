@@ -37,30 +37,31 @@ export const useUpdatePaymentStatus = (orderUuid: string, orderPaymentStatusPage
     const [{ data: paymentStatusData }, updatePaymentStatusMutation] = useUpdatePaymentStatusMutation();
     const wasPaymentStatusUpdatedRef = useRef(false);
 
-    const updatePaymentStatus = async () => {
-        const updatePaymentStatusActionResult = await updatePaymentStatusMutation({
-            orderUuid,
-            orderPaymentStatusPageValidityHash,
-        });
-
-        const { gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart } = getGtmCreateOrderEventFromLocalStorage();
-        if (
-            !updatePaymentStatusActionResult.data?.UpdatePaymentStatus ||
-            !gtmCreateOrderEventOrderPart ||
-            !gtmCreateOrderEventUserPart
-        ) {
-            return;
-        }
-
-        removeGtmCreateOrderEventFromLocalStorage();
-    };
-
     useEffect(() => {
+        const updatePaymentStatus = async () => {
+            const updatePaymentStatusActionResult = await updatePaymentStatusMutation({
+                orderUuid,
+                orderPaymentStatusPageValidityHash,
+            });
+
+            const { gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart } =
+                getGtmCreateOrderEventFromLocalStorage();
+            if (
+                !updatePaymentStatusActionResult.data?.UpdatePaymentStatus ||
+                !gtmCreateOrderEventOrderPart ||
+                !gtmCreateOrderEventUserPart
+            ) {
+                return;
+            }
+
+            removeGtmCreateOrderEventFromLocalStorage();
+        };
+
         if (!wasPaymentStatusUpdatedRef.current) {
             updatePaymentStatus();
             wasPaymentStatusUpdatedRef.current = true;
         }
-    }, []);
+    }, [orderPaymentStatusPageValidityHash, orderUuid, updatePaymentStatusMutation]);
 
     useEffect(() => {
         if (paymentStatusData) {

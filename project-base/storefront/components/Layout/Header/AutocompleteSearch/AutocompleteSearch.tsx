@@ -3,14 +3,11 @@ import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AnimatePresence } from 'framer-motion';
 import { useAutocompleteFavoritesQuery } from 'graphql/requests/autocomplete/queries/AutocompleteFavoritesQuery.generated';
-import {
-    TypeAutocompleteSearchQuery,
-    useAutocompleteSearchQuery,
-} from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
+import { useAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/utils/pageViewEvents/useGtmAutocompleteResultsViewEvent';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -33,7 +30,6 @@ export const AutocompleteSearch: FC = () => {
     const searchInputRef = useRef<HTMLInputElement>(null);
 
     const [isSearchResultsPopupOpen, setIsSearchResultsPopupOpen] = useState(false);
-    const [searchData, setSearchData] = useState<TypeAutocompleteSearchQuery>();
     const [searchQueryValue, setSearchQueryValue] = useState('');
 
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
@@ -55,15 +51,7 @@ export const AutocompleteSearch: FC = () => {
 
     const [{ data: favoritesData }] = useAutocompleteFavoritesQuery();
 
-    useEffect(() => {
-        setSearchData(autocompleteSearchData);
-    }, [autocompleteSearchData]);
-
-    useEffect(() => {
-        if (!isWithValidSearchQuery) {
-            setSearchData(undefined);
-        }
-    }, [searchQueryValue]);
+    const searchData = isWithValidSearchQuery ? autocompleteSearchData : undefined;
 
     const isWithFavorites = !!(
         favoritesData?.autocompleteFavorites.products.length ||

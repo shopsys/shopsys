@@ -52,27 +52,32 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
     const formMeta = useDeliveryAddressFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
     const { setValue } = formProviderMethods;
+
+    const countryFieldName = formMeta.fields.country.name;
+    const deliveryAddressCountryCode = deliveryAddress?.country.code;
+
+    useEffect(() => {
+        if (countriesAsSelectOptions.length > 0 && deliveryAddressCountryCode) {
+            const selectedCountry = countriesAsSelectOptions.find(
+                (country) => country.value === deliveryAddressCountryCode,
+            );
+            setValue(countryFieldName, selectedCountry ?? countriesAsSelectOptions[0], {
+                shouldValidate: true,
+            });
+        }
+    }, [countriesAsSelectOptions, deliveryAddressCountryCode, countryFieldName, setValue]);
+
     const handleEditError = useErrorHandler({
         form: formProviderMethods,
         gtmOrigin: GtmMessageOriginType.other,
         customMessage: t('There was an error while editing your delivery address'),
     });
+
     const handleCreateError = useErrorHandler({
         form: formProviderMethods,
         gtmOrigin: GtmMessageOriginType.other,
         customMessage: t('There was an error while creating your delivery address'),
     });
-
-    useEffect(() => {
-        if (countriesAsSelectOptions.length > 0 && deliveryAddress?.country) {
-            const selectedCountry = countriesAsSelectOptions.find(
-                (country) => country.value === deliveryAddress.country.code,
-            );
-            setValue(formMeta.fields.country.name, selectedCountry ?? countriesAsSelectOptions[0], {
-                shouldValidate: true,
-            });
-        }
-    }, [countriesAsSelectOptions, formMeta.fields.country.name, setValue]);
 
     const deliveryAddressHandler: SubmitHandler<DeliveryAddressFormType> = async (deliveryAddressFormData) => {
         blurInput();

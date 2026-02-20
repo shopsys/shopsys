@@ -9,6 +9,20 @@ type ImageProps = {
 
 const fallbackImageSrc = '/images/optimized-noimage.webp';
 
+// Extract src from StaticImageData object if needed
+const getSrcFromImageUrl = (imageUrl: NextImageProps['src']): string => {
+    if (typeof imageUrl === 'string') {
+        return imageUrl;
+    }
+
+    // Handle StaticImageData objects that have src property
+    if (typeof imageUrl === 'object') {
+        return (imageUrl as any).src || '';
+    }
+
+    return '';
+};
+
 export const Image: FC<ImageProps> = ({ src, hash, tid, ...props }) => {
     const imageUrl = src ?? null;
     const [error, setError] = useState<SyntheticEvent<HTMLImageElement, Event> | null>(null);
@@ -24,20 +38,6 @@ export const Image: FC<ImageProps> = ({ src, hash, tid, ...props }) => {
     };
 
     const finalImageUrl = shouldLoadFallbackImage ? fallbackImageSrc : imageUrl;
-
-    // Extract src from StaticImageData object if needed
-    const getSrcFromImageUrl = (imageUrl: typeof finalImageUrl): string => {
-        if (typeof imageUrl === 'string') {
-            return imageUrl;
-        }
-
-        // Handle StaticImageData objects that have src property
-        if (typeof imageUrl === 'object') {
-            return (imageUrl as any).src || '';
-        }
-
-        return '';
-    };
 
     const finalSrc = getSrcFromImageUrl(finalImageUrl);
 

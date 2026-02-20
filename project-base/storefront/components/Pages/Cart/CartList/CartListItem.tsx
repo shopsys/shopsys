@@ -8,7 +8,7 @@ import { CartItemPrice } from 'components/Pages/Cart/CartItemPrice';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { TypeCartItemTypeEnum } from 'graphql/types';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { AddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -30,6 +30,7 @@ export const CartListItem: FC<CartListItemProps> = ({
     onAddToCart,
 }) => {
     const spinboxRef = useRef<HTMLInputElement>(null);
+    const lastSubmittedQuantityRef = useRef<number | null>(null);
     const [spinboxValue, setSpinboxValue] = useState<number>();
     const debouncedSpinboxValue = useDebounce(spinboxValue, 500);
     const { t } = useTranslation();
@@ -38,11 +39,28 @@ export const CartListItem: FC<CartListItemProps> = ({
     const isProduct = type === TypeCartItemTypeEnum.Product;
     const isProductGift = type === TypeCartItemTypeEnum.ProductGift;
 
+    const onSubmitCartChange = useEffectEvent((productUuid: string, qty: number, idx: number) => {
+        onAddToCart(productUuid, qty, idx, true);
+    });
+
     useEffect(() => {
-        if (debouncedSpinboxValue !== undefined && spinboxRef.current?.valueAsNumber !== quantity) {
-            onAddToCart(product.uuid, debouncedSpinboxValue, listIndex, true);
+        if (debouncedSpinboxValue === undefined) {
+            return;
         }
-    }, [debouncedSpinboxValue]);
+
+        if (debouncedSpinboxValue === quantity) {
+            lastSubmittedQuantityRef.current = null;
+
+            return;
+        }
+
+        if (lastSubmittedQuantityRef.current === debouncedSpinboxValue) {
+            return;
+        }
+
+        lastSubmittedQuantityRef.current = debouncedSpinboxValue;
+        onSubmitCartChange(product.uuid, debouncedSpinboxValue, listIndex);
+    }, [debouncedSpinboxValue, listIndex, product.uuid, quantity]);
 
     useEffect(() => {
         if (quantity > 0 && spinboxRef.current) {
@@ -58,7 +76,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                 data-tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
             >
                 {isProductGift && (
-                    <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-gradient-to-r from-purple-600 to-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow-md">
+                    <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-linear-to-r from-purple-600 to-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow-md">
                         {t('Gift')}
                     </div>
                 )}

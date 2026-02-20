@@ -1,6 +1,6 @@
 import { NavigationItem } from './NavigationItem';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -19,18 +19,18 @@ export const Navigation: FC<NavigationProps> = ({ navigation }) => {
     const navigationRef = useRef<HTMLUListElement>(null);
     const windowDimensions = useWindowDimensions();
 
-    const checkOverflow = () => {
+    const checkOverflow = useCallback(() => {
         if (navigationRef.current) {
             const { scrollWidth, clientWidth, scrollLeft } = navigationRef.current;
             const isScrolledToEnd = Math.abs(scrollWidth - clientWidth - scrollLeft) < 1;
 
             setShowNavigationShadow(scrollWidth > clientWidth && !isScrolledToEnd);
         }
-    };
+    }, [setShowNavigationShadow]);
 
     useEffect(() => {
         checkOverflow();
-    }, [windowDimensions, navigation]);
+    }, [windowDimensions, navigation, checkOverflow]);
 
     const handleScroll = () => {
         checkOverflow();
@@ -56,7 +56,7 @@ export const Navigation: FC<NavigationProps> = ({ navigation }) => {
                 className={twJoin(
                     'hide-scrollbar hidden w-full overflow-x-auto overflow-y-hidden lg:flex',
                     showNavigationShadow &&
-                        'after:from-background-brand after:z-above transition-all after:absolute after:top-1/2 after:-right-1 after:h-7 after:w-20 after:-translate-y-1/2 after:bg-gradient-to-l after:from-30% after:to-transparent after:to-80% after:blur-xs',
+                        'after:from-background-brand after:z-above transition-all after:absolute after:top-1/2 after:-right-1 after:h-7 after:w-20 after:-translate-y-1/2 after:bg-linear-to-l after:from-30% after:to-transparent after:to-80% after:blur-xs',
                 )}
                 onMouseLeave={handleEnableAnimation}
                 onScroll={handleScroll}

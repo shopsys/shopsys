@@ -2,7 +2,7 @@ import { AdvertImage } from './AdvertImage';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useAdvertsQuery } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type PositionNameType = 'footer' | 'header' | 'cartPreview' | 'productListSecondRow';
@@ -15,6 +15,9 @@ type AdvertsProps = {
 };
 
 export const Adverts: FC<AdvertsProps> = ({ positionName, withWebline, currentCategory, className, isSingle }) => {
+    // setState lazy initializer runs once per mount; Strict Mode may call it twice in dev but discards one result, so the seed remains stable after mount
+    const [randomSeed] = useState(() => Math.random());
+
     const [{ data: advertsData }] = useAdvertsQuery({
         variables: {
             categoryUuid: currentCategory?.uuid || null,
@@ -22,15 +25,14 @@ export const Adverts: FC<AdvertsProps> = ({ positionName, withWebline, currentCa
         },
     });
 
-    // keep useMemo for Math.random() - needs stable value across renders
     const displayedAdverts = useMemo(() => {
         const advertsForPosition = advertsData?.adverts.filter((advert) => advert.positionName === positionName) ?? [];
 
         if (isSingle && advertsForPosition.length) {
-            return [advertsForPosition[Math.floor(Math.random() * advertsForPosition.length)]];
+            return [advertsForPosition[Math.floor(randomSeed * advertsForPosition.length)]];
         }
         return advertsForPosition;
-    }, [isSingle, advertsData?.adverts, positionName]);
+    }, [isSingle, advertsData?.adverts, positionName, randomSeed]);
 
     if (!displayedAdverts.length) {
         return null;

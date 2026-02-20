@@ -97,7 +97,8 @@ const getOptimisticChangePaymentInCartResult = (
         items: cartQueryResult.cart?.items ?? null,
         modifications: cartQueryResult.cart?.modifications ?? null,
         payment: optimisticPayment,
-        paymentGoPayBankSwift: optimisticPayment === null ? null : cartQueryResult.cart?.paymentGoPayBankSwift ?? null,
+        paymentGoPayBankSwift:
+            optimisticPayment === null ? null : (cartQueryResult.cart?.paymentGoPayBankSwift ?? null),
         promoCodes: cartQueryResult.cart?.promoCodes ?? [],
         remainingAmountForFreeTransport: cartQueryResult.cart?.remainingAmountForFreeTransport ?? null,
         selectedPickupPlaceIdentifier: cartQueryResult.cart?.selectedPickupPlaceIdentifier ?? null,

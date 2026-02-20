@@ -43,10 +43,12 @@ export const Fonts = () => {
                 font-family: ${interFont.style.fontFamily};
             }
             :root {
-                --font-inter-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-                    system-ui, sans-serif;
-                --font-raleway-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-                    system-ui, sans-serif;
+                --font-inter-fallback:
+                    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, system-ui,
+                    sans-serif;
+                --font-raleway-fallback:
+                    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, system-ui,
+                    sans-serif;
             }
         `}</style>
     );

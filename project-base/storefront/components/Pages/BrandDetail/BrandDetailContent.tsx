@@ -2,7 +2,7 @@ import { BrandDetailProductsWrapper } from './BrandDetailProductsWrapper';
 import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
-import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
+import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
@@ -22,7 +22,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
 
     const title = useSeoTitleWithPagination(brand.products.totalCount, brand.name, brand.seoH1);
 
-    brand.products.productFilterOptions.brands = null;
+    const productFilterOptions = { ...brand.products.productFilterOptions, brands: null };
 
     return (
         <VerticalStack gap="md">
@@ -39,7 +39,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                     defaultOrderingMode={brand.products.defaultOrderingMode}
                     orderingMode={brand.products.orderingMode}
                     originalSlug={brand.slug}
-                    productFilterOptions={brand.products.productFilterOptions}
+                    productFilterOptions={productFilterOptions}
                     slug={brand.slug}
                     totalCount={brand.products.totalCount}
                 />
@@ -50,7 +50,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                     ref={paginationScrollTargetRef}
                 >
                     <div className="vl:flex-col flex flex-col-reverse">
-                        <FilterSelectedParameters filterOptions={brand.products.productFilterOptions} />
+                        <DeferredFilterSelectedParameters filterOptions={productFilterOptions} />
 
                         <DeferredFilterAndSortingBar
                             sorting={brand.products.orderingMode}

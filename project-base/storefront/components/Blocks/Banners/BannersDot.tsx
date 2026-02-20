@@ -29,7 +29,9 @@ export const BannersDot: FC<BannersDotProps> = ({
     const [start, setStart] = useState(false);
     const isDesktop = useMediaMin('vl');
 
-    useEffect(() => setStart(true), []);
+    useEffect(() => {
+        setStart(true);
+    }, []);
 
     useEffect(() => {
         if (isDesktop && isActive && dotRef.current && isWholeElementVisible(dotRef.current)) {
@@ -39,7 +41,7 @@ export const BannersDot: FC<BannersDotProps> = ({
                 block: 'nearest',
             });
         }
-    }, [isActive]);
+    }, [isActive, isDesktop]);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
         if (e.key === 'Enter' || e.key === ' ') {

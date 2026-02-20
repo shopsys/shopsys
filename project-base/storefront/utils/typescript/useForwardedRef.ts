@@ -9,6 +9,7 @@ export const useForwardedRef = <T>(ref: ForwardedRef<T>): MutableRefObject<T | n
         if (typeof ref === 'function') {
             ref(innerRef.current);
         } else {
+            // eslint-disable-next-line react-hooks/immutability -- Standard pattern for syncing forwarded refs
             ref.current = innerRef.current;
         }
     });

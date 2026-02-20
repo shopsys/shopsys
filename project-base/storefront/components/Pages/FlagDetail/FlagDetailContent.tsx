@@ -1,7 +1,7 @@
 import { FlagDetailProductsWrapper } from './FlagDetailProductsWrapper';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
-import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
+import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
@@ -20,7 +20,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
 
     const title = useSeoTitleWithPagination(flag.products.totalCount, flag.name);
 
-    flag.products.productFilterOptions.flags = null;
+    const productFilterOptions = { ...flag.products.productFilterOptions, flags: null };
 
     return (
         <VerticalStack gap="md">
@@ -33,7 +33,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                     defaultOrderingMode={flag.products.defaultOrderingMode}
                     orderingMode={flag.products.orderingMode}
                     originalSlug={flag.slug}
-                    productFilterOptions={flag.products.productFilterOptions}
+                    productFilterOptions={productFilterOptions}
                     slug={flag.slug}
                     totalCount={flag.products.totalCount}
                 />
@@ -44,7 +44,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                     ref={paginationScrollTargetRef}
                 >
                     <div className="vl:flex-col flex flex-col-reverse">
-                        <FilterSelectedParameters filterOptions={flag.products.productFilterOptions} />
+                        <DeferredFilterSelectedParameters filterOptions={productFilterOptions} />
 
                         <DeferredFilterAndSortingBar
                             sorting={flag.products.orderingMode}

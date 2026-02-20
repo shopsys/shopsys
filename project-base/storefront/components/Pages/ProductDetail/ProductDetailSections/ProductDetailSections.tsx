@@ -38,6 +38,7 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
     const relatedProductsRef = useRef<HTMLDivElement>(null);
     const filesRef = useRef<HTMLDivElement>(null);
 
+    // eslint-disable-next-line react-hooks/refs -- .filter() only reads isVisible, not ref.current
     const sections = [
         { id: PRODUCT_DETAIL_SECTIONS_IDS.overview, label: t('Overview'), ref: overviewRef, isVisible: true },
         {

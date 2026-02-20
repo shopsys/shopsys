@@ -4,7 +4,7 @@ import { bannersReducer } from './bannersUtils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TIDs } from 'cypress/tids';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
-import { useEffect, useReducer, useRef } from 'react';
+import { startTransition, useEffect, useEffectEvent, useReducer, useRef } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -30,23 +30,6 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     });
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-    const slide = (dir: 'PREV' | 'NEXT') => {
-        checkAndClearInterval();
-        dispatchBannerSliderStateChange({ type: dir, numItems });
-        setTimeout(() => {
-            dispatchBannerSliderStateChange({ type: 'STOP_SLIDING' });
-        }, SLIDER_STOP_SLIDE_TIMEOUT);
-        startInterval();
-    };
-
-    useEffect(() => {
-        startInterval();
-
-        return () => {
-            checkAndClearInterval();
-        };
-    }, []);
-
     const checkAndClearInterval = () => {
         if (intervalRef.current) {
             clearInterval(intervalRef.current);
@@ -54,8 +37,41 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     };
 
     const startInterval = () => {
-        intervalRef.current = setInterval(() => slide('NEXT'), SLIDER_AUTOMATIC_SLIDE_INTERVAL);
+        checkAndClearInterval();
+        intervalRef.current = setInterval(() => {
+            dispatchBannerSliderStateChange({ type: 'NEXT', numItems: numItems });
+            setTimeout(() => {
+                startTransition(() => {
+                    dispatchBannerSliderStateChange({ type: 'STOP_SLIDING' });
+                });
+            }, SLIDER_STOP_SLIDE_TIMEOUT);
+        }, SLIDER_AUTOMATIC_SLIDE_INTERVAL);
     };
+
+    const slide = (dir: 'PREV' | 'NEXT') => {
+        checkAndClearInterval();
+        dispatchBannerSliderStateChange({ type: dir, numItems });
+        setTimeout(() => {
+            startTransition(() => {
+                dispatchBannerSliderStateChange({ type: 'STOP_SLIDING' });
+            });
+        }, SLIDER_STOP_SLIDE_TIMEOUT);
+        startInterval();
+    };
+
+    const onStartInterval = useEffectEvent(() => {
+        startInterval();
+    });
+
+    const onClearInterval = useEffectEvent(() => {
+        checkAndClearInterval();
+    });
+
+    useEffect(() => {
+        onStartInterval();
+
+        return () => onClearInterval();
+    }, []);
 
     const moveToSlide = (slideToMoveTo: number) => {
         checkAndClearInterval();
@@ -95,7 +111,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
             <div {...handlers}>
                 <ExtendedNextLink
                     preventRedirectOnTextSelection
-                    className="group block rounded-t-xl rounded-b-none !no-underline select-text"
+                    className="group block rounded-t-xl rounded-b-none no-underline! select-text"
                     draggable={false}
                     href={currentBanner.link}
                     id={`banner-link-${bannerSliderState.sliderPosition}`}
@@ -118,10 +134,10 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                                 'flex',
                                 sliderItems.length > 1 &&
                                     (!bannerSliderState.isSliding
-                                        ? `transform transition-transform motion-safe:translate-x-[calc(-100%)] duration-${SLIDER_SLIDE_DURATION} ease-in-out`
+                                        ? `transition-transform motion-safe:translate-x-[calc(-100%)] duration-${SLIDER_SLIDE_DURATION} ease-in-out`
                                         : bannerSliderState.slideDirection === 'PREV'
-                                          ? 'translate-x-[calc(2*(-100%))] transform'
-                                          : 'translate-x-0 transform'),
+                                          ? 'translate-x-[calc(2*(-100%))]'
+                                          : 'translate-x-0'),
                             )}
                         >
                             {sliderItems.map((item, index) => (

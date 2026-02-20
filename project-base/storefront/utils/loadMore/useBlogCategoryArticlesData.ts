@@ -9,8 +9,8 @@ import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { DocumentNode } from 'graphql';
 import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
 import {
-    TypeBlogCategoryArticles,
     TypeBlogCategoryArticlesVariables,
+    TypeBlogCategoryArticles,
 } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import { useEffect, useRef, useState } from 'react';
 import { useClient } from 'urql';
@@ -24,75 +24,62 @@ export const useBlogCategoryArticlesData = (queryDocument: DocumentNode, uuid: s
 
     const previousLoadMoreRef = useRef(currentLoadMore);
     const previousPageRef = useRef(currentPage);
-    const initialPageSizeRef = useRef(calculatePageSize(currentLoadMore, DEFAULT_BLOG_PAGE_SIZE));
+    const initialPageSize = calculatePageSize(currentLoadMore, DEFAULT_BLOG_PAGE_SIZE);
+    const initialPageSizeRef = useRef(initialPageSize);
 
-    const [blogCategoryArticlesData, setBlogCategoryArticlesData] = useState<{
-        blogCategoryArticles: TypeBlogArticleConnectionFragment['edges'] | undefined;
-        hasNextPage: boolean;
-    }>({ blogCategoryArticles: undefined, hasNextPage: false });
+    const [blogCategoryArticlesData, setBlogCategoryArticlesData] = useState(() =>
+        readBlogCategoryArticlesFromCache(
+            queryDocument,
+            client,
+            uuid,
+            getEndCursor(currentPage, 0, DEFAULT_BLOG_PAGE_SIZE),
+            initialPageSize,
+        ),
+    );
 
-    const [areBlogCategoryArticlesFetching, setAreBlogCategoryArticlesFetching] = useState(true);
-    const isInitializedRef = useRef(false);
+    const [areBlogCategoryArticlesFetching, setAreBlogCategoryArticlesFetching] = useState(
+        !blogCategoryArticlesData.blogCategoryArticles,
+    );
     const [isLoadingMoreBlogCategoryArticles, setIsLoadingMoreBlogCategoryArticles] = useState(false);
 
-    const fetchBlogCategoryArticles = async (
-        variables: TypeBlogCategoryArticlesVariables,
-        previouslyQueriedProductsFromCache: TypeBlogArticleConnectionFragment['edges'] | undefined,
-    ) => {
-        const productsResponse = await client
-            .query<TypeBlogCategoryArticles, typeof variables>(queryDocument, variables)
-            .toPromise();
-
-        if (!productsResponse.data) {
-            setBlogCategoryArticlesData({ blogCategoryArticles: undefined, hasNextPage: false });
-
-            return;
-        }
-
-        setBlogCategoryArticlesData({
-            blogCategoryArticles: mergeItemEdges(
-                previouslyQueriedProductsFromCache,
-                productsResponse.data.blogCategory?.blogArticles.edges,
-            ) as TypeBlogArticleConnectionFragment['edges'],
-            hasNextPage: productsResponse.data.blogCategory?.blogArticles.pageInfo.hasNextPage ?? false,
-        });
-        stopFetching();
-    };
-
-    const startFetching = () => {
-        if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
-            setAreBlogCategoryArticlesFetching(true);
-        } else {
-            setIsLoadingMoreBlogCategoryArticles(true);
-            previousLoadMoreRef.current = currentLoadMore;
-        }
-    };
-
-    const stopFetching = () => {
-        setAreBlogCategoryArticlesFetching(false);
-        setIsLoadingMoreBlogCategoryArticles(false);
-    };
-
     useEffect(() => {
-        // Initial cache read - only on first render
-        if (!isInitializedRef.current) {
-            isInitializedRef.current = true;
+        const fetchBlogCategoryArticles = async (
+            variables: TypeBlogCategoryArticlesVariables,
+            previouslyQueriedProductsFromCache: TypeBlogArticleConnectionFragment['edges'] | undefined,
+        ) => {
+            const productsResponse = await client
+                .query<TypeBlogCategoryArticles, typeof variables>(queryDocument, variables)
+                .toPromise();
 
-            const cachedData = readBlogCategoryArticlesFromCache(
-                queryDocument,
-                client,
-                uuid,
-                getEndCursor(currentPage, 0, DEFAULT_BLOG_PAGE_SIZE),
-                initialPageSizeRef.current,
-            );
-
-            if (cachedData.blogCategoryArticles) {
-                setBlogCategoryArticlesData(cachedData);
-                setAreBlogCategoryArticlesFetching(false);
+            if (!productsResponse.data) {
+                setBlogCategoryArticlesData({ blogCategoryArticles: undefined, hasNextPage: false });
 
                 return;
             }
-        }
+
+            setBlogCategoryArticlesData({
+                blogCategoryArticles: mergeItemEdges(
+                    previouslyQueriedProductsFromCache,
+                    productsResponse.data.blogCategory?.blogArticles.edges,
+                ) as TypeBlogArticleConnectionFragment['edges'],
+                hasNextPage: productsResponse.data.blogCategory?.blogArticles.pageInfo.hasNextPage ?? false,
+            });
+            stopFetching();
+        };
+
+        const startFetching = () => {
+            if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
+                setAreBlogCategoryArticlesFetching(true);
+            } else {
+                setIsLoadingMoreBlogCategoryArticles(true);
+                previousLoadMoreRef.current = currentLoadMore;
+            }
+        };
+
+        const stopFetching = () => {
+            setAreBlogCategoryArticlesFetching(false);
+            setIsLoadingMoreBlogCategoryArticles(false);
+        };
 
         if (previousPageRef.current !== currentPage) {
             previousPageRef.current = currentPage;
@@ -142,7 +129,7 @@ export const useBlogCategoryArticlesData = (queryDocument: DocumentNode, uuid: s
             },
             previousProductsFromCache,
         );
-    }, [uuid, currentPage, currentLoadMore]);
+    }, [uuid, currentPage, currentLoadMore, queryDocument, client, totalArticlesCount]);
 
     return { ...blogCategoryArticlesData, areBlogCategoryArticlesFetching, isLoadingMoreBlogCategoryArticles };
 };

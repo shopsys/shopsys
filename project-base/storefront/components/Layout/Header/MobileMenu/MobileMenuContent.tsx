@@ -33,7 +33,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
     useEffect(() => {
         // Set initial positions programmatically to ensure first navigation animations work correctly
         animate('#animation-hidden-element', { transform: 'translateX(120%)' }, { duration: 0 });
-    }, []);
+    }, [animate]);
 
     const handleExpandClick = (navigationItem: MenuItem) => {
         const slideAwayThenTeleportIntoViewSequence: AnimationSequence = [

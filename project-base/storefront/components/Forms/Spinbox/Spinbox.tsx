@@ -2,7 +2,7 @@ import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { TIDs } from 'cypress/tids';
-import { FormEventHandler, KeyboardEventHandler, forwardRef, useEffect, useRef, useState } from 'react';
+import { FormEventHandler, KeyboardEventHandler, forwardRef, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
@@ -31,7 +31,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
         const resolvedMax = Math.min(max ?? MAX_CART_ITEM_QUANTITY, MAX_CART_ITEM_QUANTITY);
 
-        const [value, setValue] = useState<number>();
+        const [value, setValue] = useState<number | undefined>(defaultValue);
         const [lastValidValue, setLastValidValue] = useState<number>(defaultValue);
         const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
         const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
@@ -41,6 +41,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         const spinboxRef = useForwardedRef<HTMLInputElement>(spinboxForwardedRef);
         const intervalRef = useRef<NodeJS.Timeout | null>(null);
         const debouncedValue = useDebounce(value, 500);
+        const lastReportedValueRef = useRef<number | undefined>(undefined);
 
         const restoreValueOnEmpty = (inputValue: number) => {
             if (!spinboxRef.current) {
@@ -172,28 +173,33 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             }
         };
 
-        useEffect(() => {
-            const currentValue = spinboxRef.current?.valueAsNumber;
-            if (currentValue !== undefined && isValidNumber(currentValue)) {
-                setValue(currentValue);
-                setLastValidValue(currentValue);
-            }
-        }, [spinboxRef]);
+        const onReportValue = useEffectEvent((reportedValue: number) => {
+            onChangeValueCallback?.(reportedValue);
+        });
 
         useEffect(() => {
-            if (debouncedValue !== undefined && !isNaN(debouncedValue)) {
-                onChangeValueCallback?.(debouncedValue);
+            if (
+                debouncedValue !== undefined &&
+                !isNaN(debouncedValue) &&
+                debouncedValue !== lastReportedValueRef.current
+            ) {
+                lastReportedValueRef.current = debouncedValue;
+                onReportValue(debouncedValue);
             }
         }, [debouncedValue]);
+
+        const onValueChange = useEffectEvent((amountChange: number) => {
+            handleValueChange(amountChange);
+        });
 
         useEffect(() => {
             if (isHoldingIncrease) {
                 intervalRef.current = setInterval(() => {
-                    handleValueChange(step);
+                    onValueChange(step);
                 }, 200);
             } else if (isHoldingDecrease) {
                 intervalRef.current = setInterval(() => {
-                    handleValueChange(-step);
+                    onValueChange(-step);
                 }, 200);
             } else {
                 clearSpinboxInterval(intervalRef.current);
@@ -206,7 +212,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         return (
             <div
                 className={twJoin(
-                    'bg-input-bg-default outline-input-border-default rounded-counter inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden outline-2 outline-offset-[-2px]',
+                    'bg-input-bg-default outline-input-border-default rounded-counter inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden outline-2 -outline-offset-2',
                     (size === 'small' || size === 'medium') && 'py-1',
                     size === 'large' && 'py-1 sm:py-1.5',
                     size === 'xlarge' && 'py-1.5 sm:py-3.5',
@@ -293,7 +299,7 @@ const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, tid, 
         tabIndex={disabled ? -1 : 0}
         title={title}
         className={twMergeCustom([
-            'text-icon-less hover:text-icon-default flex cursor-pointer justify-center rounded-sm border-none outline-none',
+            'text-icon-less hover:text-icon-default flex cursor-pointer justify-center rounded-sm border-none outline-hidden',
             size === 'xlarge' ? 'w-10' : 'w-7',
 
             disabled && 'text-input-border-disabled pointer-events-none',

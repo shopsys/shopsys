@@ -39,7 +39,7 @@ export const StoresWrapper: FC = () => {
             setUserCoordinates(coordinates);
             updateDefaultUserCoordinates(coordinates);
         });
-    }, []);
+    }, [updateDefaultUserCoordinates]);
 
     const clickOnMarkerHandler = (uuid: string) => {
         setSelectedStore(uuid);

@@ -68,6 +68,8 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
         (_, i) => activeIndex + i,
     );
 
+    const previousActiveIndex = useRef(activeIndex);
+
     useEffect(() => {
         setProductElementRefs(
             Array(products.length)
@@ -77,27 +79,38 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     }, [products.length]);
 
     useEffect(() => {
+        const hasActiveIndexChanged = previousActiveIndex.current !== activeIndex;
+        previousActiveIndex.current = activeIndex;
+
+        if (!hasActiveIndexChanged) {
+            return;
+        }
+
+        const handleScroll = async (selectedActiveIndex: number) => {
+            const selectedElement = productElementRefs?.[selectedActiveIndex]?.current;
+
+            if (selectedElement && !isWholeElementVisible(selectedElement)) {
+                sliderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                await wait(350);
+            }
+
+            selectedElement?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'start',
+            });
+        };
+
         if (!isMobile) {
             handleScroll(activeIndex);
         }
-    }, [activeIndex]);
-
-    const handleScroll = async (selectedActiveIndex: number) => {
-        const selectedElement = productElementRefs?.[selectedActiveIndex]?.current;
-
-        if (selectedElement && !isWholeElementVisible(selectedElement)) {
-            sliderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-            await wait(350);
-        }
-
-        selectedElement?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-            inline: 'start',
-        });
-    };
+    }, [activeIndex, isMobile, productElementRefs]);
 
     const handlePrevious = () => {
+        if (productElementRefs === undefined) {
+            return;
+        }
+
         const prevIndex = activeIndex - 1;
         const isFirstSlide = activeIndex === 0;
 
@@ -105,7 +118,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             return;
         }
 
-        const newActiveIndex = isFirstSlide ? productElementRefs!.length - currentVisibleItems : prevIndex;
+        const newActiveIndex = isFirstSlide ? productElementRefs.length - currentVisibleItems : prevIndex;
 
         if (!isTextSelected()) {
             setActiveIndex(newActiveIndex);
@@ -113,8 +126,12 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     };
 
     const handleNext = () => {
+        if (productElementRefs === undefined) {
+            return;
+        }
+
         const nextIndex = activeIndex + 1;
-        const isEndSlide = nextIndex > productElementRefs!.length - currentVisibleItems;
+        const isEndSlide = nextIndex > productElementRefs.length - currentVisibleItems;
 
         if (isMobile && isEndSlide) {
             return;

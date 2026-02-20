@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { RefObject, useEffect, useRef } from 'react';
+import { RefObject, useEffect, useEffectEvent, useRef } from 'react';
 
 type MutuallyExcludedProps = {
     scrollTargetRef: RefObject<HTMLElement | null> | null;
@@ -20,25 +20,27 @@ export const useScrollRestoration = <E extends keyof MutuallyExcludedProps>({
     const router = useRouter();
     const scrollRestored = useRef(false);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            if (shouldScroll && !scrollRestored.current) {
-                scrollRestored.current = true;
+    const onScrollRestore = useEffectEvent(() => {
+        if (shouldScroll && !scrollRestored.current) {
+            scrollRestored.current = true;
 
-                if (window.scrollY === 0) {
-                    if (scrollTargetRef?.current) {
-                        scrollTargetRef.current.scrollIntoView({ behavior: 'smooth' });
-                    }
+            if (window.scrollY === 0) {
+                if (scrollTargetRef?.current) {
+                    scrollTargetRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
 
-                    if (scrollY && scrollY > 0) {
-                        window.scrollTo({
-                            top: scrollY,
-                            behavior: 'smooth',
-                        });
-                    }
+                if (scrollY && scrollY > 0) {
+                    window.scrollTo({
+                        top: scrollY,
+                        behavior: 'smooth',
+                    });
                 }
             }
-        }, 100); // Small delay to let Next.js restore scroll first
+        }
+    });
+
+    useEffect(() => {
+        const timer = setTimeout(() => onScrollRestore(), 100);
 
         const handleRouteChange = () => {
             scrollRestored.current = false;
@@ -50,5 +52,5 @@ export const useScrollRestoration = <E extends keyof MutuallyExcludedProps>({
             clearTimeout(timer);
             router.events.off('routeChangeStart', handleRouteChange);
         };
-    }, [router]);
+    }, [shouldScroll, scrollTargetRef, scrollY, router.events]);
 };

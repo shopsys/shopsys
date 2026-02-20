@@ -1,9 +1,11 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, startTransition, useEffect } from 'react';
 
 export const useScrollTop = (element: string, setTableStickyHeadActive: Dispatch<SetStateAction<boolean>>) => {
     useEffect(() => {
         const updateSize = () => {
-            setTableStickyHeadActive(document.getElementById(element)!.getBoundingClientRect().top < -150);
+            startTransition(() => {
+                setTableStickyHeadActive(document.getElementById(element)!.getBoundingClientRect().top < -150);
+            });
         };
 
         window.addEventListener('scroll', updateSize);
@@ -12,5 +14,5 @@ export const useScrollTop = (element: string, setTableStickyHeadActive: Dispatch
         return () => {
             window.removeEventListener('scroll', updateSize);
         };
-    }, [element]);
+    }, [element, setTableStickyHeadActive]);
 };

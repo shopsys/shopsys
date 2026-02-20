@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { startTransition, useCallback, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -62,11 +62,13 @@ export const RouteAnnouncer: FC = () => {
             }
 
             pendingDeferredAnnouncementRef.current = window.setTimeout(() => {
-                lastAnnouncedRef.current = normalized;
-                const resolvedMessage = options.formatter
-                    ? options.formatter(normalized)
-                    : t('You are on {{pageTitle}} page', { ns: 'accessibility', pageTitle: normalized });
-                setMessage(resolvedMessage);
+                startTransition(() => {
+                    lastAnnouncedRef.current = normalized;
+                    const resolvedMessage = options.formatter
+                        ? options.formatter(normalized)
+                        : t('You are on {{pageTitle}} page', { ns: 'accessibility', pageTitle: normalized });
+                    setMessage(resolvedMessage);
+                });
             }, 50);
         },
         [t],
@@ -114,24 +116,25 @@ export const RouteAnnouncer: FC = () => {
         [announceTitle, clearTimers],
     );
 
+    const onInitialAnnounce = useEffectEvent(() => {
+        const toastTextElement = document.querySelector(
+            '[data-tid="toast_success"], [data-tid="toast_error"], [data-tid="toast_info"]',
+        );
+
+        if (toastTextElement instanceof HTMLElement) {
+            toastTextElement.setAttribute('tabindex', '-1');
+            toastTextElement.focus();
+        } else {
+            announceTitle(readDocumentTitle(), { forceRepeat: true });
+        }
+    });
+
     useEffect(() => {
-        const attemptToFocusToast = () => {
-            const toastTextElement = document.querySelector(
-                '[data-tid="toast_success"], [data-tid="toast_error"], [data-tid="toast_info"]',
-            );
+        onInitialAnnounce();
+    }, []);
 
-            // Announce flash message after login/logout
-            if (toastTextElement instanceof HTMLElement) {
-                toastTextElement.setAttribute('tabindex', '-1');
-                toastTextElement.focus();
-            } else {
-                // Announce the server-rendered title after hydration.
-                announceTitle(readDocumentTitle(), { forceRepeat: true });
-            }
-        };
-
-        attemptToFocusToast();
-    }, [announceTitle]);
+    const onCleanup = useEffectEvent(() => clearTimers());
+    const onSchedule = useEffectEvent(() => scheduleTitleAnnouncement({ forceRepeat: true }));
 
     useEffect(() => {
         if (!hadClientSideNavigation) {
@@ -139,35 +142,32 @@ export const RouteAnnouncer: FC = () => {
         }
 
         if (isPageLoading) {
-            clearTimers();
+            onCleanup();
             return undefined;
         }
 
-        scheduleTitleAnnouncement({ forceRepeat: true });
+        onSchedule();
 
-        return clearTimers;
-    }, [clearTimers, hadClientSideNavigation, isPageLoading, scheduleTitleAnnouncement]);
+        return () => onCleanup();
+    }, [hadClientSideNavigation, isPageLoading]);
+
+    const onRouteChangeStart = useEffectEvent(() => {
+        clearTimers();
+
+        const loadingText = t('Page loading', { ns: 'accessibility' });
+        loadingTitleRef.current = loadingText;
+        document.title = loadingText;
+        lastAnnouncedRef.current = loadingText;
+        setMessage(loadingText);
+    });
 
     useEffect(() => {
-        const handleRouteChangeStart = () => {
-            clearTimers();
-            lastAnnouncedRef.current = '';
-
-            const loadingText = t('Page loading', { ns: 'accessibility' });
-            loadingTitleRef.current = loadingText;
-            document.title = loadingText;
-            announceTitle(loadingText, {
-                forceRepeat: true,
-                formatter: () => loadingText,
-            });
-        };
-
-        router.events.on('routeChangeStart', handleRouteChangeStart);
+        router.events.on('routeChangeStart', onRouteChangeStart);
 
         return () => {
-            router.events.off('routeChangeStart', handleRouteChangeStart);
+            router.events.off('routeChangeStart', onRouteChangeStart);
         };
-    }, [announceTitle, clearTimers, router.events, t]);
+    }, [router.events]);
 
     return (
         <div aria-atomic="true" aria-live="polite" className="sr-only" role="status">

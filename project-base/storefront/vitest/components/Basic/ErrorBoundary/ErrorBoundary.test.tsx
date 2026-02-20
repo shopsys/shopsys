@@ -55,12 +55,12 @@ describe('ErrorBoundary', () => {
     });
 
     test('resetErrorBoundary clears error state', () => {
-        let resetFn: () => void;
-
-        const FallbackWithReset = ({ error, resetErrorBoundary }: FallbackProps) => {
-            resetFn = resetErrorBoundary;
-            return <div>Error: {error.message}</div>;
-        };
+        const FallbackWithReset = ({ error, resetErrorBoundary }: FallbackProps) => (
+            <div>
+                <span>Error: {error.message}</span>
+                <button onClick={resetErrorBoundary}>Reset</button>
+            </div>
+        );
 
         const { rerender } = render(
             <ErrorBoundary fallbackRender={FallbackWithReset}>
@@ -70,7 +70,7 @@ describe('ErrorBoundary', () => {
 
         expect(screen.getByText('Error: Test error')).toBeInTheDocument();
 
-        resetFn!();
+        screen.getByText('Reset').click();
 
         rerender(
             <ErrorBoundary fallbackRender={FallbackWithReset}>

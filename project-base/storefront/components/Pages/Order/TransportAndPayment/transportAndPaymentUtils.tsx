@@ -16,7 +16,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { Translate } from 'next-translate';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { useClient } from 'urql';
@@ -241,34 +241,37 @@ export const useLoadTransportAndPaymentFromLastOrder = (
 
     const [lastOrderPickupPlace, setLastOrderPickupPlace] = useState<StoreOrPacketeryPoint | null>(null);
     const [isLoadingTransportAndPaymentFromLastOrder, setIsLoadingTransportAndPaymentFromLastOrder] = useState(false);
+    const hasLoadedFromLastOrderRef = useRef(false);
 
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
-    const loadLastOrderPickupPlace = async (lastOrder: TypeLastOrderQuery | undefined) => {
-        if (!lastOrder?.lastOrder?.pickupPlaceIdentifier) {
-            return null;
-        }
+    const hasCart = !!cart;
 
-        let lastOrderPickupPlaceDataFromApi;
-        if (!isPacketeryTransport(lastOrder.lastOrder.transport.transportTypeCode)) {
-            lastOrderPickupPlaceDataFromApi = (
-                await client
-                    .query<TypeStoreQuery, TypeStoreQueryVariables>(StoreQueryDocument, {
-                        uuid: lastOrder.lastOrder.pickupPlaceIdentifier,
-                    })
-                    .toPromise()
-            ).data?.store;
-        }
+    const onLoadFromLastOrder = useEffectEvent(async () => {
+        const loadLastOrderPickupPlace = async (lastOrder: TypeLastOrderQuery | undefined) => {
+            if (!lastOrder?.lastOrder?.pickupPlaceIdentifier) {
+                return null;
+            }
 
-        return getLastOrderPickupPlace(
-            lastOrder.lastOrder,
-            lastOrder.lastOrder.pickupPlaceIdentifier,
-            lastOrderPickupPlaceDataFromApi,
-            packeteryPickupPoint,
-        );
-    };
+            let lastOrderPickupPlaceDataFromApi;
+            if (!isPacketeryTransport(lastOrder.lastOrder.transport.transportTypeCode)) {
+                lastOrderPickupPlaceDataFromApi = (
+                    await client
+                        .query<TypeStoreQuery, TypeStoreQueryVariables>(StoreQueryDocument, {
+                            uuid: lastOrder.lastOrder.pickupPlaceIdentifier,
+                        })
+                        .toPromise()
+                ).data?.store;
+            }
 
-    const loadTransportAndPaymentFromLastOrder = async () => {
+            return getLastOrderPickupPlace(
+                lastOrder.lastOrder,
+                lastOrder.lastOrder.pickupPlaceIdentifier,
+                lastOrderPickupPlaceDataFromApi,
+                packeteryPickupPoint,
+            );
+        };
+
         setIsLoadingTransportAndPaymentFromLastOrder(true);
 
         if (currentTransport || currentPayment) {
@@ -311,13 +314,14 @@ export const useLoadTransportAndPaymentFromLastOrder = (
         } finally {
             setIsLoadingTransportAndPaymentFromLastOrder(false);
         }
-    };
+    });
 
     useEffect(() => {
-        if (!!cart && isUserLoggedIn) {
-            loadTransportAndPaymentFromLastOrder();
+        if (hasCart && isUserLoggedIn && !hasLoadedFromLastOrderRef.current) {
+            hasLoadedFromLastOrderRef.current = true;
+            onLoadFromLastOrder();
         }
-    }, [!cart]);
+    }, [hasCart, isUserLoggedIn]);
 
     return [isLoadingTransportAndPaymentFromLastOrder, lastOrderPickupPlace];
 };

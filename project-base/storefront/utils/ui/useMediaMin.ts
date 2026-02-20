@@ -1,11 +1,15 @@
-import { useEffect, useState } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 import { mobileFirstSizes } from 'utils/mediaQueries';
 
 export const useMediaMin = (breakpoint: keyof typeof mobileFirstSizes, debounce = false): boolean | undefined => {
     const [match, setMatch] = useState<boolean>();
 
     useEffect(() => {
-        const stateHandler = () => setMatch(window.innerWidth >= mobileFirstSizes[breakpoint]);
+        const stateHandler = () => {
+            startTransition(() => {
+                setMatch(window.innerWidth >= mobileFirstSizes[breakpoint]);
+            });
+        };
 
         let timer: number | undefined;
         const handler = () => {

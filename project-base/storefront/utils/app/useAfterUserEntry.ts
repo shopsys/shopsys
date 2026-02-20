@@ -16,5 +16,5 @@ export const useAfterUserEntry = () => {
             );
             updateUserEntryState(null);
         }
-    }, [userEntry, currentCustomerData]);
+    }, [userEntry, currentCustomerData, updateUserEntryState]);
 };

@@ -4,7 +4,7 @@ import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilter
 import { TypeListedProductConnectionPreviewFragment } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { NextRouter, useRouter } from 'next/router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useEffectEvent, useState } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsUrlQueryType } from 'types/productFilter';
@@ -27,15 +27,15 @@ export const useCategoryDetailData = (
     const currentSort = useCurrentSortQuery();
     const mappedProductFilter = mapParametersFilter(filter);
 
-    const lastUsedUrlRef = useRef<string>(undefined);
-    const lastSeoCategoryRedirectRef = useRef<string>(undefined);
+    const [lastUsedUrl, setLastUsedUrl] = useState<string | undefined>(undefined);
+    const [lastSeoCategoryRedirect, setLastSeoCategoryRedirect] = useState<string | undefined>(undefined);
 
     const setOriginalCategorySlug = useSessionStore((s) => s.setOriginalCategorySlug);
     const wasRedirectedFromSeoCategory = useSessionStore((s) => s.wasRedirectedFromSeoCategory);
     const setWasRedirectedFromSeoCategory = useSessionStore((s) => s.setWasRedirectedFromSeoCategory);
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
     const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
-    const isInSeoRedirectedCategory = lastSeoCategoryRedirectRef.current === urlSlug;
+    const isInSeoRedirectedCategory = lastSeoCategoryRedirect === urlSlug;
 
     const [{ data: categoryDetailData, fetching: isCategoryFetching }] = useCategoryDetailQuery({
         variables: {
@@ -46,18 +46,18 @@ export const useCategoryDetailData = (
         pause: isInSeoRedirectedCategory,
     });
 
-    const hasFetchedWithCurrentUrl = lastUsedUrlRef.current === urlSlug;
+    const hasFetchedWithCurrentUrl = lastUsedUrl === urlSlug;
     const isFetchingVisible =
         isCategoryFetching && !hasFetchedWithCurrentUrl && !wasRedirectedToSeoCategory && !wasRedirectedFromSeoCategory;
 
     useEffect(() => {
         if (wasRedirectedToSeoCategory) {
-            lastSeoCategoryRedirectRef.current = urlSlug;
+            setLastSeoCategoryRedirect(urlSlug);
         }
     }, [urlSlug, wasRedirectedToSeoCategory]);
 
-    useEffect(() => {
-        lastUsedUrlRef.current = categoryDetailData?.category ? urlSlug : undefined;
+    const onCategoryDataUpdate = useEffectEvent(() => {
+        setLastUsedUrl(categoryDetailData?.category ? urlSlug : undefined);
         setWasRedirectedFromSeoCategory(false);
         handleSeoCategorySlugUpdate(
             router,
@@ -69,6 +69,10 @@ export const useCategoryDetailData = (
             setWasRedirectedToSeoCategory,
             setOriginalCategorySlug,
         );
+    });
+
+    useEffect(() => {
+        onCategoryDataUpdate();
     }, [categoryDetailData]);
 
     return { categoryData: categoryDetailData?.category, isFetchingVisible };
@@ -115,7 +119,7 @@ export const useHandleDefaultFiltersUpdate = (
                 productsPreview?.defaultOrderingMode,
             ),
         );
-    }, [productsPreview?.productFilterOptions, productsPreview?.defaultOrderingMode]);
+    }, [productsPreview?.productFilterOptions, productsPreview?.defaultOrderingMode, setDefaultProductFiltersMap]);
 };
 
 const getDefaultFilterFromFilterOptions = (

@@ -19,7 +19,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
 
     useEffect(() => {
         updatePageLoadingState({ isCartHydrated: true });
-    }, []);
+    }, [updatePageLoadingState]);
 
     const [{ data: fetchedCartData, fetching: isCartFetching }, fetchCart] = useCartQuery({
         variables: { cartUuid },

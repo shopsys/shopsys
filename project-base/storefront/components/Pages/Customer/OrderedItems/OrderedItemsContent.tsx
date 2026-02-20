@@ -32,7 +32,9 @@ export const OrderedItemsContent: FC<OrderedItemsContentProps> = ({ areOrderedIt
                 <SkeletonModuleCustomerComplaints />
             ) : (
                 <div className="flex flex-col gap-5">
-                    {items?.map((item) => <OrderedItem key={item.uuid} orderedItem={item} />)}
+                    {items?.map((item) => (
+                        <OrderedItem key={item.uuid} orderedItem={item} />
+                    ))}
                 </div>
             )}
 
