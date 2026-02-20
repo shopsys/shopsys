@@ -25,6 +25,7 @@ class Country extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
@@ -39,6 +40,7 @@ class Country extends AbstractTranslatableEntity
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Country\CountryTranslation>
      */
     #[Prezent\Translations(targetEntity: CountryTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

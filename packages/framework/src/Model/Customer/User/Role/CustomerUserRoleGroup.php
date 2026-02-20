@@ -21,12 +21,14 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupTranslation>
      */
     #[Prezent\Translations(targetEntity: CustomerUserRoleGroupTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

@@ -27,6 +27,7 @@ class BlogArticle extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
@@ -39,6 +40,7 @@ class BlogArticle extends AbstractTranslatableEntity
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleTranslation>
      */
     #[Prezent\Translations(targetEntity: BlogArticleTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

@@ -36,12 +36,14 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation>
      */
     #[Prezent\Translations(targetEntity: PaymentTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

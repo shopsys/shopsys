@@ -29,12 +29,14 @@ class BlogCategory extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryTranslation>
      */
     #[Prezent\Translations(targetEntity: BlogCategoryTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

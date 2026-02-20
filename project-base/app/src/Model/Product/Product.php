@@ -58,6 +58,7 @@ class Product extends BaseProduct
      * @var string
      */
     #[ORM\Column(type: 'string', length: 100, unique: true, nullable: false)]
+    #[Override]
     protected $catnum;
 
     /**

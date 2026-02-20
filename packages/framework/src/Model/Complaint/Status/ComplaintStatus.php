@@ -24,12 +24,14 @@ class ComplaintStatus extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation>
      */
     #[Prezent\Translations(targetEntity: ComplaintStatusTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

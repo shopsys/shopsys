@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Image;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
@@ -16,6 +17,7 @@ class ImageTranslation extends AbstractTranslation
      * @var \Shopsys\FrameworkBundle\Component\Image\Image
      */
     #[Prezent\Translatable(targetEntity: Image::class)]
+    #[Override]
     protected $translatable;
 
     /**

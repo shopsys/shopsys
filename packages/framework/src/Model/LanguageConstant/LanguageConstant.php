@@ -26,6 +26,7 @@ class LanguageConstant extends AbstractTranslatableEntity
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
@@ -44,6 +45,7 @@ class LanguageConstant extends AbstractTranslatableEntity
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation>
      */
     #[Prezent\Translations(targetEntity: LanguageConstantTranslation::class)]
+    #[Override]
     protected $translations;
 
     public function __construct(LanguageConstantData $languageConstantData)

@@ -23,12 +23,14 @@ class Unit extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation>
      */
     #[Prezent\Translations(targetEntity: UnitTranslation::class)]
+    #[Override]
     protected $translations;
 
     public function __construct(UnitData $unitData)

@@ -25,6 +25,7 @@ class Flag extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
@@ -37,6 +38,7 @@ class Flag extends AbstractTranslatableEntity
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation>
      */
     #[Prezent\Translations(targetEntity: FlagTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**
