@@ -15,15 +15,15 @@ Security headers are applied at three layers:
 
 ### How headers reach each response type
 
-Static security headers (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `X-XSS-Protection`, `Strict-Transport-Security`) are set at the nginx **server level**.
+Static security headers (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `X-XSS-Protection`, `Strict-Transport-Security`, `X-Powered-By`) are set at the nginx **server level**.
 
-| Response type          | nginx location  | Inherits server-level headers?                    | Additional headers beyond server-level defaults                                                            |
-| ---------------------- | --------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Admin pages            | `@app`          | No — has own `add_header`, so must redeclare them | PHP: CSP (dynamic); nginx `@app`: X-Powered-By; CORS headers intentionally not set                         |
-| Storefront pages       | `@storefront`   | Yes                                               | Next.js: CSP only (dynamic, obtained via GraphQL)                                                          |
-| Frontend API (GraphQL) | `@app`          | No — same as admin                                | nginx `@app`: X-Powered-By only (CSP is **not** set for API responses); CORS headers intentionally not set |
-| Static files           | `try_files`     | Yes                                               | —                                                                                                          |
-| Image resizer          | `@imageResizer` | Yes                                               | —                                                                                                          |
+| Response type          | nginx location  | Inherits server-level headers?                    | Additional headers beyond server-level defaults                                                                            |
+| ---------------------- | --------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Admin pages            | `@app`          | No — has own `add_header`, so must redeclare them | PHP: CSP (dynamic); nginx `@app`: redeclared static security headers; CORS headers intentionally not set                   |
+| Storefront pages       | `@storefront`   | Yes                                               | Next.js: CSP only (dynamic, obtained via GraphQL)                                                                          |
+| Frontend API (GraphQL) | `@app`          | No — same as admin                                | nginx `@app`: redeclared static security headers; CSP is **not** set for API responses; CORS headers intentionally not set |
+| Static files           | `try_files`     | Yes                                               | —                                                                                                                          |
+| Image resizer          | `@imageResizer` | Yes                                               | —                                                                                                                          |
 
 Important nginx rule: if a location block defines _any_ `add_header` directive, it does **not** inherit server-level `add_header` directives.
 This is why the `@app` location explicitly redeclares the security headers, while `@storefront` does not need to — it inherits them automatically.
@@ -52,6 +52,7 @@ The storefront Next.js app only sets CSP because it's the only header that requi
 **Development override:**
 
 The application appends `'unsafe-eval'` (for storefront) and `http://localhost:35729` (for backend) to the CSP value for local development:
+
 - `'unsafe-eval'` is required by webpack dev tooling / Next.js dev mode
 - `http://localhost:35729` is required for LiveReload in the admin
 
@@ -115,12 +116,12 @@ Note: browsers only honor this header when received over a valid HTTPS connectio
 
 ### X-Powered-By
 
-**In plain English:** PHP normally tells the world "I'm PHP version 8.x" in every response. Attackers use this to find servers running vulnerable versions. We replace it with a generic "Shopsys Platform" label — no useful version info for attackers. Only set on PHP-served responses (admin, API), not on static files or storefront pages.
+**In plain English:** Upstreams (PHP/Next.js) may expose technology/version details in `X-Powered-By`. Attackers use this to target known vulnerabilities. We overwrite it with a generic `Shopsys Platform` value so no useful stack/version information is exposed.
 
-| Property   | Value                                                      |
-| ---------- | ---------------------------------------------------------- |
-| **Value**  | `Shopsys Platform`                                         |
-| **Set by** | nginx (`@app` location in dev and production nginx config) |
+| Property   | Value                                                                                                                                                                           |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Value**  | `Shopsys Platform`                                                                                                                                                              |
+| **Set by** | nginx (server-level `add_header`; redeclared in `@app` because location-level `add_header` disables inheritance; `@storefront` hides upstream header so nginx value is applied) |
 
 ### Access-Control-Allow-Origin (CORS)
 
