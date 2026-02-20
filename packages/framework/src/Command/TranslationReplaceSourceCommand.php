@@ -156,8 +156,7 @@ class TranslationReplaceSourceCommand extends Command
                 $continues = isset($item['translated']) ? 'translated' : 'ids';
 
                 if (is_array($item[$continues])) {
-                    end($item[$continues]);
-                    $item[$continues][key($item[$continues])] .= substr($line, 1, -1);
+                    $item[$continues][array_key_last($item[$continues])] .= substr($line, 1, -1);
                 } else {
                     $item[$continues] .= substr($line, 1, -1);
                 }
@@ -203,8 +202,7 @@ class TranslationReplaceSourceCommand extends Command
                 // PO are by definition indexed so sort by index.
                 ksort($plurals);
                 // Make sure every index is filled.
-                end($plurals);
-                $count = key($plurals);
+                $count = array_key_last($plurals);
                 // Fill missing spots with '-'.
                 $empties = array_fill(0, $count + 1, '-');
                 $plurals += $empties;

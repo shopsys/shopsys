@@ -106,7 +106,7 @@ class LuigisBoxClient
         }
 
         if ($endpoint === LuigisBoxEndpointEnum::RECOMMENDATIONS) {
-            $data = reset($data);
+            $data = array_first($data);
         }
 
         return $this->getResultsIndexedByItemType($data, $endpoint, array_keys($limitsByType));
@@ -297,7 +297,7 @@ class LuigisBoxClient
             return TypeInLuigisBoxEnum::PRODUCT;
         }
 
-        return reset($types);
+        return array_first($types);
     }
 
     /**

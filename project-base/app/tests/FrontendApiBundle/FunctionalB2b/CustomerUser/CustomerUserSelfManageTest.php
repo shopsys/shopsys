@@ -171,7 +171,7 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
     private function getCreateComplaintResponse(Order $order): array
     {
         $orderItems = $order->getItems();
-        $orderItem = reset($orderItems);
+        $orderItem = array_first($orderItems);
 
         return $this->getResponseContentForGql(
             __DIR__ . '/../../Functional/Complaint/graphql/CreateComplaintMutation.graphql',

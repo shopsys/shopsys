@@ -208,7 +208,7 @@ class CronCommand extends Command
             CronModuleConfig::DEFAULT_INSTANCE_NAME,
             $instanceNames,
             true,
-        ) ? CronModuleConfig::DEFAULT_INSTANCE_NAME : reset(
+        ) ? CronModuleConfig::DEFAULT_INSTANCE_NAME : array_first(
             $instanceNames,
         );
 

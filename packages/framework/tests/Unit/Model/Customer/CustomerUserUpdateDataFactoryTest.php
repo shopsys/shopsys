@@ -34,7 +34,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $customer = $customerUser->getCustomer();
 
         $deliveryAddresses = $customer->getDeliveryAddresses();
-        $deliveryAddress = reset($deliveryAddresses);
+        $deliveryAddress = array_first($deliveryAddresses);
 
         $orderData = TestOrderProvider::getTestOrderData();
         $order = new Order(

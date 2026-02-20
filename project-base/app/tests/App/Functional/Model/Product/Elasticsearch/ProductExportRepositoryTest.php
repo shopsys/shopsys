@@ -19,7 +19,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
         $data = $this->repository->getProductsData($this->domain->getId(), $this->domain->getLocale(), 0, 10);
         $this->assertCount(10, $data);
 
-        $structure = array_keys(reset($data));
+        $structure = array_keys(array_first($data));
         sort($structure);
 
         $expectedStructure = $this->getExpectedStructureForRepository();

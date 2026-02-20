@@ -401,7 +401,7 @@ class CustomerController extends AdminBaseController
         }
 
         $customerUsers = $this->customerFacade->getCustomerUsers($customer);
-        $firstCustomerUser = reset($customerUsers);
+        $firstCustomerUser = array_first($customerUsers);
 
         return $this->generateUrl('admin_customer_edit', ['id' => $firstCustomerUser->getId()]);
     }
@@ -415,7 +415,7 @@ class CustomerController extends AdminBaseController
         }
 
         $customerUsers = $this->customerFacade->getCustomerUsers($customer);
-        $firstCustomerUser = reset($customerUsers);
+        $firstCustomerUser = array_first($customerUsers);
 
         return t('Back to customer {{ name }}', ['{{ name }}' => $firstCustomerUser->getFullName()]);
     }

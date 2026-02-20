@@ -77,7 +77,7 @@ class ProductDataFixture
 
             if ($productTemplate === false) {
                 $this->createVariants($variantCatnumsByMainVariantCatnum);
-                $productTemplate = reset($this->productTemplates);
+                $productTemplate = array_first($this->productTemplates);
             }
             $productData = $this->productDataFactory->createFromProduct($productTemplate);
             $productData->files = $this->uploadedFileDataFactory->create();

@@ -50,7 +50,7 @@ class CustomerUserDataFactory
     {
         $customerUserData = $this->createForCustomer($customer);
         $customerUsers = $this->customerRepository->getCustomerUsers($customer);
-        $customerUser = reset($customerUsers);
+        $customerUser = array_first($customerUsers);
         $customerUserData->pricingGroup = $customerUser->getPricingGroup();
         $customerUserData->domainId = $customerUser->getDomainId();
 

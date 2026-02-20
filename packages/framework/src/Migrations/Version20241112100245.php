@@ -30,7 +30,7 @@ class Version20241112100245 extends AbstractMigration implements DomainAwareInte
         $rootBlogCategories = $this->sql('SELECT id FROM blog_categories WHERE parent_id IS NULL AND level = 0')->fetchAllAssociative();
 
         if (count($rootBlogCategories) === 1) {
-            $blogCategoryId = reset($rootBlogCategories)['id'];
+            $blogCategoryId = array_first($rootBlogCategories)['id'];
             $translation = $this->sql('SELECT 1 FROM blog_category_translations WHERE translatable_id = ?', [$blogCategoryId])->fetchOne();
 
             if ($translation === false) {

@@ -319,7 +319,7 @@ class PriceListFacade
 
     protected function getFileContent(UploadedFileData $uploadedFileData): string
     {
-        $path = $this->fileUpload->getTemporaryFilepathForMountManager(reset($uploadedFileData->uploadedFiles));
+        $path = $this->fileUpload->getTemporaryFilepathForMountManager(array_first($uploadedFileData->uploadedFiles));
 
         return $this->mountManager->read('main://' . $path);
     }

@@ -152,7 +152,7 @@ function findExactOrClosestLargerOrLargestImageSize(int $requestedImageSize, arr
         }
     }
 
-    return end($allowedImageSizes);
+    return array_last($allowedImageSizes);
 }
 
 function render404(): void

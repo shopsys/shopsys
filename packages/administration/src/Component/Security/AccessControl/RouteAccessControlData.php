@@ -76,7 +76,7 @@ class RouteAccessControlData
         if (!class_exists($this->controllerClass)) {
             // Extract just the class name from the full path
             $parts = explode('\\', $this->controllerClass);
-            $shortControllerClass = end($parts);
+            $shortControllerClass = array_last($parts);
         } else {
             $shortControllerClass = (new ReflectionClass($this->controllerClass))->getShortName();
         }

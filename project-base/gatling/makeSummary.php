@@ -48,14 +48,14 @@ class PageStats
     {
         $this->checkFrozen();
 
-        return reset($this->requestsTimes);
+        return array_first($this->requestsTimes);
     }
 
     public function getMaxRequestTime(): int
     {
         $this->checkFrozen();
 
-        return end($this->requestsTimes);
+        return array_last($this->requestsTimes);
     }
 
     public function getAvgRequestTime(): int

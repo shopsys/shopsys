@@ -165,7 +165,7 @@ class IndexFacade
             $this->exportIds($index, $indexDefinition, $changedIdsBatch);
 
             $progressBar->advance(count($changedIdsBatch));
-            $lastProcessedId = end($changedIdsBatch);
+            $lastProcessedId = array_last($changedIdsBatch);
         }
 
         $progressBar->finish();

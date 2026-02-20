@@ -115,7 +115,7 @@ final class InteractiveInputCollector
             type: $io->choice(
                 'Domain type',
                 CoreDomainConfigValidator::SUPPORTED_DOMAIN_TYPES,
-                CoreDomainConfigValidator::SUPPORTED_DOMAIN_TYPES[array_key_first(CoreDomainConfigValidator::SUPPORTED_DOMAIN_TYPES)],
+                array_first(CoreDomainConfigValidator::SUPPORTED_DOMAIN_TYPES),
             ),
             currencyCode: $io->ask(
                 'Currency code (e.g., EUR, CZK)',

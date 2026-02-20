@@ -121,7 +121,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
 
     protected function extractMessage(MethodCall $methodCall): void
     {
-        $firstArgumentWithMessage = reset($methodCall->args);
+        $firstArgumentWithMessage = array_first($methodCall->args);
 
         if (!($firstArgumentWithMessage->value instanceof String_)) {
             return;

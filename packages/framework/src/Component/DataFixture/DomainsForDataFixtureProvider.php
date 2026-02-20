@@ -63,7 +63,7 @@ class DomainsForDataFixtureProvider
     {
         $allowedDomains = $this->getAllowedDemoDataDomains();
 
-        return reset($allowedDomains);
+        return array_first($allowedDomains);
     }
 
     public function isDomainIdAllowed(int $domainId): bool

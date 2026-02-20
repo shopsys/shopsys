@@ -30,7 +30,7 @@ class QueryBuilderExtenderTest extends TestCase
         $queryBuilderExtender->addOrExtendJoin($queryBuilder, BaseProduct::class, 'p', '1 = 1');
 
         $joinDqlPart = $queryBuilder->getDQLPart('join');
-        $this->assertCount(1, reset($joinDqlPart));
+        $this->assertCount(1, array_first($joinDqlPart));
     }
 
     #[DataProvider('extendJoinWithExtendedEntityProvider')]

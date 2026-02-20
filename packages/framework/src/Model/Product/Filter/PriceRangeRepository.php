@@ -80,7 +80,7 @@ class PriceRangeRepository
             ->select('MIN(pmip.inputPrice) AS minimalPrice, MAX(pmip.inputPrice) AS maximalPrice');
 
         $priceRangeData = $queryBuilder->getQuery()->execute();
-        $priceRangeDataRow = reset($priceRangeData);
+        $priceRangeDataRow = array_first($priceRangeData);
 
         return new PriceRange(
             Money::create($priceRangeDataRow['minimalPrice'] ?? 0),

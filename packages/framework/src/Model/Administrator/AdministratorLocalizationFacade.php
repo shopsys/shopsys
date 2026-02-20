@@ -63,9 +63,9 @@ class AdministratorLocalizationFacade
     public function getDefaultAdminLocale(): string
     {
         $allowedAdminLocales = $this->allowedAdminLocales;
-        $defaultAdminLocale = reset($allowedAdminLocales);
+        $defaultAdminLocale = array_first($allowedAdminLocales);
 
-        if ($defaultAdminLocale === false) {
+        if ($defaultAdminLocale === null) {
             throw new AdminLocaleNotFoundException();
         }
 

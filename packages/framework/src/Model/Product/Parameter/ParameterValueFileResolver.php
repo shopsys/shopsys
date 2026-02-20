@@ -37,7 +37,7 @@ class ParameterValueFileResolver
                 continue;
             }
 
-            $firstFile = reset($parameterValueFiles);
+            $firstFile = array_first($parameterValueFiles);
             $resolvedFileData = $this->uploadedFileDataExtractor->extractUploadedFileData($firstFile, $domainConfig);
 
             $parameterValuesData[$key]['parameter_value_icon_anchor_text'] = $resolvedFileData['anchorText'];

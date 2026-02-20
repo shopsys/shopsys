@@ -54,7 +54,7 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         /** @var \App\Model\Order\Order $order2 */
         $order2 = $this->getReference(OrderDataFixture::ORDER_PREFIX . 2);
         $orderItems2 = $order2->getProductItems();
-        $complaintItem2 = $this->complaintHelper->createComplaintItemData(reset($orderItems2), 'Broken!', 1, [$uploadedFile4]);
+        $complaintItem2 = $this->complaintHelper->createComplaintItemData(array_first($orderItems2), 'Broken!', 1, [$uploadedFile4]);
         $complaint2 = $this->complaintHelper->createComplaint(
             $customerUser1,
             $order2,

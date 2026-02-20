@@ -133,7 +133,7 @@ class LuigisBoxBatchLoader
     {
         $categoryArray = $this->categoryFacade->getVisibleCategoriesByIds([$luigisBoxResult->getIds()], $this->domain->getCurrentDomainConfig());
 
-        return reset($categoryArray);
+        return array_first($categoryArray);
     }
 
     protected function mapArticleData(LuigisBoxResult $luigisBoxResult): array
@@ -179,7 +179,7 @@ class LuigisBoxBatchLoader
         }
 
         if ($this->mainBatchLoadData === null) {
-            $this->mainBatchLoadData = reset($luigisBoxBatchLoadData);
+            $this->mainBatchLoadData = array_first($luigisBoxBatchLoadData);
         }
 
         return $this->mainBatchLoadData;

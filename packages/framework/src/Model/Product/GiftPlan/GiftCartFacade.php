@@ -39,7 +39,7 @@ class GiftCartFacade
             $giftQuantity = $giftCartItemSetup->getQuantity();
 
             $giftCartItems = array_filter($cart->getProductGiftCartItems(), fn (CartItem $cartItem) => $cartItem->getProduct()->getId() === $giftProduct->getId());
-            $giftCartItem = reset($giftCartItems);
+            $giftCartItem = array_first($giftCartItems);
 
             if ($giftCartItem) {
                 $giftCartItem->changeQuantity($giftQuantity);

@@ -42,7 +42,7 @@ class AdminDomainTabsFacade
             return $this->domain->getDomainConfigById($domainId);
         } catch (InvalidDomainIdException|SessionNotFoundException) {
             $allowedDomainIds = $this->domain->getAdminEnabledDomainIds();
-            $firstAllowedDomainId = reset($allowedDomainIds);
+            $firstAllowedDomainId = array_first($allowedDomainIds);
 
             $this->setSelectedDomainId($firstAllowedDomainId);
 

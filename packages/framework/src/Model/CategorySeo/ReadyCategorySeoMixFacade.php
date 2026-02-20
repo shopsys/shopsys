@@ -276,7 +276,7 @@ class ReadyCategorySeoMixFacade
                 $text = $parameterFilterData['minimalValue'];
                 $parameterValueId = $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale((string)$text, (string)$text, $currentLocale);
             } else {
-                $parameterUuid = reset($parameterFilterData['values']);
+                $parameterUuid = array_first($parameterFilterData['values']);
 
                 if (array_key_exists($parameterUuid, $parameterValueIdsByUuids) === false) {
                     throw new ParameterValueNotFoundException(sprintf(

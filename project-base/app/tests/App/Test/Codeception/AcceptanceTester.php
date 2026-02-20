@@ -39,7 +39,7 @@ class AcceptanceTester extends Actor implements ActorInterface
 
         $closure = Closure::fromCallable(function (RemoteWebDriver $webdriver): void {
             $handles = $webdriver->getWindowHandles();
-            $lastWindow = end($handles);
+            $lastWindow = array_last($handles);
             $this->switchToWindow($lastWindow);
         });
 

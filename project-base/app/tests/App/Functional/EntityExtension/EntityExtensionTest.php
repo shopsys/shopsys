@@ -225,12 +225,12 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
         $foundOneToManyBidirectionalEntities = $foundProduct->getOneToManyBidirectionalEntities();
         $this->assertCount(1, $foundOneToManyBidirectionalEntities);
-        $foundOneToManyBidirectionalEntity = reset($foundOneToManyBidirectionalEntities);
+        $foundOneToManyBidirectionalEntity = array_first($foundOneToManyBidirectionalEntities);
         $this->assertSame('one-to-many bidirectional', $foundOneToManyBidirectionalEntity->getName());
 
         $foundOneToManyUnidirectionalWithJoinTableEntities = $foundProduct->getOneToManyUnidirectionalWithJoinTableEntities();
         $this->assertCount(1, $foundOneToManyUnidirectionalWithJoinTableEntities);
-        $foundOneToManyUnidirectionalWithJoinTableEntity = reset($foundOneToManyUnidirectionalWithJoinTableEntities);
+        $foundOneToManyUnidirectionalWithJoinTableEntity = array_first($foundOneToManyUnidirectionalWithJoinTableEntities);
         $this->assertSame(
             'one-to-many unidirectional with join table',
             $foundOneToManyUnidirectionalWithJoinTableEntity->getName(),
@@ -238,7 +238,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
         $foundOneToManySelfReferencingEntities = $foundProduct->getOneToManySelfReferencingEntities();
         $this->assertCount(1, $foundOneToManySelfReferencingEntities);
-        $foundOneToManySelfReferencingEntity = reset($foundOneToManySelfReferencingEntities);
+        $foundOneToManySelfReferencingEntity = array_first($foundOneToManySelfReferencingEntities);
         $this->assertInstanceOf(ExtendedProduct::class, $foundOneToManySelfReferencingEntity);
         $this->assertSame(
             self::ONE_TO_MANY_SELF_REFERENCING_PRODUCT_ID,
@@ -251,19 +251,19 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
         $foundManyToManyUnidirectionalEntities = $foundProduct->getManyToManyUnidirectionalEntities();
         $this->assertCount(1, $foundManyToManyUnidirectionalEntities);
-        $foundManyToManyUnidirectionalEntity = reset($foundManyToManyUnidirectionalEntities);
+        $foundManyToManyUnidirectionalEntity = array_first($foundManyToManyUnidirectionalEntities);
         $this->assertInstanceOf(UnidirectionalEntity::class, $foundManyToManyUnidirectionalEntity);
         $this->assertSame('many-to-many unidirectional', $foundManyToManyUnidirectionalEntity->getName());
 
         $foundManyToManyBidirectionalEntities = $foundProduct->getManyToManyBidirectionalEntities();
         $this->assertCount(1, $foundManyToManyBidirectionalEntities);
-        $foundManyToManyBidirectionalEntity = reset($foundManyToManyBidirectionalEntities);
+        $foundManyToManyBidirectionalEntity = array_first($foundManyToManyBidirectionalEntities);
         $this->assertInstanceOf(ProductManyToManyBidirectionalEntity::class, $foundManyToManyBidirectionalEntity);
         $this->assertSame('many-to-many bidirectional', $foundManyToManyBidirectionalEntity->getName());
 
         $foundManyToManySelfReferencingEntities = $foundProduct->getManyToManySelfReferencingEntities();
         $this->assertCount(1, $foundManyToManySelfReferencingEntities);
-        $foundManyToManySelfReferencingEntity = reset($foundManyToManySelfReferencingEntities);
+        $foundManyToManySelfReferencingEntity = array_first($foundManyToManySelfReferencingEntities);
         $this->assertInstanceOf(ExtendedProduct::class, $foundManyToManySelfReferencingEntity);
         $this->assertSame(
             self::MANY_TO_MANY_SELF_REFERENCING_PRODUCT_ID,
@@ -271,7 +271,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         );
         $foundManyToManySelfReferencingInverseEntities = $foundManyToManySelfReferencingEntity->getManyToManySelfReferencingInverseEntities();
         $this->assertCount(1, $foundManyToManySelfReferencingInverseEntities);
-        $foundManyToManySelfReferencingInverseEntity = reset($foundManyToManySelfReferencingInverseEntities);
+        $foundManyToManySelfReferencingInverseEntity = array_first($foundManyToManySelfReferencingInverseEntities);
         $this->assertInstanceOf(ExtendedProduct::class, $foundManyToManySelfReferencingInverseEntity);
         $this->assertSame($foundProduct, $foundManyToManySelfReferencingInverseEntity);
     }
@@ -357,12 +357,12 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
         $foundOneToManyBidirectionalEntities = $foundCategory->getOneToManyBidirectionalEntities();
         $this->assertCount(1, $foundOneToManyBidirectionalEntities);
-        $foundOneToManyBidirectionalEntity = reset($foundOneToManyBidirectionalEntities);
+        $foundOneToManyBidirectionalEntity = array_first($foundOneToManyBidirectionalEntities);
         $this->assertSame('one-to-many bidirectional', $foundOneToManyBidirectionalEntity->getName());
 
         $foundOneToManyUnidirectionalWithJoinTableEntities = $foundCategory->getOneToManyUnidirectionalWithJoinTableEntities();
         $this->assertCount(1, $foundOneToManyUnidirectionalWithJoinTableEntities);
-        $foundOneToManyUnidirectionalWithJoinTableEntity = reset($foundOneToManyUnidirectionalWithJoinTableEntities);
+        $foundOneToManyUnidirectionalWithJoinTableEntity = array_first($foundOneToManyUnidirectionalWithJoinTableEntities);
         $this->assertSame(
             'one-to-many unidirectional with join table',
             $foundOneToManyUnidirectionalWithJoinTableEntity->getName(),
@@ -370,7 +370,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
         $foundOneToManySelfReferencingEntities = $foundCategory->getOneToManySelfReferencingEntities();
         $this->assertCount(1, $foundOneToManySelfReferencingEntities);
-        $foundOneToManySelfReferencingEntity = reset($foundOneToManySelfReferencingEntities);
+        $foundOneToManySelfReferencingEntity = array_first($foundOneToManySelfReferencingEntities);
         $this->assertInstanceOf(ExtendedCategory::class, $foundOneToManySelfReferencingEntity);
         $this->assertSame(
             self::ONE_TO_MANY_SELF_REFERENCING_CATEGORY_ID,
@@ -383,19 +383,19 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
         $foundManyToManyUnidirectionalEntities = $foundCategory->getManyToManyUnidirectionalEntities();
         $this->assertCount(1, $foundManyToManyUnidirectionalEntities);
-        $foundManyToManyUnidirectionalEntity = reset($foundManyToManyUnidirectionalEntities);
+        $foundManyToManyUnidirectionalEntity = array_first($foundManyToManyUnidirectionalEntities);
         $this->assertInstanceOf(UnidirectionalEntity::class, $foundManyToManyUnidirectionalEntity);
         $this->assertSame('many-to-many unidirectional', $foundManyToManyUnidirectionalEntity->getName());
 
         $foundManyToManyBidirectionalEntities = $foundCategory->getManyToManyBidirectionalEntities();
         $this->assertCount(1, $foundManyToManyBidirectionalEntities);
-        $foundManyToManyBidirectionalEntity = reset($foundManyToManyBidirectionalEntities);
+        $foundManyToManyBidirectionalEntity = array_first($foundManyToManyBidirectionalEntities);
         $this->assertInstanceOf(CategoryManyToManyBidirectionalEntity::class, $foundManyToManyBidirectionalEntity);
         $this->assertSame('many-to-many bidirectional', $foundManyToManyBidirectionalEntity->getName());
 
         $foundManyToManySelfReferencingEntities = $foundCategory->getManyToManySelfReferencingEntities();
         $this->assertCount(1, $foundManyToManySelfReferencingEntities);
-        $foundManyToManySelfReferencingEntity = reset($foundManyToManySelfReferencingEntities);
+        $foundManyToManySelfReferencingEntity = array_first($foundManyToManySelfReferencingEntities);
         $this->assertInstanceOf(ExtendedCategory::class, $foundManyToManySelfReferencingEntity);
         $this->assertSame(
             self::MANY_TO_MANY_SELF_REFERENCING_CATEGORY_ID,
@@ -403,7 +403,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         );
         $foundManyToManySelfReferencingInverseEntities = $foundManyToManySelfReferencingEntity->getManyToManySelfReferencingInverseEntities();
         $this->assertCount(1, $foundManyToManySelfReferencingInverseEntities);
-        $foundManyToManySelfReferencingInverseEntity = reset($foundManyToManySelfReferencingInverseEntities);
+        $foundManyToManySelfReferencingInverseEntity = array_first($foundManyToManySelfReferencingInverseEntities);
         $this->assertInstanceOf(ExtendedCategory::class, $foundManyToManySelfReferencingInverseEntity);
         $this->assertSame($foundCategory, $foundManyToManySelfReferencingInverseEntity);
     }

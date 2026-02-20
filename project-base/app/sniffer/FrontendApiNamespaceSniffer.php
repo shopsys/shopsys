@@ -166,8 +166,8 @@ class FrontendApiNamespaceSniffer implements Sniff
         $namespacePartsIndexedByPosition = $this->getNamespacePartsIndexedByPosition($file, $position);
 
 
-        $namespacePart = reset($namespacePartsIndexedByPosition);
-        while ($namespacePart !== false) {
+        $namespacePart = array_first($namespacePartsIndexedByPosition);
+        while ($namespacePart !== null) {
             if ($namespacePart === $checkedNamespacePart) {
                 $previousNamespacePart = prev($namespacePartsIndexedByPosition);
                 if ($previousNamespacePart !== self::FRONTEND_API_NAMESPACE_PART) {

@@ -98,7 +98,7 @@ class DomainController extends AdminBaseController
                 $files = $iconData !== null ? $iconData->uploadedFiles : [];
 
                 if (count($files) !== 0) {
-                    $iconName = reset($files);
+                    $iconName = array_first($files);
 
                     $this->domainFacade->editIcon($id, $iconName);
 
