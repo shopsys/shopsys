@@ -50,7 +50,7 @@ export const ProductDetailSectionNavigation: FC<ProductDetailSectionNavigationPr
                             type="button"
                             className={twMergeCustom(
                                 'font-secondary shrink-0 cursor-pointer rounded-2xl px-3.5 py-1.5 text-sm font-semibold select-none',
-                                'focus-visible:text-text-default focus-visible:bg-orange-500 focus-visible:outline-none',
+                                'focus-visible:text-text-default focus-visible:bg-orange-500 focus-visible:outline-hidden',
                                 activeSection === section.id
                                     ? 'bg-background-default outline-border-success outline-2'
                                     : 'bg-background-more hover:bg-background-most',

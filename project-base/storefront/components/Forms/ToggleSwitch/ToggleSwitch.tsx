@@ -19,7 +19,7 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
             <input
                 aria-label={ariaLabel}
                 checked={value}
-                className="peer h-5 w-10 outline-none"
+                className="peer h-5 w-10 outline-hidden"
                 id={id}
                 name={name}
                 ref={toggleSwitchForwardedRef}

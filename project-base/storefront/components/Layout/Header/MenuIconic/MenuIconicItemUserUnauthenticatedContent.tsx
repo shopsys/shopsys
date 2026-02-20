@@ -52,7 +52,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
                 </LinkButton>
             </div>
             <div className="vl:order-2 vl:w-[364px] order-1 w-full">
-                <LoginForm formHeading={t('Log in')} formWrapperClassName="!p-8 w-full" />
+                <LoginForm formHeading={t('Log in')} formWrapperClassName="p-8! w-full" />
             </div>
         </div>
     );

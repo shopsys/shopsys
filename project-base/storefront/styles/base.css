@@ -79,7 +79,7 @@
     }
 
     hr {
-        @apply h-[1px];
+        @apply h-1;
     }
 
     dfn {
@@ -91,7 +91,7 @@
     }
 
     p {
-        @apply text-sm break-words lg:text-base;
+        @apply text-sm wrap-break-word lg:text-base;
     }
 
     a {
@@ -138,7 +138,7 @@
     }
 
     .Toastify__toast-container {
-        @apply focus-visible:outline-none;
+        @apply focus-visible:outline-hidden;
     }
 
     .Toastify__toast-body {
@@ -149,7 +149,7 @@
         }
 
         span {
-            @apply focus-visible:outline-none;
+            @apply focus-visible:outline-hidden;
         }
     }
 
@@ -173,7 +173,7 @@
         }
 
         span {
-            @apply focus-visible:outline-none;
+            @apply focus-visible:outline-hidden;
         }
 
         & .Toastify__progress-bar-theme--colored {

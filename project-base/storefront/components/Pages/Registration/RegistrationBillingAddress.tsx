@@ -43,7 +43,7 @@ export const RegistrationBillingAddress: FC = () => {
                 <AnimatePresence initial={false}>
                     {customerValue === 'companyCustomer' && (
                         <AnimateCollapseDivWithMargin
-                            className="!flex flex-col gap-5"
+                            className="flex! flex-col gap-5"
                             keyName="registration-company-data"
                         >
                             <RegistrationCompany />

@@ -121,7 +121,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                         {showComplaintButton && (
                             <button
                                 aria-haspopup="dialog"
-                                className="text-link-default hover:text-link-hovered cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-none"
+                                className="text-link-default hover:text-link-hovered cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-hidden"
                                 data-tid={TIDs.order_detail_create_complaint_button}
                                 tabIndex={0}
                                 aria-label={t('Create complaint for product {{ productName }}', {

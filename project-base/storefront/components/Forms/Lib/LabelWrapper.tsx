@@ -49,7 +49,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     ],
                     inputType === 'selectbox' && [
                         'top-1/2 -translate-y-1/2',
-                        disabled && '!text-input-placeholder-disabled',
+                        disabled && 'text-input-placeholder-disabled!',
                     ],
                     inputType === 'textarea' &&
                         'bg-background-default top-1 pr-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:text-base peer-placeholder-shown:font-semibold peer-focus:top-1 peer-focus:text-sm peer-focus:font-normal',

@@ -60,7 +60,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                                 </div>
                             </div>
 
-                            <h2 className="h5 text-text-default group-hover:text-link-default mb-0 !font-bold group-hover:underline max-md:text-base">
+                            <h2 className="h5 text-text-default group-hover:text-link-default mb-0 font-bold! group-hover:underline max-md:text-base">
                                 {blogArticle.name}
                             </h2>
 

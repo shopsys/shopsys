@@ -68,7 +68,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     </div>
                 )}
                 <div className="w-full md:pl-4 lg:flex lg:items-center lg:justify-between">
-                    <div className="block break-words" data-tid={TIDs.blocks_product_addtocartpopup_product_name}>
+                    <div className="block wrap-break-word" data-tid={TIDs.blocks_product_addtocartpopup_product_name}>
                         <ExtendedNextLink
                             href={productUrl}
                             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}

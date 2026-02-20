@@ -65,7 +65,7 @@ export const CartInHeader: FC = ({ className }) => {
                 tabIndex={!cart?.items.length ? -1 : 0}
                 title={t('Cart')}
                 className={twMergeCustom(
-                    'vl:flex group relative outline-none',
+                    'vl:flex group relative outline-hidden',
                     isActive && 'z-aboveOverlay',
                     className,
                 )}

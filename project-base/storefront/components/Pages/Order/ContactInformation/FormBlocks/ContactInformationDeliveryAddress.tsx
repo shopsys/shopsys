@@ -31,9 +31,13 @@ export const ContactInformationDeliveryAddress: FC = () => {
     });
     const isUserLoggedIn = useIsUserLoggedIn();
     const { canManagePersonalData } = useAuthorization();
+    const { setValue } = formProviderMethods;
+    const deliveryAddressUuidFieldName = formMeta.fields.deliveryAddressUuid.name;
+    const defaultDeliveryAddressUuid = user?.defaultDeliveryAddress?.uuid;
+    const firstDeliveryAddressUuid = user?.deliveryAddresses[0]?.uuid;
 
     const handleChangeDeliveryAddressForOrder = (value: string) => {
-        formProviderMethods.setValue(formMeta.fields.deliveryAddressUuid.name, value);
+        setValue(deliveryAddressUuidFieldName, value);
         updateContactInformation({ deliveryAddressUuid: value });
     };
 
@@ -42,12 +46,18 @@ export const ContactInformationDeliveryAddress: FC = () => {
             return;
         }
 
-        if (user?.defaultDeliveryAddress !== undefined) {
-            formProviderMethods.setValue(formMeta.fields.deliveryAddressUuid.name, user.defaultDeliveryAddress.uuid);
-        } else if (user?.deliveryAddresses && user.deliveryAddresses.length > 0) {
-            formProviderMethods.setValue(formMeta.fields.deliveryAddressUuid.name, user.deliveryAddresses[0].uuid);
+        if (defaultDeliveryAddressUuid) {
+            setValue(deliveryAddressUuidFieldName, defaultDeliveryAddressUuid);
+        } else if (firstDeliveryAddressUuid) {
+            setValue(deliveryAddressUuidFieldName, firstDeliveryAddressUuid);
         }
-    }, [user?.defaultDeliveryAddress?.uuid, user?.deliveryAddresses.length, deliveryAddressUuid]);
+    }, [
+        defaultDeliveryAddressUuid,
+        firstDeliveryAddressUuid,
+        deliveryAddressUuid,
+        deliveryAddressUuidFieldName,
+        setValue,
+    ]);
 
     return (
         <FormBlockWrapper>
@@ -72,7 +82,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
 
             <AnimatePresence initial={false}>
                 {isDeliveryAddressDifferentFromBilling && (
-                    <AnimateCollapseDiv className="!block">
+                    <AnimateCollapseDiv className="block!">
                         {!pickupPlace && isUserLoggedIn && (
                             <>
                                 <p className="h4 mb-5">{t('Choose delivery address')}</p>

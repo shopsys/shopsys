@@ -128,7 +128,7 @@ export function MultiSelect<T extends string | number = string>({
                                 ref={inputRef}
                                 value={comboBoxConfig.searchValue}
                                 className={twJoin(
-                                    'size-full bg-transparent px-3 !text-base outline-hidden',
+                                    'size-full bg-transparent px-3 text-base! outline-hidden',
                                     'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}

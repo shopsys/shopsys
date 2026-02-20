@@ -67,7 +67,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                 </ul>
 
                 {cart.items.length > 3 && (
-                    <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-20 bg-gradient-to-t from-white to-transparent" />
+                    <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-20 bg-linear-to-t from-white to-transparent" />
                 )}
             </div>
 
