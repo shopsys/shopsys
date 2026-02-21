@@ -114,6 +114,7 @@ EOF,
         });
 
         try {
+            // @phpstan-ignore argument.type (Symfony Yaml parser accepts this runtime bitmask combination)
             $this->getParser()->parse($content, Yaml::PARSE_CONSTANT | $flags);
         } catch (ParseException $e) {
             return ['file' => $file, 'line' => $e->getParsedLine(), 'valid' => false, 'message' => $e->getMessage()];
