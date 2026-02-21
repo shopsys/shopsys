@@ -90,6 +90,34 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $this->assertEquals($expected, Json::decode($result, true), $result);
     }
 
+    /**
+     * @template TReturn
+     * @param callable(): TReturn $callback
+     * @param callable(): void|null $finallyCallback
+     * @return TReturn
+     */
+    protected function withIsolatedClient(callable $callback, ?callable $finallyCallback = null): mixed
+    {
+        $originalClient = self::$client;
+        $isolatedClient = $this->createNewClient();
+        self::$client = $isolatedClient;
+
+        try {
+            return $callback();
+        } finally {
+            if ($finallyCallback !== null) {
+                $finallyCallback();
+            }
+
+            if ($isolatedClient !== $originalClient) {
+                $isolatedClient->enableReboot();
+                $isolatedClient->getKernel()->shutdown();
+            }
+
+            self::$client = $originalClient;
+        }
+    }
+
     protected function getResponseContentForQuery(string $query, array $variables = []): array
     {
         $content = $this->getResponseForQuery($query, $variables)->getContent();
