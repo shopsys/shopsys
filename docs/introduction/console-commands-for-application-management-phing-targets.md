@@ -359,14 +359,6 @@ Change environment to production, development or test using this target.
 This target comes handy when you need to debug some functionality on your development / testing server.
 Switching to development environment will also install composer dev dependencies.
 
-### For monorepo developers
-
-#### frontend-api-generate-apiary-blueprint
-
-Generate apiary blueprint for frontend API based on its pieces.
-
-Pieces of frontend API blueprint are in `frontend-api/apiary`. These pieces are build together by running this command which creates complete blueprint to `frontend-api/apiary.apib`.
-
 ## Customization of Phing targets and properties
 
 You can override and replace any Phing target or property defined in the `shopsys/framework` package by redefining it in your `build.xml` config.

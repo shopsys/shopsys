@@ -41,17 +41,6 @@
         </exec>
     </target>
 
-    <target name="frontend-api-generate-apiary-blueprint">
-        <echo level="info" message="Generating apiary blueprint"/>
-        <exec executable="npx" passthru="true" checkreturn="true">
-            <arg value="hercule"/>
-            <arg value="${path.frontend-api}/apiary/index.md"/>
-            <arg value="-o"/>
-            <arg value="${path.frontend-api}/apiary.apib"/>
-        </exec>
-        <echo message="Apiary blueprint was generated, commit changes when needed"/>
-    </target>
-
     <target name="js-standards-check" description="Find JS coding standard violations in all files using ESLint in the whole monorepo and print human readable output." hidden="true">
         <exec executable="${path.npm.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="run"/>
