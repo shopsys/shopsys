@@ -499,7 +499,9 @@ class Grid
 
     protected function loadRows(): void
     {
-        if (array_key_exists($this->orderSourceColumnName, $this->columnsById)
+        if (
+            $this->orderSourceColumnName !== null
+            && array_key_exists($this->orderSourceColumnName, $this->columnsById)
             && $this->columnsById[$this->orderSourceColumnName]->isSortable()
         ) {
             $orderSourceColumnName = $this->columnsById[$this->orderSourceColumnName]->getOrderSourceColumnName();

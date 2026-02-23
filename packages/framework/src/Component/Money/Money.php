@@ -30,6 +30,20 @@ class Money implements JsonSerializable
      */
     public static function createFromFloat(float $float, int $scale): static
     {
+        if (is_nan($float)) {
+            throw new InvalidNumericArgumentException(
+                'NAN',
+                new InvalidArgumentException('NAN and INF values are not supported'),
+            );
+        }
+
+        if (is_infinite($float)) {
+            throw new InvalidNumericArgumentException(
+                $float > 0 ? 'INF' : '-INF',
+                new InvalidArgumentException('NAN and INF values are not supported'),
+            );
+        }
+
         // Using Decimal::fromString as the Decimal::fromFloat has issues with specified scale
         // See https://github.com/Litipk/php-bignumbers/pull/67 for details
         $decimal = static::createDecimal((string)$float, $scale);
