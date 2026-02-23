@@ -9,7 +9,7 @@
             {% set itemCount = form|length %}
             {% set columnClass = itemCount == 1 ? 'col-12' : (itemCount == 2 ? 'col-12 col-xl-6' : 'col-12 col-xl-4') %}
             {% set columnSpacing = itemCount > 1 ? ' mb-3 mb-xl-0' : '' %}
-            
+
             <div class="row">
                 {% for child in form %}
                     <div class="{{ display_mode == 'columns' ? columnClass ~ columnSpacing : 'col-12 mb-3' }}">
@@ -22,7 +22,7 @@
             {% set itemCount = form|length %}
             {% set columnClass = itemCount == 1 ? 'col-12' : (itemCount == 2 ? 'col-12 col-xl-6' : 'col-12 col-xl-4') %}
             {% set columnSpacing = itemCount > 1 ? ' mb-3 mb-xl-0' : '' %}
-            
+
             <div class="row">
                 {% for child in form %}
                     {% set childContent = form_row(child, {row_attr: {class: "mb-0"}})|trim %}
@@ -40,7 +40,6 @@
                                     </div>
                                     <div class="card-body">
                                         {{- childContent|raw -}}
-                                        {{- form_errors(child) -}}
                                     </div>
                                 </div>
                             {% else %}
@@ -54,7 +53,6 @@
                                     </div>
                                     <div class="card-body">
                                         {{- childContent|raw -}}
-                                        {{- form_errors(child) -}}
                                     </div>
                                 </div>
                             {% endif %}
