@@ -1,6 +1,7 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchPageContent } from 'components/Pages/Search/SearchPageContent';
+import { useSearchQuery } from 'components/Pages/Search/searchUtils';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -21,6 +22,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const currentSearchString = useCurrentSearchStringQuery();
+    const { searchData, isSearchFetching } = useSearchQuery(currentSearchString);
     useResetSessionFilters();
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
@@ -33,8 +35,16 @@ const SearchPage: FC<ServerSidePropsType> = () => {
         <>
             <MetaRobots content="noindex, nofollow" />
 
-            <CommonLayout breadcrumbs={breadcrumbs} title={t('Search')}>
-                <SearchPageContent key={currentSearchString} />
+            <CommonLayout
+                breadcrumbs={breadcrumbs}
+                isFetchingData={isSearchFetching && !!currentSearchString}
+                title={t('Search')}
+            >
+                <SearchPageContent
+                    key={currentSearchString}
+                    isSearchFetching={isSearchFetching}
+                    searchData={searchData}
+                />
             </CommonLayout>
         </>
     );

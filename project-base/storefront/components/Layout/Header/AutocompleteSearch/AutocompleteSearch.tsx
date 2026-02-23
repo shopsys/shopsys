@@ -9,7 +9,9 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
+import { SkeletonEnum } from 'types/skeletons';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useDebounce } from 'utils/useDebounce';
@@ -33,6 +35,7 @@ export const AutocompleteSearch: FC = () => {
     const [searchQueryValue, setSearchQueryValue] = useState('');
 
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
+    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
 
     const debouncedSearchQuery = useDebounce(searchQueryValue, 200);
     const isWithValidSearchQuery = searchQueryValue.length >= MINIMAL_SEARCH_QUERY_LENGTH;
@@ -66,6 +69,9 @@ export const AutocompleteSearch: FC = () => {
 
     const handleSearch = () => {
         if (isWithValidSearchQuery) {
+            setIsSearchResultsPopupOpen(false);
+            searchInputRef.current?.blur();
+            updatePageLoadingState({ redirectPageType: SkeletonEnum.Category });
             router.push({
                 pathname: searchUrl,
                 query: { q: searchQueryValue },
