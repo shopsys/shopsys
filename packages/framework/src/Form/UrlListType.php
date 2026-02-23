@@ -20,9 +20,12 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\GroupSequence;
 
 final class UrlListType extends AbstractType
 {
+    private const string UNIQUE_SLUGS_VALIDATION_GROUP = 'UniqueSlugs';
+
     public function __construct(
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
         private readonly DomainRouterFactory $domainRouterFactory,
@@ -48,7 +51,9 @@ final class UrlListType extends AbstractType
                 'limit_domains_by_ids' => $this->domain->getAdminEnabledDomainIds($options['limit_domains_by_ids']),
             ],
             'constraints' => [
-                new UniqueSlugsOnDomains(),
+                new UniqueSlugsOnDomains(
+                    groups: [self::UNIQUE_SLUGS_VALIDATION_GROUP],
+                ),
             ],
         ]);
 
@@ -114,6 +119,7 @@ final class UrlListType extends AbstractType
                 'route_name' => null,
                 'entity_id' => null,
                 'limit_domains_by_ids' => [],
+                'validation_groups' => new GroupSequence(['Default', self::UNIQUE_SLUGS_VALIDATION_GROUP]),
             ])
             ->setAllowedTypes('limit_domains_by_ids', 'array');
     }

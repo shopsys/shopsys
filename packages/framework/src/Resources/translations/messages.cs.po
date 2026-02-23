@@ -1795,6 +1795,9 @@ msgstr "Ikona"
 msgid "If the country is not listed, you have to <a href=\"%countryCreateUrl%\" target=\"_blank\">create</a> it first. Or, in rare scenarios, your country code might not be <a href=\"%supportedCountriesUrl%\" target=\"_blank\">supported</a>."
 msgstr "Pokud země není uvedena, musíte ji nejprve <a href=\"%countryCreateUrl%\" target=\"_blank\">vytvořit</a>. Nebo ve vzácných případech váš kód země nemusí být <a href=\"%supportedCountriesUrl%\" target=\"_blank\">podporován</a>."
 
+msgid "If the slug contains non-ASCII characters (e.g. \"café\"), encode it as URL-encoded form (e.g. \"caf%C3%A9\"). You can use https://www.urlencoder.org/."
+msgstr "Pokud slug obsahuje jiné než ASCII znaky (např. \"café\"), zakódujte jej do URL-zakódované formy (např. \"caf%C3%A9\"). Můžete použít https://www.urlencoder.org/."
+
 msgid "If you allow negative stock, it is possible to order more items than are currently in stock."
 msgstr "Pokud povolíte nákup do mínusu, je možné objednat více položek, než je aktuálně na skladě."
 

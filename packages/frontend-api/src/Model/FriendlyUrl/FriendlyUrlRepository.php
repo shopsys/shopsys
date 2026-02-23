@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository as FrameworkFriendlyUrlRepository;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlSlugNormalizer;
 
 class FriendlyUrlRepository
 {
@@ -27,7 +28,7 @@ class FriendlyUrlRepository
         $criteria = [
             'domainId' => $domainId,
             'routeName' => $routeName,
-            'slug' => $slug,
+            'slug' => FriendlyUrlSlugNormalizer::normalize($slug),
         ];
 
         return $this->getFriendlyUrlRepository()->findOneBy($criteria);

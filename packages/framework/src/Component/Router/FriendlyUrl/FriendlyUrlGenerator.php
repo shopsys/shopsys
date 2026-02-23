@@ -74,29 +74,16 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         array $parameters,
         int $referenceType,
     ): string {
-        $compiledRoute = RouteCompiler::compile($route);
-
-        $tokens = [
-            [
-                0 => 'text',
-                1 => '/' . $friendlyUrl->getSlug(),
-            ],
-        ];
-
-        return $this->doGenerate(
-            $compiledRoute->getVariables(),
-            $route->getDefaults(),
-            $route->getRequirements(),
-            $tokens,
-            $parameters,
+        return $this->getGeneratedUrlBySlug(
             $routeName,
+            $route,
+            $friendlyUrl->getSlug(),
+            $parameters,
             $referenceType,
-            $compiledRoute->getHostTokens(),
-            $route->getSchemes(),
         );
     }
 
-    public function getGeneratedUrlBySlug(
+    protected function getGeneratedUrlBySlug(
         string $routeName,
         Route $route,
         string $slug,
@@ -108,7 +95,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         $tokens = [
             [
                 0 => 'text',
-                1 => '/' . $slug,
+                1 => '/' . $this->getSlugForGeneration($slug),
             ],
         ];
 
@@ -149,5 +136,10 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
             throw new RouteNotFoundException($message, 0, $e);
         }
+    }
+
+    protected function getSlugForGeneration(string $slug): string
+    {
+        return rawurldecode($slug);
     }
 }

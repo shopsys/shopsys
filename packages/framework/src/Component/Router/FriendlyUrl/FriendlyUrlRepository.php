@@ -41,7 +41,7 @@ class FriendlyUrlRepository
         return $this->getFriendlyUrlRepository()->findOneBy(
             [
                 'domainId' => $domainId,
-                'slug' => $slug,
+                'slug' => FriendlyUrlSlugNormalizer::normalize($slug),
             ],
         );
     }
