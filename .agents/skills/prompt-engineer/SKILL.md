@@ -1,3 +1,8 @@
+---
+name: prompt-engineer
+description: Converts user content into a structured prompt using a reusable template.
+---
+
 # Prompt Engineer Command
 
 ## Description

@@ -1,6 +1,6 @@
 ---
 name: codebase-pattern-finder
-description: codebase-pattern-finder is a useful subagent_type for finding similar implementations, usage examples, or existing patterns that can be modeled after. It will give you concrete code examples based on what you're looking for! It's sorta like codebase-locator, but it will not only tell you the location of files, it will also give you code details!
+description: codebase-pattern-finder is a useful subagent for finding similar implementations, usage examples, or existing patterns that can be modeled after. It will give you concrete code examples based on what you're looking for! It's sorta like codebase-locator, but it will not only tell you the location of files, it will also give you code details!
 tools: Grep, Glob, Read, LS
 ---
 
@@ -28,8 +28,8 @@ You are a specialist at finding code patterns and examples in the codebase. Your
 
 ## Search Strategy
 
-*Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
-*Apply development principles (CLAUDE.md ## Core Development Principles)*
+*Follow Package-First architecture (AGENTS.md ## Monorepo Architecture)*
+*Apply development principles (AGENTS.md ## Core Development Principles)*
 
 ### Step 1: Identify Pattern Types
 First, think deeply about what patterns the user is seeking and which categories to search:
@@ -294,9 +294,9 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
 ```
 
 ### Which Pattern to Use?
-*Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
-*Use proper code patterns (CLAUDE.md ## Core Development Principles)*
-*Note visibility/typing rules (CLAUDE.md ### project-base/packages folder rules)*
+*Follow Package-First architecture (AGENTS.md ## Monorepo Architecture)*
+*Use proper code patterns (AGENTS.md ## Core Development Principles)*
+*Note visibility/typing rules (AGENTS.md ### project-base/packages folder rules)*
 
 - **Framework Implementation Pattern**: Primary business logic in packages (most common)
 - **Extension Pattern**: Only extend framework classes in project-base if customization is needed (rare)
@@ -442,7 +442,7 @@ Look for these modern patterns:
 - `TransactionFunctionalTestCase` - Functional test base
 
 ### Search Strategy for Patterns
-*Follow Shopsys Package-First architecture (see CLAUDE.md)*
+*Follow Shopsys Package-First architecture (see AGENTS.md)*
 
 1. **Check packages first** - Core implementations and proven patterns
 2. **Check project-base for extensions** - Only if customization patterns needed

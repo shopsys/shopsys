@@ -1,3 +1,8 @@
+---
+name: generate-upgrade-notes
+description: Generates structured upgrade notes for a pull request based on diff analysis.
+---
+
 # Generate Upgrade Notes
 
 Generates upgrade notes for Shopsys Platform features when creating pull requests. Analyzes code changes and creates structured upgrade note files following project conventions.
@@ -37,7 +42,7 @@ Use the Task tool with general-purpose agent:
 ```
 Description: "Fetch PR diff and metadata"
 
-Prompt: "You are the PR Diff Fetcher subagent. Read the specification at .claude/agents/pull_request_diff_fetcher.md and follow it exactly.
+Prompt: "You are the PR Diff Fetcher subagent. Read the specification at .agents/skills/pull-request-diff-fetcher/SKILL.md and follow it exactly.
 
 Input: {PR_URL or PR_NUMBER or 'current-branch'}
 
@@ -59,7 +64,7 @@ Use the Task tool with general-purpose agent:
 ```
 Description: "Analyze BC breaks and movements"
 
-Prompt: "You are the Upgrade Notes Analyzer subagent. Read the specification at .claude/agents/upgrade_notes_analyzer.md and follow it exactly.
+Prompt: "You are the Upgrade Notes Analyzer subagent. Read the specification at .agents/skills/upgrade-notes-analyzer/SKILL.md and follow it exactly.
 
 Input:
 - Complete diff content: {from pr-diff-fetcher}
@@ -184,7 +189,7 @@ Ready for inclusion in your PR. These will be combined into UPGRADE-{version}.md
 
 This command uses two specialized subagents (via general-purpose agent with detailed prompts):
 
-### 1. PR Diff Fetcher (`pull_request_diff_fetcher.md`)
+### 1. PR Diff Fetcher (`.agents/skills/pull-request-diff-fetcher/SKILL.md`)
 **Responsibilities:**
 - Check gh CLI availability and authentication
 - Fetch PR metadata (base branch, title, labels)
@@ -192,7 +197,7 @@ This command uses two specialized subagents (via general-purpose agent with deta
 - Fetch commit messages
 - Handle fallback logic
 
-### 2. Upgrade Notes Analyzer (`upgrade_notes_analyzer.md`)
+### 2. Upgrade Notes Analyzer (`.agents/skills/upgrade-notes-analyzer/SKILL.md`)
 **Responsibilities:**
 - Detect feature movements (FIRST!)
 - Identify true deletions vs movements
@@ -253,7 +258,7 @@ The analyzer subagent has comprehensive examples of upgrade note patterns. Key p
 9. **Configuration changes**
 10. **Multiple related changes**
 
-See `.claude/agents/upgrade_notes_analyzer.md` for detailed examples.
+See `.agents/skills/upgrade-notes-analyzer/SKILL.md` for detailed examples.
 
 ## Example Usage Scenarios
 

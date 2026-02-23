@@ -1,3 +1,8 @@
+---
+name: create-plan
+description: Creates detailed implementation plans through an interactive research and specification workflow.
+---
+
 # Implementation Plan
 
 You are tasked with creating detailed implementation plans through an interactive, iterative process. You should be skeptical, thorough, and work collaboratively with the user to produce high-quality technical specifications.
@@ -22,7 +27,7 @@ Please provide:
 
 I'll analyze this information and work with you to create a comprehensive plan.
 
-Tip: You can also invoke this command with a description directly: `/create_plan Add seller description management for multi-domain support`
+Tip: You can also invoke this command with a description directly: `/create-plan Add seller description management for multi-domain support`
 ```
 
 Then wait for the user's input.
@@ -51,8 +56,8 @@ Then wait for the user's input.
     - Use the **codebase-analyzer** agent to understand how the current implementation works
 
    These agents understand Shopsys architecture and will:
-    *Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
-    *Apply development principles (CLAUDE.md ## Core Development Principles)*
+    *Follow Package-First architecture (AGENTS.md ## Monorepo Architecture)*
+    *Apply development principles (AGENTS.md ## Core Development Principles)*
     - Find relevant source files in the monorepo
     - Identify extension patterns (project extends package base classes)
     - Trace data flow through the codebase
@@ -392,10 +397,10 @@ Please review it and let me know:
 
 ## Common Patterns
 
-*Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
-*Apply development principles (CLAUDE.md ## Core Development Principles)*
-*Use proper commands (CLAUDE.md ## Essential Development Commands)*
-*Note visibility/typing rules (CLAUDE.md ### project-base/packages folder rules)*
+*Follow Package-First architecture (AGENTS.md ## Monorepo Architecture)*
+*Apply development principles (AGENTS.md ## Core Development Principles)*
+*Use proper commands (AGENTS.md ## Essential Development Commands)*
+*Note visibility/typing rules (AGENTS.md ### project-base/packages folder rules)*
 
 ### For Database Changes:
 - Create/modify Doctrine entities in framework packages (`packages/framework/src/Model/`)
@@ -479,7 +484,7 @@ tasks = [
 ## Example Interaction Flow
 
 ```
-User: /create_plan
+User: /create-plan
 Assistant: I'll help you create a detailed implementation plan...
 
 User: We need to implement PROD-456 - Add product variant description management

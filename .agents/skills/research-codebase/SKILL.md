@@ -1,3 +1,8 @@
+---
+name: research-codebase
+description: Conducts comprehensive codebase research using parallel specialized subagents.
+---
+
 # Research Codebase
 
 You are tasked with conducting comprehensive research across the codebase to answer user questions by spawning parallel sub-agents and synthesizing their findings.
@@ -23,7 +28,7 @@ Then wait for the user's research query.
     - Break down the user's query into composable research areas
     - Take time to ultrathink about the underlying patterns, connections, and architectural implications the user might be seeking
     - Consider Shopsys architecture implications:
-      *Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
+      *Follow Package-First architecture (AGENTS.md ## Monorepo Architecture)*
       - Framework packages contain core implementations
       - Project-base for configuration and rare extensions
       - Extension relationships: Project extends Package base classes (when needed)
@@ -53,7 +58,7 @@ Then wait for the user's research query.
     - Validate form type options, security attribute patterns, interface names
     - Get file:line references for all patterns to verify against framework conventions
 
-    These agents understand the Shopsys architecture (see CLAUDE.md for Package-First details):
+    These agents understand the Shopsys architecture (see AGENTS.md for Package-First details):
     - They prioritize packages/framework layers for core implementations
     - They check project-base only for configuration and rare extensions
     - They recognize extension patterns (project extends package)
@@ -184,7 +189,7 @@ Then wait for the user's research query.
     - ALWAYS wait for all sub-agents to complete before synthesizing (step 4)
     - ALWAYS gather metadata before writing the document (step 5 before step 6)
     - NEVER write the research document with placeholder values
-- **Shopsys Architecture awareness** (see CLAUDE.md):
+- **Shopsys Architecture awareness** (see AGENTS.md):
     - Prioritize framework packages for core implementations and patterns
     - Check project-base for configuration and rare extensions
     - Look for extension patterns (project extends package)

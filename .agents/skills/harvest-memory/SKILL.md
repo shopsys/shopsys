@@ -1,3 +1,8 @@
+---
+name: harvest-memory
+description: Extracts key learnings from a session and persists them using Memory MCP tools.
+---
+
 # Harvest Memory
 
 You are tasked with reviewing the FULL conversation transcript now in context and extract:

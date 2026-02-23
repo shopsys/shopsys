@@ -28,7 +28,7 @@ You are a specialist at finding WHERE code lives in a codebase. Your job is to l
 
 ## Search Strategy
 
-*Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
+*Follow Package-First architecture (AGENTS.md ## Monorepo Architecture)*
 
 ### Monorepo Navigation Priority
 Always search in this order:
