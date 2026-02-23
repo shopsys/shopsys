@@ -14,7 +14,10 @@ class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
     #[Override]
     public function process(ContainerBuilder $container): void
     {
-        /** @var \Doctrine\ORM\Mapping\Driver\AttributeDriver $attributeReader */
+        /**
+         * @var \Doctrine\ORM\Mapping\Driver\AttributeDriver $attributeReader
+         * @phpstan-ignore symfonyContainer.privateService (Metadata driver service is intentionally fetched in compiler pass)
+         */
         $attributeReader = $container->get('doctrine.orm.default_metadata_driver');
 
         $entityExtensionMap = [];

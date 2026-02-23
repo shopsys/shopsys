@@ -33,6 +33,7 @@ class AdministratorChecker extends InMemoryUserChecker
             throw new LoginWithDefaultPasswordException();
         }
 
+        // @phpstan-ignore arguments.count (Forward compatibility with Symfony 8 parent method signature)
         parent::checkPostAuth($user, $token);
     }
 }

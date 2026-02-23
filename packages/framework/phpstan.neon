@@ -5,12 +5,6 @@ parameters:
     ignoreErrors:
         # Don't forget to add these rules to phpstan.neon in monorepo
         -
-            message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$transport \(Shopsys\\FrameworkBundle\\Model\\Transport\\Transport\) does not accept null\.#'
-            path: %currentWorkingDirectory%/src/Model/Order/Order.php
-        -
-            message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.#'
-            path: %currentWorkingDirectory%/src/Model/Order/Order.php
-        -
             message: '#^Unsafe usage of new static\(\).#'
             path: %currentWorkingDirectory%/src/*
     excludePaths:
