@@ -22,7 +22,7 @@ Please provide:
 
 I'll analyze this information and work with you to create a comprehensive plan.
 
-Tip: You can also invoke this command with a description directly: `/create_plan Add seller description management for multi-domain support`
+Tip: You can also invoke this command with a description directly: `/create-plan Add seller description management for multi-domain support`
 ```
 
 Then wait for the user's input.
@@ -479,7 +479,7 @@ tasks = [
 ## Example Interaction Flow
 
 ```
-User: /create_plan
+User: /create-plan
 Assistant: I'll help you create a detailed implementation plan...
 
 User: We need to implement PROD-456 - Add product variant description management

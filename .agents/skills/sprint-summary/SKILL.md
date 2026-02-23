@@ -10,7 +10,7 @@ I am ready to generate a sprint summary. Please provide:
 1. Path to the CSV file exported from Jira
 2. (Optional) Path where to save the output file
 
-Example: /sprint_summary /home/user/jira-export.csv
+Example: /sprint-summary /home/user/jira-export.csv
 
 Expected CSV columns:
 - Issue key (e.g., SSP-3614)
