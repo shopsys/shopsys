@@ -25,5 +25,8 @@
             <directory>tests/Unit</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <ini name="error_reporting" value="24575"/>
+    </php>
     <source/>
 </phpunit>

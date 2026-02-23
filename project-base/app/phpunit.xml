@@ -25,6 +25,7 @@
     <env name="APP_ENV" value="test"/>
     <env name="APP_DEBUG" value="false"/>
     <ini name="memory_limit" value="4G"/>
+    <ini name="error_reporting" value="24575"/>
   </php>
   <testsuites>
     <testsuite name="Unit">
