@@ -34,7 +34,9 @@ class AddConstraintValidatorsPass implements CompilerPassInterface
                 $validators[$attributes[0]['alias']] = new Reference($id);
             }
 
-            $validators[$definition->getClass()] = new Reference($id);
+            if ($definition->getClass() !== null) {
+                $validators[$definition->getClass()] = new Reference($id);
+            }
             $validators[$id] = new Reference($id);
         }
 

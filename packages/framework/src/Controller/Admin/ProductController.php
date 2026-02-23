@@ -331,7 +331,9 @@ class ProductController extends AdminBaseController
         $products = $this->productFacade->findAllByCatnums($catnums);
 
         foreach ($products as $product) {
-            $response[$product->getCatnum()] = $product->getName();
+            if ($product->getCatnum() !== null) {
+                $response[$product->getCatnum()] = $product->getName();
+            }
         }
 
         return new JsonResponse($response);
