@@ -30,4 +30,6 @@ services:
 
     Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDownloader:
         arguments:
-            - '%shopsys.product_feed.heureka_bundle.heureka_category_feed_url%'
+            $feedUrlsByLocale:
+                cs: '%shopsys.product_feed.heureka_bundle.heureka_category_feed_cz_url%'
+                sk: '%shopsys.product_feed.heureka_bundle.heureka_category_feed_sk_url%'

@@ -9,7 +9,7 @@ class HeurekaCategoryData
     /**
      * @var int|null
      */
-    public $id;
+    public $heurekaId;
 
     /**
      * @var string|null
@@ -25,6 +25,11 @@ class HeurekaCategoryData
      * @var \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public $categories;
+
+    /**
+     * @var string
+     */
+    public $locale;
 
     public function __construct()
     {

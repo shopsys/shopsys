@@ -9,26 +9,38 @@ use SimpleXMLElement;
 
 class HeurekaCategoryDownloader
 {
+    /**
+     * @param array<string, string> $feedUrlsByLocale
+     */
     public function __construct(
-        protected string $heurekaCategoryFeedUrl,
+        protected readonly array $feedUrlsByLocale,
         protected readonly HeurekaCategoryDataFactory $heurekaCategoryDataFactory,
     ) {
     }
 
     /**
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData[]
+     * @return string[]
      */
-    public function getHeurekaCategories(): array
+    public function getSupportedLocales(): array
     {
-        $xmlCategoryDataObjects = $this->loadXml()->xpath('/HEUREKA//CATEGORY[CATEGORY_FULLNAME]');
-
-        return $this->convertToHeurekaCategoriesData($xmlCategoryDataObjects);
+        return array_keys($this->feedUrlsByLocale);
     }
 
-    protected function loadXml(): SimpleXMLElement
+    /**
+     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData[]
+     */
+    public function getHeurekaCategories(string $locale): array
+    {
+        $url = $this->feedUrlsByLocale[$locale];
+        $xmlCategoryDataObjects = $this->loadXml($url)->xpath('/HEUREKA//CATEGORY[CATEGORY_FULLNAME]');
+
+        return $this->convertToHeurekaCategoriesData($xmlCategoryDataObjects, $locale);
+    }
+
+    protected function loadXml(string $url): SimpleXMLElement
     {
         try {
-            return new SimpleXMLElement($this->heurekaCategoryFeedUrl, LIBXML_NOERROR | LIBXML_NOWARNING, true);
+            return new SimpleXMLElement($url, LIBXML_NOERROR | LIBXML_NOWARNING, true);
         } catch (Exception $e) {
             throw new HeurekaCategoryDownloadFailedException($e);
         }
@@ -38,15 +50,15 @@ class HeurekaCategoryDownloader
      * @param \SimpleXMLElement[] $xmlCategoryDataObjects
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData[]
      */
-    protected function convertToHeurekaCategoriesData(array $xmlCategoryDataObjects): array
+    protected function convertToHeurekaCategoriesData(array $xmlCategoryDataObjects, string $locale): array
     {
         $heurekaCategoriesData = [];
 
         foreach ($xmlCategoryDataObjects as $xmlCategoryDataObject) {
             $categoryId = (int)$xmlCategoryDataObject->CATEGORY_ID;
 
-            $heurekaCategoryData = $this->heurekaCategoryDataFactory->create();
-            $heurekaCategoryData->id = $categoryId;
+            $heurekaCategoryData = $this->heurekaCategoryDataFactory->create($locale);
+            $heurekaCategoryData->heurekaId = $categoryId;
             $heurekaCategoryData->name = (string)$xmlCategoryDataObject->CATEGORY_NAME;
             $heurekaCategoryData->fullName = (string)$xmlCategoryDataObject->CATEGORY_FULLNAME;
 

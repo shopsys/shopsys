@@ -11,8 +11,11 @@ class HeurekaCategoryDataFactory
         return new HeurekaCategoryData();
     }
 
-    public function create(): HeurekaCategoryData
+    public function create(string $locale): HeurekaCategoryData
     {
-        return $this->createInstance();
+        $heurekaCategoryData = $this->createInstance();
+        $heurekaCategoryData->locale = $locale;
+
+        return $heurekaCategoryData;
     }
 }

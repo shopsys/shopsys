@@ -155,9 +155,9 @@ class HeurekaFeedItemTest extends TestCase
                 [$this->defaultProduct, $this->defaultDomain->getId(), $categoryStub],
             ]);
 
-        $this->heurekaCategoryFacadeStub->method('findByCategoryId')
+        $this->heurekaCategoryFacadeStub->method('findByCategoryIdAndLocale')
             ->willReturnMap([
-                [1, $heurekaCategoryStub],
+                [1, 'cs', $heurekaCategoryStub],
             ]);
 
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);

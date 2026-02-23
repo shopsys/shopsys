@@ -30,55 +30,70 @@ class HeurekaCategoryDataFixture implements PluginDataFixtureInterface
     #[Override]
     public function load(): void
     {
+        $czechLocale = 'cs';
         $heurekaCategoriesData = [];
 
-        $firsHeurekaCategoryData = $this->heurekaCategoryDataFactory->create();
-        $firsHeurekaCategoryData->id = static::HEUREKA_CATEGORY_ID_FIRST;
-        $firsHeurekaCategoryData->name = 'Autobaterie';
-        $firsHeurekaCategoryData->fullName = 'Heureka.cz | Auto-moto | Autodoplňky | Autobaterie';
+        $firstHeurekaCategoryData = $this->heurekaCategoryDataFactory->create($czechLocale);
+        $firstHeurekaCategoryData->heurekaId = static::HEUREKA_CATEGORY_ID_FIRST;
+        $firstHeurekaCategoryData->name = 'Autobaterie';
+        $firstHeurekaCategoryData->fullName = 'Heureka.cz | Auto-moto | Autodoplňky | Autobaterie';
 
-        $heurekaCategoriesData[] = $firsHeurekaCategoryData;
+        $heurekaCategoriesData[] = $firstHeurekaCategoryData;
 
-        $secondHeurekaCategoryData = $this->heurekaCategoryDataFactory->create();
-        $secondHeurekaCategoryData->id = static::HEUREKA_CATEGORY_ID_SECOND;
+        $secondHeurekaCategoryData = $this->heurekaCategoryDataFactory->create($czechLocale);
+        $secondHeurekaCategoryData->heurekaId = static::HEUREKA_CATEGORY_ID_SECOND;
         $secondHeurekaCategoryData->name = 'Bublifuky';
         $secondHeurekaCategoryData->fullName = 'Heureka.cz | Dětské zboží | Hračky | Hry na zahradu | Bublifuky';
 
         $heurekaCategoriesData[] = $secondHeurekaCategoryData;
 
-        $thirdHeurekaCategoryData = $this->heurekaCategoryDataFactory->create();
-        $thirdHeurekaCategoryData->id = static::HEUREKA_CATEGORY_ID_THIRD;
+        $thirdHeurekaCategoryData = $this->heurekaCategoryDataFactory->create($czechLocale);
+        $thirdHeurekaCategoryData->heurekaId = static::HEUREKA_CATEGORY_ID_THIRD;
         $thirdHeurekaCategoryData->name = 'Cukřenky';
         $thirdHeurekaCategoryData->fullName = 'Heureka.cz | Dům a zahrada | Domácnost | Kuchyně | Stolování | Cukřenky';
 
         $heurekaCategoriesData[] = $thirdHeurekaCategoryData;
 
-        $this->heurekaCategoryFacade->saveHeurekaCategories($heurekaCategoriesData);
+        $this->heurekaCategoryFacade->saveHeurekaCategories($heurekaCategoriesData, $czechLocale);
 
-        $heurekaCategoryFirst = $this->heurekaCategoryFacade->getOneById(static::HEUREKA_CATEGORY_ID_FIRST);
+        $heurekaCategoryFirst = $this->heurekaCategoryFacade->getOneByHeurekaIdAndLocale(
+            static::HEUREKA_CATEGORY_ID_FIRST,
+            $czechLocale,
+        );
         $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId(
             static::CATEGORY_ID_FIRST,
             $heurekaCategoryFirst,
+            $czechLocale,
         );
 
-        $heurekaCategorySecond = $this->heurekaCategoryFacade->getOneById(static::HEUREKA_CATEGORY_ID_SECOND);
+        $heurekaCategorySecond = $this->heurekaCategoryFacade->getOneByHeurekaIdAndLocale(
+            static::HEUREKA_CATEGORY_ID_SECOND,
+            $czechLocale,
+        );
         $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId(
             static::CATEGORY_ID_SECOND,
             $heurekaCategorySecond,
+            $czechLocale,
         );
         $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId(
             static::CATEGORY_ID_THIRD,
             $heurekaCategorySecond,
+            $czechLocale,
         );
 
-        $heurekaCategoryThird = $this->heurekaCategoryFacade->getOneById(static::HEUREKA_CATEGORY_ID_THIRD);
+        $heurekaCategoryThird = $this->heurekaCategoryFacade->getOneByHeurekaIdAndLocale(
+            static::HEUREKA_CATEGORY_ID_THIRD,
+            $czechLocale,
+        );
         $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId(
             static::CATEGORY_ID_FOURTH,
             $heurekaCategoryThird,
+            $czechLocale,
         );
         $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId(
             static::CATEGORY_ID_FIFTH,
             $heurekaCategoryThird,
+            $czechLocale,
         );
     }
 }

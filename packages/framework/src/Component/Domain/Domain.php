@@ -321,4 +321,9 @@ class Domain implements DomainIdsProviderInterface
 
         return true;
     }
+
+    public function anyDomainHasLocale(string $locale): bool
+    {
+        return in_array($locale, $this->getAllLocales(), true);
+    }
 }
