@@ -107,6 +107,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
 
     protected static function getRouterAdapter(): RouterAdapterInterface
     {
+        /** @phpstan-ignore symfonyContainer.serviceNotFound (Service is available in test environment) */
         $router = static::$kernel->getContainer()->get('test.service_container')->get(AdministrationRouter::class);
 
         return new SymfonyRouterAdapter($router);
@@ -122,7 +123,10 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         $uri = static::getRouterAdapter()->generateUri($requestDataSet);
 
         $request = Request::create($uri);
-        /** @var \Symfony\Component\HttpFoundation\Session\SessionFactory $sessionFactory */
+        /**
+         * @var \Symfony\Component\HttpFoundation\Session\SessionFactory $sessionFactory
+         * @phpstan-ignore symfonyContainer.serviceNotFound (Service is available in test environment)
+         */
         $sessionFactory = static::$kernel->getContainer()->get('test.service_container')->get('session.factory');
         /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
         $requestStack = static::$kernel->getContainer()->get(RequestStack::class);

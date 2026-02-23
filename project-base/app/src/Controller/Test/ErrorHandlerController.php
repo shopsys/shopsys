@@ -14,6 +14,7 @@ class ErrorHandlerController extends AbstractController
     #[Route(path: '/error-handler/notice')]
     public function noticeAction(): Response
     {
+        // @phpstan-ignore expr.resultUnused, variable.undefined (Undefined variable access is intentional for testing error handler behavior)
         $undefined[42];
 
         return new Response('');

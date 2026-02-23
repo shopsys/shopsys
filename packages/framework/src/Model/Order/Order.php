@@ -613,10 +613,12 @@ class Order
     public function removeItem(OrderItem $item): void
     {
         if ($item->isTypeTransport()) {
+            // @phpstan-ignore assign.propertyType
             $this->transport = null;
         }
 
         if ($item->isTypePayment()) {
+            // @phpstan-ignore assign.propertyType
             $this->payment = null;
         }
         $this->items->removeElement($item);

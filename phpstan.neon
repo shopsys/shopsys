@@ -10,23 +10,9 @@ parameters:
     ignoreErrors:
         # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
         -
-            message: '#^Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$transport \(Shopsys\\FrameworkBundle\\Model\\Transport\\Transport\) does not accept null\.$#'
-            path: %currentWorkingDirectory%/packages/framework/src/Model/Order/Order.php
-        -
-            message: '#^Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.$#'
-            path: %currentWorkingDirectory%/packages/framework/src/Model/Order/Order.php
-        -
             message: '#^Unsafe usage of new static\(\).#'
             path: %currentWorkingDirectory%/packages/framework/*
         # shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base
-        -
-            # We need to have undefined variable for testing purposes
-            message: '#^Undefined variable: \$undefined$#'
-            path: %currentWorkingDirectory%/project-base/app/src/Controller/Test/ErrorHandlerController.php
-        -
-            # We need to have undefined variable for testing purposes
-            message: '#^Expression "\$undefined\[42\]" on a separate line does not do anything\.$#'
-            path: %currentWorkingDirectory%/project-base/app/src/Controller/Test/ErrorHandlerController.php
         -
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @(param|return) has invalid value (.|\n)+ expected type at offset \d+$#'
@@ -42,15 +28,6 @@ parameters:
         -
             message: '#^Service "test.service_container" is not registered in the container.$#'
             path: %currentWorkingDirectory%/*/tests/*
-        -
-            message: '#^Service "doctrine.orm.default_metadata_driver" is private.$#'
-            path: %currentWorkingDirectory%/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php
-        -
-            message: '#^Service "twig" is private.#'
-            path: %currentWorkingDirectory%/packages/framework/src/Component/FlashMessage/FlashMessageTrait.php
-        -
-            message: '#^Service "test.service_container" is not registered in the container.#'
-            path: %currentWorkingDirectory%/packages/http-smoke-testing/src/HttpSmokeTestCase.php
     excludePaths:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*
