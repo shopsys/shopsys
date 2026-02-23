@@ -28,7 +28,7 @@ class GqlContextInitializer implements EventSubscriberInterface
 
     public function initializeContext(ExecutorArgumentsEvent $event): void
     {
-        $flattened = new RecursiveIteratorIterator(new RecursiveArrayIterator($event->getVariableValue() ?? []));
+        $flattened = new RecursiveIteratorIterator(new RecursiveArrayIterator((array)($event->getVariableValue() ?? []), RecursiveArrayIterator::CHILD_ARRAYS_ONLY));
 
         $event->getContextValue()['args'] = iterator_to_array($flattened, true);
     }
