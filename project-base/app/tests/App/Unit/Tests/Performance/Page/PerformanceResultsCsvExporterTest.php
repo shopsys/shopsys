@@ -96,10 +96,10 @@ class PerformanceResultsCsvExporterTest extends TestCase
 
         // seek to $rowIndex
         for ($i = 0; $i < $lineIndex; $i++) {
-            fgetcsv($handle);
+            fgetcsv($handle, null, ',', '"', '\\');
         }
 
-        return fgetcsv($handle);
+        return fgetcsv($handle, null, ',', '"', '\\');
     }
 
     private function createPerformanceResultsCsvExporter(): PerformanceResultsCsvExporter
