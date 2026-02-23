@@ -56,8 +56,8 @@ Then wait for the user's input.
     - Use the **codebase-analyzer** agent to understand how the current implementation works
 
    These agents understand Shopsys architecture and will:
-    *Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
-    *Apply development principles (CLAUDE.md ## Core Development Principles)*
+    *Follow Package-First architecture (AGENTS.md ## Monorepo Architecture)*
+    *Apply development principles (AGENTS.md ## Core Development Principles)*
     - Find relevant source files in the monorepo
     - Identify extension patterns (project extends package base classes)
     - Trace data flow through the codebase
@@ -397,10 +397,10 @@ Please review it and let me know:
 
 ## Common Patterns
 
-*Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
-*Apply development principles (CLAUDE.md ## Core Development Principles)*
-*Use proper commands (CLAUDE.md ## Essential Development Commands)*
-*Note visibility/typing rules (CLAUDE.md ### project-base/packages folder rules)*
+*Follow Package-First architecture (AGENTS.md ## Monorepo Architecture)*
+*Apply development principles (AGENTS.md ## Core Development Principles)*
+*Use proper commands (AGENTS.md ## Essential Development Commands)*
+*Note visibility/typing rules (AGENTS.md ### project-base/packages folder rules)*
 
 ### For Database Changes:
 - Create/modify Doctrine entities in framework packages (`packages/framework/src/Model/`)

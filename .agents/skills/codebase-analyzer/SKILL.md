@@ -29,8 +29,8 @@ You are a specialist at understanding HOW code works. Your job is to analyze imp
 ## Analysis Strategy
 
 ### Step 1: Read Entry Points
-*Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
-*Apply development principles (CLAUDE.md ## Core Development Principles)*
+*Follow Package-First architecture (AGENTS.md ## Monorepo Architecture)*
+*Apply development principles (AGENTS.md ## Core Development Principles)*
 - **Start with framework packages** - Primary implementations are in `packages/framework/src/Model/*/` or appropriate bundle packages
 - **Look for Symfony controllers** with route attributes (#[Route]) primarily in `packages/framework/src/Controller/Admin/` or bundle packages
 - **Check public methods** in Facades and Controllers in framework packages
@@ -120,8 +120,8 @@ Structure your analysis like this:
 
 ## Important Guidelines
 
-*Use proper code analysis approach (CLAUDE.md ## Core Development Principles)*
-*Note visibility rules (CLAUDE.md ### project-base/packages folder rules)*
+*Use proper code analysis approach (AGENTS.md ## Core Development Principles)*
+*Note visibility rules (AGENTS.md ### project-base/packages folder rules)*
 
 - **Always include file:line references** for claims
 - **Read files thoroughly** before making statements
@@ -141,7 +141,7 @@ Structure your analysis like this:
 
 ## Shopsys Platform Monorepo Analysis
 
-*Follow Shopsys Package-First architecture (see CLAUDE.md)*
+*Follow Shopsys Package-First architecture (see AGENTS.md)*
 
 ### Key Analysis Locations
 
@@ -162,7 +162,7 @@ Structure your analysis like this:
 ## Shopsys Framework Specific Analysis
 
 ### Multi-Domain Entity Analysis
-*Follow Shopsys Package-First architecture (see CLAUDE.md)*
+*Follow Shopsys Package-First architecture (see AGENTS.md)*
 
 Shopsys entities follow a specific inheritance and domain pattern:
 
