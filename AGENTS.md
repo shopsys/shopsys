@@ -6,18 +6,36 @@ This file provides guidance to agents when working with code in this repository.
 
 Shopsys Platform is a **monorepo-based e-commerce platform** with a three-tier architecture:
 
-### Monorepo Structure
-
-- **Framework packages** (glass-box): `/packages/` - Reusable framework bundles and components
-- **Project-base** (open-box): `/project-base/` - Customizable application foundation with Symfony backend
-- **Storefront** (React/Next.js): `/project-base/storefront/` - Modern React frontend with TypeScript
-
 ### Technology Stack
 
 - **Backend**: Symfony PHP application with PostgreSQL, Redis, Elasticsearch
 - **Frontend Admin**: Server-rendered Twig templates with LESS/CSS and JavaScript
 - **Storefront**: Next.js/React with TypeScript, Tailwind CSS, GraphQL, pnpm
 - **API**: GraphQL Frontend API for backend-storefront communication
+
+## Monorepo Architecture
+
+### Package-First Development
+
+**Core Principle**: All new PHP business logic MUST be implemented in `/packages/`, NOT in `/project-base/`.
+
+### Structure
+
+- **`/packages/`** (PRIMARY): Core framework implementation - All PHP classes, business logic, and reusable components
+    - Framework Bundle (`/packages/framework/`) - Main business logic
+    - Frontend API (`/packages/frontend-api/`) - GraphQL API
+    - Other packages - Additional framework components
+- **`/project-base/`** (SECONDARY): Application configuration layer
+    - Configuration files (`config/`)
+    - Rare project-specific extensions of package classes
+    - Storefront React app (`storefront/`)
+
+### Decision Guide
+
+**Code goes in `/packages/`**: Business logic, entities, facades, repositories, controllers, forms
+**Config goes in `/project-base/`**: Service configuration, environment settings, routing
+
+Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/project-base/`
 
 ## Essential Development Commands
 
@@ -34,7 +52,7 @@ Shopsys Platform is a **monorepo-based e-commerce platform** with a three-tier a
 
 **Platform-specific Docker Compose:**
 
-- **macOS**: Use helper scripts `./scripts/mutagen-up.sh`, `./scripts/mutagen-stop.sh` and `./scripts/mutagen-down.sh`
+- **macOS**: Use helper scripts `./scripts/mutagen-up.sh` and `./scripts/mutagen-down.sh`, or manually use `docker compose --profile mutagen` + `mutagen project start/terminate`
 - **Linux/Windows**: Use `docker compose`
 
 **Commands that MUST run in Docker containers:**
@@ -237,6 +255,10 @@ Login credentials for PostgreSQL are set in the `project-base/app/.env` file.
 - Storefront development requires pnpm, backend requires PHP/Composer - both run in Docker containers
 - Framework packages should only be modified via the monorepo, not directly in `/packages/`
 - **Always use proper Docker commands**: `docker compose exec` for PHP/storefront commands, direct execution for git/make/system commands
+
+## Skills / Slash Commands
+
+When the user asks to generate upgrade notes, always use the `/generate-upgrade-notes` command instead of manually analyzing commits.
 
 ## Core Development Principles
 
