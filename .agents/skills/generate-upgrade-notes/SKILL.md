@@ -1,3 +1,8 @@
+---
+name: generate-upgrade-notes
+description: Generates structured upgrade notes for a pull request based on diff analysis.
+---
+
 # Generate Upgrade Notes
 
 Generates upgrade notes for Shopsys Platform features when creating pull requests. Analyzes code changes and creates structured upgrade note files following project conventions.

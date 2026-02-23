@@ -1,3 +1,8 @@
+---
+name: sprint-summary
+description: Generates a Czech sprint summary article from a Jira CSV export.
+---
+
 # Sprint Summary
 
 Generates a sprint summary from a Jira CSV export. Creates a structured article in Czech suitable for Confluence.

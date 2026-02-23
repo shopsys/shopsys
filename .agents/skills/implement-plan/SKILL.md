@@ -1,3 +1,8 @@
+---
+name: implement-plan
+description: Implements an approved plan from docs/plans and tracks phase completion.
+---
+
 # Implement Plan
 
 You are tasked with implementing an approved technical plan from `docs/plans/`. These plans contain phases with specific changes and success criteria.
