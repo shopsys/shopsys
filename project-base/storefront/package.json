@@ -93,7 +93,7 @@
         "@vitejs/plugin-react": "4.2.1",
         "babel-plugin-react-compiler": "1.0.0",
         "concurrently": "~8.2.2",
-        "eslint": "~9.22.0",
+        "eslint": "~9.26.0",
         "eslint-config-prettier": "~9.1.2",
         "eslint-plugin-jsx-a11y": "^6.10.2",
         "eslint-plugin-no-relative-import-paths": "~1.6.1",
