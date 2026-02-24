@@ -39,50 +39,52 @@ class CategorySeoTest extends GraphQlTestCase
     {
         $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION, 1, ReadyCategorySeoMix::class);
 
+        $locale = $this->getLocaleForFirstDomain();
+
         $readyCategorySeoMixLinks = [
             [
-                'name' => t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-od-nejdrazsiho',
+                'name' => t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-from-most-expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
             [
-                'name' => t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-barva-cerna',
+                'name' => t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-color-black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
             [
-                'name' => t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-barva-cervena',
+                'name' => t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-color-red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
             [
-                'name' => t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-led-uhlopricka-30-akce',
+                'name' => t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-led-30-inch-in-sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
             [
-                'name' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-bez-hdmi-akce',
+                'name' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-without-hdmi-in-sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
             [
-                'name' => t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-full-hd-led-usb',
+                'name' => t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-full-hd-led-usb', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
         ];
 
-        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $locale);
 
         $arrayExpected = [
-            'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-            'slug' => '/elektro-bez-hdmi-akce',
-            'seoH1' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-            'seoTitle' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-            'seoMetaDescription' => t('All kind of electronic devices.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+            'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            'slug' => '/' . t('electronics-without-hdmi-in-sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            'seoH1' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            'seoTitle' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            'seoMetaDescription' => t('All kind of electronic devices.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             'bestsellers' => [
-                ['name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                ['name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+                ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+                ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+                ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ],
             'breadcrumb' => [
                 [
-                    'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                     'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $readyCategorySeoMix->getCategory()->getId()]),
                 ],
             ],
@@ -90,7 +92,7 @@ class CategorySeoTest extends GraphQlTestCase
         ];
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategorySeoWithLinks.graphql', [
-            'urlSlug' => '/elektro-bez-hdmi-akce',
+            'urlSlug' => $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoMix->getId()]),
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'category');
 

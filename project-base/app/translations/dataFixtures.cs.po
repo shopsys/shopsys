@@ -28,6 +28,9 @@ msgstr "1920×1080 (Full HD)"
 msgid "2 litre coffeemakers in sale"
 msgstr "2 litrové kávovary v akci"
 
+msgid "2-litre-coffeemakers-in-sale"
+msgstr "2-litrove-kavovary-v-akci"
+
 msgid "2000 DPI"
 msgstr "2000 DPI"
 
@@ -1996,6 +1999,24 @@ msgstr "popis 'Televize a audio ve slevě' seo kategorie"
 msgid "description of TV, audio plasma with HDMI seo category"
 msgstr "popis 'Televize a audie s plasmovou technologií a HDMI' seo kategorie"
 
+msgid "electronics-color-black"
+msgstr "elektro-barva-cerna"
+
+msgid "electronics-color-red"
+msgstr "elektro-barva-cervena"
+
+msgid "electronics-from-most-expensive"
+msgstr "elektro-od-nejdrazsiho"
+
+msgid "electronics-full-hd-led-usb"
+msgstr "elektro-full-hd-led-usb"
+
+msgid "electronics-led-30-inch-in-sale"
+msgstr "elektro-led-uhlopricka-30-akce"
+
+msgid "electronics-without-hdmi-in-sale"
+msgstr "elektro-bez-hdmi-akce"
+
 msgid "fits into VP812x VP9520"
 msgstr "pasuje do VP812x VP9520"
 
@@ -2070,6 +2091,9 @@ msgstr ""
 
 msgid "m³"
 msgstr "m³"
+
+msgid "new-pc-with-usb"
+msgstr "nove-pc-s-usb"
 
 msgid "one-slotted"
 msgstr "jednořádkový"
@@ -2172,6 +2196,18 @@ msgstr "titulek 'Televize a audio ve slevě' seo kategorie"
 
 msgid "title of TV, audio plasma with HDMI seo category"
 msgstr "titulek 'Televize a audio ve slevě' seo kategorie"
+
+msgid "tv-audio-from-cheapest"
+msgstr "televize-audio-nejlevnejsi"
+
+msgid "tv-audio-from-cheapest-b2b"
+msgstr "televize-audio-nejlevnejsi-b2b"
+
+msgid "tv-audio-in-sale"
+msgstr "televize-audio-vyprodej"
+
+msgid "tv-audio-plasma-with-hdmi"
+msgstr "televize-audio-plasma-s-hdmi"
 
 msgid "white"
 msgstr "bílá"
