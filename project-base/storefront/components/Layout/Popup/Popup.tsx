@@ -3,7 +3,7 @@ import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { useLayoutEffect, useRef, useState, useEffect } from 'react';
+import { useLayoutEffect, useRef, useState, useEffect, useEffectEvent } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -50,23 +50,42 @@ export const Popup: React.FC<PopupProps> = ({
         restoreStoredFocus();
     };
 
-    // Focus on popup when it appears
-    useEffect(() => {
+    const onStoreAndFocus = useEffectEvent(() => {
         storeCurrentFocus();
 
         if (popupRef.current) {
             popupRef.current.focus();
         }
-    }, [popupRef]);
+    });
+
+    // Focus on popup when it appears
+    useEffect(() => {
+        onStoreAndFocus();
+    }, []);
 
     useLayoutEffect(() => {
-        if (popupRef.current) {
-            setPopupPositions({
-                left: Math.round(windowDimensions.width / 2 - popupRef.current.offsetWidth / 2 - 20),
-                top: Math.round(windowDimensions.height / 2 - popupRef.current.offsetHeight / 2),
-            });
+        if (!popupRef.current) {
+            return undefined;
         }
-    }, [windowDimensions, children]);
+
+        const updatePosition = () => {
+            if (popupRef.current) {
+                setPopupPositions({
+                    left: Math.round(windowDimensions.width / 2 - popupRef.current.offsetWidth / 2 - 20),
+                    top: Math.round(windowDimensions.height / 2 - popupRef.current.offsetHeight / 2),
+                });
+            }
+        };
+
+        updatePosition();
+
+        const observer = new ResizeObserver(updatePosition);
+        observer.observe(popupRef.current);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [windowDimensions]);
 
     useKeypress('Escape', () => handleClosePopup());
 
@@ -109,7 +128,7 @@ export const Popup: React.FC<PopupProps> = ({
                         }}
                     >
                         <div className="mb-3 flex justify-between">
-                            <span className="h3 outline-none" tabIndex={-1}>
+                            <span className="h3 outline-hidden" tabIndex={-1}>
                                 {title}
                             </span>
 

@@ -119,7 +119,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
 
                         <h3
                             className={twJoin(
-                                'font-secondary group-hover:text-link-default grow overflow-hidden font-semibold break-words group-hover:underline',
+                                'font-secondary group-hover:text-link-default grow overflow-hidden font-semibold wrap-break-word group-hover:underline',
                                 textSize === 'xs' ? 'text-xs lg:text-xs' : 'text-sm lg:text-sm',
                             )}
                         >

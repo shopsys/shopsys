@@ -70,7 +70,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
             <AnimatePresence initial={false}>
                 {hasChildren && isMenuOpenedDelayed && (
                     <AnimateNavigationMenu
-                        className="z-menu bg-background-default absolute right-0 left-0 !grid grid-cols-4 gap-11 px-10 shadow-md"
+                        className="z-menu bg-background-default absolute right-0 left-0 grid! grid-cols-4 gap-11 px-10 shadow-md"
                         disableAnimation={isAnimationDisabled || !!shouldReduceMotion}
                     >
                         <NavigationItemColumn

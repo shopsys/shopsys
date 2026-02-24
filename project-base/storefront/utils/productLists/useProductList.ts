@@ -10,7 +10,7 @@ import {
     useProductListQuery,
 } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
 import { TypeProductListTypeEnum } from 'graphql/types';
-import { useEffect } from 'react';
+import { useEffect, useEffectEvent } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { useClient } from 'urql';
@@ -74,11 +74,15 @@ export const useProductList = (
 
     useEffect(() => {
         updatePageLoadingState({ isProductListHydrated: true });
-    }, []);
+    }, [updatePageLoadingState]);
+
+    const onUpdateProductListUuid = useEffectEvent((uuid: string) => {
+        updateProductListUuid(uuid);
+    });
 
     useEffect(() => {
         if (productListData?.productList?.uuid) {
-            updateProductListUuid(productListData.productList.uuid);
+            onUpdateProductListUuid(productListData.productList.uuid);
         }
     }, [productListData?.productList?.uuid]);
 

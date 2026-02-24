@@ -1,5 +1,5 @@
 import { NextRouter, useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesDestinations } from 'types/friendlyUrl';
 import { getPublicConfigProperty } from 'utils/config/getNextConfig';
@@ -44,14 +44,16 @@ export const useDeferredRender = (place: DeferPlace) => {
         if (!shouldRender) {
             const defer = getDeferByPageAndPlace(page as DeferPage, place);
             timer = setTimeout(() => {
-                setShouldRender(true);
+                startTransition(() => {
+                    setShouldRender(true);
+                });
             }, defer);
         }
 
         return () => {
             clearTimeout(timer);
         };
-    }, []);
+    }, [page, place, shouldRender]);
 
     return shouldRender;
 };
@@ -81,6 +83,7 @@ const CATEGORY_PAGE_DEFER_ORDER = [
     'footer',
     'product_list',
     'filter_panel',
+    'selected_filters',
     'sorting_bar',
     'recommended_products',
     'last_visited',

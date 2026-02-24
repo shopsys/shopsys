@@ -35,7 +35,7 @@ export const CartStickyBar: FC<CartStickyBarProps> = ({ originalButtonRef }) => 
 
     return (
         <div
-            className={`z-above bg-background-default fixed right-0 bottom-0 left-0 transform shadow-[0_-4px_16px_rgba(0,0,0,0.1)] transition-transform duration-300 ${
+            className={`z-above bg-background-default fixed right-0 bottom-0 left-0 shadow-[0_-4px_16px_rgba(0,0,0,0.1)] transition-transform duration-300 ${
                 isEndOfList ? 'translate-y-full' : 'translate-y-0'
             }`}
         >

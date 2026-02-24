@@ -103,7 +103,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
 
             <AnimatePresence initial={false}>
                 {((hasChildren && isFirstLevel) || isOpen) && (
-                    <AnimateCollapseDiv className="!block">
+                    <AnimateCollapseDiv className="block!">
                         <div
                             className={twJoin(
                                 isFirstLevel && level1ChildrenWrapperTwClassName,

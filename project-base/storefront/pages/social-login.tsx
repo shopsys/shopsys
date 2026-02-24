@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useEffectEvent } from 'react';
 import { AuthLoadingStatus } from 'store/slices/createAuthLoadingSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { useHandleActionsAfterLogin } from 'utils/auth/useLogin';
@@ -14,7 +14,7 @@ const SocialLoginPage: FC<ServerSidePropsType> = () => {
     const handleActionsAfterLogin = useHandleActionsAfterLogin();
     const router = useRouter();
 
-    useEffect(() => {
+    const onSocialLogin = useEffectEvent(() => {
         const replaceUrl = getStringFromUrlQuery(query.redirect ?? '/');
 
         if (query.exceptionType === 'socialNetworkLoginException') {
@@ -28,6 +28,10 @@ const SocialLoginPage: FC<ServerSidePropsType> = () => {
             handleActionsAfterLogin(query.showCartMergeInfo === 'true', replaceUrl);
             updateUserEntryState(query.isRegistration === 'true' ? 'registration' : 'login');
         }
+    });
+
+    useEffect(() => {
+        onSocialLogin();
     }, []);
 
     return null;

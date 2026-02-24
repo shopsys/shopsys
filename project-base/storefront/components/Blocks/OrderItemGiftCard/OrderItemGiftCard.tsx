@@ -31,7 +31,7 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
 
     return (
         <li className="bg-background-more font-secondary relative flex flex-col gap-1 rounded-xl p-4">
-            <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-gradient-to-r from-purple-600 to-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow-md">
+            <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-linear-to-r from-purple-600 to-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow-md">
                 {t('Gift')}
             </div>
 

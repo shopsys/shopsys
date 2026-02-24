@@ -2,7 +2,7 @@ import { SearchProductsContent } from './SearchProductsContent';
 import { useSearchProductsData } from './searchUtils';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
-import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
+import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -46,7 +46,7 @@ export const SearchProducts: FC = () => {
                     ref={paginationScrollTargetRef}
                 >
                     <div className="vl:flex-col flex flex-col-reverse">
-                        <FilterSelectedParameters filterOptions={searchProductsData.productFilterOptions} />
+                        <DeferredFilterSelectedParameters filterOptions={searchProductsData.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar
                             sorting={searchProductsData.orderingMode}

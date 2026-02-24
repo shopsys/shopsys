@@ -1,7 +1,7 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getCookies } from 'cookies-next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useEffectEvent } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { getCookieName } from 'utils/cookies/cookieNaming';
@@ -22,6 +22,10 @@ export const useAuthLoader = () => {
     const slug = getUrlWithoutGetParameters(router.asPath);
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
 
+    const onTokenMismatchReload = useEffectEvent(() => {
+        router.reload();
+    });
+
     useEffect(() => {
         const cookies = getCookies({ secure: getIsHttps() });
         const accessTokenName = getCookieName('accessToken', domainConfig.domainId);
@@ -29,11 +33,11 @@ export const useAuthLoader = () => {
         const isWithUserTokens = !!(cookies[accessTokenName] && cookies[refreshTokenName]);
 
         if ((isUserLoggedIn && !isWithUserTokens) || (!isUserLoggedIn && isWithUserTokens)) {
-            router.reload();
+            onTokenMismatchReload();
         }
-    }, [slug, domainConfig.domainId]);
+    }, [slug, domainConfig.domainId, isUserLoggedIn]);
 
-    useEffect(() => {
+    const onShowAuthToasts = useEffectEvent(() => {
         if (typeof authLoading === 'object' && authLoading?.authLoadingStatus === 'social-login-fail') {
             if (authLoading.socialNetworkType) {
                 showErrorMessage(
@@ -66,5 +70,9 @@ export const useAuthLoader = () => {
         }
 
         updateAuthLoadingState(null);
+    });
+
+    useEffect(() => {
+        onShowAuthToasts();
     }, []);
 };

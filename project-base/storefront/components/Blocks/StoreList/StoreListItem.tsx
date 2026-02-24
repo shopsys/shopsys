@@ -19,14 +19,16 @@ type StoreListItemProps = {
 };
 
 export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(isSelected);
     const { t } = useTranslation();
     const itemRef = useRef<HTMLDivElement>(null);
     const storeInfoId = `store-info-${store.slug.replace(/\//g, '-')}`;
+    const [prevIsSelected, setPrevIsSelected] = useState(isSelected);
 
-    useEffect(() => {
+    if (isSelected !== prevIsSelected) {
+        setPrevIsSelected(isSelected);
         setIsExpanded(isSelected);
-    }, [isSelected]);
+    }
 
     useEffect(() => {
         if (isExpanded && itemRef.current) {
@@ -101,16 +103,13 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                     </div>
                 </div>
 
-                <ArrowIcon
-                    aria-hidden="true"
-                    className={`size-5 motion-safe:transform ${isExpanded ? 'rotate-180' : ''}`}
-                />
+                <ArrowIcon aria-hidden="true" className={`size-5 ${isExpanded ? 'rotate-180' : ''}`} />
             </div>
 
             <div id={storeInfoId}>
                 <AnimatePresence initial={false}>
                     {isExpanded && (
-                        <AnimateCollapseDiv className="mt-2.5 !block" keyName={storeInfoId}>
+                        <AnimateCollapseDiv className="mt-2.5 block!" keyName={storeInfoId}>
                             {!!store.specialMessage && (
                                 <InfoItem>
                                     <Infobox message={store.specialMessage} />

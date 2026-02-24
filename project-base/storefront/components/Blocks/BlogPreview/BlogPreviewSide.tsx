@@ -21,7 +21,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
             {articles.map((article) => (
                 <div key={article.uuid} className="vl:flex-row flex max-w-[410px] min-w-96 snap-start flex-col gap-5">
                     <ArticleLink href={article.link} tabIndex={-1} title={t('Blog article')}>
-                        <div className="vl:h-24 vl:w-36 aspect-video w-full flex-shrink-0 overflow-hidden rounded-xl">
+                        <div className="vl:h-24 vl:w-36 aspect-video w-full shrink-0 overflow-hidden rounded-xl">
                             <Image
                                 alt={article.mainImage?.name || article.name}
                                 className="size-full object-cover"

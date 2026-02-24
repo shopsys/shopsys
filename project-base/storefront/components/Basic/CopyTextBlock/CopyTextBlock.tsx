@@ -100,7 +100,7 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy, onIgnore }) 
     return (
         <div className="bg-background-default flex max-h-96 flex-col gap-3 overflow-auto rounded">
             <div className="px-3 pt-3">
-                <p className="text-text-error break-words whitespace-pre-line">
+                <p className="text-text-error wrap-break-word whitespace-pre-line">
                     {errorCode !== null && <span>{t('Error {{ errorCode }}', { errorCode })}: </span>}
                     {message}
                 </p>
@@ -111,7 +111,7 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy, onIgnore }) 
                     <button
                         type="button"
                         className={twMergeCustom(
-                            'border-border-less bg-background-more hover:text-button-inverted-text-hovered flex w-full cursor-pointer items-center justify-between rounded-md border p-2 text-left text-sm transition-[border-radius] duration-200 outline-none',
+                            'border-border-less bg-background-more hover:text-button-inverted-text-hovered flex w-full cursor-pointer items-center justify-between rounded-md border p-2 text-left text-sm outline-hidden transition-[border-radius] duration-200',
                             isDetailsExpanded && 'rounded-b-none',
                         )}
                         onClick={() => setIsDetailsExpanded(!isDetailsExpanded)}
@@ -132,7 +132,7 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy, onIgnore }) 
                         )}
                     >
                         <div className="overflow-hidden">
-                            <pre className="border-border-less bg-background-more overflow-auto rounded-b-md border-x border-b p-3 text-xs break-words whitespace-pre-wrap">
+                            <pre className="border-border-less bg-background-more overflow-auto rounded-b-md border-x border-b p-3 text-xs wrap-break-word whitespace-pre-wrap">
                                 {fullDetails}
                             </pre>
                         </div>

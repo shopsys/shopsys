@@ -56,7 +56,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         <AnimatePresence initial={false}>
                             {!!transport && (
                                 <AnimateCollapseDiv
-                                    className="relative !block"
+                                    className="relative block!"
                                     disableAnimation={transports.length === 1 ? true : false}
                                     keyName="transport-selected"
                                 >
@@ -74,7 +74,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         <AnimatePresence initial={false}>
                             {!transport && (
                                 <AnimateCollapseDiv
-                                    className="relative !block"
+                                    className="relative block!"
                                     disableAnimation={transports.length === 1 ? true : false}
                                     keyName="transport-list"
                                 >
@@ -94,7 +94,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
                 <AnimatePresence initial={false}>
                     {!!transport && transports.length > 1 && (
-                        <AnimateCollapseDiv className="relative !flex flex-col" keyName="transport-reset">
+                        <AnimateCollapseDiv className="relative flex! flex-col" keyName="transport-reset">
                             <ResetButton
                                 text={t('Change transport type')}
                                 tid={TIDs.reset_transport_button}
@@ -108,7 +108,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
             <AnimatePresence initial={false}>
                 {transport !== null && (
                     <AnimateCollapseDiv
-                        className="relative mt-12 !flex flex-col"
+                        className="relative mt-12 flex! flex-col"
                         keyName="payments-list"
                         tid={TIDs.pages_order_payment}
                     >
@@ -125,7 +125,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 <AnimatePresence initial={false}>
                                     {!!payment && (
                                         <AnimateCollapseDiv
-                                            className="relative !block"
+                                            className="relative block!"
                                             disableAnimation={transport.payments.length === 1 ? true : false}
                                             keyName="payment-selected"
                                         >
@@ -137,7 +137,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 <AnimatePresence initial={false}>
                                     {!payment && (
                                         <AnimateCollapseDiv
-                                            className="relative !block"
+                                            className="relative block!"
                                             disableAnimation={transport.payments.length === 1 ? true : false}
                                             keyName="payment-list"
                                         >
@@ -156,7 +156,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
                         <AnimatePresence initial={false}>
                             {payment !== null && transport.payments.length > 1 && (
-                                <AnimateCollapseDiv className="relative !flex flex-col" keyName="payment-reset">
+                                <AnimateCollapseDiv className="relative flex! flex-col" keyName="payment-reset">
                                     <ResetButton
                                         text={t('Change payment type')}
                                         tid={TIDs.reset_payment_button}

@@ -1,6 +1,6 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useEffectEvent, useRef, useState } from 'react';
 import InfiniteScroll, { Props as InfiniteScrollProps } from 'react-infinite-scroll-component';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
@@ -32,37 +32,40 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
 }: SelectListProps<T> & FunctionComponentProps) => {
     const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
     const listRef = useRef<HTMLUListElement>(null);
+    const optionsLength = options.length;
 
     useFocusTrap(listRef);
+
+    const onKeyDown = useEffectEvent((k: KeyboardEvent) => {
+        if (k.key === 'Escape') {
+            setIsOpen?.(false);
+            setFocusedIndex(null);
+            return;
+        }
+
+        if (k.key === 'ArrowDown' && focusedIndex === null && optionsLength > 0) {
+            k.preventDefault();
+            setFocusedIndex(0);
+        }
+
+        if (k.key === 'ArrowUp' && focusedIndex === null && optionsLength > 0) {
+            k.preventDefault();
+            setFocusedIndex(optionsLength - 1);
+        }
+    });
 
     useEffect(() => {
         if (focusedIndex !== null && listRef.current && focusedIndex < listRef.current.children.length) {
             const focusedElement = listRef.current.children[focusedIndex] as HTMLElement;
             focusedElement.focus();
         }
-
-        const handleFirstKeyboardPress = (k: KeyboardEvent) => {
-            if (k.key === 'Escape') {
-                setIsOpen?.(false);
-                setFocusedIndex(null);
-                return;
-            }
-
-            if (k.key === 'ArrowDown' && focusedIndex === null && options.length > 0) {
-                k.preventDefault();
-                setFocusedIndex(0);
-            }
-
-            if (k.key === 'ArrowUp' && focusedIndex === null && options.length > 0) {
-                k.preventDefault();
-                setFocusedIndex(options.length - 1);
-            }
-        };
-
-        document.addEventListener('keydown', handleFirstKeyboardPress);
-
-        return () => document.removeEventListener('keydown', handleFirstKeyboardPress);
     }, [focusedIndex]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', onKeyDown);
+
+        return () => document.removeEventListener('keydown', onKeyDown);
+    }, []);
 
     const handleKeyDown = (k: React.KeyboardEvent<Element>) => {
         if (options.length === 0) {
@@ -127,7 +130,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     if (infinityScrollConfig && infinityScrollConfig.dataLength >= infinityScrollConfig.pageSize) {
         return (
             <AnimateCollapseDiv
-                className="z-above border-input-border-default bg-background-default hover:border-input-border-hovered absolute right-0 left-0 !block rounded-b-md border-2 border-t-0"
+                className="z-above border-input-border-default bg-background-default hover:border-input-border-hovered absolute right-0 left-0 block! rounded-b-md border-2 border-t-0"
                 keyName={tid}
             >
                 <InfiniteScroll
@@ -156,10 +159,10 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
         <AnimateCollapseDiv
             keyName={tid}
             className={twMergeCustom(
-                '!overflow-y-auto',
-                'z-above bg-background-default absolute right-0 left-0 !block max-h-[144px] rounded-b-md lg:max-h-[200px]',
+                'overflow-y-auto!',
+                'z-above bg-background-default absolute right-0 left-0 block! max-h-36 rounded-b-md lg:max-h-[200px]',
                 'border-input-border-default hover:border-input-border-hovered border-2 border-t-0',
-                '[&::-webkit-scrollbar-thumb]:bg-input-placeholder-default [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full',
+                '[&::-webkit-scrollbar-thumb]:bg-input-placeholder-default [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full',
                 listClassName,
             )}
         >

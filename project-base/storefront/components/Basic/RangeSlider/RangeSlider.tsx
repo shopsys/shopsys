@@ -52,15 +52,26 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     const { t } = useTranslation();
     const step = getStep(min, max);
 
-    const [minValueInput, setMinValueInput] = useState<number | ''>(min);
-    const [minValueThumb, setMinValueThumb] = useState(min);
+    const clampedMinValue = Math.max(min, Math.min(minValue, maxValue));
+    const clampedMaxValue = Math.min(max, Math.max(maxValue, minValue));
 
-    const [maxValueInput, setMaxValueInput] = useState<number | ''>(max);
-    const [maxValueThumb, setMaxValueThumb] = useState(max);
+    const [minValueInput, setMinValueInput] = useState<number | ''>(clampedMinValue);
+    const [minValueThumb, setMinValueThumb] = useState(clampedMinValue);
+
+    const [maxValueInput, setMaxValueInput] = useState<number | ''>(clampedMaxValue);
+    const [maxValueThumb, setMaxValueThumb] = useState(clampedMaxValue);
 
     const range = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    const [prevSyncProps, setPrevSyncProps] = useState({ minValue, maxValue, min, max });
+    if (
+        minValue !== prevSyncProps.minValue ||
+        maxValue !== prevSyncProps.maxValue ||
+        min !== prevSyncProps.min ||
+        max !== prevSyncProps.max
+    ) {
+        setPrevSyncProps({ minValue, maxValue, min, max });
+
         if (minValue < min) {
             setMinValueThumb(min);
             setMinValueInput(min);
@@ -71,9 +82,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
             setMinValueThumb(minValue);
             setMinValueInput(minValue);
         }
-    }, [maxValue, minValue, min]);
 
-    useEffect(() => {
         if (maxValue > max) {
             setMaxValueThumb(max);
             setMaxValueInput(max);
@@ -84,11 +93,11 @@ export const RangeSlider: FC<RangeSliderProps> = ({
             setMaxValueThumb(maxValue);
             setMaxValueInput(maxValue);
         }
-    }, [maxValue, minValue, max]);
-
-    const getPercent = (value: number) => Math.round(((value - min) / (max - min)) * 100);
+    }
 
     useEffect(() => {
+        const getPercent = (value: number) => Math.round(((value - min) / (max - min)) * 100);
+
         const minPercent = getPercent(minValueThumb);
         const maxPercent = getPercent(maxValueThumb);
 
@@ -96,7 +105,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
             range.current.style.left = `${minPercent}%`;
             range.current.style.width = `${maxPercent - minPercent}%`;
         }
-    }, [getPercent, maxValueThumb, minValueThumb]);
+    }, [min, max, minValueThumb, maxValueThumb]);
 
     const onBlurMinHandler: FocusEventHandler<HTMLInputElement> = (event) => {
         const value = parseFloat(event.currentTarget.value);

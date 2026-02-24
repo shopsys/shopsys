@@ -78,9 +78,9 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                     'disabled:border-input-border-disabled disabled:bg-input-bg-disabled disabled:text-input-text-disabled',
                     !hasError && 'hover:border-input-border-hovered hover:text-input-text-hovered',
                     !hasError && 'focus:border-input-border-active focus:text-input-text-active',
-                    '[&:-internal-autofill-selected]:!bg-input-bg-default [&:-webkit-autofill]:!bg-input-bg-default [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!shadow-inner',
-                    '[&:-webkit-autofill]:hover:!bg-input-fill [&:-webkit-autofill]:hover:!shadow-inner',
-                    '[&:-webkit-autofill]:focus:!bg-input-fill [&:-webkit-autofill]:focus:!shadow-inner',
+                    '[&:-internal-autofill-selected]:bg-input-bg-default! [&:-webkit-autofill]:bg-input-bg-default! [&:-internal-autofill-selected]:shadow-inner! [&:-webkit-autofill]:shadow-inner!',
+                    '[&:-webkit-autofill]:hover:bg-input-fill! [&:-webkit-autofill]:hover:shadow-inner!',
+                    '[&:-webkit-autofill]:focus:bg-input-fill! [&:-webkit-autofill]:focus:shadow-inner!',
                     inputSize === 'small' ? 'text-small h-12' : 'h-14',
                     hasError && 'border-input-border-error bg-input-bg-default shadow-none',
                     hasWarning &&

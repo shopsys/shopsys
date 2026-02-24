@@ -28,7 +28,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
                 role="button"
                 tabIndex={0}
                 className={twMergeCustom(
-                    'group min-size-12 rounded-md outline-none lg:relative lg:flex',
+                    'group min-size-12 rounded-md outline-hidden lg:relative lg:flex',
                     isActive && 'z-aboveOverlay',
                 )}
                 onMouseEnter={() => isDesktop && setIsActive(true)}

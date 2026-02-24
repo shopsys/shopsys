@@ -35,7 +35,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
             className={twMergeCustom(
                 'text-input-text-default group relative flex w-full cursor-pointer items-center gap-2 text-sm font-semibold',
                 disabled && 'text-input-text-disabled cursor-no-drop opacity-60',
-                'rounded-sm outline-none peer-focus-visible:bg-orange-500',
+                'rounded-sm outline-hidden peer-focus-visible:bg-orange-500',
             )}
         >
             <ColorPreview

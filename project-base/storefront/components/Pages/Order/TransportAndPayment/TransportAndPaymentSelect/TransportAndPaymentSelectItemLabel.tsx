@@ -86,7 +86,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                             <AnimatePresence initial={false}>
                                 {isActive && (
                                     <AnimateCollapseDiv
-                                        className="!block"
+                                        className="block!"
                                         keyName="store-opening-hours"
                                         onAnimationStart={() => {
                                             setTimeout(() => {

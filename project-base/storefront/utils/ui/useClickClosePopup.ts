@@ -1,6 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useEffectEvent } from 'react';
 
 const useClickClosePopup = (refs: React.RefObject<HTMLElement | null>[], onOutsideClick: () => void) => {
+    const onOutsideClickEvent = useEffectEvent(() => {
+        onOutsideClick();
+    });
+
     useEffect(() => {
         const handleDocumentClick = (event: MouseEvent) => {
             const isClickedInsideRefs = refs.some((ref) => {
@@ -8,7 +12,7 @@ const useClickClosePopup = (refs: React.RefObject<HTMLElement | null>[], onOutsi
             });
 
             if (!isClickedInsideRefs) {
-                onOutsideClick();
+                onOutsideClickEvent();
             }
         };
 
@@ -17,7 +21,7 @@ const useClickClosePopup = (refs: React.RefObject<HTMLElement | null>[], onOutsi
         return () => {
             window.removeEventListener('click', handleDocumentClick);
         };
-    }, [refs, onOutsideClick]);
+    }, [refs]);
 };
 
 export default useClickClosePopup;

@@ -31,7 +31,7 @@ import { SkeletonPageStores } from './SkeletonPageStores';
 import { SkeletonPageTransportAndPayment } from './SkeletonPageTransportAndPayment';
 import { SkeletonPageUserConsent } from './SkeletonPageUserConsent';
 import { SkeletonPageWishlist } from './SkeletonPageWishlist';
-import { ComponentType, useEffect, useState } from 'react';
+import { ComponentType, useEffect } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { SkeletonEnum } from 'types/skeletons';
@@ -88,24 +88,20 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
     const redirectPageType = useSessionStore((s) => s.redirectPageType);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const pageType = redirectPageType ?? pageTypeOverride;
-    const [showSkeleton, setShowSkeleton] = useState(false);
 
     useEffect(() => {
         if (pageTypeOverride) {
             updatePageLoadingState({ redirectPageType: pageTypeOverride });
         }
-    }, [pageTypeOverride]);
+    }, [pageTypeOverride, updatePageLoadingState]);
 
     useEffect(() => {
         if (isPageLoading) {
             window.scrollTo({ top: 0 });
-            setShowSkeleton(true);
-        } else {
-            setShowSkeleton(false);
         }
     }, [isPageLoading]);
 
-    if (!showSkeleton && !isFetchingData) {
+    if (!isPageLoading && !isFetchingData) {
         return <div className="animate-in">{children}</div>;
     }
 

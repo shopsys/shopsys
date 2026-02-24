@@ -104,7 +104,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 placeholder={placeholder}
                                 value={comboBoxConfig.searchValue}
                                 className={twJoin(
-                                    'h-full w-full bg-transparent px-3 !text-base outline-hidden',
+                                    'h-full w-full bg-transparent px-3 text-base! outline-hidden',
                                     'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}

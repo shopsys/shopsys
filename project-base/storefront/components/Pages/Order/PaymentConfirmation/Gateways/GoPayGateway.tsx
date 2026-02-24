@@ -6,7 +6,7 @@ import { usePayOrderMutation } from 'graphql/requests/orders/mutations/PayOrderM
 import { TypeGoPayCreatePaymentSetup } from 'graphql/types';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { useEffect, useRef, useState } from 'react';
+import { startTransition, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -97,7 +97,14 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
                     setInitiatedPaymentGate(false);
                 }
             } else if (attempt < 10) {
-                setTimeout(() => attemptCheckout(attempt + 1), Math.min(100 * (attempt + 1), 500));
+                setTimeout(
+                    () => {
+                        startTransition(() => {
+                            attemptCheckout(attempt + 1);
+                        });
+                    },
+                    Math.min(100 * (attempt + 1), 500),
+                );
             } else {
                 showErrorMessage(t('Payment gateway failed to load. Please refresh the page.'));
                 setInitiatedPaymentGate(false);
@@ -116,12 +123,16 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
         setInitiatedPaymentGate(false);
     };
 
+    const onPayOrder = useEffectEvent(async () => {
+        await handlePayOrder();
+    });
+
     useEffect(() => {
         if (!requiresAction && autoTriggeredOrderRef.current !== orderUuid) {
             autoTriggeredOrderRef.current = orderUuid;
-            handlePayOrder();
+            onPayOrder();
         }
-    }, [requiresAction, handlePayOrder, orderUuid]);
+    }, [requiresAction, orderUuid]);
 
     return (
         <>

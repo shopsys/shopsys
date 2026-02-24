@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
-import { useEffect, ReactNode } from 'react';
+import { useEffect, useEffectEvent, ReactNode } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 
 export const RouteAccessibilityManager: FC<{ children: ReactNode }> = ({ children }) => {
     const router = useRouter();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
 
-    const handleRouteChangeStart = (_url: string, options: { shallow: boolean }) => {
+    const handleRouteChangeStart = useEffectEvent((_url: string, options: { shallow: boolean }) => {
         const { shallow } = options;
 
         if (shallow) {
@@ -17,9 +17,9 @@ export const RouteAccessibilityManager: FC<{ children: ReactNode }> = ({ childre
             hadClientSideNavigation: true,
             isPageLoading: true,
         });
-    };
+    });
 
-    const handleRouteChangeComplete = (_url: string, options: { shallow: boolean }) => {
+    const handleRouteChangeComplete = useEffectEvent((_url: string, options: { shallow: boolean }) => {
         const { shallow } = options;
 
         if (shallow) {
@@ -29,9 +29,9 @@ export const RouteAccessibilityManager: FC<{ children: ReactNode }> = ({ childre
         updatePageLoadingState({
             isPageLoading: false,
         });
-    };
+    });
 
-    const handleRouteChangeError = (_err: Error, _url: string, options: { shallow: boolean }) => {
+    const handleRouteChangeError = useEffectEvent((_err: Error, _url: string, options: { shallow: boolean }) => {
         const { shallow } = options;
 
         if (shallow) {
@@ -41,7 +41,7 @@ export const RouteAccessibilityManager: FC<{ children: ReactNode }> = ({ childre
         updatePageLoadingState({
             isPageLoading: false,
         });
-    };
+    });
 
     useEffect(() => {
         router.events.on('routeChangeStart', handleRouteChangeStart);
@@ -53,7 +53,7 @@ export const RouteAccessibilityManager: FC<{ children: ReactNode }> = ({ childre
             router.events.off('routeChangeComplete', handleRouteChangeComplete);
             router.events.off('routeChangeError', handleRouteChangeError);
         };
-    }, [router.events, handleRouteChangeStart, handleRouteChangeComplete, handleRouteChangeError]);
+    }, [router.events]);
 
     return <>{children}</>;
 };

@@ -167,6 +167,7 @@ test:storefront-acceptance:
 #            -   GROUP: "order"
 #            -   GROUP: "transportAndPayment"
 #            -   GROUP: "visits"
+#            -   GROUP: "ssr"
 #            -   GROUP: "others"
 
     artifacts:
@@ -235,6 +236,7 @@ regenerate-storefront-screenshots:
     #            - GROUP: "order"
     #            - GROUP: "transportAndPayment"
     #            - GROUP: "visits"
+    #            - GROUP: "ssr"
     #            - GROUP: "others"
     artifacts:
         paths:

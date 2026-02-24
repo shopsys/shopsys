@@ -36,7 +36,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
 }) => {
     const menuIconicSubItemLinkTwClass = twJoin(
         'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default cursor-pointer w-full rounded-md',
-        isActive && '!text-text-accent',
+        isActive && 'text-text-accent!',
     );
 
     if (href) {
@@ -58,7 +58,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     return (
         <button
             aria-label={ariaLabel}
-            className={twJoin(menuIconicSubItemLinkTwClass, 'outline-none')}
+            className={twJoin(menuIconicSubItemLinkTwClass, 'outline-hidden')}
             data-tid={tid}
             tabIndex={0}
             onClick={onClick}

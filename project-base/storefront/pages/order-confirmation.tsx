@@ -24,7 +24,7 @@ import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEve
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import Trans from 'next-translate/Trans';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useEffectEvent, useState } from 'react';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -72,8 +72,12 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
         url,
     );
 
-    useEffect(() => {
+    const onFetchCart = useEffectEvent(() => {
         fetchCart();
+    });
+
+    useEffect(() => {
+        onFetchCart();
     }, []);
 
     if (!orderData?.order) {

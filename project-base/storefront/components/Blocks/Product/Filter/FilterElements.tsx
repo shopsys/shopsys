@@ -35,8 +35,8 @@ export const FilterGroupTitle: FC<{
 };
 
 export const FilterGroupContent: FC<{ keyName?: string; id?: string }> = ({ children, keyName, id }) => (
-    <AnimateCollapseDiv className="!block" keyName={keyName}>
-        <div className="vl:pb-0 vl:pt-2.5 !flex flex-col flex-wrap gap-2.5 pt-4 pb-1" id={id}>
+    <AnimateCollapseDiv className="block!" keyName={keyName}>
+        <div className="vl:pb-0 vl:pt-2.5 flex! flex-col flex-wrap gap-2.5 pt-4 pb-1" id={id}>
             {children}
         </div>
     </AnimateCollapseDiv>
@@ -47,7 +47,7 @@ export const FilterGroupContentItem: FC<{ isDisabled: boolean; keyName?: string 
     isDisabled,
     keyName,
 }) => (
-    <AnimateAppearSlideY className={twJoin('!block', isDisabled && 'opacity-30')} keyName={keyName}>
+    <AnimateAppearSlideY className={twJoin('block!', isDisabled && 'opacity-30')} keyName={keyName}>
         {children}
     </AnimateAppearSlideY>
 );
@@ -71,7 +71,7 @@ export const SelectedParametersName: FC = ({ children }) => (
 );
 
 export const SelectedParametersList: FC<{ keyName?: string }> = ({ children, keyName }) => (
-    <AnimateSlideDiv className="!flex flex-wrap items-center gap-x-2.5 gap-y-2" direction="right" keyName={keyName}>
+    <AnimateSlideDiv className="flex! flex-wrap items-center gap-x-2.5 gap-y-2" direction="right" keyName={keyName}>
         {children}
     </AnimateSlideDiv>
 );

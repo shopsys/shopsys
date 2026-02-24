@@ -23,10 +23,13 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 aria-expanded={isUserMenuOpen}
                 aria-haspopup="menu"
                 aria-label={t('Show logged in user popup')}
-                className={twMergeCustom('group outline-none lg:relative lg:flex', isUserMenuOpen && 'z-aboveOverlay')}
                 data-tid={TIDs.my_account_link}
                 role="button"
                 tabIndex={0}
+                className={twMergeCustom(
+                    'group outline-hidden lg:relative lg:flex',
+                    isUserMenuOpen && 'z-aboveOverlay',
+                )}
                 onMouseEnter={() => isDesktop && setIsUserMenuOpen(true)}
                 onMouseLeave={() => isDesktop && setIsUserMenuOpen(false)}
                 onKeyDown={(e) => {

@@ -73,13 +73,13 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 </div>
 
                 {isProduct && isPriceVisible(product.price.priceWithVat) && (
-                    <div className="font-secondary text-price-default w-28 font-bold break-words lg:text-right">
+                    <div className="font-secondary text-price-default w-28 font-bold wrap-break-word lg:text-right">
                         {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
                     </div>
                 )}
 
                 {isProductGift && isPriceVisible(product.giftPrice.priceWithVat) && (
-                    <div className="font-secondary text-price-default w-28 font-bold break-words lg:text-right">
+                    <div className="font-secondary text-price-default w-28 font-bold wrap-break-word lg:text-right">
                         {formatPrice(mapPriceForCalculations(product.giftPrice.priceWithVat) * quantity)}
                     </div>
                 )}

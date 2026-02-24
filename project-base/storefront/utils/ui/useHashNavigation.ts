@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useEffectEvent, useRef, useState } from 'react';
 
 type SectionRef = {
     id: string;
@@ -60,43 +60,37 @@ export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationRetu
     }, []);
 
     // Scroll-based section detection - only when user is scrolling
+    const onScroll = useEffectEvent(() => {
+        if (!isUserScrollingRef.current) {
+            return;
+        }
+
+        let active: string | null = null;
+
+        for (const section of sections) {
+            const rect = section.ref.current?.getBoundingClientRect();
+
+            if (rect && rect.top <= SCROLL_OFFSET) {
+                active = section.id;
+            }
+        }
+
+        setActiveSection((current) => {
+            if (active !== current) {
+                updateHash(active);
+                return active;
+            }
+            return current;
+        });
+    });
+
     useEffect(() => {
-        const findActiveSection = (): string | null => {
-            let active: string | null = null;
-
-            for (const section of sections) {
-                const rect = section.ref.current?.getBoundingClientRect();
-
-                if (rect && rect.top <= SCROLL_OFFSET) {
-                    active = section.id;
-                }
-            }
-
-            return active;
-        };
-
-        const handleScroll = () => {
-            if (!isUserScrollingRef.current) {
-                return;
-            }
-
-            const newActive = findActiveSection();
-
-            setActiveSection((current) => {
-                if (newActive !== current) {
-                    updateHash(newActive);
-                    return newActive;
-                }
-                return current;
-            });
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('scroll', onScroll, { passive: true });
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('scroll', onScroll);
         };
-    }, [sections, updateHash]);
+    }, []);
 
     return {
         scrollToSection,

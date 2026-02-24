@@ -10,7 +10,7 @@ import { TIDs } from 'cypress/tids';
 import { useCouldBeCustomerRegisteredQuery } from 'graphql/requests/customer/queries/CouldBeCustomerRegisteredQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
-import { useRef } from 'react';
+import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
@@ -30,7 +30,7 @@ export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
     const { registerByOrder } = useRegistration();
-    const isInvalidRegistrationRef = useRef(false);
+    const [isInvalidRegistration, setIsInvalidRegistration] = useState(false);
     const isUserLoggedIn = useIsUserLoggedIn();
 
     const [{ data: couldBeCustomerRegisteredData, fetching: isInformationAboutUserRegistrationFetching }] =
@@ -63,7 +63,7 @@ export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
                         showErrorMessage(errorMessage, GtmMessageOriginType.order_confirmation_page);
                     }
                 } else {
-                    isInvalidRegistrationRef.current = true;
+                    setIsInvalidRegistration(true);
                     showErrorMessage(t('There was an error with your registration. Please try again later.'));
                     break;
                 }
@@ -158,7 +158,7 @@ export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
                         aria-label={t('Submit form to create your new account', { ns: 'accessibility' })}
                         className="self-start"
                         hasDisabledCursor={!formProviderMethods.formState.isValid}
-                        hasDisabledLook={isInvalidRegistrationRef.current}
+                        hasDisabledLook={isInvalidRegistration}
                         size="large"
                         tid={TIDs.registration_after_order_submit_button}
                     >

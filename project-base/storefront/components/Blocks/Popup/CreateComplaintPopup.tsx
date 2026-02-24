@@ -86,11 +86,9 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
         setShowNewAddressForm(true);
     };
 
-    useEffect(() => {
-        if (deliveryAddressUuid === '' && !showNewAddressForm) {
-            setShowNewAddressForm(true);
-        }
-    }, [deliveryAddressUuid, showNewAddressForm]);
+    if (deliveryAddressUuid === '' && !showNewAddressForm) {
+        setShowNewAddressForm(true);
+    }
 
     const createComplaintHandler: SubmitHandler<ComplaintFormType> = async (complaintFormData) => {
         blurInput();

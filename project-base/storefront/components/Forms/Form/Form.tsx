@@ -1,4 +1,4 @@
-import { FormEvent, FormHTMLAttributes, KeyboardEvent } from 'react';
+import { FormHTMLAttributes, KeyboardEvent, SubmitEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'utils/twMerge';
@@ -23,7 +23,7 @@ export const Form: FC<FormProps> = ({
     onKeyDown,
 }) => {
     const formProviderMethods = useFormContext();
-    const controlledOnSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
+    const controlledOnSubmitHandler = (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         // formProviderMethods may be null probably when it is not used in FormProvider context - see https://github.com/react-hook-form/react-hook-form/discussions/3894

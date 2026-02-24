@@ -34,18 +34,25 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
         : t('Show less', { ns: 'accessibility' });
 
     useEffect(() => {
-        if (shouldFocusNewItem && !isCollapsed && listRef.current) {
-            const focusableLinks = listRef.current.querySelectorAll('a[tabindex="0"]');
-            const targetLink = focusableLinks[NUMBER_OF_VISIBLE_ITEMS] as HTMLElement | undefined;
-
-            if (targetLink) {
-                setTimeout(() => {
-                    targetLink.focus();
-                }, 150);
-            }
-
-            setShouldFocusNewItem(false);
+        if (!shouldFocusNewItem || isCollapsed || !listRef.current) {
+            return undefined;
         }
+
+        const focusableLinks = listRef.current.querySelectorAll('a[tabindex="0"]');
+        const targetLink = focusableLinks[NUMBER_OF_VISIBLE_ITEMS] as HTMLElement | undefined;
+
+        if (!targetLink) {
+            return undefined;
+        }
+
+        const id = window.setTimeout(() => {
+            targetLink.focus();
+            setShouldFocusNewItem(false);
+        }, 150);
+
+        return () => {
+            window.clearTimeout(id);
+        };
     }, [isCollapsed, shouldFocusNewItem]);
 
     const handleShowMoreClick = () => {
@@ -63,14 +70,14 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
         <div className="bg-background-more relative rounded-xl p-5">
             <h2 className="sr-only">{t('Bestsellers')}</h2>
 
-            <div className="font-secondary mb-3 text-center text-lg font-semibold break-words">
+            <div className="font-secondary mb-3 text-center text-lg font-semibold wrap-break-word">
                 {t('Do not want to choose? Choose certainty')}
             </div>
 
             <div className="divide-border-less mb-3 flex flex-col divide-y" id="bestsellers-list" ref={listRef}>
                 <AnimatePresence initial={false}>
                     {shownProducts.map((product, index) => (
-                        <AnimateCollapseDiv key={product.uuid} className={twJoin('!block')} keyName={product.uuid}>
+                        <AnimateCollapseDiv key={product.uuid} className={twJoin('block!')} keyName={product.uuid}>
                             <CategoryBestsellersListItem
                                 key={product.uuid}
                                 gtmProductListName={GtmProductListNameType.bestsellers}

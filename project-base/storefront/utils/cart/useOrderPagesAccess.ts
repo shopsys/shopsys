@@ -28,7 +28,7 @@ export const useOrderPagesAccess = (page: 'transport-and-payment' | 'contact-inf
                 setCanContentBeDisplayed(true);
             }
         }
-    }, [cart, isCartFetchingOrUnavailable, authLoading]);
+    }, [cart, isCartFetchingOrUnavailable, authLoading, cartUrl, transportAndPaymentUrl, page, router]);
 
     return canContentBeDisplayed;
 };

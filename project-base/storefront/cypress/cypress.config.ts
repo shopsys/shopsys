@@ -102,6 +102,7 @@ export default defineConfig({
                     order: ['e2e/order/*.cy.ts'],
                     transportAndPayment: ['e2e/transportAndPayment/*.cy.ts'],
                     visits: ['e2e/visits/*.cy.ts'],
+                    ssr: ['e2e/ssr/*.cy.ts'],
                 };
 
                 const usedPatterns = Object.values(patternsMap).flat();

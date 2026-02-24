@@ -54,7 +54,7 @@ export const PromoCode: FC = () => {
                         <m.form
                             key="promo-code"
                             animate="open"
-                            className="!flex flex-col gap-2.5 sm:flex-row"
+                            className="flex! flex-col gap-2.5 sm:flex-row"
                             exit="closed"
                             initial="closed"
                             variants={collapseExpandAnimation}

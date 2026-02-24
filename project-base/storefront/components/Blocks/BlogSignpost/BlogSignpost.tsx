@@ -30,7 +30,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                     <Button
                         variant="secondary"
                         className={twJoin(
-                            'relative w-full justify-between !text-base',
+                            'relative w-full justify-between text-base!',
                             'xl:text-text-default xl:pointer-events-none xl:bg-transparent xl:p-0 xl:font-semibold xl:outline-hidden',
                             'max-xl:font-default max-xl:py-2.5',
                             isBlogSignpostOpen && 'max-xl:z-aboveOverlay',

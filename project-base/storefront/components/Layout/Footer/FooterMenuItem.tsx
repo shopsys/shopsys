@@ -55,7 +55,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
 
                 <AnimatePresence initial={false}>
                     {isExpanded && (
-                        <AnimateCollapseDiv className="!block" keyName={`footer-menu-${title}`}>
+                        <AnimateCollapseDiv className="block!" keyName={`footer-menu-${title}`}>
                             <ul className="space-y-5 pt-5">
                                 {items.map((item) => (
                                     <li key={item.uuid}>

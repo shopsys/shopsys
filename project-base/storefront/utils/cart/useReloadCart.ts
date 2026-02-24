@@ -1,7 +1,7 @@
 import { useChangePaymentInCart } from './useChangePaymentInCart';
 import { useCurrentCart } from './useCurrentCart';
 import { handleCartModifications } from 'connectors/cart/Cart';
-import { useEffect, useRef } from 'react';
+import { useEffect, useEffectEvent, useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useBroadcastChannel } from 'utils/useBroadcastChannel';
@@ -41,9 +41,15 @@ export const useReloadCart = (): void => {
         };
     }, [isCartStale, setCartStale]);
 
-    useEffect(() => {
+    const onHandleModifications = useEffectEvent(() => {
         if (modifications) {
             handleCartModifications(modifications, t, changePaymentInCart);
+        }
+    });
+
+    useEffect(() => {
+        if (modifications) {
+            onHandleModifications();
         }
     }, [modifications]);
 };

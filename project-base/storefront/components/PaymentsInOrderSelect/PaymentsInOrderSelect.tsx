@@ -44,7 +44,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                 ? currentOrderPayment
                 : undefined,
         );
-    }, [currentOrderPayment?.uuid]);
+    }, [currentOrderPayment]);
 
     const changePaymentSubmitHandler = async () => {
         if (selectedPaymentForChange?.uuid) {

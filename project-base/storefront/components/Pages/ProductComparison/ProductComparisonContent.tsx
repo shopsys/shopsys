@@ -60,7 +60,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
 
     useEffect(() => {
         calcMaxMarginLeft();
-    }, [comparedProducts]);
+    }, [comparedProducts, calcMaxMarginLeft]);
 
     return (
         <div className="relative mb-24 overflow-hidden" id="js-table-compare-wrap">

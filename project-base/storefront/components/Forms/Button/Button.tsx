@@ -55,7 +55,7 @@ export const getButtonClassName = (
 ) => {
     return twJoin(
         'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded-button text-center font-bold font-secondary transition-all hover:no-underline',
-        'outline-2 outline-offset-[-2px]',
+        'outline-2 -outline-offset-2',
         size === 'small' && 'px-3 py-2.5 text-xs',
         size === 'medium' && 'px-3 py-2.5 text-xs sm:px-4 sm:py-2 sm:text-sm',
         size === 'large' && 'px-4 py-2 text-sm sm:py-2.5',

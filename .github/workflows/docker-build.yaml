@@ -625,7 +625,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                group: [ authentication, cart, order, transportAndPayment, visits, others ]
+                group: [ authentication, cart, order, transportAndPayment, visits, ssr, others ]
         env:
             GH_TOKEN: ${{ github.token }}
         steps:
@@ -718,7 +718,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                group: [ authentication, cart, order, transportAndPayment, visits, others ]
+                group: [ authentication, cart, order, transportAndPayment, visits, ssr, others ]
         env:
             GH_TOKEN: ${{ github.token }}
         outputs:

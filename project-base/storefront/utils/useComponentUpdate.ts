@@ -8,5 +8,6 @@ export const useComponentUpdate = (effect: () => void, deps: DependencyList | un
             effect();
         }
         didMountRef.current = true;
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- deps are passed through from the caller; this utility hook is incompatible with static analysis
     }, deps);
 };

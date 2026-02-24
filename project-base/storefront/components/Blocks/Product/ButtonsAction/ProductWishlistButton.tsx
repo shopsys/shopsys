@@ -42,7 +42,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
             }
             className={twMergeCustom(
                 'text-icon-less hover:text-icon-accent flex cursor-pointer items-center gap-2',
-                'rounded-sm outline-none',
+                'rounded-sm outline-hidden',
                 className,
             )}
             onClick={toggleProductInWishlist}

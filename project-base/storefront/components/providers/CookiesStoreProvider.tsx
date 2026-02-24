@@ -1,4 +1,4 @@
-import { createContext, useRef } from 'react';
+import { createContext, useState } from 'react';
 import { CookiesStore, CookiesStoreState, createCookiesStore } from 'utils/cookies/cookiesStore';
 import { type StoreApi } from 'zustand';
 
@@ -12,7 +12,7 @@ export const CookiesStoreProvider: FC<CookiesStoreProviderProps> = ({
     children,
     cookieStoreStateFromServer: cookieStoreFromServer,
 }) => {
-    const storeRef = useRef<StoreApi<CookiesStore>>(createCookiesStore(cookieStoreFromServer));
+    const [store] = useState(() => createCookiesStore(cookieStoreFromServer));
 
-    return <CookiesStoreContext.Provider value={storeRef.current}>{children}</CookiesStoreContext.Provider>;
+    return <CookiesStoreContext.Provider value={store}>{children}</CookiesStoreContext.Provider>;
 };

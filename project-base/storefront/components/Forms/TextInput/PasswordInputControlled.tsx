@@ -33,7 +33,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
 }) => {
     const {
         fieldState: { error },
-        field,
+        field: { ref: fieldRef, value, onBlur, onChange },
     } = useController({ name, control });
     const passwordInputId = formName + '-' + name;
 
@@ -55,11 +55,11 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                 inputSize={passwordInputProps.inputSize}
                 label={passwordInputProps.label}
                 name={name}
-                ref={field.ref}
+                ref={fieldRef}
                 type={inputType}
-                value={field.value}
-                onBlur={field.onBlur}
-                onChange={field.onChange}
+                value={value}
+                onBlur={onBlur}
+                onChange={onChange}
             >
                 <Image
                     alt="eye icon"

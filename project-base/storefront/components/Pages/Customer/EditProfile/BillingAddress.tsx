@@ -19,21 +19,22 @@ export const BillingAddress: FC<{ companyCustomer: boolean }> = ({ companyCustom
 
     const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
-    const { setValue } = formProviderMethods;
+    const { setValue, getValues } = formProviderMethods;
 
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
+    const countryFieldName = formMeta.fields.country.name;
 
     useEffect(() => {
         if (countriesAsSelectOptions.length > 0) {
-            const userCountryValue = formProviderMethods.getValues(formMeta.fields.country.name);
+            const currentCountryValue = getValues(countryFieldName);
             const selectedCountry = countriesAsSelectOptions.find(
-                (country) => country.value === userCountryValue.value,
+                (country) => country.value === currentCountryValue.value,
             );
-            setValue(formMeta.fields.country.name, selectedCountry ?? countriesAsSelectOptions[0], {
+            setValue(countryFieldName, selectedCountry ?? countriesAsSelectOptions[0], {
                 shouldValidate: true,
             });
         }
-    }, [countriesAsSelectOptions, formMeta.fields.country.name, setValue]);
+    }, [countriesAsSelectOptions, countryFieldName, setValue, getValues]);
 
     return (
         <FormBlockWrapper>

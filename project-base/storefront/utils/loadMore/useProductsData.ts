@@ -46,92 +46,47 @@ export const useProductsData = (
     const currentLoadMore = useCurrentLoadMoreQuery();
     const urlSlug = getSlugFromUrl(asPath);
     const mappedFilter = mapParametersFilter(currentFilter);
+    const currentFilterSerialized = JSON.stringify(currentFilter);
+    const shouldAbortFetchingProducts = additionalParams?.shouldAbortFetchingProducts ?? false;
 
     const previousLoadMoreRef = useRef(currentLoadMore);
     const previousPageRef = useRef(currentPage);
     const initialPageSizeRef = useRef(calculatePageSize(currentLoadMore));
+    const abortedFetchCallbackRef = useRef<(() => void) | undefined>(additionalParams?.abortedFetchCallback);
+    const hasHandledAbortRef = useRef(false);
+    const totalProductCountRef = useRef(totalProductCount);
+    totalProductCountRef.current = totalProductCount;
 
-    const [productsData, setProductsData] = useState<{
-        products: TypeListedProductConnectionFragment['edges'] | undefined;
-        hasNextPage: boolean;
-    }>({ products: undefined, hasNextPage: false });
+    const [productsData, setProductsData] = useState(
+        readProductsFromCache(
+            queryDocument,
+            client,
+            urlSlug,
+            currentSort,
+            mappedFilter,
+            getEndCursor(currentPage),
+            initialPageSizeRef.current,
+        ),
+    );
 
-    const [areProductsFetching, setAreProductsFetching] = useState(true);
-    const isInitializedRef = useRef(false);
+    const [areProductsFetching, setAreProductsFetching] = useState(!productsData.products);
     const [isLoadingMoreProducts, setIsLoadingMoreProducts] = useState(false);
 
-    const fetchProducts = async (
-        variables:
-            | TypeCategoryProductsQueryVariables
-            | TypeFlagProductsQueryVariables
-            | TypeBrandProductsQueryVariables,
-        previouslyQueriedProductsFromCache: TypeListedProductConnectionFragment['edges'] | undefined,
-    ) => {
-        const productsResponse = await client
-            .query<
-                TypeCategoryProductsQuery | TypeBrandProductsQuery | TypeFlagProductsQuery,
-                typeof variables
-            >(queryDocument, variables)
-            .toPromise();
-
-        if (!productsResponse.data) {
-            setProductsData({ products: undefined, hasNextPage: false });
-
-            return;
-        }
-
-        setProductsData({
-            products: mergeItemEdges(
-                previouslyQueriedProductsFromCache,
-                productsResponse.data.products.edges,
-            ) as TypeListedProductConnectionFragment['edges'],
-            hasNextPage: productsResponse.data.products.pageInfo.hasNextPage,
-        });
-        stopFetching();
-    };
-
-    const startFetching = () => {
-        if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
-            setAreProductsFetching(true);
-        } else {
-            setIsLoadingMoreProducts(true);
-            previousLoadMoreRef.current = currentLoadMore;
-        }
-    };
-
-    const stopFetching = () => {
-        setAreProductsFetching(false);
-        setIsLoadingMoreProducts(false);
-    };
+    useEffect(() => {
+        abortedFetchCallbackRef.current = additionalParams?.abortedFetchCallback;
+    }, [additionalParams?.abortedFetchCallback]);
 
     useEffect(() => {
-        if (additionalParams?.shouldAbortFetchingProducts) {
-            additionalParams.abortedFetchCallback();
+        if (shouldAbortFetchingProducts) {
+            if (!hasHandledAbortRef.current) {
+                hasHandledAbortRef.current = true;
+                abortedFetchCallbackRef.current?.();
+            }
 
             return;
         }
 
-        // Initial cache read - only on first render
-        if (!isInitializedRef.current) {
-            isInitializedRef.current = true;
-
-            const cachedData = readProductsFromCache(
-                queryDocument,
-                client,
-                urlSlug,
-                currentSort,
-                mappedFilter,
-                getEndCursor(currentPage),
-                initialPageSizeRef.current,
-            );
-
-            if (cachedData.products) {
-                setProductsData(cachedData);
-                setAreProductsFetching(false);
-
-                return;
-            }
-        }
+        hasHandledAbortRef.current = false;
 
         if (previousPageRef.current !== currentPage) {
             previousPageRef.current = currentPage;
@@ -152,7 +107,12 @@ export const useProductsData = (
         );
 
         if (
-            hasReadAllItemsFromCache(previousProductsFromCache?.length, currentLoadMore, currentPage, totalProductCount)
+            hasReadAllItemsFromCache(
+                previousProductsFromCache?.length,
+                currentLoadMore,
+                currentPage,
+                totalProductCountRef.current,
+            )
         ) {
             return;
         }
@@ -160,18 +120,49 @@ export const useProductsData = (
         const { pageSize, isMoreThanOnePage } = getPageSizeInfo(!!previousProductsFromCache, currentLoadMore);
         const endCursor = getEndCursor(currentPage, isMoreThanOnePage ? undefined : currentLoadMore);
 
-        startFetching();
-        fetchProducts(
-            {
-                endCursor,
-                filter: mappedFilter,
-                orderingMode: currentSort,
-                urlSlug,
-                pageSize,
-            },
-            previousProductsFromCache,
-        );
-    }, [urlSlug, currentSort, JSON.stringify(currentFilter), currentPage, currentLoadMore]);
+        if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
+            setAreProductsFetching(true);
+        } else {
+            setIsLoadingMoreProducts(true);
+            previousLoadMoreRef.current = currentLoadMore;
+        }
+
+        const fetchProducts = async () => {
+            const productsResponse = await client
+                .query<
+                    TypeCategoryProductsQuery | TypeBrandProductsQuery | TypeFlagProductsQuery,
+                    | TypeCategoryProductsQueryVariables
+                    | TypeFlagProductsQueryVariables
+                    | TypeBrandProductsQueryVariables
+                >(queryDocument, {
+                    endCursor,
+                    filter: mappedFilter,
+                    orderingMode: currentSort,
+                    urlSlug,
+                    pageSize,
+                })
+                .toPromise();
+
+            if (!productsResponse.data) {
+                setProductsData({ products: undefined, hasNextPage: false });
+
+                return;
+            }
+
+            setProductsData({
+                products: mergeItemEdges(
+                    previousProductsFromCache,
+                    productsResponse.data.products.edges,
+                ) as TypeListedProductConnectionFragment['edges'],
+                hasNextPage: productsResponse.data.products.pageInfo.hasNextPage,
+            });
+            setAreProductsFetching(false);
+            setIsLoadingMoreProducts(false);
+        };
+
+        fetchProducts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- mappedFilter is derived from currentFilter (tracked via currentFilterSerialized), totalProductCount is tracked via ref to avoid redundant re-fetches when category detail query updates the count
+    }, [urlSlug, currentSort, currentFilterSerialized, currentPage, currentLoadMore, queryDocument, client]);
 
     return { ...productsData, areProductsFetching, isLoadingMoreProducts };
 };

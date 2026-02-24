@@ -14,26 +14,26 @@ export type ResponseInfo = {
 export const useRequests = (tokenHeader: string, tokenLinkHeader: string) => {
     const [responses, setResponses] = useState<ResponseInfo[]>([]);
 
-    const onResponse = (response: Response) => {
-        const headers = response.headers;
-        if (hasProfilerHeaders(headers, tokenLinkHeader, tokenHeader)) {
-            const requestInfo: ResponseInfo = {
-                error: false,
-                operationName: response.url.split('graphql/')[1],
-                type: response.type,
-                status: response.status,
-                token: headers.get(tokenHeader) ?? '',
-                profiler: headers.get(tokenLinkHeader) ?? '',
-            };
-
-            addResponse(requestInfo);
-        }
-    };
-
     useEffect(() => {
+        const onResponse = (response: Response) => {
+            const headers = response.headers;
+            if (hasProfilerHeaders(headers, tokenLinkHeader, tokenHeader)) {
+                const requestInfo: ResponseInfo = {
+                    error: false,
+                    operationName: response.url.split('graphql/')[1],
+                    type: response.type,
+                    status: response.status,
+                    token: headers.get(tokenHeader) ?? '',
+                    profiler: headers.get(tokenLinkHeader) ?? '',
+                };
+
+                setResponses((prevState) => [...prevState, requestInfo]);
+            }
+        };
+
         interceptor.apply();
         interceptor.on('response', onResponse);
-    }, []);
+    }, [tokenHeader, tokenLinkHeader]);
 
     const addResponse = (requestInfo: ResponseInfo) => setResponses((prevState) => [...prevState, requestInfo]);
 

@@ -2,7 +2,7 @@ import { DeferredCategoryDetailProductsWrapper } from './CategoryDetailProductsW
 import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
-import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
+import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
@@ -72,7 +72,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
                     <div className="vl:flex-col flex scroll-mt-5 flex-col-reverse" ref={paginationScrollTargetRef}>
-                        <FilterSelectedParameters filterOptions={category.products.productFilterOptions} />
+                        <DeferredFilterSelectedParameters filterOptions={category.products.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar
                             sorting={category.products.orderingMode}

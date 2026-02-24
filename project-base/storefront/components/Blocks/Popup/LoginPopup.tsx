@@ -16,7 +16,7 @@ export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCu
 
                 <LoginForm
                     defaultEmail={defaultEmail}
-                    formContentWrapperClassName="!px-5"
+                    formContentWrapperClassName="px-5!"
                     shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
                 />
             </VerticalStack>
