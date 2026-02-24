@@ -49,4 +49,16 @@ fragment OrderDetailItemFragment on OrderItem {
             status
         }
     }
+    transport {
+        isPersonalPickup
+        transportTypeCode
+        mainImage {
+            url
+        }
+    }
+    payment {
+        mainImage {
+            url
+        }
+    }
 }

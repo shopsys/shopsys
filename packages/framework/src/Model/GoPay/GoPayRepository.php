@@ -10,7 +10,6 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 
 class GoPayRepository
@@ -24,7 +23,8 @@ class GoPayRepository
     protected function getQueryBuilderForAllUnpaidGoPayOrders(DateTimeImmutable $fromDate): QueryBuilder
     {
         $queryBuilder = $this->orderRepository->createOrderQueryBuilder()
-            ->join(Payment::class, 'p', Join::WITH, 'o.payment = p.id')
+            ->join('o.items', 'oi', Join::WITH, 'oi.payment IS NOT NULL')
+            ->join('oi.payment', 'p')
             ->join('o.paymentTransactions', 'pt', Join::WITH, 'p.id = pt.payment')
             ->andWhere('p.type = :type')
             ->andWhere('o.createdAt >= :fromDate')

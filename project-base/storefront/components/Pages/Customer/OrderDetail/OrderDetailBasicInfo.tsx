@@ -16,6 +16,7 @@ import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getOrderPaymentItem, getOrderRoundingItem, getOrderTransportItem } from 'utils/mappers/order';
 import { isPriceVisible } from 'utils/mappers/price';
 
 type OrderDetailBasicInfoProps = {
@@ -28,9 +29,9 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
     const { formatDate } = useFormatDate();
     const addOrderItemsToEmptyCart = useAddOrderItemsToCart();
     const { canCreateOrder } = useAuthorization();
-    const orderRounding = order.items.find((orderItem) => orderItem.type === TypeOrderItemTypeEnum.Rounding);
-    const orderTransport = order.items.find((orderItem) => orderItem.type === TypeOrderItemTypeEnum.Transport);
-    const orderPayment = order.items.find((orderItem) => orderItem.type === TypeOrderItemTypeEnum.Payment);
+    const orderRounding = getOrderRoundingItem(order.items);
+    const orderTransport = getOrderTransportItem(order.items);
+    const orderPayment = getOrderPaymentItem(order.items);
 
     const filteredOrderItems = order.items.filter(
         (orderItem) =>
@@ -116,7 +117,10 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 <OrderDetailRowInfo tid={TIDs.order_detail_transport} title={t('Transport')}>
                     <div className="flex w-full items-center justify-between">
                         <div className="flex flex-col gap-2">
-                            <ElementWithImage image={order.transport.mainImage?.url} name={orderTransport.name} />
+                            <ElementWithImage
+                                image={orderTransport.transport?.mainImage?.url}
+                                name={orderTransport.name}
+                            />
 
                             {order.trackingUrl && (
                                 <div>
@@ -146,7 +150,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
             {orderPayment && (
                 <OrderDetailRowInfo tid={TIDs.order_detail_payment} title={t('Payment')}>
                     <div className="flex w-full justify-between">
-                        <ElementWithImage image={order.payment.mainImage?.url} name={orderPayment.name} />
+                        <ElementWithImage image={orderPayment.payment?.mainImage?.url} name={orderPayment.name} />
 
                         {isPriceVisible(orderPayment.totalPrice.priceWithVat) && (
                             <span className="font-bold">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>

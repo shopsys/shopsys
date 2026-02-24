@@ -2,7 +2,4 @@ fragment ChangePaymentInOrderFragment on Order {
     __typename
     urlHash
     number
-    payment {
-        ...SimplePaymentFragment
-    }
 }

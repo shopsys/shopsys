@@ -38,12 +38,6 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
         $expected = [
             'orderCreated' => true,
             'order' => [
-                'transport' => [
-                    'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                ],
-                'payment' => [
-                    'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                ],
                 'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'totalPrice' => self::getSerializedOrderTotalPriceByExpectedOrderItems(
                     $expectedOrderItems,

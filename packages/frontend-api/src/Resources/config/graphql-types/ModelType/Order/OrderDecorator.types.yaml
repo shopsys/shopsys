@@ -17,13 +17,6 @@ OrderDecorator:
                 type: "[OrderItem!]!"
                 description: "All items in the order including payment and transport"
 
-            transport:
-                type: "Transport!"
-                description: "Transport method applied to the order"
-            payment:
-                type: "Payment!"
-                description: "Payment method applied to the order"
-
             status:
                 type: "String!"
                 description: "Current status of the order"

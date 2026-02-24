@@ -22,12 +22,6 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
         $expectedOrderItems = $this->getExpectedOrderItems();
         $expected = [
             'order' => [
-                'transport' => [
-                    'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                ],
-                'payment' => [
-                    'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                ],
                 'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'totalPrice' => self::getSerializedOrderTotalPriceByExpectedOrderItems(
                     $expectedOrderItems,

@@ -20,16 +20,6 @@ class OrderData
     public $uuid;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
-     */
-    public $transport;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
-     */
-    public $payment;
-
-    /**
      * @var string|null
      */
     public $orderNumber;

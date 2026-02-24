@@ -29,6 +29,7 @@ import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import { logException } from 'utils/errors/logException';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getOrderPaymentItem, getOrderTransportItem } from 'utils/mappers/order';
 import { isPacketeryTransport, mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -283,8 +284,10 @@ export const useLoadTransportAndPaymentFromLastOrder = (
                 return null;
             }
 
+            const orderTransport = getOrderTransportItem(lastOrder.lastOrder.items);
+
             let lastOrderPickupPlaceDataFromApi;
-            if (!isPacketeryTransport(lastOrder.lastOrder.transport.transportTypeCode)) {
+            if (!isPacketeryTransport(orderTransport?.transport?.transportTypeCode)) {
                 lastOrderPickupPlaceDataFromApi = (
                     await client
                         .query<TypeStoreQuery, TypeStoreQueryVariables>(StoreQueryDocument, {
@@ -317,15 +320,16 @@ export const useLoadTransportAndPaymentFromLastOrder = (
             >(LastOrderQueryDocument, {}, { requestPolicy: 'network-only' })
             .toPromise();
 
+        const orderTransport = getOrderTransportItem(lastOrderData?.lastOrder?.items);
+        const orderPayment = getOrderPaymentItem(lastOrderData?.lastOrder?.items);
+
         try {
             const lastOrderPickupPlace = await loadLastOrderPickupPlace(lastOrderData);
 
-            const newCart = await changeTransportInCart(
-                lastOrderData?.lastOrder?.transport.uuid ?? null,
-                lastOrderPickupPlace,
-                { suppressValidationErrors: true },
-            );
-            const successfullyChangedTransport = newCart?.transport?.uuid === lastOrderData?.lastOrder?.transport.uuid;
+            const newCart = await changeTransportInCart(orderTransport?.transport?.uuid ?? null, lastOrderPickupPlace, {
+                suppressValidationErrors: true,
+            });
+            const successfullyChangedTransport = newCart?.transport?.uuid === orderTransport?.transport?.uuid;
             const successfullyChangedPickupPlace =
                 !!newCart?.selectedPickupPlaceIdentifier &&
                 newCart.selectedPickupPlaceIdentifier === lastOrderPickupPlace?.identifier;
@@ -335,7 +339,7 @@ export const useLoadTransportAndPaymentFromLastOrder = (
                     setLastOrderPickupPlace(lastOrderPickupPlace);
                 }
 
-                await changePaymentInCart(lastOrderData?.lastOrder?.payment.uuid ?? null, null);
+                await changePaymentInCart(orderPayment?.payment?.uuid ?? null, null);
             }
         } catch (e: unknown) {
             const error = e as Error;
