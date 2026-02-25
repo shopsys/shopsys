@@ -2,7 +2,7 @@
 set -euo pipefail
 
 npm_name_license_tsv() {
-    npm exec --yes license-checker -- --json 2> /dev/null |
+    pnpm exec license-checker --json 2> /dev/null |
         node -e '
             let data = "";
             process.stdin.setEncoding("utf8");

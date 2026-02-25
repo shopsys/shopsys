@@ -27,6 +27,7 @@ export default [
             'cypress/*',
             '.next/*',
             'public/*',
+            'next-env.d.ts',
             '!**/.prettierrc.js',
             'graphql/types.ts',
             '**/*.generated.*',

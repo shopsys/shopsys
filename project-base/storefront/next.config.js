@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-const { withSentryConfig } = require('@sentry/nextjs');
+const withSentryConfig =
+    process.env.SENTRY_BUILD_PLUGIN_DISABLED === '1'
+        ? (nextConfigValue) => nextConfigValue
+        : require('@sentry/nextjs').withSentryConfig;
 const nextTranslate = require('next-translate-plugin');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
@@ -12,6 +15,7 @@ const isSentryEnabled = sentryDsn !== '';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: 'standalone',
     experimental: {
         reactCompiler: true,
         scrollRestoration: true,

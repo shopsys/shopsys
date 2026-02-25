@@ -1,5 +1,6 @@
 import { BatchInterceptor } from '@mswjs/interceptors';
-import browserInterceptors from '@mswjs/interceptors/lib/presets/browser';
+import { XMLHttpRequestInterceptor } from '@mswjs/interceptors/XMLHttpRequest';
+import { FetchInterceptor } from '@mswjs/interceptors/fetch';
 import { useEffect, useState } from 'react';
 
 export type ResponseInfo = {
@@ -11,11 +12,19 @@ export type ResponseInfo = {
     profiler: string;
 };
 
+type InterceptorResponseEvent = {
+    response: Response;
+    isMockedResponse: boolean;
+    request: Request;
+    requestId: string;
+};
+
 export const useRequests = (tokenHeader: string, tokenLinkHeader: string) => {
     const [responses, setResponses] = useState<ResponseInfo[]>([]);
+    const addResponse = (requestInfo: ResponseInfo) => setResponses((prevState) => [...prevState, requestInfo]);
 
     useEffect(() => {
-        const onResponse = (response: Response) => {
+        const onResponse = ({ response }: InterceptorResponseEvent) => {
             const headers = response.headers;
             if (hasProfilerHeaders(headers, tokenLinkHeader, tokenHeader)) {
                 const requestInfo: ResponseInfo = {
@@ -27,15 +36,13 @@ export const useRequests = (tokenHeader: string, tokenLinkHeader: string) => {
                     profiler: headers.get(tokenLinkHeader) ?? '',
                 };
 
-                setResponses((prevState) => [...prevState, requestInfo]);
+                addResponse(requestInfo);
             }
         };
 
         interceptor.apply();
         interceptor.on('response', onResponse);
     }, [tokenHeader, tokenLinkHeader]);
-
-    const addResponse = (requestInfo: ResponseInfo) => setResponses((prevState) => [...prevState, requestInfo]);
 
     return {
         responses,
@@ -46,7 +53,7 @@ export const useRequests = (tokenHeader: string, tokenLinkHeader: string) => {
 
 const interceptor = new BatchInterceptor({
     name: 'symfony-debug',
-    interceptors: browserInterceptors,
+    interceptors: [new FetchInterceptor(), new XMLHttpRequestInterceptor()] as const,
 });
 
 const hasProfilerHeaders = (headers: Headers, tokenLinkHeader: string, tokenHeader: string) => {

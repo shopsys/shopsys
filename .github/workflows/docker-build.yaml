@@ -363,7 +363,15 @@ jobs:
                     docker compose exec storefront sh check-next-public-variable.sh
             -   name: Check graphql schema files are up to date
                 run: |
-                    docker compose exec php-fpm npm install format-graphql
+                    for i in 1 2 3 4 5; do
+                        docker compose exec php-fpm npm install format-graphql && break
+                        if [ "$i" -eq 5 ]; then
+                            exit 1
+                        fi
+                        sleep_time=$((i * 5))
+                        echo "npm install format-graphql failed (attempt $i/5), retrying in ${sleep_time}s..."
+                        sleep "$sleep_time"
+                    done
                     docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
                     docker compose cp php-fpm:/var/www/html/project-base/app/schema.graphql /tmp/schema.graphql
                     docker compose cp /tmp/schema.graphql storefront:/home/node/app/schema.graphql
@@ -599,7 +607,7 @@ jobs:
                     if [ -n "$COMPOSER_GITHUB_TOKEN" ]; then
                         docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
                     fi
-                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
+                    ./.github/scripts/run-build-demo-dev-quick-with-retry.sh
             -   name: Run Cypress smoke tests
                 run: docker compose run --rm -e TYPE=null -e COMMAND=smoke -e TEST_LOCALE=en cypress;
             -   name: PHP-FPM container logs
@@ -662,7 +670,7 @@ jobs:
                     COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
-                    for i in {1..2}; do
+                    for i in 1 2; do
                         if docker compose up -d --wait; then
                             break
                         else
@@ -675,7 +683,7 @@ jobs:
                     if [ -n "$COMPOSER_GITHUB_TOKEN" ]; then
                         docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
                     fi
-                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
+                    ./.github/scripts/run-build-demo-dev-quick-with-retry.sh
             -   name: Run Cypress tests for ${{ matrix.group }}
                 if: env.SHOULD_RUN_TESTS == 'true'
                 run: docker compose run cypress
@@ -765,7 +773,7 @@ jobs:
                     COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
-                     for i in {1..2}; do
+                    for i in 1 2; do
                         if docker compose up -d --wait; then
                             break
                         else
@@ -778,7 +786,7 @@ jobs:
                     if [ -n "$COMPOSER_GITHUB_TOKEN" ]; then
                         docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
                     fi
-                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
+                    ./.github/scripts/run-build-demo-dev-quick-with-retry.sh
             -   name: Run regenerate Cypress tests for ${{ matrix.group }}
                 if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 run: |
@@ -940,7 +948,7 @@ jobs:
                         docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
                     fi
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction --dev
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
+                    ./.github/scripts/run-build-demo-dev-quick-with-retry.sh -T
             -   name: Check all commands are passing
                 run: |
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y cron-list cron-run-all-serially cron-watch maintenance-on maintenance-off elasticsearch-export-changed
@@ -1051,7 +1059,16 @@ jobs:
                     docker compose exec -T php-fpm php bin/console shopsys:list:export-scopes
                     docker compose exec -T php-fpm php bin/console shopsys:dispatch:recalculations 1
             -   name: Check licenses of dependencies in Composer and NPM (php-fpm & storefront)
-                run: make check-licenses
+                run: |
+                    for i in 1 2 3 4 5; do
+                        make check-licenses && break
+                        if [ "$i" -eq 5 ]; then
+                            exit 1
+                        fi
+                        sleep_time=$((i * 5))
+                        echo "make check-licenses failed (attempt $i/5), retrying in ${sleep_time}s..."
+                        sleep "$sleep_time"
+                    done
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
@@ -1070,14 +1087,30 @@ jobs:
             -   name: Build Storefront part of application
                 run: |
                     docker compose cp ./project-base/app/schema.graphql storefront:/home/node/app/schema.graphql
-                    docker compose exec storefront pnpm install --frozen-lockfile
+                    for i in 1 2 3 4 5; do
+                        docker compose exec storefront pnpm install --frozen-lockfile && break
+                        if [ "$i" -eq 5 ]; then
+                            exit 1
+                        fi
+                        sleep_time=$((i * 5))
+                        echo "pnpm install --frozen-lockfile failed (attempt $i/5), retrying in ${sleep_time}s..."
+                        sleep "$sleep_time"
+                    done
             -   name: Check no NEXT_PUBLIC_ variables are used in Storefront
                 run: |
                     docker compose exec --user root storefront apk add grep
                     docker compose exec storefront sh check-next-public-variable.sh
             -   name: Check graphql schema files are up to date
                 run: |
-                    docker compose exec php-fpm npm install format-graphql
+                    for i in 1 2 3 4 5; do
+                        docker compose exec php-fpm npm install format-graphql && break
+                        if [ "$i" -eq 5 ]; then
+                            exit 1
+                        fi
+                        sleep_time=$((i * 5))
+                        echo "npm install format-graphql failed (attempt $i/5), retrying in ${sleep_time}s..."
+                        sleep "$sleep_time"
+                    done
                     docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
                     docker compose cp php-fpm:/var/www/html/project-base/app/schema.graphql /tmp/schema.graphql
                     docker compose cp /tmp/schema.graphql storefront:/home/node/app/schema.graphql
@@ -1113,7 +1146,7 @@ jobs:
                         docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
                     fi
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
-                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
+                    ./.github/scripts/run-build-demo-dev-quick-with-retry.sh
             -   name: Run Cypress tests
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
