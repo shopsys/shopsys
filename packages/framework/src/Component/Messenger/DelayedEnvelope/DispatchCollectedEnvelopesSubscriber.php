@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope;
 
 use Override;
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -63,6 +64,7 @@ class DispatchCollectedEnvelopesSubscriber implements EventSubscriberInterface
     {
         return [
             KernelEvents::EXCEPTION => 'resetCollectedMessageEnvelopes',
+            SilencedExceptionEvent::class => 'resetCollectedMessageEnvelopes',
             KernelEvents::RESPONSE => ['handleCollectedMessageEnvelopes', -10],
             ConsoleEvents::TERMINATE => ['handleCollectedMessageEnvelopes', -10],
             WorkerMessageHandledEvent::class => ['handleCollectedMessageEnvelopes', 10],

@@ -1,0 +1,7 @@
+framework:
+    messenger:
+        routing:
+            Tests\App\Test\Messenger\DummyMessage: dummy_transport
+        transports:
+            dummy_transport:
+                dsn: 'in-memory://'
