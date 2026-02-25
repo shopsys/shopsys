@@ -1,16 +1,13 @@
+import { ProductsSliderPlaceholder } from 'components/Blocks/Product/ProductsSliderPlaceholder';
 import { Webline } from 'components/Layout/Webline/Webline';
-import {
-    ProductDetailAccessories,
-    ProductDetailAccessoriesProps,
-} from 'components/Pages/ProductDetail/ProductDetailAccessories/ProductDetailAccessories';
+import type { ProductDetailAccessoriesProps } from 'components/Pages/ProductDetail/ProductDetailAccessories/ProductDetailAccessories';
 import dynamic from 'next/dynamic';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
-const ProductsSliderPlaceholder = dynamic(() =>
-    import('components/Blocks/Product/ProductsSliderPlaceholder').then(
-        (component) => component.ProductsSliderPlaceholder,
-    ),
+const ProductDetailAccessories = dynamic(
+    () => import('./ProductDetailAccessories').then((component) => component.ProductDetailAccessories),
+    { ssr: false },
 );
 
 export const DeferredProductDetailAccessories: FC<ProductDetailAccessoriesProps> = ({ accessories }) => {

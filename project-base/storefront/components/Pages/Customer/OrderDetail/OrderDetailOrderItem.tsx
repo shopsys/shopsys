@@ -1,7 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { Image } from 'components/Basic/Image/Image';
-import { CreateComplaintPopup } from 'components/Blocks/Popup/CreateComplaintPopup';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
@@ -40,12 +39,13 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
         orderItem.type === TypeOrderItemTypeEnum.Product;
 
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const openCreateComplaintPopup = (
+    const openCreateComplaintPopup = async (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
         orderUuid?: string,
         orderItem?: TypeOrderDetailItemFragment,
     ) => {
         e.stopPropagation();
+        const { CreateComplaintPopup } = await import('components/Blocks/Popup/CreateComplaintPopup');
         updatePortalContent(<CreateComplaintPopup orderItem={orderItem} orderUuid={orderUuid} />);
     };
 
