@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter;
@@ -31,6 +33,7 @@ class FeedExport
         protected readonly string $feedFilepath,
         protected readonly string $feedLocalFilepath,
         protected readonly ServicesResetter $servicesResetter,
+        protected readonly LoggerInterface $logger,
         protected ?int $lastSeekId = null,
     ) {
     }
@@ -38,12 +41,57 @@ class FeedExport
     public function wakeUp(): void
     {
         if ($this->filesystem->has($this->getTemporaryFilepath())) {
-            $this->mountManager->move(
-                'main://' . $this->getTemporaryFilepath(),
-                'local://' . $this->transformStringHelper->removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
+            try {
+                $this->mountManager->move(
+                    'main://' . $this->getTemporaryFilepath(),
+                    'local://' . $this->transformStringHelper->removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
+                );
+
+                return;
+            } catch (FilesystemException $exception) {
+                $this->handleWakeUpFailure($exception);
+            }
+        }
+
+        $this->localFilesystem->touch($this->getTemporaryLocalFilepath());
+    }
+
+    protected function handleWakeUpFailure(FilesystemException $exception): void
+    {
+        $this->logger->error(
+            'Failed to download temporary feed file from storage, restarting feed generation from the beginning.',
+            [
+                'feedName' => $this->feed->getInfo()->getName(),
+                'domainId' => $this->domainConfig->getId(),
+                'temporaryFilepath' => $this->getTemporaryFilepath(),
+                'exception' => $exception,
+            ],
+        );
+
+        $this->tryDeleteRemoteTemporaryFile();
+        $this->tryDeleteLocalTemporaryFile();
+        $this->lastSeekId = null;
+    }
+
+    protected function tryDeleteRemoteTemporaryFile(): void
+    {
+        try {
+            $this->filesystem->delete($this->getTemporaryFilepath());
+        } catch (FilesystemException $deleteException) {
+            $this->logger->warning(
+                'Failed to delete stuck temporary feed file from remote storage. Manual cleanup may be required.',
+                [
+                    'temporaryFilepath' => $this->getTemporaryFilepath(),
+                    'exception' => $deleteException,
+                ],
             );
-        } else {
-            $this->localFilesystem->touch($this->getTemporaryLocalFilepath());
+        }
+    }
+
+    protected function tryDeleteLocalTemporaryFile(): void
+    {
+        if ($this->localFilesystem->exists($this->getTemporaryLocalFilepath())) {
+            $this->localFilesystem->remove($this->getTemporaryLocalFilepath());
         }
     }
 
