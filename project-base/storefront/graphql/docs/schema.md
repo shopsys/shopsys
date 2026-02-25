@@ -2608,7 +2608,7 @@ Alternate links for hreflang meta tags
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-ID of category
+ID of blog article
 
 </td>
 </tr>
@@ -2678,7 +2678,7 @@ The blog article perex
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="blogarticle.publishdate">publishDate</strong></td>
-<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
 
 Date and time of the blog article publishing
@@ -2718,6 +2718,15 @@ The blog article SEO title
 <td>
 
 The blog article URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="blogarticle.status">status</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The blog article status (draft, preview, published)
 
 </td>
 </tr>

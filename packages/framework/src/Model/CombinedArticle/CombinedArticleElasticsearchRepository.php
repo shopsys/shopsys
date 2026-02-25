@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\CombinedArticle;
 
 use Elasticsearch\Client;
 use InvalidArgumentException;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Search\SearchSetting;
@@ -20,6 +21,7 @@ class CombinedArticleElasticsearchRepository
     public function __construct(
         protected readonly Client $client,
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -202,6 +204,8 @@ class CombinedArticleElasticsearchRepository
 
     protected function getCombinedArticlesCondition(): array
     {
+        $now = $this->clock->now()->format('Y-m-d H:i:s');
+
         return [
             'bool' => [
                 'should' => [
@@ -215,6 +219,20 @@ class CombinedArticleElasticsearchRepository
                             'must_not' => [
                                 'exists' => [
                                     'field' => 'type',
+                                ],
+                            ],
+                            'must' => [
+                                [
+                                    'term' => [
+                                        'status' => 'published',
+                                    ],
+                                ],
+                                [
+                                    'range' => [
+                                        'publishDate' => [
+                                            'lte' => $now,
+                                        ],
+                                    ],
                                 ],
                             ],
                         ],

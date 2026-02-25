@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -22,10 +23,12 @@ use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleGridFactory;
+use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleStatusTransitionException;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[ForRole(AdminRoleConstant::ROLE_BLOG_ARTICLE)]
 class BlogArticleController extends AdminBaseController
@@ -38,6 +41,8 @@ class BlogArticleController extends AdminBaseController
         protected readonly BlogArticleGridFactory $blogArticleGridFactory,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly Localization $localization,
+        protected readonly Domain $domain,
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -58,7 +63,7 @@ class BlogArticleController extends AdminBaseController
             $this->localization->getCurrentLocaleForTranslatableEntities(),
         );
 
-        $grid = $this->blogArticleGridFactory->create($queryBuilder);
+        $grid = $this->blogArticleGridFactory->create($queryBuilder, $selectedDomainId);
 
         return $this->render('@ShopsysAdministration/content/blog/article/list.html.twig', [
             'quickSearchForm' => $quickSearchForm->createView(),
@@ -81,18 +86,22 @@ class BlogArticleController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->blogArticleFacade->edit($id, $blogArticleData);
+            try {
+                $this->blogArticleFacade->edit($id, $blogArticleData);
 
-            $this
-                ->addSuccessFlashTwig(
-                    t('Blog article <strong><a href="{{ url }}">{{ name }}</a></strong> has been updated'),
-                    [
-                        'name' => $blogArticle->getName(),
-                        'url' => $this->generateUrl('admin_blogarticle_edit', ['id' => $blogArticle->getId()]),
-                    ],
-                );
+                $this
+                    ->addSuccessFlashTwig(
+                        t('Blog article <strong><a href="{{ url }}">{{ name }}</a></strong> has been updated'),
+                        [
+                            'name' => $blogArticle->getName(),
+                            'url' => $this->generateUrl('admin_blogarticle_edit', ['id' => $blogArticle->getId()]),
+                        ],
+                    );
 
-            return $this->redirectToRoute('admin_blogarticle_list');
+                return $this->redirectToRoute('admin_blogarticle_list');
+            } catch (BlogArticleStatusTransitionException $e) {
+                $this->addErrorFlash($e->getMessage());
+            }
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -104,6 +113,7 @@ class BlogArticleController extends AdminBaseController
         return $this->render('@ShopsysAdministration/content/blog/article/edit.html.twig', [
             'form' => $form->createView(),
             'blogArticle' => $blogArticle,
+            'domains' => $this->domain->getAdminEnabledDomains(),
         ]);
     }
 
@@ -119,18 +129,22 @@ class BlogArticleController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $blogArticle = $this->blogArticleFacade->create($blogArticleData);
+            try {
+                $blogArticle = $this->blogArticleFacade->create($blogArticleData);
 
-            $this
-                ->addSuccessFlashTwig(
-                    t('Blog article <strong><a href="{{ url }}">{{ name }}</a></strong> has been created'),
-                    [
-                        'name' => $blogArticle->getName(),
-                        'url' => $this->generateUrl('admin_blogarticle_edit', ['id' => $blogArticle->getId()]),
-                    ],
-                );
+                $this
+                    ->addSuccessFlashTwig(
+                        t('Blog article <strong><a href="{{ url }}">{{ name }}</a></strong> has been created'),
+                        [
+                            'name' => $blogArticle->getName(),
+                            'url' => $this->generateUrl('admin_blogarticle_edit', ['id' => $blogArticle->getId()]),
+                        ],
+                    );
 
-            return $this->redirectToRoute('admin_blogarticle_list');
+                return $this->redirectToRoute('admin_blogarticle_list');
+            } catch (BlogArticleStatusTransitionException $e) {
+                $this->addErrorFlash($e->getMessage());
+            }
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

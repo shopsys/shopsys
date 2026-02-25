@@ -1,0 +1,9 @@
+{
+    blogArticles {
+        edges {
+            node {
+                uuid
+            }
+        }
+    }
+}

@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoResultException;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQuery;
+use Symfony\Component\Clock\MockClock;
 
 class BlogArticleElasticsearchDataFetcherTest extends TestCase
 {
@@ -17,7 +18,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
         $expectedTotalCount = 10;
         $mockedResultArray = $this->getMockedResultArray($expectedTotalCount, []);
         $articleElasticsearchDataFetcher = $this->getBlogArticleElasticsearchDataFetcherWithMockedClient($mockedResultArray);
-        $actualTotalCount = $articleElasticsearchDataFetcher->getTotalCount(new FilterQuery('blog_articles'));
+        $actualTotalCount = $articleElasticsearchDataFetcher->getTotalCount(new FilterQuery('blog_articles', new MockClock()));
 
         $this->assertEquals($expectedTotalCount, $actualTotalCount);
     }
@@ -25,13 +26,13 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
     public function testGetSingleResult(): void
     {
         $expectedBlogArticleData = $this->getBlogArticleDataDefaultValues();
-        $expectedBlogArticleData['id'] = '1';
+        $expectedBlogArticleData['id'] = 1;
 
         $mockedHits = $this->getMockedHits($expectedBlogArticleData);
         $mockedResultArray = $this->getMockedResultArray(1, $mockedHits);
 
         $articleElasticsearchDataFetcher = $this->getBlogArticleElasticsearchDataFetcherWithMockedClient($mockedResultArray);
-        $actualResults = $articleElasticsearchDataFetcher->getSingleResult(new FilterQuery('blog_articles'));
+        $actualResults = $articleElasticsearchDataFetcher->getSingleResult(new FilterQuery('blog_articles', new MockClock()));
 
         $this->assertEquals($expectedBlogArticleData, $actualResults);
     }
@@ -43,7 +44,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
         $articleElasticsearchDataFetcher = $this->getBlogArticleElasticsearchDataFetcherWithMockedClient($mockedResultArray);
 
         $this->expectException(ElasticsearchNoResultException::class);
-        $articleElasticsearchDataFetcher->getSingleResult(new FilterQuery('blog_articles'));
+        $articleElasticsearchDataFetcher->getSingleResult(new FilterQuery('blog_articles', new MockClock()));
     }
 
     public function testGetAllResults(): void
@@ -52,13 +53,13 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
         $expectedBlogArticleData1['id'] = '1';
 
         $expectedBlogArticleData2 = $this->getBlogArticleDataDefaultValues();
-        $expectedBlogArticleData2['id'] = '2';
+        $expectedBlogArticleData2['id'] = 2;
 
         $mockedHits = $this->getMockedHits($expectedBlogArticleData1, $expectedBlogArticleData2);
         $mockedResultArray = $this->getMockedResultArray(2, $mockedHits);
 
         $articleElasticsearchDataFetcher = $this->getBlogArticleElasticsearchDataFetcherWithMockedClient($mockedResultArray);
-        $actualResults = $articleElasticsearchDataFetcher->getAllResults(new FilterQuery('blog_articles'));
+        $actualResults = $articleElasticsearchDataFetcher->getAllResults(new FilterQuery('blog_articles', new MockClock()));
 
         $this->assertEquals([$expectedBlogArticleData1, $expectedBlogArticleData2], $actualResults);
     }
@@ -90,6 +91,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
             'mainSlug' => '',
             'products' => [],
             'imageUrl' => null,
+            'status' => 'published',
         ];
     }
 

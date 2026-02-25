@@ -166,6 +166,21 @@ msgstr "Naozaj?"
 msgid "Article"
 msgstr "Článok"
 
+msgid "Article is accessible via direct URL only, with noindex/nofollow."
+msgstr "Článok je prístupný iba cez priamy odkaz, s noindex/nofollow."
+
+msgid "Article is fully visible on storefront."
+msgstr "Článok je plne viditeľný na e-shope."
+
+msgid "Article is only visible in administration."
+msgstr "Článok je viditeľný iba v administrácii."
+
+msgid "Article is published but not visible on storefront (missing name or category)."
+msgstr "Článok je publikovaný, ale nie je viditeľný na e-shope (chýba názov alebo kategória)."
+
+msgid "Article will be visible from %date%."
+msgstr "Článok bude viditeľný od %date%."
+
 msgid "Articles"
 msgstr "Články"
 
@@ -655,6 +670,9 @@ msgstr "Filter domén"
 msgid "Download"
 msgstr "Stiahnuť"
 
+msgid "Draft"
+msgstr "Rozpracované"
+
 msgid "Drag to reorder"
 msgstr "Pretiahnutím zoradíte"
 
@@ -1135,6 +1153,9 @@ msgstr "Prehľad Measurement units"
 msgid "Medium"
 msgstr "Stredné"
 
+msgid "Mixed"
+msgstr "Rôzne"
+
 msgid "Modifications"
 msgstr "Modifikácie"
 
@@ -1603,6 +1624,12 @@ msgstr "Propagované produkty"
 msgid "Public access"
 msgstr "Verejný prístup"
 
+msgid "Published"
+msgstr "Zverejnené"
+
+msgid "Published (invisible)"
+msgstr "Zverejnené (neviditeľné)"
+
 msgid "Quantity"
 msgstr "Množstvo"
 
@@ -1872,6 +1899,9 @@ msgstr "Špeciálna cena"
 
 msgid "Status"
 msgstr "Stav"
+
+msgid "Status differs across domains. Select a domain to see details."
+msgstr "Stav sa v jednotlivých doménach líši. Podrobnosti zobrazíte výberom domény."
 
 msgid "Stops on first failure"
 msgstr "Zastaví sa pri prvej chybe"

@@ -313,7 +313,7 @@ export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHrefla
   createdAt: Scalars['DateTime']['output'];
   /** Alternate links for hreflang meta tags */
   hreflangLinks: Array<TypeHreflangLink>;
-  /** ID of category */
+  /** ID of blog article */
   id: Scalars['Int']['output'];
   /** Blog article images */
   images: Array<TypeImage>;
@@ -328,7 +328,7 @@ export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHrefla
   /** The blog article perex */
   perex: Maybe<Scalars['String']['output']>;
   /** Date and time of the blog article publishing */
-  publishDate: Scalars['DateTime']['output'];
+  publishDate: Maybe<Scalars['DateTime']['output']>;
   /** The blog article SEO H1 heading */
   seoH1: Maybe<Scalars['String']['output']>;
   /** The blog article SEO meta description */
@@ -337,6 +337,8 @@ export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHrefla
   seoTitle: Maybe<Scalars['String']['output']>;
   /** The blog article URL slug */
   slug: Scalars['String']['output'];
+  /** The blog article status (draft, preview, published) */
+  status: Scalars['String']['output'];
   /** The blog article text */
   text: Maybe<Scalars['String']['output']>;
   /** The blog article UUID */

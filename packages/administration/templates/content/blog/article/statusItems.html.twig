@@ -1,0 +1,46 @@
+<p>
+    {% for domain in domains %}
+        {% set status = blogArticle.getStatus(domain.id) %}
+        {% set publishDate = blogArticle.getPublishDate(domain.id) %}
+        {% set visible = blogArticle.isVisible(domain.id) %}
+        {% set url = null %}
+
+        {% if blogArticle.getName(domain.locale) is not same as(null) %}
+            {% set url = findUrlByDomainId('front_blogarticle_detail', { id: blogArticle.id }, domain.id) %}
+        {% endif %}
+
+        <div class="row align-items-center mb-3">
+
+            {% if isMultidomain() %}
+                <div class="col-auto">
+                    {{ domain_icon(domain.id) }}
+                </div>
+            {% endif %}
+
+            <div class="col">
+                {% if url is not null and blogArticle.isAccessibleOnStorefront(domain.id) %}
+                    <a href="{{ url }}" target="_blank">
+                        {% if isMultidomain() %}
+                            {{ getDomainName(domain.id) }}
+                            {{ ux_icon('forward-page') }}
+                        {% else %}
+                            <span title="{{ 'Go to Frontend'|trans }}" data-bs-toggle="tooltip">
+                                {{ ux_icon('forward-page') }}
+                            </span>
+                        {% endif %}
+                    </a>
+                {% elseif isMultidomain() %}
+                    {{ getDomainName(domain.id) }}
+                {% endif %}
+            </div>
+
+            <div class="col-auto">
+                {% include '@ShopsysAdministration/content/blog/article/statusBadge.html.twig' with {
+                    status: status,
+                    publishDate: publishDate,
+                    visible: visible,
+                } only %}
+            </div>
+        </div>
+    {% endfor %}
+</p>

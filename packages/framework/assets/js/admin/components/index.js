@@ -55,5 +55,6 @@ import './SelectAdminDomains';
 import './SortableValues';
 import './PinnedMenuItem';
 import './Statistics';
+import './StatusDescription';
 import './TransportPriceWithWeightLimitCollection';
 import './ImportPriceList';

@@ -266,7 +266,7 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
   createdAt: DateTime!
   "Alternate links for hreflang meta tags"
   hreflangLinks: [HreflangLink!]!
-  "ID of category"
+  "ID of blog article"
   id: Int!
   "Blog article images"
   images(type: String = null): [Image!]!
@@ -281,7 +281,7 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
   "The blog article perex"
   perex: String
   "Date and time of the blog article publishing"
-  publishDate: DateTime!
+  publishDate: DateTime
   "The blog article SEO H1 heading"
   seoH1: String
   "The blog article SEO meta description"
@@ -290,6 +290,8 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
   seoTitle: String
   "The blog article URL slug"
   slug: String!
+  "The blog article status (draft, preview, published)"
+  status: String!
   "The blog article text"
   text: String
   "The blog article UUID"

@@ -89,7 +89,7 @@ class BlogArticleRepository
         if ($domainId === null) {
             $queryBuilder = $this->getAllBlogArticlesByLocaleQueryBuilder($locale);
         } else {
-            $queryBuilder = $this->getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory($domainId, $locale);
+            $queryBuilder = $this->getBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale);
         }
 
         if ($this->transformStringHelper->emptyToNull($searchData->text) !== null) {
@@ -115,11 +115,27 @@ class BlogArticleRepository
     {
         return $this->getBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
             ->join('ba.domains', 'bad', Join::WITH, 'bad.domainId = :domainId')
-            ->andWhere('ba.publishDate <= :now')
+            ->andWhere('bad.publishDate <= :now')
             ->andWhere('bad.visible = true')
-            ->andWhere('ba.hidden = false')
+            ->andWhere('bad.status = :publishedStatus')
             ->setParameter('now', $this->clock->now())
-            ->setParameter('domainId', $domainId);
+            ->setParameter('domainId', $domainId)
+            ->setParameter('publishedStatus', BlogArticleStatusEnum::STATUS_PUBLISHED);
+    }
+
+    public function getExportableBlogArticlesByDomainIdAndLocaleQueryBuilder(
+        int $domainId,
+        string $locale,
+    ): QueryBuilder {
+        return $this->getBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
+            ->join('ba.domains', 'bad', Join::WITH, 'bad.domainId = :domainId')
+            ->andWhere('bad.visible = true')
+            ->andWhere('bad.status IN (:exportableStatuses)')
+            ->setParameter('domainId', $domainId)
+            ->setParameter('exportableStatuses', [
+                BlogArticleStatusEnum::STATUS_PUBLISHED,
+                BlogArticleStatusEnum::STATUS_PREVIEW,
+            ]);
     }
 
     public function getAllBlogArticlesCountByDomainId(int $domainId): int

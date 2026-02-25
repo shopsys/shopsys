@@ -11,12 +11,13 @@ use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData;
 use stdClass;
+use Symfony\Component\Clock\MockClock;
 
 class FilterQueryTest extends TestCase
 {
     public function testFilterByUuid(): void
     {
-        $filterQuery = new FilterQuery('blog_article');
+        $filterQuery = new FilterQuery('blog_article', new MockClock());
         $uuid = '123e4567-e89b-12d3-a456-426614174000';
         $actualQuery = $filterQuery->filterByUuid($uuid)->getQuery();
 
@@ -52,7 +53,7 @@ class FilterQueryTest extends TestCase
 
     public function testFilterBySlug(): void
     {
-        $filterQuery = new FilterQuery('blog_article');
+        $filterQuery = new FilterQuery('blog_article', new MockClock());
         $slug = 'blog-article-slug';
         $actualQuery = $filterQuery->filterBySlug($slug)->getQuery();
 
@@ -88,7 +89,7 @@ class FilterQueryTest extends TestCase
 
     public function testFilterByCategory(): void
     {
-        $filterQuery = new FilterQuery('blog_article');
+        $filterQuery = new FilterQuery('blog_article', new MockClock());
         $blogCategory = $this->getBlogCategoryWithId1();
         $actualQuery = $filterQuery->filterByCategory($blogCategory)->getQuery();
 
@@ -125,7 +126,7 @@ class FilterQueryTest extends TestCase
     #[DataProvider('offsetAndLimitDataProvider')]
     public function testFilterWithOffsetAndLimit(?int $limit, ?int $offset, int $expectedSize, int $expectedFrom): void
     {
-        $filterQuery = new FilterQuery('blog_article');
+        $filterQuery = new FilterQuery('blog_article', new MockClock());
         $filterQueryWithOffsetAndLimit = $filterQuery->setLimit($limit)->setFrom($offset);
         $actualQuery = $filterQueryWithOffsetAndLimit->getQuery();
 

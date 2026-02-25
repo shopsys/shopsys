@@ -29,7 +29,7 @@ class BlogArticleResolverMap extends ResolverMap
                     return $this->blogCategoryFacade->getVisibleByIds($this->domain->getId(), $blogArticleData['categories']);
                 },
                 'publishDate' => static function (array $blogArticleData) {
-                    return new DatePoint($blogArticleData['publishDate']);
+                    return $blogArticleData['publishDate'] !== null ? new DatePoint($blogArticleData['publishDate']) : null;
                 },
                 'createdAt' => static function (array $blogArticleData) {
                     return new DatePoint($blogArticleData['createdAt']);

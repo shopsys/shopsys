@@ -43,7 +43,7 @@ class BlogArticleVisibilityRepository
             'UPDATE blog_article_domains AS bad
                 SET visible = CASE
                     WHEN (
-                        ba.hidden = FALSE
+                        bad.status IN (:statusPublished, :statusPreview)
                         AND EXISTS (
                             SELECT 1
                             FROM blog_article_translations AS bat
@@ -70,10 +70,14 @@ class BlogArticleVisibilityRepository
             [
                 'locale' => $domainConfig->getLocale(),
                 'domainId' => $domainConfig->getId(),
+                'statusPublished' => BlogArticleStatusEnum::STATUS_PUBLISHED,
+                'statusPreview' => BlogArticleStatusEnum::STATUS_PREVIEW,
             ],
             [
                 'locale' => Types::STRING,
                 'domainId' => Types::INTEGER,
+                'statusPublished' => Types::STRING,
+                'statusPreview' => Types::STRING,
             ],
         );
     }

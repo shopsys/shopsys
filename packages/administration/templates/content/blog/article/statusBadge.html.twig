@@ -1,0 +1,28 @@
+{% if status is same as constant('Shopsys\\FrameworkBundle\\Model\\Blog\\Article\\BlogArticleStatusEnum::STATUS_DRAFT') %}
+    <span class="badge bg-secondary-lt cursor-help"
+          title="{{ 'Article is only visible in administration.'|trans }}"
+          data-bs-toggle="tooltip"
+    >{{ 'Draft'|trans }}</span>
+{% elseif status is same as constant('Shopsys\\FrameworkBundle\\Model\\Blog\\Article\\BlogArticleStatusEnum::STATUS_PREVIEW') %}
+    <span class="badge bg-orange-lt cursor-help"
+          title="{{ 'Article is accessible via direct URL only, with noindex/nofollow.'|trans }}"
+          data-bs-toggle="tooltip"
+    >{{ 'Preview'|trans }}</span>
+{% elseif status is same as constant('Shopsys\\FrameworkBundle\\Model\\Blog\\Article\\BlogArticleStatusEnum::STATUS_PUBLISHED') %}
+    {% if publishDate is not null and date(publishDate) > date() %}
+        <span class="badge bg-cyan-lt cursor-help"
+              title="{{ 'Article will be visible from %date%.'|trans({'%date%': publishDate|date('j.n.Y G:i')}) }}"
+              data-bs-toggle="tooltip"
+        >{{ 'Scheduled'|trans }}</span>
+    {% elseif not visible %}
+        <span class="badge bg-yellow-lt cursor-help"
+              title="{{ 'Article is published but not visible on storefront (missing name or category).'|trans }}"
+              data-bs-toggle="tooltip"
+        >{{ 'Published (invisible)'|trans }}</span>
+    {% else %}
+        <span class="badge bg-green-lt cursor-help"
+              title="{{ 'Article is fully visible on storefront.'|trans }}"
+              data-bs-toggle="tooltip"
+        >{{ 'Published'|trans }}</span>
+    {% endif %}
+{% endif %}
