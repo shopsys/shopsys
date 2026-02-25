@@ -71,8 +71,8 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
             $giftPlanData->domainId = $domainId;
             $giftPlanData->validFrom = null;
             $giftPlanData->validTo = (new DatePoint())->modify('-3 days');
-            $giftPlanData->giftProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
-            $giftPlanData->mainProducts = [$this->getReference(ProductDataFixture::PRODUCT_PREFIX . '14')];
+            $giftPlanData->giftProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '81');
+            $giftPlanData->mainProducts = [$this->getReference(ProductDataFixture::PRODUCT_PREFIX . '77')];
             $giftPlan = $this->createGiftPlan($giftPlanData);
             $this->addReferenceForDomain(self::GIFT_PLAN_INVALID, $giftPlan, $domainId);
 
@@ -82,8 +82,8 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
             $giftPlanData->domainId = $domainId;
             $giftPlanData->validFrom = null;
             $giftPlanData->validTo = null;
-            $giftPlanData->giftProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '76');
-            $giftPlanData->mainProducts = [$this->getReference(ProductDataFixture::PRODUCT_PREFIX . '14')];
+            $giftPlanData->giftProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '71');
+            $giftPlanData->mainProducts = [$this->getReference(ProductDataFixture::PRODUCT_PREFIX . '10')];
             $giftPlan = $this->createGiftPlan($giftPlanData);
             $this->addReferenceForDomain(self::GIFT_PLAN_SALE_EXCLUDED, $giftPlan, $domainId);
         }
