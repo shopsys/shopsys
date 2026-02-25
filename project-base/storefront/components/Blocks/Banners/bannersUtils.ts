@@ -1,4 +1,4 @@
-export type CarouselState = {
+type CarouselState = {
     sliderPosition: number;
     isSliding: boolean;
     slideDirection: 'PREV' | 'NEXT';

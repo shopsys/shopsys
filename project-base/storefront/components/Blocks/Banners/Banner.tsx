@@ -1,5 +1,4 @@
 import { BannerImage } from './BannerImage';
-import { CarouselState, getBannerOrderCSSProperty } from './bannersUtils';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import { getRGBColorString, getYIQContrastTextColor } from 'utils/colors/colors';
@@ -8,9 +7,8 @@ import { twMergeCustom } from 'utils/twMerge';
 
 type BannerProps = {
     banner: TypeSliderItemFragment;
-    bannerSliderState: CarouselState;
-    index: number;
-    numItems: number;
+    order: number;
+    isFirst: boolean;
 };
 
 const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, className }) => (
@@ -39,21 +37,15 @@ const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, classNa
     </div>
 );
 
-export const Banner: FC<BannerProps> = ({ banner, bannerSliderState, index, numItems }) => {
+export const Banner: FC<BannerProps> = ({ banner, order, isFirst }) => {
     const { t } = useTranslation();
 
     return (
-        <div
-            key={banner.link}
-            className="vl:flex-row flex flex-[1_0_100%] basis-full flex-col"
-            style={{
-                order: getBannerOrderCSSProperty(index, bannerSliderState.sliderPosition, numItems),
-            }}
-        >
+        <div key={banner.link} className="vl:flex-row flex flex-[1_0_100%] basis-full flex-col" style={{ order }}>
             <BannerImage
                 desktopAlt={`${t('Promotional banner')} - ${banner.webMainImage.name || banner.name} - ${banner.description?.slice(0, 50)}`}
                 desktopSrc={banner.webMainImage.url}
-                isFirst={index === 0}
+                isFirst={isFirst}
                 mobileAlt={`${t('Promotional banner')} - ${banner.mobileMainImage.name || banner.name} - ${banner.description?.slice(0, 50)}`}
                 mobileSrc={banner.mobileMainImage.url}
             >
