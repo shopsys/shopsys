@@ -16,7 +16,8 @@ export const packeteryPick: PacketeryPickFunction = (apiKey, callback, opts, inE
         return;
     }
 
-    window.Packeta.Widget.pick(apiKey, callback, opts, inElement);
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    window.Packeta?.Widget?.pick?.(apiKey, callback, opts, inElement);
 };
 
 export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExtendedPoint): StoreOrPacketeryPoint => ({
