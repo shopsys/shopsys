@@ -9,6 +9,9 @@ ProductListDecorator:
             type:
                 type: "ProductListTypeEnum!"
                 description: "Product list type"
+            itemsCount:
+                type: "Int!"
+                description: "Total count of products in the list"
             products:
                 type: "[Product!]!"
                 description: "An array of the products in the list"

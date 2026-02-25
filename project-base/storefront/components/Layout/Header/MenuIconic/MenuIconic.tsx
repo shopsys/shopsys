@@ -5,10 +5,10 @@ import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TypeProductListTypeEnum } from 'graphql/types';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { useComparison } from 'utils/productLists/comparison/useComparison';
-import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
+import { useProductListCount } from 'utils/productLists/useProductListCount';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const MenuIconic: FC = () => {
@@ -18,8 +18,8 @@ export const MenuIconic: FC = () => {
         ['/stores', '/product-comparison', '/wishlist'],
         url,
     );
-    const { comparison } = useComparison();
-    const { wishlist } = useWishlist();
+    const comparisonCount = useProductListCount(TypeProductListTypeEnum.Comparison);
+    const wishlistCount = useProductListCount(TypeProductListTypeEnum.Wishlist);
     const isUserLoggedIn = useIsUserLoggedIn();
 
     const menuCountTwClass =
@@ -49,9 +49,7 @@ export const MenuIconic: FC = () => {
                     >
                         <div className="relative">
                             <CompareIcon className="size-6" />
-                            {!!comparison?.products.length && (
-                                <span className={menuCountTwClass}>{comparison.products.length}</span>
-                            )}
+                            {!!comparisonCount && <span className={menuCountTwClass}>{comparisonCount}</span>}
                         </div>
                         <span className="max-lg:hidden">{t('Comparison')}</span>
                     </MenuIconicItemLink>
@@ -66,9 +64,7 @@ export const MenuIconic: FC = () => {
                     >
                         <div className="relative">
                             <HeartIcon className="size-6" />
-                            {!!wishlist?.products.length && (
-                                <span className={menuCountTwClass}>{wishlist.products.length}</span>
-                            )}
+                            {!!wishlistCount && <span className={menuCountTwClass}>{wishlistCount}</span>}
                         </div>
                         <span className="max-lg:hidden">{t('Wishlist')}</span>
                     </MenuIconicItemLink>

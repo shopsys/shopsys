@@ -2189,6 +2189,8 @@ type ProductFilterOptions {
 }
 
 type ProductList {
+  "Total count of products in the list"
+  itemsCount: Int!
   "An array of the products in the list"
   products: [Product!]!
   "Product list type"

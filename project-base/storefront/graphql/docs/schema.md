@@ -8426,6 +8426,15 @@ Parameter filter options
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="productlist.itemscount">itemsCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total count of products in the list
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="productlist.products">products</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
