@@ -291,7 +291,7 @@ final class ComplaintFormType extends AbstractType
         ComplaintData $complaintData,
         ExecutionContextInterface $context,
     ): void {
-        foreach ($complaintData->complaintItems as $complaintItemData) {
+        foreach ($complaintData->complaintItems as $key => $complaintItemData) {
             $orderedQuantity = $complaintItemData->orderItem?->getQuantity();
 
             if ($complaintItemData->orderItem === null || $complaintItemData->quantity <= $orderedQuantity) {
@@ -304,7 +304,7 @@ final class ComplaintFormType extends AbstractType
             ], Translator::VALIDATOR_TRANSLATION_DOMAIN);
             $context
                 ->buildViolation($message)
-                ->atPath('complaintItems')
+                ->atPath(sprintf('complaintItems[%s].quantity', $key))
                 ->addViolation();
         }
     }
