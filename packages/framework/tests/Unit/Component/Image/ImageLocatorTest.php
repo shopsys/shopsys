@@ -11,40 +11,20 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigDefinition;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
-use stdClass;
-use Symfony\Component\Filesystem\Filesystem;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityForImageLocator;
 
 class ImageLocatorTest extends TestCase
 {
     private function getBaseImageConfig(): ImageConfig
     {
-        $inputConfig = [
-            [
-                ImageConfigDefinition::CONFIG_CLASS => stdClass::class,
-                ImageConfigDefinition::CONFIG_ENTITY_NAME => 'Name_1',
-                ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                ImageConfigDefinition::CONFIG_TYPES => [
-                    [
-                        ImageConfigDefinition::CONFIG_TYPE_NAME => 'TypeName_1',
-                        ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                    ],
-                    [
-                        ImageConfigDefinition::CONFIG_TYPE_NAME => 'TypeName_2',
-                        ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                    ],
-                ],
-            ],
-        ];
-
-        $filesystem = new Filesystem();
         $entityNameResolver = new EntityNameResolver([]);
-        $imageConfigLoader = new ImageConfigLoader($filesystem, $entityNameResolver);
-        $imageEntityConfigByClass = $imageConfigLoader->loadFromArray($inputConfig);
+        $imageConfigLoader = new ImageConfigLoader($entityNameResolver);
 
-        return new ImageConfig($imageEntityConfigByClass, $entityNameResolver);
+        return $imageConfigLoader->loadFromEntityClasses([
+            TestEntityForImageLocator::class,
+        ]);
     }
 
     public static function getRelativeImagePathProvider(): array
@@ -95,6 +75,7 @@ class ImageLocatorTest extends TestCase
         $imageLocator = new ImageLocator('imageDir', $this->getBaseImageConfig(), $filesystemStub);
 
         $this->expectException($exceptionClass);
+
         $imageLocator->getRelativeImagePath($entityName, $type);
     }
 }

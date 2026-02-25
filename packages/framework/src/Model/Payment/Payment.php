@@ -12,6 +12,7 @@ use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentDomainNotFoundException;
@@ -24,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
  */
 #[ORM\Table(name: 'payments')]
 #[ORM\Entity]
+#[EntityImage]
 class Payment extends AbstractTranslatableEntity implements OrderableEntityInterface
 {
     protected const int GEDMO_SORTABLE_LAST_POSITION = -1;

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
@@ -17,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  */
 #[ORM\Table(name: 'blog_articles')]
 #[ORM\Entity]
+#[EntityImage]
 class BlogArticle extends AbstractTranslatableEntity
 {
     /**

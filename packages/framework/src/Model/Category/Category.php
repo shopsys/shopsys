@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -22,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 #[ORM\Index(columns: ['rgt'])]
 #[ORM\Entity]
 #[Gedmo\Tree(type: 'nested')]
+#[EntityImage]
 class Category extends AbstractTranslatableEntity
 {
     /**

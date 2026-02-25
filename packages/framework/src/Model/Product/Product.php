@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -32,6 +33,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 #[ORM\Table(name: 'products')]
 #[ORM\Index(columns: ['variant_type'])]
 #[ORM\Entity]
+#[EntityImage(multiple: true)]
 class Product extends AbstractTranslatableEntity
 {
     public const VARIANT_TYPE_NONE = 'none';

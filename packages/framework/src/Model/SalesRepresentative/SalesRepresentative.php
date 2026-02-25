@@ -6,9 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 
 #[ORM\Table(name: 'sales_representatives')]
 #[ORM\Entity]
+#[EntityImage]
 class SalesRepresentative
 {
     /**

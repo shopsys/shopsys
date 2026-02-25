@@ -323,11 +323,6 @@ services:
         arguments:
             $dsn: 'file:%kernel.project_dir%/var/cache/profiler'
 
-    Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig:
-        arguments:
-            - '%shopsys.image_config_filepath%'
-        factory: ['@Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader', loadFromYaml]
-
     Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator:
         arguments:
             - '%shopsys.image_dir%'

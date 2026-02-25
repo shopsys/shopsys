@@ -9,10 +9,19 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateEntityNameExceptionInvalid;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateTypeNameExceptionInvalid;
-use Shopsys\FrameworkBundle\Component\Image\Config\Exception\EntityParseException;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigDefinition;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader;
-use Symfony\Component\Filesystem\Filesystem;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityChildWithFolder;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityChildWithNothing;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityChildWithTypes;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityDuplicateNameA;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityDuplicateNameAChild;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityDuplicateNameB;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityParentWithTypesAndFolder;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityWithDuplicateTypes;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityWithImage;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityWithMultipleImages;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityWithoutAttribute;
+use Tests\FrameworkBundle\Unit\Component\Image\Config\Resources\TestEntityWithTypes;
 
 class ImageConfigLoaderTest extends TestCase
 {
@@ -21,124 +30,150 @@ class ImageConfigLoaderTest extends TestCase
     #[Override]
     protected function setUp(): void
     {
-        $filesystem = new Filesystem();
         $entityNameResolver = new EntityNameResolver([]);
-        $this->imageConfigLoader = new ImageConfigLoader($filesystem, $entityNameResolver);
+        $this->imageConfigLoader = new ImageConfigLoader($entityNameResolver);
     }
 
-    public function testLoadFromArrayDuplicateEntityName(): void
+    public function testLoadFromEntityClassesThrowsOnDuplicateTypeName(): void
     {
-        $inputConfig = [
-            [
-                ImageConfigDefinition::CONFIG_ENTITY_NAME => 'Name_1',
-                ImageConfigDefinition::CONFIG_CLASS => 'Class_1',
-                ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                ImageConfigDefinition::CONFIG_TYPES => [],
-            ],
-            [
-                ImageConfigDefinition::CONFIG_ENTITY_NAME => 'Name_1',
-                ImageConfigDefinition::CONFIG_CLASS => 'Class_2',
-                ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                ImageConfigDefinition::CONFIG_TYPES => [],
-            ],
-        ];
+        $this->expectException(DuplicateTypeNameExceptionInvalid::class);
 
-        $previousException = null;
-
-        try {
-            $this->imageConfigLoader->loadFromArray($inputConfig);
-        } catch (EntityParseException $exception) {
-            $previousException = $exception->getPrevious();
-        }
-
-        $this->assertInstanceOf(DuplicateEntityNameExceptionInvalid::class, $previousException);
+        $this->imageConfigLoader->loadFromEntityClasses([
+            TestEntityWithDuplicateTypes::class,
+        ]);
     }
 
-    public function testLoadFromArrayDuplicateEntityClass(): void
+    public function testLoadFromEntityClassesBasic(): void
     {
-        $inputConfig = [
-            [
-                ImageConfigDefinition::CONFIG_CLASS => 'Class_1',
-                ImageConfigDefinition::CONFIG_ENTITY_NAME => 'Name_1',
-                ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                ImageConfigDefinition::CONFIG_TYPES => [],
-            ],
-            [
-                ImageConfigDefinition::CONFIG_ENTITY_NAME => 'Name_2',
-                ImageConfigDefinition::CONFIG_CLASS => 'Class_1',
-                ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                ImageConfigDefinition::CONFIG_TYPES => [],
-            ],
-        ];
+        $config = $this->imageConfigLoader->loadFromEntityClasses([
+            TestEntityWithImage::class,
+        ]);
 
-        $previousException = null;
+        $entityConfig = $config->getImageEntityConfigByClass(TestEntityWithImage::class);
 
-        try {
-            $this->imageConfigLoader->loadFromArray($inputConfig);
-        } catch (EntityParseException $exception) {
-            $previousException = $exception->getPrevious();
-        }
-
-        $this->assertInstanceOf(DuplicateEntityNameExceptionInvalid::class, $previousException);
+        $this->assertSame('testEntity', $entityConfig->getEntityName());
+        $this->assertFalse($entityConfig->isMultiple(null));
+        $this->assertSame(['default'], $entityConfig->getTypes());
     }
 
-    public function testLoadFromArrayDuplicateTypeName(): void
+    public function testLoadFromEntityClassesMultiple(): void
     {
-        $inputConfig = [
-            [
-                ImageConfigDefinition::CONFIG_CLASS => 'Class_1',
-                ImageConfigDefinition::CONFIG_ENTITY_NAME => 'Name_1',
-                ImageConfigDefinition::CONFIG_TYPES => [
-                    [
-                        ImageConfigDefinition::CONFIG_TYPE_NAME => 'TypeName_1',
-                        ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                    ],
-                    [
-                        ImageConfigDefinition::CONFIG_TYPE_NAME => 'TypeName_1',
-                        ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                    ],
-                ],
-            ],
-        ];
+        $config = $this->imageConfigLoader->loadFromEntityClasses([
+            TestEntityWithMultipleImages::class,
+        ]);
 
-        $previousException = null;
+        $entityConfig = $config->getImageEntityConfigByClass(TestEntityWithMultipleImages::class);
 
-        try {
-            $this->imageConfigLoader->loadFromArray($inputConfig);
-        } catch (EntityParseException $exception) {
-            $previousException = $exception->getPrevious();
-        }
-
-        $this->assertInstanceOf(DuplicateTypeNameExceptionInvalid::class, $previousException);
+        $this->assertSame('testEntityMultiple', $entityConfig->getEntityName());
+        $this->assertTrue($entityConfig->isMultiple(null));
+        $this->assertSame(['default'], $entityConfig->getTypes());
     }
 
-    public function testLoadFromArray(): void
+    public function testLoadFromEntityClassesWithTypes(): void
     {
-        $inputConfig = [
-            [
-                ImageConfigDefinition::CONFIG_CLASS => 'Class_1',
-                ImageConfigDefinition::CONFIG_ENTITY_NAME => 'Name_1',
-                ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                ImageConfigDefinition::CONFIG_TYPES => [
-                    [
-                        ImageConfigDefinition::CONFIG_TYPE_NAME => 'TypeName_1',
-                        ImageConfigDefinition::CONFIG_MULTIPLE => true,
-                    ],
-                    [
-                        ImageConfigDefinition::CONFIG_TYPE_NAME => 'TypeName_2',
-                        ImageConfigDefinition::CONFIG_MULTIPLE => false,
-                    ],
-                ],
-            ],
-        ];
+        $config = $this->imageConfigLoader->loadFromEntityClasses([
+            TestEntityWithTypes::class,
+        ]);
 
-        $preparedConfig = $this->imageConfigLoader->loadFromArray($inputConfig);
+        $entityConfig = $config->getImageEntityConfigByClass(TestEntityWithTypes::class);
 
-        $imageEntityConfig = $preparedConfig[$inputConfig[0][ImageConfigDefinition::CONFIG_CLASS]];
-        $this->assertSame('Class_1', $imageEntityConfig->getEntityClass());
-        $this->assertSame('Name_1', $imageEntityConfig->getEntityName());
-        $this->assertFalse($imageEntityConfig->isMultiple(null));
-        $this->assertTrue($imageEntityConfig->isMultiple('TypeName_1'));
-        $this->assertFalse($imageEntityConfig->isMultiple('TypeName_2'));
+        $this->assertSame('testEntityWithTypes', $entityConfig->getEntityName());
+        $this->assertSame(['web', 'mobile'], $entityConfig->getTypes());
+        $this->assertFalse($entityConfig->isMultiple('web'));
+        $this->assertTrue($entityConfig->isMultiple('mobile'));
+    }
+
+    public function testLoadFromEntityClassesSkipsClassesWithoutAttribute(): void
+    {
+        $config = $this->imageConfigLoader->loadFromEntityClasses([
+            TestEntityWithoutAttribute::class,
+            TestEntityWithImage::class,
+        ]);
+
+        $this->assertFalse($config->hasImageConfig(new TestEntityWithoutAttribute()));
+        $this->assertTrue($config->hasImageConfig(new TestEntityWithImage()));
+    }
+
+    public function testLoadFromEntityClassesWithDuplicateFolderNameThrowsForUnrelatedEntities(): void
+    {
+        $this->expectException(DuplicateEntityNameExceptionInvalid::class);
+
+        $this->imageConfigLoader->loadFromEntityClasses([
+            TestEntityDuplicateNameA::class,
+            TestEntityDuplicateNameB::class,
+        ]);
+    }
+
+    public function testLoadFromEntityClassesWithDuplicateFolderNameAllowsChildEntity(): void
+    {
+        $config = $this->imageConfigLoader->loadFromEntityClasses([
+            TestEntityDuplicateNameA::class,
+            TestEntityDuplicateNameAChild::class,
+        ]);
+
+        $this->assertFalse($config->hasImageConfig(new TestEntityDuplicateNameA()));
+        $this->assertTrue($config->hasImageConfig(new TestEntityDuplicateNameAChild()));
+
+        $entityConfig = $config->getImageEntityConfigByClass(TestEntityDuplicateNameAChild::class);
+        $this->assertSame('duplicateName', $entityConfig->getEntityName());
+    }
+
+    public function testChildInheritsTypesAndFolderFromParent(): void
+    {
+        $config = $this->imageConfigLoader->loadFromEntityClasses([
+            TestEntityParentWithTypesAndFolder::class,
+            TestEntityChildWithNothing::class,
+        ]);
+
+        $entityConfig = $config->getImageEntityConfigByClass(TestEntityChildWithNothing::class);
+
+        $this->assertSame('parentFolder', $entityConfig->getEntityName());
+        $this->assertSame(['web', 'mobile'], $entityConfig->getTypes());
+        $this->assertFalse($entityConfig->isMultiple('web'));
+        $this->assertTrue($entityConfig->isMultiple('mobile'));
+    }
+
+    public function testChildOverridesTypesButInheritsFolderFromParent(): void
+    {
+        $config = $this->imageConfigLoader->loadFromEntityClasses([
+            TestEntityParentWithTypesAndFolder::class,
+            TestEntityChildWithTypes::class,
+        ]);
+
+        $entityConfig = $config->getImageEntityConfigByClass(TestEntityChildWithTypes::class);
+
+        $this->assertSame('parentFolder', $entityConfig->getEntityName());
+        $this->assertSame(['thumbnail', 'banner'], $entityConfig->getTypes());
+        $this->assertFalse($entityConfig->isMultiple('thumbnail'));
+        $this->assertTrue($entityConfig->isMultiple('banner'));
+    }
+
+    public function testChildOverridesFolderButInheritsTypesFromParent(): void
+    {
+        $config = $this->imageConfigLoader->loadFromEntityClasses([
+            TestEntityParentWithTypesAndFolder::class,
+            TestEntityChildWithFolder::class,
+        ]);
+
+        $entityConfig = $config->getImageEntityConfigByClass(TestEntityChildWithFolder::class);
+
+        $this->assertSame('childFolder', $entityConfig->getEntityName());
+        $this->assertSame(['web', 'mobile'], $entityConfig->getTypes());
+        $this->assertFalse($entityConfig->isMultiple('web'));
+        $this->assertTrue($entityConfig->isMultiple('mobile'));
+    }
+
+    public function testLoadFromEntityClassesWithDuplicateFolderNameAllowsChildEntityRegardlessOfOrder(): void
+    {
+        $config = $this->imageConfigLoader->loadFromEntityClasses([
+            TestEntityDuplicateNameAChild::class,
+            TestEntityDuplicateNameA::class,
+        ]);
+
+        $this->assertFalse($config->hasImageConfig(new TestEntityDuplicateNameA()));
+        $this->assertTrue($config->hasImageConfig(new TestEntityDuplicateNameAChild()));
+
+        $entityConfig = $config->getImageEntityConfigByClass(TestEntityDuplicateNameAChild::class);
+        $this->assertSame('duplicateName', $entityConfig->getEntityName());
     }
 }

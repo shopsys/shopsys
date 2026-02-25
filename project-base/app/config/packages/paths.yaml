@@ -16,7 +16,6 @@ parameters:
     shopsys.filemanager_upload_web_dir: '%shopsys.content_dir_name%/wysiwyg'
     shopsys.framework.root_dir: '%kernel.project_dir%/vendor/shopsys/framework'
     shopsys.front_design_image_url_prefix: /public/frontend/images/
-    shopsys.image_config_filepath: '%kernel.project_dir%/config/images.yaml'
     shopsys.image_dir: '/web%shopsys.image_url_prefix%'
     shopsys.image_url_prefix: '/%shopsys.content_dir_name%/images/'
     shopsys.json_entrypoints_path: '%kernel.project_dir%/web/build/entrypoints.json'

@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
@@ -19,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 #[ORM\Table(name: 'blog_categories')]
 #[ORM\Entity]
 #[Gedmo\Tree(type: 'nested')]
+#[EntityImage]
 class BlogCategory extends AbstractTranslatableEntity
 {
     /**

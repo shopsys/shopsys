@@ -13,6 +13,7 @@ use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -24,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundExce
  */
 #[ORM\Table(name: 'transports')]
 #[ORM\Entity]
+#[EntityImage]
 class Transport extends AbstractTranslatableEntity implements OrderableEntityInterface
 {
     protected const GEDMO_SORTABLE_LAST_POSITION = -1;

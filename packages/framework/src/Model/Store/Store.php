@@ -10,12 +10,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
 
 #[ORM\Table(name: 'stores')]
 #[ORM\Entity]
+#[EntityImage(multiple: true)]
 class Store implements OrderableEntityInterface
 {
     protected const GEDMO_SORTABLE_LAST_POSITION = -1;

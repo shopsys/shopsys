@@ -7,10 +7,16 @@ namespace Shopsys\FrameworkBundle\Model\Advert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImageFolder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
 #[ORM\Table(name: 'adverts')]
 #[ORM\Entity]
+#[EntityImageFolder('noticer')]
+#[EntityImage]
+#[EntityImage('web')]
+#[EntityImage('mobile')]
 class Advert
 {
     public const TYPE_IMAGE = 'image';

@@ -6,10 +6,12 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Webmozart\Assert\Assert;
 
 #[ORM\Table(name: 'parameter_values')]
 #[ORM\Entity]
+#[EntityImage]
 class ParameterValue
 {
     public const string ENTITY_NAME_FOR_FILES_CONFIG = 'parameterValue';
