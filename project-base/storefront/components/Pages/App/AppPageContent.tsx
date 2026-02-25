@@ -1,4 +1,6 @@
 import { DeferredLoaders } from './DeferredLoaders';
+import { DeferredSecondaryLoaders } from './DeferredSecondaryLoaders';
+import { DeferredTertiaryLoaders } from './DeferredTertiaryLoaders';
 import { Fonts, ralewayFont } from './Fonts';
 import { PageHeadScripts } from './PageHeadScripts';
 import { Portal } from 'components/Basic/Portal/Portal';
@@ -38,6 +40,8 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
         return (
             <>
                 <DeferredLoaders />
+                <DeferredSecondaryLoaders />
+                <DeferredTertiaryLoaders />
                 <Error403Content />
             </>
         );
@@ -52,6 +56,8 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <PageHeadScripts />
             <Fonts />
             <DeferredLoaders />
+            <DeferredSecondaryLoaders />
+            <DeferredTertiaryLoaders />
             <ToastContainer autoClose={6000} position="top-center" theme="colored" transition={Slide} />
             <Component {...pageProps} />
             <DeferredSymfonyDebugToolbar />
