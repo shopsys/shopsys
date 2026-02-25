@@ -57,10 +57,7 @@ trait FlashMessageTrait
 
     protected function renderStringTwigTemplate(string $template, array $parameters = []): string
     {
-        /**
-         * @var \Twig\Environment $twigEnvironment
-         * @phpstan-ignore symfonyContainer.privateService (Twig service is intentionally fetched from the container in this trait)
-         */
+        /** @var \Twig\Environment $twigEnvironment */
         $twigEnvironment = $this->container->get('twig');
         $twigTemplate = $twigEnvironment->createTemplate($template);
 

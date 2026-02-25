@@ -20,10 +20,7 @@ class RegisterImageEntitiesCompilerPass implements CompilerPassInterface
     #[Override]
     public function process(ContainerBuilder $container): void
     {
-        /**
-         * @var \Doctrine\ORM\Mapping\Driver\AttributeDriver $attributeReader
-         * @phpstan-ignore symfonyContainer.privateService (Metadata driver service is intentionally fetched in compiler pass)
-         */
+        /** @var \Doctrine\ORM\Mapping\Driver\AttributeDriver $attributeReader */
         $attributeReader = $container->get('doctrine.orm.default_metadata_driver');
         $allClasses = $attributeReader->getAllClassNames();
 

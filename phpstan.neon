@@ -8,6 +8,16 @@ parameters:
         constantHassers: false
 
     ignoreErrors:
+        # Monorepo-only: these are reported only when Symfony container metadata from project-base is available.
+        -
+            identifier: symfonyContainer.privateService
+            path: %currentWorkingDirectory%/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php
+        -
+            identifier: symfonyContainer.privateService
+            path: %currentWorkingDirectory%/packages/framework/src/DependencyInjection/Compiler/RegisterImageEntitiesCompilerPass.php
+        -
+            identifier: symfonyContainer.privateService
+            path: %currentWorkingDirectory%/packages/framework/src/Component/FlashMessage/FlashMessageTrait.php
         # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
         -
             message: '#^Unsafe usage of new static\(\).#'
