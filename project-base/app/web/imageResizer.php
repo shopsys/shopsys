@@ -17,7 +17,7 @@ require $projectRootDirectory . '/vendor/symfony/dotenv/Dotenv.php';
 $CDN_API_KEY = $_ENV['CDN_API_KEY'] ?? null;
 $CDN_API_SALT = $_ENV['CDN_API_SALT'] ?? null;
 $CDN_DOMAIN = $_ENV['CDN_DOMAIN'] ?? '';
-$CDN_RESIZE_DISABLE = $_ENV['CDN_RESIZE_DISABLE'] ?? false;
+$CDN_RESIZE_DISABLE = isEnvTruthy($_ENV['CDN_RESIZE_DISABLE'] ?? false);
 
 $imagePath = $_SERVER['DOCUMENT_URI'] ?? '';
 $IMAGE_URL = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $imagePath;
@@ -156,4 +156,16 @@ function render404(): void
     header('HTTP/1.1 404 Not Found');
 
     echo 'File not found';
+}
+
+/**
+ * inspired by @see Symfony\Component\DependencyInjection\EnvVarProcessor
+ */
+function isEnvTruthy(mixed $value): bool
+{
+    return (bool) (
+        filter_var($value, \FILTER_VALIDATE_BOOL)
+        ?: filter_var($value, \FILTER_VALIDATE_INT)
+        ?: filter_var($value, \FILTER_VALIDATE_FLOAT)
+    );
 }

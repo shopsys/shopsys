@@ -128,7 +128,7 @@ export const useTransportChangeInSelect = (
     const openPacketeryPopup = (newTransport: TypeTransportWithAvailablePaymentsFragment) => {
         // packeteryApiKey is available from module scope
 
-        if (!packeteryApiKey?.length) {
+        if (!packeteryApiKey.length) {
             logException('Packeta API key was not set');
             return;
         }

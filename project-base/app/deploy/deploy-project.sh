@@ -5,7 +5,7 @@ CONFIGURATION_TARGET_PATH="${BASE_PATH}/var/deployment/kubernetes"
 BASIC_AUTH_PATH="${BASE_PATH}/deploy/basicHttpAuth"
 DEPLOY_TARGET_PATH="${BASE_PATH}/var/deployment/deploy"
 CI_ENVIRONMENT_SLUG=${CI_ENVIRONMENT_SLUG}
-SENTRY_DSN=${SENTRY_DSN}
+SENTRY_DSN=${SENTRY_DSN:-}
 SENTRY_FEEDBACK_ENABLE=${SENTRY_FEEDBACK_ENABLE}
 SENTRY_REPLAYS_ENABLE=${SENTRY_REPLAYS_ENABLE}
 S3_REGION=${S3_REGION:-'us-east-1'}
@@ -55,13 +55,13 @@ function deploy() {
         ["CDN_DOMAIN"]=${CDN_DOMAIN}
         ["CDN_API_KEY"]=${CDN_API_KEY}
         ["CDN_API_SALT"]=${CDN_API_SALT}
+        ["CDN_RESIZE_DISABLE"]=${CDN_RESIZE_DISABLE}
 
         ["PACKETERY_ENABLED"]=${PACKETERY_ENABLED}
         ["PACKETERY_REST_API_URL"]=${PACKETERY_REST_API_URL}
         ["PACKETERY_API_PASSWORD"]=${PACKETERY_API_PASSWORD}
         ["PACKETERY_SENDER"]=${PACKETERY_SENDER}
 
-        ["SENTRY_DSN"]=${SENTRY_DSN}
         ["SENTRY_ENVIRONMENT"]=${CI_ENVIRONMENT_SLUG}
         ["SENTRY_RELEASE"]=${CI_COMMIT_SHORT_SHA}
         ["FORCE_ELASTIC_LIMITS"]=${FORCE_ELASTIC_LIMITS:-false}
@@ -82,7 +82,6 @@ function deploy() {
 
     declare -A STOREFRONT_ENVIRONMENT_VARIABLES=(
         ["GTM_ID"]=${GTM_ID}
-        ["SENTRY_DSN"]=${SENTRY_DSN}
         ["SENTRY_ENVIRONMENT"]=${CI_ENVIRONMENT_SLUG}
         ["SENTRY_FEEDBACK_ENABLE"]=${SENTRY_FEEDBACK_ENABLE}
         ["SENTRY_REPLAYS_ENABLE"]=${SENTRY_REPLAYS_ENABLE}
@@ -109,6 +108,11 @@ function deploy() {
         ["cron-watchdog"]='*/10 * * * *'
     )
 
+    if [ -n "${SENTRY_DSN}" ]; then
+        ENVIRONMENT_VARIABLES["SENTRY_DSN"]=${SENTRY_DSN}
+        STOREFRONT_ENVIRONMENT_VARIABLES["SENTRY_DSN"]=${SENTRY_DSN}
+    fi
+
     # Default whitelisted IPs (will be merged with WHITELIST_IPS environment variable if set)
     # You can define whitelisted IPs here when using HTTP authentication, see https://github.com/shopsys/deployment#whitelist-ip-addresses
     # GoPay IPs
@@ -120,7 +124,6 @@ function deploy() {
         PROJECT_NAME
         BASE_PATH
         CI_ENVIRONMENT_SLUG
-        SENTRY_DSN
         RABBITMQ_DEFAULT_USER
         RABBITMQ_DEFAULT_PASS
         RABBITMQ_IP_WHITELIST

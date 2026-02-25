@@ -8,6 +8,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 // Sentry feature flags
 const isSentryReplaysEnabled = process.env.SENTRY_REPLAYS_ENABLE === '1';
 const isSentryFeedbackEnabled = process.env.SENTRY_FEEDBACK_ENABLE === '1';
+const sentryDsn = process.env.SENTRY_DSN?.trim() ?? '';
+const isSentryEnabled = sentryDsn !== '';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -46,7 +48,7 @@ const nextConfig = {
         googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
         packeteryApiKey: process.env.PACKETERY_API_KEY,
         cdnDomain: process.env.CDN_DOMAIN ?? '',
-        sentryDsn: process.env.SENTRY_DSN ?? '',
+        sentryDsn: sentryDsn,
         sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? '',
         sentryFeedbackEnable: isSentryFeedbackEnabled,
         sentryReplaysEnable: isSentryReplaysEnabled,
@@ -166,4 +168,9 @@ const sentryConfig = {
     },
 };
 
-module.exports = withBundleAnalyzer(withSentryConfig(nextTranslate(nextConfig), sentryConfig));
+const translatedNextConfig = nextTranslate(nextConfig);
+const nextConfigWithSentryIfEnabled = isSentryEnabled
+    ? withSentryConfig(translatedNextConfig, sentryConfig)
+    : translatedNextConfig;
+
+module.exports = withBundleAnalyzer(nextConfigWithSentryIfEnabled);

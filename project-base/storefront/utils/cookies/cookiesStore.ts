@@ -27,7 +27,7 @@ const getCookiesStoreName = (domainConfig: DomainConfigType): string => {
 };
 const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30;
 
-const userSnapEnabledDefaultValue = getPublicConfigProperty('userSnapEnabledDefaultValue', false) ?? false;
+const userSnapEnabledDefaultValue = getPublicConfigProperty('userSnapEnabledDefaultValue', false);
 
 const getDefaultInitState = (): CookiesStoreState => ({
     lastVisitedProductsCatnums: null,
