@@ -1,7 +1,5 @@
-import {
-    TypeCurrentCustomerUserQuery,
-    useCurrentCustomerUserQuery,
-} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
+import { useCurrentCustomerUserQueryData } from 'components/providers/CurrentCustomerUserProvider';
+import { TypeCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { CustomerTypeEnum } from 'types/customer';
@@ -9,7 +7,7 @@ import { SelectOptionType } from 'types/selectOptions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 
 export const useCurrentUserContactInformation = (): ContactInformation => {
-    const [{ data: currentCustomerUserData }] = useCurrentCustomerUserQuery();
+    const currentCustomerUserData = useCurrentCustomerUserQueryData();
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
 
     const contactInformationApiData = mapCurrentCustomerContactInformationApiData(
