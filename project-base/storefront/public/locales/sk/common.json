@@ -205,6 +205,7 @@
     "Expand store info": "Rozbaliť informácie o obchode",
     "Failed": "Chyba",
     "Failed to initialize payment gateway. Please try again.": "Nepodarilo sa inicializovať platobnú bránu. Skúste to prosím znova.",
+    "Failed to load Packeta widget. Please try again later.": "Nepodarilo sa načítať widget Packeta. Skúste to prosím neskôr.",
     "Failed to load payment gateway. Please try again.": "Nepodarilo sa načítať platobnú bránu. Skúste to prosím znova.",
     "Faster checkout for purchases": "Rýchlejšie dokončenie nákupu",
     "Files": "Súbory",

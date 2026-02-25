@@ -191,6 +191,7 @@
     "Expand store info": "Expand store info",
     "Failed": "Failed",
     "Failed to initialize payment gateway. Please try again.": "Failed to initialize payment gateway. Please try again.",
+    "Failed to load Packeta widget. Please try again later.": "Failed to load Packeta widget. Please try again later.",
     "Failed to load payment gateway. Please try again.": "Failed to load payment gateway. Please try again.",
     "Faster checkout for purchases": "Faster checkout for purchases",
     "Files": "Files",

@@ -20,6 +20,7 @@ export type DomainConfigType = {
     };
     gtmId?: string;
     isLuigisBoxActive: boolean;
+    packeteryCountry?: string;
     type: CustomerUserAreaEnum;
 };
 

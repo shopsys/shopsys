@@ -72,6 +72,7 @@ const nextConfig = {
                 },
                 gtmId: process.env.GTM_ID,
                 isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('1'),
+                packeteryCountry: 'cz',
                 type: 'B2C',
             },
             {
@@ -88,6 +89,7 @@ const nextConfig = {
                 },
                 gtmId: process.env.GTM_ID,
                 isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('2'),
+                packeteryCountry: 'cz',
                 type: 'B2B',
             },
             {
@@ -104,6 +106,7 @@ const nextConfig = {
                 },
                 gtmId: process.env.GTM_ID,
                 isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('2'),
+                packeteryCountry: 'sk',
                 type: 'B2B',
             },
         ],
