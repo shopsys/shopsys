@@ -16,6 +16,7 @@ type TransportListItemProps = {
         | (TypeTransportWithAvailablePaymentsFragment & TypeTransportStoresFragment)
         | TypeTransportWithAvailablePaymentsFragment;
     isActive?: boolean;
+    disabled?: boolean;
     changeTransport: ChangeTransport;
     pickupPlace: StoreOrPacketeryPoint | null;
     openPickupPlacePopup?: () => void;
@@ -24,6 +25,7 @@ type TransportListItemProps = {
 export const TransportListItem: FC<TransportListItemProps> = ({
     transport,
     isActive = false,
+    disabled,
     changeTransport,
     pickupPlace,
     openPickupPlacePopup,
@@ -47,6 +49,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
             <Radiobutton
                 aria-label={ariaLabel}
                 checked={isActive}
+                disabled={disabled}
                 id={transport.uuid}
                 name="transport"
                 value={transport.uuid}
@@ -54,6 +57,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                     <TransportAndPaymentSelectItemLabel
                         daysUntilDelivery={transport.daysUntilDelivery}
                         description={transport.description}
+                        disabled={disabled}
                         image={transport.mainImage}
                         name={transport.name}
                         openPickupPlacePopup={() => openPickupPlacePopup?.()}

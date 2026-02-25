@@ -21,7 +21,7 @@ export const TransportAndPaymentContent: FC = () => {
     const { transport, pickupPlace, payment } = useCurrentCart();
 
     const { changeTransportInCart, isChangingTransportInCart } = useChangeTransportInCart();
-    const { changePaymentInCart, isChangingPaymentInOrder } = useChangePaymentInCart();
+    const { changePaymentInCart, isChangingPaymentInCart } = useChangePaymentInCart();
     const [{ data: transportsData, fetching: areTransportsFetching }] = useTransportsQuery({
         variables: { cartUuid },
         requestPolicy: 'network-only',
@@ -35,7 +35,7 @@ export const TransportAndPaymentContent: FC = () => {
     const { goToPreviousStepFromTransportAndPaymentPage, goToNextStepFromTransportAndPaymentPage } =
         useTransportAndPaymentPageNavigation(validationMessages);
 
-    const isDisabled = hasValidationErrors(validationMessages) || isChangingTransportInCart || isChangingPaymentInOrder;
+    const isDisabled = hasValidationErrors(validationMessages) || isChangingTransportInCart || isChangingPaymentInCart;
 
     return (
         <OrderLayout
@@ -46,13 +46,13 @@ export const TransportAndPaymentContent: FC = () => {
 
             <OrderContentWrapper
                 activeStep={2}
-                isTransportOrPaymentLoading={isChangingTransportInCart || isChangingPaymentInOrder}
+                isTransportOrPaymentLoading={isChangingTransportInCart || isChangingPaymentInCart}
             >
                 {!!transportsData?.transports.length && (
                     <TransportAndPaymentSelect
                         changePaymentInCart={changePaymentInCart}
                         changeTransportInCart={changeTransportInCart}
-                        isTransportSelectionLoading={isChangingTransportInCart}
+                        isTransportSelectionLoading={isChangingTransportInCart || isChangingPaymentInCart}
                         lastOrderPickupPlace={lastOrderPickupPlace}
                         transports={transportsData.transports}
                     />
@@ -69,7 +69,7 @@ export const TransportAndPaymentContent: FC = () => {
                         step: t('Contact information'),
                     })}
                     shouldShowSpinnerOnNextStepButton={
-                        (isChangingTransportInCart || isChangingPaymentInOrder) && !!transport && !!payment
+                        (isChangingTransportInCart || isChangingPaymentInCart) && !!transport && !!payment
                     }
                 />
             </OrderContentWrapper>

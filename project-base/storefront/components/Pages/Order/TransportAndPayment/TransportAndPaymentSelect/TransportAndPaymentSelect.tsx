@@ -63,6 +63,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                     <TransportListItem
                                         isActive
                                         changeTransport={changeTransport}
+                                        disabled={isTransportSelectionLoading}
                                         openPickupPlacePopup={() => openPickupPlacePopup(transport.uuid)}
                                         pickupPlace={pickupPlace}
                                         transport={transport}
@@ -82,6 +83,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                         <TransportListItem
                                             key={transportItem.uuid}
                                             changeTransport={changeTransport}
+                                            disabled={isTransportSelectionLoading}
                                             pickupPlace={pickupPlace}
                                             transport={transportItem}
                                         />
@@ -96,6 +98,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     {!!transport && transports.length > 1 && (
                         <AnimateCollapseDiv className="relative flex! flex-col" keyName="transport-reset">
                             <ResetButton
+                                disabled={isTransportSelectionLoading}
                                 text={t('Change transport type')}
                                 tid={TIDs.reset_transport_button}
                                 onClick={resetTransportAndPayment}
@@ -129,7 +132,12 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                             disableAnimation={transport.payments.length === 1 ? true : false}
                                             keyName="payment-selected"
                                         >
-                                            <PaymentListItem isActive changePayment={changePayment} payment={payment} />
+                                            <PaymentListItem
+                                                isActive
+                                                changePayment={changePayment}
+                                                disabled={isTransportSelectionLoading}
+                                                payment={payment}
+                                            />
                                         </AnimateCollapseDiv>
                                     )}
                                 </AnimatePresence>
@@ -145,6 +153,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                                 <PaymentListItem
                                                     key={paymentItem.uuid}
                                                     changePayment={changePayment}
+                                                    disabled={isTransportSelectionLoading}
                                                     payment={paymentItem}
                                                 />
                                             ))}
@@ -158,6 +167,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                             {payment !== null && transport.payments.length > 1 && (
                                 <AnimateCollapseDiv className="relative flex! flex-col" keyName="payment-reset">
                                     <ResetButton
+                                        disabled={isTransportSelectionLoading}
                                         text={t('Change payment type')}
                                         tid={TIDs.reset_payment_button}
                                         onClick={resetPaymentAndGoPayBankSwift}
@@ -172,12 +182,13 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     );
 };
 
-type ResetButtonProps = { text: string; onClick: () => void; tid: string };
+type ResetButtonProps = { text: string; onClick: () => void; tid: string; disabled?: boolean };
 
-const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid }) => (
+const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid, disabled }) => (
     <button
-        className="bg-background-more hover:bg-background-most flex w-full cursor-pointer items-center rounded-xl px-5 py-3 text-sm"
+        className="bg-background-more hover:bg-background-most flex w-full cursor-pointer items-center rounded-xl px-5 py-3 text-sm disabled:pointer-events-none disabled:opacity-50"
         data-tid={tid}
+        disabled={disabled}
         tabIndex={0}
         onClick={onClick}
     >

@@ -12,10 +12,11 @@ type ChangePayment = ReturnType<typeof usePaymentChangeInSelect>['changePayment'
 type PaymentListItemProps = {
     payment: TypeSimplePaymentFragment;
     isActive?: boolean;
+    disabled?: boolean;
     changePayment: ChangePayment;
 };
 
-export const PaymentListItem: FC<PaymentListItemProps> = ({ payment, isActive = false, changePayment }) => {
+export const PaymentListItem: FC<PaymentListItemProps> = ({ payment, isActive = false, disabled, changePayment }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
@@ -35,6 +36,7 @@ export const PaymentListItem: FC<PaymentListItemProps> = ({ payment, isActive = 
             <Radiobutton
                 aria-label={ariaLabel}
                 checked={isActive}
+                disabled={disabled}
                 id={payment.uuid}
                 name="payment"
                 value={payment.uuid}

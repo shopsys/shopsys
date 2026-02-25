@@ -11,7 +11,7 @@ export type ChangePaymentInCart = (
 ) => Promise<TypeCartFragment | undefined | null>;
 
 export const useChangePaymentInCart = () => {
-    const [{ fetching: isChangingPaymentInOrder }, changePaymentInCartMutation] = useChangePaymentInCartMutation();
+    const [{ fetching: isChangingPaymentInCart }, changePaymentInCartMutation] = useChangePaymentInCartMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { gtmCartInfo } = useGtmCartInfo();
     const { canSeePrices } = useAuthorization();
@@ -43,5 +43,5 @@ export const useChangePaymentInCart = () => {
         return changePaymentResult.data?.ChangePaymentInCart;
     };
 
-    return { changePaymentInCart, isChangingPaymentInOrder };
+    return { changePaymentInCart, isChangingPaymentInCart };
 };
