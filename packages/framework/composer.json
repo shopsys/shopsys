@@ -42,6 +42,7 @@
         "arvenil/ninja-mutex": "^0.6",
         "barryvdh/elfinder-flysystem-driver": "^0.5",
         "becklyn/ordered-form-bundle": "^1.4",
+        "brick/math": "^0.12",
         "commerceguys/intl": "^2.0.0",
         "composer/composer": "^2.2.12",
         "defuse/php-encryption": "^2.2.1",
@@ -68,7 +69,6 @@
         "knplabs/knp-menu-bundle": "^3.5",
         "league/csv": "^9.6",
         "league/flysystem": "^3.11",
-        "litipk/php-bignumbers": "^0.8.7",
         "league/iso3166": "^4.2.1",
         "nette/utils": "^4.0",
         "nikic/php-parser": "^5.1",
@@ -143,12 +143,6 @@
     "suggest": {
         "ext-pgsql": "Required for dumping the Postgres database in shopsys:database:dump command"
     },
-    "repositories": [
-        {
-            "type": "github",
-            "url": "https://github.com/bigcommerce/php-bignumbers"
-        }
-    ],
     "config": {
         "allow-plugins": {
             "symfony/flex": true,
