@@ -2,13 +2,21 @@
 name: test-writing
 description: >
   This skill MUST be used when the user asks to write tests, add tests, create test cases,
-  test a specific class or method, or when working on any *Test.php file in this Shopsys
-  application. Applies codebase-specific best practices across unit, functional, GraphQL API,
-  smoke, and acceptance test layers.
+  run/execute/re-run/debug tests, test a specific class or method, or when working on any
+  *Test.php file in this Shopsys application. Applies codebase-specific best practices across
+  unit, functional, GraphQL API, smoke, and acceptance test layers.
 version: 1.0.0
 ---
 
 # Shopsys Test Writing Guide
+
+## Trigger Scope
+
+Use this skill whenever the request is about tests in this repository, including:
+- writing or modifying tests
+- running or re-running tests
+- debugging failing tests
+- selecting the right command/suite/configuration for a test run
 
 ## 1. Layer Selection — Pick the Right Base Class First
 
