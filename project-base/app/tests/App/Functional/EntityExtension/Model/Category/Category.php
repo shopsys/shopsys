@@ -26,6 +26,7 @@ class Category extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     #[ORM\Column(type: 'guid', unique: true)]
@@ -35,6 +36,7 @@ class Category extends AbstractTranslatableEntity
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Category\CategoryTranslation>
      */
     #[Prezent\Translations(targetEntity: CategoryTranslation::class)]
+    #[Override]
     protected $translations;
 
     #[Gedmo\TreeParent]

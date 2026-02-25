@@ -98,8 +98,8 @@ class FilesBatchLoader
 
         foreach ($filesBatchLoadData as $fileBatchLoadData) {
             $entityFiles = $filesIndexedByEntityId[$fileBatchLoadData->getEntityId()] ?? [];
-            $firstFile = reset($entityFiles);
-            $files[$fileBatchLoadData->getId()] = $firstFile !== false ? $this->getResolvedFile($firstFile) : null;
+            $firstFile = array_first($entityFiles);
+            $files[$fileBatchLoadData->getId()] = $firstFile !== null ? $this->getResolvedFile($firstFile) : null;
         }
 
         return $files;

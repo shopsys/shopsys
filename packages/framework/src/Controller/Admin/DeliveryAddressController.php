@@ -68,7 +68,7 @@ class DeliveryAddressController extends AdminBaseController
             }
 
             $customerUsers = $this->customerFacade->getCustomerUsers($customer);
-            $firstCustomerUser = reset($customerUsers);
+            $firstCustomerUser = array_first($customerUsers);
 
             return $this->redirectToRoute('admin_customer_edit', ['id' => $firstCustomerUser->getId()]);
         }
@@ -119,7 +119,7 @@ class DeliveryAddressController extends AdminBaseController
             }
 
             $customerUsers = $this->customerFacade->getCustomerUsers($customer);
-            $firstCustomerUser = reset($customerUsers);
+            $firstCustomerUser = array_first($customerUsers);
 
             return $this->redirectToRoute('admin_customer_edit', ['id' => $firstCustomerUser->getId()]);
         }
@@ -179,7 +179,7 @@ class DeliveryAddressController extends AdminBaseController
         }
 
         $customerUsers = $this->customerFacade->getCustomerUsers($customer);
-        $firstCustomerUser = reset($customerUsers);
+        $firstCustomerUser = array_first($customerUsers);
 
         return $this->generateUrl('admin_customer_edit', ['id' => $firstCustomerUser->getId()]);
     }
@@ -193,7 +193,7 @@ class DeliveryAddressController extends AdminBaseController
         }
 
         $customerUsers = $this->customerFacade->getCustomerUsers($customer);
-        $firstCustomerUser = reset($customerUsers);
+        $firstCustomerUser = array_first($customerUsers);
 
         return t('Back to customer {{ name }}', ['{{ name }}' => $firstCustomerUser->getCustomerUserFullName()]);
     }

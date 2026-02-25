@@ -48,7 +48,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     private function extractAttributesForController(string $controller): array
     {
         try {
-            $reflectionMethod = new ReflectionMethod($controller);
+            $reflectionMethod = ReflectionMethod::createFromMethodName($controller);
         } catch (ReflectionException $e) {
             return [];
         }

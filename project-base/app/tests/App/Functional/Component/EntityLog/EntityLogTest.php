@@ -166,7 +166,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $logs = $this->entityLogRepository->getEntityLogsFromLastLogCollection($entityName, $entityId);
 
         /** @var \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog $log */
-        $log = reset($logs);
+        $log = array_first($logs);
 
         $this->assertSame(EntityLogActionEnum::UPDATE, $log->getAction());
         $this->assertSame($orderFromDb->getId(), $log->getEntityId());
@@ -198,11 +198,11 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $logs = $this->entityLogRepository->getEntityLogsFromLastLogCollection($entityName, $entityId);
         $orderLogs = array_filter($logs, fn (EntityLog $log) => $log->getEntityName() === 'Order');
         /** @var \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog $orderLog */
-        $orderLog = reset($orderLogs);
+        $orderLog = array_first($orderLogs);
 
         $orderItemLogs = array_filter($logs, fn (EntityLog $log) => $log->getEntityName() === 'OrderItem');
         /** @var \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog $orderItemLog */
-        $orderItemLog = reset($orderItemLogs);
+        $orderItemLog = array_first($orderItemLogs);
 
         $this->assertSame(EntityLogActionEnum::CREATE, $orderItemLog->getAction());
         $this->assertSame($productTicketName, $orderItemLog->getEntityIdentifier());
@@ -255,7 +255,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
 
         $this->assertCount(2, $logs);
         $logs = array_filter($logs, fn (EntityLog $log) => $log->getEntityName() === 'OrderItem');
-        $changeSet = reset($logs)->getChangeSet();
+        $changeSet = array_first($logs)->getChangeSet();
 
         $this->assertArrayHasKey('name', $changeSet);
 

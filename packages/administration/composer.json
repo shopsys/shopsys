@@ -28,7 +28,7 @@
     },
     "require": {
         "knplabs/knp-menu-bundle": "^3.5",
-        "php": "^8.3",
+        "php": "^8.5",
         "shopsys/form-types-bundle": "19.0.x-dev",
         "shopsys/framework": "19.0.x-dev",
         "shopsys/migrations": "19.0.x-dev",

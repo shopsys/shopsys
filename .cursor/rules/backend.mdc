@@ -8,7 +8,7 @@ description: Essential backend patterns and commands for PHP/Symfony
 ## Technology Stack
 
 - **Framework**: Symfony 6.4
-- **Language**: PHP 8.3
+- **Language**: PHP 8.5
 - **ORM**: Doctrine ORM
 - **GraphQL**: Overblog GraphQL Bundle
 - **Database**: PostgreSQL

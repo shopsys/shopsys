@@ -329,7 +329,7 @@ class OrderMail implements MessageFactoryInterface
             return null;
         }
 
-        $orderRoundingItem = reset($orderRoundingItems);
+        $orderRoundingItem = array_first($orderRoundingItems);
 
         return $this->twig->render('@ShopsysFramework/Mail/Order/roundingInfo.html.twig', [
             'order' => $order,

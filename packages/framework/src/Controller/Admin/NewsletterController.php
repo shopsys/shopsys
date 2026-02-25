@@ -116,7 +116,7 @@ class NewsletterController extends AdminBaseController
             $email = $emailData['email'];
             $createdAt = $emailData['createdAt'];
             $fields = [$email, $createdAt];
-            $output->fputcsv($fields, ';');
+            $output->fputcsv($fields, ';', '"', '\\');
         }
     }
 }

@@ -88,7 +88,9 @@ class TransformStringHelper
         $transliteratorToLatin = Transliterator::create('Any-Latin');
         $transliteratorToAscii = Transliterator::create('Latin-ASCII');
 
-        return $transliteratorToAscii->transliterate($transliteratorToLatin->transliterate($string));
+        return $string
+            |> $transliteratorToLatin->transliterate(...)
+            |> $transliteratorToAscii->transliterate(...);
     }
 
     /**
@@ -113,7 +115,12 @@ class TransformStringHelper
             return null;
         }
 
-        return trim(preg_replace('/\s\s+/', ' ', strip_tags(str_replace('<', ' <', html_entity_decode($htmlText)))));
+        return $htmlText
+            |> html_entity_decode(...)
+            |> (fn ($v) => str_replace('<', ' <', $v))
+            |> strip_tags(...)
+            |> (fn ($v) => preg_replace('/\s\s+/', ' ', $v))
+            |> trim(...);
     }
 
     public function removeStringFromStart(string $string, string $stringToRemove): string

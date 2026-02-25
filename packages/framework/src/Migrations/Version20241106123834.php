@@ -20,9 +20,9 @@ class Version20241106123834 extends AbstractMigration implements DomainAwareInte
     public function up(Schema $schema): void
     {
         $allowedAdminLocales = $this->administratorLocalizationFacade->getAllowedAdminLocales();
-        $defaultLocale = reset($allowedAdminLocales);
+        $defaultLocale = array_first($allowedAdminLocales);
 
-        if ($defaultLocale === false) {
+        if ($defaultLocale === null) {
             throw new AdminLocaleNotFoundException();
         }
 

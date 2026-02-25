@@ -23,7 +23,7 @@ class DomainChoiceHandler
             throw new NoDomainSetException();
         }
 
-        $firstDomainConfig = reset($domainConfigs);
+        $firstDomainConfig = array_first($domainConfigs);
 
         if (count($domainConfigs) === 1) {
             return $firstDomainConfig;

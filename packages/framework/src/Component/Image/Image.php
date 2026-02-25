@@ -33,12 +33,14 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Component\Image\ImageTranslation>
      */
     #[Prezent\Translations(targetEntity: ImageTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

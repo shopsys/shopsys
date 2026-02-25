@@ -64,7 +64,7 @@
         }
     },
     "require": {
-        "php": "^8.3",
+        "php": "^8.5",
         "ext-amqp": "*",
         "ext-bcmath": "*",
         "ext-calendar": "*",
@@ -128,7 +128,7 @@
         "league/flysystem-aws-s3-v3": "^3.12.2",
         "league/flysystem-google-cloud-storage": "^3.0",
         "league/iso3166": "^4.2.1",
-        "litipk/php-bignumbers": "^0.8.6",
+        "litipk/php-bignumbers": "^0.8.7",
         "nette/utils": "^4.0",
         "nikic/php-parser": "^5.1",
         "overblog/dataloader-bundle": "^1.1",
@@ -220,7 +220,7 @@
         "symfony/web-profiler-bundle": "^7.4",
         "symfony/yaml": "^7.4",
         "symplify/easy-coding-standard": "^13.0",
-        "shopsys/phpunit-injector": "^2.5.1"
+        "shopsys/phpunit-injector": "^2.7"
     },
     "conflict": {
         "symfony/symfony": "*",
@@ -249,7 +249,7 @@
         "component-dir": "project-base/app/web/components",
         "sort-packages": true,
         "platform": {
-            "php": "8.3.2"
+            "php": "8.5.0"
         },
         "allow-plugins": {
             "cweagans/composer-patches": true,
@@ -284,6 +284,12 @@
             }
         }
     },
+    "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/bigcommerce/php-bignumbers"
+        }
+    ],
     "replace": {
         "shopsys/administration": "self.version",
         "shopsys/article-feed-luigis-box": "self.version",

@@ -158,7 +158,6 @@ class CountryFormTypeTest extends TypeTestCase
         /* Entity returned by mock have to have Id properly set */
         $reflection = new ReflectionClass($country);
         $property = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($country, 1);
 
         $this->countryFacade = $this->createStub(CountryFacade::class);

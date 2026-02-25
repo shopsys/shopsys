@@ -27,6 +27,7 @@ class Brand extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
@@ -45,6 +46,7 @@ class Brand extends AbstractTranslatableEntity
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation>
      */
     #[Prezent\Translations(targetEntity: BrandTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

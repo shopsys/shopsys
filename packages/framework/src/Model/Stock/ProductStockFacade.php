@@ -79,7 +79,7 @@ class ProductStockFacade
 
         foreach ($stocksIndexedById as $stockId => $stock) {
             $filteredProductStockDataItem = array_filter($productStockDataItems, fn ($productStockDataItem) => $productStockDataItem->stockId === $stockId);
-            $productStockData = reset($filteredProductStockDataItem);
+            $productStockData = array_first($filteredProductStockDataItem);
 
             $productStock = $productStocksIndexedByStockId[$stockId] ?? $this->createProductStock($product, $stock);
             $productStock->edit($productStockData);

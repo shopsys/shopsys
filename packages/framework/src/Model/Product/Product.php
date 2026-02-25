@@ -46,12 +46,14 @@ class Product extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\ProductTranslation>
      */
     #[Prezent\Translations(targetEntity: ProductTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

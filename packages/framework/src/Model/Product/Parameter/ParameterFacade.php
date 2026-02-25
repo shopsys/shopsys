@@ -141,7 +141,11 @@ class ParameterFacade
             $parameter = $this->getById((int)$parameterId);
             $parameterValue = $this->parameterRepository->getParameterValueById((int)$parameterValueId);
 
-            $parameterValueNamesIndexedByParameterNames[$parameter->getName()] = $parameterValue->getText();
+            $parameterName = $parameter->getName();
+
+            if ($parameterName !== null) {
+                $parameterValueNamesIndexedByParameterNames[$parameterName] = $parameterValue->getText();
+            }
         }
 
         return $parameterValueNamesIndexedByParameterNames;

@@ -19,5 +19,8 @@
     cacheDirectory=".phpunit.cache"
     backupStaticProperties="false"
 >
+  <php>
+    <ini name="error_reporting" value="24575"/>
+  </php>
   <source/>
 </phpunit>

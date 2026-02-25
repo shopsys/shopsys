@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
@@ -13,6 +14,7 @@ use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 class BlogArticleTranslation extends AbstractTranslation
 {
     #[Prezent\Translatable(targetEntity: BlogArticle::class)]
+    #[Override]
     protected $translatable;
 
     /**

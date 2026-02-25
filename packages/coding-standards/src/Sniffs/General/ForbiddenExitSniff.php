@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs\General;
 
+use Override;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 
 final class ForbiddenExitSniff extends ForbiddenFunctionsSniff
@@ -17,6 +18,7 @@ final class ForbiddenExitSniff extends ForbiddenFunctionsSniff
      * @var string[]|null[]
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
+    #[Override]
     public $forbiddenFunctions = [
         'exit' => null,
     ];

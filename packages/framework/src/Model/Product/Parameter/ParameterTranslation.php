@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
@@ -17,6 +18,7 @@ class ParameterTranslation extends AbstractTranslation
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
     #[Prezent\Translatable(targetEntity: Parameter::class)]
+    #[Override]
     protected $translatable;
 
     /**

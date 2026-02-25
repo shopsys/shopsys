@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
@@ -17,6 +18,7 @@ class PaymentTranslation extends AbstractTranslation
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
     #[Prezent\Translatable(targetEntity: Payment::class)]
+    #[Override]
     protected $translatable;
 
     /**

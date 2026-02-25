@@ -66,7 +66,7 @@ class ConstraintMessageExtractorTest extends TestCase
         $extractor = new ConstraintMessageExtractor($phpParserNodeHelper);
 
         $parserFactory = new ParserFactory();
-        $parser = $parserFactory->createForVersion(PhpVersion::fromString('8.3'));
+        $parser = $parserFactory->createForVersion(PhpVersion::fromString('8.5'));
         $ast = $parser->parse(file_get_contents($file->getPathname()));
 
         $catalogue = new MessageCatalogue();

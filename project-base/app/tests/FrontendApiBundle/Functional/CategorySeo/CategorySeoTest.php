@@ -327,7 +327,7 @@ class CategorySeoTest extends GraphQlTestCase
             },
         );
 
-        $colorFilterValues = reset($colorFilter)['values'];
+        $colorFilterValues = array_first($colorFilter)['values'];
         $black = t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
 
         $blackColorFilter = array_filter(
@@ -337,6 +337,6 @@ class CategorySeoTest extends GraphQlTestCase
             },
         );
 
-        $this->assertTrue(reset($blackColorFilter)['isSelected']);
+        $this->assertTrue(array_first($blackColorFilter)['isSelected']);
     }
 }

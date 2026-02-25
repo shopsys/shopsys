@@ -84,6 +84,10 @@ class EntityChoiceHelper
      */
     protected function filterOutShopsysEntitiesThatHaveExtensionInProjectBase(array $allEntityNames): array
     {
-        return array_values(array_diff_key($allEntityNames, array_flip(array_keys($this->entityExtensionMap))));
+        return $this->entityExtensionMap
+            |> array_keys(...)
+            |> array_flip(...)
+            |> (fn ($v) => array_diff_key($allEntityNames, $v))
+            |> array_values(...);
     }
 }

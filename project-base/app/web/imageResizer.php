@@ -64,9 +64,15 @@ if ($CDN_DOMAIN === '' || $CDN_API_KEY === null || $CDN_API_SALT === null) {
 
     $extension = getExtension($IMAGE_URL);
 
-    $encodedUrl = rtrim(strtr(base64_encode($IMAGE_URL), '+/', '-_'), '=');
+    $encodedUrl = $IMAGE_URL
+        |> base64_encode(...)
+        |> (fn($v) => strtr($v, '+/', '-_'))
+        |> (fn($v) => rtrim($v, '='));
     $path = "/{$resize}/{$width}/{$height}/{$gravity}/{$enlarge}/{$encodedUrl}.{$extension}";
-    $signature = rtrim(strtr(base64_encode(hash_hmac('sha256', $saltBin . "/" . $ttl . "/" . $path, $keyBin, true)), '+/', '-_'), '=');
+    $signature = hash_hmac('sha256', $saltBin . "/" . $ttl . "/" . $path, $keyBin, true)
+        |> base64_encode(...)
+        |> (fn($v) => strtr($v, '+/', '-_'))
+        |> (fn($v) => rtrim($v, '='));
 
     $imageUrl = sprintf("%s/zoh4eiLi/IMG/%d/%s%s", $CDN_DOMAIN, $ttl, $signature, $path);
 }
@@ -96,8 +102,6 @@ function getImageFromUrl(string $url): void
     $image = curl_exec($ch);
     $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
     $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
     if ($statusCode !== 200 || !$image) {
         render404();
         exit;
@@ -148,7 +152,7 @@ function findExactOrClosestLargerOrLargestImageSize(int $requestedImageSize, arr
         }
     }
 
-    return end($allowedImageSizes);
+    return array_last($allowedImageSizes);
 }
 
 function render404(): void

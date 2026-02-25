@@ -15,7 +15,7 @@ This solution uses [_Mutagen_](https://mutagen.io) (for relatively fast two-way 
 
 - [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [PHP](http://php.net/manual/en/install.macosx.php)
-    - At least version **8.3 or higher**
+    - At least version **8.5 or higher**
 - [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
 - [Docker Desktop](https://docs.docker.com/engine/install/)
     - Enable Docker Compose V2 in General settings

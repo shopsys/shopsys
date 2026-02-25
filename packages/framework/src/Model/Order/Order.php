@@ -883,7 +883,7 @@ class Order
             throw new OrderItemNotFoundException('Order item `transport` not found.');
         }
 
-        return reset($transports);
+        return array_first($transports);
     }
 
     public function getPaymentItem(): OrderItem
@@ -894,7 +894,7 @@ class Order
             throw new OrderItemNotFoundException('Order item `payment` not found.');
         }
 
-        return reset($payments);
+        return array_first($payments);
     }
 
     /**

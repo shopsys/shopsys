@@ -36,12 +36,14 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation>
      */
     #[Prezent\Translations(targetEntity: TransportTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

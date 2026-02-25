@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
@@ -17,6 +18,7 @@ class BrandTranslation extends AbstractTranslation
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
     #[Prezent\Translatable(targetEntity: Brand::class)]
+    #[Override]
     protected $translatable;
 
     /**

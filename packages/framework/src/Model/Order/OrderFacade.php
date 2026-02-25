@@ -344,7 +344,7 @@ class OrderFacade
                 $order->isFreeTransportAndPaymentApplied(),
             );
         } else {
-            $paymentPrice = reset($previousPaymentItems)->getPrice();
+            $paymentPrice = array_first($previousPaymentItems)->getPrice();
         }
 
         $orderPaymentData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PAYMENT);

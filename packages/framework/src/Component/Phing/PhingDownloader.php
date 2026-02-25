@@ -84,9 +84,9 @@ class PhingDownloader
         return $this->getVersionFromString($phingLatestVersionString);
     }
 
-    protected function getVersionFromString(string $string): ?Version
+    protected function getVersionFromString(?string $string): ?Version
     {
-        if (preg_match(self::SEMVER_REGEX, $string, $matches) === 1) {
+        if ($string !== null && preg_match(self::SEMVER_REGEX, $string, $matches) === 1) {
             return new Version($matches[0]);
         }
 

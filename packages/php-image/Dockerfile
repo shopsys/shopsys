@@ -1,7 +1,7 @@
 ARG LINUX_DISTRIBUTION=alpine
 ARG project_root='/'
 ARG NODE_MAJOR=24
-ARG PHP_VERSION=8.3
+ARG PHP_VERSION=8.5
 
 # Node and Composer are already installed in the node_builder and composer_builder stages
 FROM composer:latest AS composer_builder
@@ -25,7 +25,6 @@ FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
 #  bcmath - Arbitrary precision mathematics
 #  gd - Image processing for gd extension
 #  intl - Internationalization for intl extension
-#  opcache - Opcode cache for performance
 #  pdo_pgsql - PostgreSQL driver for PDO
 #  pgsql - PostgreSQL driver
 #  zip - Zip archive handling for zip extension
@@ -68,7 +67,6 @@ RUN apk add --no-cache --virtual .build-deps \
         calendar \
         gd \
         intl \
-        opcache \
         pdo_pgsql \
         pgsql \
         zip && \

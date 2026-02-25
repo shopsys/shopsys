@@ -24,6 +24,10 @@ class GoPayOrderStatus
     {
         $goPaySubStatusesToTranslate = self::getGoPaySubStatusesToTranslate();
 
+        if ($goPaySubStatus === null) {
+            return null;
+        }
+
         return $goPaySubStatusesToTranslate[$goPaySubStatus] ?? null;
     }
 

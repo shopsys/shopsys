@@ -88,7 +88,7 @@ class EntityConfig
             return null;
         }
 
-        return reset($domainPropertiesOnly);
+        return array_first($domainPropertiesOnly);
     }
 
     /**

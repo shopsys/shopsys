@@ -302,7 +302,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         string $type,
         UploadedFileData $uploadedFileData,
     ): int {
-        $temporaryFilename = end($uploadedFileData->uploadedFiles) ?: null;
+        $temporaryFilename = array_last($uploadedFileData->uploadedFiles);
         $hasPickerSelection = count($uploadedFileData->relations) > 0;
         $orderedFiles = $uploadedFileData->orderedFiles;
 
@@ -312,7 +312,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         }
 
         if (count($orderedFiles) > 0 && ($temporaryFilename || $hasPickerSelection)) {
-            $this->deleteRelationsByEntityAndUploadedFiles($entity, [reset($orderedFiles)], $type);
+            $this->deleteRelationsByEntityAndUploadedFiles($entity, [array_first($orderedFiles)], $type);
         }
 
         if ($temporaryFilename && !$hasPickerSelection) {
@@ -321,8 +321,8 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
                 $entityName,
                 $type,
                 $temporaryFilename,
-                end($uploadedFileData->uploadedFilenames) ?: '',
-                end($uploadedFileData->names) ?: [],
+                array_last($uploadedFileData->uploadedFilenames) ?: '',
+                array_last($uploadedFileData->names) ?: [],
             );
 
             return 1;

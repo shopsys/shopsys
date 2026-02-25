@@ -290,7 +290,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
     {
         $anotherUserOrder = $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 3, $this->domain->getId(), Order::class);
         $orderItems = $anotherUserOrder->getItems();
-        $orderItem = reset($orderItems);
+        $orderItem = array_first($orderItems);
         $response = $this->getResponseContentForGql(
             __DIR__ . '/../../Functional/Complaint/graphql/CreateComplaintMutation.graphql',
             [

@@ -23,7 +23,7 @@
         }
     },
     "require": {
-        "php": "^8.3",
+        "php": "^8.5",
         "ext-amqp": "*",
         "ext-bcmath": "*",
         "ext-ctype": "*",
@@ -135,7 +135,7 @@
         "symfony/debug-bundle": "^7.4",
         "symfony/var-dumper": "^7.4",
         "symfony/web-profiler-bundle": "^7.4",
-        "shopsys/phpunit-injector": "^2.6.0"
+        "shopsys/phpunit-injector": "^2.7"
     },
     "conflict": {
         "symfony/symfony": "*",
@@ -175,7 +175,7 @@
         "component-dir": "web/components",
         "sort-packages": true,
         "platform": {
-            "php": "8.3.2"
+            "php": "8.5.0"
         },
         "allow-plugins": {
             "cweagans/composer-patches": true,

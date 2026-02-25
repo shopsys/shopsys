@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "php": "^8.3",
+        "php": "^8.5",
         "google/cloud-storage": "^1.10",
         "league/flysystem-google-cloud-storage": "^3.0",
         "shopsys/form-types-bundle": "19.0.x-dev",

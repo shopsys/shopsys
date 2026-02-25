@@ -48,14 +48,14 @@ class PageStats
     {
         $this->checkFrozen();
 
-        return reset($this->requestsTimes);
+        return array_first($this->requestsTimes);
     }
 
     public function getMaxRequestTime(): int
     {
         $this->checkFrozen();
 
-        return end($this->requestsTimes);
+        return array_last($this->requestsTimes);
     }
 
     public function getAvgRequestTime(): int
@@ -148,7 +148,10 @@ class Summary
 }
 
 $summaryPath = '/gatlingResults/' . getenv('SUMMARY_DIR');
-$simulationDirs = explode("\n", str_replace("\r", '', file_get_contents($summaryPath . '/results.log')));
+$simulationDirs = $summaryPath . '/results.log'
+    |> file_get_contents(...)
+    |> (fn($v) => str_replace("\r", '', $v))
+    |> (fn($v) => explode("\n", $v));
 $simulationDirs = array_filter($simulationDirs);
 
 ob_start(function ($content) use ($summaryPath) {
@@ -159,10 +162,10 @@ ob_start(function ($content) use ($summaryPath) {
 
 $summary = new Summary();
 foreach ($simulationDirs as $simulationDir) {
-    $lines = explode(
-        "\n",
-        str_replace("\r", '', file_get_contents('/gatlingResults/' . $simulationDir . '/simulation.log'))
-    );
+    $lines = '/gatlingResults/' . $simulationDir . '/simulation.log'
+        |> file_get_contents(...)
+        |> (fn($v) => str_replace("\r", '', $v))
+        |> (fn($v) => explode("\n", $v));
 
     foreach ($lines as $line) {
         $data = explode("\t", $line);

@@ -61,7 +61,7 @@ class FileProfilerStorage extends BaseFileProfilerStorage
                 $profile->getParentToken(),
                 $profile->getStatusCode(),
                 $profile->getVirtualType(),
-            ]);
+            ], ',', '"', '\\');
             fclose($file);
         }
 

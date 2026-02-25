@@ -28,12 +28,14 @@ class Product extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Product\ProductTranslation>
      */
     #[Prezent\Translations(targetEntity: ProductTranslation::class)]
+    #[Override]
     protected $translations;
 
     #[ORM\Column(type: 'string', length: 100, nullable: true)]

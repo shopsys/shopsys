@@ -32,6 +32,7 @@ class Category extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
@@ -44,6 +45,7 @@ class Category extends AbstractTranslatableEntity
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation>
      */
     #[Prezent\Translations(targetEntity: CategoryTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

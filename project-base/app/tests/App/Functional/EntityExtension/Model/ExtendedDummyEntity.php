@@ -6,6 +6,7 @@ namespace Tests\App\Functional\EntityExtension\Model;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 
 #[ORM\Entity]
@@ -19,5 +20,6 @@ class ExtendedDummyEntity extends DummyEntity
     #[ORM\ManyToMany(targetEntity: Flag::class)]
     #[ORM\JoinTable(name: 'dummy_flags')]
     #[ORM\OrderBy(['id' => 'DESC'])]
+    #[Override]
     protected Collection $flags;
 }

@@ -165,7 +165,7 @@ class IndexFacade
             $this->exportIds($index, $indexDefinition, $changedIdsBatch);
 
             $progressBar->advance(count($changedIdsBatch));
-            $lastProcessedId = end($changedIdsBatch);
+            $lastProcessedId = array_last($changedIdsBatch);
         }
 
         $progressBar->finish();
@@ -227,7 +227,10 @@ class IndexFacade
                     $this->indexRepository->bulkUpdate($indexAlias, $currentBatchData);
                 }
 
-                $idsToDelete = array_values(array_diff($idsToExport, array_keys($currentBatchData)));
+                $idsToDelete = $currentBatchData
+                    |> array_keys(...)
+                    |> (fn ($v) => array_diff($idsToExport, $v))
+                    |> array_values(...);
 
                 if (count($idsToDelete) > 0) {
                     $this->indexRepository->deleteIds($indexAlias, $idsToDelete);

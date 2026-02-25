@@ -75,6 +75,6 @@ class SeoPageRepository
             ->getQuery()
             ->getResult();
 
-        return count($seoPage) === 0 ? null : reset($seoPage);
+        return array_first($seoPage);
     }
 }

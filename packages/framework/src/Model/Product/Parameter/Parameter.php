@@ -34,6 +34,7 @@ class Parameter extends AbstractTranslatableEntity
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
@@ -46,6 +47,7 @@ class Parameter extends AbstractTranslatableEntity
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation>
      */
     #[Prezent\Translations(targetEntity: ParameterTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

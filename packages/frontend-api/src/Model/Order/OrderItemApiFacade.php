@@ -236,7 +236,7 @@ class OrderItemApiFacade
         if (count($orX) > 1) {
             $queryBuilder->andWhere($queryBuilder->expr()->orX(...$orX));
         } elseif (count($orX) > 0) {
-            $queryBuilder->andWhere(reset($orX));
+            $queryBuilder->andWhere(array_first($orX));
         }
     }
 

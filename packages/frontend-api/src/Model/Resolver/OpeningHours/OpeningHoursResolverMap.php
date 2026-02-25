@@ -24,19 +24,19 @@ class OpeningHoursResolverMap extends ResolverMap
             'OpeningHours' => [
                 'status' => function (array $openingHours): string {
                     /** @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHour */
-                    $openingHour = reset($openingHours);
+                    $openingHour = array_first($openingHours);
 
                     return $this->storeOpeningHoursApiProvider->getStatus($openingHour->getStore());
                 },
                 'dayOfWeek' => function (array $openingHours): int {
                     /** @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHour */
-                    $openingHour = reset($openingHours);
+                    $openingHour = array_first($openingHours);
 
                     return $this->dateTimeHelper->getCurrentDayOfWeek($openingHour->getStore()->getDomainId());
                 },
                 'openingHoursOfDays' => function (array $openingHours): array {
                     /** @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHour */
-                    $openingHour = reset($openingHours);
+                    $openingHour = array_first($openingHours);
 
                     return $this->storeOpeningHoursApiProvider->getFollowingWeekOpeningHours($openingHour->getStore());
                 },

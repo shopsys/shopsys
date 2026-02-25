@@ -52,7 +52,9 @@ class IndexDefinition
 
     protected function getDocumentDefinitionVersion(): string
     {
-        return md5(serialize($this->getDefinition()));
+        return $this->getDefinition()
+            |> serialize(...)
+            |> md5(...);
     }
 
     public function getVersionedIndexName(): string

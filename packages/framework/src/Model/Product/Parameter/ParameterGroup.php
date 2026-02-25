@@ -27,12 +27,14 @@ class ParameterGroup extends AbstractTranslatableEntity implements OrderableEnti
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Override]
     protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation>
      */
     #[Prezent\Translations(targetEntity: ParameterGroupTranslation::class)]
+    #[Override]
     protected $translations;
 
     /**

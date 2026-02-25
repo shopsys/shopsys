@@ -65,7 +65,7 @@ class QueryBuilderExtender
             throw new InvalidCountOfAliasesException($rootAliases);
         }
 
-        return reset($rootAliases);
+        return array_first($rootAliases);
     }
 
     /**

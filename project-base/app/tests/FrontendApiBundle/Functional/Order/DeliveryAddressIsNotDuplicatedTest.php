@@ -40,7 +40,7 @@ class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/CreateOrderMutation.graphql', $orderVariables);
 
         $deliveryAddresses = $this->getCustomersDeliveryAddresses();
-        $lastDeliveryAddressUuid = end($deliveryAddresses)['uuid'];
+        $lastDeliveryAddressUuid = array_last($deliveryAddresses)['uuid'];
 
         $this->assertCount(2, $deliveryAddresses);
 
@@ -55,7 +55,7 @@ class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
         $deliveryAddresses = $this->getCustomersDeliveryAddresses();
 
         $this->assertCount(2, $deliveryAddresses);
-        $this->assertEquals($lastDeliveryAddressUuid, end($deliveryAddresses)['uuid']);
+        $this->assertEquals($lastDeliveryAddressUuid, array_last($deliveryAddresses)['uuid']);
     }
 
     private function initializeCart(): void

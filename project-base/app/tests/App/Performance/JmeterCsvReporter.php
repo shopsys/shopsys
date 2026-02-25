@@ -19,7 +19,7 @@ class JmeterCsvReporter
             'success',
             'URL',
             'Variables',
-        ]);
+        ], ',', '"', '\\');
     }
 
     /**
@@ -42,6 +42,6 @@ class JmeterCsvReporter
             $isSuccessful ? 'true' : 'false',
             '/' . $relativeUrl,
             $queryCount,
-        ]);
+        ], ',', '"', '\\');
     }
 }

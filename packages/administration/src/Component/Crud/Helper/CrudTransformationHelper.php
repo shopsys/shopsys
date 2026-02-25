@@ -17,7 +17,10 @@ final class CrudTransformationHelper
      */
     public static function transformToRouteName(string $controllerName): string
     {
-        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', self::getCleanControllerName($controllerName)));
+        return $controllerName
+            |> self::getCleanControllerName(...)
+            |> (fn ($v) => preg_replace('/(?<!^)[A-Z]/', '_$0', $v))
+            |> strtolower(...);
     }
 
     public static function generateController(string $controllerClass, ActionType $pageType): string
@@ -34,7 +37,10 @@ final class CrudTransformationHelper
      */
     public static function transformToRouteUrl(string $controllerName): string
     {
-        return strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', self::getCleanControllerName($controllerName)));
+        return $controllerName
+            |> self::getCleanControllerName(...)
+            |> (fn ($v) => preg_replace('/(?<!^)[A-Z]/', '-$0', $v))
+            |> strtolower(...);
     }
 
     /**

@@ -100,6 +100,7 @@ use Shopsys\CodingStandards\Sniffs\General\ForbiddenDumpSniff;
 use Shopsys\CodingStandards\Sniffs\General\ForbiddenExitSniff;
 use Shopsys\CodingStandards\Sniffs\General\ForbiddenSuperGlobalSniff;
 use Shopsys\CodingStandards\Sniffs\General\ObjectIsCreatedByFactorySniff;
+use Shopsys\CodingStandards\Sniffs\General\RequireOverrideAttributeOnPropertySniff;
 use Shopsys\CodingStandards\Sniffs\General\RequireOverrideAttributeSniff;
 use Shopsys\CodingStandards\Sniffs\General\ValidVariableNameSniff;
 use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff;
@@ -254,6 +255,7 @@ return ECSConfig::configure()
         DisallowEmptySniff::class,
         ParentCallSpacingSniff::class,
         UselessIfConditionWithReturnSniff::class,
+        RequireOverrideAttributeOnPropertySniff::class,
         RequireOverrideAttributeSniff::class,
         ParameterTypeHintSniff::class,
         ReturnTypeHintSniff::class,

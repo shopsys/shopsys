@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
@@ -16,6 +17,7 @@ class FlagTranslation extends AbstractTranslation
      * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
     #[Prezent\Translatable(targetEntity: Flag::class)]
+    #[Override]
     protected $translatable;
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Status;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
@@ -16,6 +17,7 @@ class OrderStatusTranslation extends AbstractTranslation
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
     #[Prezent\Translatable(targetEntity: OrderStatus::class)]
+    #[Override]
     protected $translatable;
 
     /**
