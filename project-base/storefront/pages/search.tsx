@@ -7,6 +7,7 @@ import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/B
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { SkeletonEnum } from 'types/skeletons';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
@@ -38,6 +39,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
             <CommonLayout
                 breadcrumbs={breadcrumbs}
                 isFetchingData={isSearchFetching && !!currentSearchString}
+                pageTypeOverride={SkeletonEnum.Search}
                 title={t('Search')}
             >
                 <SearchPageContent

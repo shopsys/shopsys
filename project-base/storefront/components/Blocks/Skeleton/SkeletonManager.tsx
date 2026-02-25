@@ -26,6 +26,7 @@ import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetai
 import { SkeletonPageProductsList } from './SkeletonPageProductsList';
 import { SkeletonPageRegistration } from './SkeletonPageRegistration';
 import { SkeletonPageResetPassword } from './SkeletonPageResetPassword';
+import { SkeletonPageSearch } from './SkeletonPageSearch';
 import { SkeletonPageStore } from './SkeletonPageStore';
 import { SkeletonPageStores } from './SkeletonPageStores';
 import { SkeletonPageTransportAndPayment } from './SkeletonPageTransportAndPayment';
@@ -65,6 +66,7 @@ const SKELETON_COMPONENT_MAP: Record<PageType, ComponentType> = {
     [SkeletonEnum.ProductMainVariant]: SkeletonPageProductDetailMainVariant,
     [SkeletonEnum.Registration]: SkeletonPageRegistration,
     [SkeletonEnum.ResetPassword]: SkeletonPageResetPassword,
+    [SkeletonEnum.Search]: SkeletonPageSearch,
     [SkeletonEnum.SeoCategory]: SkeletonPageProductsList,
     [SkeletonEnum.Store]: SkeletonPageStore,
     [SkeletonEnum.Stores]: SkeletonPageStores,
@@ -107,5 +109,5 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
 
     const SkeletonComponent = pageType ? SKELETON_COMPONENT_MAP[pageType] : null;
 
-    return SkeletonComponent ? <SkeletonComponent /> : null;
+    return SkeletonComponent ? <SkeletonComponent /> : <>{children}</>;
 };

@@ -25,6 +25,7 @@ export enum SkeletonEnum {
     Product = 'product',
     ProductMainVariant = 'productMainVariant',
     Registration = 'registration',
+    Search = 'search',
     SeoCategory = 'seo_category',
     Store = 'store',
     Stores = 'stores',
