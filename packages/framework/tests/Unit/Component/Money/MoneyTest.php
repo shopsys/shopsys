@@ -363,6 +363,12 @@ final class MoneyTest extends TestCase
 
         yield ['0.1', '0.1', 0, '1'];
 
+        yield ['0', '0', 2, '0'];
+
+        yield ['0', '1', 2, '0'];
+
+        yield ['0.0', '1', 1, '0.0'];
+
         yield ['-0', '1', 0, '0'];
 
         yield ['-0.0', '1', 1, '0.0'];
@@ -380,6 +386,20 @@ final class MoneyTest extends TestCase
         yield ['0.5', 2, 2, '0.25'];
 
         yield ['0.5', 2, 1, '0.3'];
+
+        yield ['-2', '3', 3, '-0.667'];
+
+        yield ['-1', '3', 3, '-0.333'];
+
+        yield ['1', '-3', 3, '-0.333'];
+
+        yield ['2', '-3', 3, '-0.667'];
+
+        yield ['-1', '2', 0, '-1'];
+
+        yield ['6', '2', 2, '3.00'];
+
+        yield ['0.0', '1', 3, '0.0'];
     }
 
     #[DataProvider('invalidDivisorProvider')]
@@ -416,6 +436,12 @@ final class MoneyTest extends TestCase
         yield ['0.0'];
 
         yield [0];
+
+        yield ['0.00'];
+
+        yield ['+0'];
+
+        yield ['000'];
     }
 
     public function testRoundIsImmutable(): void
