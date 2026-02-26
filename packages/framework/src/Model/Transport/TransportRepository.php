@@ -59,7 +59,7 @@ class TransportRepository
     public function getAllByDomainId(int $domainId): array
     {
         return $this->getQueryBuilderForAll()
-            ->join(TransportDomain::class, 'td', Join::WITH, 't.id = td.transport AND td.domainId = :domainId')
+            ->join('t.domains', 'td', Join::WITH, 'td.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->getQuery()
             ->getResult();
@@ -108,7 +108,7 @@ class TransportRepository
     public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Transport
     {
         $queryBuilder = $this->getTransportRepository()->createQueryBuilder('t')
-            ->join(TransportDomain::class, 'td', Join::WITH, 't.id = td.transport AND td.domainId = :domainId')
+            ->join('t.domains', 'td', Join::WITH, 'td.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->where('t.uuid = :uuid')
             ->setParameter('uuid', $uuid)

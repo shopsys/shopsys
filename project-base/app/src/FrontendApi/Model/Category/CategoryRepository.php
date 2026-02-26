@@ -29,7 +29,6 @@ class CategoryRepository extends BaseCategoryRepository
             $childrenByCategories[$category->getId()] = [];
         }
         $queryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId())
-            ->addSelect('cd')
             ->andWhere('c.parent IN(:categories)')
             ->setParameter('categories', $categories);
         $this->categoryRepository->addTranslation($queryBuilder, $domainConfig->getLocale());

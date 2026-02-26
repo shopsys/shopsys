@@ -7,11 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\GoPay;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 
 class GoPayRepository
 {
@@ -21,14 +21,11 @@ class GoPayRepository
     ) {
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
-     */
-    public function getAllUnpaidGoPayOrders(DateTimeImmutable $fromDate): array
+    protected function getQueryBuilderForAllUnpaidGoPayOrders(DateTimeImmutable $fromDate): QueryBuilder
     {
         $queryBuilder = $this->orderRepository->createOrderQueryBuilder()
             ->join(Payment::class, 'p', Join::WITH, 'o.payment = p.id')
-            ->join(PaymentTransaction::class, 'pt', Join::WITH, 'o.id = pt.order AND p.id = pt.payment')
+            ->join('o.paymentTransactions', 'pt', Join::WITH, 'p.id = pt.payment')
             ->andWhere('p.type = :type')
             ->andWhere('o.createdAt >= :fromDate')
             ->andWhere('pt.externalPaymentStatus NOT IN (:paymentStatuses)')
@@ -37,6 +34,16 @@ class GoPayRepository
             ->setParameter('paymentStatuses', [PaymentStatus::PAID, PaymentStatus::CANCELED, PaymentStatus::TIMEOUTED])
             ->setParameter('type', PaymentTypeEnum::TYPE_GOPAY);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
+     */
+    public function getAllUnpaidGoPayOrders(DateTimeImmutable $fromDate): array
+    {
+        return $this->getQueryBuilderForAllUnpaidGoPayOrders($fromDate)
+            ->getQuery()
+            ->execute();
     }
 }

@@ -61,7 +61,7 @@ class ReadyCategorySeoMixGridFactory
             ->from(ReadyCategorySeoMix::class, 'rcsm')
             ->andWhere('rcsm.domainId = :domainId')
             ->join('rcsm.category', 'c')
-            ->leftJoin(CategoryTranslation::class, 'ct', Join::WITH, 'ct.translatable = c and ct.locale = :locale ')
+            ->leftJoin(CategoryTranslation::class, 'ct', Join::WITH, 'ct.translatable = c and ct.locale = :locale')
             ->leftJoin(FriendlyUrl::class, 'fu', Join::WITH, 'fu.routeName = :routeName and fu.entityId = rcsm.id and fu.domainId = :domainId and fu.main = true')
             ->leftJoin('rcsm.flag', 'f')
             ->leftJoin(FlagTranslation::class, 'ft', Join::WITH, 'ft.translatable = f and ft.locale = :locale')

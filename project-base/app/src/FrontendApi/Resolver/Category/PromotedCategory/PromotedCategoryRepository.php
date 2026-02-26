@@ -23,7 +23,7 @@ class PromotedCategoryRepository
         $queryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId());
 
         return $queryBuilder
-            ->addSelect('ct, cd')
+            ->addSelect('ct')
             ->join(TopCategory::class, 'tc', Join::WITH, 'tc.category = c AND tc.domainId = :domainId')
             ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
             ->setParameter('locale', $domainConfig->getLocale())

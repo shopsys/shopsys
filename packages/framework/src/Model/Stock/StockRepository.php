@@ -60,7 +60,7 @@ class StockRepository
     public function getStocksEnabledOnDomain(int $domainId): array
     {
         return $this->getQueryBuilder()
-            ->join(StockDomain::class, 'sd', Join::WITH, 's.id = sd.stock AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
+            ->join('s.domains', 'sd', Join::WITH, 'sd.isEnabled = TRUE AND sd.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->getQuery()
             ->execute();

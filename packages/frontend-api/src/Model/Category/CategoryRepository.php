@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Category;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Category\CategoryDomain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as FrameworkCategoryRepository;
 
 class CategoryRepository
@@ -68,7 +66,7 @@ class CategoryRepository
     {
         return $this->em->getRepository(Category::class)->createQueryBuilder('c')
             ->where('c.parent IS NOT NULL')
-            ->join(CategoryDomain::class, 'cd', Join::WITH, 'cd.category = c.id')
+            ->join('c.domains', 'cd')
             ->andWhere('cd.domainId = :domainId')
             ->andWhere('cd.visible = TRUE')
             ->setParameter('domainId', $domainId);
@@ -81,7 +79,6 @@ class CategoryRepository
     public function getVisibleCategoriesByIds(array $categoriesIds, DomainConfig $domainConfig): array
     {
         $queryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId())
-            ->addSelect('cd')
             ->andWhere('c.id IN(:categoryIds)')
             ->indexBy('c', 'c.id')
             ->setParameter('categoryIds', array_merge(...$categoriesIds));

@@ -256,7 +256,7 @@ class CategoryRepository extends NestedTreeRepository
         $this->addTranslation($queryBuilder, $locale);
 
         $queryBuilder
-            ->join(CategoryDomain::class, 'cd', Join::WITH, 'cd.category = c')
+            ->join('c.domains', 'cd')
             ->andWhere('c.level >= 1')
             ->andWhere('cd.domainId = :domainId')
             ->setParameter('domainId', $domainId)
@@ -293,7 +293,7 @@ class CategoryRepository extends NestedTreeRepository
     public function getAllVisibleByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         $queryBuilder = $this->getAllQueryBuilder()
-            ->join(CategoryDomain::class, 'cd', Join::WITH, 'cd.category = c.id')
+            ->join('c.domains', 'cd')
             ->andWhere('cd.domainId = :domainId')
             ->andWhere('cd.visible = TRUE');
 
@@ -460,21 +460,27 @@ class CategoryRepository extends NestedTreeRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getCategoriesWithVisibleChildren(array $categories, int $domainId): array
+    protected function getCategoriesWithVisibleChildrenQueryBuilder(array $categories, int $domainId): QueryBuilder
     {
-        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId);
-
-        $queryBuilder
-            ->join(Category::class, 'cc', Join::WITH, 'cc.parent = c')
-            ->join(CategoryDomain::class, 'ccd', Join::WITH, 'ccd.category = cc.id')
+        return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+            ->join('c.children', 'cc')
+            ->join('cc.domains', 'ccd')
             ->andWhere('ccd.domainId = :domainId')
             ->andWhere('ccd.visible = TRUE')
             ->andWhere('c IN (:categories)')
             ->setParameter('categories', $categories);
+    }
 
-        return $queryBuilder->getQuery()->getResult();
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getCategoriesWithVisibleChildren(array $categories, int $domainId): array
+    {
+        return $this->getCategoriesWithVisibleChildrenQueryBuilder($categories, $domainId)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -497,7 +503,7 @@ class CategoryRepository extends NestedTreeRepository
 
         $result = $this->getAllQueryBuilder()
             ->select('c.id, COUNT(cd.id) AS domainCount')
-            ->join(CategoryDomain::class, 'cd', Join::WITH, 'cd.category = c.id')
+            ->join('c.domains', 'cd')
             ->andWhere('cd.visible = TRUE')
             ->groupBy('c.id')
             ->getQuery()
