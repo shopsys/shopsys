@@ -37,7 +37,7 @@ class EntityExtensionListenerTest extends TransactionFunctionalTestCase
         $classMetadata = $this->em->getClassMetadata(ExtendedDummyEntity::class);
 
         $expectedOrderByValue = ['id' => 'DESC'];
-        $this->assertEquals($expectedOrderByValue, $classMetadata->associationMappings['flags']['orderBy']);
+        $this->assertEquals($expectedOrderByValue, $classMetadata->getAssociationMapping('flags')['orderBy']);
     }
 
     private function isMonorepo(): bool

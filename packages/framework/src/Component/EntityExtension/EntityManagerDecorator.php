@@ -62,17 +62,6 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
      * {@inheritdoc}
      */
     #[Override]
-    public function getPartialReference($entityName, $identifier): ?object
-    {
-        $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
-
-        return parent::getPartialReference($resolvedEntityName, $identifier);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function find($entityName, $id, $lockMode = null, $lockVersion = null): ?object
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);

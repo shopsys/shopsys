@@ -107,8 +107,7 @@ class CollationOrderByWalker extends TreeWalkerAdapter
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $queryComponents[$fieldPathExpression->identificationVariable]['metadata'];
-        $fieldData = $metadata->getFieldMapping($fieldPathExpression->field);
 
-        return $fieldData['type'] === 'string';
+        return $metadata->getTypeOfField($fieldPathExpression->field) === 'string';
     }
 }

@@ -134,7 +134,7 @@ class EntityExtensionListener
                     $parentClass,
                 );
 
-                $isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping = !isset($classMetadata->associationMappings[$associationName]) || $classMetadata->associationMappings[$associationName] !== $parentEntityAssociationMapping;
+                $isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping = !$classMetadata->hasAssociation($associationName) || $classMetadata->getAssociationMapping($associationName) !== $parentEntityAssociationMapping;
                 $isOverriddenPropertyInChildClass = true;
 
                 if ($isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping) {
@@ -174,7 +174,7 @@ class EntityExtensionListener
         foreach ($this->parentEntitiesByClass[$currentEntityClass] as $parentClass) {
             $parentMetadata = $this->getClassMetadataForEntity($parentClass);
 
-            foreach ($parentMetadata->reflFields as $name => $field) {
+            foreach ($parentMetadata->getReflectionProperties() as $name => $field) {
                 if (!isset($metadata->reflFields[$name])) {
                     $metadata->reflFields[$name] = $field;
                 }
