@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Doctrine;
 
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\ClassMetadata as PersistenceClassMetadata;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
 use Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder;
@@ -14,7 +14,7 @@ class NotNullableColumnsFinderTest extends TestCase
 {
     public function testGetAllNotNullableColumnNamesIndexedByTableName(): void
     {
-        $classMetadataInfoStub = $this->createStub(ClassMetadataInfo::class);
+        $classMetadataInfoStub = $this->createStub(ClassMetadata::class);
         $classMetadataInfoStub
             ->method('getTableName')
             ->willReturn('EntityName');
@@ -76,7 +76,7 @@ class NotNullableColumnsFinderTest extends TestCase
 
     public function testGetAllNotNullableColumnNamesIndexedByTableNameException(): void
     {
-        $classMetadataStub = $this->createStub(ClassMetadata::class);
+        $classMetadataStub = $this->createStub(PersistenceClassMetadata::class);
         $this->expectException(UnexpectedTypeException::class);
 
         $notNullableColumnsFinder = new NotNullableColumnsFinder();

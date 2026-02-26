@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
 
 class NotNullableColumnsFinder
@@ -18,8 +18,8 @@ class NotNullableColumnsFinder
         $notNullableColumnNamesIndexedByTableName = [];
 
         foreach ($classesMetadata as $classMetadata) {
-            if (!($classMetadata instanceof ClassMetadataInfo)) {
-                $message = 'Instance of ' . ClassMetadataInfo::class . ' is required.';
+            if (!($classMetadata instanceof ClassMetadata)) {
+                $message = 'Instance of ' . ClassMetadata::class . ' is required.';
 
                 throw new UnexpectedTypeException($message);
             }
@@ -36,7 +36,7 @@ class NotNullableColumnsFinder
     /**
      * @return string[]
      */
-    protected function getNotNullableFieldColumnNames(ClassMetadataInfo $classMetadataInfo): array
+    protected function getNotNullableFieldColumnNames(ClassMetadata $classMetadataInfo): array
     {
         $notNullableFieldNames = [];
 
@@ -52,7 +52,7 @@ class NotNullableColumnsFinder
     /**
      * @return string[]
      */
-    protected function getNotNullableAssociationColumnNames(ClassMetadataInfo $classMetadataInfo): array
+    protected function getNotNullableAssociationColumnNames(ClassMetadata $classMetadataInfo): array
     {
         $notNullableAssociationNames = [];
 
