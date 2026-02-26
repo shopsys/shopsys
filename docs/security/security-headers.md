@@ -7,11 +7,11 @@ This document describes each header, where it is set, and how it is configured.
 
 Security headers are applied at three layers:
 
-| Layer                        | Scope                                                               | Configuration                                                                                                                                                                  |
-| ---------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **nginx**                    | All responses (including static files and error pages)              | `project-base/docker/nginx/nginx.conf` (dev), [deployment nginx.yaml](https://github.com/shopsys/deployment/blob/main/kubernetes/configmap/nginx.yaml) (production Kubernetes) |
-| **PHP (Symfony)**            | Dynamic CSP on admin/backend main requests (excluding Frontend API) | `SecurityHeadersResponseListener`                                                                                                                                              |
-| **Storefront (Next.js SSR)** | All storefront HTML pages                                           | `initServerSideProps.ts`                                                                                                                                                       |
+| Layer                        | Scope                                                               | Configuration                                                                                                                                  |
+| ---------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **nginx**                    | All responses (including static files and error pages)              | `project-base/docker/nginx/nginx.conf` (development), `project-base/app/orchestration/kubernetes/configmap/nginx.yaml` (production Kubernetes) |
+| **PHP (Symfony)**            | Dynamic CSP on admin/backend main requests (excluding Frontend API) | `SecurityHeadersResponseListener`                                                                                                              |
+| **Storefront (Next.js SSR)** | All storefront HTML pages                                           | `initServerSideProps.ts`                                                                                                                       |
 
 ### How headers reach each response type
 
