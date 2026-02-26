@@ -15,15 +15,15 @@ Security headers are applied at three layers:
 
 ### How headers reach each response type
 
-Static security headers (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `X-XSS-Protection`, `Strict-Transport-Security`, `X-Powered-By`) are set at the nginx **server level**.
+Static security headers (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `X-XSS-Protection`, `Strict-Transport-Security`, `Permissions-Policy`, `X-Powered-By`) are set at the nginx **server level**.
 
-| Response type          | nginx location  | Inherits server-level headers?                    | Additional headers beyond server-level defaults                                                                            |
-| ---------------------- | --------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Admin pages            | `@app`          | No — has own `add_header`, so must redeclare them | PHP: CSP (dynamic); nginx `@app`: redeclared static security headers; CORS headers intentionally not set                   |
-| Storefront pages       | `@storefront`   | Yes                                               | Next.js: CSP only (dynamic, obtained via GraphQL)                                                                          |
-| Frontend API (GraphQL) | `@app`          | No — same as admin                                | nginx `@app`: redeclared static security headers; CSP is **not** set for API responses; CORS headers intentionally not set |
-| Static files           | `try_files`     | Yes                                               | —                                                                                                                          |
-| Image resizer          | `@imageResizer` | Yes                                               | —                                                                                                                          |
+| Response type          | nginx location  | Inherits server-level headers?                    | Additional headers beyond server-level defaults                                                                                                                                  |
+| ---------------------- | --------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Admin pages            | `@app`          | No — has own `add_header`, so must redeclare them | PHP: CSP (dynamic); nginx `@app`: redeclared static security headers with stricter `Permissions-Policy` (`geolocation=()`); CORS headers intentionally not set                   |
+| Storefront pages       | `@storefront`   | Yes                                               | Next.js: CSP only (dynamic, obtained via GraphQL)                                                                                                                                |
+| Frontend API (GraphQL) | `@app`          | No — same as admin                                | nginx `@app`: redeclared static security headers with stricter `Permissions-Policy` (`geolocation=()`); CSP is **not** set for API responses; CORS headers intentionally not set |
+| Static files           | `try_files`     | Yes                                               | —                                                                                                                                                                                |
+| Image resizer          | `@imageResizer` | Yes                                               | —                                                                                                                                                                                |
 
 Important nginx rule: if a location block defines _any_ `add_header` directive, it does **not** inherit server-level `add_header` directives.
 This is why the `@app` location explicitly redeclares the security headers, while `@storefront` does not need to — it inherits them automatically.
@@ -122,6 +122,15 @@ Note: browsers only honor this header when received over a valid HTTPS connectio
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Value**  | `Shopsys Platform`                                                                                                                                                              |
 | **Set by** | nginx (server-level `add_header`; redeclared in `@app` because location-level `add_header` disables inheritance; `@storefront` hides upstream header so nginx value is applied) |
+
+### Permissions-Policy
+
+**In plain English:** Controls access to browser features such as camera, microphone, geolocation, payment APIs, and USB. Most features are disabled for all origins using `()`. Geolocation is allowed only for same-origin storefront responses via server-level policy, while `@app` responses (admin/GraphQL/PHP) override it to `geolocation=()`.
+
+| Property   | Value                                                                                                                                                                                         |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Value**  | server level (`@storefront` inherit): `camera=(), geolocation=(self), microphone=(), payment=(), usb=()`; `@app`/PHP override: `camera=(), geolocation=(), microphone=(), payment=(), usb=()` |
+| **Set by** | nginx (server-level `add_header`; `@app` and payment-status-notify locations redeclare a stricter policy because location-level `add_header` disables inheritance)                            |
 
 ### Access-Control-Allow-Origin (CORS)
 
