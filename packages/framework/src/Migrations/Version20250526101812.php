@@ -38,7 +38,7 @@ class Version20250526101812 extends AbstractMigration implements DomainAwareInte
         string $subject,
         string $body,
     ): void {
-        $mailTemplateCount = $this->sql(
+        $mailTemplateCount = $this->sqlQuery(
             'SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName and domain_id = :domainId',
             [
                 'mailTemplateName' => $mailTemplateName,

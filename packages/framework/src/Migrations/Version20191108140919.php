@@ -30,7 +30,7 @@ class Version20191108140919 extends AbstractMigration implements DomainAwareInte
 
     private function migrateCurrentData(): void
     {
-        $currentProductsIdWithVat = $this->sql('SELECT id, vat_id FROM products')->fetchAllAssociative();
+        $currentProductsIdWithVat = $this->sqlQuery('SELECT id, vat_id FROM products')->fetchAllAssociative();
 
         foreach ($this->getAllDomainIds() as $domainId) {
             foreach ($currentProductsIdWithVat as $currentProductIdWithVat) {
@@ -38,7 +38,7 @@ class Version20191108140919 extends AbstractMigration implements DomainAwareInte
 
                 if ($domainId > 1) {
                     $newVatId = $this
-                        ->sql(
+                        ->sqlQuery(
                             'SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId',
                             [
                                 'tmpOriginalId' => $currentProductIdWithVat['vat_id'],

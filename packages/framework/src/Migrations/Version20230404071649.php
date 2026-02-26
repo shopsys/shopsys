@@ -16,7 +16,7 @@ class Version20230404071649 extends AbstractMigration implements DomainAwareInte
     public function up(Schema $schema): void
     {
         foreach ($this->getAllDomainIds() as $domainId) {
-            $seoRobotsTxtContentSettingCount = $this->sql(
+            $seoRobotsTxtContentSettingCount = $this->sqlQuery(
                 'SELECT COUNT(*) FROM setting_values WHERE name = \'seoRobotsTxtContent\' AND domain_id = :domainId;',
                 ['domainId' => $domainId],
             )->fetchOne();

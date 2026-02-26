@@ -22,7 +22,7 @@ class Version20250404110544 extends AbstractMigration implements DomainAwareInte
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
 
-            $paymentInProcessPageContent = $this->sql(
+            $paymentInProcessPageContent = $this->sqlQuery(
                 'SELECT COUNT(*) FROM setting_values WHERE name = :settingName AND domain_id = :domainId;',
                 [
                     'settingName' => self::SETTING_NAME,

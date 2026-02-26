@@ -13,7 +13,7 @@ class Version20250326101147 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $inputPriceType = $this->sql(
+        $inputPriceType = $this->sqlQuery(
             'SELECT value FROM setting_values WHERE name = \'inputPriceType\'',
         )->fetchOne();
 

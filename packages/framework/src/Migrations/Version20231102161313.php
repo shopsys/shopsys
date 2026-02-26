@@ -33,7 +33,7 @@ class Version20231102161313 extends AbstractMigration
             return;
         }
 
-        $wishlists = $this->sql('SELECT * FROM wishlists')->fetchAllAssociative();
+        $wishlists = $this->sqlQuery('SELECT * FROM wishlists')->fetchAllAssociative();
 
         foreach ($wishlists as $wishlist) {
             $wishlistUuid = $wishlist['uuid'] ?? Uuid::uuid4()->toString();
@@ -44,8 +44,8 @@ class Version20231102161313 extends AbstractMigration
                 'updated_at' => $wishlist['updated_at'],
                 'type' => 'wishlist',
             ]);
-            $productListId = $this->sql('SELECT id FROM product_lists WHERE uuid = :uuid', ['uuid' => $wishlistUuid])->fetchOne();
-            $wishlistItems = $this->sql('SELECT * FROM wishlist_items WHERE wishlist_id = :wishlist_id', ['wishlist_id' => $wishlist['id']])->fetchAllAssociative();
+            $productListId = $this->sqlQuery('SELECT id FROM product_lists WHERE uuid = :uuid', ['uuid' => $wishlistUuid])->fetchOne();
+            $wishlistItems = $this->sqlQuery('SELECT * FROM wishlist_items WHERE wishlist_id = :wishlist_id', ['wishlist_id' => $wishlist['id']])->fetchAllAssociative();
 
             foreach ($wishlistItems as $wishlistItem) {
                 $this->sql('INSERT INTO product_list_items (uuid, product_list_id, product_id, created_at) VALUES (:uuid, :product_list_id, :product_id, :created_at)', [
@@ -64,7 +64,7 @@ class Version20231102161313 extends AbstractMigration
             return;
         }
 
-        $comparisons = $this->sql('SELECT * FROM comparisons')->fetchAllAssociative();
+        $comparisons = $this->sqlQuery('SELECT * FROM comparisons')->fetchAllAssociative();
 
         foreach ($comparisons as $comparison) {
             $comparisonUuid = $comparison['uuid'] ?? Uuid::uuid4()->toString();
@@ -75,8 +75,8 @@ class Version20231102161313 extends AbstractMigration
                 'updated_at' => $comparison['updated_at'],
                 'type' => 'comparison',
             ]);
-            $comparisonId = $this->sql('SELECT id FROM product_lists WHERE uuid = :uuid', ['uuid' => $comparisonUuid])->fetchOne();
-            $comparisonItems = $this->sql('SELECT * FROM compared_items WHERE comparison_id = :comparison_id', ['comparison_id' => $comparison['id']])->fetchAllAssociative();
+            $comparisonId = $this->sqlQuery('SELECT id FROM product_lists WHERE uuid = :uuid', ['uuid' => $comparisonUuid])->fetchOne();
+            $comparisonItems = $this->sqlQuery('SELECT * FROM compared_items WHERE comparison_id = :comparison_id', ['comparison_id' => $comparison['id']])->fetchAllAssociative();
 
             foreach ($comparisonItems as $comparisonItem) {
                 $this->sql('INSERT INTO product_list_items (uuid, product_list_id, product_id, created_at) VALUES (:uuid, :product_list_id, :product_id, :created_at)', [

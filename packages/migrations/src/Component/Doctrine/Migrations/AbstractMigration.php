@@ -26,13 +26,24 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
     #[Override]
     protected function addSql(string $sql, array $params = [], array $types = []): void
     {
-        $message = 'Calling method "addSql" is not allowed. Use "sql" method instead';
+        $message = 'Calling method "addSql" is not allowed. Use "sql" for DDL/DML or "sqlQuery" for SELECT queries';
 
         throw new MethodIsNotAllowedException($message);
     }
 
-    public function sql(string $query, array $params = [], array $types = [], ?QueryCacheProfile $qcp = null): Result
+    public function sql(string $query, array $params = [], array $types = []): int|string
     {
+        $this->sqlQueries[] = new Query($query, $params, $types);
+
+        return $this->connection->executeStatement($query, $params, $types);
+    }
+
+    public function sqlQuery(
+        string $query,
+        array $params = [],
+        array $types = [],
+        ?QueryCacheProfile $qcp = null,
+    ): Result {
         $this->sqlQueries[] = new Query($query, $params, $types);
 
         return $this->connection->executeQuery($query, $params, $types, $qcp);
@@ -62,7 +73,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
 
     protected function isAppMigrationNotInstalled(string $version): bool
     {
-        return !$this->sql(
+        return !$this->sqlQuery(
             'SELECT COUNT(*) FROM migrations WHERE version = :version;',
             ['version' => $this->prefixAppMigrationVersion($version)],
         )->fetchOne();
@@ -94,7 +105,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
 
     protected function columnExists(string $tableName, string $columnName): bool
     {
-        return $this->sql('SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = :table_name AND column_name = :column_name)', [
+        return $this->sqlQuery('SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = :table_name AND column_name = :column_name)', [
             'table_name' => $tableName,
             'column_name' => $columnName,
         ])->fetchOne();
@@ -102,7 +113,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
 
     protected function tableExists(string $tableName): bool
     {
-        return $this->sql('SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = :table_name)', [
+        return $this->sqlQuery('SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = :table_name)', [
             'table_name' => $tableName,
         ])->fetchOne();
     }

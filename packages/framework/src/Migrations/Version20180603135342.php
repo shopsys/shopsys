@@ -13,7 +13,7 @@ class Version20180603135342 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $currenciesCount = $this->sql('SELECT count(*) FROM currencies')->fetchOne();
+        $currenciesCount = $this->sqlQuery('SELECT count(*) FROM currencies')->fetchOne();
 
         if ($currenciesCount > 0) {
             return;
@@ -26,7 +26,7 @@ class Version20180603135342 extends AbstractMigration
 
         $this->sql('ALTER SEQUENCE currencies_id_seq RESTART WITH 3');
 
-        $defaultCurrencyId = $this->sql(
+        $defaultCurrencyId = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultCurrencyId\' AND domain_id = 0;',
         )->fetchOne();
 
@@ -36,7 +36,7 @@ class Version20180603135342 extends AbstractMigration
             );
         }
 
-        $defaultDomainCurrencyId = $this->sql(
+        $defaultDomainCurrencyId = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultDomainCurrencyId\' AND domain_id = 1;',
         )->fetchOne();
 

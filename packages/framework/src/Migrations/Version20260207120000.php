@@ -14,7 +14,7 @@ class Version20260207120000 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $friendlyUrlsResult = $this->sql(
+        $friendlyUrlsResult = $this->sqlQuery(
             'SELECT domain_id, slug, route_name, entity_id, main, redirect_to, redirect_code, last_modification
              FROM friendly_urls',
         );

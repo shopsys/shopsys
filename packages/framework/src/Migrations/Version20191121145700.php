@@ -16,7 +16,7 @@ class Version20191121145700 extends AbstractMigration implements DomainAwareInte
     public function up(Schema $schema): void
     {
         foreach ($this->getAllDomainIds() as $domainId) {
-            $contactFormMainTextCount = $this->sql(
+            $contactFormMainTextCount = $this->sqlQuery(
                 'SELECT COUNT(*) FROM setting_values WHERE name = \'contactFormMainText\' AND domain_id = :domainId;',
                 [
                     'domainId' => $domainId,

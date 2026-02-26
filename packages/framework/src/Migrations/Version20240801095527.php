@@ -20,7 +20,7 @@ class Version20240801095527 extends AbstractMigration
                 PRIMARY KEY(id)
             )');
 
-        $complaintNumberSequence = $this->sql('SELECT count(*) FROM complaint_number_sequences')->fetchOne();
+        $complaintNumberSequence = $this->sqlQuery('SELECT count(*) FROM complaint_number_sequences')->fetchOne();
 
         if ($complaintNumberSequence > 0) {
             return;

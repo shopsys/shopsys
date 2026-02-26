@@ -25,7 +25,7 @@ class Version20170807084807 extends AbstractMigration
     {
         $heurekaDataValues = [];
         $zboziDataValues = [];
-        $productDomainRows = $this->sql(
+        $productDomainRows = $this->sqlQuery(
             'SELECT product_id, domain_id, heureka_cpc, zbozi_cpc, zbozi_cpc_search, show_in_zbozi_feed
             FROM product_domains',
         )->fetchAllAssociative();

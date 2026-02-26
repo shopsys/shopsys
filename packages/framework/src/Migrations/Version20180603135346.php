@@ -13,7 +13,7 @@ class Version20180603135346 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $pricingGroupsCount = $this->sql('SELECT count(*) FROM pricing_groups')->fetchOne();
+        $pricingGroupsCount = $this->sqlQuery('SELECT count(*) FROM pricing_groups')->fetchOne();
 
         if ($pricingGroupsCount > 0) {
             return;
@@ -24,7 +24,7 @@ class Version20180603135346 extends AbstractMigration
         );
         $this->sql('ALTER SEQUENCE pricing_groups_id_seq RESTART WITH 2');
 
-        $defaultPricingGroupId = $this->sql(
+        $defaultPricingGroupId = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultPricingGroupId\' AND domain_id = 1;',
         )->fetchOne();
 
