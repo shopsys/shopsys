@@ -51,7 +51,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
      * {@inheritdoc}
      */
     #[Override]
-    public function getReference($entityName, $id): ?object
+    public function getReference($entityName, $id): object
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
 

@@ -125,16 +125,20 @@ class EntityExtensionListener
             $parentMetadata = $this->getClassMetadataForEntity($parentClass);
 
             foreach ($parentMetadata->getAssociationMappings() as $associationName => $parentEntityAssociationMapping) {
-                if (isset($parentEntityAssociationMapping['sourceEntity']) && $parentEntityAssociationMapping['sourceEntity'] === $parentClass) {
-                    $parentEntityAssociationMapping['sourceEntity'] = $currentEntityClass;
+                $mappingArray = $parentEntityAssociationMapping->toArray();
+
+                if ($mappingArray['sourceEntity'] === $parentClass) {
+                    $mappingArray['sourceEntity'] = $currentEntityClass;
                 }
 
-                $parentEntityAssociationMapping['targetEntity'] = $this->ensureAbsoluteClassName(
-                    $parentEntityAssociationMapping['targetEntity'],
+                $mappingArray['targetEntity'] = $this->ensureAbsoluteClassName(
+                    $mappingArray['targetEntity'],
                     $parentClass,
                 );
 
-                $isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping = !$classMetadata->hasAssociation($associationName) || $classMetadata->getAssociationMapping($associationName) !== $parentEntityAssociationMapping;
+                $reconstructedMapping = $parentEntityAssociationMapping::fromMappingArray($mappingArray);
+
+                $isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping = !$classMetadata->hasAssociation($associationName) || $classMetadata->getAssociationMapping($associationName)->toArray() !== $reconstructedMapping->toArray();
                 $isOverriddenPropertyInChildClass = true;
 
                 if ($isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping) {
@@ -144,7 +148,7 @@ class EntityExtensionListener
                 }
 
                 if (!$isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping || !$isOverriddenPropertyInChildClass) {
-                    $classMetadata->associationMappings[$associationName] = $parentEntityAssociationMapping;
+                    $classMetadata->associationMappings[$associationName] = $reconstructedMapping;
                 }
             }
         }
@@ -240,14 +244,15 @@ class EntityExtensionListener
     protected function updateAssociationMappingsToMappedSuperclasses(ClassMetadata $classMetadata): void
     {
         foreach ($classMetadata->getAssociationMappings() as $name => $mapping) {
-            if (!$this->isParentEntity($mapping['targetEntity'])) {
+            if (!$this->isParentEntity($mapping->targetEntity)) {
                 continue;
             }
 
-            $overridingClass = $this->getOverridingClass($mapping['targetEntity']);
+            $overridingClass = $this->getOverridingClass($mapping->targetEntity);
 
-            $mapping['targetEntity'] = $overridingClass;
-            $classMetadata->associationMappings[$name] = $mapping;
+            $mappingArray = $mapping->toArray();
+            $mappingArray['targetEntity'] = $overridingClass;
+            $classMetadata->associationMappings[$name] = $mapping::fromMappingArray($mappingArray);
         }
     }
 

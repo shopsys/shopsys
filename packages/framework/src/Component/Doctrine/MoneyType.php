@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\ConversionException;
+use Doctrine\DBAL\Types\Exception\InvalidFormat;
+use Doctrine\DBAL\Types\Exception\InvalidType;
 use Doctrine\DBAL\Types\Type;
 use Exception;
 use Override;
@@ -13,15 +14,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class MoneyType extends Type
 {
-    /**
-     * @deprecated Will be removed in DBAL 4 — types are identified by class, not by name
-     */
-    #[Override]
-    public function getName(): string
-    {
-        return 'money';
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -45,7 +37,7 @@ class MoneyType extends Type
             return $value->getAmount();
         }
 
-        throw ConversionException::conversionFailedInvalidType($value, static::class, ['null', Money::class]);
+        throw InvalidType::new($value, static::class, ['null', Money::class]);
     }
 
     /**
@@ -61,7 +53,7 @@ class MoneyType extends Type
         try {
             return Money::create($value);
         } catch (Exception $e) {
-            throw ConversionException::conversionFailedFormat($value, static::class, 'numeric', $e);
+            throw InvalidFormat::new($value, static::class, 'numeric', $e);
         }
     }
 }

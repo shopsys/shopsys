@@ -53,11 +53,15 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
 
         $order = $this->createOrder($product, $transport, $transport->getPayments()[0]);
+        $orderUuid = $order->getUuid();
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/OrderSentPageContentQuery.graphql', [
-            'orderUuid' => $order->getUuid(),
+            'orderUuid' => $orderUuid,
         ]);
 
+        // Re-fetch order after GraphQL request to avoid ORM 3 EntityIdentityCollisionException
+        $this->em->clear();
+        $order = $this->orderFacade->getByUuid($orderUuid);
         $this->assertEquals(
             $this->orderContentPageFacade->getOrderSentPageContent($order),
             $response['data']['orderSentPageContent'],
@@ -95,6 +99,10 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, 'orderPaymentPageContent');
 
         $this->assertSame(strtoupper(PaymentContentPageStatusEnum::STATUS_FAILED), $responseData['status']);
+        // Re-fetch order after GraphQL request to avoid ORM 3 EntityIdentityCollisionException
+        // (the request may load the same entities, causing proxy init collisions)
+        $this->em->clear();
+        $order = $this->orderFacade->getByUuid($orderUuid);
         $this->assertSame($this->orderContentPageFacade->getPaymentFailedPageContent($order), $responseData['content']);
 
         // simulate payment in process
@@ -109,6 +117,8 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, 'orderPaymentPageContent');
 
         $this->assertSame(strtoupper(PaymentContentPageStatusEnum::STATUS_IN_PROCESS), $responseData['status']);
+        $this->em->clear();
+        $order = $this->orderFacade->getByUuid($orderUuid);
         $this->assertSame($this->orderContentPageFacade->getPaymentInProcessPageContent($order), $responseData['content']);
 
         // simulate paid payment
@@ -123,6 +133,8 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, 'orderPaymentPageContent');
 
         $this->assertSame(strtoupper(PaymentContentPageStatusEnum::STATUS_SUCCESSFUL), $responseData['status']);
+        $this->em->clear();
+        $order = $this->orderFacade->getByUuid($orderUuid);
         $this->assertSame($this->orderContentPageFacade->getPaymentSuccessfulPageContent($order), $responseData['content']);
     }
 

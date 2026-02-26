@@ -92,17 +92,22 @@ class LoggableEntityConfigFactory
 
             $associationMapping = $classMetaData->getAssociationMapping($reflectionProperty->getName());
 
-            $targetEntity = $associationMapping['targetEntity'];
+            $targetEntity = $associationMapping->targetEntity;
             $targetEntityNamespaceParts = explode('\\', $targetEntity);
             $targetEntityObjectName = array_pop($targetEntityNamespaceParts);
 
             $loggableSetup->setParentEntityName($targetEntityObjectName);
 
-            $referencedColumnName = $associationMapping['joinColumns'][0]['referencedColumnName'] ?? false;
-            $expectedMethodName = sprintf('get%s', ucfirst($referencedColumnName));
+            $referencedColumnName = (property_exists($associationMapping, 'joinColumns') && count($associationMapping->joinColumns) > 0)
+                ? $associationMapping->joinColumns[0]->referencedColumnName
+                : null;
 
-            if ($referencedColumnName && method_exists($targetEntity, $expectedMethodName)) {
-                $loggableSetup->setParentEntityIdentityFunctionName($expectedMethodName);
+            if ($referencedColumnName !== null) {
+                $expectedMethodName = sprintf('get%s', ucfirst($referencedColumnName));
+
+                if (method_exists($targetEntity, $expectedMethodName)) {
+                    $loggableSetup->setParentEntityIdentityFunctionName($expectedMethodName);
+                }
             }
 
             break;
