@@ -7,11 +7,12 @@ namespace Shopsys\FrameworkBundle\Component\Router;
 use Override;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
-class AdministrationRouter implements RouterInterface
+class AdministrationRouter implements RouterInterface, RequestMatcherInterface
 {
     public function __construct(protected Router $router)
     {
@@ -65,6 +66,7 @@ class AdministrationRouter implements RouterInterface
     /**
      * @return array<string, mixed>
      */
+    #[Override]
     public function matchRequest(Request $request): array
     {
         return $this->router->matchRequest($request);
