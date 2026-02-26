@@ -1,12 +1,15 @@
 /.idea
+/logs
 /nbproject
 /.npm-global
+/.ralph
 /var/cache/test-db-dump.sql
 /vendor
 /.php_cs.cache
 /.phpcs-cache
 /.docker-sync
 .DS_Store
+.ralphrc
 /composer.lock
 /docker-compose.yml
 /docker-sync.yml
