@@ -33,6 +33,7 @@ ENV SENTRY_RELEASE=$SENTRY_RELEASE
 ENV CYPRESS_KEEP_TID=$CYPRESS_KEEP_TID
 
 RUN pnpm run build
+RUN pnpm prune --prod
 RUN rm -rf ./.next/cache
 
 FROM base AS production
@@ -43,11 +44,9 @@ WORKDIR $APP_DIR
 ENV APP_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-COPY --from=dependencies /tmp/build/.next/standalone $APP_DIR
-COPY --from=dependencies /tmp/build/public $APP_DIR/public
-COPY --from=dependencies /tmp/build/.next/static $APP_DIR/.next/static
+COPY --from=dependencies /tmp/build $APP_DIR
 RUN chown -R root:root $APP_DIR && chmod -R a-w $APP_DIR
 
 USER node
 
-CMD ["node", "server.js"]
+CMD ["pnpm", "start"]
