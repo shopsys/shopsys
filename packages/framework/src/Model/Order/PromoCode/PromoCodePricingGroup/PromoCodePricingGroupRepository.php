@@ -31,7 +31,7 @@ class PromoCodePricingGroupRepository
             ->where('pcpg.promoCode = :promoCodeId')
             ->setParameter('promoCodeId', $promoCodeId)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     /**
@@ -46,6 +46,6 @@ class PromoCodePricingGroupRepository
             ->where('pcpg.promoCode = :promoCodeId')
             ->setParameter('promoCodeId', $promoCodeId)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 }

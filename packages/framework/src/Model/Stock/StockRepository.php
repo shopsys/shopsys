@@ -63,7 +63,7 @@ class StockRepository
             ->join('s.domains', 'sd', Join::WITH, 'sd.isEnabled = TRUE AND sd.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     /**

@@ -83,7 +83,7 @@ class StoreRepository
             $queryBuilder->setFirstResult($offset);
         }
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function findStoreByExternalId(string $externalId): ?Store
@@ -132,7 +132,7 @@ class StoreRepository
             ->where('s.id IN (:storeIds)')
             ->setParameter('storeIds', $storeIds);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**

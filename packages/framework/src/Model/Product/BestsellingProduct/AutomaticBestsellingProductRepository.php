@@ -51,6 +51,6 @@ class AutomaticBestsellingProductRepository
             ->groupBy('p.id, pmip.product, pmip.pricingGroup')
             ->setMaxResults($maxResults);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 }

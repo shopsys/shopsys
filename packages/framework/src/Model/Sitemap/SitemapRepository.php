@@ -104,7 +104,7 @@ class SitemapRepository
      */
     protected function getSitemapItemsFromQueryBuilderWithSlugField(QueryBuilder $queryBuilder): array
     {
-        $rows = $queryBuilder->getQuery()->execute(null, AbstractQuery::HYDRATE_SCALAR);
+        $rows = $queryBuilder->getQuery()->getScalarResult();
         $sitemapItems = [];
 
         foreach ($rows as $row) {

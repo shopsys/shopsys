@@ -50,7 +50,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
             ->resetDQLPart('orderBy')
             ->setParameter('locale', $locale);
 
-        $rows = $productsQueryBuilder->getQuery()->execute(null, GroupedScalarHydrator::HYDRATION_MODE);
+        $rows = $productsQueryBuilder->getQuery()->getResult(GroupedScalarHydrator::HYDRATION_MODE);
 
         $visibleParametersIndexedById = $this->getVisibleParametersIndexedByIdOrderedByParameterPositionInCategory($rows, $locale, $category);
         $parameterValuesIndexedByParameterId = $this->getParameterValuesIndexedByParameterIdOrderedByValueText($rows, $locale);
@@ -92,7 +92,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
         $parametersQueryBuilder->setParameter('parameterIds', $parameterIds);
         $parametersQueryBuilder->setParameter('locale', $locale);
         $parametersQueryBuilder->setParameter('category', $category);
-        $parameters = $parametersQueryBuilder->getQuery()->execute();
+        $parameters = $parametersQueryBuilder->getQuery()->getResult();
 
         $parametersIndexedById = [];
 

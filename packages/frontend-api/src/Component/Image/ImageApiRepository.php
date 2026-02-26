@@ -82,7 +82,7 @@ class ImageApiRepository
         }
 
         /** @var \Shopsys\FrameworkBundle\Component\Image\Image $image */
-        foreach ($queryBuilder->getQuery()->execute() as $image) {
+        foreach ($queryBuilder->getQuery()->getResult() as $image) {
             $imagesByEntityId[$image->getEntityId()][] = $image;
         }
 

@@ -64,7 +64,7 @@ class ReadyCategorySeoMixRepository
                 'parameter' => $parameter,
             ])
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     /**
@@ -173,7 +173,7 @@ class ReadyCategorySeoMixRepository
                 'domainId' => $domainConfig->getId(),
             ])
             ->getQuery()
-            ->execute();
+            ->getResult();
 
         /** @var \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix */
         foreach ($result as $readyCategorySeoMix) {

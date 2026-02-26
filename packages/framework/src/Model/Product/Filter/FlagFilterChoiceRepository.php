@@ -112,6 +112,6 @@ class FlagFilterChoiceRepository
             $flagsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
         }
 
-        return $flagsQueryBuilder->getQuery()->execute();
+        return $flagsQueryBuilder->getQuery()->getResult();
     }
 }

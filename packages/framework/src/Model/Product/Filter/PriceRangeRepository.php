@@ -79,7 +79,7 @@ class PriceRangeRepository
             ->resetDQLPart('orderBy')
             ->select('MIN(pmip.inputPrice) AS minimalPrice, MAX(pmip.inputPrice) AS maximalPrice');
 
-        $priceRangeData = $queryBuilder->getQuery()->execute();
+        $priceRangeData = $queryBuilder->getQuery()->getResult();
         $priceRangeDataRow = array_first($priceRangeData);
 
         return new PriceRange(

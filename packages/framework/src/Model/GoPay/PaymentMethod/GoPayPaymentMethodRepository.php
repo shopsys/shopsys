@@ -39,7 +39,7 @@ class GoPayPaymentMethodRepository
             ->setParameter('domainId', $domainId)
             ->indexBy('pm', 'pm.identifier')
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     /**
@@ -69,6 +69,6 @@ class GoPayPaymentMethodRepository
             ->where('pm.currency = :currency')
             ->setParameter('currency', $currencyId);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 }

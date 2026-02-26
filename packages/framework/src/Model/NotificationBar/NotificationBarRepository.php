@@ -49,7 +49,7 @@ class NotificationBarRepository
                 'domainId' => $domainId,
                 'now' => $this->clock->now(),
             ])
-            ->getQuery()->execute();
+            ->getQuery()->getResult();
     }
 
     public function getAllByDomainIdQueryBuilderForGrid(int $domainId): QueryBuilder

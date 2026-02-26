@@ -52,6 +52,6 @@ class TopProductRepository
             ->setParameter('domainId', $domainId)
             ->setMaxResults($limit);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 }

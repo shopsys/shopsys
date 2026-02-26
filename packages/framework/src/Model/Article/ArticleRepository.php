@@ -69,7 +69,7 @@ class ArticleRepository
             $placement,
         );
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function getById(int $articleId): Article
@@ -138,7 +138,7 @@ class ArticleRepository
         $result = $this->getArticlesByDomainIdQueryBuilder($domainId)
             ->select('a.id')
             ->getQuery()
-            ->execute();
+            ->getResult();
 
         return array_column($result, 'id');
     }

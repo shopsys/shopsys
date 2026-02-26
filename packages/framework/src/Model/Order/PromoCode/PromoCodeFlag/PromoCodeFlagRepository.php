@@ -30,7 +30,7 @@ class PromoCodeFlagRepository
             ->where('pcf.promoCode = :promoCodeId')
             ->setParameter('promoCodeId', $id)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     public function deleteByPromoCodeId(int $id): void

@@ -82,7 +82,7 @@ class ParameterRepository
 
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainConfig->getId());
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     protected function applyCategorySeoConditions(QueryBuilder $queryBuilder, Category $category, int $domainId): void
@@ -126,7 +126,7 @@ class ParameterRepository
         return $this->getAllQueryBuilder()
             ->orderBy('p.orderingPriority', 'DESC')
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     /**
@@ -140,7 +140,7 @@ class ParameterRepository
             ->setParameter('locale', $locale)
             ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pt.name', $locale), 'asc')
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     protected function getAllQueryBuilder(): QueryBuilder
@@ -247,7 +247,7 @@ class ParameterRepository
     {
         $queryBuilder = $this->getProductParameterValuesByProductQueryBuilder($product);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -259,7 +259,7 @@ class ParameterRepository
     ): array {
         $queryBuilder = $this->getProductParameterValuesByProductSortedByOrderingPriorityAndNameQueryBuilder($product, $locale);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -286,7 +286,7 @@ class ParameterRepository
                 'locale' => $locale,
             ]);
 
-        $productIdsAndParameterNamesAndValues = $queryBuilder->getQuery()->execute(null, Query::HYDRATE_ARRAY);
+        $productIdsAndParameterNamesAndValues = $queryBuilder->getQuery()->getArrayResult();
 
         return $this->getParameterValuesIndexedByProductIdAndParameterName($productIdsAndParameterNamesAndValues);
     }
@@ -579,7 +579,7 @@ class ParameterRepository
 
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -601,7 +601,7 @@ class ParameterRepository
 
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -683,7 +683,7 @@ class ParameterRepository
             ->from(ParameterGroup::class, 'pg')
             ->orderBy('pg.position', 'ASC')
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     public function getOrderedParameterGroupsQueryBuilder(string $locale): QueryBuilder
@@ -768,6 +768,6 @@ class ParameterRepository
                 'locale' => $locale,
             ])
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 }

@@ -56,7 +56,7 @@ class PromoCodeRepository
             ->select('pc')
             ->from(PromoCode::class, 'pc');
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function getAllQueryBuilder(): QueryBuilder
@@ -73,7 +73,7 @@ class PromoCodeRepository
         $queryBuilder = $this->getAllQueryBuilder()
             ->select('pc.code');
 
-        return array_column($queryBuilder->getQuery()->execute(), 'code');
+        return array_column($queryBuilder->getQuery()->getResult(), 'code');
     }
 
     public function getMassLastGeneratedBatchId(): int

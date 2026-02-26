@@ -20,7 +20,7 @@ class GroupedScalarHydratorTest extends TransactionFunctionalTestCase
             ->join(OrderItem::class, 'oi', Join::WITH, 'oi.order = o')
             ->setMaxResults(1);
 
-        $rows = $qb->getQuery()->execute(null, GroupedScalarHydrator::HYDRATION_MODE);
+        $rows = $qb->getQuery()->getResult(GroupedScalarHydrator::HYDRATION_MODE);
         $row = $rows[0];
 
         $this->assertIsArray($row);

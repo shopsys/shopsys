@@ -34,7 +34,7 @@ class ManualBestsellingProductRepository
             ->setParameter('category', $category)
             ->setParameter('domainId', $domainId);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -51,7 +51,7 @@ class ManualBestsellingProductRepository
             ->andWhere('bp.domainId = prv.domainId')
             ->setParameter('category', $category);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -73,7 +73,7 @@ class ManualBestsellingProductRepository
             ->setParameter('domainId', $domainId)
             ->groupBy('c.id');
 
-        $rows = $queryBuilder->getQuery()->execute();
+        $rows = $queryBuilder->getQuery()->getResult();
         $countsIndexedByCategoryId = [];
 
         foreach ($rows as $row) {

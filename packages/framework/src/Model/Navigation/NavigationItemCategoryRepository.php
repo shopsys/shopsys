@@ -37,7 +37,7 @@ class NavigationItemCategoryRepository
     public function getSortedNavigationItemCategoriesByNavigationItems(array $navigationItems): array
     {
         return $this->getSortedNavigationItemCategoriesByNavigationItemQueryBuilder($navigationItems)
-            ->getQuery()->execute();
+            ->getQuery()->getResult();
     }
 
     /**

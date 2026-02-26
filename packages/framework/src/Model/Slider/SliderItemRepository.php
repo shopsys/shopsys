@@ -74,7 +74,7 @@ class SliderItemRepository
             'now' => $dateToday,
         ]);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     protected function getSliderItemQueryBuilder(): QueryBuilder

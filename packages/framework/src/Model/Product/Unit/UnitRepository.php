@@ -56,7 +56,7 @@ class UnitRepository
      */
     public function getAll(): array
     {
-        return $this->getAllQueryBuilder()->getQuery()->execute();
+        return $this->getAllQueryBuilder()->getQuery()->getResult();
     }
 
     /**
@@ -66,7 +66,7 @@ class UnitRepository
     {
         return $this->getAllQueryBuilder()
             ->where('u.id != :id')->setParameter('id', $unitId)
-            ->getQuery()->execute();
+            ->getQuery()->getResult();
     }
 
     public function existsProductWithUnit(Unit $unit): bool

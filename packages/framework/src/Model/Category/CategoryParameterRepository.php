@@ -48,7 +48,7 @@ class CategoryParameterRepository
             ->setParameter('category', $category)
             ->orderBy('cp.position')
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     /**
@@ -63,6 +63,6 @@ class CategoryParameterRepository
             ->andWhere('cp.collapsed = true')
             ->setParameter('category', $category)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 }

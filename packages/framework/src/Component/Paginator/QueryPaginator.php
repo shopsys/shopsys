@@ -67,7 +67,9 @@ class QueryPaginator implements PaginatorInterface
             $query->setHint(Query::HINT_INCLUDE_META_COLUMNS, true);
         }
 
-        $results = $query->execute(null, $this->hydrationMode);
+        $results = $this->hydrationMode !== null
+            ? $query->getResult($this->hydrationMode)
+            : $query->getResult();
 
         return new PaginationResult($page, $pageSize, $totalCount, $results);
     }
