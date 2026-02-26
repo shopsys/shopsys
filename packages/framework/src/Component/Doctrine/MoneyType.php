@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 class MoneyType extends Type
 {
     /**
-     * {@inheritdoc}
+     * @deprecated Will be removed in DBAL 4 — types are identified by class, not by name
      */
     #[Override]
     public function getName(): string
@@ -26,9 +26,9 @@ class MoneyType extends Type
      * {@inheritdoc}
      */
     #[Override]
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return $platform->getDecimalTypeDeclarationSQL($fieldDeclaration);
+        return $platform->getDecimalTypeDeclarationSQL($column);
     }
 
     /**
@@ -45,7 +45,7 @@ class MoneyType extends Type
             return $value->getAmount();
         }
 
-        throw ConversionException::conversionFailedInvalidType($value, 'money', ['null', Money::class]);
+        throw ConversionException::conversionFailedInvalidType($value, static::class, ['null', Money::class]);
     }
 
     /**
@@ -61,13 +61,7 @@ class MoneyType extends Type
         try {
             return Money::create($value);
         } catch (Exception $e) {
-            throw ConversionException::conversionFailedFormat($value, 'money', 'numeric', $e);
+            throw ConversionException::conversionFailedFormat($value, static::class, 'numeric', $e);
         }
-    }
-
-    #[Override]
-    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
-    {
-        return true;
     }
 }
