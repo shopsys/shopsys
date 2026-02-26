@@ -19,7 +19,7 @@ final class DatagridHydrator extends AbstractHydrator
     {
         $result = [];
 
-        while ($data = $this->_stmt->fetchAssociative()) {
+        while ($data = $this->stmt->fetchAssociative()) {
             $this->hydrateRowData($data, $result);
         }
 
@@ -67,12 +67,12 @@ final class DatagridHydrator extends AbstractHydrator
     {
         foreach ($associations as $dqlAlias => $data) {
             $associationName = $this->transformFieldNameToDotNotation(
-                $this->_rsm->entityMappings[$dqlAlias],
+                $this->rsm->entityMappings[$dqlAlias],
             );
 
             $rowData[$associationName] = in_array($dqlAlias, $nullableAssociations, true)
                 ? null
-                : $this->_uow->createEntity($this->_rsm->aliasMap[$dqlAlias], $data, $this->_hints);
+                : $this->uow->createEntity($this->rsm->aliasMap[$dqlAlias], $data, $this->hints);
         }
     }
 
@@ -88,7 +88,7 @@ final class DatagridHydrator extends AbstractHydrator
     {
         $type = $cacheKeyInfo['type'] ?? null;
 
-        return $type ? $type->convertToPHPValue($value, $this->_platform) : $value;
+        return $type ? $type->convertToPHPValue($value, $this->platform) : $value;
     }
 
     private function processAssociation(
@@ -112,7 +112,7 @@ final class DatagridHydrator extends AbstractHydrator
     {
         parent::cleanup();
 
-        $this->_uow->triggerEagerLoads();
-        $this->_uow->hydrationComplete();
+        $this->uow->triggerEagerLoads();
+        $this->uow->hydrationComplete();
     }
 }

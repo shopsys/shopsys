@@ -29,10 +29,10 @@
     },
     "require": {
         "php": "^8.5",
-        "doctrine/dbal": "^3.8.5",
-        "doctrine/doctrine-migrations-bundle": "^3.7.0",
+        "doctrine/dbal": "^4.4",
+        "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/migrations": "^3.4.1",
-        "doctrine/orm": "^2.20.9",
+        "doctrine/orm": "^3.6",
         "jdorn/sql-formatter": "^1.2",
         "psr/log": "^3.0",
         "symfony/config": "^7.4",

@@ -20,7 +20,7 @@ class GroupedScalarHydrator extends AbstractHydrator
         $result = [];
 
         while (true) {
-            $data = $this->_stmt->fetchAssociative();
+            $data = $this->stmt->fetchAssociative();
 
             if ($data === false) {
                 break;
@@ -63,11 +63,11 @@ class GroupedScalarHydrator extends AbstractHydrator
             $type = $cacheKeyInfo['type'];
 
             if (isset($cacheKeyInfo['isScalar'])) {
-                $value = $type->convertToPHPValue($value, $this->_platform);
+                $value = $type->convertToPHPValue($value, $this->platform);
                 $rowData[$fieldName] = $value;
             } else {
                 $dqlAlias = $cacheKeyInfo['dqlAlias'];
-                $value = $type ? $type->convertToPHPValue($value, $this->_platform) : $value;
+                $value = $type ? $type->convertToPHPValue($value, $this->platform) : $value;
 
                 $rowData[$dqlAlias][$fieldName] = $value;
             }

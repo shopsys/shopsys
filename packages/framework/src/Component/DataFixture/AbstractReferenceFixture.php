@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\DataFixture;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\DBAL\Driver\Middleware as MiddlewareInterface;
-use Doctrine\DBAL\Logging\Middleware as LoggingMiddleware;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Doctrine\ToggleableDebugDataHolder;
 use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class AbstractReferenceFixture implements FixtureInterface
@@ -16,14 +15,18 @@ abstract class AbstractReferenceFixture implements FixtureInterface
 
     protected DomainsForDataFixtureProvider $domainsForDataFixtureProvider;
 
+    protected ToggleableDebugDataHolder $toggleableDebugDataHolder;
+
     #[Required]
-    public function removeLoggingMiddlewareFromEntityManager(EntityManagerInterface $entityManager): void
+    public function autowireToggleableDebugDataHolder(ToggleableDebugDataHolder $toggleableDebugDataHolder): void
     {
-        $middlewaresWithoutLoggingMiddleware = array_values(array_filter(
-            $entityManager->getConnection()->getConfiguration()->getMiddlewares(),
-            fn (MiddlewareInterface $middleware) => !($middleware instanceof LoggingMiddleware),
-        ));
-        $entityManager->getConnection()->getConfiguration()->setMiddlewares($middlewaresWithoutLoggingMiddleware);
+        $this->toggleableDebugDataHolder = $toggleableDebugDataHolder;
+    }
+
+    #[Required]
+    public function disableLoggingForEntityManager(EntityManagerInterface $entityManager): void
+    {
+        $this->toggleableDebugDataHolder->disable();
         $entityManager->clear();
     }
 
