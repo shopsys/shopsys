@@ -1,11 +1,13 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchPageContent } from 'components/Pages/Search/SearchPageContent';
+import { useSearchQuery } from 'components/Pages/Search/searchUtils';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { SkeletonEnum } from 'types/skeletons';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
@@ -21,6 +23,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const currentSearchString = useCurrentSearchStringQuery();
+    const { searchData, isSearchFetching } = useSearchQuery(currentSearchString);
     useResetSessionFilters();
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
@@ -33,8 +36,17 @@ const SearchPage: FC<ServerSidePropsType> = () => {
         <>
             <MetaRobots content="noindex, nofollow" />
 
-            <CommonLayout breadcrumbs={breadcrumbs} title={t('Search')}>
-                <SearchPageContent key={currentSearchString} />
+            <CommonLayout
+                breadcrumbs={breadcrumbs}
+                isFetchingData={isSearchFetching && !!currentSearchString}
+                pageTypeOverride={SkeletonEnum.Search}
+                title={t('Search')}
+            >
+                <SearchPageContent
+                    key={currentSearchString}
+                    isSearchFetching={isSearchFetching}
+                    searchData={searchData}
+                />
             </CommonLayout>
         </>
     );
