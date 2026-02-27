@@ -6,16 +6,18 @@ namespace Tests\FrameworkBundle\Unit\Component\Context;
 
 use InvalidArgumentException;
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Context\AbstractContext;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolver;
+use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 
 class ContextResolverTest extends TestCase
 {
     public function testConstructorAddsContexts(): void
     {
         $context = new TestContextA(shouldMatch: true);
-        $resolver = new ContextResolver([$context]);
+        $resolver = $this->createContextResolver([$context]);
 
         // Test that context was registered correctly by checking if it matches
         $this->assertTrue($resolver->isCurrentContext(TestContextA::class));
@@ -29,7 +31,7 @@ class ContextResolverTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Context with identifier "' . TestContextA::class . '" is already registered');
 
-        new ContextResolver([$context1, $context2]);
+        $this->createContextResolver([$context1, $context2]);
     }
 
     public function testContextMatching(): void
@@ -38,7 +40,7 @@ class ContextResolverTest extends TestCase
         $context2 = new TestContextB(shouldMatch: true);
         $context3 = new TestContextC(shouldMatch: true);
 
-        $resolver = new ContextResolver([$context1, $context2, $context3]);
+        $resolver = $this->createContextResolver([$context1, $context2, $context3]);
 
         $this->assertFalse($resolver->isCurrentContext(TestContextA::class));
         $this->assertTrue($resolver->isCurrentContext(TestContextB::class));
@@ -51,7 +53,7 @@ class ContextResolverTest extends TestCase
         $requiredContext = new TestContextB(shouldMatch: true);
         $independentContext = new TestContextC(shouldMatch: true);
 
-        $resolver = new ContextResolver([$contextWithDependency, $requiredContext, $independentContext]);
+        $resolver = $this->createContextResolver([$contextWithDependency, $requiredContext, $independentContext]);
 
         $this->assertTrue($resolver->isCurrentContext(TestContextA::class));
         $this->assertTrue($resolver->isCurrentContext(TestContextB::class));
@@ -63,14 +65,17 @@ class ContextResolverTest extends TestCase
         $nonMatchingRequiredContext = new TestContextB(shouldMatch: false);
         $contextWithDependency = new TestContextA(shouldMatch: true, requiredContexts: [TestContextB::class]);
 
-        $resolver = new ContextResolver([$nonMatchingRequiredContext, $contextWithDependency]);
+        $resolver = $this->createContextResolver([$nonMatchingRequiredContext, $contextWithDependency]);
 
         $this->assertFalse($resolver->isCurrentContext(TestContextA::class));
         $this->assertFalse($resolver->isCurrentContext(TestContextB::class));
     }
 
-    public function testContextMatchingResultsAreCached(): void
-    {
+    #[DataProvider('contextMatchingCacheBehaviorDataProvider')]
+    public function testContextMatchingCacheBehavior(
+        string $environment,
+        int $expectedMatchesCallCount,
+    ): void {
         $matchesCallCount = 0;
 
         $context = new class($matchesCallCount) extends AbstractContext {
@@ -92,13 +97,29 @@ class ContextResolverTest extends TestCase
             }
         };
 
-        $resolver = new ContextResolver([$context]);
+        $resolver = $this->createContextResolver([$context], $environment);
 
         $contextClass = $context::class;
         $resolver->isCurrentContext($contextClass);
         $resolver->isCurrentContext($contextClass);
 
-        $this->assertSame(1, $matchesCallCount, 'matches() should only be called once due to caching');
+        $this->assertSame($expectedMatchesCallCount, $matchesCallCount);
+    }
+
+    /**
+     * @return iterable<string, array{environment: string, expectedMatchesCallCount: int}>
+     */
+    public static function contextMatchingCacheBehaviorDataProvider(): iterable
+    {
+        yield 'context matching results are cached in non-test environment' => [
+            'environment' => EnvironmentType::DEVELOPMENT,
+            'expectedMatchesCallCount' => 1,
+        ];
+
+        yield 'context matching results are not cached in test environment' => [
+            'environment' => EnvironmentType::TEST,
+            'expectedMatchesCallCount' => 2,
+        ];
     }
 
     public function testComplexDependencyChain(): void
@@ -107,7 +128,7 @@ class ContextResolverTest extends TestCase
         $middleContext = new TestContextB(shouldMatch: true, requiredContexts: [TestContextC::class]);
         $leafContext = new TestContextA(shouldMatch: true, requiredContexts: [TestContextB::class]);
 
-        $resolver = new ContextResolver([$rootContext, $middleContext, $leafContext]);
+        $resolver = $this->createContextResolver([$rootContext, $middleContext, $leafContext]);
 
         $this->assertTrue($resolver->isCurrentContext(TestContextC::class));
         $this->assertTrue($resolver->isCurrentContext(TestContextB::class));
@@ -122,7 +143,7 @@ class ContextResolverTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Circular dependency detected: ' . TestContextA::class . ' → ' . TestContextB::class . ' → ' . TestContextA::class);
 
-        new ContextResolver([$contextA, $contextB]);
+        $this->createContextResolver([$contextA, $contextB]);
     }
 
     public function testComplexCircularDependencyDetection(): void
@@ -134,7 +155,7 @@ class ContextResolverTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Circular dependency detected: ' . TestContextA::class . ' → ' . TestContextB::class . ' → ' . TestContextC::class . ' → ' . TestContextA::class);
 
-        new ContextResolver([$contextA, $contextB, $contextC]);
+        $this->createContextResolver([$contextA, $contextB, $contextC]);
     }
 
     public function testCircularDependencyInMiddleOfChain(): void
@@ -146,6 +167,16 @@ class ContextResolverTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Circular dependency detected: ' . TestContextB::class . ' → ' . TestContextC::class . ' → ' . TestContextB::class);
 
-        new ContextResolver([$contextA, $contextB, $contextC]);
+        $this->createContextResolver([$contextA, $contextB, $contextC]);
+    }
+
+    /**
+     * @param iterable<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contexts
+     */
+    private function createContextResolver(
+        iterable $contexts,
+        string $environment = EnvironmentType::PRODUCTION,
+    ): ContextResolver {
+        return new ContextResolver($contexts, $environment);
     }
 }
