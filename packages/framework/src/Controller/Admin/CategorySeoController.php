@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
@@ -35,6 +36,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[ForRole(AdminRoleConstant::ROLE_CATEGORY_SEO)]
 class CategorySeoController extends AdminBaseController
@@ -50,6 +52,7 @@ class CategorySeoController extends AdminBaseController
         protected readonly ReadyCategorySeoMixGridFactory $readyCategorySeoMixGridFactory,
         protected readonly Domain $domain,
         protected readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -251,8 +254,10 @@ class CategorySeoController extends AdminBaseController
 
                 return $this->redirect($newCombinationsUrl);
             } catch (ReadyCategorySeoMixUrlsContainBadDomainUrlException) {
+                $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
                 $this->addErrorFlash(t('Fill URL only for selected domain'));
             } catch (ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException) {
+                $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
                 $this->addErrorFlash(t('Fill URL also for selected domain'));
             }
         }

@@ -14,8 +14,6 @@ class TransactionalMasterRequestListener
 {
     protected bool $inTransaction = false;
 
-    protected static bool $isManuallyRollbacked = false;
-
     /**
      * @param \Traversable<int, \Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestConditionProviderInterface> $transactionalMasterRequestConditionProviders
      */
@@ -23,11 +21,6 @@ class TransactionalMasterRequestListener
         protected readonly Traversable $transactionalMasterRequestConditionProviders,
         protected readonly EntityManagerInterface $em,
     ) {
-    }
-
-    public static function setTransactionManuallyRollbacked(): void
-    {
-        static::$isManuallyRollbacked = true;
     }
 
     public function onKernelRequest(RequestEvent $event): void
@@ -40,18 +33,32 @@ class TransactionalMasterRequestListener
 
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if ($this->inTransaction && !static::$isManuallyRollbacked) {
-            $this->em->commit();
-            $this->inTransaction = false;
+        if (!$this->inTransaction) {
+            return;
         }
+
+        $this->em->commit();
+        $this->inTransaction = false;
     }
 
     public function onKernelException(ExceptionEvent $event): void
     {
-        if ($this->inTransaction) {
-            $this->em->rollback();
-            $this->inTransaction = false;
+        $this->rollbackTransaction();
+    }
+
+    public function onSilencedException(SilencedExceptionEvent $event): void
+    {
+        $this->rollbackTransaction();
+    }
+
+    protected function rollbackTransaction(): void
+    {
+        if (!$this->inTransaction) {
+            return;
         }
+
+        $this->em->rollback();
+        $this->inTransaction = false;
     }
 
     protected function shouldBeginTransaction(RequestEvent $event): bool
