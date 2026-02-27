@@ -382,10 +382,8 @@ class CategoryRepository extends NestedTreeRepository
             ->orderBy('c.level DESC, c.lft')
             ->setMaxResults(1);
 
-        $qb->setParameters([
-            'domainId' => $domainId,
-            'product' => $product,
-        ]);
+        $qb->setParameter('domainId', $domainId)
+            ->setParameter('product', $product);
 
         return $qb->getQuery()->getOneOrNullResult();
     }

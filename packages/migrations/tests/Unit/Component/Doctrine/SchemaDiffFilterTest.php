@@ -24,27 +24,25 @@ class SchemaDiffFilterTest extends TestCase
         $fromTable = new Table('testTableDiff');
 
         $tableDiff = new TableDiff(
-            tableName: 'testTableDiff',
+            oldTable: $fromTable,
             addedColumns: [new Column('testColumnName1', $testType)],
-            modifiedColumns: [new ColumnDiff('testFromColumn', new Column('testColumnName4', $testType), [], new Column('testFromColumn', $testType))],
+            changedColumns: ['testFromColumn' => new ColumnDiff(new Column('testFromColumn', $testType), new Column('testColumnName4', $testType))],
             droppedColumns: [new Column('testColumnName7', $testType)],
             addedIndexes: [new Index('testIndexName1', ['testColumnName3'])],
-            changedIndexes: [new Index('testIndexName2', ['testColumnName6'])],
-            removedIndexes: [new Index('testIndexName3', ['testColumnName9'])],
-            fromTable: $fromTable,
-            addedForeignKeys: [new ForeignKeyConstraint(['testColumnName2'], 'foreignTableName1', [])],
-            changedForeignKeys: [new ForeignKeyConstraint(['testColumnName5'], 'foreignTableName2', [])],
-            removedForeignKeys: [new ForeignKeyConstraint(['testColumnName8'], 'foreignTableName3', [])],
-            renamedColumns: ['oldName' => new Column('testColumnName10', $testType)],
+            modifiedIndexes: [new Index('testIndexName2', ['testColumnName6'])],
+            droppedIndexes: [new Index('testIndexName3', ['testColumnName9'])],
             renamedIndexes: ['oldIndexName' => new Index('testIndexName4', ['testColumnName11'])],
+            addedForeignKeys: [new ForeignKeyConstraint(['testColumnName2'], 'foreignTableName1', ['foreignColumn1'])],
+            modifiedForeignKeys: [new ForeignKeyConstraint(['testColumnName5'], 'foreignTableName2', ['foreignColumn2'])],
+            droppedForeignKeys: [new ForeignKeyConstraint(['testColumnName8'], 'foreignTableName3', ['foreignColumn3'])],
         );
 
         $schemaDiff = new SchemaDiff(
-            newTables: [new Table('testTableName2')],
-            changedTables: [$tableDiff],
-            removedTables: [new Table('testTableName3')],
             createdSchemas: ['testNamespace1'],
             droppedSchemas: ['testNamespace2'],
+            createdTables: [new Table('testTableName2')],
+            alteredTables: [$tableDiff],
+            droppedTables: [new Table('testTableName3')],
             createdSequences: [new Sequence('testSequence2')],
             alteredSequences: [new Sequence('testSequence1')],
             droppedSequences: [new Sequence('testSequence3')],
@@ -65,13 +63,12 @@ class SchemaDiffFilterTest extends TestCase
                 $filteredTableDiff->getAddedForeignKeys(),
             );
             $this->assertSame($originalTableDiff->getAddedIndexes(), $filteredTableDiff->getAddedIndexes());
-            $this->assertSame($originalTableDiff->getModifiedColumns(), $filteredTableDiff->getModifiedColumns());
+            $this->assertSame($originalTableDiff->getChangedColumns(), $filteredTableDiff->getChangedColumns());
             $this->assertSame(
                 $originalTableDiff->getModifiedForeignKeys(),
                 $filteredTableDiff->getModifiedForeignKeys(),
             );
             $this->assertSame($originalTableDiff->getModifiedIndexes(), $filteredTableDiff->getModifiedIndexes());
-            $this->assertSame($originalTableDiff->getRenamedColumns(), $filteredTableDiff->getRenamedColumns());
             $this->assertSame($originalTableDiff->getRenamedIndexes(), $filteredTableDiff->getRenamedIndexes());
 
             $this->assertEmpty($filteredTableDiff->getDroppedColumns());

@@ -9,8 +9,6 @@ services:
     Shopsys\MigrationBundle\Command\:
         resource: '../../Command/'
 
-    Doctrine\DBAL\Schema\Comparator: ~
-
     Doctrine\ORM\Tools\SchemaTool:
         arguments:
             - '@Doctrine\ORM\EntityManagerInterface'
@@ -23,7 +21,6 @@ services:
         arguments:
             - '@Doctrine\ORM\EntityManagerInterface'
             - '@Shopsys\MigrationBundle\Component\Doctrine\SchemaDiffFilter'
-            - '@Doctrine\DBAL\Schema\Comparator'
             - '@Doctrine\ORM\Tools\SchemaTool'
 
     Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator: ~

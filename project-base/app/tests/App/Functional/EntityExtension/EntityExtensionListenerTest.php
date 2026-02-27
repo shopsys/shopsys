@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\EntityExtension;
 
+use Doctrine\ORM\Mapping\ManyToManyOwningSideMapping;
 use Override;
 use Tests\App\Functional\EntityExtension\Model\DummyEntity;
 use Tests\App\Functional\EntityExtension\Model\ExtendedDummyEntity;
@@ -36,8 +37,9 @@ class EntityExtensionListenerTest extends TransactionFunctionalTestCase
     {
         $classMetadata = $this->em->getClassMetadata(ExtendedDummyEntity::class);
 
-        $expectedOrderByValue = ['id' => 'DESC'];
-        $this->assertEquals($expectedOrderByValue, $classMetadata->getAssociationMapping('flags')->orderBy);
+        $mapping = $classMetadata->getAssociationMapping('flags');
+        $this->assertInstanceOf(ManyToManyOwningSideMapping::class, $mapping);
+        $this->assertEquals(['id' => 'DESC'], $mapping->orderBy);
     }
 
     private function isMonorepo(): bool

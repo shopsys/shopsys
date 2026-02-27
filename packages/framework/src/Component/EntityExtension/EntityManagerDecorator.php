@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityExtension;
 
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Decorator\EntityManagerDecorator as BaseEntityManagerDecorator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Repository\RepositoryFactory;
-use Doctrine\Persistence\ObjectRepository;
 use Override;
 
 class EntityManagerDecorator extends BaseEntityManagerDecorator
@@ -40,7 +41,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
      * {@inheritdoc}
      */
     #[Override]
-    public function createQuery($dql = ''): Query
+    public function createQuery(string $dql = ''): Query
     {
         $resolvedDql = $this->entityNameResolver->resolveIn($dql);
 
@@ -51,7 +52,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
      * {@inheritdoc}
      */
     #[Override]
-    public function getReference($entityName, $id): object
+    public function getReference(string $entityName, mixed $id): object|null
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
 
@@ -62,11 +63,15 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
      * {@inheritdoc}
      */
     #[Override]
-    public function find($entityName, $id, $lockMode = null, $lockVersion = null): ?object
-    {
-        $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
+    public function find(
+        string $className,
+        mixed $id,
+        LockMode|int|null $lockMode = null,
+        int|null $lockVersion = null,
+    ): object|null {
+        $resolvedClassName = $this->entityNameResolver->resolve($className);
 
-        return parent::find($resolvedEntityName, $id, $lockMode, $lockVersion);
+        return parent::find($resolvedClassName, $id, $lockMode, $lockVersion);
     }
 
     public function refreshLoadedEntitiesByClassName(string $className): void
@@ -85,10 +90,10 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     }
 
     /**
-     * @param string $className
+     * {@inheritdoc}
      */
     #[Override]
-    public function getRepository($className): ObjectRepository
+    public function getRepository(string $className): EntityRepository
     {
         $resolvedClassName = $this->entityNameResolver->resolve($className);
 
@@ -96,10 +101,10 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     }
 
     /**
-     * @param string $className
+     * {@inheritdoc}
      */
     #[Override]
-    public function getClassMetadata($className): ClassMetadata
+    public function getClassMetadata(string $className): ClassMetadata
     {
         $resolvedClassName = $this->entityNameResolver->resolve($className);
 

@@ -22,10 +22,10 @@ final class QueryCountingStatement extends AbstractStatementMiddleware
      * {@inheritdoc}
      */
     #[Override]
-    public function execute($params = null): Result
+    public function execute(): Result
     {
         $this->middleware->incrementQueryCount();
 
-        return parent::execute($params);
+        return parent::execute();
     }
 }

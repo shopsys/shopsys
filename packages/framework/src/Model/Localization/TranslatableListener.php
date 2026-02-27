@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Localization;
 
+use Doctrine\ORM\Event\PostLoadEventArgs;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Metadata\MetadataFactory;
 use Override;
@@ -46,6 +47,6 @@ class TranslatableListener extends PrezentTranslatableListener
 
     public function postPersist(PostPersistEventArgs $args): void
     {
-        $this->postLoad($args);
+        $this->postLoad(new PostLoadEventArgs($args->getObject(), $args->getObjectManager()));
     }
 }

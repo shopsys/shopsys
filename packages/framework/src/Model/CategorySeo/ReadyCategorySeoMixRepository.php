@@ -60,9 +60,7 @@ class ReadyCategorySeoMixRepository
             ->from(ReadyCategorySeoMix::class, 'rcsm')
             ->join(ReadyCategorySeoMixParameterParameterValue::class, 'ppv', Join::WITH, 'ppv.readyCategorySeoMix = rcsm')
             ->where('ppv.parameter = :parameter')
-            ->setParameters([
-                'parameter' => $parameter,
-            ])
+            ->setParameter('parameter', $parameter)
             ->getQuery()
             ->getResult();
     }
@@ -168,10 +166,8 @@ class ReadyCategorySeoMixRepository
             ->andWhere('rcsm.domainId = :domainId')
             ->andWhere('rcsm.showInCategory = true')
             ->orderBy($this->orderByCollationHelper->createOrderByForLocale('rcsm.h1', $domainConfig->getLocale()), 'asc')
-            ->setParameters([
-                'categories' => $categoryIds,
-                'domainId' => $domainConfig->getId(),
-            ])
+            ->setParameter('categories', $categoryIds)
+            ->setParameter('domainId', $domainConfig->getId())
             ->getQuery()
             ->getResult();
 

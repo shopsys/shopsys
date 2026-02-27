@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
@@ -231,10 +230,8 @@ class ParameterRepository
             ->leftJoin('p.group', 'pg')
             ->where('ppv.product = :product_id')
             ->andWhere('pt.locale = :locale')
-            ->setParameters([
-                'product_id' => $product->getId(),
-                'locale' => $locale,
-            ])
+            ->setParameter('product_id', $product->getId())
+            ->setParameter('locale', $locale)
             ->orderBy('p.orderingPriority', 'DESC')
             ->addOrderBy('pg.position', 'ASC')
             ->addOrderBy('pt.name');
@@ -281,10 +278,8 @@ class ParameterRepository
             ->where('ppv.product IN (:products)')
             ->andWhere('pv.locale = :locale')
             ->andWhere('pt.locale = :locale')
-            ->setParameters([
-                'products' => $products,
-                'locale' => $locale,
-            ]);
+            ->setParameter('products', $products)
+            ->setParameter('locale', $locale);
 
         $productIdsAndParameterNamesAndValues = $queryBuilder->getQuery()->getArrayResult();
 
@@ -630,10 +625,8 @@ class ParameterRepository
             ->where('pv.text = :text')
             ->andWhere('pv.locale = :locale')
             ->andWhere('pv.numericValue IS NULL')
-            ->setParameters([
-                'text' => $text,
-                'locale' => $locale,
-            ])
+            ->setParameter('text', $text)
+            ->setParameter('locale', $locale)
             ->getQuery()->getSingleScalarResult();
     }
 
@@ -763,10 +756,8 @@ class ParameterRepository
             ->orderBy('group_position', 'ASC')
             ->addOrderBy('ordering_priority', 'DESC')
             ->addOrderBy($collatedParameterName, 'ASC')
-            ->setParameters([
-                'products' => $products,
-                'locale' => $locale,
-            ])
+            ->setParameter('products', $products)
+            ->setParameter('locale', $locale)
             ->getQuery()
             ->getResult();
     }

@@ -9,6 +9,7 @@ use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\RuntimeReflectionService;
 use LogicException;
 use ReflectionClass;
 use Webmozart\Assert\Assert;
@@ -148,6 +149,7 @@ class EntityExtensionListener
                 }
 
                 if (!$isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping || !$isOverriddenPropertyInChildClass) {
+                    // @phpstan-ignore assign.propertyType (fromMappingArray() returns the correct subtype at runtime)
                     $classMetadata->associationMappings[$associationName] = $reconstructedMapping;
                 }
             }
@@ -229,6 +231,7 @@ class EntityExtensionListener
             $entityClass,
             $this->configuration->getNamingStrategy(),
         );
+        $classMetadata->initializeReflection(new RuntimeReflectionService());
 
         $metadataDriver = $this->configuration->getMetadataDriverImpl();
 
@@ -252,6 +255,7 @@ class EntityExtensionListener
 
             $mappingArray = $mapping->toArray();
             $mappingArray['targetEntity'] = $overridingClass;
+            // @phpstan-ignore assign.propertyType (fromMappingArray() returns the correct subtype at runtime)
             $classMetadata->associationMappings[$name] = $mapping::fromMappingArray($mappingArray);
         }
     }

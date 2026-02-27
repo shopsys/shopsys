@@ -27,7 +27,6 @@ class ExtendedProduct extends Product
     protected UnidirectionalEntity $oneToOneUnidirectionalEntity;
 
     #[ORM\OneToOne(targetEntity: ProductOneToOneBidirectionalEntity::class, mappedBy: 'product')]
-    #[ORM\JoinColumn(nullable: true)]
     protected ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity;
 
     #[ORM\OneToOne(targetEntity: self::class)]

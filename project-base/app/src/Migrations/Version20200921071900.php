@@ -14,7 +14,7 @@ class Version20200921071900 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql('INSERT INTO order_statuses (type) VALUES (5)');
-        $lastOrderStatusId = $this->connection->lastInsertId('order_statuses_id_seq');
+        $lastOrderStatusId = $this->connection->lastInsertId();
 
         $this->sql(sprintf('INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (%d, \'Nadlimitní\', \'cs\')', $lastOrderStatusId));
         $this->sql(sprintf('INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (%d, \'Over limit\', \'en\')', $lastOrderStatusId));

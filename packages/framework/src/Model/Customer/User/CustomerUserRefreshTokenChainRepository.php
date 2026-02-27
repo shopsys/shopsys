@@ -73,11 +73,9 @@ class CustomerUserRefreshTokenChainRepository
             ->where('curtc.customerUser = :customerUser')
             ->andWhere('curtc.expiredAt >= :now')
             ->andWhere('curtc.deviceId = :deviceId')
-            ->setParameters([
-                'customerUser' => $customerUser,
-                'now' => $this->clock->now(),
-                'deviceId' => $deviceId,
-            ])
+            ->setParameter('customerUser', $customerUser)
+            ->setParameter('now', $this->clock->now())
+            ->setParameter('deviceId', $deviceId)
             ->getQuery()->getResult();
     }
 

@@ -75,7 +75,7 @@ SAMPLE,
 
             $propertyInfo = $this->analyzeProperty($tokens, $index);
 
-            if ($propertyInfo === null || !$propertyInfo['hasRelation'] || $propertyInfo['hasNullable']) {
+            if ($propertyInfo === null || !$propertyInfo['hasRelation'] || $propertyInfo['hasNullable'] || $propertyInfo['isInverseSide']) {
                 continue;
             }
 
@@ -115,13 +115,14 @@ SAMPLE,
     }
 
     /**
-     * @return array{hasRelation: bool, hasNullable: bool, joinColumnIndex: int|null, lastAttributeEnd: int|null}|null
+     * @return array{hasRelation: bool, hasNullable: bool, isInverseSide: bool, joinColumnIndex: int|null, lastAttributeEnd: int|null}|null
      */
     private function analyzeProperty(Tokens $tokens, int $propertyIndex): ?array
     {
         $result = [
             'hasRelation' => false,
             'hasNullable' => false,
+            'isInverseSide' => false,
             'joinColumnIndex' => null,
             'lastAttributeEnd' => null,
         ];
@@ -143,6 +144,10 @@ SAMPLE,
 
             if ($this->isRelationAttribute($content)) {
                 $result['hasRelation'] = true;
+
+                if ($this->hasMappedByParam($content)) {
+                    $result['isInverseSide'] = true;
+                }
             }
 
             if ($this->isJoinColumnAttribute($content)) {
@@ -220,6 +225,11 @@ SAMPLE,
     private function hasNullableParam(string $content): bool
     {
         return preg_match('~\bnullable\s*:~', $content) === 1;
+    }
+
+    private function hasMappedByParam(string $content): bool
+    {
+        return preg_match('~\bmappedBy\s*:~', $content) === 1;
     }
 
     private function addNullableToExistingJoinColumn(Tokens $tokens, int $attrStart): void

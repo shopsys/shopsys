@@ -26,11 +26,9 @@ class PersonalDataAccessRequestRepository
             ->where('pdar.hash = :hash')
             ->andWhere('pdar.domainId = :domainId')
             ->andWhere('pdar.createdAt >= :createdAt')
-            ->setParameters([
-                'domainId' => $domainId,
-                'hash' => $hash,
-                'createdAt' => $dateTime,
-            ])
+            ->setParameter('domainId', $domainId)
+            ->setParameter('hash', $hash)
+            ->setParameter('createdAt', $dateTime)
             ->getQuery()->getOneOrNullResult();
     }
 

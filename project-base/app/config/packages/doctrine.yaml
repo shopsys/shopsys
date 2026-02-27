@@ -16,6 +16,7 @@ doctrine:
         user: "%env(DATABASE_USER)%"
     orm:
         auto_mapping: false
+        class_metadata_factory_name: Shopsys\FrameworkBundle\Component\EntityExtension\ClassMetadataFactory
         controller_resolver:
             auto_mapping: false
         dql:

@@ -212,10 +212,8 @@ class BlogCategoryRepository extends NestedTreeRepository
             ->orderBy('bc.level DESC, bc.lft')
             ->setMaxResults(1);
 
-        $qb->setParameters([
-            'domainId' => $domainId,
-            'blogArticle' => $blogArticle,
-        ]);
+        $qb->setParameter('domainId', $domainId)
+            ->setParameter('blogArticle', $blogArticle);
 
         return $qb->getQuery()->getOneOrNullResult();
     }
