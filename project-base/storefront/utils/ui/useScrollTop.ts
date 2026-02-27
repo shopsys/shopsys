@@ -2,17 +2,22 @@ import { Dispatch, SetStateAction, startTransition, useEffect } from 'react';
 
 export const useScrollTop = (element: string, setTableStickyHeadActive: Dispatch<SetStateAction<boolean>>) => {
     useEffect(() => {
-        const updateSize = () => {
-            startTransition(() => {
-                setTableStickyHeadActive(document.getElementById(element)!.getBoundingClientRect().top < -150);
-            });
-        };
+        const el = document.getElementById(element);
+        if (!el) {
+            return undefined;
+        }
 
-        window.addEventListener('scroll', updateSize);
-        updateSize();
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                startTransition(() => {
+                    setTableStickyHeadActive(!entry.isIntersecting && entry.boundingClientRect.top < 0);
+                });
+            },
+            { rootMargin: '-150px 0px 0px 0px' },
+        );
 
-        return () => {
-            window.removeEventListener('scroll', updateSize);
-        };
+        observer.observe(el);
+
+        return () => observer.disconnect();
     }, [element, setTableStickyHeadActive]);
 };

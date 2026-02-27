@@ -89,6 +89,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
 }) => {
     const redirectPageType = useSessionStore((s) => s.redirectPageType);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+    const hadClientSideNavigation = useSessionStore((s) => s.hadClientSideNavigation);
     const pageType = redirectPageType ?? pageTypeOverride;
 
     useEffect(() => {
@@ -104,7 +105,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
     }, [isPageLoading]);
 
     if (!isPageLoading && !isFetchingData) {
-        return <div className="animate-in">{children}</div>;
+        return <div className={hadClientSideNavigation ? 'animate-in' : undefined}>{children}</div>;
     }
 
     const SkeletonComponent = pageType ? SKELETON_COMPONENT_MAP[pageType] : null;

@@ -44,6 +44,10 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
     const isVideo = selectedGalleryItem.__typename === 'VideoToken';
     const isFile = selectedGalleryItem.__typename === 'File';
 
+    useEffect(() => {
+        setIsLoaded(isVideo);
+    }, [selectedIndex, isVideo]);
+
     const lastItemIndex = items.length - 1;
 
     const isCarouselDisplayed = items.length > 1 && (!isImage || isLoaded);
@@ -104,7 +108,12 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                     aria-label={t('Gallery content', { ns: 'accessibility' })}
                     role="region"
                 >
-                    <SpinnerIcon aria-hidden="true" className="-z-above text-text-inverted absolute w-16 opacity-50" />
+                    {!isLoaded && (
+                        <SpinnerIcon
+                            aria-hidden="true"
+                            className="-z-above text-text-inverted absolute w-16 opacity-50"
+                        />
+                    )}
                     <AnimatePresence initial={false}>
                         {isImage && (
                             <AnimateSlideDiv

@@ -1,0 +1,5 @@
+query ProductListCountQuery($input: ProductListInput!) {
+    productList(input: $input) {
+        itemsCount
+    }
+}

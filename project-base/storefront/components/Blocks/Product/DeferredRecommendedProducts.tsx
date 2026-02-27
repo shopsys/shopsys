@@ -1,4 +1,4 @@
-import { ProductsSlider } from './ProductsSlider';
+import { ProductsSliderPlaceholder } from './ProductsSliderPlaceholder';
 import { SkeletonModuleProductSlider } from 'components/Blocks/Skeleton/SkeletonModuleProductSlider';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -12,9 +12,9 @@ import { useCookiesStore } from 'store/useCookiesStore';
 import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
-const ProductsSliderPlaceholder = dynamic(() =>
-    import('./ProductsSliderPlaceholder').then((component) => component.ProductsSliderPlaceholder),
-);
+const ProductsSlider = dynamic(() => import('./ProductsSlider').then((component) => component.ProductsSlider), {
+    ssr: false,
+});
 
 type DeferredRecommendedProductsProps = {
     recommendationType: TypeRecommendationType;

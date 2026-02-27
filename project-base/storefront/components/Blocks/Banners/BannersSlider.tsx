@@ -1,10 +1,10 @@
 import { Banner } from './Banner';
 import { BannersDot } from './BannersDot';
-import { bannersReducer } from './bannersUtils';
+import { bannersReducer, getBannerOrderCSSProperty } from './bannersUtils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TIDs } from 'cypress/tids';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
-import { startTransition, useEffect, useEffectEvent, useReducer, useRef } from 'react';
+import { startTransition, useEffect, useEffectEvent, useReducer, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -13,7 +13,6 @@ import { getSkeletonTypeFromLink } from 'utils/skeleton/getSkeletonTypeFromLink'
 import { isTextSelected } from 'utils/ui/isTextSelected';
 
 const SLIDER_STOP_SLIDE_TIMEOUT = 300 as const;
-const SLIDER_SLIDE_DURATION = 500 as const;
 const SLIDER_AUTOMATIC_SLIDE_INTERVAL = 5000 as const;
 
 type BannersSliderProps = {
@@ -28,6 +27,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
         isSliding: false,
         slideDirection: 'NEXT',
     });
+    const [shouldRenderAllSlides, setShouldRenderAllSlides] = useState(false);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
     const checkAndClearInterval = () => {
@@ -49,6 +49,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     };
 
     const slide = (dir: 'PREV' | 'NEXT') => {
+        setShouldRenderAllSlides(true);
         checkAndClearInterval();
         dispatchBannerSliderStateChange({ type: dir, numItems });
         setTimeout(() => {
@@ -60,7 +61,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     };
 
     const onStartInterval = useEffectEvent(() => {
-        startInterval();
+        slide('NEXT');
     });
 
     const onClearInterval = useEffectEvent(() => {
@@ -68,12 +69,30 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     });
 
     useEffect(() => {
-        onStartInterval();
+        // Delay auto-rotation start so LCP stays locked to slide 1 (which has
+        // all the right priority hints). Start earlier if the user interacts first.
+        const controller = new AbortController();
+        const { signal } = controller;
 
-        return () => onClearInterval();
+        const start = () => {
+            controller.abort();
+            setShouldRenderAllSlides(true);
+            onStartInterval();
+        };
+
+        const timeout = setTimeout(start, SLIDER_AUTOMATIC_SLIDE_INTERVAL);
+        window.addEventListener('scroll', start, { signal, passive: true });
+        window.addEventListener('pointerdown', start, { signal });
+
+        return () => {
+            clearTimeout(timeout);
+            controller.abort();
+            onClearInterval();
+        };
     }, []);
 
     const moveToSlide = (slideToMoveTo: number) => {
+        setShouldRenderAllSlides(true);
         checkAndClearInterval();
         dispatchBannerSliderStateChange({ type: 'MOVE_TO', slideToMoveTo });
         startInterval();
@@ -125,7 +144,9 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                     onMouseEnter={checkAndClearInterval}
                     onMouseLeave={() => {
                         checkAndClearInterval();
-                        startInterval();
+                        if (shouldRenderAllSlides) {
+                            startInterval();
+                        }
                     }}
                 >
                     <div className="vl:rounded-b-none w-full overflow-hidden rounded-xl">
@@ -134,21 +155,29 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                                 'flex',
                                 sliderItems.length > 1 &&
                                     (!bannerSliderState.isSliding
-                                        ? `transition-transform motion-safe:translate-x-[calc(-100%)] duration-${SLIDER_SLIDE_DURATION} ease-in-out`
+                                        ? `translate-x-[calc(-100%)] [transition-property:translate] duration-500 ease-in-out motion-reduce:duration-0`
                                         : bannerSliderState.slideDirection === 'PREV'
                                           ? 'translate-x-[calc(2*(-100%))]'
                                           : 'translate-x-0'),
                             )}
                         >
-                            {sliderItems.map((item, index) => (
-                                <Banner
-                                    key={item.uuid}
-                                    banner={item}
-                                    bannerSliderState={bannerSliderState}
-                                    index={index}
-                                    numItems={numItems}
-                                />
-                            ))}
+                            {sliderItems.map((item, index) => {
+                                const order = getBannerOrderCSSProperty(
+                                    index,
+                                    bannerSliderState.sliderPosition,
+                                    numItems,
+                                );
+
+                                return shouldRenderAllSlides || index === 0 ? (
+                                    <Banner key={item.uuid} banner={item} isFirst={index === 0} order={order} />
+                                ) : (
+                                    <div
+                                        key={item.uuid}
+                                        className="vl:h-[425px] h-[250px] flex-[1_0_100%] basis-full md:h-[345px]"
+                                        style={{ order }}
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
                 </ExtendedNextLink>

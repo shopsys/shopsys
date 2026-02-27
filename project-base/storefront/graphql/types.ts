@@ -2654,6 +2654,8 @@ export type TypeProductFilterOptions = {
 
 export type TypeProductList = {
   __typename?: 'ProductList';
+  /** Total count of products in the list */
+  itemsCount: Scalars['Int']['output'];
   /** An array of the products in the list */
   products: Array<TypeProduct>;
   /** Product list type */

@@ -1,12 +1,17 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
-import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import dynamic from 'next/dynamic';
 import { ReactNode, useEffect, useEffectEvent, useRef, useState } from 'react';
-import InfiniteScroll, { Props as InfiniteScrollProps } from 'react-infinite-scroll-component';
+import type { Props as InfiniteScrollProps } from 'react-infinite-scroll-component';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
 import { SelectOptionType } from 'types/selectOptions';
 import { twMergeCustom } from 'utils/twMerge';
 import { useFocusTrap } from 'utils/useFocusTrap';
+
+const SelectListInfiniteScroll = dynamic(
+    () => import('components/Forms/Select/SelectListInfiniteScroll').then((mod) => mod.SelectListInfiniteScroll),
+    { ssr: false },
+);
 
 export type SelectListProps<T = string> = {
     itemBeforeText?: ReactNode;
@@ -129,29 +134,9 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
 
     if (infinityScrollConfig && infinityScrollConfig.dataLength >= infinityScrollConfig.pageSize) {
         return (
-            <AnimateCollapseDiv
-                className="z-above border-input-border-default bg-background-default hover:border-input-border-hovered absolute right-0 left-0 block! rounded-b-md border-2 border-t-0"
-                keyName={tid}
-            >
-                <InfiniteScroll
-                    dataLength={infinityScrollConfig.dataLength}
-                    hasMore={infinityScrollConfig.hasMore}
-                    height={200}
-                    next={infinityScrollConfig.next}
-                    loader={
-                        <>
-                            <div className="flex h-9 items-center pl-3">
-                                <Skeleton className="h-4 w-32" />
-                            </div>
-                            <div className="flex h-9 items-center pl-3">
-                                <Skeleton className="h-4 w-32" />
-                            </div>
-                        </>
-                    }
-                >
-                    <ul ref={listRef}>{SelectListItems}</ul>
-                </InfiniteScroll>
-            </AnimateCollapseDiv>
+            <SelectListInfiniteScroll infinityScrollConfig={infinityScrollConfig} listRef={listRef} tid={tid}>
+                {SelectListItems}
+            </SelectListInfiniteScroll>
         );
     }
 

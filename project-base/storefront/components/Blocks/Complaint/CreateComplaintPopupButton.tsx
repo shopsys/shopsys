@@ -1,4 +1,3 @@
-import { CreateComplaintPopup } from 'components/Blocks/Popup/CreateComplaintPopup';
 import { Button, ButtonProps } from 'components/Forms/Button/Button';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { useSessionStore } from 'store/useSessionStore';
@@ -16,12 +15,13 @@ export const CreateComplaintPopupButton: FC<CreateComplaintButtonProps> = ({
     ...props
 }) => {
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const openCreateComplaintPopup = (
+    const openCreateComplaintPopup = async (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
         orderUuid?: string,
         orderItem?: TypeOrderDetailItemFragment,
     ) => {
         e.stopPropagation();
+        const { CreateComplaintPopup } = await import('components/Blocks/Popup/CreateComplaintPopup');
         updatePortalContent(<CreateComplaintPopup orderItem={orderItem} orderUuid={orderUuid} />);
     };
 

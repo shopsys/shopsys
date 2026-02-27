@@ -2,6 +2,7 @@ import { RouteAccessibilityManager } from 'components/Layout/RouteAccessibilityM
 import { RouteAnnouncer } from 'components/Layout/RouteAnnouncer';
 import { AuthorizationProvider } from 'components/providers/AuthorizationProvider';
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
+import { CurrentCustomerUserProvider } from 'components/providers/CurrentCustomerUserProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { PersistStoreProvider } from 'components/providers/PersistStoreProvider';
 import { LazyMotion, MotionConfig } from 'framer-motion';
@@ -96,18 +97,20 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
                 <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
                     <DomainConfigProvider domainConfig={domainConfig}>
                         <PersistStoreProvider>
-                            <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
-                                <GtmProvider>
-                                    <MotionConfig reducedMotion="user">
-                                        <LazyMotion features={framerMotionPlugins}>
-                                            <RouteAccessibilityManager>
-                                                <RouteAnnouncer />
-                                                <AppPageContent Component={Component} pageProps={pageProps} />
-                                            </RouteAccessibilityManager>
-                                        </LazyMotion>
-                                    </MotionConfig>
-                                </GtmProvider>
-                            </AuthorizationProvider>
+                            <CurrentCustomerUserProvider>
+                                <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
+                                    <GtmProvider>
+                                        <MotionConfig reducedMotion="user">
+                                            <LazyMotion features={framerMotionPlugins}>
+                                                <RouteAccessibilityManager>
+                                                    <RouteAnnouncer />
+                                                    <AppPageContent Component={Component} pageProps={pageProps} />
+                                                </RouteAccessibilityManager>
+                                            </LazyMotion>
+                                        </MotionConfig>
+                                    </GtmProvider>
+                                </AuthorizationProvider>
+                            </CurrentCustomerUserProvider>
                         </PersistStoreProvider>
                     </DomainConfigProvider>
                 </CookiesStoreProvider>

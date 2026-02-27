@@ -85,10 +85,25 @@ export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationRetu
     });
 
     useEffect(() => {
-        window.addEventListener('scroll', onScroll, { passive: true });
+        let rafId: number | null = null;
+
+        const throttledOnScroll = () => {
+            if (rafId !== null) {
+                return;
+            }
+            rafId = requestAnimationFrame(() => {
+                onScroll();
+                rafId = null;
+            });
+        };
+
+        window.addEventListener('scroll', throttledOnScroll, { passive: true });
 
         return () => {
-            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('scroll', throttledOnScroll);
+            if (rafId !== null) {
+                cancelAnimationFrame(rafId);
+            }
         };
     }, []);
 

@@ -1,9 +1,9 @@
-import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
+import { useCurrentCustomerUserQueryData } from 'components/providers/CurrentCustomerUserProvider';
 import { TypeDeliveryAddress } from 'graphql/types';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 
 export const useCurrentCustomerData = (): CurrentCustomerType | undefined => {
-    const [{ data: currentCustomerUserData }] = useCurrentCustomerUserQuery();
+    const currentCustomerUserData = useCurrentCustomerUserQueryData();
 
     if (!currentCustomerUserData?.currentCustomerUser) {
         return undefined;

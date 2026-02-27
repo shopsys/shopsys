@@ -1,5 +1,4 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
 import {
     useStoreDetailQuery,
     TypeStoreDetailQuery,
@@ -9,6 +8,7 @@ import {
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
@@ -20,6 +20,10 @@ import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { getPrefixedSeoTitle } from 'utils/seo/getPrefixedSeoTitle';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
+
+const StoreDetailContent = dynamic(() =>
+    import('components/Pages/StoreDetail/StoreDetailContent').then((mod) => mod.StoreDetailContent),
+);
 
 const StoreDetailPage: NextPage = () => {
     const { t } = useTranslation();
