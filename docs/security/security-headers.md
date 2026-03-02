@@ -15,18 +15,22 @@ Security headers are applied at three layers:
 
 ### How headers reach each response type
 
-Static security headers (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `X-XSS-Protection`, `Strict-Transport-Security`, `Permissions-Policy`, `X-Powered-By`) are set at the nginx **server level**.
+Static security headers (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `X-XSS-Protection`, `Strict-Transport-Security`, `X-Powered-By`) are set directly in nginx:
+
+- server-level defaults
+- explicitly redeclared in locations that define their own `add_header` directives
 
 | Response type          | nginx location  | Inherits server-level headers?                    | Additional headers beyond server-level defaults                                                                                                                                  |
 | ---------------------- | --------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Admin pages            | `@app`          | No — has own `add_header`, so must redeclare them | PHP: CSP (dynamic); nginx `@app`: redeclared static security headers with stricter `Permissions-Policy` (`geolocation=()`); CORS headers intentionally not set                   |
-| Storefront pages       | `@storefront`   | Yes                                               | Next.js: CSP only (dynamic, obtained via GraphQL)                                                                                                                                |
+| Storefront pages       | `@storefront`   | No — has own `add_header`, so must redeclare them | Next.js: CSP only (dynamic, obtained via GraphQL); nginx `@storefront` redeclares static security headers and intentionally does not expose CORS                                 |
 | Frontend API (GraphQL) | `@app`          | No — same as admin                                | nginx `@app`: redeclared static security headers with stricter `Permissions-Policy` (`geolocation=()`); CSP is **not** set for API responses; CORS headers intentionally not set |
-| Static files           | `try_files`     | Yes                                               | —                                                                                                                                                                                |
-| Image resizer          | `@imageResizer` | Yes                                               | —                                                                                                                                                                                |
+| Static files           | `try_files`     | Yes                                               | Inherit server-level CORS defaults (`Access-Control-Allow-Origin: *`, `Access-Control-Allow-Credentials: false`)                                                                 |
+| Image resizer          | `@imageResizer` | No — has own `add_header`, so must redeclare them | nginx `@imageResizer`: app-style static security headers (`geolocation=()`), CORS intentionally not set                                                                          |
 
 Important nginx rule: if a location block defines _any_ `add_header` directive, it does **not** inherit server-level `add_header` directives.
-This is why the `@app` location explicitly redeclares the security headers, while `@storefront` does not need to — it inherits them automatically.
+This is why `@app`, `@storefront`, and `@imageResizer` explicitly redeclare the security headers.
+Each location then sets its own `Permissions-Policy` value where needed.
 The storefront Next.js app only sets CSP because it's the only header that requires application-level logic (the value is configurable via admin and fetched from the database through a GraphQL query).
 
 ## Headers Reference
@@ -64,10 +68,10 @@ The CSP value is sanitized when saved in Admin (carriage return `\r` and line fe
 
 **In plain English:** Prevents other websites from putting your pages inside a hidden frame. Without this, an attacker could overlay your admin or checkout page with their own site and trick users into clicking your buttons without realizing it (clickjacking).
 
-| Property   | Value                                                    |
-| ---------- | -------------------------------------------------------- |
-| **Value**  | `SAMEORIGIN`                                             |
-| **Set by** | nginx (`always` flag — server level and `@app` location) |
+| Property   | Value                                                                                          |
+| ---------- | ---------------------------------------------------------------------------------------------- |
+| **Value**  | `SAMEORIGIN`                                                                                   |
+| **Set by** | nginx (`always` flag — server level; redeclared in `@storefront`, `@app`, and `@imageResizer`) |
 
 `SAMEORIGIN` allows embedding only from the same origin, which is needed for admin features like CKEditor and elFinder. The default CSP also includes `frame-ancestors 'self'` as the modern replacement. Both are set for defense-in-depth — `X-Frame-Options` covers older browsers, static files, and API responses where CSP is not present.
 
@@ -75,19 +79,19 @@ The CSP value is sanitized when saved in Admin (carriage return `\r` and line fe
 
 **In plain English:** Tells the browser "trust the file type I'm telling you, don't try to guess." Without this, a browser might look at a file labeled as an image, decide it looks like JavaScript, and execute it — which an attacker could exploit by uploading a malicious file disguised as an image. Particularly important for e-commerce platforms that accept user-uploaded content.
 
-| Property   | Value                                                    |
-| ---------- | -------------------------------------------------------- |
-| **Value**  | `nosniff`                                                |
-| **Set by** | nginx (`always` flag — server level and `@app` location) |
+| Property   | Value                                                                                          |
+| ---------- | ---------------------------------------------------------------------------------------------- |
+| **Value**  | `nosniff`                                                                                      |
+| **Set by** | nginx (`always` flag — server level; redeclared in `@storefront`, `@app`, and `@imageResizer`) |
 
 ### Referrer-Policy
 
 **In plain English:** Controls what URL information is shared when a user clicks a link to another site. With `same-origin`, if a user navigates from `/admin/orders/12345` to an external site, the browser sends no referrer at all — so the external site never learns what page the user was on. Within your own site, the full referrer is still sent (needed for CSRF protection and analytics).
 
-| Property   | Value                                                    |
-| ---------- | -------------------------------------------------------- |
-| **Value**  | `same-origin`                                            |
-| **Set by** | nginx (`always` flag — server level and `@app` location) |
+| Property   | Value                                                                                          |
+| ---------- | ---------------------------------------------------------------------------------------------- |
+| **Value**  | `same-origin`                                                                                  |
+| **Set by** | nginx (`always` flag — server level; redeclared in `@storefront`, `@app`, and `@imageResizer`) |
 
 This is stricter than `strict-origin-when-cross-origin` (which still sends the origin to external sites) but appropriate for an e-commerce platform where URL paths may contain sensitive information like order IDs.
 
@@ -95,10 +99,10 @@ This is stricter than `strict-origin-when-cross-origin` (which still sends the o
 
 **In plain English:** Tells the browser "from now on, only connect to this site over HTTPS — even if the user types `http://`." Once a browser sees this header, it will automatically upgrade all future requests to HTTPS for the specified duration. This prevents man-in-the-middle attacks where an attacker intercepts the initial insecure HTTP request before the server can redirect to HTTPS.
 
-| Property   | Value                                                    |
-| ---------- | -------------------------------------------------------- |
-| **Value**  | `max-age=31536000; includeSubDomains`                    |
-| **Set by** | nginx (`always` flag — server level and `@app` location) |
+| Property   | Value                                                                                          |
+| ---------- | ---------------------------------------------------------------------------------------------- |
+| **Value**  | `max-age=31536000; includeSubDomains`                                                          |
+| **Set by** | nginx (`always` flag — server level; redeclared in `@storefront`, `@app`, and `@imageResizer`) |
 
 - `max-age=31536000` — the browser remembers the HTTPS-only policy for 1 year (in seconds)
 - `includeSubDomains` — the policy also applies to all subdomains, preventing attacks on `api.example.com` or `cdn.example.com`
@@ -109,40 +113,41 @@ Note: browsers only honor this header when received over a valid HTTPS connectio
 
 **In plain English:** Older browsers had a built-in XSS filter (XSS Auditor) that tried to detect and block attacks, but it was unreliable and could actually be exploited by attackers to break legitimate pages. Setting this to `0` turns it off. Modern browsers have removed it entirely (Chrome 78+, Edge 79+, Firefox) — CSP is the proper replacement.
 
-| Property   | Value                                                    |
-| ---------- | -------------------------------------------------------- |
-| **Value**  | `0`                                                      |
-| **Set by** | nginx (`always` flag — server level and `@app` location) |
+| Property   | Value                                                                                          |
+| ---------- | ---------------------------------------------------------------------------------------------- |
+| **Value**  | `0`                                                                                            |
+| **Set by** | nginx (`always` flag — server level; redeclared in `@storefront`, `@app`, and `@imageResizer`) |
 
 ### X-Powered-By
 
 **In plain English:** Upstreams (PHP/Next.js) may expose technology/version details in `X-Powered-By`. Attackers use this to target known vulnerabilities. We overwrite it with a generic `Shopsys Platform` value so no useful stack/version information is exposed.
 
-| Property   | Value                                                                                                                                                                           |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Value**  | `Shopsys Platform`                                                                                                                                                              |
-| **Set by** | nginx (server-level `add_header`; redeclared in `@app` because location-level `add_header` disables inheritance; `@storefront` hides upstream header so nginx value is applied) |
+| Property   | Value                                                                                                                                                                                          |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Value**  | `Shopsys Platform`                                                                                                                                                                             |
+| **Set by** | nginx (server-level `add_header`; redeclared in `@storefront`, `@app`, and `@imageResizer` because location-level `add_header` disables inheritance; `@storefront` also hides upstream header) |
 
 ### Permissions-Policy
 
 **In plain English:** Controls access to browser features such as camera, microphone, geolocation, payment APIs, and USB. Most features are disabled for all origins using `()`. Geolocation is allowed only for same-origin storefront responses via server-level policy, while `@app` responses (admin/GraphQL/PHP) override it to `geolocation=()`.
 
-| Property   | Value                                                                                                                                                                                         |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Value**  | server level (`@storefront` inherit): `camera=(), geolocation=(self), microphone=(), payment=(), usb=()`; `@app`/PHP override: `camera=(), geolocation=(), microphone=(), payment=(), usb=()` |
-| **Set by** | nginx (server-level `add_header`; `@app` and payment-status-notify locations redeclare a stricter policy because location-level `add_header` disables inheritance)                            |
+| Property   | Value                                                                                                                                                                                                                              |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Value**  | server-level default: `camera=(), geolocation=(self), microphone=(), payment=(), usb=()`; `@storefront` redeclares same value; `@app`/`@imageResizer`/PHP override: `camera=(), geolocation=(), microphone=(), payment=(), usb=()` |
+| **Set by** | nginx (server-level `add_header`; `@storefront`, `@app`, and `@imageResizer` redeclare headers; only `@storefront` keeps `geolocation=(self)`)                                                                                     |
 
 ### Access-Control-Allow-Origin (CORS)
 
-**In plain English:** By default, browsers block JavaScript on `site-a.com` from fetching resources from `site-b.com`. This header says "it's OK, these origins are allowed to load my resources." The wildcard `*` means "anyone can load this" — used for public static assets like images and fonts. For admin/PHP pages it's disabled because no external site should be making requests there (the storefront communicates via server-side GraphQL calls, not browser-to-backend).
+**In plain English:** By default, browsers block JavaScript on `site-a.com` from fetching resources from `site-b.com`. This header says "it's OK, these origins are allowed to load my resources." The wildcard `*` means "anyone can load this" — used here only for public static assets. For dynamic routes (storefront HTML, admin, GraphQL, PHP endpoints) it is removed.
 
-| Property   | Value                                                                                |
-| ---------- | ------------------------------------------------------------------------------------ |
-| **Value**  | `*` (nginx server level on responses that inherit it), no header on `@app` responses |
-| **Set by** | nginx                                                                                |
+| Property   | Value                                                                                                                              |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Value**  | `*` by default (nginx server level on responses that inherit it), no header on `@storefront`, `@app`, or `@imageResizer` responses |
+| **Set by** | nginx                                                                                                                              |
 
-The `@storefront` location strips this header from the Next.js upstream via `proxy_hide_header`, then nginx's server-level `*` is applied instead.  
-The `@app` location defines its own `add_header` directives, so it does not inherit the server-level CORS headers.
+Static `content` locations that proxy to object storage strip upstream CORS via `proxy_hide_header`, so only nginx-controlled values are sent.  
+`@storefront` strips CORS from the Next.js upstream and defines its own `add_header` block, so server-level CORS is not inherited.  
+`@app` and `@imageResizer` do the same for FastCGI responses (`fastcgi_hide_header` + location-level headers).
 
 **Why CORS is intentionally disabled on `@app`:**
 
@@ -154,10 +159,10 @@ The `@app` location defines its own `add_header` directives, so it does not inhe
 
 **In plain English:** Even when cross-origin requests are allowed (via `Access-Control-Allow-Origin`), this header controls whether the browser sends cookies or login tokens along with those requests. Set to `false` — so an external site can load a public image, but cannot make requests as a logged-in user. Browsers also enforce this: when `Access-Control-Allow-Origin` is `*`, credentials are always blocked regardless.
 
-| Property   | Value                                                                                    |
-| ---------- | ---------------------------------------------------------------------------------------- |
-| **Value**  | `false` (nginx server level on responses that inherit it), no header on `@app` responses |
-| **Set by** | nginx                                                                                    |
+| Property   | Value                                                                                                                                  |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **Value**  | `false` by default (nginx server level on responses that inherit it), no header on `@storefront`, `@app`, or `@imageResizer` responses |
+| **Set by** | nginx                                                                                                                                  |
 
 ### Additional nginx security settings
 
