@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\CategorySeo;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
@@ -40,8 +39,6 @@ class ReadyCategorySeoMixFacade
     ): ReadyCategorySeoMix {
         $readyCategorySeoMix = $this->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination);
 
-        $this->em->beginTransaction();
-
         if ($readyCategorySeoMix === null) {
             $readyCategorySeoMix = $this->readyCategorySeoMixFactory->create($readyCategorySeoMixData);
             $this->em->persist($readyCategorySeoMix);
@@ -59,16 +56,7 @@ class ReadyCategorySeoMixFacade
 
         $this->saveReadyCategoryMixFriendlyUrls($readyCategorySeoMix, $urlListData);
 
-        try {
-            $this->validateReadyCategoryMixFriendlyUrls($readyCategorySeoMix);
-        } catch (ReadyCategorySeoMixUrlsContainBadDomainUrlException | ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException $e) {
-            TransactionalMasterRequestListener::setTransactionManuallyRollbacked();
-            $this->em->rollback();
-
-            throw $e;
-        }
-
-        $this->em->commit();
+        $this->validateReadyCategoryMixFriendlyUrls($readyCategorySeoMix);
 
         return $readyCategorySeoMix;
     }

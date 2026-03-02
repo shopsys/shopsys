@@ -1,0 +1,6 @@
+query InvalidProductListQuery($type: ProductListTypeEnum!, $productListUuid: Uuid!) {
+    productList(input: {type: $type, uuid: $productListUuid}) {
+        uuid
+        nonExistingField
+    }
+}

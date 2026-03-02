@@ -1,7 +1,7 @@
 # Introduction to Automated Testing
 
 Testing is a crucial part of the development and maintenance of reliable software.  
-For this reason, Shopsys Platform comes with 5 types of automated tests:
+For this reason, Shopsys Platform comes with 6 types of automated tests:
 
 - [Unit tests](#unit-tests)
 - [Functional tests](#functional-tests)
@@ -91,8 +91,8 @@ See test class `\Tests\FrameworkBundle\Unit\Model\Cart\CartTest` in the `shopsys
 Notice that test method names describe the tested scenario. Also, notice that each test case focuses just on one specific class behavior.
 When a test fails, it provides detailed feedback to the developer.
 
-You can create similar unit tests anywhere in your directory `tests/Unit/`.
-If they are named with the prefix `Test` and are extending `\PHPUnit\Framework\TestCase`, they will be executed during the [`tests` Phing target](../introduction/console-commands-for-application-management-phing-targets.md#tests).
+You can create similar unit tests in directories registered in `phpunit.xml` (for example `tests/App/Unit/` and `tests/*Bundle/Unit/`).
+If they are named with the suffix `Test` (for example `*Test.php`) and are extending `\PHPUnit\Framework\TestCase`, they will be executed during the [`tests` Phing target](../introduction/console-commands-for-application-management-phing-targets.md#tests).
 
 ### Functional tests
 
@@ -131,7 +131,22 @@ Use `FunctionalTestCase` if you are sure that you won't commit anything to the d
 ### Application tests
 
 When you need to check your direct response from the application by accessing it directly via URL, application tests are the way to go.
-`ApplicationTestCase` is used, for example, in our frontend API testing `GraphlQlTestCase`
+`ApplicationTestCase` is used, for example, in our frontend API testing `GraphQlTestCase`.
+
+#### Isolated client in application tests
+
+`ApplicationTestCase` keeps one client instance with disabled kernel reboot during a test.
+This is useful for speed, but all requests in the test share the same kernel service instances.
+
+If your scenario needs request-level transaction semantics (commit/rollback) or must avoid state leakage between requests, create a dedicated client using `createNewClient()` (or helper wrappers such as `withIsolatedClient()` in GraphQL tests).
+
+Use isolated client when:
+
+- you verify behavior implemented in `kernel.request` / `kernel.response` listeners or subscribers
+- you need a fresh container state for a specific request flow
+- you intentionally run a scenario outside the default per-test transaction wrapper
+
+Note that isolated client has its own kernel/container and DB connection, so it does not see uncommitted changes from another client transaction.
 
 #### Advantages:
 

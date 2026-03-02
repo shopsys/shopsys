@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Context;
 
 use InvalidArgumentException;
 use Override;
+use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Webmozart\Assert\Assert;
 
 final class ContextResolver implements ContextResolverInterface
@@ -23,8 +24,10 @@ final class ContextResolver implements ContextResolverInterface
     /**
      * @param iterable<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contexts
      */
-    public function __construct(iterable $contexts = [])
-    {
+    public function __construct(
+        iterable $contexts,
+        private readonly string $environment,
+    ) {
         foreach ($contexts as $context) {
             $this->addContext($context);
         }
@@ -126,9 +129,11 @@ final class ContextResolver implements ContextResolverInterface
 
     private function buildMatchingResults(): void
     {
-        if ($this->contextMatchingResults !== []) {
+        if ($this->contextMatchingResults !== [] && !$this->isTestEnvironment()) {
             return;
         }
+
+        $this->contextMatchingResults = [];
 
         foreach ($this->contexts as $context) {
             if (isset($this->contextMatchingResults[$context->getIdentifier()])) {
@@ -137,6 +142,11 @@ final class ContextResolver implements ContextResolverInterface
 
             $this->contextMatchingResults[$context->getIdentifier()] = $this->contextMatches($context);
         }
+    }
+
+    private function isTestEnvironment(): bool
+    {
+        return $this->environment === EnvironmentType::TEST;
     }
 
     /**

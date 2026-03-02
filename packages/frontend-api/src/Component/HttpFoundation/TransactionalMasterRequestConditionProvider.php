@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\HttpFoundation;
 
-use GraphQL\Error\SyntaxError;
-use GraphQL\Language\AST\OperationDefinitionNode;
-use GraphQL\Language\Parser;
 use Override;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
@@ -20,6 +17,7 @@ class TransactionalMasterRequestConditionProvider implements TransactionalMaster
 
     public function __construct(
         protected readonly ContextResolverInterface $contextResolver,
+        protected readonly GraphqlOperationTypeResolver $graphqlOperationTypeResolver,
     ) {
     }
 
@@ -47,24 +45,8 @@ class TransactionalMasterRequestConditionProvider implements TransactionalMaster
             throw new InvalidArgumentUserError('Request content is not a valid JSON.');
         }
 
-        if (!array_key_exists(static::QUERY_TYPE, $source)) {
-            return false;
-        }
+        $operationType = $this->graphqlOperationTypeResolver->resolveOperationTypeFromPayload($source);
 
-        $queryString = $source[static::QUERY_TYPE];
-
-        try {
-            $parsed = Parser::parse($queryString);
-
-            foreach ($parsed->definitions as $definition) {
-                if ($definition instanceof OperationDefinitionNode) {
-                    return $definition->operation === static::QUERY_TYPE;
-                }
-            }
-        } catch (SyntaxError) {
-            return false;
-        }
-
-        return false;
+        return $operationType === static::QUERY_TYPE;
     }
 }

@@ -110,7 +110,9 @@ services:
             - { name: data_collector, id: shopsys_framework_core, template: '@ShopsysFramework/Components/Collector/shopsysFramework.html.twig', priority: -300 }
 
     Shopsys\FrameworkBundle\Component\Context\ContextResolver:
-        arguments: [!tagged_iterator shopsys.context]
+        arguments:
+            $contexts: !tagged_iterator shopsys.context
+            $environment: '%kernel.environment%'
 
     Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface:
         alias: Shopsys\FrameworkBundle\Component\Context\ContextResolver
@@ -312,6 +314,7 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+            - { name: kernel.event_listener, event: Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent, method: onSilencedException }
 
     Shopsys\FrameworkBundle\Component\HttpFoundation\VaryResponseByXRequestedWithHeaderListener:
         tags:

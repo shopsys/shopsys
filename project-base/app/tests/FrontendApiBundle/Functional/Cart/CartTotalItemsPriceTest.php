@@ -47,53 +47,25 @@ class CartTotalItemsPriceTest extends GraphQlTestCase
     private function addPaymentCardToCart(string $cartUuid): void
     {
         $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
-        $changePaymentInCartMutation = '
-            mutation {
-                ChangePaymentInCart(input:{
-                    cartUuid: "' . $cartUuid . '"
-                    paymentUuid: "' . $paymentCard->getUuid() . '"
-                }) {
-                    uuid
-                }
-            }
-        ';
-
-        $this->getResponseContentForQuery($changePaymentInCartMutation);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'paymentUuid' => $paymentCard->getUuid(),
+        ]);
     }
 
     private function addTransportPplToCart(string $cartUuid): void
     {
         $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
-        $changeTransportInCartMutation = '
-            mutation {
-                ChangeTransportInCart(input:{
-                    cartUuid: "' . $cartUuid . '"
-                    paymentUuid: "' . $transportPpl->getUuid() . '"
-                }) {
-                    uuid
-                }
-            }
-        ';
-
-        $this->getResponseContentForQuery($changeTransportInCartMutation);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'transportUuid' => $transportPpl->getUuid(),
+        ]);
     }
 
     private function getCartResponse(string $cartUuid): array
     {
-        $getCartQuery = '
-            query {
-                cart(cartInput:{
-                    cartUuid: "' . $cartUuid . '"
-                }) {
-                    totalItemsPrice {
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
-                    }
-                }
-            }
-        ';
-
-        return $this->getResponseContentForQuery($getCartQuery);
+        return $this->getResponseContentForGql(__DIR__ . '/graphql/CartWithDiscountBreakdown.graphql', [
+            'cartUuid' => $cartUuid,
+        ]);
     }
 }
