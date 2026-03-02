@@ -46,7 +46,7 @@ You can learn how to set up multiple cron instances in [Working with Multiple Cr
 ## Cron Limitations
 
 One cron run can only be run for a limited time by default to prevent high-memory usage of long-running jobs in PHP.
-In `app/config/cron.yaml` is set the default timeout to `240 seconds`:
+You can configure the behaviour of each instance in `app/config/cron.yaml`:
 
 ```yaml
 parameters:
@@ -54,6 +54,7 @@ parameters:
         default:
             run_every_min: 5
             timeout_iterated_cron_sec: 240
+            stop_on_failure: true
 ```
 
 That means, if the time needed to run all planned cron modules is higher than `240 seconds`, not all cron modules will be run in a current iteration.
@@ -62,6 +63,10 @@ but in some cases, the overall time of the "every 5 minutes" cron modules can be
 Then it's possible, some cron modules will never be run.
 
 It's crucial to monitor your crons and, if necessary, update their periodicity and timeout or split them into [multiple Cron Instances](#multiple-cron-instances).
+
+The `stop_on_failure` option controls whether the instance stops executing subsequent cron modules when one module fails.
+It defaults to `true`.
+Set it to `false` for instances whose modules are independent of each other so that a failure in one module does not prevent the remaining modules from running.
 
 !!! note
 
