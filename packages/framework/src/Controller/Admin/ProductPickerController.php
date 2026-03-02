@@ -139,8 +139,6 @@ class ProductPickerController extends AdminBaseController
 
         $product = $this->productFacade->getById($productId);
 
-        $this->imageExtension->getImageHtml($product);
-
         return new JsonResponse([
             'imageHtml' => $this->imageExtension->getImageHtml($product),
         ]);

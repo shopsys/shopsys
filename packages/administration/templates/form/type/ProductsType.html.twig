@@ -56,11 +56,11 @@
 
             <div class="col-auto">
                 {% if product is not null %}
-                    <span class="avatar bg-white">
-                        {{ image(product, {width: 40, height: 40, style: 'max-width: 40px; max-height: 40px; width: auto; height: auto'}) }}
+                    <span class="avatar bg-white product-picker-image-avatar">
+                        {{ image(product) }}
                     </span>
                 {% else %}
-                    <span class="avatar js-products-picker-item-product-image"></span>
+                    <span class="avatar bg-white product-picker-image-avatar js-products-picker-item-product-image"></span>
                 {% endif %}
             </div>
 

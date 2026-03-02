@@ -18,3 +18,10 @@
         background-color: var(--tblr-bg-surface-secondary);
     }
 }
+
+.product-picker-image-avatar img {
+    max-width: 40px;
+    max-height: 40px;
+    width: auto;
+    height: auto;
+}
