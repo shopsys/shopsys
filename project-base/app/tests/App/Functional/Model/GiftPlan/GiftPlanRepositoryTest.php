@@ -23,6 +23,6 @@ class GiftPlanRepositoryTest extends TransactionFunctionalTestCase
 
         $result = $this->giftPlanRepository->findActiveGiftPlansByMainProductAndDomainId($mainProduct, Domain::FIRST_DOMAIN_ID);
 
-        $this->assertCount(2, $result);
+        $this->assertCount(1, $result);
     }
 }

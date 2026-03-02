@@ -125,6 +125,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $countData->countByFlagId = [
             $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class)->getId() => 5,
             $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class)->getId() => 3,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_GIFT, Flag::class)->getId() => 1,
         ];
         $countData->countByParameterIdAndValueId = [
             $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => [
@@ -189,6 +190,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         ];
         $countData->countByFlagId = [
             $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class)->getId() => 2,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_GIFT, Flag::class)->getId() => 1,
         ];
         $countData->countByParameterIdAndValueId = [
             $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => [
@@ -422,6 +424,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $countData->countByFlagId = [
             $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class)->getId() => 1,
             $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class)->getId() => 3,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_GIFT, Flag::class)->getId() => 1,
         ];
         $countData->countByParameterIdAndValueId = [
             $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => [
@@ -518,6 +521,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $countData->countByFlagId = [
             $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class)->getId() => 2,
             $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class)->getId() => 4,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_GIFT, Flag::class)->getId() => 1,
         ];
 
         return [
@@ -560,6 +564,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $countData->countByFlagId = [
             $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class)->getId() => 2,
             $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class)->getId() => 3,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_GIFT, Flag::class)->getId() => 1,
         ];
 
         return [
