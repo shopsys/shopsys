@@ -89,14 +89,14 @@ The CSP value is sanitized when saved in Admin (carriage return `\r` and line fe
 
 ### Referrer-Policy
 
-**In plain English:** Controls what URL information is shared when a user clicks a link to another site. With `same-origin`, if a user navigates from `/admin/orders/12345` to an external site, the browser sends no referrer at all — so the external site never learns what page the user was on. Within your own site, the full referrer is still sent (needed for CSRF protection and analytics).
+**In plain English:** Controls what URL information is shared when a user clicks a link to another site. With `strict-origin-when-cross-origin`, same-origin requests still receive the full referrer, while cross-origin HTTPS requests receive only the origin (for example, `https://shop.example`) without path/query details.
 
 | Property   | Value                                                                                          |
 | ---------- | ---------------------------------------------------------------------------------------------- |
-| **Value**  | `same-origin`                                                                                  |
+| **Value**  | `strict-origin-when-cross-origin`                                                              |
 | **Set by** | nginx (`always` flag — server level; redeclared in `@storefront`, `@app`, and `@imageResizer`) |
 
-This is stricter than `strict-origin-when-cross-origin` (which still sends the origin to external sites) but appropriate for an e-commerce platform where URL paths may contain sensitive information like order IDs.
+This is a balanced default: it preserves useful origin-level referrer data for embedded third-party integrations while avoiding leakage of sensitive URL path/query data.
 
 ### Strict-Transport-Security (HSTS)
 
