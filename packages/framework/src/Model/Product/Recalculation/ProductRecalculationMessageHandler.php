@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
 use Psr\Log\LoggerInterface;
-use Shopsys\FrameworkBundle\Component\Messenger\Batch\BatchHandlerWithTimeLimitTrait;
 use Symfony\Component\Messenger\Handler\Acknowledger;
 use Symfony\Component\Messenger\Handler\BatchHandlerInterface;
+use Symfony\Component\Messenger\Handler\BatchHandlerTrait;
 use Throwable;
 
 class ProductRecalculationMessageHandler implements BatchHandlerInterface
 {
-    use BatchHandlerWithTimeLimitTrait;
+    use BatchHandlerTrait;
 
     public function __construct(
         protected readonly ProductRecalculationFacade $productRecalculationFacade,
