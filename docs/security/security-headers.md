@@ -39,26 +39,31 @@ The storefront Next.js app only sets CSP because it's the only header that requi
 
 **In plain English:** A whitelist that tells the browser "only load scripts, styles, images, and other resources from these trusted sources." If an attacker injects malicious code into your page, the browser will refuse to run it because it's not on the whitelist. This is the primary defense against XSS and content injection attacks.
 
-| Property          | Value                                                                                              |
-| ----------------- | -------------------------------------------------------------------------------------------------- |
-| **Default value** | `frame-ancestors 'self'; default-src 'self' https: 'unsafe-inline' data:`                          |
-| **Set by**        | PHP `SecurityHeadersResponseListener` (admin), Storefront `initServerSideProps` (storefront pages) |
-| **Not set on**    | Frontend API (GraphQL) responses, static files                                                     |
-| **Configurable**  | Yes, via Admin > Superadmin > CSP Header Setting                                                   |
+| Property          | Value                                                                                                                                                                                                                                                       |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Default value** | `frame-ancestors 'self'; default-src 'self' https: 'unsafe-inline' data:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com *.usersnap.com https://widget.packeta.com https://cdnjs.cloudflare.com https://*.gopay.com https://*.gopay.cz` |
+| **Set by**        | PHP `SecurityHeadersResponseListener` (admin), Storefront `initServerSideProps` (storefront pages)                                                                                                                                                          |
+| **Not set on**    | Frontend API (GraphQL) responses, static files                                                                                                                                                                                                              |
+| **Configurable**  | Yes, via Admin > Superadmin > CSP Header Setting                                                                                                                                                                                                            |
 
 **Default policy breakdown:**
 
-| Directive         | Value                                 | Purpose                                                                                 |
-| ----------------- | ------------------------------------- | --------------------------------------------------------------------------------------- |
-| `frame-ancestors` | `'self'`                              | Only allows embedding from the same origin (modern CSP replacement for X-Frame-Options) |
-| `default-src`     | `'self' https: 'unsafe-inline' data:` | Allows same-origin, HTTPS, inline scripts/styles, and data URIs                         |
+| Directive         | Value                                                                                                                                                                   | Purpose                                                                                               |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `frame-ancestors` | `'self'`                                                                                                                                                                | Only allows embedding from the same origin (modern CSP replacement for X-Frame-Options)               |
+| `default-src`     | `'self' https: 'unsafe-inline' data:`                                                                                                                                   | Fallback for resource types without a dedicated directive (keeps current non-script behavior)         |
+| `script-src`      | `'self' 'unsafe-inline' https://www.googletagmanager.com *.usersnap.com https://widget.packeta.com https://cdnjs.cloudflare.com https://*.gopay.com https://*.gopay.cz` | Restricts script execution to same-origin and known third-party script providers used by the platform |
 
-**Development override:**
+**Development additions to CSP:**
 
-The application appends `'unsafe-eval'` (for storefront) and `http://localhost:35729` (for backend) to the CSP value for local development:
+| Context             | Directive     | Added source/value            | Purpose                                                                               |
+| ------------------- | ------------- | ----------------------------- | ------------------------------------------------------------------------------------- |
+| Storefront (dev)    | `script-src`  | `'unsafe-eval'`               | Required by webpack dev tooling / Next.js dev mode                                    |
+| Backend admin (dev) | `script-src`  | `http://localhost:35729`      | LiveReload in admin                                                                   |
+| Backend admin (dev) | `script-src`  | `http://cdnjs.cloudflare.com` | Allows protocol-relative elFinder script URLs resolved to `http://` on local HTTP     |
+| Backend admin (dev) | `default-src` | `http://cdnjs.cloudflare.com` | Allows protocol-relative elFinder stylesheet URLs resolved to `http://` on local HTTP |
 
-- `'unsafe-eval'` is required by webpack dev tooling / Next.js dev mode
-- `http://localhost:35729` is required for LiveReload in the admin
+Storefront behavior relies on `script-src` being the last directive so appended `'unsafe-eval'` extends script policy.
 
 **Sanitization:**
 

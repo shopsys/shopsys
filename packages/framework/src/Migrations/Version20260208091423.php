@@ -14,7 +14,7 @@ class Version20260208091423 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql('UPDATE setting_values SET value = :value WHERE name = :name AND domain_id = :domainId AND value = :oldValue', [
-            'value' => "frame-ancestors 'self'; default-src 'self' https: 'unsafe-inline' data:",
+            'value' => "frame-ancestors 'self'; default-src 'self' https: 'unsafe-inline' data:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com *.usersnap.com https://widget.packeta.com https://cdnjs.cloudflare.com https://*.gopay.com https://*.gopay.cz",
             'name' => 'cspHeader',
             'domainId' => 0,
             'oldValue' => "default-src https: 'unsafe-inline' 'unsafe-eval' data:",
