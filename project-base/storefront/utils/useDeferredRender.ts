@@ -1,10 +1,10 @@
+import { getPublicConfigProperty } from 'envConfig';
 import { NextRouter, useRouter } from 'next/router';
 import { startTransition, useEffect, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesDestinations } from 'types/friendlyUrl';
-import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
-const shouldUseDefer = getPublicConfigProperty('shouldUseDefer', false);
+const shouldUseDefer = getPublicConfigProperty('shouldUseDefer');
 
 type DeferPage = 'product' | 'category' | 'homepage';
 

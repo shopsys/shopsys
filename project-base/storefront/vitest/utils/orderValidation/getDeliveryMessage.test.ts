@@ -1,16 +1,6 @@
 import { getDeliveryMessage } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { describe, expect, test, vi } from 'vitest';
 
-vi.mock('next/config', () => ({
-    default: () => ({
-        serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/' },
-        publicRuntimeConfig: {
-            errorDebuggingLevel: 'no-debug',
-            domains: [{ url: 'https://test.ts/' }, { url: 'https://test.ts/' }],
-        },
-    }),
-}));
-
 // Mock the translate function
 const mockT = vi.fn((key: string, options?: any) => {
     if (options?.count !== undefined) {

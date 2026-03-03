@@ -39,6 +39,7 @@ declare global {
             };
         };
         dataLayer: any[] | undefined;
+        __ENV?: import('envConfig').PublicRuntimeConfig;
     }
 
     const Loader: SeznamMapLoaderBase & {

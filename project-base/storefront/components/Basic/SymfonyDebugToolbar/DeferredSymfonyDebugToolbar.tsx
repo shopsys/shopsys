@@ -1,8 +1,8 @@
+import { getPublicConfigProperty } from 'envConfig';
 import dynamic from 'next/dynamic';
-import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 import { isEnvironment } from 'utils/isEnvironment';
 
-const showSymfonyToolbar = getPublicConfigProperty('showSymfonyToolbar', '');
+const showSymfonyToolbar = getPublicConfigProperty('showSymfonyToolbar');
 
 const SymfonyDebugToolbar =
     isEnvironment('development') &&

@@ -1,12 +1,12 @@
 import { GoogleMapMarker } from './GoogleMapMarker';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { getPublicConfigProperty } from 'envConfig';
 import GoogleMapReact from 'google-map-react';
 import { TypeCoordinates } from 'graphql/types';
 import { useEffect, useRef, useState } from 'react';
 import { PointFeature } from 'supercluster';
 import { MapMarker, MapMarkerNullable } from 'types/map';
 import useSupercluster from 'use-supercluster';
-import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
 const CLUSTER_RADIUS = 75;
 const CLUSTER_MAX_ZOOM = 20;
@@ -56,7 +56,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     userCoordinates = null,
     shouldCenterToUserCoordinates = true,
 }) => {
-    const googleMapApiKey = getPublicConfigProperty('googleMapApiKey', '');
+    const googleMapApiKey = getPublicConfigProperty('googleMapApiKey');
     const { mapSetting } = useDomainConfig();
     const defaultLatitude = latitude ? parseFloat(latitude) : mapSetting.latitude;
     const defaultLongitude = longitude ? parseFloat(longitude) : mapSetting.longitude;

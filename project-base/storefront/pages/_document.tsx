@@ -1,3 +1,4 @@
+import { getPublicConfig, PublicRuntimeConfig, serializeConfigForHtml } from 'envConfig';
 import { Head, Html, Main, NextScript } from 'next/document';
 import Document, { DocumentContext, DocumentInitialProps } from 'next/document';
 import { getDomainConfig } from 'utils/domain/domainConfig';
@@ -5,6 +6,7 @@ import { logException } from 'utils/errors/logException';
 
 interface MyDocumentInitialProps extends DocumentInitialProps {
     htmlLang: string;
+    publicConfig: PublicRuntimeConfig;
 }
 
 // Browser warning translations (must be simple object, no imports - this runs before React hydrates)
@@ -165,16 +167,20 @@ class MyDocument extends Document<MyDocumentInitialProps> {
             logException(error);
         }
 
-        return { ...initialProps, htmlLang };
+        const publicConfig = getPublicConfig();
+
+        return { ...initialProps, htmlLang, publicConfig };
     }
 
     render() {
-        const { htmlLang } = this.props;
+        const { htmlLang, publicConfig } = this.props;
         const warningTranslation = getBrowserWarningTranslation(htmlLang);
+        const envJson = serializeConfigForHtml(publicConfig);
 
         return (
             <Html lang={htmlLang}>
                 <Head>
+                    <script dangerouslySetInnerHTML={{ __html: `window.__ENV=${envJson};` }} />
                     <style dangerouslySetInnerHTML={{ __html: BROWSER_WARNING_STYLES }} />
                     <script dangerouslySetInnerHTML={{ __html: BROWSER_SYNTAX_TEST_SCRIPT }} />
                     <script dangerouslySetInnerHTML={{ __html: BROWSER_SYNTAX_PROBE_SCRIPT }} />

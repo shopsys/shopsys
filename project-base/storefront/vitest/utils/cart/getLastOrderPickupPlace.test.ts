@@ -13,16 +13,6 @@ vi.mock('gtm/mappers/getGtmPickupPlaceFromLastOrder', () => ({
     getGtmPickupPlaceFromLastOrder: vi.fn(),
 }));
 
-vi.mock('next/config', () => ({
-    default: () => ({
-        serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/' },
-        publicRuntimeConfig: {
-            errorDebuggingLevel: 'no-debug',
-            domains: [{ url: 'https://test.ts/' }, { url: 'https://test.ts/' }],
-        },
-    }),
-}));
-
 // Type the mocked functions
 const mockGetGtmPickupPlaceFromStore = vi.mocked(getGtmPickupPlaceFromStore);
 const mockGetGtmPickupPlaceFromLastOrder = vi.mocked(getGtmPickupPlaceFromLastOrder);

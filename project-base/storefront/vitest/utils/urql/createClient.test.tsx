@@ -11,16 +11,6 @@ vi.mock('urql/fetcher', () => ({
     fetcher: vi.fn(() => mockRequestWithFetcher),
 }));
 
-vi.mock('next/config', () => ({
-    default: () => ({
-        serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/' },
-        publicRuntimeConfig: {
-            errorDebuggingLevel: 'no-debug',
-            domains: [{ url: 'https://test.ts/' }, { url: 'https://test.ts/' }],
-        },
-    }),
-}));
-
 const mockRedisClientGet = vi.fn((): string | null => null);
 const mockRedisClient = {
     get: mockRedisClientGet,
@@ -35,22 +25,25 @@ const QUERY_OBJECT = gql`
     }
 `;
 const OPERATION_NAME = 'NotificationBars';
+
+const mockDomainConfig = {
+    publicGraphqlEndpoint: 'https://test.ts/graphql/',
+    defaultLocale: 'en',
+    url: 'https://test.ts',
+    currencyCode: 'USD',
+    fallbackTimezone: 'UTC',
+    domainId: 1,
+    mapSetting: { latitude: 0, longitude: 0, zoom: 10 },
+    isLuigisBoxActive: false,
+    gtmId: '',
+    packeteryCountry: 'cz',
+    type: 'b2c' as any,
+};
+
 describe('createClient test', () => {
     afterEach(cleanup);
 
     test('created client (and URQL) do not filter out Redis cache directive on the client (in component)', async () => {
-        const mockDomainConfig = {
-            publicGraphqlEndpoint: 'https://test.ts/graphql/',
-            defaultLocale: 'en',
-            url: 'https://test.ts',
-            currencyCode: 'USD',
-            fallbackTimezone: 'UTC',
-            domainId: 1,
-            mapSetting: { latitude: 0, longitude: 0, zoom: 10 },
-            isLuigisBoxActive: false,
-            type: 'b2c' as any,
-        };
-
         const UrqlWrapper: FC = ({ children }) => {
             return (
                 <Provider
@@ -95,18 +88,6 @@ describe('createClient test', () => {
     });
 
     test('created client (and URQL) do not filter out Redis cache directive on the server', async () => {
-        const mockDomainConfig = {
-            publicGraphqlEndpoint: 'https://test.ts/graphql/',
-            defaultLocale: 'en',
-            url: 'https://test.ts',
-            currencyCode: 'USD',
-            fallbackTimezone: 'UTC',
-            domainId: 1,
-            mapSetting: { latitude: 0, longitude: 0, zoom: 10 },
-            isLuigisBoxActive: false,
-            type: 'b2c' as any,
-        };
-
         const client = createClient({
             t: () => 'foo' as any,
             ssrExchange: ssrExchange(),

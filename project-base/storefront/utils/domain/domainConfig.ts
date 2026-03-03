@@ -1,28 +1,11 @@
 import { getBaseUrlWithLocale, DEFAULT_LOCALE } from './domainUtils';
+import { DomainConfig, getPublicConfigProperty } from 'envConfig';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
-import { CustomerUserAreaEnum } from 'types/customer';
-import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
-const domainsConfig: DomainConfigType[] = getPublicConfigProperty('domains', []) as DomainConfigType[];
-const cdnDomain = getPublicConfigProperty('cdnDomain', '');
+const domainsConfig = getPublicConfigProperty('domains');
+const cdnDomain = getPublicConfigProperty('cdnDomain');
 
-export type DomainConfigType = {
-    url: string;
-    publicGraphqlEndpoint: string;
-    defaultLocale: string;
-    currencyCode: string;
-    fallbackTimezone: string;
-    domainId: number;
-    mapSetting: {
-        latitude: number;
-        longitude: number;
-        zoom: number;
-    };
-    gtmId?: string;
-    isLuigisBoxActive: boolean;
-    packeteryCountry?: string;
-    type: CustomerUserAreaEnum;
-};
+export type DomainConfigType = DomainConfig;
 
 export function getDomainConfig(context: GetServerSidePropsContext | NextPageContext): DomainConfigType {
     if (!context.req?.headers.host) {

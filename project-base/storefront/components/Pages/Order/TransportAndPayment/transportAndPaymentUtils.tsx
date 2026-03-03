@@ -1,4 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { getPublicConfigProperty } from 'envConfig';
 import {
     LastOrderQueryDocument,
     TypeLastOrderQuery,
@@ -25,7 +26,6 @@ import { getLastOrderPickupPlace, PICKUP_POINT_NOT_SET_ERROR_MESSAGE } from 'uti
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import { logException } from 'utils/errors/logException';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -48,7 +48,7 @@ const ErrorPopup = dynamic(
     },
 );
 
-const packeteryApiKey = getPublicConfigProperty('packeteryApiKey', '');
+const packeteryApiKey = getPublicConfigProperty('packeteryApiKey');
 
 export const usePaymentChangeInSelect = (changePaymentHandler: ChangePaymentInCart) => {
     const { payment: currentPayment, paymentGoPayBankSwift: currentPaymentGoPayBankSwift } = useCurrentCart();

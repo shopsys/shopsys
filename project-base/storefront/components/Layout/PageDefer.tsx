@@ -1,7 +1,7 @@
+import { getPublicConfigProperty } from 'envConfig';
 import { Suspense } from 'react';
-import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
-const shouldUseDefer = getPublicConfigProperty('shouldUseDefer', false);
+const shouldUseDefer = getPublicConfigProperty('shouldUseDefer');
 
 export const PageDefer: FC = ({ children }) => {
     if (shouldUseDefer) {
