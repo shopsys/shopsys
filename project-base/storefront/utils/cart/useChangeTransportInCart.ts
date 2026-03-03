@@ -9,6 +9,7 @@ import { useLatest } from 'utils/ui/useLatest';
 export type ChangeTransportInCart = (
     newTransportUuid: string | null,
     newPickupPlace: StoreOrPacketeryPoint | null,
+    options?: { suppressValidationErrors?: boolean },
 ) => Promise<TypeCartFragment | undefined | null>;
 
 export const useChangeTransportInCart = () => {
@@ -19,7 +20,7 @@ export const useChangeTransportInCart = () => {
 
     const gtmCart = useLatest(gtmCartInfo);
 
-    const changeTransportInCart: ChangeTransportInCart = async (newTransportUuid, newPickupPlace) => {
+    const changeTransportInCart: ChangeTransportInCart = async (newTransportUuid, newPickupPlace, options) => {
         const changeTransportResult = await changeTransportInCartMutation(
             {
                 input: {
@@ -28,7 +29,7 @@ export const useChangeTransportInCart = () => {
                     cartUuid,
                 },
             },
-            { additionalTypenames: ['dedup'] },
+            { additionalTypenames: ['dedup'], suppressValidationErrors: options?.suppressValidationErrors },
         );
 
         // EXTEND TRANSPORT MODIFICATIONS HERE

@@ -24,6 +24,7 @@ type MutationErrorConfig = {
     errorType: FlashMessageKeys;
     gtmOrigin: GtmMessageOriginType;
     validationFields?: string[];
+    suppressValidationErrors?: boolean;
 };
 
 const MUTATION_ERROR_CONFIG: Partial<Record<string, MutationErrorConfig>> = {
@@ -163,6 +164,12 @@ const handleErrorMessagesForMutation = (error: CombinedError, t: Translate, oper
     }
 
     const { userError } = parsedErrors;
+
+    // Silently suppress validation errors (e.g. transport weight limit exceeded when restoring from last order)
+    const suppressErrors = operation.context.suppressValidationErrors ?? config.suppressValidationErrors;
+    if (userError?.validation && suppressErrors) {
+        return;
+    }
 
     // Handle validation errors for configured fields
     if (userError?.validation && config.validationFields) {
