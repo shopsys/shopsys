@@ -42,7 +42,7 @@
              data-bs-placement="left"
              data-content-url="{{ url('admin_product_visibility', {productId: product.id}) }}"
         >
-            <button type="button" class="btn btn-link dropdown-toggle" data-bs-toggle="dropdown">
+            <button type="button" class="btn btn-link">
                 <span class="{{ visibilityClass }}">{{ ux_icon(visibilityIcon) }}</span>
                 <span class="{{ sellabilityClass }}">{{ ux_icon(sellabilityIcon) }}</span>
                 {{ 'Preview'|trans }}
