@@ -63,8 +63,6 @@ The storefront Next.js app only sets CSP because it's the only header that requi
 | Backend admin (dev) | `script-src`  | `http://cdnjs.cloudflare.com` | Allows protocol-relative elFinder script URLs resolved to `http://` on local HTTP     |
 | Backend admin (dev) | `default-src` | `http://cdnjs.cloudflare.com` | Allows protocol-relative elFinder stylesheet URLs resolved to `http://` on local HTTP |
 
-Storefront behavior relies on `script-src` being the last directive so appended `'unsafe-eval'` extends script policy.
-
 **Sanitization:**
 
 The CSP value is sanitized when saved in Admin (carriage return `\r` and line feed `\n` are normalized to spaces) to prevent HTTP response splitting attacks.
