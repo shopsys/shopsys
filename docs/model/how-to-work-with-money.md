@@ -77,7 +77,7 @@ Results of a division may be inexpressible with a finite decimal (e.g., 1 / 3 = 
 
 - scale of the result of `add` and `subtract` is the _maximal scale_ of both money values
 - scale of the result of `multiply` is the _sum of scales_ of both money values
-- scale of the result of `divide` must be _explicitly specified_, the last decimal place will be rounded to minimize the error
+- scale of the result of `divide` must be _explicitly specified_, the last decimal place will be rounded to minimize the error; dividing by zero throws a `\DomainException`
 
 !!! note
 
@@ -85,10 +85,11 @@ Results of a division may be inexpressible with a finite decimal (e.g., 1 / 3 = 
 
 ### Rounding
 
-You may use `Money::round(int $scale) : Money` method that rounds the amount of money up to `$scale` decimal places, it rounds 0.5 away from zero (making 1.5 into 2 and -1.5 into -2).
+You may use `Money::round(int $scale) : Money` method that rounds the amount of money to at most `$scale` decimal places, rounding 0.5 away from zero (making 1.5 into 2 and -1.5 into -2).
 This behavior is consistent with `PHP_ROUND_HALF_UP` rounding mode, which is the default mode for [the `round` function](http://php.net/manual/en/function.round.php).
 
-The scale of the result will always be equal to the provided `$scale`.
+The scale of the result is `min($scale, current_scale)` — rounding only reduces precision, it never pads the result with extra trailing zeros.
+For example, `Money::create('1.0')->round(6)` returns a value with scale 1 (`'1.0'`), not scale 6 (`'1.000000'`).
 
 ### Comparing
 

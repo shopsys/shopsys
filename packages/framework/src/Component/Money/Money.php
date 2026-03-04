@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Money;
 
+use Brick\Math\BigDecimal;
+use Brick\Math\Exception\MathException;
+use Brick\Math\RoundingMode;
+use DomainException;
 use InvalidArgumentException;
 use JsonSerializable;
-use Litipk\BigNumbers\Decimal;
-use Litipk\BigNumbers\Errors\BigNumbersError;
 use Override;
 use Shopsys\FrameworkBundle\Component\Money\Exception\InvalidNumericArgumentException;
-use function substr;
 
 class Money implements JsonSerializable
 {
-    protected function __construct(protected readonly Decimal $decimal)
+    protected function __construct(protected readonly BigDecimal $decimal)
     {
     }
 
@@ -44,8 +45,6 @@ class Money implements JsonSerializable
             );
         }
 
-        // Using Decimal::fromString as the Decimal::fromFloat has issues with specified scale
-        // See https://github.com/Litipk/php-bignumbers/pull/67 for details
         $decimal = static::createDecimal((string)$float, $scale);
 
         return new static($decimal);
@@ -58,10 +57,6 @@ class Money implements JsonSerializable
 
     public function getAmount(): string
     {
-        if ($this->decimal->isZero() && $this->decimal->isNegative()) {
-            return substr((string)$this->decimal, 1);
-        }
-
         return (string)$this->decimal;
     }
 
@@ -78,14 +73,14 @@ class Money implements JsonSerializable
 
     public function add(self $money): static
     {
-        $resultDecimal = $this->decimal->add($money->decimal);
+        $resultDecimal = $this->decimal->plus($money->decimal);
 
         return new static($resultDecimal);
     }
 
     public function subtract(self $money): static
     {
-        $resultDecimal = $this->decimal->sub($money->decimal);
+        $resultDecimal = $this->decimal->minus($money->decimal);
 
         return new static($resultDecimal);
     }
@@ -93,7 +88,7 @@ class Money implements JsonSerializable
     public function multiply(int|string $multiplier): static
     {
         $decimalMultiplier = self::createDecimal($multiplier);
-        $resultDecimal = $this->decimal->mul($decimalMultiplier);
+        $resultDecimal = $this->decimal->multipliedBy($decimalMultiplier);
 
         return new static($resultDecimal);
     }
@@ -102,26 +97,29 @@ class Money implements JsonSerializable
     {
         $decimalDivisor = self::createDecimal($divisor);
 
-        // Decimal internally ignores scale when number is zero
         if ($this->decimal->isZero()) {
             return $this->round($scale);
         }
 
-        $resultDecimal = $this->decimal->div($decimalDivisor, $scale);
+        if ($decimalDivisor->isZero()) {
+            throw new DomainException('Division by zero.');
+        }
+
+        $resultDecimal = $this->decimal->dividedBy($decimalDivisor, $scale, RoundingMode::HALF_UP);
 
         return new static($resultDecimal);
     }
 
     public function round(int $scale): static
     {
-        $decimal = $this->decimal->round($scale);
+        $decimal = $this->decimal->toScale(min($scale, $this->decimal->getScale()), RoundingMode::HALF_UP);
 
         return new static($decimal);
     }
 
     public function equals(self $money): bool
     {
-        return $this->decimal->equals($money->decimal);
+        return $this->decimal->isEqualTo($money->decimal);
     }
 
     /**
@@ -129,7 +127,7 @@ class Money implements JsonSerializable
      */
     public function compare(self $money): int
     {
-        return $this->decimal->comp($money->decimal);
+        return $this->decimal->compareTo($money->decimal);
     }
 
     public function isGreaterThan(self $money): bool
@@ -139,7 +137,7 @@ class Money implements JsonSerializable
 
     public function isGreaterThanOrEqualTo(self $money): bool
     {
-        return $this->decimal->isGreaterOrEqualTo($money->decimal);
+        return $this->decimal->isGreaterThanOrEqualTo($money->decimal);
     }
 
     public function isLessThan(self $money): bool
@@ -149,7 +147,7 @@ class Money implements JsonSerializable
 
     public function isLessThanOrEqualTo(self $money): bool
     {
-        return $this->decimal->isLessOrEqualTo($money->decimal);
+        return $this->decimal->isLessThanOrEqualTo($money->decimal);
     }
 
     public function isNegative(): bool
@@ -167,15 +165,25 @@ class Money implements JsonSerializable
         return $this->decimal->isZero();
     }
 
-    protected static function createDecimal(int|string $value, ?int $scale = null): Decimal
+    protected static function createDecimal(int|string $value, ?int $scale = null): BigDecimal
     {
-        if (is_int($value)) {
-            return Decimal::fromInteger($value);
+        if (is_string($value) && !preg_match('/^[+-]?(\d+(\.\d+)?)([eE][+-]?\d+)?$/', $value)) {
+            throw new InvalidNumericArgumentException($value, new InvalidArgumentException(sprintf('Invalid numeric value: "%s"', $value)));
+        }
+
+        if ($scale !== null && $scale < 0) {
+            throw new InvalidNumericArgumentException($value, new InvalidArgumentException(sprintf('Scale cannot be negative, got %d.', $scale)));
         }
 
         try {
-            return Decimal::fromString($value, $scale);
-        } catch (BigNumbersError | InvalidArgumentException $e) {
+            $decimal = BigDecimal::of($value);
+
+            if ($scale !== null) {
+                return $decimal->toScale($scale, RoundingMode::HALF_UP);
+            }
+
+            return $decimal;
+        } catch (MathException $e) {
             throw new InvalidNumericArgumentException($value, $e);
         }
     }

@@ -90,6 +90,7 @@
         "aws/aws-sdk-php": "^3.220.0",
         "barryvdh/elfinder-flysystem-driver": "^0.5",
         "becklyn/ordered-form-bundle": "^1.4",
+        "brick/math": "^0.12",
         "commerceguys/intl": "^2.0.0",
         "composer/composer": "^2.2.12",
         "cweagans/composer-patches": "^2.0",
@@ -128,7 +129,6 @@
         "league/flysystem-aws-s3-v3": "^3.12.2",
         "league/flysystem-google-cloud-storage": "^3.0",
         "league/iso3166": "^4.2.1",
-        "litipk/php-bignumbers": "^0.8.7",
         "nette/utils": "^4.0",
         "nikic/php-parser": "^5.1",
         "overblog/dataloader-bundle": "^1.1",
@@ -281,12 +281,6 @@
             }
         }
     },
-    "repositories": [
-        {
-            "type": "github",
-            "url": "https://github.com/bigcommerce/php-bignumbers"
-        }
-    ],
     "replace": {
         "shopsys/administration": "self.version",
         "shopsys/article-feed-luigis-box": "self.version",

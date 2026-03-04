@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 
+use Brick\Math\BigDecimal;
+use Brick\Math\RoundingMode;
 use Doctrine\ORM\EntityManagerInterface;
-use Litipk\BigNumbers\Decimal;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\DeletingNotAllowedToDeleteCurrencyException;
@@ -122,7 +123,7 @@ class CurrencyFacade
             if ($currency->getId() === $newDefaultCurrency->getId()) {
                 $newExchangeRate = Currency::DEFAULT_EXCHANGE_RATE;
             } else {
-                $newExchangeRate = Decimal::fromString($currency->getExchangeRate())->mul($coefficient);
+                $newExchangeRate = (string)BigDecimal::of($currency->getExchangeRate())->multipliedBy($coefficient);
             }
             $currency->setExchangeRate($newExchangeRate);
         }
@@ -175,12 +176,12 @@ class CurrencyFacade
         return $currenciesIndexedById;
     }
 
-    public function getExchangeRateForCurrencies(Currency $inputCurrency, Currency $outputCurrency): Decimal
+    public function getExchangeRateForCurrencies(Currency $inputCurrency, Currency $outputCurrency): BigDecimal
     {
-        $inputCurrencyExchangeRate = Decimal::fromString($inputCurrency->getExchangeRate());
-        $outputCurrencyExchangeRate = Decimal::fromString($outputCurrency->getExchangeRate());
+        $inputCurrencyExchangeRate = BigDecimal::of($inputCurrency->getExchangeRate());
+        $outputCurrencyExchangeRate = BigDecimal::of($outputCurrency->getExchangeRate());
 
-        return $inputCurrencyExchangeRate->div($outputCurrencyExchangeRate, 6);
+        return $inputCurrencyExchangeRate->dividedBy($outputCurrencyExchangeRate, 6, RoundingMode::HALF_UP);
     }
 
     /**

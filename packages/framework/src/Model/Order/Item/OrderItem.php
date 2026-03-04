@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
+use Brick\Math\BigDecimal;
+use Brick\Math\RoundingMode;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Litipk\BigNumbers\Decimal;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
@@ -160,7 +161,7 @@ class OrderItem
         $this->name = $name;
         $this->unitPriceWithoutVat = $price->getPriceWithoutVat();
         $this->unitPriceWithVat = $price->getPriceWithVat();
-        $this->vatPercent = Decimal::create($vatPercent, 6)->innerValue();
+        $this->vatPercent = (string)BigDecimal::of($vatPercent)->toScale(6, RoundingMode::HALF_UP);
         $this->quantity = $quantity;
         $this->type = $type;
         $this->unitName = $unitName;
@@ -304,7 +305,7 @@ class OrderItem
             $this->setTotalPrice(new Price($orderItemData->totalPriceWithoutVat, $orderItemData->totalPriceWithVat));
         }
 
-        $this->vatPercent = Decimal::create($orderItemData->vatPercent, 6)->innerValue();
+        $this->vatPercent = (string)BigDecimal::of($orderItemData->vatPercent)->toScale(6, RoundingMode::HALF_UP);
         $this->quantity = $orderItemData->quantity;
         $this->unitName = $orderItemData->unitName;
         $this->catnum = $orderItemData->catnum;

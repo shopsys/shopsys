@@ -309,9 +309,6 @@
     "league/mime-type-detection": {
         "version": "1.5.1"
     },
-    "litipk/php-bignumbers": {
-        "version": "0.8.6"
-    },
     "monolog/monolog": {
         "version": "1.25.1"
     },
