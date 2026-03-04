@@ -114,6 +114,10 @@ This is a balanced default: it preserves useful origin-level referrer data for e
 
 Note: browsers only honor this header when received over a valid HTTPS connection. In local development over HTTP, the header is present but ignored — so it won't interfere with the development setup.
 
+Limitation: without the `preload` directive and HSTS preload list registration, a very first HTTP visit can still be vulnerable to SSL stripping before the browser learns the HSTS policy.
+
+For highly security-oriented projects, consider enabling HSTS preload (`...; preload`) and registering the domain via `https://hstspreload.org/` (only after validating all preload requirements for the root domain and subdomains).
+
 ### X-XSS-Protection
 
 **In plain English:** Older browsers had a built-in XSS filter (XSS Auditor) that tried to detect and block attacks, but it was unreliable and could actually be exploited by attackers to break legitimate pages. Setting this to `0` turns it off. Modern browsers have removed it entirely (Chrome 78+, Edge 79+, Firefox) — CSP is the proper replacement.
