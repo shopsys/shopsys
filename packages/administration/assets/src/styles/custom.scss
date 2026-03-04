@@ -76,3 +76,7 @@
 .white-space-normal {
     white-space: normal !important;
 }
+
+.js-search-item.active {
+    background-color: var(--tblr-primary-lt);
+}
