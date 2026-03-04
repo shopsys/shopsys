@@ -8,13 +8,22 @@ msgid "Heureka XML feed settings"
 msgstr ""
 
 msgid "Heureka category"
-msgstr "Heureka category"
+msgstr ""
 
-msgid "Heureka.cz product feed"
-msgstr "Heureka.cz product feed"
+msgid "Heureka is not available for this domain locale"
+msgstr ""
+
+msgid "Heureka product feed"
+msgstr ""
+
+msgid "Heureka.cz category"
+msgstr ""
+
+msgid "Heureka.sk category"
+msgstr ""
 
 msgid "Maximum price per click"
-msgstr "Maximum price per click"
+msgstr ""
 
 msgid "Number of delivery days for out of stock products for Heureka XML feed"
 msgstr ""

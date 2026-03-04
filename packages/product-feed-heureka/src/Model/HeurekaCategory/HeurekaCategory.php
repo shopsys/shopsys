@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
 #[ORM\Table(name: 'heureka_category')]
+#[ORM\UniqueConstraint(name: 'uq_heureka_category_heureka_id_locale', columns: ['locale', 'heureka_id'])]
 #[ORM\Entity]
 class HeurekaCategory
 {
@@ -17,6 +18,7 @@ class HeurekaCategory
      */
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
 
     /**
@@ -36,13 +38,25 @@ class HeurekaCategory
      */
     #[ORM\JoinTable(name: 'heureka_category_categories')]
     #[ORM\JoinColumn(name: 'heureka_category_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'category_id', referencedColumnName: 'id', unique: true)]
+    #[ORM\InverseJoinColumn(name: 'category_id', referencedColumnName: 'id')]
     #[ORM\ManyToMany(targetEntity: Category::class)]
     protected $categories;
 
+    /**
+     * @var string
+     */
+    #[ORM\Column(type: 'string')]
+    protected $locale;
+
+    /**
+     * @var int
+     */
+    #[ORM\Column(type: 'integer')]
+    protected $heurekaId;
+
     public function __construct(HeurekaCategoryData $heurekaCategoryData)
     {
-        $this->id = $heurekaCategoryData->id;
+        $this->heurekaId = $heurekaCategoryData->heurekaId;
         $this->categories = new ArrayCollection($heurekaCategoryData->categories);
         $this->setData($heurekaCategoryData);
     }
@@ -57,6 +71,7 @@ class HeurekaCategory
     {
         $this->name = $heurekaCategoryData->name;
         $this->fullName = $heurekaCategoryData->fullName;
+        $this->locale = $heurekaCategoryData->locale;
     }
 
     /**
@@ -87,6 +102,14 @@ class HeurekaCategory
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeurekaId()
+    {
+        return $this->heurekaId;
     }
 
     /**

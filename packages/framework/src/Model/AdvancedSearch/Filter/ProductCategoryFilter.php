@@ -73,7 +73,6 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
                 return $padding . $category->getName();
             },
             'choice_value' => 'id',
-            'attr' => ['class' => 'js-autocomplete-selectbox'],
         ];
     }
 

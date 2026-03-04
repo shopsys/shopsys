@@ -71,28 +71,29 @@ class HeurekaFeedItemFactory
         $mainCategory = $this->categoryFacade->findProductMainCategoryByDomainId($product, $domainConfig->getId());
 
         if ($mainCategory !== null) {
-            return $this->findHeurekaCategoryFullNameByCategoryIdUsingCache($mainCategory->getId());
+            return $this->findHeurekaCategoryFullNameByCategoryIdUsingCache($mainCategory->getId(), $domainConfig->getLocale());
         }
 
         return null;
     }
 
-    protected function findHeurekaCategoryFullNameByCategoryIdUsingCache(int $categoryId): ?string
+    protected function findHeurekaCategoryFullNameByCategoryIdUsingCache(int $categoryId, string $locale): ?string
     {
-        $key = (string)$categoryId;
+        $key = $categoryId . '_' . $locale;
 
         return $this->inMemoryCache->getOrSaveValue(
             static::HEUREKA_CATEGORY_FULL_NAMES_CACHE_NAMESPACE,
             fn () => $this->findHeurekaCategoryFullNameByCategoryId(
                 $categoryId,
+                $locale,
             ),
             $key,
         );
     }
 
-    protected function findHeurekaCategoryFullNameByCategoryId(int $categoryId): ?string
+    protected function findHeurekaCategoryFullNameByCategoryId(int $categoryId, string $locale): ?string
     {
-        $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryId($categoryId);
+        $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryIdAndLocale($categoryId, $locale);
 
         return $heurekaCategory !== null ? $heurekaCategory->getFullName() : null;
     }

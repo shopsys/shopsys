@@ -1,2 +1,3 @@
 parameters:
-    shopsys.product_feed.heureka_bundle.heureka_category_feed_url: http://www.heureka.cz/direct/xml-export/shops/heureka-sekce.xml
+    shopsys.product_feed.heureka_bundle.heureka_category_feed_cz_url: https://www.heureka.cz/direct/xml-export/shops/heureka-sekce.xml
+    shopsys.product_feed.heureka_bundle.heureka_category_feed_sk_url: https://www.heureka.sk/direct/xml-export/shops/heureka-sekce.xml

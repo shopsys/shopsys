@@ -21,40 +21,46 @@ class HeurekaCategoryRepository
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory[]
      */
-    public function getAllIndexedById(): array
+    public function getAllIndexedByHeurekaId(string $locale): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('hc')
-            ->from(HeurekaCategory::class, 'hc', 'hc.id');
+            ->from(HeurekaCategory::class, 'hc', 'hc.heurekaId')
+            ->where('hc.locale = :locale')
+            ->setParameter('locale', $locale);
 
         return $queryBuilder->getQuery()
             ->execute();
     }
 
-    public function findByCategoryId(int $categoryId): ?HeurekaCategory
+    public function findByCategoryIdAndLocale(int $categoryId, string $locale): ?HeurekaCategory
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('hc')
             ->from(HeurekaCategory::class, 'hc')
             ->join('hc.categories', 'hcc')
-            ->andWhere('hcc = :categoriesId')
-            ->setParameter('categoriesId', $categoryId);
+            ->andWhere('hcc = :categoryId')
+            ->andWhere('hc.locale = :locale')
+            ->setParameter('categoryId', $categoryId)
+            ->setParameter('locale', $locale);
 
         return $queryBuilder->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function getOneById(int $id): HeurekaCategory
+    public function getOneByHeurekaIdAndLocale(int $heurekaId, string $locale): HeurekaCategory
     {
         $queryBuilder = $this->getHeurekaCategoryRepository()
             ->createQueryBuilder('hc')
-            ->andWhere('hc.id = :id')
-            ->setParameter('id', $id);
+            ->andWhere('hc.heurekaId = :heurekaId')
+            ->andWhere('hc.locale = :locale')
+            ->setParameter('heurekaId', $heurekaId)
+            ->setParameter('locale', $locale);
         $heurekaCategory = $queryBuilder->getQuery()->getOneOrNullResult();
 
         if ($heurekaCategory === null) {
             throw new HeurekaCategoryNotFoundException(
-                'Heureka category with ID ' . $id . ' does not exist.',
+                'Heureka category with ID ' . $heurekaId . ' and locale ' . $locale . ' does not exist.',
             );
         }
 

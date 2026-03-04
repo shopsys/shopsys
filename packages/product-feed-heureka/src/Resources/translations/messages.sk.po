@@ -10,8 +10,17 @@ msgstr "Nastavenia Heureka XML feedu"
 msgid "Heureka category"
 msgstr "Heureka kategória"
 
-msgid "Heureka.cz product feed"
-msgstr "Feed produktov pre Heureka.cz"
+msgid "Heureka is not available for this domain locale"
+msgstr "Heureka nie je dostupná pre tento jazyk domény"
+
+msgid "Heureka product feed"
+msgstr "Heureka produktový feed"
+
+msgid "Heureka.cz category"
+msgstr "Heureka.cz kategória"
+
+msgid "Heureka.sk category"
+msgstr "Heureka.sk kategória"
 
 msgid "Maximum price per click"
 msgstr "Maximálna cena za klik"

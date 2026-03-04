@@ -28,7 +28,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     #[Override]
     public function getFormLabel(): string
     {
-        return $this->translator->trans('Heureka.cz product feed');
+        return $this->translator->trans('Heureka product feed');
     }
 
     /**

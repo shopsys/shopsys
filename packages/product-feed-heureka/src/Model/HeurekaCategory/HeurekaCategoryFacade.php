@@ -20,18 +20,18 @@ class HeurekaCategoryFacade
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData[] $newHeurekaCategoriesData
      */
-    public function saveHeurekaCategories(array $newHeurekaCategoriesData): void
+    public function saveHeurekaCategories(array $newHeurekaCategoriesData, string $locale): void
     {
-        $existingHeurekaCategories = $this->heurekaCategoryRepository->getAllIndexedById();
+        $existingHeurekaCategories = $this->heurekaCategoryRepository->getAllIndexedByHeurekaId($locale);
 
         $this->removeOldHeurekaCategories($newHeurekaCategoriesData, $existingHeurekaCategories);
 
         foreach ($newHeurekaCategoriesData as $newHeurekaCategoryData) {
-            if (!array_key_exists($newHeurekaCategoryData->id, $existingHeurekaCategories)) {
+            if (!array_key_exists($newHeurekaCategoryData->heurekaId, $existingHeurekaCategories)) {
                 $newHeurekaCategory = $this->heurekaCategoryFactory->create($newHeurekaCategoryData);
                 $this->em->persist($newHeurekaCategory);
             } else {
-                $existingHeurekaCategory = $existingHeurekaCategories[$newHeurekaCategoryData->id];
+                $existingHeurekaCategory = $existingHeurekaCategories[$newHeurekaCategoryData->heurekaId];
                 $newHeurekaCategoryData->categories = $existingHeurekaCategory->getCategories();
                 $existingHeurekaCategory->edit($newHeurekaCategoryData);
             }
@@ -53,7 +53,7 @@ class HeurekaCategoryFacade
         $newHeurekaCategoriesIds = [];
 
         foreach ($newHeurekaCategoriesData as $newHeurekaCategoryData) {
-            $newHeurekaCategoriesIds[] = $newHeurekaCategoryData->id;
+            $newHeurekaCategoriesIds[] = $newHeurekaCategoryData->heurekaId;
         }
 
         $categoryIdsToDelete = array_diff($existingHeurekaCategoriesIds, $newHeurekaCategoriesIds);
@@ -63,15 +63,18 @@ class HeurekaCategoryFacade
         }
     }
 
-    public function changeHeurekaCategoryForCategoryId(int $categoryId, HeurekaCategory $heurekaCategory): void
-    {
-        $oldHeurekaCategoryByCategoryId = $this->heurekaCategoryRepository->findByCategoryId($categoryId);
+    public function changeHeurekaCategoryForCategoryId(
+        int $categoryId,
+        HeurekaCategory $heurekaCategory,
+        string $locale,
+    ): void {
+        $oldHeurekaCategoryByCategoryId = $this->heurekaCategoryRepository->findByCategoryIdAndLocale($categoryId, $locale);
 
         $category = $this->categoryRepository->getById($categoryId);
 
         if ($oldHeurekaCategoryByCategoryId === null) {
             $heurekaCategory->addCategory($category);
-        } elseif ($oldHeurekaCategoryByCategoryId->getId() !== $heurekaCategory->getId()) {
+        } elseif ($oldHeurekaCategoryByCategoryId->getHeurekaId() !== $heurekaCategory->getHeurekaId()) {
             $oldHeurekaCategoryByCategoryId->removeCategory($category);
             $heurekaCategory->addCategory($category);
         }
@@ -79,15 +82,14 @@ class HeurekaCategoryFacade
         $this->em->flush();
     }
 
-    public function findByCategoryId(
-        int $categoryId,
-    ): ?HeurekaCategory {
-        return $this->heurekaCategoryRepository->findByCategoryId($categoryId);
+    public function findByCategoryIdAndLocale(int $categoryId, string $locale): ?HeurekaCategory
+    {
+        return $this->heurekaCategoryRepository->findByCategoryIdAndLocale($categoryId, $locale);
     }
 
-    public function removeHeurekaCategoryForCategoryId(int $categoryId): void
+    public function removeHeurekaCategoryForCategoryId(int $categoryId, string $locale): void
     {
-        $heurekaCategory = $this->heurekaCategoryRepository->findByCategoryId($categoryId);
+        $heurekaCategory = $this->heurekaCategoryRepository->findByCategoryIdAndLocale($categoryId, $locale);
 
         if ($heurekaCategory === null) {
             return;
@@ -99,16 +101,16 @@ class HeurekaCategoryFacade
         $this->em->flush();
     }
 
-    public function getOneById(int $id): HeurekaCategory
+    public function getOneByHeurekaIdAndLocale(int $heurekaId, string $locale): HeurekaCategory
     {
-        return $this->heurekaCategoryRepository->getOneById($id);
+        return $this->heurekaCategoryRepository->getOneByHeurekaIdAndLocale($heurekaId, $locale);
     }
 
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory[]
      */
-    public function getAllIndexedById(): array
+    public function getAllIndexedByHeurekaId(string $locale): array
     {
-        return $this->heurekaCategoryRepository->getAllIndexedById();
+        return $this->heurekaCategoryRepository->getAllIndexedByHeurekaId($locale);
     }
 }
