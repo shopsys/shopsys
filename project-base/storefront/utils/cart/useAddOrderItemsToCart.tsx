@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
+import { SkeletonEnum } from 'types/skeletons';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
@@ -24,6 +25,7 @@ export const useAddOrderItemsToCart = () => {
     const [, addOrderItemsToCart] = useAddOrderItemsToCartMutation();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const updatePortalContent = useSessionStore((store) => store.updatePortalContent);
+    const updatePageLoadingState = useSessionStore((store) => store.updatePageLoadingState);
 
     const handleAddingItemsToCart = async (input: TypeAddOrderItemsToCartInput) => {
         const addOrderItemsToCartResponse = await addOrderItemsToCart({ input });
@@ -41,6 +43,7 @@ export const useAddOrderItemsToCart = () => {
             const notAddedProducts = newCart.modifications.multipleAddedProductModifications.notAddedProducts;
             const addedAllProducts = notAddedProducts.length === 0;
             if (addedAllProducts) {
+                updatePageLoadingState({ isPageLoading: true, redirectPageType: SkeletonEnum.Cart });
                 router.push(cartUrl);
             } else {
                 updatePortalContent(
