@@ -8,6 +8,7 @@ use Doctrine\Migrations\AbstractMigration;
 use Doctrine\Migrations\Version\MigrationFactory as DoctrineMigrationFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
+use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 
@@ -18,6 +19,7 @@ class MigrationFactory implements DoctrineMigrationFactory
         protected readonly Domain $domain,
         protected readonly EntityManagerInterface $entityManager,
         protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
+        protected readonly CdnFacade $cdnFacade,
     ) {
     }
 
@@ -36,6 +38,10 @@ class MigrationFactory implements DoctrineMigrationFactory
 
         if ($migration instanceof AdministratorLocalizationAwareInterface) {
             $migration->setAdministratorLocalizationFacade($this->administratorLocalizationFacade);
+        }
+
+        if ($migration instanceof CdnAwareInterface) {
+            $migration->setCdnFacade($this->cdnFacade);
         }
 
         return $migration;

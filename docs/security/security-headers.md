@@ -54,6 +54,8 @@ The storefront Next.js app only sets CSP because it's the only header that requi
 | `default-src`     | `'self' https: 'unsafe-inline' data:`                                                                                                                                   | Fallback for resource types without a dedicated directive (keeps current non-script behavior)         |
 | `script-src`      | `'self' 'unsafe-inline' https://www.googletagmanager.com *.usersnap.com https://widget.packeta.com https://cdnjs.cloudflare.com https://*.gopay.com https://*.gopay.cz` | Restricts script execution to same-origin and known third-party script providers used by the platform |
 
+When default `cspHeader` is seeded by migration `Version20260208091423`, `CDN_DOMAIN` (if configured) is appended to both `default-src` and `script-src`.
+
 **Development additions to CSP:**
 
 | Context             | Directive     | Added source/value            | Purpose                                                                               |

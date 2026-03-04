@@ -25,6 +25,11 @@ class CdnFacade
         return $this->cdnDomain ?? $domainConfig->getBaseUrl();
     }
 
+    public function getCdnDomain(): ?string
+    {
+        return $this->cdnDomain;
+    }
+
     public function replaceUrlsByCdnForAssets(?string $content): ?string
     {
         if ($content === null || $this->cdnDomain === null) {
