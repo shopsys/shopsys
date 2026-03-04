@@ -19,7 +19,7 @@ jobs:
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: '8.5'
-                    extensions: bcmath, gd, intl-74.2, pdo_pgsql, redis, pgsql, zip
+                    extensions: amqp, bcmath, gd, intl-74.2, pdo_pgsql, redis, pgsql, zip
                     tools: composer
             -   name: Install Composer dependencies
                 run: composer install --optimize-autoloader --no-interaction
