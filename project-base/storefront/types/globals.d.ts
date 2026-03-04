@@ -17,7 +17,7 @@ declare global {
     type SvgFC<P = object> = FC<P & SVGProps<SVGSVGElement>>;
 
     interface Window {
-        Packeta: {
+        Packeta?: {
             Viewport: {
                 element: null;
                 originalValue: null;

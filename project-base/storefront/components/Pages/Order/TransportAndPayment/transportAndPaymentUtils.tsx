@@ -28,9 +28,11 @@ import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import { logException } from 'utils/errors/logException';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPacketeryTransport, mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
 const PickupPlacePopup = dynamic(
     () => import('components/Blocks/Popup/PickupPlacePopup').then((component) => component.PickupPlacePopup),
@@ -68,7 +70,9 @@ export const useTransportChangeInSelect = (
     changeTransportHandler: ChangeTransportInCart,
     changePaymentHandler: ChangePaymentInCart,
 ) => {
-    const { defaultLocale } = useDomainConfig();
+    const { defaultLocale, packeteryCountry } = useDomainConfig();
+    const { t } = useTranslation();
+    const isPacketeryScriptLoadingRef = useRef(false);
     const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState(lastOrderPickupPlace);
     const clearPacketeryPickupPoint = usePersistStore((store) => store.clearPacketeryPickupPoint);
     const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
@@ -126,24 +130,50 @@ export const useTransportChangeInSelect = (
     };
 
     const openPacketeryPopup = (newTransport: TypeTransportWithAvailablePaymentsFragment) => {
-        // packeteryApiKey is available from module scope
-
         if (!packeteryApiKey.length) {
             logException('Packeta API key was not set');
             return;
         }
 
-        packeteryPick(
-            packeteryApiKey,
-            (packeteryPoint) => {
-                if (packeteryPoint) {
-                    const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
-                    setPacketeryPickupPoint(mappedPacketeryPoint);
-                    changeTransportHandler(newTransport.uuid, mappedPacketeryPoint);
-                }
-            },
-            { language: defaultLocale },
-        );
+        const pickWithPacketery = () => {
+            packeteryPick(
+                packeteryApiKey,
+                (packeteryPoint) => {
+                    if (packeteryPoint) {
+                        const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
+                        setPacketeryPickupPoint(mappedPacketeryPoint);
+                        changeTransportHandler(newTransport.uuid, mappedPacketeryPoint);
+                    }
+                },
+                { language: defaultLocale, country: packeteryCountry },
+            );
+        };
+
+        if (window.Packeta?.Widget.pick !== undefined) {
+            pickWithPacketery();
+            return;
+        }
+
+        if (isPacketeryScriptLoadingRef.current) {
+            return;
+        }
+
+        isPacketeryScriptLoadingRef.current = true;
+        const script = document.createElement('script');
+        script.src = 'https://widget.packeta.com/v6/www/js/library.js';
+        script.async = true;
+        document.body.appendChild(script);
+
+        script.onload = () => {
+            isPacketeryScriptLoadingRef.current = false;
+            pickWithPacketery();
+        };
+
+        script.onerror = () => {
+            isPacketeryScriptLoadingRef.current = false;
+            showErrorMessage(t('Failed to load Packeta widget. Please try again later.'));
+            logException('Packetery script failed to load');
+        };
     };
 
     const openPersonalPickupPopup = (newTransport: TypeTransportWithAvailablePaymentsFragment) => {

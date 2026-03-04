@@ -22,6 +22,7 @@ interface NextConfigPublicRuntimeConfig {
         };
         gtmId?: string;
         isLuigisBoxActive: boolean;
+        packeteryCountry?: string;
         type: string;
     }>;
     cdnDomain?: string;
