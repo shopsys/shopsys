@@ -2,11 +2,11 @@ import {
     changeSelectionOfPaymentByName,
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
+    waitForTransportAndPaymentToBeInteractive,
 } from './transportAndPaymentSupport';
 import { staticData, url } from 'fixtures/demodata';
 import { generateCreateOrderInput, generateCustomerRegistrationData } from 'fixtures/generators';
 import {
-    checkLoaderOverlayIsNotVisibleAfterTimePeriod,
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
@@ -47,11 +47,11 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(translations.transport.czechPost);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
+        waitForTransportAndPaymentToBeInteractive();
         changeSelectionOfTransportByName(translations.transport.ppl);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
+        waitForTransportAndPaymentToBeInteractive();
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
+        waitForTransportAndPaymentToBeInteractive();
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after first change and refresh', {
             blackout: [
@@ -62,14 +62,14 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         });
 
         changeSelectionOfTransportByName(translations.transport.ppl);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
+        waitForTransportAndPaymentToBeInteractive();
         chooseTransportPersonalCollectionAndStore(
             staticData.transport.personalCollection.storePardubice.name,
             translations.transport.personalCollection,
         );
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
+        waitForTransportAndPaymentToBeInteractive();
         changeSelectionOfPaymentByName(translations.payment.cash);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
+        waitForTransportAndPaymentToBeInteractive();
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after second change and refresh', {
             blackout: [

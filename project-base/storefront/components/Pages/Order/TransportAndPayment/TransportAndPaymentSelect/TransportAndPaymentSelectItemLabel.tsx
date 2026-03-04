@@ -19,6 +19,7 @@ type TransportAndPaymentSelectItemLabelProps = {
     image?: TypeImageFragment | null;
     pickupPlaceDetail?: StoreOrPacketeryPoint;
     isActive?: boolean;
+    disabled?: boolean;
     showChangeButton?: boolean;
     openPickupPlacePopup?: () => void;
 };
@@ -31,6 +32,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     image,
     pickupPlaceDetail,
     isActive,
+    disabled,
     showChangeButton,
     openPickupPlacePopup,
 }) => {
@@ -113,7 +115,8 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                     {showChangeButton && pickupPlaceDetail && (
                         <button
                             aria-haspopup="dialog"
-                            className="text-link-default hover:text-link-hovered cursor-pointer text-left text-xs underline hover:no-underline"
+                            className="text-link-default hover:text-link-hovered cursor-pointer text-left text-xs underline hover:no-underline disabled:pointer-events-none disabled:opacity-50"
+                            disabled={disabled}
                             tabIndex={0}
                             onClick={openPickupPlacePopup}
                         >

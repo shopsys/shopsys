@@ -36,13 +36,13 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     inputType === 'text-input' &&
                         'pointer-events-none top-2 text-sm peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:font-semibold peer-focus:top-2 peer-focus:text-sm peer-focus:font-normal',
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
-                        'text-input-placeholder-default peer-hover:text-input-placeholder-hovered peer-focus:text-input-placeholder-active peer-disabled:text-input-placeholder-disabled absolute left-3 z-[2] block transform-none peer-placeholder-shown:-translate-y-1/2 peer-focus:translate-none motion-safe:transition-all',
+                        'text-input-placeholder-default peer-hover:text-input-placeholder-hovered peer-focus:text-input-placeholder-active peer-disabled:text-input-placeholder-disabled absolute left-3 z-2 block transform-none peer-placeholder-shown:-translate-y-1/2 peer-focus:translate-none motion-safe:transition-all',
                     (inputType === 'checkbox' || inputType === 'radio') && [
                         'group relative flex w-full cursor-pointer items-center gap-2 text-sm font-semibold',
                         checked
                             ? 'text-link-default hover:text-link-hovered'
                             : 'text-input-text-default hover:text-input-text-hovered',
-                        disabled && 'text-input-text-disabled hover:text-input-text-disabled cursor-no-drop opacity-60',
+                        disabled && 'text-input-text-disabled hover:text-input-text-disabled cursor-no-drop opacity-50',
                     ],
                     inputType === 'checkbox' && [
                         '[&>a]:text-link-default [&>a]:hover:text-link-hovered [&>a]:focus:text-link-hovered [&>a]:active:text-link-hovered',

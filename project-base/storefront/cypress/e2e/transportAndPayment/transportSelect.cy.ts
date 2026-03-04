@@ -4,13 +4,13 @@ import {
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
     removeTransportSelectionUsingButton,
+    waitForTransportAndPaymentToBeInteractive,
 } from './transportAndPaymentSupport';
 import { goToNextOrderStep } from 'e2e/cart/cartSupport';
 import { checkEmptyCartTextIsVisible, checkTransportSelectionIsNotVisible } from 'e2e/order/orderSupport';
 import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
-    checkLoaderOverlayIsNotVisibleAfterTimePeriod,
     checkUrl,
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
@@ -33,7 +33,7 @@ describe('Transport Select Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(translations.transport.czechPost);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -53,7 +53,7 @@ describe('Transport Select Tests', () => {
             staticData.transport.personalCollection.storeOstrava.name,
             translations.transport.personalCollection,
         );
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -68,11 +68,11 @@ describe('Transport Select Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(translations.transport.czechPost);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        waitForTransportAndPaymentToBeInteractive();
         changeSelectionOfTransportByName(translations.transport.czechPost);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        waitForTransportAndPaymentToBeInteractive();
         changeSelectionOfTransportByName(translations.transport.ppl);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting, deselecting, and selecting again', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -87,7 +87,7 @@ describe('Transport Select Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(translations.transport.czechPost);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -97,7 +97,7 @@ describe('Transport Select Tests', () => {
         });
 
         changeSelectionOfTransportByName(translations.transport.czechPost);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -112,7 +112,7 @@ describe('Transport Select Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(translations.transport.czechPost);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -122,7 +122,7 @@ describe('Transport Select Tests', () => {
         });
 
         removeTransportSelectionUsingButton();
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -180,7 +180,7 @@ describe('Transport Select Tests', () => {
 
         goToNextOrderStep();
         changeSelectionOfTransportByName(translations.transport.ppl);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page with enough products', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },

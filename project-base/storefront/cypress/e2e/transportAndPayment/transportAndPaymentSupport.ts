@@ -19,6 +19,24 @@ export const changeSelectionOfPaymentByName = (paymentName: string) => {
     cy.getByTID([TIDs.pages_order_payment, TIDs.pages_order_selectitem_label_name]).contains(paymentName).click('left');
 };
 
+const checkSectionHasEnabledRadios = (sectionTid: TIDs) => {
+    cy.getByTID([sectionTid], { timeout: 10000 }).find('input[type="radio"]').its('length').should('be.gte', 1);
+    cy.getByTID([sectionTid], { timeout: 10000 }).find('input[type="radio"]:enabled').its('length').should('be.gte', 1);
+};
+
+export const waitForTransportAndPaymentToBeInteractive = () => {
+    cy.getByTID([TIDs.loader_overlay], { timeout: 10000 }).should('not.exist');
+    checkSectionHasEnabledRadios(TIDs.pages_order_transport);
+
+    cy.get('body').then(($body) => {
+        const paymentSectionSelector = `[data-tid=${TIDs.pages_order_payment}]`;
+
+        if ($body.find(paymentSectionSelector).length > 0) {
+            checkSectionHasEnabledRadios(TIDs.pages_order_payment);
+        }
+    });
+};
+
 export const changeDayOfWeekInTransportsApiResponse = (dayOfWeek: number) => {
     cy.intercept('POST', '/graphql/TransportsFullQuery', (req) => {
         req.reply((response) => {
