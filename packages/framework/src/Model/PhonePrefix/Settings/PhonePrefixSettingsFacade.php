@@ -44,4 +44,13 @@ class PhonePrefixSettingsFacade
 
         $this->em->flush();
     }
+
+    /**
+     * @param int[] $domainIds
+     * @return int[]
+     */
+    public function filterOutConfiguredDomainIds(array $domainIds): array
+    {
+        return $this->phonePrefixRepository->filterOutConfiguredDomainIds($domainIds);
+    }
 }

@@ -39,4 +39,21 @@ class PhonePrefixRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * @param int[] $domainIds
+     * @return int[]
+     */
+    public function filterOutConfiguredDomainIds(array $domainIds): array
+    {
+        $configuredDomains = $this->getRepository()
+            ->createQueryBuilder('pp')
+            ->indexBy('pp', 'pp.domainId')
+            ->where('pp.domainId IN (:domainIds)')
+            ->setParameter('domainIds', $domainIds)
+            ->getQuery()
+            ->getResult();
+
+        return array_values(array_diff($domainIds, array_keys($configuredDomains)));
+    }
 }
