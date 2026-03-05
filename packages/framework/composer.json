@@ -107,6 +107,8 @@
         "symfony/property-info": "^7.4",
         "symfony/rate-limiter": "^7.4",
         "symfony/security-bundle": "^7.4",
+        "symfony/security-core": "^7.4",
+        "symfony/security-http": "^7.4",
         "symfony/serializer": "^7.4",
         "symfony/service-contracts": "^3.5",
         "symfony/ux-icons": "^2.22",
