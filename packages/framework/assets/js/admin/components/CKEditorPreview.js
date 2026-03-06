@@ -4,6 +4,10 @@ export default class CKEditorPreview {
     constructor($ckEditorPreview) {
         const $editButton = $ckEditorPreview.children('.js-cke-preview-edit');
 
+        $ckEditorPreview.on('click', 'a', e => {
+            e.preventDefault();
+        });
+
         $ckEditorPreview.click(() => {
             $ckEditorPreview.hide();
             $editButton.hide();
