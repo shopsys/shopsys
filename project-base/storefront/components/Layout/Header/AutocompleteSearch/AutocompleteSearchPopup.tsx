@@ -47,8 +47,8 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
     const isWithResults = !!(
         articlesSearch?.length ||
         brandSearch?.length ||
-        categoriesSearch?.totalCount ||
-        productsSearch?.totalCount
+        categoriesSearch?.edges?.length ||
+        productsSearch?.edges?.length
     );
 
     const showSearchResults = !showFavorites;
