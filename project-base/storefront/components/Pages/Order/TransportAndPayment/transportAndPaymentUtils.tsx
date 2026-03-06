@@ -323,6 +323,7 @@ export const useLoadTransportAndPaymentFromLastOrder = (
             const newCart = await changeTransportInCart(
                 lastOrderData?.lastOrder?.transport.uuid ?? null,
                 lastOrderPickupPlace,
+                { suppressValidationErrors: true },
             );
             const successfullyChangedTransport = newCart?.transport?.uuid === lastOrderData?.lastOrder?.transport.uuid;
             const successfullyChangedPickupPlace =

@@ -80,3 +80,29 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         });
     });
 });
+
+describe('Last Order Transport Overweight Tests', { retries: { runMode: 0 } }, () => {
+    beforeEach(() => {
+        initializePersistStoreInLocalStorageToDefaultValues();
+
+        const registrationInput = generateCustomerRegistrationData('commonCustomer');
+        cy.registerAsNewUser(registrationInput);
+        cy.addProductToCartForTest();
+        cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+        cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
+        cy.createOrder(generateCreateOrderInput(registrationInput.email));
+        cy.addProductToCartForTest(staticData.products.helloKitty.uuid);
+        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid);
+    });
+
+    it('[Last Order Overweight] should show no toast and keep Czech post unavailable when restored transport exceeds weight limit', function () {
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
+
+        cy.getByTID([TIDs.toast_info]).should('not.exist');
+        cy.getByTID([TIDs.toast_error]).should('not.exist');
+        cy.getByTID([TIDs.pages_order_transport, TIDs.pages_order_selectitem_label_name]).should(
+            'not.contain',
+            translations.transport.czechPost,
+        );
+    });
+});
