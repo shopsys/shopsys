@@ -14,12 +14,12 @@ type ProductDetailParametersSectionProps = {
 
 const renderParameterValues = (parameter: TypeParameterFragment) =>
     parameter.values.map((value, index) => (
-        <span key={value.uuid} className="inline-flex items-center">
-            {index > 0 && ' | '}
-            <ColorPreview className="mr-1" colorIcon={value.colorIcon} rgbHex={value.rgbHex} />
+        <div key={value.uuid} className="inline-flex items-center gap-1">
+            {index > 0 && <span>|</span>}
+            <ColorPreview colorIcon={value.colorIcon} rgbHex={value.rgbHex} />
             {value.text}
             {parameter.unit?.name && ` ${parameter.unit.name}`}
-        </span>
+        </div>
     ));
 
 export const ProductDetailParametersSection = ({ parameters, sectionRef }: ProductDetailParametersSectionProps) => {
@@ -65,10 +65,12 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
                                             <span className="h6 leading-5">{parameter.name}</span>
                                         </Cell>
 
-                                        <Cell className="flex flex-col gap-1 px-5 py-2.5 text-sm lg:block">
+                                        <Cell className="flex flex-col gap-1 px-5 py-2.5 text-sm lg:flex-row">
                                             <span className="h6 leading-5 lg:hidden">{parameter.name}</span>
 
-                                            {renderParameterValues(parameter)}
+                                            <div className="inline-flex flex-wrap gap-1">
+                                                {renderParameterValues(parameter)}
+                                            </div>
                                         </Cell>
                                     </Row>
                                 ))}
@@ -90,10 +92,12 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
                                             <span className="h6 leading-5">{parameter.name}</span>
                                         </Cell>
 
-                                        <Cell className="flex flex-col gap-1 px-5 py-2.5 text-sm lg:block">
+                                        <Cell className="flex flex-col gap-1 px-5 py-2.5 text-sm lg:flex-row">
                                             <span className="h6 leading-5 lg:hidden">{parameter.name}</span>
 
-                                            {renderParameterValues(parameter)}
+                                            <div className="inline-flex flex-wrap gap-1">
+                                                {renderParameterValues(parameter)}
+                                            </div>
                                         </Cell>
                                     </Row>
                                 ))}
