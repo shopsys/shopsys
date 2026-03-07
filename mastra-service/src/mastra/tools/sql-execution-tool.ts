@@ -40,6 +40,8 @@ export const sqlExecutionTool = createTool({
       query_timeout: 60000,
     });
 
+    let finalQuery = inputData.sql.trim();
+
     try {
       // Security validation: Only SELECT queries
       let trimmedQuery = inputData.sql.trim();
@@ -74,14 +76,15 @@ export const sqlExecutionTool = createTool({
       }
 
       // Ensure LIMIT clause (max 500)
-      let finalQuery = inputData.sql.trim();
-      if (!trimmedQuery.includes('limit')) {
-        finalQuery += ' LIMIT 500';
+      finalQuery = finalQuery.replace(/;+\s*$/, '');
+
+      if (!/\blimit\b/i.test(finalQuery)) {
+        finalQuery = `${finalQuery} LIMIT 500`;
       } else {
         // Verify LIMIT is not greater than 500
-        const limitMatch = finalQuery.match(/LIMIT\s+(\d+)/i);
-        if (limitMatch && parseInt(limitMatch[1]) > 500) {
-          finalQuery = finalQuery.replace(/LIMIT\s+\d+/i, 'LIMIT 500');
+        const limitMatch = finalQuery.match(/\bLIMIT\s+(\d+)\b/i);
+        if (limitMatch && parseInt(limitMatch[1], 10) > 500) {
+          finalQuery = finalQuery.replace(/\bLIMIT\s+\d+\b/i, 'LIMIT 500');
         }
       }
 
@@ -99,7 +102,7 @@ export const sqlExecutionTool = createTool({
         success: false,
         data: [],
         rowCount: 0,
-        executedQuery: inputData.sql,
+        executedQuery: finalQuery,
         error: err instanceof Error ? err.message : String(err),
       };
     } finally {
