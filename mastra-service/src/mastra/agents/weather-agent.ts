@@ -4,6 +4,12 @@ import { LibSQLStore } from '@mastra/libsql';
 import { weatherTool } from '../tools/weather-tool';
 import { scorers } from '../scorers/weather-scorer';
 
+const weatherModel = process.env.MASTRA_WEATHER_MODEL;
+
+if (!weatherModel) {
+  throw new Error('Missing required environment variable: MASTRA_WEATHER_MODEL');
+}
+
 export const weatherAgent = new Agent({
   name: 'Weather Agent',
   instructions: `
@@ -20,7 +26,7 @@ export const weatherAgent = new Agent({
 
       Use the weatherTool to fetch current weather data.
 `,
-  model: 'openai/gpt-4o-mini',
+  model: weatherModel,
   tools: { weatherTool },
   scorers: {
     toolCallAppropriateness: {

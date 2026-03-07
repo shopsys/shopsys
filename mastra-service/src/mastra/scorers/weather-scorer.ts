@@ -3,6 +3,8 @@ import { createToolCallAccuracyScorerCode } from '@mastra/evals/scorers/code';
 import { createCompletenessScorer } from '@mastra/evals/scorers/code';
 import { createScorer } from '@mastra/core/scores';
 
+const scorerModel = process.env.MASTRA_SCORER_MODEL || 'google/gemini-2.0-flash-lite';
+
 export const toolCallAppropriatenessScorer = createToolCallAccuracyScorerCode({
   expectedTool: 'weatherTool',
   strictMode: false,
@@ -17,7 +19,7 @@ export const translationScorer = createScorer({
     'Checks that non-English location names are translated and used correctly',
   type: 'agent',
   judge: {
-    model: 'openai/gpt-4o-mini',
+    model: scorerModel,
     instructions:
       'You are an expert evaluator of translation quality for geographic locations. ' +
       'Determine whether the user text mentions a non-English location and whether the assistant correctly uses an English translation of that location. ' +

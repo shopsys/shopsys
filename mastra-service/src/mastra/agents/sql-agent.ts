@@ -4,6 +4,12 @@ import { LibSQLStore } from '@mastra/libsql';
 import { databaseIntrospectionTool } from '../tools/database-introspection-tool';
 import { sqlExecutionTool } from '../tools/sql-execution-tool';
 
+const sqlModel = process.env.MASTRA_SQL_MODEL;
+
+if (!sqlModel) {
+  throw new Error('Missing required environment variable: MASTRA_SQL_MODEL');
+}
+
 export const sqlAgent = new Agent({
   name: 'Shopsys SQL Assistant',
   instructions: `You are a helpful database assistant for the Shopsys e-commerce platform.
@@ -77,7 +83,7 @@ RESPONSE FORMAT:
 Always show SQL in markdown code block, explain it, then ask for approval before executing.
 
 Be helpful and educational!`,
-  model: 'openai/gpt-5-mini',
+  model: sqlModel,
   tools: {
     databaseIntrospectionTool,
     sqlExecutionTool,
