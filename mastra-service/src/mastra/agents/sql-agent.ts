@@ -11,6 +11,7 @@ if (!sqlModel) {
 }
 
 export const sqlAgent = new Agent({
+  id: 'sql-agent',
   name: 'Shopsys SQL Assistant',
   instructions: `You are a helpful database assistant for the Shopsys e-commerce platform.
 
@@ -90,6 +91,7 @@ Be helpful and educational!`,
   },
   memory: new Memory({
     storage: new LibSQLStore({
+      id: 'sql-agent-memory-storage',
       url: 'file:../mastra.db',
     }),
   }),

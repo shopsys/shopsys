@@ -22,7 +22,7 @@ export const sqlExecutionTool = createTool({
   id: 'sql-execution',
   description: 'Executes SELECT queries on Shopsys database with safety validation',
   inputSchema: z.object({
-    sql: z.string().describe('SQL query to execute')
+    sql: z.string().describe('SQL query to execute'),
   }),
   outputSchema: z.object({
     success: z.boolean(),
@@ -31,7 +31,7 @@ export const sqlExecutionTool = createTool({
     executedQuery: z.string(),
     error: z.string().optional(),
   }),
-  execute: async ({ context }) => {
+  execute: async (inputData) => {
     const connectionString = getShopsysConnectionString();
     const client = new Client({
       connectionString,
@@ -42,7 +42,7 @@ export const sqlExecutionTool = createTool({
 
     try {
       // Security validation: Only SELECT queries
-      let trimmedQuery = context.sql.trim();
+      let trimmedQuery = inputData.sql.trim();
       // Remove leading parentheses (common in UNION queries)
       while (trimmedQuery.startsWith('(')) {
         trimmedQuery = trimmedQuery.substring(1).trim();
@@ -68,13 +68,13 @@ export const sqlExecutionTool = createTool({
       ];
 
       for (const pattern of forbiddenPatterns) {
-        if (pattern.test(context.sql)) {
+        if (pattern.test(inputData.sql)) {
           throw new Error(`Forbidden SQL command detected: ${pattern.source}`);
         }
       }
 
       // Ensure LIMIT clause (max 500)
-      let finalQuery = context.sql.trim();
+      let finalQuery = inputData.sql.trim();
       if (!trimmedQuery.includes('limit')) {
         finalQuery += ' LIMIT 500';
       } else {
@@ -99,11 +99,11 @@ export const sqlExecutionTool = createTool({
         success: false,
         data: [],
         rowCount: 0,
-        executedQuery: context.sql,
+        executedQuery: inputData.sql,
         error: err instanceof Error ? err.message : String(err),
       };
     } finally {
       await client.end();
     }
-  }
+  },
 });

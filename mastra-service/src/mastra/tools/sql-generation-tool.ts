@@ -5,15 +5,15 @@ export const schemaFormatterTool = createTool({
   id: 'schema-formatter',
   description: 'Formats database schema into readable description for SQL generation',
   inputSchema: z.object({
-    schema: z.any().describe('Database schema metadata from introspection')
+    schema: z.any().describe('Database schema metadata from introspection'),
   }),
   outputSchema: z.object({
     formattedSchema: z.string().describe('Human-readable schema description'),
     tableCount: z.number().describe('Number of tables'),
     guidelines: z.string().describe('SQL generation guidelines for Shopsys'),
   }),
-  execute: async ({ context }) => {
-    const { tables, columns, relationships, rowCounts } = context.schema;
+  execute: async (inputData) => {
+    const { tables, columns, relationships, rowCounts } = inputData.schema;
 
     let description = 'AVAILABLE TABLES:\n';
     for (const table of tables) {
@@ -67,5 +67,5 @@ PERFORMANCE:
       tableCount: tables.length,
       guidelines,
     };
-  }
+  },
 });

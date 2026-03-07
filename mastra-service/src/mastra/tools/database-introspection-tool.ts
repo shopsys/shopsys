@@ -34,7 +34,7 @@ export const databaseIntrospectionTool = createTool({
     columns: z.array(z.any()),
     relationships: z.array(z.any()),
     indexes: z.array(z.any()),
-    rowCounts: z.record(z.number()),
+    rowCounts: z.record(z.string(), z.number()),
   }),
   execute: async () => {
     const connectionString = getShopsysConnectionString();
@@ -79,7 +79,7 @@ export const databaseIntrospectionTool = createTool({
       const columnsResult = await client.query(columnsQuery, [WHITELISTED_TABLES]);
 
       // Filter out sensitive columns
-      const filteredColumns = columnsResult.rows.filter(col => {
+      const filteredColumns = columnsResult.rows.filter((col: { table_name: string; column_name: string }) => {
         const excludedForTable = EXCLUDED_COLUMNS[col.table_name] || [];
         return !excludedForTable.includes(col.column_name);
       });

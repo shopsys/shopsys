@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import { createToolCallAccuracyScorerCode } from '@mastra/evals/scorers/code';
-import { createCompletenessScorer } from '@mastra/evals/scorers/code';
-import { createScorer } from '@mastra/core/scores';
+import { createScorer } from '@mastra/core/evals';
+import { createCompletenessScorer, createToolCallAccuracyScorerCode } from '@mastra/evals/scorers/prebuilt';
+import { getAssistantMessageFromRunOutput, getUserMessageFromRunInput } from '@mastra/evals/scorers/utils';
 
 const scorerModel = process.env.MASTRA_SCORER_MODEL || 'google/gemini-2.0-flash-lite';
 
 export const toolCallAppropriatenessScorer = createToolCallAccuracyScorerCode({
-  expectedTool: 'weatherTool',
+  expectedTool: 'get-weather',
   strictMode: false,
 });
 
@@ -14,6 +14,7 @@ export const completenessScorer = createCompletenessScorer();
 
 // Custom LLM-judged scorer: evaluates if non-English locations are translated appropriately
 export const translationScorer = createScorer({
+  id: 'translation-quality',
   name: 'Translation Quality',
   description:
     'Checks that non-English location names are translated and used correctly',
@@ -28,8 +29,8 @@ export const translationScorer = createScorer({
   },
 })
   .preprocess(({ run }) => {
-    const userText = (run.input?.inputMessages?.[0]?.content as string) || '';
-    const assistantText = (run.output?.[0]?.content as string) || '';
+    const userText = getUserMessageFromRunInput(run.input) || '';
+    const assistantText = getAssistantMessageFromRunOutput(run.output) || '';
     return { userText, assistantText };
   })
   .analyze({
