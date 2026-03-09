@@ -14,8 +14,8 @@ if (file_exists(__DIR__ . '/../../../parameters_monorepo.yaml')) {
 require $projectRootDirectory . '/vendor/symfony/dotenv/Dotenv.php';
 (new Dotenv())->bootEnv(dirname(__DIR__) . '/.env');
 
-$CDN_API_KEY = $_ENV['CDN_API_KEY'] ?? null;
-$CDN_API_SALT = $_ENV['CDN_API_SALT'] ?? null;
+$CDN_API_KEY = $_ENV['CDN_API_KEY'] ?? '';
+$CDN_API_SALT = $_ENV['CDN_API_SALT'] ?? '';
 $CDN_DOMAIN = $_ENV['CDN_DOMAIN'] ?? '';
 $CDN_RESIZE_DISABLE = isEnvTruthy($_ENV['CDN_RESIZE_DISABLE'] ?? false);
 
@@ -41,7 +41,7 @@ if ($width === 0 && $height === 0) {
     exit();
 }
 
-if ($CDN_DOMAIN === '' || $CDN_API_KEY === null || $CDN_API_SALT === null) {
+if ($CDN_DOMAIN === '' || $CDN_API_KEY === '' || $CDN_API_SALT === '') {
     # see https://docs.imgproxy.net/usage/processing
     $imgProxyInternalUrl = $_ENV['IMG_PROXY_INTERNAL_URL'] ?? 'http://img-proxy:8080';
     $webserverInternalUrl = $_ENV['WEBSERVER_INTERNAL_URL'] ?? 'http://webserver:8080';
