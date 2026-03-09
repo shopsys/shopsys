@@ -9,7 +9,7 @@ use NinjaMutex\Mutex;
 
 class MutexFactory
 {
-    protected const MUTEX_CRON_NAME = 'cron';
+    protected const string MUTEX_CRON_NAME = 'cron';
 
     /**
      * @var \NinjaMutex\Mutex[]

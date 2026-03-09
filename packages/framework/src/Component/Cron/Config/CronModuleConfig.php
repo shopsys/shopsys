@@ -11,9 +11,9 @@ use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class CronModuleConfig implements CronTimeInterface
 {
-    public const DEFAULT_INSTANCE_NAME = 'default';
-    public const RUN_EVERY_MIN_DEFAULT = 5;
-    public const TIMEOUT_ITERATED_CRON_SEC_DEFAULT = 240;
+    public const string DEFAULT_INSTANCE_NAME = 'default';
+    public const int RUN_EVERY_MIN_DEFAULT = 5;
+    public const int TIMEOUT_ITERATED_CRON_SEC_DEFAULT = 240;
 
     protected string $instanceName;
 

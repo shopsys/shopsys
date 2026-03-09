@@ -3,6 +3,13 @@ parameters:
         default:
             run_every_min: 5
             timeout_iterated_cron_sec: 240
+            stop_on_failure: true
+        service:
+            stop_on_failure: false
+        export:
+            stop_on_failure: false
+        gopay:
+            stop_on_failure: false
 
 services:
     _defaults:

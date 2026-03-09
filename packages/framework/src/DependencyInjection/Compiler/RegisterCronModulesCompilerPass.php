@@ -46,7 +46,7 @@ class RegisterCronModulesCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * @param array<string, array{run_every_min: int|null, timeout_iterated_cron_sec: int|null}> $cronInstances
+     * @param array<string, array{run_every_min?: int|null, timeout_iterated_cron_sec?: int|null, stop_on_failure?: bool}> $cronInstances
      * @return array{run_every_min: int, timeout_iterated_cron_sec: int}
      */
     private function getInstanceConfig(array $cronInstances, string $instanceName): array

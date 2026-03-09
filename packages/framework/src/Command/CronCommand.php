@@ -6,8 +6,8 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use DateTimeZone;
 use NinjaMutex\Lock\LockInterface;
+use NinjaMutex\Mutex;
 use Override;
-use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Command\Exception\CronIsLockedException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
@@ -17,9 +17,11 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Process\Process;
 
 #[AsCommand(
     name: 'shopsys:cron',
@@ -46,31 +48,39 @@ class CronCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addOption(self::OPTION_LIST, null, InputOption::VALUE_NONE, 'List all Service commands')
-            ->addOption(self::OPTION_MODULE, null, InputOption::VALUE_OPTIONAL, 'Service ID')
+            ->addOption(
+                self::OPTION_LIST,
+                null,
+                InputOption::VALUE_NONE,
+                'List all Service commands',
+            )
+            ->addOption(
+                self::OPTION_MODULE,
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Run only specific module (service ID)',
+            )
             ->addOption(
                 self::OPTION_INSTANCE_NAME,
                 null,
                 InputOption::VALUE_REQUIRED,
-                'specific cron instance identifier',
+                'Specific cron instance identifier',
             )
             ->addOption(
                 self::OPTION_RUN_ALL_SERIALLY,
                 null,
                 InputOption::VALUE_NONE,
-                'run all crons serially (this is not safe to run in production environment)',
+                'Run all cron jobs serially (this is not safe to run in production environment)',
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $optionList = $input->getOption(self::OPTION_LIST);
         $optionInstanceName = $input->getOption(self::OPTION_INSTANCE_NAME);
         $optionRunAllSerially = $input->getOption(self::OPTION_RUN_ALL_SERIALLY);
+        $optionModule = $input->getOption(self::OPTION_MODULE);
 
         if ($optionList === true) {
             $this->listAllCronModulesSortedByServiceId($input, $output, $this->cronFacade);
@@ -85,9 +95,7 @@ class CronCommand extends Command
         }
 
         if ($optionRunAllSerially === true) {
-            foreach ($this->cronFacade->getAll() as $cronModuleConfig) {
-                $this->cronFacade->runModuleByServiceId($cronModuleConfig->getServiceId());
-            }
+            $this->runAllModulesSerially($output);
 
             return Command::SUCCESS;
         }
@@ -95,15 +103,26 @@ class CronCommand extends Command
         $instanceName = $optionInstanceName ?? $this->chooseInstance($input, $output);
 
         try {
-            $this->runCron($input, $this->cronFacade, $this->mutexFactory, $instanceName);
+            $mutex = $this->acquireInstanceMutex($instanceName);
         } catch (CronIsLockedException $e) {
             $output->writeln($e->getMessage());
 
             return Command::SUCCESS;
-        } catch (CronCommandException $e) {
-            $output->writeln($e->getMessage());
+        }
 
-            return Command::FAILURE;
+        try {
+            if ($optionModule !== null) {
+                $this->cronFacade->runSingleModule(
+                    $optionModule,
+                    $instanceName,
+                    $this->getProcessOutputCallback($output),
+                    $output->isDecorated(),
+                );
+            } else {
+                $this->runModulesInInstance($instanceName, $output);
+            }
+        } finally {
+            $mutex->releaseLock();
         }
 
         return Command::SUCCESS;
@@ -138,13 +157,6 @@ class CronCommand extends Command
      */
     protected function getCronCommands(array $cronModuleConfigs, bool $includeInstance = false): array
     {
-        uasort(
-            $cronModuleConfigs,
-            function (CronModuleConfig $cronModuleConfigA, CronModuleConfig $cronModuleConfigB) {
-                return strcmp($cronModuleConfigA->getServiceId(), $cronModuleConfigB->getServiceId());
-            },
-        );
-
         $commands = [];
 
         foreach ($cronModuleConfigs as $cronModuleConfig) {
@@ -165,26 +177,9 @@ class CronCommand extends Command
         return $commands;
     }
 
-    protected function runCron(
-        InputInterface $input,
-        CronFacade $cronFacade,
-        MutexFactory $mutexFactory,
-        string $instanceName,
-    ): void {
-        $requestedModuleServiceId = $input->getOption(self::OPTION_MODULE);
-        $runAllModules = $requestedModuleServiceId === null;
-        $cronInstances = $this->parameterBag->get('cron_instances');
-        $instanceRunEveryMin = $cronInstances[$instanceName]['run_every_min'] ?? CronModuleConfig::RUN_EVERY_MIN_DEFAULT;
-
-        if ($instanceRunEveryMin < 0 || $instanceRunEveryMin > 30) {
-            $instanceRunEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT;
-        }
-
-        if ($runAllModules) {
-            $cronFacade->scheduleModulesByTime($this->dateTimeHelper->getCurrentRoundedTimeForIntervalAndTimezone($instanceRunEveryMin, $this->getCronTimeZone()));
-        }
-
-        $mutex = $mutexFactory->getPrefixedCronMutex($instanceName);
+    protected function acquireInstanceMutex(string $instanceName): Mutex
+    {
+        $mutex = $this->mutexFactory->getPrefixedCronMutex($instanceName);
 
         if (!$mutex->acquireLock(0)) {
             throw new CronIsLockedException(
@@ -192,12 +187,64 @@ class CronCommand extends Command
             );
         }
 
-        if ($runAllModules) {
-            $cronFacade->runScheduledModulesForInstance($instanceName);
-        } else {
-            $cronFacade->runModuleByServiceId($requestedModuleServiceId);
+        return $mutex;
+    }
+
+    protected function getInstanceRunEveryMin(string $instanceName): int
+    {
+        $cronInstances = $this->parameterBag->get('cron_instances');
+        $instanceRunEveryMin = $cronInstances[$instanceName]['run_every_min'] ?? CronModuleConfig::RUN_EVERY_MIN_DEFAULT;
+
+        if ($instanceRunEveryMin < 0 || $instanceRunEveryMin > 30) {
+            return CronModuleConfig::RUN_EVERY_MIN_DEFAULT;
         }
-        $mutex->releaseLock();
+
+        return $instanceRunEveryMin;
+    }
+
+    protected function runModulesInInstance(
+        string $instanceName,
+        OutputInterface $output,
+    ): void {
+        $instanceRunEveryMin = $this->getInstanceRunEveryMin($instanceName);
+
+        $this->cronFacade->scheduleModulesByTime(
+            $this->dateTimeHelper->getCurrentRoundedTimeForIntervalAndTimezone($instanceRunEveryMin, $this->getCronTimeZone()),
+        );
+
+        $this->cronFacade->runScheduledModulesForInstance(
+            $instanceName,
+            $this->getProcessOutputCallback($output),
+            $output->isDecorated(),
+        );
+    }
+
+    protected function runAllModulesSerially(OutputInterface $output): void
+    {
+        foreach ($this->cronFacade->getAll() as $cronModuleConfig) {
+            $this->cronFacade->runSingleModule(
+                $cronModuleConfig->getServiceId(),
+                $cronModuleConfig->getInstanceName(),
+                $this->getProcessOutputCallback($output),
+                $output->isDecorated(),
+            );
+        }
+    }
+
+    /**
+     * @return callable(string, string): void
+     */
+    protected function getProcessOutputCallback(OutputInterface $output): callable
+    {
+        return static function (string $type, string $buffer) use ($output): void {
+            if ($type === Process::ERR && $output instanceof ConsoleOutputInterface) {
+                $output->getErrorOutput()->write($buffer, false, OutputInterface::OUTPUT_RAW);
+
+                return;
+            }
+
+            $output->write($buffer, false, OutputInterface::OUTPUT_RAW);
+        };
     }
 
     protected function chooseInstance(InputInterface $input, OutputInterface $output): string

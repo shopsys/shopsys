@@ -106,7 +106,9 @@ class CronModuleFacade
     public function markCronAsFailed(CronModuleConfig $cronModuleConfig): void
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
-        $lastCronDuration = $this->clock->now()->getTimestamp() - $cronModule->getLastStartedAt()->getTimestamp();
+        $startedAt = $cronModule->getLastStartedAt() ?? $this->clock->now();
+        $finishedAt = $this->clock->now();
+        $lastCronDuration = max(0, $finishedAt->getTimestamp() - $startedAt->getTimestamp());
 
         /**
          * We want to avoid flushing the whole identity map (using EntityManager::flush())
@@ -130,7 +132,7 @@ class CronModuleFacade
             [
                 'errorStatus' => CronModule::CRON_STATUS_ERROR,
                 'serviceId' => $cronModuleConfig->getServiceId(),
-                'now' => $this->clock->now()->format('Y-m-d H:i:s'),
+                'now' => $finishedAt->format('Y-m-d H:i:s'),
                 'lastDuration' => $lastCronDuration,
             ],
         );
@@ -141,8 +143,8 @@ class CronModuleFacade
             [
                 'cronModuleId' => $cronModule->getServiceId(),
                 'status' => CronModule::CRON_STATUS_ERROR,
-                'startedAt' => $cronModule->getLastStartedAt()->format('Y-m-d H:i:s'),
-                'finishedAt' => $this->clock->now()->format('Y-m-d H:i:s'),
+                'startedAt' => $startedAt->format('Y-m-d H:i:s'),
+                'finishedAt' => $finishedAt->format('Y-m-d H:i:s'),
                 'duration' => $lastCronDuration,
             ],
         );

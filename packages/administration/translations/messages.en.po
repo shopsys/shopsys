@@ -376,6 +376,9 @@ msgstr ""
 msgid "Content-Security-Policy header setting"
 msgstr ""
 
+msgid "Continues on failure"
+msgstr ""
+
 msgid "Convert values associated with parameter"
 msgstr ""
 
@@ -1856,6 +1859,9 @@ msgid "Special price"
 msgstr ""
 
 msgid "Status"
+msgstr ""
+
+msgid "Stops on first failure"
 msgstr ""
 
 msgid "Store"

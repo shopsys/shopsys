@@ -197,7 +197,12 @@ class DefaultController extends AdminBaseController
 
         $cronListGrid->setTitle(t('Cron overview (%instanceName%)', ['%instanceName%' => $instanceName]));
 
-        $cronListGrid->setTheme('@ShopsysAdministration/content/default/cronListGrid.html.twig');
+        $cronListGrid->setTheme(
+            '@ShopsysAdministration/content/default/cronListGrid.html.twig',
+            [
+                'stopOnFailure' => $this->cronFacade->shouldInstanceStopOnFailure($instanceName),
+            ],
+        );
 
         return $cronListGrid->createView();
     }

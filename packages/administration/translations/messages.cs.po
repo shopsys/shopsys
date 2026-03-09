@@ -376,6 +376,9 @@ msgstr "Hlavička Content-Security-Policy"
 msgid "Content-Security-Policy header setting"
 msgstr "Nastavení hlavičky Content-Security-Policy"
 
+msgid "Continues on failure"
+msgstr "Pokračuje při chybě"
+
 msgid "Convert values associated with parameter"
 msgstr "Převeďte hodnoty spojené s parametrem"
 
@@ -1857,6 +1860,9 @@ msgstr "Speciální cena"
 
 msgid "Status"
 msgstr "Stav"
+
+msgid "Stops on first failure"
+msgstr "Zastaví se při první chybě"
 
 msgid "Store"
 msgstr "Prodejna"
