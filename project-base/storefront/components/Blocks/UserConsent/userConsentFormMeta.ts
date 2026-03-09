@@ -1,8 +1,11 @@
 import { UseFormReturn } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const useUserConsentForm = (): [UseFormReturn<UserConsentFormType>, UserConsentFormType] => {
     const userConsent = usePersistStore((store) => store.userConsent);
@@ -19,28 +22,16 @@ export const useUserConsentForm = (): [UseFormReturn<UserConsentFormType>, UserC
     return [formProviderMethods, defaultValues];
 };
 
-type UserConsentFormMeta = {
-    formName: string;
-    fields: {
-        [key in keyof UserConsentFormType]: {
-            name: key;
-        };
-    };
-};
+export const useUserConsentFormMeta = (): FormMeta<UserConsentFormType> => {
+    const { t } = useTranslation();
 
-export const useUserConsentFormMeta = (): UserConsentFormMeta => {
     return {
         formName: 'user-consent-form',
-        fields: {
-            marketing: {
-                name: 'marketing' as const,
-            },
-            preferences: {
-                name: 'preferences' as const,
-            },
-            statistics: {
-                name: 'statistics' as const,
-            },
-        },
+        messages: {},
+        fields: createFields<UserConsentFormType>({
+            marketing: t('Marketing'),
+            preferences: t('Preferences'),
+            statistics: t('Statistics'),
+        }),
     };
 };

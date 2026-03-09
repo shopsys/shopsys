@@ -18,7 +18,7 @@ export const BillingAddress: FC<{ companyCustomer: boolean }> = ({ companyCustom
     const { canManageCompanyData } = useAuthorization();
 
     const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
-    const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
+    const formMeta = useCustomerChangeProfileFormMeta();
     const { setValue, getValues } = formProviderMethods;
 
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
@@ -46,7 +46,6 @@ export const BillingAddress: FC<{ companyCustomer: boolean }> = ({ companyCustom
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.street.name}
-                render={(textInput) => <FormLine>{textInput}</FormLine>}
                 textInputProps={{
                     label: formMeta.fields.street.label,
                     required: true,
@@ -60,8 +59,8 @@ export const BillingAddress: FC<{ companyCustomer: boolean }> = ({ companyCustom
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-3"
                     name={formMeta.fields.city.name}
-                    render={(textInput) => <FormLine className="col-span-3">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.city.label,
                         required: true,
@@ -73,8 +72,8 @@ export const BillingAddress: FC<{ companyCustomer: boolean }> = ({ companyCustom
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-start-4"
                     name={formMeta.fields.postcode.name}
-                    render={(textInput) => <FormLine className="col-start-4">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.postcode.label,
                         required: true,

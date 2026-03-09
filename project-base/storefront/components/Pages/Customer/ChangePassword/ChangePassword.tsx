@@ -1,21 +1,18 @@
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import {
     useChangePasswordForm,
     useChangePasswordFormMeta,
 } from 'components/Pages/Customer/ChangePassword/changePasswordFormMeta';
 import { useChangePasswordMutation } from 'graphql/requests/customer/mutations/ChangePasswordMutation.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { SubmitHandler, FormProvider } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { ChangePasswordFormType } from 'types/form';
-import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
+import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { clearForm } from 'utils/forms/clearForm';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type ChangePasswordProps = {
@@ -28,8 +25,25 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
     const [formProviderMethods, defaultValues] = useChangePasswordForm({
         ...currentCustomerUser,
     });
-    const formMeta = useChangePasswordFormMeta(formProviderMethods);
+    const formMeta = useChangePasswordFormMeta();
     const isSubmitting = formProviderMethods.formState.isSubmitting;
+
+    const handleError = useErrorHandler({
+        form: formProviderMethods,
+        customMessage: formMeta.messages.error,
+        customHandlers: {
+            'invalid-account-or-password': () => {
+                formProviderMethods.setError('oldPassword', { message: t('The current password is incorrect') });
+
+                const input = document.getElementsByName('oldPassword')[0] as HTMLInputElement | undefined;
+
+                if (input) {
+                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    input.focus();
+                }
+            },
+        },
+    });
 
     const onSubmitChangePasswordFormHandler: SubmitHandler<ChangePasswordFormType> = async (
         changePasswordFormData,
@@ -56,24 +70,7 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
             clearForm(changePasswordResult.error, formProviderMethods, defaultValues);
         }
 
-        if (changePasswordResult.error !== undefined) {
-            const { applicationError } = getUserFriendlyErrors(changePasswordResult.error, t);
-
-            if (applicationError !== undefined) {
-                if (applicationError.type === 'invalid-account-or-password') {
-                    formProviderMethods.setError('oldPassword', { message: t('The current password is incorrect') });
-
-                    const input = document.getElementsByName('oldPassword')[0] as HTMLInputElement | undefined;
-
-                    if (input) {
-                        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        input.focus();
-                    }
-                }
-            } else {
-                showErrorMessage(formMeta.messages.error, GtmMessageOriginType.other);
-            }
-        }
+        handleError(changePasswordResult.error);
     };
 
     return (
@@ -85,14 +82,16 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
             </p>
 
             <FormProvider {...formProviderMethods}>
-                <Form onSubmit={formProviderMethods.handleSubmit(onSubmitChangePasswordFormHandler)}>
+                <Form
+                    formName={formMeta.formName}
+                    onSubmit={formProviderMethods.handleSubmit(onSubmitChangePasswordFormHandler)}
+                >
                     <FormContentWrapper>
                         <FormBlockWrapper className="border-b-0">
                             <PasswordInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.oldPassword.name}
-                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                                 passwordInputProps={{
                                     label: formMeta.fields.oldPassword.label,
                                     autoComplete: 'current-password',
@@ -104,27 +103,23 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
                                 <PasswordInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
+                                    gridClassName="col-span-2"
                                     name={formMeta.fields.newPassword.name}
                                     passwordInputProps={{
                                         label: formMeta.fields.newPassword.label,
                                         autoComplete: 'new-password',
                                     }}
-                                    render={(passwordInput) => (
-                                        <FormLine className="col-span-2">{passwordInput}</FormLine>
-                                    )}
                                 />
 
                                 <PasswordInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
+                                    gridClassName="col-span-2"
                                     name={formMeta.fields.newPasswordConfirm.name}
                                     passwordInputProps={{
                                         label: formMeta.fields.newPasswordConfirm.label,
                                         autoComplete: 'new-password-confirm',
                                     }}
-                                    render={(passwordInput) => (
-                                        <FormLine className="col-span-2">{passwordInput}</FormLine>
-                                    )}
                                 />
                             </FormColumn>
                         </FormBlockWrapper>

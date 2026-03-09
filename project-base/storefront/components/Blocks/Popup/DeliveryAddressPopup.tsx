@@ -22,7 +22,6 @@ import { DeliveryAddressFormType } from 'types/form';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
-import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -49,7 +48,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
             value: deliveryAddress?.country.code ?? '',
         },
     });
-    const formMeta = useDeliveryAddressFormMeta(formProviderMethods);
+    const formMeta = useDeliveryAddressFormMeta();
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
     const { setValue } = formProviderMethods;
 
@@ -121,20 +120,18 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
         showSuccessMessage(t('Your delivery address has been created'));
     };
 
-    useScrollToFirstError(formMeta.formName, formProviderMethods);
-
     return (
         <Popup className="vl:w-auto w-11/12 lg:w-4/5" contentClassName="overflow-y-auto" title={t('Delivery address')}>
             <FormProvider {...formProviderMethods}>
-                <Form onSubmit={formProviderMethods.handleSubmit(deliveryAddressHandler)}>
+                <Form formName={formMeta.formName} onSubmit={formProviderMethods.handleSubmit(deliveryAddressHandler)}>
                     <FormContentWrapper>
                         <FormBlockWrapper>
                             <FormColumn>
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
+                                    gridClassName="col-span-2"
                                     name={formMeta.fields.firstName.name}
-                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.firstName.label,
                                         required: true,
@@ -146,8 +143,8 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
+                                    gridClassName="col-span-2"
                                     name={formMeta.fields.lastName.name}
-                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.lastName.label,
                                         required: true,
@@ -161,8 +158,8 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
+                                    gridClassName="col-span-2"
                                     name={formMeta.fields.telephone.name}
-                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.telephone.label,
                                         required: true,
@@ -176,7 +173,6 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.companyName.name}
-                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     label: formMeta.fields.companyName.label,
                                     type: 'text',
@@ -188,7 +184,6 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.street.name}
-                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     label: formMeta.fields.street.label,
                                     required: true,
@@ -201,8 +196,8 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
+                                    gridClassName="col-span-3"
                                     name={formMeta.fields.city.name}
-                                    render={(textInput) => <FormLine className="col-span-3">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.city.label,
                                         required: true,
@@ -214,8 +209,8 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
+                                    gridClassName="col-start-4"
                                     name={formMeta.fields.postcode.name}
-                                    render={(textInput) => <FormLine className="col-start-4">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.postcode.label,
                                         required: true,

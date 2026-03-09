@@ -3,9 +3,10 @@ import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validatePassword, validatePasswordConfirm, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import { ReactElement } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
@@ -27,55 +28,29 @@ export const useRegistrationAfterOrderForm = (): [
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-type RegistrationAfterOrderFormMetaType = {
-    formName: string;
-    fields: {
-        [key in keyof RegistrationAfterOrderFormType]: {
-            name: key;
-            label: string | ReactElement;
-            errorMessage: string | undefined;
-        };
-    };
-};
-
-export const useRegistrationAfterOrderFormMeta = (
-    formProviderMethods: UseFormReturn<RegistrationAfterOrderFormType>,
-): RegistrationAfterOrderFormMetaType => {
+export const useRegistrationAfterOrderFormMeta = (): FormMeta<RegistrationAfterOrderFormType> => {
     const { t } = useTranslation();
     const [{ data: settingsData }] = useSettingsQuery();
     const termsAndConditionUrl = settingsData?.settings?.termsAndConditionsArticleUrl;
-    const errors = formProviderMethods.formState.errors;
-
     return {
         formName: 'registration-after-order-form',
-        fields: {
-            password: {
-                name: 'password' as const,
-                label: t('Password'),
-                errorMessage: errors.password?.message,
-            },
-            passwordConfirm: {
-                name: 'passwordConfirm' as const,
-                label: t('Password again'),
-                errorMessage: errors.passwordConfirm?.message,
-            },
-            privacyPolicy: {
-                name: 'privacyPolicy' as const,
-                label: (
-                    <Trans
-                        defaultTrans="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
-                        i18nKey="I agree with terms and conditions and privacy policy"
-                        components={{
-                            lnk1: termsAndConditionUrl ? (
-                                <Link className="inline text-sm" href={termsAndConditionUrl} target="_blank" />
-                            ) : (
-                                <span className={linkPlaceholderTwClass} />
-                            ),
-                        }}
-                    />
-                ),
-                errorMessage: errors.privacyPolicy?.message,
-            },
-        },
+        messages: {},
+        fields: createFields<RegistrationAfterOrderFormType>({
+            password: t('Password'),
+            passwordConfirm: t('Password again'),
+            privacyPolicy: (
+                <Trans
+                    defaultTrans="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
+                    i18nKey="I agree with terms and conditions and privacy policy"
+                    components={{
+                        lnk1: termsAndConditionUrl ? (
+                            <Link className="inline text-sm" href={termsAndConditionUrl} target="_blank" />
+                        ) : (
+                            <span className={linkPlaceholderTwClass} />
+                        ),
+                    }}
+                />
+            ),
+        }),
     };
 };

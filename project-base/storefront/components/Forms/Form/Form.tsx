@@ -1,6 +1,7 @@
 import { FormHTMLAttributes, KeyboardEvent, SubmitEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<
@@ -10,6 +11,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 >;
 
 type FormProps = NativeProps & {
+    formName: string;
     preventEnterSubmission?: boolean;
 };
 
@@ -19,10 +21,12 @@ export const Form: FC<FormProps> = ({
     children,
     className,
     tid,
+    formName,
     preventEnterSubmission = false,
     onKeyDown,
 }) => {
     const formProviderMethods = useFormContext();
+
     const controlledOnSubmitHandler = (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -44,6 +48,8 @@ export const Form: FC<FormProps> = ({
 
         onKeyDown?.(event);
     };
+
+    useScrollToFirstError(formName, formProviderMethods);
 
     return (
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions

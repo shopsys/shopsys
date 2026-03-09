@@ -14,7 +14,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 export const ContactInformationContent: FC = () => {
     const { t } = useTranslation();
     const [formProviderMethods] = useContactInformationForm();
-    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const formMeta = useContactInformationFormMeta();
     const { goToPreviousStepFromContactInformationPage } = useContactInformationPageNavigation();
     const { createOrder } = useCreateOrder(formProviderMethods, formMeta);
 
@@ -27,6 +27,7 @@ export const ContactInformationContent: FC = () => {
             <FormProvider {...formProviderMethods}>
                 <Form
                     preventEnterSubmission
+                    formName={formMeta.formName}
                     tid={TIDs.contact_information_form}
                     onSubmit={formProviderMethods.handleSubmit(createOrder)}
                 >

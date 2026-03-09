@@ -2,6 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { validateNewPassword, validateNewPasswordConfirm } from 'components/Forms/validationRules';
 import { UseFormReturn } from 'react-hook-form';
 import { NewPasswordFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
@@ -26,44 +28,17 @@ export const useRecoveryPasswordForm = (): [UseFormReturn<NewPasswordFormType>, 
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-type NewPasswordFormMetaType = {
-    formName: string;
-    messages: {
-        error: string;
-        success: string;
-    };
-    fields: {
-        [key in keyof NewPasswordFormType]: {
-            name: key;
-            label: string;
-            errorMessage: string | undefined;
-        };
-    };
-};
-
-export const useRecoveryPasswordFormMeta = (
-    formProviderMethods: UseFormReturn<NewPasswordFormType>,
-): NewPasswordFormMetaType => {
+export const useRecoveryPasswordFormMeta = (): FormMeta<NewPasswordFormType, { error: string; success: string }> => {
     const { t } = useTranslation();
-    const errors = formProviderMethods.formState.errors;
-
     return {
         formName: 'new-password-form',
         messages: {
             error: t('An error occurred while changing your password'),
             success: t('Your password has been changed successfully'),
         },
-        fields: {
-            newPassword: {
-                name: 'newPassword' as const,
-                label: t('New password'),
-                errorMessage: errors.newPassword?.message,
-            },
-            newPasswordConfirm: {
-                name: 'newPasswordConfirm' as const,
-                label: t('New password again'),
-                errorMessage: errors.newPasswordConfirm?.message,
-            },
-        },
+        fields: createFields<NewPasswordFormType>({
+            newPassword: t('New password'),
+            newPasswordConfirm: t('New password again'),
+        }),
     };
 };

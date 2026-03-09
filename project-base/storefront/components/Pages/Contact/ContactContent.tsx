@@ -4,8 +4,6 @@ import { MailSecondaryIcon } from 'components/Basic/Icon/MailSecondaryIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
-import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
@@ -25,7 +23,7 @@ export const ContactContent: FC = () => {
     const { t } = useTranslation();
     const [isSuccess, setIsSuccess] = useState(false);
     const [formProviderMethods, defaultValues] = useContactForm();
-    const formMeta = useContactFormMeta(formProviderMethods);
+    const formMeta = useContactFormMeta();
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const [, contactForm] = useContactFormMutation();
     const handleError = useErrorHandler({
@@ -81,14 +79,16 @@ export const ContactContent: FC = () => {
                         />
 
                         <FormProvider {...formProviderMethods}>
-                            <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
+                            <Form
+                                formName={formMeta.formName}
+                                onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}
+                            >
                                 <FormContentWrapper>
                                     <FormBlockWrapper>
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
                                             name={formMeta.fields.name.name}
-                                            render={(textInput) => <FormLine>{textInput}</FormLine>}
                                             textInputProps={{
                                                 label: formMeta.fields.name.label,
                                                 required: true,
@@ -101,7 +101,6 @@ export const ContactContent: FC = () => {
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
                                             name={formMeta.fields.email.name}
-                                            render={(textInput) => <FormLine>{textInput}</FormLine>}
                                             textInputProps={{
                                                 label: formMeta.fields.email.label,
                                                 required: true,
@@ -114,7 +113,6 @@ export const ContactContent: FC = () => {
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
                                             name={formMeta.fields.message.name}
-                                            render={(textarea) => <FormLine>{textarea}</FormLine>}
                                             textareaProps={{
                                                 label: formMeta.fields.message.label,
                                                 required: true,
@@ -126,7 +124,6 @@ export const ContactContent: FC = () => {
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
                                             name={formMeta.fields.privacyPolicy.name}
-                                            render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
                                             checkboxProps={{
                                                 label: formMeta.fields.privacyPolicy.label,
                                                 required: true,

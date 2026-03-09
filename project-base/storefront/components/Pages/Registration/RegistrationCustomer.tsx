@@ -9,7 +9,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 export const RegistrationCustomer: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<RegistrationFormType>();
-    const formMeta = useRegistrationFormMeta(formProviderMethods);
+    const formMeta = useRegistrationFormMeta();
 
     return (
         <fieldset className="bg-background-more rounded-t-xl">

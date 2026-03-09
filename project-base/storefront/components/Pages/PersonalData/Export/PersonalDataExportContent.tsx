@@ -3,7 +3,6 @@ import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
@@ -27,7 +26,7 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
     const [isSuccess, setIsSuccess] = useState(false);
     const [, personalDataExport] = usePersonalDataRequestMutation();
     const [formProviderMethods] = usePersonalDataExportForm();
-    const formMeta = usePersonalDataExportFormMeta(formProviderMethods);
+    const formMeta = usePersonalDataExportFormMeta();
     const handleError = useErrorHandler({
         form: formProviderMethods,
         customMessage: formMeta.messages.error,
@@ -79,6 +78,7 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                         <FormProvider {...formProviderMethods}>
                             <Form
                                 className="flex w-full justify-center"
+                                formName={formMeta.formName}
                                 onSubmit={formProviderMethods.handleSubmit(onPersonalDataExportHandler)}
                             >
                                 <FormContentWrapper>
@@ -87,7 +87,6 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
                                             name={formMeta.fields.email.name}
-                                            render={(textInput) => <FormLine>{textInput}</FormLine>}
                                             textInputProps={{
                                                 label: formMeta.fields.email.label,
                                                 required: true,

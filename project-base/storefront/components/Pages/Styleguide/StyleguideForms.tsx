@@ -37,7 +37,7 @@ const StyleguideFormExample: FC = () => {
 
     return (
         <FormProvider {...formProviderMethods}>
-            <Form onSubmit={formProviderMethods.handleSubmit(onValidForm, onInvalidForm)}>
+            <Form formName="example-form" onSubmit={formProviderMethods.handleSubmit(onValidForm, onInvalidForm)}>
                 <FormContentWrapper>
                     <FormBlockWrapper>
                         <FormHeading>Example form</FormHeading>

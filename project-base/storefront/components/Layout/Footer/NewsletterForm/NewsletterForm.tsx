@@ -2,8 +2,6 @@ import { useNewsletterForm, useNewsletterFormMeta } from './newsletterFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
-import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 import { useNewsletterSubscribeMutation } from 'graphql/requests/newsletterSubscription/mutations/NewsletterSubscribeMutation.generated';
@@ -19,7 +17,7 @@ export const NewsletterForm: FC = () => {
     const { t } = useTranslation();
     const [, subscribeToNewsletter] = useNewsletterSubscribeMutation();
     const [formProviderMethods, defaultValues] = useNewsletterForm();
-    const formMeta = useNewsletterFormMeta(formProviderMethods);
+    const formMeta = useNewsletterFormMeta();
     const handleError = useErrorHandler({
         form: formProviderMethods,
         customMessage: formMeta.messages.error,
@@ -48,6 +46,7 @@ export const NewsletterForm: FC = () => {
                 <FormProvider {...formProviderMethods}>
                     <Form
                         className="grid grid-cols-3 items-start gap-2 lg:gap-3"
+                        formName={formMeta.formName}
                         onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}
                     >
                         <div className="col-span-2">
@@ -55,7 +54,6 @@ export const NewsletterForm: FC = () => {
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.email.name}
-                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     'aria-label': t('To sign up for newsletter, enter', { ns: 'accessibility' }),
                                     inputSize: 'small',
@@ -72,7 +70,6 @@ export const NewsletterForm: FC = () => {
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.privacyPolicy.name}
-                                render={(checkbox) => <ChoiceFormLine className="mb-0">{checkbox}</ChoiceFormLine>}
                                 checkboxProps={{
                                     label: formMeta.fields.privacyPolicy.label,
                                     required: true,

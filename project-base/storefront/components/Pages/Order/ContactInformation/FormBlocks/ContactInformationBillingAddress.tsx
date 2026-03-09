@@ -21,7 +21,7 @@ export const ContactInformationBillingAddress: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
-    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const formMeta = useContactInformationFormMeta();
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
     const { canManageCompanyData } = useAuthorization();
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
@@ -48,7 +48,6 @@ export const ContactInformationBillingAddress: FC = () => {
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.street.name}
-                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                     textInputProps={{
                         disabled: !canManageCompanyData,
                         label: formMeta.fields.street.label,
@@ -63,8 +62,8 @@ export const ContactInformationBillingAddress: FC = () => {
                     <TextInputControlled
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
+                        gridClassName="col-span-3"
                         name={formMeta.fields.city.name}
-                        render={(textInput) => <FormLine className="col-span-3">{textInput}</FormLine>}
                         textInputProps={{
                             disabled: !canManageCompanyData,
                             label: formMeta.fields.city.label,
@@ -78,8 +77,8 @@ export const ContactInformationBillingAddress: FC = () => {
                     <TextInputControlled
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
+                        gridClassName="col-start-4"
                         name={formMeta.fields.postcode.name}
-                        render={(textInput) => <FormLine className="col-start-4">{textInput}</FormLine>}
                         textInputProps={{
                             disabled: !canManageCompanyData,
                             label: formMeta.fields.postcode.label,

@@ -3,7 +3,6 @@ import { DocumentDeleteIcon } from 'components/Basic/Icon/DocumentDeleteIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
@@ -12,12 +11,10 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderWithdrawalDataFragment } from 'graphql/requests/orders/fragments/OrderWithdrawalDataFragment.generated';
 import { useOrderWithdrawalRequestMutation } from 'graphql/requests/orders/mutations/OrderWithdrawalRequestMutation.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useRouter } from 'next/router';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { OrderWithdrawalFormType } from 'types/form';
-import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -31,10 +28,8 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
     const { url } = useDomainConfig();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const [formProviderMethods] = useOrderWithdrawalForm(order);
-    const formMeta = useOrderWithdrawalFormMeta(formProviderMethods);
+    const formMeta = useOrderWithdrawalFormMeta();
     const [, orderWithdrawalRequest] = useOrderWithdrawalRequestMutation();
-
-    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onSubmitHandler: SubmitHandler<OrderWithdrawalFormType> = async (values) => {
         const { firstName, lastName, email, telephone, note } = values;
@@ -75,7 +70,11 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                 />
 
                 <FormProvider {...formProviderMethods}>
-                    <Form tid={TIDs.order_withdrawal_form} onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
+                    <Form
+                        formName={formMeta.formName}
+                        tid={TIDs.order_withdrawal_form}
+                        onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}
+                    >
                         <FormContentWrapper>
                             <FormBlockWrapper>
                                 <FormHeading>{t('Personal data')}</FormHeading>
@@ -84,7 +83,6 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.email.name}
-                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.email.label,
                                         required: true,
@@ -97,8 +95,8 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                                     <TextInputControlled
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
+                                        gridClassName="col-span-2"
                                         name={formMeta.fields.firstName.name}
-                                        render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                         textInputProps={{
                                             label: formMeta.fields.firstName.label,
                                             required: true,
@@ -110,8 +108,8 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                                     <TextInputControlled
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
+                                        gridClassName="col-span-2"
                                         name={formMeta.fields.lastName.name}
-                                        render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                         textInputProps={{
                                             label: formMeta.fields.lastName.label,
                                             required: true,
@@ -125,8 +123,8 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                                     <TextInputControlled
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
+                                        gridClassName="col-span-2"
                                         name={formMeta.fields.telephone.name}
-                                        render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                         textInputProps={{
                                             label: formMeta.fields.telephone.label,
                                             required: false,
@@ -142,7 +140,6 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.note.name}
-                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.note.label,
                                         required: false,

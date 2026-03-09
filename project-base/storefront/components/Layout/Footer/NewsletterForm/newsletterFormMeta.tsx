@@ -3,9 +3,10 @@ import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import { ReactElement } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
@@ -23,63 +24,36 @@ export const useNewsletterForm = (): [UseFormReturn<NewsletterFormType>, Newslet
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-type NewsletterFormMetaType = {
-    formName: string;
-    messages: {
-        error: string;
-        success: string;
-    };
-    fields: {
-        [key in keyof NewsletterFormType]: {
-            name: key;
-            label: string | ReactElement;
-            errorMessage: string | undefined;
-        };
-    };
-};
-
-export const useNewsletterFormMeta = (
-    formProviderMethods: UseFormReturn<NewsletterFormType>,
-): NewsletterFormMetaType => {
+export const useNewsletterFormMeta = (): FormMeta<NewsletterFormType, { error: string; success: string }> => {
     const { t } = useTranslation();
     const [{ data: settingsData }] = useSettingsQuery();
     const privacyPolicyArticleUrl = settingsData?.settings?.privacyPolicyArticleUrl;
-    const errors = formProviderMethods.formState.errors;
-
     return {
         formName: 'newsletter-form',
         messages: {
             error: t('Could not subscribe to newsletter'),
             success: t('You have successfully subscribed to our newsletter'),
         },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: errors.email?.message,
-            },
-            privacyPolicy: {
-                name: 'privacyPolicy' as const,
-                label: (
-                    <Trans
-                        defaultTrans="I take note of the <lnk1>processing of personal data</lnk1>."
-                        i18nKey="PrivacyPolicyCheckbox"
-                        components={{
-                            lnk1: privacyPolicyArticleUrl ? (
-                                <Link
-                                    aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                    className="inline text-sm"
-                                    href={privacyPolicyArticleUrl}
-                                    target="_blank"
-                                />
-                            ) : (
-                                <span className={linkPlaceholderTwClass} />
-                            ),
-                        }}
-                    />
-                ),
-                errorMessage: errors.privacyPolicy?.message,
-            },
-        },
+        fields: createFields<NewsletterFormType>({
+            email: t('Your email'),
+            privacyPolicy: (
+                <Trans
+                    defaultTrans="I take note of the <lnk1>processing of personal data</lnk1>."
+                    i18nKey="PrivacyPolicyCheckbox"
+                    components={{
+                        lnk1: privacyPolicyArticleUrl ? (
+                            <Link
+                                aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
+                                className="inline text-sm"
+                                href={privacyPolicyArticleUrl}
+                                target="_blank"
+                            />
+                        ) : (
+                            <span className={linkPlaceholderTwClass} />
+                        ),
+                    }}
+                />
+            ),
+        }),
     };
 };

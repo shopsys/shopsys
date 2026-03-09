@@ -16,11 +16,12 @@ import {
 } from 'components/Forms/validationRules';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useEffect } from 'react';
-import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
-import { CustomerTypeEnum } from 'types/customer';
+import { FormMeta } from 'types/formMeta';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
@@ -195,188 +196,51 @@ const shouldValidateDeliveryAddressField = (
     return true;
 };
 
-export type ContactInformationFormMetaType = {
-    formName: string;
-    messages: {
-        error: string;
-    };
-    fields: {
-        [key in keyof ContactInformation]: {
-            name: key;
-            label: string;
-            disabled?: boolean;
-            errorMessage: string | undefined;
-        };
-    };
-};
+export type ContactInformationFormMetaType = FormMeta<ContactInformation, { error: string }, { disabled?: boolean }>;
 
-export const useContactInformationFormMeta = (
-    formProviderMethods: UseFormReturn<ContactInformation>,
-): ContactInformationFormMetaType => {
+export const useContactInformationFormMeta = (): ContactInformationFormMetaType => {
     const { t } = useTranslation();
     const { pickupPlace } = useCurrentCart();
     const isUserLoggedIn = useIsUserLoggedIn();
     const { isB2B, isCompanyUser } = useAuthorization();
 
-    const isEmailValid = formProviderMethods.formState.errors.email === undefined;
-
-    const isDeliveryAddressDifferentFromBillingFieldName = 'isDeliveryAddressDifferentFromBilling' as const;
-    const customerFieldName = 'customer' as const;
-
-    const [isDeliveryAddressDifferentFromBillingValue, customerValue] = useWatch({
-        name: [isDeliveryAddressDifferentFromBillingFieldName, customerFieldName],
-        control: formProviderMethods.control,
-    });
-
-    const errors = formProviderMethods.formState.errors;
+    const isDeliveryAddressDifferentFromBillingLabel = pickupPlace
+        ? t('Order will pick up someone else')
+        : t('Send to another delivery address');
 
     return {
         formName: 'contact-information-form',
         messages: {
             error: t('Could not create order'),
         },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                disabled: isUserLoggedIn,
-                errorMessage: errors.email?.message,
-            },
-            [customerFieldName]: {
-                name: customerFieldName,
-                label: t('I will shop as'),
-                disabled: isB2B && isUserLoggedIn,
-                errorMessage: isEmailValid ? errors.customer?.message : undefined,
-            },
-            telephone: {
-                name: 'telephone' as const,
-                label: t('Phone'),
-                errorMessage: isEmailValid ? errors.telephone?.message : undefined,
-            },
-            firstName: {
-                name: 'firstName' as const,
-                label: t('First name'),
-                errorMessage: isEmailValid ? errors.firstName?.message : undefined,
-            },
-            lastName: {
-                name: 'lastName' as const,
-                label: t('Last name'),
-                errorMessage: isEmailValid ? errors.lastName?.message : undefined,
-            },
-            companyName: {
-                name: 'companyName' as const,
-                label: t('Company name'),
-                disabled: isCompanyUser,
-                errorMessage:
-                    customerValue === CustomerTypeEnum.CompanyCustomer ? errors.companyName?.message : undefined,
-            },
-            companyNumber: {
-                name: 'companyNumber' as const,
-                label: t('Company number'),
-                disabled: isCompanyUser,
-                errorMessage:
-                    customerValue === CustomerTypeEnum.CompanyCustomer ? errors.companyNumber?.message : undefined,
-            },
-            companyTaxNumber: {
-                name: 'companyTaxNumber' as const,
-                label: t('Tax number'),
-                disabled: isCompanyUser,
-                errorMessage:
-                    customerValue === CustomerTypeEnum.CompanyCustomer ? errors.companyTaxNumber?.message : undefined,
-            },
-            street: {
-                name: 'street' as const,
-                label: t('Street and house no.'),
-                errorMessage: isEmailValid ? errors.street?.message : undefined,
-            },
-            city: {
-                name: 'city' as const,
-                label: t('City'),
-                errorMessage: isEmailValid ? errors.city?.message : undefined,
-            },
-            postcode: {
-                name: 'postcode' as const,
-                label: t('Postcode'),
-                errorMessage: isEmailValid ? errors.postcode?.message : undefined,
-            },
-            country: {
-                name: 'country' as const,
-                label: t('Country'),
-                errorMessage: isEmailValid ? (errors.country as FieldError | undefined)?.message : undefined,
-            },
-            [isDeliveryAddressDifferentFromBillingFieldName]: {
-                name: isDeliveryAddressDifferentFromBillingFieldName,
-                label: pickupPlace ? t('Order will pick up someone else') : t('Send to another delivery address'),
-                errorMessage: isEmailValid ? errors.isDeliveryAddressDifferentFromBilling?.message : undefined,
-            },
-            deliveryFirstName: {
-                name: 'deliveryFirstName' as const,
-                label: t('First name'),
-                errorMessage: isDeliveryAddressDifferentFromBillingValue
-                    ? errors.deliveryFirstName?.message
-                    : undefined,
-            },
-            deliveryLastName: {
-                name: 'deliveryLastName' as const,
-                label: t('Last name'),
-                errorMessage: isDeliveryAddressDifferentFromBillingValue ? errors.deliveryLastName?.message : undefined,
-            },
-            deliveryCompanyName: {
-                name: 'deliveryCompanyName' as const,
-                label: t('Company'),
-                errorMessage: isDeliveryAddressDifferentFromBillingValue
-                    ? errors.deliveryCompanyName?.message
-                    : undefined,
-            },
-            deliveryTelephone: {
-                name: 'deliveryTelephone' as const,
-                label: t('Phone'),
-                errorMessage: isDeliveryAddressDifferentFromBillingValue
-                    ? errors.deliveryTelephone?.message
-                    : undefined,
-            },
-            deliveryStreet: {
-                name: 'deliveryStreet' as const,
-                label: t('Street and house no.'),
-                errorMessage: isDeliveryAddressDifferentFromBillingValue ? errors.deliveryStreet?.message : undefined,
-            },
-            deliveryCity: {
-                name: 'deliveryCity' as const,
-                label: t('City'),
-                errorMessage: isDeliveryAddressDifferentFromBillingValue ? errors.deliveryCity?.message : undefined,
-            },
-            deliveryPostcode: {
-                name: 'deliveryPostcode' as const,
-                label: t('Postcode'),
-                errorMessage: isDeliveryAddressDifferentFromBillingValue ? errors.deliveryPostcode?.message : undefined,
-            },
-            deliveryCountry: {
-                name: 'deliveryCountry' as const,
-                label: t('Country'),
-                errorMessage: isDeliveryAddressDifferentFromBillingValue
-                    ? (errors.deliveryCountry as FieldError | undefined)?.message
-                    : undefined,
-            },
-            deliveryAddressUuid: {
-                name: 'deliveryAddressUuid' as const,
-                label: t('Delivery address'),
-                errorMessage: undefined,
-            },
-            newsletterSubscription: {
-                name: 'newsletterSubscription' as const,
-                label: t('I want to subscribe to the newsletter'),
-                errorMessage: isEmailValid ? errors.newsletterSubscription?.message : undefined,
-            },
-            note: {
-                name: 'note' as const,
-                label: t('Note'),
-                errorMessage: undefined,
-            },
-            isWithoutHeurekaAgreement: {
-                name: 'isWithoutHeurekaAgreement' as const,
-                label: t('I do not agree to send satisfaction questionnaires within the Verified by Customers program'),
-                errorMessage: undefined,
-            },
-        },
+        fields: createFields<ContactInformation, { disabled?: boolean }>({
+            email: { label: t('Your email'), disabled: isUserLoggedIn },
+            customer: { label: t('I will shop as'), disabled: isB2B && isUserLoggedIn },
+            telephone: t('Phone'),
+            firstName: t('First name'),
+            lastName: t('Last name'),
+            companyName: { label: t('Company name'), disabled: isCompanyUser },
+            companyNumber: { label: t('Company number'), disabled: isCompanyUser },
+            companyTaxNumber: { label: t('Tax number'), disabled: isCompanyUser },
+            street: t('Street and house no.'),
+            city: t('City'),
+            postcode: t('Postcode'),
+            country: t('Country'),
+            isDeliveryAddressDifferentFromBilling: { label: isDeliveryAddressDifferentFromBillingLabel },
+            deliveryFirstName: t('First name'),
+            deliveryLastName: t('Last name'),
+            deliveryCompanyName: t('Company'),
+            deliveryTelephone: t('Phone'),
+            deliveryStreet: t('Street and house no.'),
+            deliveryCity: t('City'),
+            deliveryPostcode: t('Postcode'),
+            deliveryCountry: t('Country'),
+            deliveryAddressUuid: t('Delivery address'),
+            newsletterSubscription: t('I want to subscribe to the newsletter'),
+            note: t('Note'),
+            isWithoutHeurekaAgreement: t(
+                'I do not agree to send satisfaction questionnaires within the Verified by Customers program',
+            ),
+        }),
     };
 };

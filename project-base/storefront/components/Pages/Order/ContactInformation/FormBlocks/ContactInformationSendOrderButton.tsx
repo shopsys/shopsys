@@ -1,7 +1,6 @@
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { FormBlockAgreements } from 'components/Forms/Form/Form';
-import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
@@ -17,7 +16,7 @@ export const ContactInformationSendOrderButton: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { canManagePersonalData } = useAuthorization();
 
-    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const formMeta = useContactInformationFormMeta();
 
     const [{ data: settingsData }] = useSettingsQuery();
     const termsAndConditionsArticleUrl = settingsData?.settings?.termsAndConditionsArticleUrl;
@@ -31,7 +30,6 @@ export const ContactInformationSendOrderButton: FC = () => {
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
                         name={formMeta.fields.isWithoutHeurekaAgreement.name}
-                        render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
                         checkboxProps={{
                             label: formMeta.fields.isWithoutHeurekaAgreement.label,
                         }}
@@ -43,7 +41,6 @@ export const ContactInformationSendOrderButton: FC = () => {
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
                         name={formMeta.fields.newsletterSubscription.name}
-                        render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
                         checkboxProps={{
                             label: formMeta.fields.newsletterSubscription.label,
                         }}

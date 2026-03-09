@@ -1,8 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ReactElement } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PromoCodeFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
@@ -21,29 +22,13 @@ export const usePromoCodeForm = (): [UseFormReturn<PromoCodeFormType>, PromoCode
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-type PromoCodeFormMetaType = {
-    formName: string;
-    fields: {
-        [key in keyof PromoCodeFormType]: {
-            name: key;
-            label: string | ReactElement;
-            errorMessage: string | undefined;
-        };
-    };
-};
-
-export const usePromoCodeFormMeta = (formProviderMethods: UseFormReturn<PromoCodeFormType>): PromoCodeFormMetaType => {
+export const usePromoCodeFormMeta = (): FormMeta<PromoCodeFormType> => {
     const { t } = useTranslation();
-    const errors = formProviderMethods.formState.errors;
-
     return {
         formName: 'promoCode-form',
-        fields: {
-            promoCode: {
-                name: 'promoCode' as const,
-                label: t('Coupon'),
-                errorMessage: errors.promoCode?.message,
-            },
-        },
+        messages: {},
+        fields: createFields<PromoCodeFormType>({
+            promoCode: t('Coupon'),
+        }),
     };
 };

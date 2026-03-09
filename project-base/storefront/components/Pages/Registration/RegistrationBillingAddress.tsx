@@ -19,7 +19,7 @@ export const RegistrationBillingAddress: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const { setValue } = formProviderMethods;
-    const formMeta = useRegistrationFormMeta(formProviderMethods);
+    const formMeta = useRegistrationFormMeta();
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
 

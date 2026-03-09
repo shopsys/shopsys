@@ -3,7 +3,6 @@ import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { LockCrossIcon } from 'components/Basic/Icon/LockCrossIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
@@ -34,7 +33,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     const { url } = domainConfig;
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
     const [formProviderMethods] = useRecoveryPasswordForm();
-    const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
+    const formMeta = useRecoveryPasswordFormMeta();
     const handleError = useErrorHandler({
         form: formProviderMethods,
         customMessage: formMeta.messages.error,
@@ -96,6 +95,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                 <FormProvider {...formProviderMethods}>
                     <Form
                         className="flex w-full justify-center"
+                        formName={formMeta.formName}
                         onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}
                     >
                         <FormContentWrapper>
@@ -104,7 +104,6 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.newPassword.name}
-                                    render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                                     passwordInputProps={{
                                         label: formMeta.fields.newPassword.label,
                                     }}
@@ -114,7 +113,6 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.newPasswordConfirm.name}
-                                    render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                                     passwordInputProps={{
                                         label: formMeta.fields.newPasswordConfirm.label,
                                     }}

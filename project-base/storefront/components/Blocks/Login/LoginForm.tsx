@@ -3,7 +3,6 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { SocialNetworkLogin } from 'components/Blocks/SocialNetworkLogin/SocialNetworkLogin';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -40,7 +39,7 @@ export const LoginForm: FC<LoginFormProps> = ({
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
 
     const [formProviderMethods] = useLoginForm(defaultEmail);
-    const formMeta = useLoginFormMeta(formProviderMethods);
+    const formMeta = useLoginFormMeta();
     const login = useLogin();
     const [{ data: settingsData }] = useSettingsQuery();
     const handleError = useErrorHandler({
@@ -70,6 +69,7 @@ export const LoginForm: FC<LoginFormProps> = ({
             <FormProvider {...formProviderMethods}>
                 <Form
                     className="flex w-full justify-center"
+                    formName={formMeta.formName}
                     onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}
                 >
                     <FormContentWrapper className={formContentWrapperClassName}>
@@ -79,7 +79,6 @@ export const LoginForm: FC<LoginFormProps> = ({
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
                             name={formMeta.fields.email.name}
-                            render={(textInput) => <FormLine>{textInput}</FormLine>}
                             textInputProps={{
                                 label: formMeta.fields.email.label,
                                 required: true,
@@ -93,7 +92,6 @@ export const LoginForm: FC<LoginFormProps> = ({
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
                             name={formMeta.fields.password.name}
-                            render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                             passwordInputProps={{
                                 label: formMeta.fields.password.label,
                                 autoComplete: 'current-password',

@@ -26,7 +26,6 @@ import { useComplaintResolutionsAsSelectOptions } from 'utils/complaints/useComp
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
-import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -53,7 +52,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
     );
     const isSubmitting = formProviderMethods.formState.isSubmitting;
     const { setValue } = formProviderMethods;
-    const formMeta = useComplaintFormMeta(formProviderMethods);
+    const formMeta = useComplaintFormMeta();
     const handleError = useErrorHandler({
         form: formProviderMethods,
         gtmOrigin: GtmMessageOriginType.other,
@@ -157,12 +156,10 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
         showSuccessMessage(t('Complaint has been created'));
     };
 
-    useScrollToFirstError(formMeta.formName, formProviderMethods);
-
     return (
         <Popup className="w-11/12 lg:w-4/5" contentClassName="overflow-y-auto" title={t('Create complaint')}>
             <FormProvider {...formProviderMethods}>
-                <Form onSubmit={formProviderMethods.handleSubmit(createComplaintHandler)}>
+                <Form formName={formMeta.formName} onSubmit={formProviderMethods.handleSubmit(createComplaintHandler)}>
                     <FormContentWrapper>
                         <FormBlockWrapper>
                             {isCreationWithoutOrder && (
@@ -170,7 +167,6 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.manualDocumentNumber.name}
-                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.manualDocumentNumber.label,
                                         required: true,
@@ -187,7 +183,6 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.manualComplaintItemName.name}
-                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.manualComplaintItemName.label,
                                         required: true,
@@ -202,7 +197,6 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.manualComplaintItemCatnum.name}
-                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.manualComplaintItemCatnum.label,
                                         required: false,
@@ -216,7 +210,6 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.quantity.name}
-                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     label: formMeta.fields.quantity.label,
                                     required: true,
@@ -230,7 +223,6 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.description.name}
-                                render={(textarea) => <FormLine>{textarea}</FormLine>}
                                 textareaProps={{
                                     label: formMeta.fields.description.label,
                                     rows: 3,
@@ -261,7 +253,6 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.email.name}
-                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     label: formMeta.fields.email.label,
                                     required: true,
@@ -300,7 +291,6 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.bankAccountNumber.name}
-                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.bankAccountNumber.label,
                                         required: true,
@@ -360,10 +350,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
+                                            gridClassName="col-span-2"
                                             name={formMeta.fields.firstName.name}
-                                            render={(textInput) => (
-                                                <FormLine className="col-span-2">{textInput}</FormLine>
-                                            )}
                                             textInputProps={{
                                                 label: formMeta.fields.firstName.label,
                                                 required: true,
@@ -376,10 +364,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
+                                            gridClassName="col-span-2"
                                             name={formMeta.fields.lastName.name}
-                                            render={(textInput) => (
-                                                <FormLine className="col-span-2">{textInput}</FormLine>
-                                            )}
                                             textInputProps={{
                                                 label: formMeta.fields.lastName.label,
                                                 required: true,
@@ -394,10 +380,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
+                                            gridClassName="col-span-2"
                                             name={formMeta.fields.telephone.name}
-                                            render={(textInput) => (
-                                                <FormLine className="col-span-2">{textInput}</FormLine>
-                                            )}
                                             textInputProps={{
                                                 label: formMeta.fields.telephone.label,
                                                 required: true,
@@ -412,7 +396,6 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
                                         name={formMeta.fields.companyName.name}
-                                        render={(textInput) => <FormLine>{textInput}</FormLine>}
                                         textInputProps={{
                                             label: formMeta.fields.companyName.label,
                                             type: 'text',
@@ -425,7 +408,6 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
                                         name={formMeta.fields.street.name}
-                                        render={(textInput) => <FormLine>{textInput}</FormLine>}
                                         textInputProps={{
                                             label: formMeta.fields.street.label,
                                             required: true,
@@ -439,10 +421,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
+                                            gridClassName="col-span-3"
                                             name={formMeta.fields.city.name}
-                                            render={(textInput) => (
-                                                <FormLine className="col-span-3">{textInput}</FormLine>
-                                            )}
                                             textInputProps={{
                                                 label: formMeta.fields.city.label,
                                                 required: true,
@@ -455,10 +435,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
+                                            gridClassName="col-start-4"
                                             name={formMeta.fields.postcode.name}
-                                            render={(textInput) => (
-                                                <FormLine className="col-start-4">{textInput}</FormLine>
-                                            )}
                                             textInputProps={{
                                                 label: formMeta.fields.postcode.label,
                                                 required: true,
