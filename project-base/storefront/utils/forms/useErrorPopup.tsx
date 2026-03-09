@@ -1,7 +1,7 @@
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import dynamic from 'next/dynamic';
 import { ReactElement, useEffect, useEffectEvent } from 'react';
-import { FieldValues, UseFormReturn } from 'react-hook-form';
+import { FieldErrors, FieldValues, UseFormReturn } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 
 const ErrorPopup = dynamic(() =>
@@ -14,7 +14,6 @@ export const useErrorPopup = <T extends FieldValues>(
         [fieldName: string]: {
             name: string;
             label: string | ReactElement;
-            errorMessage?: string | undefined;
         };
     },
     overrideVisibility?: boolean,
@@ -23,7 +22,13 @@ export const useErrorPopup = <T extends FieldValues>(
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const onShowError = useEffectEvent(() => {
-        updatePortalContent(<ErrorPopup fields={fields} gtmMessageOrigin={gtmMessageOrigin} />);
+        updatePortalContent(
+            <ErrorPopup
+                errors={formProviderMethods.formState.errors as FieldErrors}
+                fields={fields}
+                gtmMessageOrigin={gtmMessageOrigin}
+            />,
+        );
     });
 
     useEffect(() => {
