@@ -1,0 +1,199 @@
+<GENERATED-CODE>
+Here is the complete implementation for your frontend.
+
+1.  **Create `components/DatabaseIntrospectionToolRenderer.tsx`**: This component will render a simple "thinking" state for your non-interactive tool.
+
+2.  **Create `components/SqlExecutionToolRenderer.tsx`**: This is the core component for the approval flow. It displays the SQL query and provides "Approve" / "Deny" controls.
+
+3.  **Update your main App component (`App.tsx`)**: This is where you'll use the `useRenderToolCall` hook to tell CopilotKit to use your new custom components for the specified tools.
+
+<NEWFILE: src/components/DatabaseIntrospectionToolRenderer.tsx>
+```tsx
+import React from 'react';
+import type { ToolCall } from '@copilotkit/react-core';
+
+interface Props {
+  toolCall: ToolCall;
+}
+
+/**
+ * A simple component to render a "loading" state for the database-introspection tool.
+ */
+export const DatabaseIntrospectionToolRenderer: React.FC<Props> = ({ toolCall }) => {
+  return (
+    <div style={{
+      border: '1px solid #ddd',
+      borderRadius: '8px',
+      padding: '12px',
+      margin: '10px 0',
+      fontFamily: 'sans-serif',
+      fontSize: '14px',
+      backgroundColor: '#f9f9f9',
+      color: '#555',
+    }}>
+      <p>🔍 Inspecting database schema...</p>
+    </div>
+  );
+};
+```
+</NEWFILE>
+
+Next, create the interactive component for SQL execution.
+
+<NEWFILE: src/components/SqlExecutionToolRenderer.tsx>
+```tsx
+import React, { useState, useMemo } from 'react';
+import { useCopilotAction, type ToolCall } from '@copilotkit/react-core';
+// For syntax highlighting, you can use a library like react-syntax-highlighter.
+// `npm install react-syntax-highlighter @types/react-syntax-highlighter`
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+interface Props {
+  toolCall: ToolCall;
+}
+
+/**
+ * Renders an interactive prompt for the user to approve or deny SQL execution.
+ * It uses `useCopilotAction` to pause the tool execution and wait for user feedback.
+ */
+export const SqlExecutionToolRenderer: React.FC<Props> = ({ toolCall }) => {
+  const [userResponse, setUserResponse] = useState<'approved' | 'denied' | null>(null);
+
+  // The `useCopilotAction` hook provides callbacks to control the execution flow.
+  const { renderProps } = useCopilotAction({
+    name: "sql-execution",
+    // Ensure the arguments from the LLM match this shape.
+    description: "Execute a SQL query against the database.",
+    parameters: [{ name: 'sql', type: 'string', description: 'The SQL query to execute.' }],
+  });
+
+  // Extract the SQL query from the tool call arguments.
+  const sqlQuery = useMemo(() => {
+    try {
+      const args = JSON.parse(toolCall.args);
+      return args.sql || 'No SQL query provided.';
+    } catch (error) {
+      return 'Error parsing SQL query.';
+    }
+  }, [toolCall.args]);
+
+  const handleApprove = () => {
+    if (userResponse) return; // Prevent multiple submissions
+    setUserResponse('approved');
+    // `done()` signals that the action is approved and execution should proceed.
+    renderProps.renderAndWaitForResponse.done();
+  };
+
+  const handleDeny = () => {
+    if (userResponse) return; // Prevent multiple submissions
+    setUserResponse('denied');
+    // `cancel()` stops the action and informs the LLM the user denied it.
+    renderProps.renderAndWaitForResponse.cancel();
+  };
+
+  const isPending = renderProps.state === 'running' && userResponse === null;
+
+  return (
+    <div style={{
+      border: '1px solid #e0e0e0',
+      borderRadius: '10px',
+      padding: '16px',
+      margin: '10px 0',
+      fontFamily: 'sans-serif',
+      backgroundColor: '#ffffff',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+    }}>
+      <p style={{ marginTop: 0, fontWeight: 'bold', color: '#333' }}>
+        SQL Execution Request
+      </p>
+      <p style={{ fontSize: '14px', color: '#666' }}>
+        The AI wants to run the following SQL query. Please review and approve.
+      </p>
+      <div style={{ margin: '16px 0' }}>
+        <SyntaxHighlighter language="sql" style={vscDarkPlus} customStyle={{ borderRadius: '6px', margin: 0 }}>
+          {sqlQuery}
+        </SyntaxHighlighter>
+      </div>
+      {isPending && (
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button onClick={handleApprove} style={buttonStyle('approve')}>Approve</button>
+          <button onClick={handleDeny} style={buttonStyle('deny')}>Deny</button>
+        </div>
+      )}
+      {userResponse === 'approved' && <p style={{ color: 'green', marginBottom: 0 }}>✅ Approved. Executing...</p>}
+      {userResponse === 'denied' && <p style={{ color: 'red', marginBottom: 0 }}>❌ Denied. The action was cancelled.</p>}
+    </div>
+  );
+};
+
+// Helper for button styling
+const buttonStyle = (type: 'approve' | 'deny'): React.CSSProperties => ({
+  border: 'none',
+  borderRadius: '6px',
+  padding: '8px 16px',
+  fontSize: '14px',
+  cursor: 'pointer',
+  fontWeight: 'bold',
+  transition: 'background-color 0.2s',
+  color: 'white',
+  backgroundColor: type === 'approve' ? '#28a745' : '#dc3545',
+});
+```
+</NEWFILE>
+
+Finally, integrate these renderers into your main application component.
+
+<UPDATED_EXISTING_FILE: src/App.tsx>
+```tsx
+import { CopilotKit, useRenderToolCall } from "@copilotkit/react-core";
+import { CopilotChat } from "@copilotkit/react-ui";
+import "@copilotkit/react-ui/styles.css";
+
+// Import your custom components
+import { DatabaseIntrospectionToolRenderer } from "./components/DatabaseIntrospectionToolRenderer";
+import { SqlExecutionToolRenderer } from "./components/SqlExecutionToolRenderer";
+
+/**
+ * A custom component that decides how to render tool calls.
+ * It must be a child of <CopilotKit />.
+ */
+const ToolRenderers = () => {
+  useRenderToolCall(toolCall => {
+    // This function is called for each tool call the AI wants to make.
+    // Return a React element to render the tool, or null for default behavior.
+    switch (toolCall.toolName) {
+      case "database-introspection":
+        return <DatabaseIntrospectionToolRenderer toolCall={toolCall} />;
+      case "sql-execution":
+        return <SqlExecutionToolRenderer toolCall={toolCall} />;
+      default:
+        // For any other tool, fall back to the default rendering.
+        return null; 
+    }
+  });
+
+  // This component doesn't render anything itself, it just sets up the hook.
+  return null;
+};
+
+function App() {
+  return (
+    <CopilotKit runtimeUrl="http://localhost:3000/api/copilotkit/chat">
+      {/* Include the ToolRenderers component inside CopilotKit */}
+      <ToolRenderers />
+
+      <CopilotChat
+        labels={{
+          title: "SQL Copilot",
+          initial: "Hello! I can help you query the database. What would you like to know?",
+        }}
+      />
+    </CopilotKit>
+  );
+}
+
+export default App;
+```
+</UPDATED_EXISTING_FILE>
+</GENERATED-CODE>

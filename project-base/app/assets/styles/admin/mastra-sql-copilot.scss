@@ -1,0 +1,148 @@
+#mastra-sql-copilot-root {
+    --copilot-kit-primary-color: #0d6efd;
+    --copilot-kit-contrast-color: #fff;
+    --copilot-kit-background-color: #f8f9fa;
+    --copilot-kit-input-background-color: #fff;
+    --copilot-kit-secondary-color: #fff;
+    --copilot-kit-secondary-contrast-color: #212529;
+    --copilot-kit-separator-color: #dee2e6;
+    --copilot-kit-muted-color: #6c757d;
+    --copilot-kit-shadow-sm: none;
+    --copilot-kit-shadow-md: none;
+    --copilot-kit-shadow-lg: none;
+}
+
+#mastra-sql-copilot-root .copilotKitChat {
+    min-height: 600px;
+    border: none;
+    border-radius: 0;
+    background-color: #f8f9fa;
+}
+
+#mastra-sql-copilot-root .copilotKitHeader {
+    display: none;
+}
+
+#mastra-sql-copilot-root .copilotKitMessages {
+    background-color: #f8f9fa;
+}
+
+#mastra-sql-copilot-root .copilotKitMessagesContainer {
+    padding: 0;
+}
+
+#mastra-sql-copilot-root .copilotKitMessage {
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    max-width: 90%;
+    box-shadow: none;
+}
+
+#mastra-sql-copilot-root .copilotKitMessage.copilotKitUserMessage {
+    background-color: #0d6efd;
+    color: #fff;
+    margin-left: auto;
+    text-align: right;
+    font-size: 0.95rem;
+}
+
+#mastra-sql-copilot-root .copilotKitMessage.copilotKitAssistantMessage {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    margin-right: auto;
+    color: #212529;
+}
+
+#mastra-sql-copilot-root .copilotKitMessageControls {
+    display: none !important;
+}
+
+#mastra-sql-copilot-root .copilotKitInputContainer {
+    border-top: 1px solid #dee2e6;
+    background: #fff;
+    padding: 12px;
+}
+
+#mastra-sql-copilot-root .mastra-sql-classic-input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background: #fff;
+    padding: 14px 16px 16px;
+}
+
+#mastra-sql-copilot-root .mastra-sql-classic-input .form-label {
+    margin-bottom: 0;
+    font-weight: 600;
+    color: #212529;
+}
+
+#mastra-sql-copilot-root .mastra-sql-classic-input .form-control {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    min-height: 42px;
+    font-size: 0.95rem;
+}
+
+#mastra-sql-copilot-root .mastra-sql-classic-input .btn {
+    align-self: flex-start;
+    min-width: 72px;
+}
+
+#mastra-sql-copilot-root .copilotKitInput {
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: transparent;
+    min-height: 0;
+}
+
+#mastra-sql-copilot-root .copilotKitCodeBlock,
+#mastra-sql-copilot-root .copilotKitMarkdownElement pre,
+#mastra-sql-copilot-root .copilotKitMarkdownElement pre code {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+#mastra-sql-copilot-root .copilotKitInlineCode {
+    background-color: #f8f9fa;
+    color: #212529;
+    border-color: #dee2e6;
+}
+
+#mastra-sql-copilot-root .tool-call-wrapper {
+    margin-top: 8px;
+}
+
+#mastra-sql-copilot-root .tool-call {
+    margin-top: 8px;
+}
+
+#mastra-sql-copilot-root .tool-call summary {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#mastra-sql-copilot-root .tool-call-body {
+    margin-top: 4px;
+}
+
+#mastra-sql-copilot-root .tool-call-json {
+    background-color: #f8f9fa;
+    color: #212529;
+    padding: 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    max-height: 260px;
+    overflow: auto;
+}
+
+#mastra-sql-copilot-root .sql-approval-buttons {
+    margin-top: 12px;
+}

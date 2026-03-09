@@ -16,6 +16,7 @@ Encore
     .cleanupOutputBeforeBuild()
     .autoProvidejQuery()
     .addEntry('admin', './assets/js/admin/admin.js')
+    .addEntry('mastra-sql-copilot', './assets/js/admin/mastraSqlCopilot.js')
     .addEntry('administration', sources.getPackageNodeModulesDir('administration') + '/src/js/index.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
