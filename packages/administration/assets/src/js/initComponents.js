@@ -9,7 +9,7 @@ function initSelect($container) {
         const settings = {
             allowEmptyOption: true,
             maxOptions: null,
-            dropdownParent: 'body',
+            dropdownParent: el.closest('.modal') ? null : 'body',
             plugins: {
                 dropdown_input: {},
                 no_backspace_delete: {},
