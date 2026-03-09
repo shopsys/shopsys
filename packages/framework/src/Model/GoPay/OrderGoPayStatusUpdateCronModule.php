@@ -9,6 +9,7 @@ use Monolog\Logger;
 use Override;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayPaymentDownloadException;
+use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayStatusUpdateFailedException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
@@ -33,6 +34,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
     {
         $twentyOneDaysAgo = $this->clock->now()->modify('-21 days');
         $orders = $this->goPayFacade->getAllUnpaidGoPayOrders($twentyOneDaysAgo);
+        $failedOrderIds = [];
 
         $this->logger->info('Downloading status updates for orders.', [
             'ordersCount' => count($orders),
@@ -63,6 +65,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
                 $this->logger->error($e->getMessage(), [
                     'exception' => $e,
                 ]);
+                $failedOrderIds[] = $orderId;
 
                 continue;
             }
@@ -87,10 +90,18 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
             $this->logger->info('Sending order e-mail.', [
                 'orderId' => $orderId,
             ]);
+
             $this->orderMailFacade->sendEmail($order, $order->getStatus());
         }
 
         $this->em->flush();
+
+        if ($failedOrderIds !== []) {
+            throw new GoPayStatusUpdateFailedException(sprintf(
+                'GoPay status update failed for %d order(s).',
+                count($failedOrderIds),
+            ));
+        }
     }
 
     #[Override]
