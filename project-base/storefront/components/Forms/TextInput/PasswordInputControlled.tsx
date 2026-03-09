@@ -1,6 +1,7 @@
 import { TextInput } from './TextInput';
 import eyeIcon from '/public/svg/eye.svg';
 import { Image } from 'components/Basic/Image/Image';
+import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { InputHTMLAttributes, ReactElement, ReactNode, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
@@ -18,7 +19,8 @@ type PasswordInputProps = NativeProps & {
 
 type PasswordInputControlledProps = {
     name: string;
-    render: (input: ReactElement) => ReactElement<any, any> | null;
+    render?: (input: ReactElement) => ReactElement<any, any> | null;
+    gridClassName?: string;
     passwordInputProps: PasswordInputProps;
     control: Control<any>;
     formName: string;
@@ -27,6 +29,7 @@ type PasswordInputControlledProps = {
 export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
     name,
     render,
+    gridClassName,
     control,
     passwordInputProps,
     formName,
@@ -43,7 +46,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
         setInputType((currentInputType) => (currentInputType === 'password' ? 'text' : 'password'));
     };
 
-    return render(
+    const element = (
         <>
             <TextInput
                 required
@@ -72,6 +75,12 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                 />
             </TextInput>
             <FormLineError error={error} inputType="text-input-password" textInputSize={passwordInputProps.inputSize} />
-        </>,
+        </>
     );
+
+    if (render) {
+        return render(element);
+    }
+
+    return <FormLine className={gridClassName}>{element}</FormLine>;
 };

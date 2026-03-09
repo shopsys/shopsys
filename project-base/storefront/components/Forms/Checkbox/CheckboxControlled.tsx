@@ -1,11 +1,13 @@
 import { Checkbox, CheckboxProps } from './Checkbox';
+import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
 
 type CheckboxControlledProps = {
     name: string;
-    render: (input: ReactElement, currentValue: any) => ReactElement<any, any> | null;
+    render?: (input: ReactElement) => ReactElement<any, any> | null;
+    gridClassName?: string;
     checkboxProps: Pick<CheckboxProps, 'count' | 'disabled' | 'label' | 'required' | 'className'>;
     control: Control<any>;
     formName: string;
@@ -15,6 +17,7 @@ type CheckboxControlledProps = {
 export const CheckboxControlled: FC<CheckboxControlledProps> = ({
     name,
     render,
+    gridClassName,
     control,
     formName,
     checkboxProps,
@@ -34,11 +37,16 @@ export const CheckboxControlled: FC<CheckboxControlledProps> = ({
         }
     };
 
-    return render(
+    const element = (
         <>
             <Checkbox {...checkboxProps} {...field} id={checkboxId} onChange={onChangeHandler} />
             <FormLineError error={error} inputType="checkbox" />
-        </>,
-        field.value,
+        </>
     );
+
+    if (render) {
+        return render(element);
+    }
+
+    return <ChoiceFormLine className={gridClassName}>{element}</ChoiceFormLine>;
 };
