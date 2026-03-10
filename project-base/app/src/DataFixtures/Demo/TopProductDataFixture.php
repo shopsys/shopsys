@@ -9,7 +9,6 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 
 class TopProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -22,46 +21,37 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
     #[Override]
     public function load(ObjectManager $manager): void
     {
-        $defaultTopProductReferenceNames = [
-            ProductDataFixture::PRODUCT_PREFIX . '1',
-            ProductDataFixture::PRODUCT_PREFIX . '2',
-            ProductDataFixture::PRODUCT_PREFIX . '69', // main variant
-            ProductDataFixture::PRODUCT_PREFIX . '3',
-            ProductDataFixture::PRODUCT_PREFIX . '4',
-            ProductDataFixture::PRODUCT_PREFIX . '5',
-            ProductDataFixture::PRODUCT_PREFIX . '6',
-            ProductDataFixture::PRODUCT_PREFIX . '7',
-            ProductDataFixture::PRODUCT_PREFIX . '8',
-            ProductDataFixture::PRODUCT_PREFIX . '9',
-            ProductDataFixture::PRODUCT_PREFIX . '10', // sold out
-            ProductDataFixture::PRODUCT_PREFIX . '17',
-            ProductDataFixture::PRODUCT_PREFIX . '76', // excluded from sale
-            ProductDataFixture::PRODUCT_PREFIX . '148', // variant
-        ];
-        $distinctTopProductReferenceNames = [
-            ProductDataFixture::PRODUCT_PREFIX . '14',
-            ProductDataFixture::PRODUCT_PREFIX . '10',
-            ProductDataFixture::PRODUCT_PREFIX . '7',
+        $topProductReferenceIds = [
+            1,
+            2,
+            69, // main variant
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10, // sold out
+            17,
+            76, // excluded from sale
+            148, // variant
         ];
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
-            if ($domainId === Domain::SECOND_DOMAIN_ID) {
-                $this->createTopProductsForDomain($distinctTopProductReferenceNames, $domainId);
-            } else {
-                $this->createTopProductsForDomain($defaultTopProductReferenceNames, $domainId);
-            }
+            $this->createTopProductsForDomain($topProductReferenceIds, $domainId);
         }
     }
 
     /**
-     * @param string[] $productReferenceNames
+     * @param int[] $productReferenceIds
      */
-    private function createTopProductsForDomain(array $productReferenceNames, int $domainId): void
+    private function createTopProductsForDomain(array $productReferenceIds, int $domainId): void
     {
         $products = [];
 
-        foreach ($productReferenceNames as $productReferenceName) {
-            $products[] = $this->getReference($productReferenceName, Product::class);
+        foreach ($productReferenceIds as $productReferenceId) {
+            $products[] = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productReferenceId, Product::class);
         }
 
         $this->topProductFacade->saveTopProductsForDomain($domainId, $products);
