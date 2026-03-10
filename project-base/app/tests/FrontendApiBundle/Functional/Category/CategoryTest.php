@@ -47,34 +47,36 @@ class CategoryTest extends GraphQlTestCase
         ]);
         $responseData = $this->getResponseDataForGraphQlType($response, 'category');
 
+        $locale = $this->getLocaleForFirstDomain();
+
         $readyCategorySeoMixLinks = [
             [
-                'name' => t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-od-nejdrazsiho',
+                'name' => t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-from-most-expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
             [
-                'name' => t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-barva-cerna',
+                'name' => t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-color-black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
             [
-                'name' => t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-barva-cervena',
+                'name' => t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-color-red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
             [
-                'name' => t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-led-uhlopricka-30-akce',
+                'name' => t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-led-30-inch-in-sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
             [
-                'name' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-bez-hdmi-akce',
+                'name' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-without-hdmi-in-sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
             [
-                'name' => t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => '/elektro-full-hd-led-usb',
+                'name' => t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'slug' => '/' . t('electronics-full-hd-led-usb', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
         ];
 
-        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $locale);
 
         $electronicsName = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
         $electronicsSlug = '/' . $this->transformStringHelper->stringToFriendlyUrlSlug($electronicsName);

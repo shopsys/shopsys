@@ -66,7 +66,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
             t('2 litre coffeemakers in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ['2-litrove-kavovary-v-akci'],
+            [t('2-litre-coffeemakers-in-sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             $firstDomainId,
             null,
             t('description of 2 litre coffeemakers in sale seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -89,7 +89,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
             t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ['elektro-bez-hdmi-akce'],
+            [t('electronics-without-hdmi-in-sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             $firstDomainId,
             self::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION,
             t('description of Electronics without HDMI in sale seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -103,7 +103,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
             t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ['elektro-led-uhlopricka-30-akce'],
+            [t('electronics-led-30-inch-in-sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             $firstDomainId,
             null,
             t('description of Electronics with LED technology and size 30 inch in sale seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -118,7 +118,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
             t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ['elektro-od-nejdrazsiho'],
+            [t('electronics-from-most-expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             $firstDomainId,
             null,
             t('description of Electronics from most expensive seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -137,7 +137,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
             t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ['elektro-full-hd-led-usb'],
+            [t('electronics-full-hd-led-usb', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             $firstDomainId,
             null,
             t('description of Full HD Electronics with LED technology and USB seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -153,7 +153,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
             t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ['elektro-barva-cerna'],
+            [t('electronics-color-black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             $firstDomainId,
             self::READY_CATEGORY_SEO_BLACK_ELECTRONICS,
             t('description of Electronics in black seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -168,7 +168,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
             t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ['elektro-barva-cervena'],
+            [t('electronics-color-red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             $firstDomainId,
             null,
             t('description of Electronics in red seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -189,7 +189,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
             t('TV, audio from the cheapest', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ['televize-audio-nejlevnejsi'],
+            [t('tv-audio-from-cheapest', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             $firstDomainId,
             self::READY_CATEGORY_SEO_TV_FROM_CHEAPEST,
             t('description of TV, audio from the cheapest seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -204,7 +204,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
             t('TV, audio in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ['televize-audio-vyprodej'],
+            [t('tv-audio-in-sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             $firstDomainId,
             self::READY_CATEGORY_SEO_TV_IN_SALE,
             t('description of TV, audio in sale seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -223,7 +223,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
             t('TV, audio plasma with HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ['televize-audio-plasma-s-hdmi'],
+            [t('tv-audio-plasma-with-hdmi', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             $firstDomainId,
             self::READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI,
             t('description of TV, audio plasma with HDMI seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -247,7 +247,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
             t('New computers with USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ['nove-pc-s-usb'],
+            [t('new-pc-with-usb', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             $firstDomainId,
             self::READY_CATEGORY_SEO_PC_NEW_WITH_USB,
             t('description of New computers with USB seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -281,7 +281,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             $this->createReadyCategorySeoMix(
                 $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
                 t('TV, audio from the cheapest', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ['televize-audio-nejlevnejsi-b2b'],
+                [t('tv-audio-from-cheapest-b2b', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
                 $domainId,
                 self::READY_CATEGORY_SEO_TV_FROM_CHEAPEST,
                 t('description of TV, audio from the cheapest seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
