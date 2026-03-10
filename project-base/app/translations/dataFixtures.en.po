@@ -28,6 +28,9 @@ msgstr ""
 msgid "2 litre coffeemakers in sale"
 msgstr ""
 
+msgid "2-litre-coffeemakers-in-sale"
+msgstr ""
+
 msgid "2000 DPI"
 msgstr ""
 
@@ -1996,6 +1999,24 @@ msgstr ""
 msgid "description of TV, audio plasma with HDMI seo category"
 msgstr ""
 
+msgid "electronics-color-black"
+msgstr ""
+
+msgid "electronics-color-red"
+msgstr ""
+
+msgid "electronics-from-most-expensive"
+msgstr ""
+
+msgid "electronics-full-hd-led-usb"
+msgstr ""
+
+msgid "electronics-led-30-inch-in-sale"
+msgstr ""
+
+msgid "electronics-without-hdmi-in-sale"
+msgstr ""
+
 msgid "fits into VP812x VP9520"
 msgstr ""
 
@@ -2069,6 +2090,9 @@ msgid "ml"
 msgstr ""
 
 msgid "m³"
+msgstr ""
+
+msgid "new-pc-with-usb"
 msgstr ""
 
 msgid "one-slotted"
@@ -2171,6 +2195,18 @@ msgid "title of TV, audio in sale seo category"
 msgstr ""
 
 msgid "title of TV, audio plasma with HDMI seo category"
+msgstr ""
+
+msgid "tv-audio-from-cheapest"
+msgstr ""
+
+msgid "tv-audio-from-cheapest-b2b"
+msgstr ""
+
+msgid "tv-audio-in-sale"
+msgstr ""
+
+msgid "tv-audio-plasma-with-hdmi"
 msgstr ""
 
 msgid "white"
