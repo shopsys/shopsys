@@ -77,12 +77,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'name_suffix',
             'store_availabilities_information',
             'usps',
-            'searching_names',
-            'searching_descriptions',
-            'searching_catnums',
-            'searching_eans',
-            'searching_partnos',
-            'searching_short_descriptions',
+            ...$this->getSearchingFields(),
             'available_stores_count',
             'related_products',
             'breadcrumb',
@@ -91,6 +86,24 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'selling_from',
             'vat_percent',
             'promotion',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getSearchingFields(): array
+    {
+        return [
+            'searching_names',
+            'searching_descriptions',
+            'searching_catnums',
+            'searching_eans',
+            'searching_partnos',
+            'searching_short_descriptions',
+            'searching_seo_titles',
+            'searching_seo_h1s',
+            'searching_seo_meta_descriptions',
         ];
     }
 }

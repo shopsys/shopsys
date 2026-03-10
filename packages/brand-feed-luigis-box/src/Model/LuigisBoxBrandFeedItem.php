@@ -16,6 +16,9 @@ class LuigisBoxBrandFeedItem implements FeedItemInterface
         protected readonly string $name,
         protected readonly string $url,
         protected readonly ?string $imageUrl,
+        protected readonly ?string $seoTitle = null,
+        protected readonly ?string $seoMetaDescription = null,
+        protected readonly ?string $seoH1 = null,
     ) {
     }
 
@@ -43,5 +46,20 @@ class LuigisBoxBrandFeedItem implements FeedItemInterface
     public function getImageUrl(): ?string
     {
         return $this->imageUrl;
+    }
+
+    public function getSeoTitle(): ?string
+    {
+        return $this->seoTitle;
+    }
+
+    public function getSeoMetaDescription(): ?string
+    {
+        return $this->seoMetaDescription;
+    }
+
+    public function getSeoH1(): ?string
+    {
+        return $this->seoH1;
     }
 }

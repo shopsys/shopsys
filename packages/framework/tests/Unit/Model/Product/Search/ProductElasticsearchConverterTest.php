@@ -71,6 +71,9 @@ class ProductElasticsearchConverterTest extends TestCase
                 'buy_quantity' => null,
                 'free_quantity' => null,
             ],
+            'searching_seo_titles' => '',
+            'searching_seo_h1s' => '',
+            'searching_seo_meta_descriptions' => '',
         ];
 
         $converter = new ProductElasticsearchConverter();
@@ -161,6 +164,9 @@ class ProductElasticsearchConverterTest extends TestCase
                 'buy_quantity' => null,
                 'free_quantity' => null,
             ],
+            'searching_seo_titles' => '',
+            'searching_seo_h1s' => '',
+            'searching_seo_meta_descriptions' => '',
         ];
 
         $converter = new ProductElasticsearchConverter();

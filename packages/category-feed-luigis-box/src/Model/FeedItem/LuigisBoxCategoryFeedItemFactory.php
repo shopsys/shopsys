@@ -40,12 +40,17 @@ class LuigisBoxCategoryFeedItemFactory
             $parent = $parent->getParent();
         }
 
+        $domainId = $domainConfig->getId();
+
         return new LuigisBoxCategoryFeedItem(
             $category->getId(),
             $category->getName($locale),
-            $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainConfig->getId(), 'front_product_list', $category->getId()),
+            $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, 'front_product_list', $category->getId()),
             array_reverse($hierarchyNames),
             $imageUrl,
+            $category->getSeoTitle($domainId),
+            $category->getSeoMetaDescription($domainId),
+            $category->getSeoH1($domainId),
         );
     }
 }

@@ -37,6 +37,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 class ProductExportRepository
 {
     protected const string VARIANTS_CACHE_NAMESPACE = 'variants';
+    protected const string VALUE_SEPARATOR = ' ';
 
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -176,6 +177,9 @@ class ProductExportRepository
                 'buy_quantity' => $product->getPromotionXy($domainId)?->getBuyQuantity(),
                 'free_quantity' => $product->getPromotionXy($domainId)?->getFreeQuantity(),
             ],
+            ProductExportFieldProvider::SEARCHING_SEO_TITLES => $this->extractSearchingSeoTitles($product, $domainId),
+            ProductExportFieldProvider::SEARCHING_SEO_H1S => $this->extractSearchingSeoH1s($product, $domainId),
+            ProductExportFieldProvider::SEARCHING_SEO_META_DESCRIPTIONS => $this->extractSearchingSeoMetaDescriptions($product, $domainId),
 
             default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
         };
@@ -491,5 +495,53 @@ class ProductExportRepository
     protected function extractVat(Product $product, int $domainId): string
     {
         return $product->getVatForDomain($domainId)->getPercent();
+    }
+
+    protected function extractSearchingSeoTitles(Product $product, int $domainId): string
+    {
+        if ($product->isMainVariant()) {
+            $variantSeoTitles = [$product->getSeoTitle($domainId) ?? ''];
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+
+            foreach ($variants as $variant) {
+                $variantSeoTitles[] = $variant->getSeoTitle($domainId) ?? '';
+            }
+
+            return trim(implode(self::VALUE_SEPARATOR, array_unique($variantSeoTitles)));
+        }
+
+        return $product->getSeoTitle($domainId) ?? '';
+    }
+
+    protected function extractSearchingSeoH1s(Product $product, int $domainId): string
+    {
+        if ($product->isMainVariant()) {
+            $variantSeoH1s = [$product->getSeoH1($domainId) ?? ''];
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+
+            foreach ($variants as $variant) {
+                $variantSeoH1s[] = $variant->getSeoH1($domainId) ?? '';
+            }
+
+            return trim(implode(self::VALUE_SEPARATOR, array_unique($variantSeoH1s)));
+        }
+
+        return $product->getSeoH1($domainId) ?? '';
+    }
+
+    protected function extractSearchingSeoMetaDescriptions(Product $product, int $domainId): string
+    {
+        if ($product->isMainVariant()) {
+            $variantSeoMetaDescriptions = [$product->getSeoMetaDescription($domainId) ?? ''];
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+
+            foreach ($variants as $variant) {
+                $variantSeoMetaDescriptions[] = $variant->getSeoMetaDescription($domainId) ?? '';
+            }
+
+            return trim(implode(self::VALUE_SEPARATOR, array_unique($variantSeoMetaDescriptions)));
+        }
+
+        return $product->getSeoMetaDescription($domainId) ?? '';
     }
 }

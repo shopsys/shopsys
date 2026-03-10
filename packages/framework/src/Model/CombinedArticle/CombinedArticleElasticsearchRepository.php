@@ -72,6 +72,9 @@ class CombinedArticleElasticsearchRepository
         $result['name'] = $article['name'] ?? '';
         $result['text'] = $article['text'] ?? '';
         $result['url'] = $article['url'] ?? '';
+        $result['seoTitle'] = $article['seoTitle'] ?? null;
+        $result['seoMetaDescription'] = $article['seoMetaDescription'] ?? null;
+        $result['seoH1'] = $article['seoH1'] ?? null;
 
         return $result;
     }
@@ -154,6 +157,17 @@ class CombinedArticleElasticsearchRepository
                                         'name.edge_ngram_with_diacritic^40',
                                         'name.edge_ngram_without_diacritic^35',
                                         'text^50',
+                                        'seoH1.full_with_diacritic^30',
+                                        'seoH1.full_without_diacritic^28',
+                                        'seoH1^26',
+                                        'seoH1.edge_ngram_with_diacritic^24',
+                                        'seoH1.edge_ngram_without_diacritic^22',
+                                        'seoTitle.full_with_diacritic^20',
+                                        'seoTitle.full_without_diacritic^18',
+                                        'seoTitle^16',
+                                        'seoTitle.edge_ngram_with_diacritic^14',
+                                        'seoTitle.edge_ngram_without_diacritic^12',
+                                        'seoMetaDescription^10',
                                     ],
                                 ],
                             ],

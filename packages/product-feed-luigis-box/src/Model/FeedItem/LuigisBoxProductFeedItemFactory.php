@@ -43,9 +43,11 @@ class LuigisBoxProductFeedItemFactory
     public function create(Product $product, DomainConfig $domainConfig): LuigisBoxProductFeedItem
     {
         $locale = $domainConfig->getLocale();
-        $mainCategory = $this->categoryRepository->getProductMainCategoryOnDomain($product, $domainConfig->getId());
-        $availabilityText = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainConfig->getId());
-        $productDescription = $product->isVariant() ? $product->getMainVariant()->getDescriptionAsPlainText($domainConfig->getId()) : $product->getDescriptionAsPlainText($domainConfig->getId());
+        $domainId = $domainConfig->getId();
+
+        $mainCategory = $this->categoryRepository->getProductMainCategoryOnDomain($product, $domainId);
+        $availabilityText = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId);
+        $productDescription = $product->isVariant() ? $product->getMainVariant()->getDescriptionAsPlainText($domainId) : $product->getDescriptionAsPlainText($domainId);
 
         $mainVariantId = null;
 
@@ -59,7 +61,7 @@ class LuigisBoxProductFeedItemFactory
 
         $productPrices = $this->productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
             $product,
-            $domainConfig->getId(),
+            $domainId,
         );
 
         return new LuigisBoxProductFeedItem(
@@ -75,7 +77,7 @@ class LuigisBoxProductFeedItemFactory
             $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
             $this->getCategoryHierarchyNamesByCategoryId($product, $domainConfig),
             $product->isMainVariant(),
-            array_map(static fn (Flag $flag): string => $flag->getName($locale), $product->getFlags($domainConfig->getId())),
+            array_map(static fn (Flag $flag): string => $flag->getName($locale), $product->getFlags($domainId)),
             $this->getParameterValuesIndexedByName($product, $locale),
             $mainCategory->getName($locale),
             $product->getEan(),
@@ -86,6 +88,9 @@ class LuigisBoxProductFeedItemFactory
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, self::SMALL_IMAGE_SIZE, self::SMALL_IMAGE_SIZE) : null,
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, self::MEDIUM_IMAGE_SIZE, self::MEDIUM_IMAGE_SIZE) : null,
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, self::LARGE_IMAGE_SIZE, self::LARGE_IMAGE_SIZE) : null,
+            $product->getSeoTitle($domainId),
+            $product->getSeoMetaDescription($domainId),
+            $product->getSeoH1($domainId),
         );
     }
 
