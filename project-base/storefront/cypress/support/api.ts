@@ -1,7 +1,7 @@
 import { TypeCreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { TypePromoCode, TypeRegistrationDataInput } from '../../graphql/types';
 import 'cypress-real-events';
-import { PERSIST_STORE_NAME, staticData } from 'fixtures/demodata';
+import { b2bDomain, PERSIST_STORE_NAME, staticData } from 'fixtures/demodata';
 
 Cypress.Commands.add('checkGQL', { prevSubject: true }, (subject: Cypress.Response<any>, operationName: string) => {
     // Defer all work into Cypress chain so cy.log entries render in GUI before any throw
@@ -528,5 +528,276 @@ Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutati
             })
             .checkGQL('CreateOrderMutation')
             .its('CreateOrder.order');
+    });
+});
+
+Cypress.Commands.add('createB2bOrderForTest', () => {
+    const b2bGraphqlUrl = b2bDomain.baseUrl + '/graphql/';
+    const b2bHostname = new URL(b2bDomain.baseUrl).hostname;
+    const cookieName = `accessToken-${b2bDomain.domainId}`;
+
+    return cy.getCookie(cookieName, { domain: b2bHostname }).then((cookie) => {
+        const accessToken = cookie?.value;
+        if (!accessToken) {
+            throw new Error('B2B access token not found. Login as a B2B user before calling createB2bOrderForTest.');
+        }
+
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-Auth-Token': 'Bearer ' + accessToken,
+        };
+
+        const gqlRequest = (operationName: string, query: string, variables: object) =>
+            cy
+                .request({
+                    method: 'POST',
+                    url: b2bGraphqlUrl,
+                    body: JSON.stringify({ operationName, query, variables }),
+                    headers,
+                    failOnStatusCode: false,
+                })
+                .checkGQL(operationName);
+
+        // Step 1: Query available transports to get a valid UUID for the B2B domain
+        return gqlRequest(
+            'TransportsQuery',
+            `query TransportsQuery($cartUuid: Uuid) {
+                transports(cartUuid: $cartUuid) {
+                    uuid
+                    payments { uuid }
+                }
+            }`,
+            { cartUuid: null },
+        ).then((data) => {
+            const firstTransport = data.transports[0];
+            if (!firstTransport) {
+                throw new Error('No transports available on B2B domain.');
+            }
+            const transportUuid: string = firstTransport.uuid;
+            const paymentUuid: string = firstTransport.payments[0]?.uuid;
+            if (!paymentUuid) {
+                throw new Error('No payments available for the selected B2B transport.');
+            }
+
+            // Step 2: AddToCart
+            return gqlRequest(
+                'AddToCartMutation',
+                `mutation AddToCartMutation($input: AddToCartInput!) {
+                    AddToCart(input: $input) {
+                        cart { uuid }
+                    }
+                }`,
+                { input: { productUuid: staticData.products.helloKitty.uuid, quantity: 1 } },
+            ).then((addData) => {
+                const cartUuid: string = addData.AddToCart.cart.uuid;
+
+                // Step 3: ChangeTransport
+                return gqlRequest(
+                    'ChangeTransportInCartMutation',
+                    `mutation ChangeTransportInCartMutation($input: ChangeTransportInCartInput!) {
+                        ChangeTransportInCart(input: $input) { uuid transport { uuid } }
+                    }`,
+                    { input: { cartUuid, transportUuid } },
+                ).then(() => {
+                    // Step 4: ChangePayment
+                    return gqlRequest(
+                        'ChangePaymentInCartMutation',
+                        `mutation ChangePaymentInCartMutation($input: ChangePaymentInCartInput!) {
+                            ChangePaymentInCart(input: $input) { uuid payment { uuid } }
+                        }`,
+                        { input: { cartUuid, paymentUuid } },
+                    ).then(() => {
+                        // Step 5: CreateOrder
+                        return gqlRequest(
+                            'CreateOrderMutation',
+                            `mutation CreateOrderMutation(
+                                $cartUuid: Uuid
+                                $firstName: String!
+                                $lastName: String!
+                                $telephone: String!
+                                $street: String!
+                                $city: String!
+                                $postcode: String!
+                                $country: String!
+                            ) {
+                                CreateOrder(input: {
+                                    cartUuid: $cartUuid
+                                    firstName: $firstName
+                                    lastName: $lastName
+                                    telephone: $telephone
+                                    street: $street
+                                    city: $city
+                                    postcode: $postcode
+                                    country: $country
+                                    onCompanyBehalf: false
+                                    isDeliveryAddressDifferentFromBilling: false
+                                    heurekaAgreement: false
+                                    newsletterSubscription: false
+                                }) {
+                                    order { urlHash }
+                                }
+                            }`,
+                            {
+                                cartUuid,
+                                firstName: 'Test',
+                                lastName: 'B2B',
+                                telephone: '+420777000111',
+                                street: 'Testovací 1',
+                                city: 'Praha',
+                                postcode: '10000',
+                                country: 'CZ',
+                            },
+                        ).its('CreateOrder.order');
+                    });
+                });
+            });
+        });
+    });
+});
+
+Cypress.Commands.add('loginB2b', (email: string, password: string) => {
+    const b2bHostname = new URL(b2bDomain.baseUrl).hostname;
+
+    cy.request({
+        method: 'POST',
+        url: b2bDomain.baseUrl + '/graphql/',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: {
+            query: `mutation LoginMutation($email: String!, $password: Password!, $previousCartUuid: Uuid, $productListsUuids: [Uuid!]!) {
+                Login(
+                    input: {email: $email, password: $password, cartUuid: $previousCartUuid, productListsUuids: $productListsUuids}
+                ) {
+                    tokens {
+                        accessToken
+                        refreshToken
+                    }
+                    showCartMergeInfo
+                }
+            }`,
+            variables: {
+                email,
+                password,
+                previousCartUuid: null,
+                productListsUuids: [],
+            },
+        },
+        failOnStatusCode: false,
+    })
+        .checkGQL('LoginMutation')
+        .then((data) => {
+            cy.log('B2B login - ' + email);
+            cy.setCookie(`accessToken-${b2bDomain.domainId}`, data.Login.tokens.accessToken, {
+                log: false,
+                domain: b2bHostname,
+            });
+            cy.setCookie(`refreshToken-${b2bDomain.domainId}`, data.Login.tokens.refreshToken, {
+                log: false,
+                domain: b2bHostname,
+            });
+        });
+});
+
+const makeB2bGraphqlRequest = (operationName: string, query: string, variables: object) => {
+    const b2bGraphqlUrl = b2bDomain.baseUrl + '/graphql/';
+    const b2bHostname = new URL(b2bDomain.baseUrl).hostname;
+    const cookieName = `accessToken-${b2bDomain.domainId}`;
+
+    return cy.getCookie(cookieName, { domain: b2bHostname }).then((cookie) => {
+        const token = cookie?.value;
+        if (!token) {
+            throw new Error('B2B access token not found. Login as a B2B user before calling this command.');
+        }
+
+        return cy
+            .request({
+                method: 'POST',
+                url: b2bGraphqlUrl,
+                body: JSON.stringify({ operationName, query, variables }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': 'Bearer ' + token,
+                },
+                failOnStatusCode: false,
+            })
+            .checkGQL(operationName);
+    });
+};
+
+Cypress.Commands.add('getCustomerUserRoleGroupUuidForTest', () => {
+    return makeB2bGraphqlRequest(
+        'CustomerUserRoleGroupsQuery',
+        `query CustomerUserRoleGroupsQuery {
+            customerUserRoleGroups {
+                uuid
+                name
+            }
+        }`,
+        {},
+    ).then((data) => data.customerUserRoleGroups[0].uuid as string);
+});
+
+Cypress.Commands.add(
+    'addCustomerUserViaApi',
+    (input: {
+        email: string;
+        firstName: string;
+        lastName: string;
+        telephone: string;
+        roleGroupUuid: string;
+        newsletterSubscription?: boolean;
+    }) => {
+        return makeB2bGraphqlRequest(
+            'AddNewCustomerUserMutation',
+            `mutation AddNewCustomerUserMutation($input: AddNewCustomerUserDataInput!) {
+                AddNewCustomerUser(input: $input) {
+                    uuid
+                    firstName
+                    lastName
+                    email
+                }
+            }`,
+            {
+                input: {
+                    email: input.email,
+                    firstName: input.firstName,
+                    lastName: input.lastName,
+                    telephone: input.telephone,
+                    roleGroupUuid: input.roleGroupUuid,
+                    newsletterSubscription: input.newsletterSubscription ?? false,
+                },
+            },
+        ).then(
+            (data) => data.AddNewCustomerUser as { uuid: string; firstName: string; lastName: string; email: string },
+        );
+    },
+);
+
+Cypress.Commands.add('removeCustomerUserViaApi', (customerUserUuid: string) => {
+    return makeB2bGraphqlRequest(
+        'RemoveCustomerUserMutation',
+        `mutation RemoveCustomerUserMutation($customerUserUuid: Uuid!) {
+            RemoveCustomerUser(input: {customerUserUuid: $customerUserUuid})
+        }`,
+        { customerUserUuid },
+    );
+});
+
+Cypress.Commands.add('removeCustomerUserByEmailIfExistsViaApi', (email: string) => {
+    return makeB2bGraphqlRequest(
+        'CurrentCustomerUsersQuery',
+        `query CurrentCustomerUsersQuery {
+            customerUsers {
+                uuid
+                email
+            }
+        }`,
+        {},
+    ).then((data) => {
+        const user = data.customerUsers.find((u: { email: string }) => u.email === email);
+        if (user) {
+            return cy.removeCustomerUserViaApi(user.uuid);
+        }
     });
 });

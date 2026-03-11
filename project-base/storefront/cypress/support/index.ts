@@ -4,7 +4,14 @@ import { loadAllTranslations, t, type TranslationsType } from './translations';
 import 'cypress-real-events';
 import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command';
 import { registerCommand } from 'cypress-wait-for-stable-dom';
-import { DEFAULT_PERSIST_STORE_STATE, PERSIST_STORE_NAME, url } from 'fixtures/demodata';
+import {
+    B2B_PERSIST_STORE_NAME,
+    b2bDomain,
+    DEFAULT_PERSIST_STORE_STATE,
+    PERSIST_STORE_NAME,
+    staticData,
+    url,
+} from 'fixtures/demodata';
 import { TIDs } from 'tids';
 
 // Global translations object - synchronized access, no race conditions
@@ -29,6 +36,16 @@ export enum SNAPSHOT_GROUP {
     ORDER = 3,
     TRANSPORT_AND_PAYMENT = 4,
     VISITS = 5,
+    CUSTOMER_USERS = 6,
+    COMPLAINTS = 7,
+    LIMITED_USER = 8,
+    B2B = 9,
+    COMPARISON = 11,
+    FILTER = 12,
+    STORES = 13,
+    SEO_CATEGORY = 14,
+    FREE_SHIPPING = 15,
+    GIFT = 16,
 }
 
 const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = [
@@ -97,6 +114,21 @@ Cypress.Commands.add('reloadAndWaitForStableAndInteractiveDOM', () => {
 
     return cy.waitForStableAndInteractiveDOM();
 });
+
+Cypress.Commands.add(
+    'visitB2bAndWaitForStableAndInteractiveDOM',
+    (path: string, options?: Partial<Cypress.VisitOptions>) => {
+        cy.visit(b2bDomain.baseUrl + path, {
+            ...options,
+            onBeforeLoad: (win) => {
+                win.localStorage.setItem(B2B_PERSIST_STORE_NAME, JSON.stringify(DEFAULT_PERSIST_STORE_STATE));
+            },
+        });
+        cy.waitForStableAndInteractiveDOM();
+
+        return cy.waitForStableAndInteractiveDOM();
+    },
+);
 
 Cypress.Commands.add('waitForHydration', () => {
     cy.get('body[data-hydrated="true"]', { timeout: 10000 }).should('exist');
@@ -171,6 +203,30 @@ export const goToEditProfileFromHeader = () => {
     cy.waitForStableAndInteractiveDOM();
 };
 
+export const check403PageIsVisible = () => {
+    cy.getByTID([TIDs.error_403_page]).should('exist').and('be.visible');
+};
+
+export const loginAsB2bOwner = () => {
+    cy.loginB2b(staticData.b2bOwner.email, staticData.b2bOwner.password);
+};
+
+export const loginAsB2bUser = () => {
+    cy.loginB2b(staticData.b2bUser.email, staticData.b2bUser.password);
+};
+
+export const loginAsB2bLimitedUser = () => {
+    cy.loginB2b(staticData.b2bLimitedUser.email, staticData.b2bLimitedUser.password);
+};
+
+export const loginAsB2bCatalogUser = () => {
+    cy.loginB2b(staticData.b2bCatalogUser.email, staticData.b2bCatalogUser.password);
+};
+
+export const loginAsB2bAccountant = () => {
+    cy.loginB2b(staticData.b2bAccountant.email, staticData.b2bAccountant.password);
+};
+
 export const checkLoaderOverlayIsNotVisibleAfterTimePeriod = (timePeriod: number = 300) => {
     cy.wait(timePeriod);
     cy.getByTID([TIDs.loader_overlay]).should('not.exist');
@@ -187,6 +243,7 @@ type SnapshotAdditionalOptions = {
     wait: number;
     blackout: Blackout[];
     removePointerEvents: (TIDs | string)[];
+    preserveFixed: TIDs[];
 };
 
 export const takeSnapshotAndCompare = (
@@ -204,6 +261,7 @@ export const takeSnapshotAndCompare = (
         wait: options.wait ?? 1000,
         blackout: options.blackout ?? [],
         removePointerEvents: options.removePointerEvents ?? [],
+        preserveFixed: options.preserveFixed ?? [],
     };
 
     if (!testName) {
@@ -212,9 +270,10 @@ export const takeSnapshotAndCompare = (
 
     scrollPageBeforeScreenshot(optionsWithDefaultValues);
     hideScrollbars();
-    disableStickyPositioningBeforeScreenshot();
+    disableStickyPositioningBeforeScreenshot(optionsWithDefaultValues.capture, optionsWithDefaultValues.preserveFixed);
     callbackBeforeBlackout?.();
     disableAnimationsBeforeScreenshot();
+    loseFocus();
     blackoutBeforeScreenshot(optionsWithDefaultValues.blackout);
     removePointerEventsBeforeScreenshot([
         ...ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS,
@@ -255,12 +314,22 @@ const hideScrollbars = () => {
         style.setAttribute('id', 'hide-scrollbars');
         doc.head.appendChild(style);
 
-        style.innerHTML = `::-webkit-scrollbar { display: none; }`;
+        style.innerHTML = `::-webkit-scrollbar { display: none; } * { scrollbar-width: none !important; }`;
     });
 };
 
-const disableStickyPositioningBeforeScreenshot = () => {
+const disableStickyPositioningBeforeScreenshot = (
+    capture: 'viewport' | 'fullPage' | TIDs,
+    preserveFixed: TIDs[] = [],
+) => {
     cy.document().then((doc) => {
+        const captureEl =
+            capture !== 'viewport' && capture !== 'fullPage' ? doc.querySelector(`[data-tid=${capture}]`) : null;
+
+        const preservedEls = preserveFixed
+            .map((tid) => doc.querySelector(`[data-tid=${tid}]`))
+            .filter(Boolean) as Element[];
+
         doc.querySelectorAll('*').forEach((el) => {
             const htmlEl = el as HTMLElement;
             const position = window.getComputedStyle(htmlEl).getPropertyValue('position');
@@ -268,6 +337,26 @@ const disableStickyPositioningBeforeScreenshot = () => {
             if (position === 'sticky') {
                 htmlEl.setAttribute('data-original-position', position);
                 htmlEl.style.setProperty('position', 'static', 'important');
+            }
+
+            if (position === 'fixed') {
+                // Skip hiding the capture target and its ancestors
+                if (captureEl && (htmlEl === captureEl || htmlEl.contains(captureEl))) {
+                    return;
+                }
+                // Skip hiding preserved fixed elements, their ancestors, and their siblings
+                if (
+                    preservedEls.some(
+                        (preserved) =>
+                            htmlEl === preserved ||
+                            htmlEl.contains(preserved) ||
+                            (preserved.parentElement && preserved.parentElement === htmlEl.parentElement),
+                    )
+                ) {
+                    return;
+                }
+                htmlEl.setAttribute('data-original-position', position);
+                htmlEl.style.setProperty('display', 'none', 'important');
             }
         });
     });
@@ -279,7 +368,14 @@ const restoreStickyPositioningAfterScreenshot = () => {
 
         modifiedElements.forEach((el) => {
             const htmlEl = el as HTMLElement;
-            htmlEl.style.removeProperty('position');
+            const originalPosition = htmlEl.getAttribute('data-original-position');
+
+            if (originalPosition === 'fixed') {
+                htmlEl.style.removeProperty('display');
+            } else {
+                htmlEl.style.removeProperty('position');
+            }
+
             htmlEl.removeAttribute('data-original-position');
         });
     });
@@ -287,21 +383,27 @@ const restoreStickyPositioningAfterScreenshot = () => {
 
 const blackoutBeforeScreenshot = (blackout: Blackout[]) => {
     for (const blackoutElement of blackout) {
-        cy.getByTID([blackoutElement.tid]).each((element) => {
-            const rect = element[0].getBoundingClientRect();
+        cy.get('body').then(($body) => {
+            const matchedElements = $body.find(`[data-tid=${blackoutElement.tid}]`);
 
-            const coverDiv = document.createElement('div');
-            coverDiv.classList.add('blackout');
-            coverDiv.style.position = 'absolute';
-            coverDiv.style.width = `${rect.width}px`;
-            coverDiv.style.height = `${rect.height}px`;
-            coverDiv.style.top = `${rect.top + window.scrollY}px`;
-            coverDiv.style.left = `${rect.left + window.scrollX}px`;
-            coverDiv.style.backgroundColor = 'black';
-            coverDiv.style.zIndex = blackoutElement.zIndex ? blackoutElement.zIndex.toString() : '10000';
+            if (!matchedElements.length) {
+                return;
+            }
 
-            cy.get('body').then((body) => {
-                body.append(coverDiv);
+            matchedElements.each((_, element) => {
+                const rect = element.getBoundingClientRect();
+
+                const coverDiv = document.createElement('div');
+                coverDiv.classList.add('blackout');
+                coverDiv.style.position = 'absolute';
+                coverDiv.style.width = `${rect.width}px`;
+                coverDiv.style.height = `${rect.height}px`;
+                coverDiv.style.top = `${rect.top + window.scrollY}px`;
+                coverDiv.style.left = `${rect.left + window.scrollX}px`;
+                coverDiv.style.backgroundColor = 'black';
+                coverDiv.style.zIndex = blackoutElement.zIndex ? blackoutElement.zIndex.toString() : '10000';
+
+                $body.append(coverDiv);
             });
         });
     }
@@ -379,7 +481,12 @@ export const changeElementText = (selector: TIDs, newText: string, isRightAfterS
 };
 
 export const loseFocus = () => {
-    cy.focused().blur();
+    cy.get('body').then(($body) => {
+        const $focused = $body.find(':focus');
+        if ($focused.length) {
+            cy.focused().blur();
+        }
+    });
 };
 
 export const checkPopupIsVisible = (shouldCloseAfterChecking: boolean = false) => {
