@@ -5,7 +5,3 @@ import { TIDs } from 'tids';
 export const changeBlogArticleDynamicPartsToStaticDemodata = () => {
     changeElementText(TIDs.blog_article_publication_date, staticData.blogArticle.publicationDate, false);
 };
-
-export const changeStoreOpeningHoursToStaticDemodata = () => {
-    changeElementText(TIDs.store_opening_hours, staticData.openingHours, false);
-};

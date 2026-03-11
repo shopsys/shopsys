@@ -107,7 +107,7 @@ export const applyPromoCodeOnCartPage = (promoCode: string) => {
 };
 
 export const removePromoCodeOnCartPage = () => {
-    cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).click();
+    cy.getByTID([TIDs.blocks_promocode_remove_button]).click();
 };
 
 export const addToCartOnProductDetailPage = () => {

@@ -64,15 +64,54 @@ describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
     });
 });
 
+describe('Registration Tests (B2B)', { retries: { runMode: 0 } }, () => {
+    beforeEach(() => {
+        initializePersistStoreInLocalStorageToDefaultValues();
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
+    });
+
+    it('[Register B2B] should register as a B2B (company) customer', function () {
+        goToRegistrationPageFromHeader();
+        const email = 'register-as-b2b@shopsys.com';
+        clearAndFillInRegstrationFormEmail(email, translations.placeholder.email);
+        fillInRegstrationForm('companyCustomer', email);
+        clearAndFillInRegistrationFormPasswords(staticData.user.password);
+        loseFocus();
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled b2b registration form', {
+            blackout: [
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
+                { tid: TIDs.footer_copyright },
+            ],
+        });
+
+        submitRegistrationForm();
+        checkAndHideSuccessToast(translations.toast.success.accountCreated);
+        checkUrl('/');
+        cy.waitForStableAndInteractiveDOM();
+
+        goToEditProfileFromHeader();
+        checkUrl(url.customer.editProfile);
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'b2b customer edit page', {
+            blackout: [
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
+                { tid: TIDs.footer_copyright },
+            ],
+        });
+    });
+});
+
 describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
         cy.visitAndWaitForStableAndInteractiveDOM(url.registration);
     });
 
-    it('[Empty Form] should disallow registration with empty registration form, but then allow after filling', function () {
+    it('[Empty Form] should disallow registration with empty registration form, show flash message, then allow after filling', function () {
         submitRegistrationForm();
         checkRegistrationValidationErrors();
+        cy.getByTID([TIDs.form_line_error]).should('have.length.greaterThan', 0);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after invalid try', {
             blackout: [
                 { tid: TIDs.footer_social_links },
