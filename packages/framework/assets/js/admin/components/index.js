@@ -5,6 +5,7 @@ import './AjaxConfirm';
 import './Article';
 import './CategoryTreeForm';
 import './CategoryTreeSorting';
+import './CKEditorLinkVariableProtocol';
 import './CKEditorPreview';
 import './choiceControl';
 import './Complaint';
