@@ -907,6 +907,12 @@ msgstr ""
 msgid "Default VAT rate"
 msgstr ""
 
+msgid "Default phone prefix"
+msgstr ""
+
+msgid "Default phone prefix must be enabled"
+msgstr ""
+
 msgid "Default pricing group"
 msgstr ""
 
@@ -3759,4 +3765,3 @@ msgstr ""
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr ""
-

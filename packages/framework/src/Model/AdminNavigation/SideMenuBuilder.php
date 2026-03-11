@@ -146,6 +146,7 @@ class SideMenuBuilder
     public const string LIST_COUNTRY = 'countries';
     public const string NEW_COUNTRY = 'new';
     public const string EDIT_COUNTRY = 'edit';
+    public const string LIST_PHONE_PREFIX_SETTINGS = 'phone_prefix_settings';
     public const string LIST_PARAMETER_VALUE = 'parameter_values';
     public const string EDIT_PARAMETER_VALUE = 'parameter_values_edit';
     public const string LIST_STORE = 'stores';
@@ -783,6 +784,10 @@ class SideMenuBuilder
         $countriesMenu->addChild(
             static::EDIT_COUNTRY,
             ['route' => 'admin_country_edit', 'label' => t('Editing country'), 'display' => false],
+        );
+        $listsMenu->addChild(
+            static::LIST_PHONE_PREFIX_SETTINGS,
+            ['route' => 'admin_phoneprefix_settings', 'label' => t('Phone prefixes')],
         );
 
         $parameterValueMenu = $listsMenu->addChild(static::LIST_PARAMETER_VALUE, ['route' => 'admin_parametervalue_list', 'label' => t('Parameter value of type color')]);

@@ -142,6 +142,7 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
             new Role(AdminRoleConstant::ROLE_FREE_TRANSPORT_AND_PAYMENT, t('Free transport and payment'), [Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT, t('Transports and payments'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_COUNTRY, t('Countries'), [Permission::CREATE, Permission::EDIT]),
+            new Role(AdminRoleConstant::ROLE_PHONE_PREFIX, t('Phone prefixes'), [Permission::VIEW, Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_STORE, t('Stores'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_CONTACT_FORM, t('Contact form'), [Permission::VIEW, Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_LANGUAGE_CONSTANTS, t('Language constants'), [Permission::EDIT, Permission::DELETE]),
