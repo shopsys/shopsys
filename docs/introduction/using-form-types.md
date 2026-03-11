@@ -250,6 +250,74 @@ Displays text `Customer has no orders so far.` if User doesn't have any orders.
 
 Required option that defines for what user should the orders be listed.
 
+### [PhoneType]({{github.link}}/packages/framework/src/Form/PhoneType.php)
+
+Compound form type for phone number input consisting of a country dial code selector and a phone number field.
+Data class is `PhoneData` which holds `countryCode` (ISO 3166-1 alpha-2), `prefix` (dial code, e.g. `+420`), and `number`.
+
+Sub-fields:
+
+- **`countryCode`** — `ChoiceType` listing all available dial codes. Codes enabled for the given `domain_id` are shown as preferred choices at the top of the list. Each option label shows the country flag emoji, dial code, and country name.
+- **`number`** — `TelType` for the phone number itself.
+
+On submit, `prefix` is automatically derived from the selected `countryCode`.
+On data initialization, if only `prefix` is stored (no `countryCode`), the matching `countryCode` is resolved automatically. If `countryCode` is stored but does not match the stored `prefix`, `countryCode` is cleared.
+
+The view exposes an `unknownPrefix` variable containing the stored prefix value when it does not correspond to any known dial code (useful for displaying a warning or fallback).
+
+The type always applies `PhoneNumber` and `PhoneNumberPrefixConsistency` constraints.
+
+#### Options
+
+##### domain_id
+
+Required `int` option. Used to determine which dial codes should be highlighted as preferred choices (those enabled on the given domain).
+
+##### required
+
+Defaults to `true`.
+When `true`, both `countryCode` and `number` sub-fields have `NotBlank` constraints applied.
+
+#### Overriding Phone Number validation in project
+
+`PhoneType` uses the `PhoneNumber` constraint and `PhoneNumberValidator`.
+If you need project-specific validation behavior, you can override the validator by extending the validator and rebinding its service ID.
+
+Example:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Component\Validator;
+
+use Shopsys\FrameworkBundle\Form\Constraints\PhoneNumber;
+use Shopsys\FrameworkBundle\Form\Constraints\PhoneNumberValidator as BasePhoneNumberValidator;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
+
+class PhoneNumberValidator extends BasePhoneNumberValidator
+{
+    public function validate(mixed $value, Constraint $constraint): void
+    {
+        // You can add custom validation logic here, for example:
+        // - Validate the phone number against specific country formats
+        // - Check for allowed prefixes using PhoneData
+        // - Add custom error messages based on your requirements
+
+        // Call the parent validator to maintain existing validation behavior if necessary
+        parent::validate($value, $constraint);
+    }
+}
+```
+
+```yaml
+# project-base/app/config/services.yaml
+services:
+    Shopsys\FrameworkBundle\Form\Constraints\PhoneNumberValidator:
+        class: App\Component\Validator\PhoneNumberValidator
+```
+
 ### [ProductsType]({{github.link}}/packages/framework/src/Form/ProductsType.php)
 
 Displays a list of products.
