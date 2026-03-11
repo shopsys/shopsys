@@ -9,7 +9,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeSettingsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeSettingsQuery = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string | null, displayTimezone: string, heurekaEnabled: boolean, privacyPolicyArticleUrl: string | null, termsAndConditionsArticleUrl: string | null, userConsentPolicyArticleUrl: string | null, socialNetworkLoginConfig: Array<Types.TypeLoginTypeEnum>, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string | null, metaDescription: string }, mainBlogCategoryData: { __typename?: 'MainBlogCategoryData', mainBlogCategoryUrl: string | null, mainBlogCategoryMainImage: { __typename?: 'Image', url: string } | null } } | null };
+export type TypeSettingsQuery = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string | null, displayTimezone: string, heurekaEnabled: boolean, privacyPolicyArticleUrl: string | null, termsAndConditionsArticleUrl: string | null, userConsentPolicyArticleUrl: string | null, socialNetworkLoginConfig: Array<Types.TypeLoginTypeEnum>, cspHeader: string, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string | null, metaDescription: string }, mainBlogCategoryData: { __typename?: 'MainBlogCategoryData', mainBlogCategoryUrl: string | null, mainBlogCategoryMainImage: { __typename?: 'Image', url: string } | null } } | null };
 
 
 export const SettingsQueryDocument = gql`
@@ -34,6 +34,7 @@ export const SettingsQueryDocument = gql`
     termsAndConditionsArticleUrl
     userConsentPolicyArticleUrl
     socialNetworkLoginConfig
+    cspHeader
   }
 }
     ${PricingSettingFragment}

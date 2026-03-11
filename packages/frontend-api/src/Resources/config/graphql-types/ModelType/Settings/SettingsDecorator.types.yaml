@@ -44,3 +44,7 @@ SettingsDecorator:
                 type: "[LoginTypeEnum!]!"
                 resolve: "@=query('socialNetworkLoginConfigQuery')"
                 description: "Returns available social network logins"
+            cspHeader:
+                type: String!
+                resolve: "@=query('cspHeaderQuery')"
+                description: "Content Security Policy header value"

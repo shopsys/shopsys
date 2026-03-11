@@ -27,6 +27,7 @@ export const middleware: NextMiddleware = async (request) => {
         }
 
         const origin = getBaseUrlWithLocale(baseOrigin, currentLocale);
+
         const staticRouteResponse = handleStaticRoutes(request, host, origin);
 
         if (staticRouteResponse) {

@@ -34,6 +34,7 @@ import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
 import { CookiesStoreState } from 'utils/cookies/cookiesStore';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
+import { isEnvironment } from 'utils/isEnvironment';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
 import { getServerSideInternationalizedStaticUrl } from 'utils/staticUrls/getServerSideInternationalizedStaticUrl';
@@ -73,6 +74,27 @@ type InitServerSidePropsParameters<VariablesType> = {
           t: Translate;
       }
 );
+
+const appendSourceToDirective = (cspHeader: string, directiveName: string, source: string): string => {
+    const directives = cspHeader.split(';');
+
+    for (let index = 0; index < directives.length; index++) {
+        const trimmedDirective = directives[index].trim();
+
+        if (!trimmedDirective.startsWith(`${directiveName} `)) {
+            continue;
+        }
+
+        directives[index] = trimmedDirective.includes(source) ? trimmedDirective : `${trimmedDirective} ${source}`;
+
+        return directives.map((directive) => directive.trim()).join('; ');
+    }
+
+    return cspHeader;
+};
+
+const applyStorefrontDevelopmentCspAppendices = (cspHeader: string): string =>
+    appendSourceToDirective(cspHeader, 'script-src', "'unsafe-eval'");
 
 export const initServerSideProps = async <VariablesType extends Variables>({
     domainConfig,
@@ -146,6 +168,17 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     const resolvedQueries = await Promise.all(
         prefetchQueries.map((queryObject) => currentClient.query(queryObject.query, queryObject.variables).toPromise()),
     );
+
+    const settingsResult = resolvedQueries.find((query) => query.data?.settings?.cspHeader !== undefined);
+    let cspHeaderValue = settingsResult?.data?.settings?.cspHeader;
+
+    if (cspHeaderValue) {
+        if (isEnvironment('development')) {
+            cspHeaderValue = applyStorefrontDevelopmentCspAppendices(cspHeaderValue);
+        }
+
+        context.res.setHeader('Content-Security-Policy', cspHeaderValue);
+    }
 
     const slugResult = resolvedQueries.find((query) => !!query.data?.slug?.slug);
     const parsedSlug = slugResult?.data.slug.slug;

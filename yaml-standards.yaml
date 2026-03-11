@@ -34,6 +34,7 @@
         - ./project-base/app/config/cron.yaml
         - ./project-base/app/config/packages/security.yaml
         - ./project-base/app/node_modules/*
+        - ./project-base/app/orchestration/kubernetes/**/*.yaml
         - ./project-base/app/var/*
         - ./project-base/storefront/*
         - ./vendor/*

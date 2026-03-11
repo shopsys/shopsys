@@ -3474,6 +3474,8 @@ export type TypeSettings = {
   __typename?: 'Settings';
   /** Main text for contact form */
   contactFormMainText: Maybe<Scalars['String']['output']>;
+  /** Content Security Policy header value */
+  cspHeader: Scalars['String']['output'];
   /** Timezone that is used for displaying time */
   displayTimezone: Scalars['String']['output'];
   /** Returns true if Heureka is available for the current domain */

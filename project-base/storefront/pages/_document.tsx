@@ -31,72 +31,48 @@ const getBrowserWarningTranslation = (locale: string) => {
     return BROWSER_WARNING_TRANSLATIONS[locale] || BROWSER_WARNING_TRANSLATIONS.en;
 };
 
+// If the browser can't parse optional chaining / nullish coalescing, this script
+// silently fails and the flag stays false — no eval() needed.
+const BROWSER_SYNTAX_TEST_SCRIPT = `window.__browserModern=false;`;
+const BROWSER_SYNTAX_PROBE_SCRIPT = `var _t={a:{b:1}};if(_t?.a?.b&&(null??"x")){window.__browserModern=true;}`;
+
 const BROWSER_WARNING_SCRIPT = `
 (function() {
+    if (window.__browserModern) return;
+
     var STORAGE_KEY = 'browser-warning-dismissed';
-    var isSupported = true;
-
-    // Test for optional chaining support (Safari 13.1+, Chrome 80+, Firefox 74+)
-    try {
-        eval('var test = {a: {b: 1}}; test?.a?.b;');
-    } catch (e) {
-        // Only treat SyntaxError as unsupported browser (CSP blocks throw EvalError)
-        if (e.name === 'SyntaxError') {
-            isSupported = false;
-        }
-    }
-
-    // Test for nullish coalescing (Safari 13.1+)
-    if (isSupported) {
-        try {
-            eval('var test = null ?? "default";');
-        } catch (e) {
-            // Only treat SyntaxError as unsupported browser (CSP blocks throw EvalError)
-            if (e.name === 'SyntaxError') {
-                isSupported = false;
-            }
-        }
-    }
-
-    // Check if user already dismissed the warning
     var wasDismissed = false;
     try {
         wasDismissed = localStorage.getItem(STORAGE_KEY) === '1';
-    } catch (e) {
-        // localStorage might not be available
-    }
+    } catch (e) {}
 
-    if (!isSupported && !wasDismissed) {
-        // Show warning banner when DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            var banner = document.getElementById('browser-warning-banner');
-            var dismissBtn = document.getElementById('browser-warning-dismiss');
-            var originalPaddingTop = '';
+    if (wasDismissed) return;
 
-            if (banner) {
-                // Capture original body padding before modifying
-                originalPaddingTop = window.getComputedStyle(document.body).paddingTop;
-                var originalPaddingValue = parseInt(originalPaddingTop, 10) || 0;
+    document.addEventListener('DOMContentLoaded', function() {
+        var banner = document.getElementById('browser-warning-banner');
+        var dismissBtn = document.getElementById('browser-warning-dismiss');
+        var originalPaddingTop = '';
 
-                banner.style.display = 'block';
-                document.body.style.paddingTop = (originalPaddingValue + banner.offsetHeight) + 'px';
-            }
+        if (banner) {
+            originalPaddingTop = window.getComputedStyle(document.body).paddingTop;
+            var originalPaddingValue = parseInt(originalPaddingTop, 10) || 0;
 
-            if (dismissBtn) {
-                dismissBtn.onclick = function() {
-                    if (banner) {
-                        banner.style.display = 'none';
-                        document.body.style.paddingTop = originalPaddingTop;
-                    }
-                    try {
-                        localStorage.setItem(STORAGE_KEY, '1');
-                    } catch (e) {
-                        // localStorage might not be available
-                    }
-                };
-            }
-        });
-    }
+            banner.style.display = 'block';
+            document.body.style.paddingTop = (originalPaddingValue + banner.offsetHeight) + 'px';
+        }
+
+        if (dismissBtn) {
+            dismissBtn.onclick = function() {
+                if (banner) {
+                    banner.style.display = 'none';
+                    document.body.style.paddingTop = originalPaddingTop;
+                }
+                try {
+                    localStorage.setItem(STORAGE_KEY, '1');
+                } catch (e) {}
+            };
+        }
+    });
 })();
 `;
 
@@ -200,6 +176,8 @@ class MyDocument extends Document<MyDocumentInitialProps> {
             <Html lang={htmlLang}>
                 <Head>
                     <style dangerouslySetInnerHTML={{ __html: BROWSER_WARNING_STYLES }} />
+                    <script dangerouslySetInnerHTML={{ __html: BROWSER_SYNTAX_TEST_SCRIPT }} />
+                    <script dangerouslySetInnerHTML={{ __html: BROWSER_SYNTAX_PROBE_SCRIPT }} />
                     <script dangerouslySetInnerHTML={{ __html: BROWSER_WARNING_SCRIPT }} />
                 </Head>
                 <body>
