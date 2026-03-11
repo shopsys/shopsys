@@ -1,3 +1,4 @@
+import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
 import { MouseEventHandler } from 'react';
 import { fadeAnimation } from 'utils/animations/animationVariants';
@@ -15,6 +16,7 @@ export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop
             {isActive && (
                 <m.div
                     animate="visible"
+                    data-tid={TIDs.overlay}
                     exit="hidden"
                     initial="hidden"
                     variants={fadeAnimation}

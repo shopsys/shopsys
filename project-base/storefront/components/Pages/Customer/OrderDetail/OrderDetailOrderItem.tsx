@@ -91,7 +91,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                 )}
             >
                 <div className="vl:w-auto flex w-full items-center gap-2.5">
-                    <div className="flex size-20 shrink-0">
+                    <div className="flex size-20 shrink-0" data-tid={TIDs.order_detail_item_image}>
                         <Image
                             alt={orderItem.name}
                             className="size-20 object-contain mix-blend-multiply"

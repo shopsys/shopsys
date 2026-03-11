@@ -124,6 +124,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                                 ariaLabel={t('Go to customer users page', { ns: 'accessibility' })}
                                 href={customerUsersUrl}
                                 isActive={pathname === customerUsersUrl}
+                                tid={TIDs.user_menu_customer_users_link}
                                 type="customer-users"
                                 onClick={() => setIsUserMenuOpen(false)}
                             >

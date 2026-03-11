@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { TIDs } from 'cypress/tids';
 import { TypeOrderItemFragment } from 'graphql/requests/orders/fragments/OrderItemFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -31,6 +32,7 @@ export const OrderItemProducts = ({ items, orderLink }: OrderItemProductsProps) 
                 return (
                     <div
                         key={product.link}
+                        data-tid={TIDs.order_list_product_image}
                         className={twJoin(
                             'bg-base-white relative size-16 rounded-xl border border-transparent p-2 transition-all',
                             isVisible && 'hover:border-border-less',

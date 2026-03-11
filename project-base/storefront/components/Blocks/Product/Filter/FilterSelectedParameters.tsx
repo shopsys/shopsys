@@ -3,6 +3,7 @@ import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseD
 import { ColorPreview } from 'components/Basic/ColorPreview/ColorPreview';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
+import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
@@ -44,7 +45,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
         <AnimatePresence initial={false}>
             {!currentFilter && !getHasDefaultFilters(defaultProductFiltersMap) ? null : (
                 <AnimateCollapseDiv className="block!" keyName="selected-parameters">
-                    <div className="vl:mb-5 vl:mt-0 mt-5">
+                    <div className="vl:mb-5 vl:mt-0 mt-5" data-tid={TIDs.selected_filters}>
                         <p className="h6 vl:mb-2 mb-5">{t('Selected filters')}</p>
 
                         <div className="flex flex-wrap items-center gap-y-2">
@@ -261,6 +262,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                             <button
                                 aria-label={t('Clear all active filters', { ns: 'accessibility' })}
                                 className="font-secondary text-link-default hover:text-link-hovered cursor-pointer rounded-sm text-sm font-semibold underline"
+                                data-tid={TIDs.clear_all_filters_button}
                                 tabIndex={0}
                                 type="button"
                                 onClick={resetAllFilterQueries}

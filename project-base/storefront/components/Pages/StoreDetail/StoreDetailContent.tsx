@@ -7,6 +7,7 @@ import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { StoreContact } from 'components/Blocks/StoreList/StoreContact';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { TIDs } from 'cypress/tids';
 import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -36,7 +37,9 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                 <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center lg:gap-5">
                     <h1>{store.storeName}</h1>
 
-                    <OpeningStatus status={store.openingHours.status} />
+                    <div data-tid={TIDs.store_opening_status}>
+                        <OpeningStatus status={store.openingHours.status} />
+                    </div>
                 </div>
             </Webline>
 
@@ -76,7 +79,10 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         </StoreSection>
                     </div>
                     <div className="w-full lg:basis-1/2">
-                        <div className="bg-background-more flex aspect-square w-full rounded-xl p-5">
+                        <div
+                            className="bg-background-more flex aspect-square w-full rounded-xl p-5"
+                            data-tid={TIDs.stores_map}
+                        >
                             <GoogleMap
                                 isDetail
                                 defaultZoom={15}
@@ -97,7 +103,10 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
 
             {store.storeImages.length > 0 && (
                 <Webline>
-                    <div className="max-vl:grid-flow-col vl:gap-8 grid snap-x snap-mandatory gap-4 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto lg:flex lg:flex-wrap">
+                    <div
+                        className="max-vl:grid-flow-col vl:gap-8 grid snap-x snap-mandatory gap-4 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto lg:flex lg:flex-wrap"
+                        data-tid={TIDs.store_gallery_images}
+                    >
                         {store.storeImages.map((image, index) => (
                             <button
                                 key={image.url}

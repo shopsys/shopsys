@@ -1,9 +1,10 @@
+import { TIDs } from 'cypress/tids';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const FreeTransportRange: FC = () => {
-    const testIdentifier = 'blocks-freetransport-range';
+    const testIdentifier = TIDs.free_transport_range;
     const { cart } = useCurrentCart();
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();

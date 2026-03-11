@@ -9,6 +9,7 @@ import {
     useCustomerChangeProfileFormMeta,
 } from 'components/Pages/Customer/EditProfile/customerChangeProfileFormMeta';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
+import { TIDs } from 'cypress/tids';
 import { useChangeCompanyDataMutation } from 'graphql/requests/customer/mutations/ChangeCompanyDataMutation.generated';
 import { useChangePersonalDataMutation } from 'graphql/requests/customer/mutations/ChangePersonalDataMutation.generated';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
@@ -112,6 +113,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         <FormButtonWrapper>
                             <SubmitButton
                                 aria-label={t('Submit form to save changes in your profile', { ns: 'accessibility' })}
+                                data-tid={TIDs.edit_profile_save_button}
                                 hasDisabledLook={isSubmitting}
                             >
                                 {t('Save profile')}

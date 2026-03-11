@@ -1,5 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { TIDs } from 'cypress/tids';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -29,7 +30,9 @@ export const RemoveAllProductsPopup: FC<RemoveAllProductsPopupProps> = ({ title,
                 <Button variant="inverted" onClick={handleClose}>
                     {t('No')}
                 </Button>
-                <Button onClick={handleConfirm}>{t('Yes')}</Button>
+                <Button tid={TIDs.popup_confirm_button} onClick={handleConfirm}>
+                    {t('Yes')}
+                </Button>
             </div>
         </Popup>
     );

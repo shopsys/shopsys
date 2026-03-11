@@ -6,6 +6,7 @@ import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { CustomerUsersTable } from 'components/Pages/Customer/Users/CustomerUsersTable';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { TypeSimpleCustomerUserFragment } from 'graphql/requests/customer/fragments/SimpleCustomerUserFragment.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
@@ -75,6 +76,7 @@ const UsersPage: FC = () => {
                     <Button
                         aria-haspopup="dialog"
                         className="w-fit"
+                        data-tid={TIDs.customer_users_add_button}
                         size="small"
                         onClick={(e) => openManageCustomerUserPopup(e)}
                     >

@@ -5,6 +5,7 @@ import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeProductListTypeEnum } from 'graphql/types';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -32,6 +33,7 @@ export const MenuIconic: FC = () => {
                     <MenuIconicItemLink
                         aria-label={t('Go to stores page', { ns: 'accessibility' })}
                         href={storesUrl}
+                        tid={TIDs.header_stores_link}
                         title={t('Stores page')}
                         type="stores"
                     >
@@ -44,6 +46,7 @@ export const MenuIconic: FC = () => {
                     <MenuIconicItemLink
                         aria-label={t('Go to comparison page', { ns: 'accessibility' })}
                         href={productComparisonUrl}
+                        tid={TIDs.header_comparison_link}
                         title={t('Comparison page')}
                         type="comparison"
                     >

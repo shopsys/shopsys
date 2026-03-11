@@ -12,6 +12,7 @@ import {
 } from 'components/Pages/Customer/customerUserManageProfileFormMeta';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { getCustomerUser } from 'connectors/customer/CustomerUser';
+import { TIDs } from 'cypress/tids';
 import { TypeSimpleCustomerUserFragment } from 'graphql/requests/customer/fragments/SimpleCustomerUserFragment.generated';
 import { useAddNewCustomerUserMutation } from 'graphql/requests/customer/mutations/AddNewCustomerUserMutation.generated';
 import { useEditCustomerUserPersonalDataMutation } from 'graphql/requests/customer/mutations/EditCustomerUserPersonalDataMutation.generated';
@@ -217,6 +218,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
 
                         <FormButtonWrapper>
                             <SubmitButton
+                                data-tid={TIDs.customer_users_manage_submit_button}
                                 aria-label={
                                     mode === 'edit'
                                         ? t('Submit form to save user changes', { ns: 'accessibility' })

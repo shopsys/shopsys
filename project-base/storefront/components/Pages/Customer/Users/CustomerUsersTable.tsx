@@ -4,6 +4,7 @@ import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { SkeletonCustomerUsersTable } from 'components/Blocks/Skeleton/SkeletonModuleCustomerUsers';
 import { Button } from 'components/Forms/Button/Button';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeSimpleCustomerUserFragment } from 'graphql/requests/customer/fragments/SimpleCustomerUserFragment.generated';
 import { useRemoveCustomerUserMutation } from 'graphql/requests/customer/mutations/RemoveCustomerUserMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -93,47 +94,51 @@ export const CustomerUsersTable: FC = () => {
     }
 
     return (
-        <Table className="w-full border-0 p-0">
-            {customerUsers.map((user) => (
-                <Row
-                    key={user.uuid}
-                    className="bg-table-bg-contrast vl:table-row vl:bg-table-bg-default vl:odd:bg-table-bg-contrast mb-2 flex flex-col rounded-md border-none"
-                >
-                    <Cell className="py-2 text-left text-sm leading-5 font-bold uppercase">
-                        {user.lastName} {user.firstName} {currentCustomerUserUuid === user.uuid && `(${t('You')})`}
-                    </Cell>
-
-                    <Cell
-                        className={twJoin(
-                            'vl:table-cell py-2 text-left text-sm leading-5',
-                            'vl:max-w-56 max-w-64 overflow-x-auto whitespace-nowrap sm:max-w-full',
-                            '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
-                        )}
+        <div data-tid={TIDs.customer_users_table}>
+            <Table className="w-full border-0 p-0">
+                {customerUsers.map((user) => (
+                    <Row
+                        key={user.uuid}
+                        className="bg-table-bg-contrast vl:table-row vl:bg-table-bg-default vl:odd:bg-table-bg-contrast mb-2 flex flex-col rounded-md border-none"
                     >
-                        {user.email}
-                    </Cell>
-                    <Cell className="vl:table-cell py-2 text-left text-sm leading-5">{user.roleGroup.name}</Cell>
-                    <Cell align="right" className="vl:flex-row vl:justify-end flex flex-row-reverse gap-2 py-2">
-                        <Button
-                            className="flex-1"
-                            size="small"
-                            variant="inverted"
-                            onClick={(e) => openManageCustomerUserPopup(e, user)}
+                        <Cell className="py-2 text-left text-sm leading-5 font-bold uppercase">
+                            {user.lastName} {user.firstName} {currentCustomerUserUuid === user.uuid && `(${t('You')})`}
+                        </Cell>
+
+                        <Cell
+                            className={twJoin(
+                                'vl:table-cell py-2 text-left text-sm leading-5',
+                                'vl:max-w-56 max-w-64 overflow-x-auto whitespace-nowrap sm:max-w-full',
+                                '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
+                            )}
                         >
-                            <EditIcon className="size-4" /> <span className="sm:block">{t('Edit')}</span>
-                        </Button>
-                        <Button
-                            aria-haspopup="dialog"
-                            className="flex-1"
-                            size="small"
-                            variant="inverted"
-                            onClick={(e) => openDeleteCustomerUserPopup(e, user.uuid)}
-                        >
-                            <RemoveIcon className="size-4" /> <span className="sm:block">{t('Delete')}</span>
-                        </Button>
-                    </Cell>
-                </Row>
-            ))}
-        </Table>
+                            {user.email}
+                        </Cell>
+                        <Cell className="vl:table-cell py-2 text-left text-sm leading-5">{user.roleGroup.name}</Cell>
+                        <Cell align="right" className="vl:flex-row vl:justify-end flex flex-row-reverse gap-2 py-2">
+                            <Button
+                                className="flex-1"
+                                data-tid={TIDs.customer_users_edit_button}
+                                size="small"
+                                variant="inverted"
+                                onClick={(e) => openManageCustomerUserPopup(e, user)}
+                            >
+                                <EditIcon className="size-4" /> <span className="sm:block">{t('Edit')}</span>
+                            </Button>
+                            <Button
+                                aria-haspopup="dialog"
+                                className="flex-1"
+                                data-tid={TIDs.customer_users_delete_button}
+                                size="small"
+                                variant="inverted"
+                                onClick={(e) => openDeleteCustomerUserPopup(e, user.uuid)}
+                            >
+                                <RemoveIcon className="size-4" /> <span className="sm:block">{t('Delete')}</span>
+                            </Button>
+                        </Cell>
+                    </Row>
+                ))}
+            </Table>
+        </div>
     );
 };

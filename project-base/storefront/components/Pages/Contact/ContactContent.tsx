@@ -11,6 +11,7 @@ import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled
 import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { TIDs } from 'cypress/tids';
 import { useContactFormMutation } from 'graphql/requests/contact/mutations/ContactFormMutation.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import React, { useState } from 'react';
@@ -54,13 +55,15 @@ export const ContactContent: FC = () => {
         <Webline className="mt-8" width="lg">
             <VerticalStack gap="sm">
                 {isSuccess && (
-                    <PageHero
-                        actionHref="/"
-                        actionSkeletonType="homepage"
-                        actionTitle={t("Let's shop")}
-                        icon={MailIcon}
-                        title={formMeta.messages.success}
-                    />
+                    <div data-tid={TIDs.contact_form_success}>
+                        <PageHero
+                            actionHref="/"
+                            actionSkeletonType="homepage"
+                            actionTitle={t("Let's shop")}
+                            icon={MailIcon}
+                            title={formMeta.messages.success}
+                        />
+                    </div>
                 )}
 
                 {!isSuccess && (
@@ -134,6 +137,7 @@ export const ContactContent: FC = () => {
                                     <FormButtonWrapper>
                                         <SubmitButton
                                             aria-label={t('Submit form to send your message', { ns: 'accessibility' })}
+                                            data-tid={TIDs.contact_form_submit_button}
                                             hasDisabledCursor={!formProviderMethods.formState.isValid}
                                         >
                                             {t('Send message')}

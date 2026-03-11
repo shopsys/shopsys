@@ -5,6 +5,7 @@ import { FilterGroupPrice } from './FilterGroupPrice';
 import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
+import { TIDs } from 'cypress/tids';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 import { TypeCategoryAutomatedFilterEnum, TypeProductOrderingModeEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
@@ -47,6 +48,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
         <div
             aria-label={t('Product filters', { ns: 'accessibility' })}
             className="z-aboveOverlay bg-background-default vl:z-above relative flex h-full flex-col pb-1"
+            data-tid={TIDs.filter_panel}
             id="filter-panel"
             role="region"
         >
@@ -135,6 +137,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                     <Button
                         aria-label={t('Clear all active filters', { ns: 'accessibility' })}
                         size="large"
+                        tid={TIDs.clear_all_filters_button}
                         variant="inverted"
                         onClick={resetAllFilterQueries}
                     >

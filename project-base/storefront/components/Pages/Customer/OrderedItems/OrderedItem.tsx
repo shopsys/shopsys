@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
@@ -51,6 +52,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                     height={80}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     src={orderedItem.product?.mainImage?.url}
+                    tid={TIDs.ordered_item_image}
                     width={80}
                 />
                 <div className="flex flex-col gap-1">

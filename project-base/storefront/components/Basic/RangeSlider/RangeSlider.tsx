@@ -1,4 +1,5 @@
 import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { TIDs } from 'cypress/tids';
 import {
     ChangeEvent,
     ChangeEventHandler,
@@ -209,7 +210,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 </div>
             </div>
             <div className="flex gap-x-2">
-                <div className="w-1/2">
+                <div className="w-1/2" data-tid={TIDs.filter_price_input_min}>
                     <TextInput
                         aria-hidden
                         aria-label={t('Filter by minimum value', { ns: 'accessibility' })}
@@ -223,7 +224,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                         onKeyDown={onEnterKeyDownHandler}
                     />
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2" data-tid={TIDs.filter_price_input_max}>
                     <TextInput
                         aria-hidden
                         aria-label={t('Filter by maximum value', { ns: 'accessibility' })}

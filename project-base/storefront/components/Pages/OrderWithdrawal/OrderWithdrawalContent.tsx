@@ -9,6 +9,7 @@ import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeOrderWithdrawalDataFragment } from 'graphql/requests/orders/fragments/OrderWithdrawalDataFragment.generated';
 import { useOrderWithdrawalRequestMutation } from 'graphql/requests/orders/mutations/OrderWithdrawalRequestMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -73,7 +74,7 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                 />
 
                 <FormProvider {...formProviderMethods}>
-                    <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
+                    <Form tid={TIDs.order_withdrawal_form} onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
                         <FormContentWrapper>
                             <FormBlockWrapper>
                                 <FormHeading>{t('Personal data')}</FormHeading>
@@ -153,6 +154,7 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                             <FormButtonWrapper>
                                 <SubmitButton
                                     hasDisabledCursor={!formProviderMethods.formState.isValid}
+                                    tid={TIDs.order_withdrawal_submit_button}
                                     aria-label={t('Submit withdrawal request for order {{ orderNumber }}', {
                                         ns: 'accessibility',
                                         orderNumber: order.number,
