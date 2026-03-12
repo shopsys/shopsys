@@ -54,7 +54,7 @@ class OrderDataFactory
         $orderData->firstName = $order->getFirstName();
         $orderData->lastName = $order->getLastName();
         $orderData->email = $order->getEmail();
-        $orderData->telephone = $order->getTelephone();
+        $orderData->telephone = $order->getTelephoneData();
         $orderData->companyName = $order->getCompanyName();
         $orderData->companyNumber = $order->getCompanyNumber();
         $orderData->companyTaxNumber = $order->getCompanyTaxNumber();
@@ -110,7 +110,7 @@ class OrderDataFactory
         $orderData->deliveryFirstName = $order->getDeliveryFirstName();
         $orderData->deliveryLastName = $order->getDeliveryLastName();
         $orderData->deliveryCompanyName = $order->getDeliveryCompanyName();
-        $orderData->deliveryTelephone = $order->getDeliveryTelephone();
+        $orderData->deliveryTelephone = $order->getDeliveryTelephoneData();
         $orderData->deliveryStreet = $order->getDeliveryStreet();
         $orderData->deliveryCity = $order->getDeliveryCity();
         $orderData->deliveryPostcode = $order->getDeliveryPostcode();

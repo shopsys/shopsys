@@ -14,6 +14,8 @@ class Version20260312111807 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->createPhonePrefixesTable();
+
+        $this->updateOrdersTable();
     }
 
     private function createPhonePrefixesTable(): void
@@ -28,5 +30,16 @@ class Version20260312111807 extends AbstractMigration
 
         $this->sql('CREATE UNIQUE INDEX phone_prefixes_domain_code ON phone_prefixes (domain_id, code)');
         $this->sql('CREATE UNIQUE INDEX phone_prefixes_domain_default ON phone_prefixes (domain_id) WHERE is_default = true');
+    }
+
+    private function updateOrdersTable(): void
+    {
+        $this->sql('ALTER TABLE orders RENAME COLUMN telephone TO telephone_number');
+        $this->sql('ALTER TABLE orders ADD telephone_prefix VARCHAR(10) DEFAULT NULL');
+        $this->sql('ALTER TABLE orders ADD telephone_prefix_country_code VARCHAR(2) DEFAULT NULL');
+
+        $this->sql('ALTER TABLE orders RENAME COLUMN delivery_telephone TO delivery_telephone_number');
+        $this->sql('ALTER TABLE orders ADD delivery_telephone_prefix VARCHAR(10) DEFAULT NULL');
+        $this->sql('ALTER TABLE orders ADD delivery_telephone_prefix_country_code VARCHAR(2) DEFAULT NULL');
     }
 }

@@ -27,6 +27,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -290,7 +291,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $orderData->firstName = 'firstName';
         $orderData->lastName = 'lastName';
         $orderData->email = 'email@example.com';
-        $orderData->telephone = 'telephone';
+        $orderData->telephone = new PhoneData('CZ', '+420', '123456789');
         $orderData->companyName = null;
         $orderData->companyNumber = null;
         $orderData->companyTaxNumber = null;
@@ -302,7 +303,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $orderData->deliveryFirstName = 'deliveryFirstName';
         $orderData->deliveryLastName = 'deliveryLastName';
         $orderData->deliveryCompanyName = 'deliveryCompanyName';
-        $orderData->deliveryTelephone = 'deliveryTelephone';
+        $orderData->deliveryTelephone = new PhoneData('CZ', '+420', '987654321');
         $orderData->deliveryStreet = 'deliveryStreet';
         $orderData->deliveryCity = 'deliveryCity';
         $orderData->deliveryPostcode = 'deliveryPostcode';

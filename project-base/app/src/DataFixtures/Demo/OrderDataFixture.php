@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -85,7 +86,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Jiří';
         $orderData->lastName = 'Ševčík';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420369554147';
+        $orderData->telephone = new PhoneData('CZ', '+420', '369554147');
         $orderData->street = 'První 1';
         $orderData->city = 'Ostrava';
         $orderData->postcode = '71200';
@@ -113,7 +114,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Iva';
         $orderData->lastName = 'Jačková';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420367852147';
+        $orderData->telephone = new PhoneData('CZ', '+420', '367852147');
         $orderData->street = 'Druhá 2';
         $orderData->city = 'Ostrava';
         $orderData->postcode = '71300';
@@ -142,7 +143,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Jan';
         $orderData->lastName = 'Adamovský';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420725852147';
+        $orderData->telephone = new PhoneData('CZ', '+420', '725852147');
         $orderData->street = 'Třetí 3';
         $orderData->city = 'Ostrava';
         $orderData->postcode = '71200';
@@ -168,7 +169,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Iveta';
         $orderData->lastName = 'Prvá';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420606952147';
+        $orderData->telephone = new PhoneData('CZ', '+420', '606952147');
         $orderData->street = 'Čtvrtá 4';
         $orderData->city = 'Ostrava';
         $orderData->postcode = '70030';
@@ -192,7 +193,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Jana';
         $orderData->lastName = 'Janíčková';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420739852148';
+        $orderData->telephone = new PhoneData('CZ', '+420', '739852148');
         $orderData->street = 'Pátá 55';
         $orderData->city = 'Ostrava';
         $orderData->postcode = '71200';
@@ -219,7 +220,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Dominik';
         $orderData->lastName = 'Hašek';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420721852152';
+        $orderData->telephone = new PhoneData('CZ', '+420', '721852152');
         $orderData->street = 'Šestá 39';
         $orderData->city = 'Pardubice';
         $orderData->postcode = '58941';
@@ -248,7 +249,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Jiří';
         $orderData->lastName = 'Sovák';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420755872155';
+        $orderData->telephone = new PhoneData('CZ', '+420', '755872155');
         $orderData->street = 'Sedmá 1488';
         $orderData->city = 'Opava';
         $orderData->postcode = '85741';
@@ -274,7 +275,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Josef';
         $orderData->lastName = 'Somr';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420369852147';
+        $orderData->telephone = new PhoneData('CZ', '+420', '369852147');
         $orderData->street = 'Osmá 1';
         $orderData->city = 'Praha';
         $orderData->postcode = '30258';
@@ -302,7 +303,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Ivan';
         $orderData->lastName = 'Horník';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420755496328';
+        $orderData->telephone = new PhoneData('CZ', '+420', '755496328');
         $orderData->street = 'Desátá 10';
         $orderData->city = 'Plzeň';
         $orderData->postcode = '30010';
@@ -327,7 +328,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Adam';
         $orderData->lastName = 'Bořič';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420987654321';
+        $orderData->telephone = new PhoneData('CZ', '+420', '987654321');
         $orderData->street = 'Cihelní 5';
         $orderData->city = 'Liberec';
         $orderData->postcode = '65421';
@@ -355,7 +356,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Evžen';
         $orderData->lastName = 'Farný';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420456789123';
+        $orderData->telephone = new PhoneData('CZ', '+420', '456789123');
         $orderData->street = 'Gagarinova 333';
         $orderData->city = 'Hodonín';
         $orderData->postcode = '69501';
@@ -380,7 +381,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Ivana';
         $orderData->lastName = 'Janečková';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420369852147';
+        $orderData->telephone = new PhoneData('CZ', '+420', '369852147');
         $orderData->street = 'Kalužní 88';
         $orderData->city = 'Lednice';
         $orderData->postcode = '69144';
@@ -405,7 +406,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Pavel';
         $orderData->lastName = 'Novák';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420605123654';
+        $orderData->telephone = new PhoneData('CZ', '+420', '605123654');
         $orderData->street = 'Adresní 6';
         $orderData->city = 'Opava';
         $orderData->postcode = '72589';
@@ -431,7 +432,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Pavla';
         $orderData->lastName = 'Adámková';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+4206051836459';
+        $orderData->telephone = new PhoneData('CZ', '+420', '6051836459');
         $orderData->street = 'Výpočetni 16';
         $orderData->city = 'Praha';
         $orderData->postcode = '30015';
@@ -460,7 +461,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Adam';
         $orderData->lastName = 'Žitný';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+4206051836459';
+        $orderData->telephone = new PhoneData('CZ', '+420', '6051836459');
         $orderData->street = 'Přímá 1';
         $orderData->city = 'Plzeň';
         $orderData->postcode = '30010';
@@ -485,7 +486,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Radim';
         $orderData->lastName = 'Svátek';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420733598748';
+        $orderData->telephone = new PhoneData('CZ', '+420', '733598748');
         $orderData->street = 'Křivá 11';
         $orderData->city = 'Jablonec';
         $orderData->postcode = '78952';
@@ -515,7 +516,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Radim';
         $orderData->lastName = 'Svátek';
         $orderData->email = 'vitek@shopsys.com';
-        $orderData->telephone = '+420733598748';
+        $orderData->telephone = new PhoneData('CZ', '+420', '733598748');
         $orderData->street = 'Křivá 11';
         $orderData->city = 'Jablonec';
         $orderData->postcode = '78952';
@@ -525,7 +526,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryCompanyName = 'BestCompanyEver, s.r.o.';
         $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
         $orderData->deliveryStreet = 'Křivá 11';
-        $orderData->deliveryTelephone = '+421555444';
+        $orderData->deliveryTelephone = new PhoneData('SK', '+421', '555444');
         $orderData->deliveryPostcode = '01305';
         $orderData->deliveryFirstName = 'Pavol';
         $orderData->deliveryLastName = 'Svátek';
@@ -559,7 +560,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Radim';
         $orderData->lastName = 'Svátek';
         $orderData->email = 'vitek@shopsys.com';
-        $orderData->telephone = '+420733598748';
+        $orderData->telephone = new PhoneData('CZ', '+420', '733598748');
         $orderData->street = 'Křivá 11';
         $orderData->city = 'Jablonec';
         $orderData->postcode = '78952';
@@ -569,7 +570,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryCompanyName = 'BestCompanyEver, s.r.o.';
         $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
         $orderData->deliveryStreet = 'Křivá 11';
-        $orderData->deliveryTelephone = '+421555444';
+        $orderData->deliveryTelephone = new PhoneData('SK', '+421', '555444');
         $orderData->deliveryPostcode = '01305';
         $orderData->deliveryFirstName = 'Pavol';
         $orderData->deliveryLastName = 'Svátek';
@@ -599,7 +600,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'NotRegistered';
         $orderData->lastName = 'User';
         $orderData->email = 'not-registered-user@shopsys.com';
-        $orderData->telephone = '+421733598748';
+        $orderData->telephone = new PhoneData('SK', '+421', '733598748');
         $orderData->street = 'Křivá 12';
         $orderData->city = 'Jablonec';
         $orderData->postcode = '78952';
@@ -613,7 +614,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryCompanyName = 'BestCompanyEver, s.r.o.';
         $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
         $orderData->deliveryStreet = 'Křivá 11';
-        $orderData->deliveryTelephone = '+421555444';
+        $orderData->deliveryTelephone = new PhoneData('SK', '+421', '555444');
         $orderData->deliveryPostcode = '01305';
         $orderData->deliveryFirstName = 'NotRegistered';
         $orderData->deliveryLastName = 'User';
@@ -647,7 +648,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Václav';
         $orderData->lastName = 'Svěrkoš';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420725711368';
+        $orderData->telephone = new PhoneData('CZ', '+420', '725711368');
         $orderData->street = 'Devátá 25';
         $orderData->city = 'Ostrava';
         $orderData->postcode = '71200';
@@ -680,7 +681,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Jan';
         $orderData->lastName = 'Novák';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420123456789';
+        $orderData->telephone = new PhoneData('CZ', '+420', '123456789');
         $orderData->street = 'Pouliční 11';
         $orderData->city = 'Městník';
         $orderData->postcode = '12345';
@@ -692,7 +693,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryFirstName = 'Karel';
         $orderData->deliveryLastName = 'Vesela';
         $orderData->deliveryCompanyName = 'Bestcompany';
-        $orderData->deliveryTelephone = '+420987654321';
+        $orderData->deliveryTelephone = new PhoneData('CZ', '+420', '987654321');
         $orderData->deliveryStreet = 'Zakopaná 42';
         $orderData->deliveryCity = 'Zemín';
         $orderData->deliveryPostcode = '54321';
@@ -722,7 +723,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Jindřich';
         $orderData->lastName = 'Němec';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420123456789';
+        $orderData->telephone = new PhoneData('CZ', '+420', '123456789');
         $orderData->street = 'Sídlištní 3259';
         $orderData->city = 'Orlová';
         $orderData->postcode = '65421';
@@ -747,7 +748,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Viktor';
         $orderData->lastName = 'Pátek';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420888777111';
+        $orderData->telephone = new PhoneData('CZ', '+420', '888777111');
         $orderData->street = 'Vyhlídková 88';
         $orderData->city = 'Ostrava';
         $orderData->postcode = '71201';
@@ -770,7 +771,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Jindřich';
         $orderData->lastName = 'Němec';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420123456789';
+        $orderData->telephone = new PhoneData('CZ', '+420', '123456789');
         $orderData->street = 'Sídlištní 3259';
         $orderData->city = 'Orlová';
         $orderData->postcode = '65421';
@@ -872,7 +873,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->firstName = 'Peťka';
         $orderData->lastName = 'Šuster';
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = '+420123456789';
+        $orderData->telephone = new PhoneData('CZ', '+420', '123456789');
         $orderData->street = 'Petřkovická 123';
         $orderData->city = 'Ostrava Lhotka';
         $orderData->postcode = '71200';

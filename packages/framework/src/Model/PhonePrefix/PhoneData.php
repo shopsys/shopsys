@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\PhonePrefix;
 
-class PhoneData
+final class PhoneData
 {
-    /**
-     * @var string|null
-     */
-    public $countryCode;
+    public function __construct(
+        public ?string $countryCode = null,
+        public ?string $prefix = null,
+        public ?string $number = null,
+    ) {
+    }
 
-    /**
-     * @var string|null
-     */
-    public $prefix;
+    public function toPhoneNumber(): ?string
+    {
+        if ($this->prefix === null && $this->number === null) {
+            return null;
+        }
 
-    /**
-     * @var string|null
-     */
-    public $number;
+        return trim(($this->prefix ?? '') . ($this->number ?? ''));
+    }
 }

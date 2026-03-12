@@ -31,6 +31,7 @@ use Shopsys\FrameworkBundle\Model\Customer\CustomerData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -169,7 +170,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $orderData->companyName = 'Shopsys';
         $orderData->isCompanyCustomer = true;
         $orderData->postcode = '65421';
-        $orderData->telephone = '+420987654321';
+        $orderData->telephone = new PhoneData('CZ', '+420', '987654321');
         $orderData->companyTaxNumber = '123456';
         $orderData->companyNumber = '123456';
         $orderData->deliveryAddressSameAsBillingAddress = true;

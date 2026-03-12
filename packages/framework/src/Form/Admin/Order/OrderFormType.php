@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\OrderItemsType;
+use Shopsys\FrameworkBundle\Form\PhoneType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\GoPay\GoPayOrderStatus;
@@ -66,10 +67,10 @@ final class OrderFormType extends AbstractType
 
         $builder
             ->add($this->createBasicInformationGroup($builder, $order))
-            ->add($this->createPersonalDataGroup($builder))
+            ->add($this->createPersonalDataGroup($builder, $domainId))
             ->add($this->createCompanyDataGroup($builder))
             ->add($this->createBillingDataGroup($builder, $countries))
-            ->add($this->createShippingAddressGroup($builder, $countries))
+            ->add($this->createShippingAddressGroup($builder, $countries, $domainId))
             ->add($this->createNoteGroup($builder))
             ->add('orderItems', OrderItemsType::class, [
                 'order' => $order,
@@ -281,7 +282,7 @@ final class OrderFormType extends AbstractType
         return $builderBasicInformationGroup;
     }
 
-    private function createPersonalDataGroup(FormBuilderInterface $builder): FormBuilderInterface
+    private function createPersonalDataGroup(FormBuilderInterface $builder, int $domainId): FormBuilderInterface
     {
         $builderPersonalDataGroup = $builder->create('personalDataGroup', GroupType::class, [
             'label' => 'Personal data',
@@ -319,15 +320,10 @@ final class OrderFormType extends AbstractType
                     ),
                 ],
             ])
-            ->add('telephone', TextType::class, [
+            ->add('telephone', PhoneType::class, [
                 'label' => 'Telephone',
-                'constraints' => [
-                    new Constraints\NotBlank(message: 'Please enter telephone number'),
-                    new Constraints\Length(
-                        max: 30,
-                        maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
-                    ),
-                ],
+                'domain_id' => $domainId,
+                'required' => true,
             ]);
 
         return $builderPersonalDataGroup;
@@ -430,8 +426,11 @@ final class OrderFormType extends AbstractType
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\Country[] $countries
      */
-    private function createShippingAddressGroup(FormBuilderInterface $builder, array $countries): FormBuilderInterface
-    {
+    private function createShippingAddressGroup(
+        FormBuilderInterface $builder,
+        array $countries,
+        int $domainId,
+    ): FormBuilderInterface {
         $builderShippingAddressGroup = $builder->create('shippingAddressGroup', GroupType::class, [
             'label' => 'Delivery address',
         ]);
@@ -495,16 +494,11 @@ final class OrderFormType extends AbstractType
                             ),
                         ],
                     ])
-                    ->add('deliveryTelephone', TextType::class, [
+                    ->add('deliveryTelephone', PhoneType::class, [
                         'label' => 'Telephone',
+                        'domain_id' => $domainId,
                         'required' => false,
-                        'constraints' => [
-                            new Constraints\Length(
-                                max: 30,
-                                maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
-                                groups: [self::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
-                            ),
-                        ],
+                        'constraint_groups' => [self::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
                     ])
                     ->add('deliveryStreet', TextType::class, [
                         'label' => 'Street',

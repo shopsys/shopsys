@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
@@ -149,10 +150,22 @@ class Order
     protected $email;
 
     /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    protected $telephonePrefix;
+
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 2, nullable: true)]
+    protected $telephonePrefixCountryCode;
+
+    /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 30)]
-    protected $telephone;
+    protected $telephoneNumber;
 
     /**
      * @var string|null
@@ -224,8 +237,20 @@ class Order
     /**
      * @var string|null
      */
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    protected $deliveryTelephonePrefix;
+
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 2, nullable: true)]
+    protected $deliveryTelephonePrefixCountryCode;
+
+    /**
+     * @var string|null
+     */
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    protected $deliveryTelephone;
+    protected $deliveryTelephoneNumber;
 
     /**
      * @var string
@@ -537,7 +562,7 @@ class Order
         $this->firstName = $orderData->firstName;
         $this->lastName = $orderData->lastName;
         $this->email = $orderData->email;
-        $this->telephone = $orderData->telephone;
+        $this->setTelephoneData($orderData->telephone);
         $this->street = $orderData->street;
         $this->city = $orderData->city;
         $this->postcode = $orderData->postcode;
@@ -585,7 +610,7 @@ class Order
             $this->deliveryFirstName = $orderData->firstName;
             $this->deliveryLastName = $orderData->lastName;
             $this->deliveryCompanyName = $orderData->companyName;
-            $this->deliveryTelephone = $orderData->telephone;
+            $this->setDeliveryTelephoneData($orderData->telephone);
             $this->deliveryStreet = $orderData->street;
             $this->deliveryCity = $orderData->city;
             $this->deliveryPostcode = $orderData->postcode;
@@ -594,7 +619,7 @@ class Order
             $this->deliveryFirstName = $orderData->deliveryFirstName;
             $this->deliveryLastName = $orderData->deliveryLastName;
             $this->deliveryCompanyName = $orderData->deliveryCompanyName;
-            $this->deliveryTelephone = $orderData->deliveryTelephone;
+            $this->setDeliveryTelephoneData($orderData->deliveryTelephone);
             $this->deliveryStreet = $orderData->deliveryStreet;
             $this->deliveryCity = $orderData->deliveryCity;
             $this->deliveryPostcode = $orderData->deliveryPostcode;
@@ -986,12 +1011,25 @@ class Order
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
-    public function getTelephone()
+    public function getTelephone(): string
     {
-        return $this->telephone;
+        return $this->getTelephoneData()->toPhoneNumber();
+    }
+
+    public function getTelephoneData(): PhoneData
+    {
+        return new PhoneData(
+            $this->telephonePrefixCountryCode,
+            $this->telephonePrefix,
+            $this->telephoneNumber,
+        );
+    }
+
+    public function setTelephoneData(PhoneData $phoneData): void
+    {
+        $this->telephonePrefix = $phoneData->prefix;
+        $this->telephonePrefixCountryCode = $phoneData->countryCode;
+        $this->telephoneNumber = $phoneData->number;
     }
 
     /**
@@ -1082,12 +1120,37 @@ class Order
         return $this->deliveryCompanyName;
     }
 
-    /**
-     * @return string
-     */
-    public function getDeliveryTelephone()
+    public function getDeliveryTelephone(): ?string
     {
-        return $this->deliveryTelephone;
+        return $this->getDeliveryTelephoneData()?->toPhoneNumber();
+    }
+
+    public function getDeliveryTelephoneData(): ?PhoneData
+    {
+        if ($this->deliveryTelephoneNumber === null) {
+            return null;
+        }
+
+        return new PhoneData(
+            $this->deliveryTelephonePrefixCountryCode,
+            $this->deliveryTelephonePrefix,
+            $this->deliveryTelephoneNumber,
+        );
+    }
+
+    public function setDeliveryTelephoneData(?PhoneData $phoneData): void
+    {
+        if ($phoneData === null) {
+            $this->deliveryTelephonePrefix = null;
+            $this->deliveryTelephonePrefixCountryCode = null;
+            $this->deliveryTelephoneNumber = null;
+
+            return;
+        }
+
+        $this->deliveryTelephonePrefix = $phoneData->prefix;
+        $this->deliveryTelephonePrefixCountryCode = $phoneData->countryCode;
+        $this->deliveryTelephoneNumber = $phoneData->number;
     }
 
     /**
