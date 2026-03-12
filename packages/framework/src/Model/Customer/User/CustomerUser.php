@@ -381,14 +381,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getSalt(): ?string
-    {
-        return null; // bcrypt include salt in password hash
-    }
-
-    /**
      * @return string|null
      */
     public function getTelephone()
