@@ -51,10 +51,12 @@ class InputPriceRecalculator
 
         $this->batchProcessQuery($query, function (Payment $payment) use ($toInputPriceType): void {
             foreach ($payment->getPrices() as $paymentInputPrice) {
+                $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($paymentInputPrice->getDomainId());
                 $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice(
                     $payment,
-                    $this->currencyFacade->getDomainDefaultCurrencyByDomainId($paymentInputPrice->getDomainId()),
                     $paymentInputPrice->getDomainId(),
+                    $currency->getRoundingType(),
+                    $currency->getRoundingPlacesPriceWithoutVat(),
                 );
 
                 $newInputPrice = $this->inputPriceCalculation->getInputPrice(

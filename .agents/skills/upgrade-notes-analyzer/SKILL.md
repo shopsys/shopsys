@@ -139,7 +139,9 @@ Analyzes PR diffs to identify breaking changes, feature movements, and scope.
 **Style:**
 - Action verbs: "use", "replace", "update"
 - Always use FQCN
-- Focus on WHAT to do, not WHY
+- Focus on WHAT to do, not WHY — do not explain reasons behind changes, only describe what changed and what action to take
+- If a method/class was renamed (same purpose, new name), say "was renamed to", NOT "was removed, use X instead"
+- When listing alternatives, use "or" not semicolons (e.g., "use X instead or use Y to populate all at once")
 - Key test: "Will code break without manual changes?" → YES = include
 
 **Code example formatting:**

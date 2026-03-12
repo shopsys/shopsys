@@ -10,10 +10,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\InvalidCurrencyRoun
 
 class Rounding
 {
-    public function roundPriceWithVatByCurrency(Money $priceWithVat, Currency $currency): Money
+    public function roundPriceWithVat(Money $priceWithVat, string $roundingType): Money
     {
-        $roundingType = $currency->getRoundingType();
-
         switch ($roundingType) {
             case Currency::ROUNDING_TYPE_HUNDREDTHS:
                 return $priceWithVat->round(2);
@@ -29,13 +27,13 @@ class Rounding
         }
     }
 
-    public function roundPriceWithoutVat(Money $priceWithoutVat, Currency $currency): Money
+    public function roundPriceWithoutVat(Money $priceWithoutVat, int $roundingPlaces): Money
     {
-        return $priceWithoutVat->round($currency->getRoundingPlacesPriceWithoutVat());
+        return $priceWithoutVat->round($roundingPlaces);
     }
 
-    public function roundVatAmount(Money $vatAmount, Currency $currency): Money
+    public function roundVatAmount(Money $vatAmount, int $roundingPlaces): Money
     {
-        return $vatAmount->round($currency->getRoundingPlacesPriceWithoutVat());
+        return $vatAmount->round($roundingPlaces);
     }
 }

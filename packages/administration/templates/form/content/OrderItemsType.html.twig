@@ -16,11 +16,11 @@
                             <th>{{ 'Catalog number'|trans }}</th>
                             <th class="text-end">{{ 'Amount'|trans }}</th>
                             <th class="text-end">{{ 'Unit'|trans }}</th>
-                            <th class="text-wrap text-end">{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+                            <th class="text-wrap text-end">{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
                             <th class="text-wrap text-end">{{ 'VAT rate (%)'|trans }}</th>
-                            <th class="text-wrap text-end">{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
-                            <th class="text-wrap text-end">{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
-                            <th class="text-wrap text-end">{{ 'Total including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+                            <th class="text-wrap text-end">{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
+                            <th class="text-wrap text-end">{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
+                            <th class="text-wrap text-end">{{ 'Total including VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
                             <th class="text-wrap text-center">
                                 {{ 'Set prices manually'|trans }}
                                 {{ info_icon('All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically.'|trans) }}
@@ -51,10 +51,10 @@
                                 <strong>{{ 'Total'|trans }}</strong>
                             </td>
                             <td class="text-end">
-                                <strong>{{ order.totalPriceWithoutVat|priceWithCurrency(order.currency) }}</strong>
+                                <strong>{{ order.totalPriceWithoutVat|priceWithCurrencyByOrder(order) }}</strong>
                             </td>
                             <td class="text-end">
-                                <strong>{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</strong>
+                                <strong>{{ order.totalPriceWithVat|priceWithCurrencyByOrder(order) }}</strong>
                             </td>
                             <td></td>
                             <td></td>

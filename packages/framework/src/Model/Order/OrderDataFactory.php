@@ -63,41 +63,20 @@ class OrderDataFactory
         $orderData->city = $order->getCity();
         $orderData->postcode = $order->getPostcode();
         $orderData->country = $order->getCountry();
-        $orderData->deliveryAddressSameAsBillingAddress = $order->isDeliveryAddressSameAsBillingAddress();
-
-        if (!$order->isDeliveryAddressSameAsBillingAddress()) {
-            $orderData->deliveryFirstName = $order->getDeliveryFirstName();
-            $orderData->deliveryLastName = $order->getDeliveryLastName();
-            $orderData->deliveryCompanyName = $order->getDeliveryCompanyName();
-            $orderData->deliveryTelephone = $order->getDeliveryTelephone();
-            $orderData->deliveryStreet = $order->getDeliveryStreet();
-            $orderData->deliveryCity = $order->getDeliveryCity();
-            $orderData->deliveryPostcode = $order->getDeliveryPostcode();
-            $orderData->deliveryCountry = $order->getDeliveryCountry();
-        }
+        $this->fillDeliveryAddressFromOrder($orderData, $order);
         $orderData->note = $order->getNote();
 
-        foreach ($order->getItemsSortedWithRelatedItems() as $orderItem) {
-            if (array_key_exists($orderItem->getId(), $orderData->items)) {
-                continue;
-            }
-
-            $orderItemData = $this->orderItemDataFactory->createFromOrderItem($orderItem);
-
-            foreach ($orderItem->getRelatedItems() as $relatedItem) {
-                $relatedOrderItemData = $this->orderItemDataFactory->createFromOrderItem($relatedItem);
-                $orderData->items[$relatedItem->getId()] = $relatedOrderItemData;
-                $orderItemData->relatedOrderItemsData[] = $relatedOrderItemData;
-            }
-
-            $orderData->items[$orderItem->getId()] = $orderItemData;
-        }
+        $this->fillItemsFromOrder($orderData, $order);
 
         $orderData->createdAt = $order->getCreatedAt();
         $orderData->deliveredAt = $order->getDeliveredAt();
 
         $orderData->domainId = $order->getDomainId();
-        $orderData->currency = $order->getCurrency();
+        $orderData->currencyCode = $order->getCurrencyCode();
+        $orderData->currencyRoundingType = $order->getCurrencyRoundingType();
+        $orderData->currencyRoundingPlacesPriceWithoutVat = $order->getCurrencyRoundingPlacesPriceWithoutVat();
+        $orderData->currencyMinFractionDigits = $order->getCurrencyMinFractionDigits();
+        $orderData->paymentCzkRounding = $order->isPaymentCzkRounding();
         $orderData->createdAsAdministrator = $order->getCreatedAsAdministrator();
         $orderData->createdAsAdministratorName = $order->getCreatedAsAdministratorName();
         $orderData->orderTransport = $this->orderItemDataFactory->createFromOrderItem($order->getTransportItem());
@@ -118,6 +97,43 @@ class OrderDataFactory
 
         if ($withdrawalRequest !== null) {
             $orderData->withdrawalRequestData = $this->withdrawalRequestDataFactory->createFromWithdrawalRequest($withdrawalRequest);
+        }
+    }
+
+    protected function fillDeliveryAddressFromOrder(OrderData $orderData, Order $order): void
+    {
+        $orderData->deliveryAddressSameAsBillingAddress = $order->isDeliveryAddressSameAsBillingAddress();
+
+        if ($order->isDeliveryAddressSameAsBillingAddress()) {
+            return;
+        }
+
+        $orderData->deliveryFirstName = $order->getDeliveryFirstName();
+        $orderData->deliveryLastName = $order->getDeliveryLastName();
+        $orderData->deliveryCompanyName = $order->getDeliveryCompanyName();
+        $orderData->deliveryTelephone = $order->getDeliveryTelephone();
+        $orderData->deliveryStreet = $order->getDeliveryStreet();
+        $orderData->deliveryCity = $order->getDeliveryCity();
+        $orderData->deliveryPostcode = $order->getDeliveryPostcode();
+        $orderData->deliveryCountry = $order->getDeliveryCountry();
+    }
+
+    protected function fillItemsFromOrder(OrderData $orderData, Order $order): void
+    {
+        foreach ($order->getItemsSortedWithRelatedItems() as $orderItem) {
+            if (array_key_exists($orderItem->getId(), $orderData->items)) {
+                continue;
+            }
+
+            $orderItemData = $this->orderItemDataFactory->createFromOrderItem($orderItem);
+
+            foreach ($orderItem->getRelatedItems() as $relatedItem) {
+                $relatedOrderItemData = $this->orderItemDataFactory->createFromOrderItem($relatedItem);
+                $orderData->items[$relatedItem->getId()] = $relatedOrderItemData;
+                $orderItemData->relatedOrderItemsData[] = $relatedOrderItemData;
+            }
+
+            $orderData->items[$orderItem->getId()] = $orderItemData;
         }
     }
 

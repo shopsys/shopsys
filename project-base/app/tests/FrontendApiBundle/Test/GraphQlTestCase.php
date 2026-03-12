@@ -285,7 +285,8 @@ abstract class GraphQlTestCase extends ApplicationTestCase
             ),
             PricingSetting::PRICE_TYPE_WITHOUT_VAT,
             $vat,
-            $currency,
+            $currency->getRoundingType(),
+            $currency->getRoundingPlacesPriceWithoutVat(),
         );
 
         $basePrice = $basePrice->multiply($quantity);
@@ -298,7 +299,8 @@ abstract class GraphQlTestCase extends ApplicationTestCase
             $basePrice->getPriceWithVat(),
             PricingSetting::PRICE_TYPE_WITH_VAT,
             $vat,
-            $currency,
+            $currency->getRoundingType(),
+            $currency->getRoundingPlacesPriceWithoutVat(),
         );
     }
 

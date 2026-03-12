@@ -12,6 +12,14 @@
     {% endif %}
 {% endblock %}
 
+{% block grid_value_cell_edit_id_code %}
+    {% if row is not null and row.c.id in currencyIdsUsedInOrders %}
+        {{ form_widget(form.code, { rawSymbolAfterInput: info_icon('Code can\'t be modified because it is used for pairing with existing orders.'|trans) }) }}
+    {% else %}
+        {{ form_widget(form.code) }}
+    {% endif %}
+{% endblock %}
+
 {% block grid_value_cell_edit_id_exchangeRate %}
     {% set info_message = null %}
 

@@ -92,7 +92,8 @@ class ProductPriceCalculation
             $inputPrice,
             $this->pricingSetting->getInputPriceType(),
             $product->getVatForDomain($domainId),
-            $defaultCurrency,
+            $defaultCurrency->getRoundingType(),
+            $defaultCurrency->getRoundingPlacesPriceWithoutVat(),
         );
 
         return new ProductPrice($basePrice, $pricingGroup, false);

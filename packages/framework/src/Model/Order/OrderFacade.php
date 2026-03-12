@@ -37,7 +37,6 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -107,8 +106,8 @@ class OrderFacade
     {
         $order = $this->orderRepository->getById($orderId);
 
-        $this->calculateOrderItemDataPrices($orderData->orderTransport, $order->getDomainId(), $orderData->currency);
-        $this->calculateOrderItemDataPrices($orderData->orderPayment, $order->getDomainId(), $orderData->currency);
+        $this->calculateOrderItemDataPrices($orderData->orderTransport, $order->getDomainId(), $order->getCurrencyRoundingType(), $order->getCurrencyRoundingPlacesPriceWithoutVat());
+        $this->calculateOrderItemDataPrices($orderData->orderPayment, $order->getDomainId(), $order->getCurrencyRoundingType(), $order->getCurrencyRoundingPlacesPriceWithoutVat());
         $this->refreshOrderItemsWithoutTransportAndPayment($order, $orderData);
         $this->updateTransportAndPaymentNamesInOrderData($orderData, $order);
 
@@ -245,7 +244,7 @@ class OrderFacade
         foreach ($order->getItemsWithoutTransportAndPayment() as $orderItem) {
             if (array_key_exists($orderItem->getId(), $orderItemsWithoutTransportAndPaymentData)) {
                 $orderItemData = $orderItemsWithoutTransportAndPaymentData[$orderItem->getId()];
-                $this->calculateOrderItemDataPrices($orderItemData, $order->getDomainId(), $orderData->currency);
+                $this->calculateOrderItemDataPrices($orderItemData, $order->getDomainId(), $order->getCurrencyRoundingType(), $order->getCurrencyRoundingPlacesPriceWithoutVat());
                 $orderItem->edit($orderItemData);
             } else {
                 $order->removeItem($orderItem);
@@ -253,7 +252,7 @@ class OrderFacade
         }
 
         foreach ($orderData->getNewItemsWithoutTransportAndPayment() as $newOrderItemData) {
-            $this->calculateOrderItemDataPrices($newOrderItemData, $order->getDomainId(), $orderData->currency);
+            $this->calculateOrderItemDataPrices($newOrderItemData, $order->getDomainId(), $order->getCurrencyRoundingType(), $order->getCurrencyRoundingPlacesPriceWithoutVat());
 
             $newOrderItem = $this->orderItemFactory->createProduct(
                 $newOrderItemData,
@@ -274,7 +273,8 @@ class OrderFacade
     protected function calculateOrderItemDataPrices(
         OrderItemData $orderItemData,
         int $domainId,
-        Currency $currency,
+        string $currencyRoundingType,
+        int $roundingPlaces,
     ): void {
         if ($orderItemData->usePriceCalculation) {
             switch ($this->pricingSetting->getInputPriceType()) {
@@ -282,6 +282,7 @@ class OrderFacade
                     $orderItemData->unitPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVatForInputPriceWithVat(
                         $orderItemData,
                         $domainId,
+                        $roundingPlaces,
                     );
 
                     break;
@@ -289,7 +290,7 @@ class OrderFacade
                     $orderItemData->unitPriceWithVat = $this->orderItemPriceCalculation->calculatePriceWithVatForInputPriceWithoutVat(
                         $orderItemData,
                         $domainId,
-                        $currency,
+                        $currencyRoundingType,
                     );
 
                     break;
@@ -338,10 +339,11 @@ class OrderFacade
         if ($updatePaymentPrice || count($previousPaymentItems) === 0) {
             $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
                 $payment,
-                $order->getCurrency(),
                 $order->getTotalProductsPrice(),
                 $order->getDomainId(),
                 $order->isFreeTransportAndPaymentApplied(),
+                $order->getCurrencyRoundingType(),
+                $order->getCurrencyRoundingPlacesPriceWithoutVat(),
             );
         } else {
             $paymentPrice = array_first($previousPaymentItems)->getPrice();
@@ -357,6 +359,7 @@ class OrderFacade
 
         $orderData = $this->orderDataFactory->createFromOrder($order);
         $orderData->orderPayment = $orderPaymentData;
+        $orderData->paymentCzkRounding = $payment->isCzkRounding();
         $this->edit($order->getId(), $orderData);
     }
 

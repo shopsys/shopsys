@@ -313,6 +313,9 @@ msgstr "Svátky a interní dny"
 msgid "Closing modules"
 msgstr "Zapínací moduly"
 
+msgid "Code can't be modified because it is used for pairing with existing orders."
+msgstr "Kód nemůže být upraven, protože je spárovaný s existujícím objednávkami."
+
 msgid "Color parameter values"
 msgstr "Hodnota parametru typu barva"
 

@@ -6,8 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasNoIdException;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
@@ -25,17 +23,19 @@ class OrderItemPriceCalculation
         protected readonly VatDataFactory $vatDataFactory,
         protected readonly PricingSetting $pricingSetting,
         protected readonly Rounding $rounding,
-        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
-    public function calculatePriceWithoutVatForInputPriceWithVat(OrderItemData $orderItemData, int $domainId): Money
-    {
+    public function calculatePriceWithoutVatForInputPriceWithVat(
+        OrderItemData $orderItemData,
+        int $domainId,
+        int $roundingPlaces,
+    ): Money {
         $vatData = $this->vatDataFactory->create();
         $vatData->name = 'orderItemVat';
         $vatData->percent = $orderItemData->vatPercent;
         $vat = $this->vatFactory->create($vatData, $domainId);
-        $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($orderItemData->unitPriceWithVat, $vat, $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId));
+        $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($orderItemData->unitPriceWithVat, $vat, $roundingPlaces);
 
         return $orderItemData->unitPriceWithVat->subtract($vatAmount);
     }
@@ -43,14 +43,14 @@ class OrderItemPriceCalculation
     public function calculatePriceWithVatForInputPriceWithoutVat(
         OrderItemData $orderItemData,
         int $domainId,
-        Currency $currency,
+        string $currencyRoundingType,
     ): Money {
         $vatData = $this->vatDataFactory->create();
         $vatData->name = 'orderItemVat';
         $vatData->percent = $orderItemData->vatPercent;
         $vat = $this->vatFactory->create($vatData, $domainId);
 
-        return $this->rounding->roundPriceWithVatByCurrency($this->priceCalculation->applyVatPercent($orderItemData->unitPriceWithoutVat, $vat), $currency);
+        return $this->rounding->roundPriceWithVat($this->priceCalculation->applyVatPercent($orderItemData->unitPriceWithoutVat, $vat), $currencyRoundingType);
     }
 
     public function calculateTotalPrice(OrderItem $orderItem): PriceInterface
@@ -62,13 +62,15 @@ class OrderItemPriceCalculation
         $vatData = $this->vatDataFactory->create();
         $vatData->name = 'orderItemVat';
         $vatData->percent = $orderItem->getVatPercent();
-        $vat = $this->vatFactory->create($vatData, $orderItem->getOrder()->getDomainId());
-        $currency = $orderItem->getOrder()->getCurrency();
+        $order = $orderItem->getOrder();
+        $vat = $this->vatFactory->create($vatData, $order->getDomainId());
+        $roundingType = $order->getCurrencyRoundingType();
+        $roundingPlaces = $order->getCurrencyRoundingPlacesPriceWithoutVat();
 
         switch ($this->pricingSetting->getInputPriceType()) {
             case PricingSetting::PRICE_TYPE_WITH_VAT:
                 $totalPriceWithVat = $orderItem->getUnitPriceWithVat()->multiply($orderItem->getQuantity());
-                $totalVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat, $currency);
+                $totalVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat, $roundingPlaces);
                 $totalPriceWithoutVat = $totalPriceWithVat->subtract($totalVatAmount);
 
                 return new Price($totalPriceWithoutVat, $totalPriceWithVat);
@@ -76,12 +78,12 @@ class OrderItemPriceCalculation
             case PricingSetting::PRICE_TYPE_WITHOUT_VAT:
                 $totalPriceWithoutVat = $this->rounding->roundPriceWithoutVat(
                     $orderItem->getUnitPriceWithoutVat()->multiply($orderItem->getQuantity()),
-                    $currency,
+                    $roundingPlaces,
                 );
 
-                $totalPriceWithVat = $this->rounding->roundPriceWithVatByCurrency(
+                $totalPriceWithVat = $this->rounding->roundPriceWithVat(
                     $orderItem->getUnitPriceWithVat()->multiply($orderItem->getQuantity()),
-                    $currency,
+                    $roundingType,
                 );
 
                 return new Price($totalPriceWithoutVat, $totalPriceWithVat);

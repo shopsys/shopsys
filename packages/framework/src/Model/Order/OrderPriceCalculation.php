@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
@@ -48,20 +47,21 @@ class OrderPriceCalculation
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     public function calculateOrderRoundingPrice(
-        Payment $payment,
-        Currency $currency,
+        bool $paymentCzkRounding,
+        string $currencyCode,
+        string $currencyRoundingType,
         PriceInterface $orderTotalPrice,
     ): ?PriceInterface {
-        if (!$payment->isCzkRounding() || $currency->getCode() !== Currency::CODE_CZK) {
+        if (!$paymentCzkRounding || $currencyCode !== Currency::CODE_CZK) {
             return null;
         }
 
         $priceWithVat = $orderTotalPrice->getPriceWithVat();
         $roundedPriceWithVat = $priceWithVat->round(0);
 
-        $roundingPrice = $this->rounding->roundPriceWithVatByCurrency(
+        $roundingPrice = $this->rounding->roundPriceWithVat(
             $roundedPriceWithVat->subtract($priceWithVat),
-            $currency,
+            $currencyRoundingType,
         );
 
         if ($roundingPrice->isZero()) {

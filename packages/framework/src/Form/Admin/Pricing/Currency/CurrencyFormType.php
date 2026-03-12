@@ -48,6 +48,7 @@ final class CurrencyFormType extends AbstractType
             ])
             ->add('code', TextType::class, [
                 'required' => true,
+                'disabled' => $options['is_used_in_orders'],
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter currency code'),
                     new Constraints\Choice(
@@ -100,6 +101,8 @@ final class CurrencyFormType extends AbstractType
         $resolver
             ->setRequired('is_default_currency')
             ->setAllowedTypes('is_default_currency', 'bool')
+            ->setRequired('is_used_in_orders')
+            ->setAllowedTypes('is_used_in_orders', 'bool')
             ->setDefaults([
                 'data_class' => CurrencyData::class,
                 'attr' => ['novalidate' => 'novalidate'],

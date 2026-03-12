@@ -27,7 +27,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade as BaseOrderFacade;
  * @method \App\Model\Order\Order getByUrlHashAndDomain(string $urlHash, int $domainId)
  * @method \App\Model\Order\Order getByOrderNumberAndUser(string $orderNumber, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method void refreshOrderItemsWithoutTransportAndPayment(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
- * @method void calculateOrderItemDataPrices(\App\Model\Order\Item\OrderItemData $orderItemData, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency)
+ * @method void calculateOrderItemDataPrices(\App\Model\Order\Item\OrderItemData $orderItemData, int $domainId, string $currencyRoundingType, int $roundingPlaces)
  * @method void updateTransportAndPaymentNamesInOrderData(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order)
  * @method void setOrderPaymentStatusPageValidFromNow(\App\Model\Order\Order $order)
  * @method void changeOrderPayment(\App\Model\Order\Order $order, \App\Model\Payment\Payment $payment, bool $updatePaymentPrice = true)

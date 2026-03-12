@@ -129,7 +129,7 @@ class StatisticsRepository
         $query = $this->em->createNativeQuery(
             'SELECT SUM(o.total_price_with_vat * c.exchange_rate) AS total_price
             FROM orders o
-            JOIN currencies c ON o.currency_id = c.id
+            JOIN currencies c ON c.code = o.currency_code
             JOIN order_statuses os ON o.status_id = os.id AND os.type != :canceled
             WHERE o.created_at BETWEEN :start_date AND :end_date AND o.deleted = FALSE',
             $resultSetMapping,

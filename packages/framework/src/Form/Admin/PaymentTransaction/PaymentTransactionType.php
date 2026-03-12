@@ -87,7 +87,7 @@ final class PaymentTransactionType extends AbstractType
         if ($order === null) {
             return;
         }
-        $formattedRefundableAmount = $this->priceExtension->priceWithCurrencyFilter($originalPaymentTransaction->getRefundableAmount(), $order->getCurrency());
+        $formattedRefundableAmount = $this->priceExtension->priceWithCurrencyByOrderFilter($originalPaymentTransaction->getRefundableAmount(), $order);
         $context->buildViolation(t('You can refund only %refundableAmount%.', ['%refundableAmount%' => $formattedRefundableAmount]))
             ->atPath('refundAmount')
             ->addViolation();

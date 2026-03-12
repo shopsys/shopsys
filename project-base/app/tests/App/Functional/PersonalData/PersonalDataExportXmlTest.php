@@ -157,7 +157,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
     private function createOrder(Currency $currency, OrderStatus $status, Country $country): Order
     {
         $orderData = TestOrderProvider::getTestOrderData();
-        $orderData->currency = $currency;
+        $orderData->fillCurrencyFieldsFromCurrency($currency);
         $orderData->status = $status;
         $orderData->email = 'no-reply@shopsys.com';
         $orderData->createdAt = new DatePoint('2018-04-13');

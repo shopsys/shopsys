@@ -54,7 +54,7 @@ class TestOrderProvider
         $orderStatusData->name = ['en' => 'orderStatusName'];
         $orderData->status = static::createOrderStatusInstance($orderStatusData);
 
-        $orderData->currency = TestCurrencyProvider::getTestCurrency();
+        $orderData->fillCurrencyFieldsFromCurrency(TestCurrencyProvider::getTestCurrency());
 
         return $orderData;
     }

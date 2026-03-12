@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
@@ -44,11 +43,11 @@ class OrderItemPriceCalculationTest extends TestCase
             new VatDataFactory(),
             $pricingSettingStub,
             new Rounding(),
-            $this->createCurrencyFacadeStub(),
         );
         $priceWithoutVat = $orderItemPriceCalculation->calculatePriceWithoutVatForInputPriceWithVat(
             $orderItemData,
             Domain::FIRST_DOMAIN_ID,
+            Currency::DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT,
         );
 
         $this->assertThat($priceWithoutVat, new IsMoneyEqual(Money::create(900)));
@@ -77,15 +76,15 @@ class OrderItemPriceCalculationTest extends TestCase
             new VatDataFactory(),
             $pricingSettingMock,
             new Rounding(),
-            $this->createCurrencyFacadeStub(),
         );
 
         $order = $this->getMockBuilder(Order::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getDomainId', 'getCurrency'])
+            ->onlyMethods(['getDomainId', 'getCurrencyRoundingType', 'getCurrencyRoundingPlacesPriceWithoutVat'])
             ->getMock();
         $order->expects($this->once())->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);
-        $order->expects($this->once())->method('getCurrency')->willReturn($this->createCurrencyStub());
+        $order->expects($this->once())->method('getCurrencyRoundingType')->willReturn(Currency::DEFAULT_ROUNDING_TYPE);
+        $order->expects($this->once())->method('getCurrencyRoundingPlacesPriceWithoutVat')->willReturn(Currency::DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT);
 
         $orderItem = $this->getMockBuilder(OrderItem::class)
             ->disableOriginalConstructor()
@@ -95,33 +94,12 @@ class OrderItemPriceCalculationTest extends TestCase
         $orderItem->expects($this->once())->method('getUnitPriceWithVat')->willReturn(Money::create(100));
         $orderItem->expects($this->once())->method('getQuantity')->willReturn(2);
         $orderItem->expects($this->once())->method('getVatPercent')->willReturn('1');
-        $orderItem->expects($this->exactly(2))->method('getOrder')->willReturn($order);
+        $orderItem->expects($this->once())->method('getOrder')->willReturn($order);
 
         $totalPrice = $orderItemPriceCalculation->calculateTotalPrice($orderItem);
 
         $this->assertThat($totalPrice->getPriceWithVat(), new IsMoneyEqual(Money::create(200)));
         $this->assertThat($totalPrice->getPriceWithoutVat(), new IsMoneyEqual(Money::create(190)));
         $this->assertThat($totalPrice->getVatAmount(), new IsMoneyEqual(Money::create(10)));
-    }
-
-    private function createCurrencyStub(): Currency
-    {
-        $currency = $this->createStub(Currency::class);
-        $currency->method('getCode')->willReturn('CZK');
-        $currency->method('getRoundingType')->willReturn(Currency::DEFAULT_ROUNDING_TYPE);
-        $currency->method('getRoundingPlacesPriceWithoutVat')->willReturn(Currency::DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT);
-
-        return $currency;
-    }
-
-    private function createCurrencyFacadeStub(): CurrencyFacade
-    {
-        $currencyFacadeStub = $this->createStub(CurrencyFacade::class);
-
-        $currencyFacadeStub->method('getDomainDefaultCurrencyByDomainId')->willReturn(
-            $this->createCurrencyStub(),
-        );
-
-        return $currencyFacadeStub;
     }
 }

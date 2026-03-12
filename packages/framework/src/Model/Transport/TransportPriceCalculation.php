@@ -50,7 +50,8 @@ class TransportPriceCalculation
             $transportPrice->getPrice(),
             $this->pricingSetting->getInputPriceType(),
             $vat,
-            $defaultCurrencyForDomain,
+            $defaultCurrencyForDomain->getRoundingType(),
+            $defaultCurrencyForDomain->getRoundingPlacesPriceWithoutVat(),
         );
     }
 }

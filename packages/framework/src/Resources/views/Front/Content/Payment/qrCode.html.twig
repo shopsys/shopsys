@@ -6,7 +6,7 @@
         <img src="{{ qrCodeImageSrc }}" alt="{% trans into locale %}QR code{% endtrans %}" class="qr-code" />
     </p>
     <p>
-        {% trans into locale %}Total price{% endtrans %}: {{ totalPrice.priceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, locale)|hidePrice(order.customerUser) }}
+        {% trans into locale %}Total price{% endtrans %}: {{ totalPrice.priceWithVat|priceTextWithCurrencyByOrderAndLocale(order, locale)|hidePrice(order.customerUser) }}
     </p>
     <p>{% trans into locale %}Account number{% endtrans %}: {{ accountNumber }}</p>
     <p>{% trans into locale %}Variable symbol{% endtrans %}: {{ orderNumber }}</p>

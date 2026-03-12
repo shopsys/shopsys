@@ -313,6 +313,9 @@ msgstr "Zatvorené dni"
 msgid "Closing modules"
 msgstr "Zatvárací moduly"
 
+msgid "Code can't be modified because it is used for pairing with existing orders."
+msgstr "Kód nemôže byť upravený, pretože je spárovaný s existujúcim objednávkami."
+
 msgid "Color parameter values"
 msgstr "Hodnoty farebných parametrov"
 

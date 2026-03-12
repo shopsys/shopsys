@@ -88,7 +88,7 @@ class QuantifiedProductPriceCalculation
         Vat $vat,
         Currency $currency,
     ): Money {
-        return $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat, $currency);
+        return $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat, $currency->getRoundingPlacesPriceWithoutVat());
     }
 
     /**

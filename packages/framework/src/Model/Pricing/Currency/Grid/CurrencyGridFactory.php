@@ -44,11 +44,17 @@ class CurrencyGridFactory implements GridFactoryInterface
         $grid->addDeleteActionColumn('admin_currency_deleteconfirm', ['id' => 'c.id'])
             ->setAjaxConfirm();
 
+        $currencyIdsUsedInOrders = array_map(
+            fn ($currency) => $currency->getId(),
+            $this->currencyFacade->getCurrenciesUsedInOrders(),
+        );
+
         $grid->setTheme(
             '@ShopsysAdministration/content/currency/listGrid.html.twig',
             [
                 'defaultCurrency' => $this->currencyFacade->getDefaultCurrency(),
                 'notAllowedToDeleteCurrencyIds' => $this->currencyFacade->getNotAllowedToDeleteCurrencyIds(),
+                'currencyIdsUsedInOrders' => $currencyIdsUsedInOrders,
             ],
         );
 

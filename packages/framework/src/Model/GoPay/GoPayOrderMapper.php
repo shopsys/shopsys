@@ -34,7 +34,7 @@ class GoPayOrderMapper
                 'contact' => $this->createContactData($order),
             ],
             'amount' => $this->formatPriceForGoPay($order->getTotalPriceWithVat()),
-            'currency' => $order->getCurrency()->getCode(),
+            'currency' => $order->getCurrencyCode(),
             'order_number' => $order->getNumber(),
             'order_description' => t('Order number') . ' ' . $order->getNumber(),
             'items' => $goPayPaymentItemsData,

@@ -70,7 +70,8 @@ class BasePriceCalculationTest extends TestCase
             $inputPrice,
             $inputPriceType,
             $vat,
-            $currency,
+            $currency->getRoundingType(),
+            $currency->getRoundingPlacesPriceWithoutVat(),
         );
 
         $this->assertThat($basePrice->getPriceWithoutVat(), new IsMoneyEqual($basePriceWithoutVat));

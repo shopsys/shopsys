@@ -26,7 +26,7 @@ class PriceConverter
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $price = $this->convertPriceToPriceInDomainDefaultCurrency($price, $priceCurrency, $domainDefaultCurrency);
 
-        return $this->rounding->roundPriceWithoutVat($price, $domainDefaultCurrency);
+        return $this->rounding->roundPriceWithoutVat($price, $domainDefaultCurrency->getRoundingPlacesPriceWithoutVat());
     }
 
     public function convertPriceWithVatToDomainDefaultCurrencyPrice(
@@ -37,7 +37,7 @@ class PriceConverter
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $price = $this->convertPriceToPriceInDomainDefaultCurrency($price, $priceCurrency, $domainDefaultCurrency);
 
-        return $this->rounding->roundPriceWithVatByCurrency($price, $domainDefaultCurrency);
+        return $this->rounding->roundPriceWithVat($price, $domainDefaultCurrency->getRoundingType());
     }
 
     protected function convertPriceToPriceInDomainDefaultCurrency(

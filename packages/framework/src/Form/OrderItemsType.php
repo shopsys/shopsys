@@ -83,9 +83,10 @@ final class OrderItemsType extends AbstractType
         $view->vars['transportVatPercentsByTransportId'] = $this->transportFacade->getTransportVatPercentsByDomainIdIndexedByTransportId(
             $order->getDomainId(),
         );
-        $view->vars['paymentPricesWithVatByPaymentId'] = $this->paymentFacade->getPaymentPricesWithVatByCurrencyAndDomainIdIndexedByPaymentId(
-            $order->getCurrency(),
+        $view->vars['paymentPricesWithVatByPaymentId'] = $this->paymentFacade->getPaymentPricesWithVatByDomainIdIndexedByPaymentId(
             $order->getDomainId(),
+            $order->getCurrencyRoundingType(),
+            $order->getCurrencyRoundingPlacesPriceWithoutVat(),
         );
         $view->vars['paymentVatPercentsByPaymentId'] = $this->paymentFacade->getPaymentVatPercentsByDomainIdIndexedByPaymentId(
             $order->getDomainId(),

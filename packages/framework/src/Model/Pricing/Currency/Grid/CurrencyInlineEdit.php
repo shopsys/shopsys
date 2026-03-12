@@ -58,6 +58,7 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
 
         return $this->formFactory->create(CurrencyFormType::class, $currencyData, [
             'is_default_currency' => $this->isDefaultCurrencyId($rowId),
+            'is_used_in_orders' => $this->isCurrencyUsedInOrders($rowId),
         ]);
     }
 
@@ -72,6 +73,20 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
         }
 
         return false;
+    }
+
+    protected function isCurrencyUsedInOrders(?int $currencyId): bool
+    {
+        if ($currencyId === null) {
+            return false;
+        }
+
+        $currencyIdsUsedInOrders = array_map(
+            fn ($currency) => $currency->getId(),
+            $this->currencyFacade->getCurrenciesUsedInOrders(),
+        );
+
+        return in_array($currencyId, $currencyIdsUsedInOrders, true);
     }
 
     #[Override]

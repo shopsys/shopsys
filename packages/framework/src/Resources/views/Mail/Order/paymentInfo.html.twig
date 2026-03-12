@@ -24,7 +24,7 @@
                             <strong style="white-space: nowrap; padding-left: 10px;">
                         {% endif %}
 
-                        {{ orderPaymentTotalPrice.priceWithoutVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}
+                        {{ orderPaymentTotalPrice.priceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}
                         {% if displayBoth %}
                             {{ 'ex VAT'|trans }}&nbsp;
                         {% endif %}
@@ -41,7 +41,7 @@
 
                 {% if displayWithVat %}
                     <strong style="white-space: nowrap; padding-left: 10px;">
-                        {{ orderPaymentTotalPrice.priceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}
+                        {{ orderPaymentTotalPrice.priceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}
                         {% if displayBoth and not isZeroPrice %}
                             {{ 'inc VAT'|trans }}&nbsp;
                         {% endif %}

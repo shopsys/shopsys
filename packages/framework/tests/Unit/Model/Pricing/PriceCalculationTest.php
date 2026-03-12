@@ -102,7 +102,7 @@ class PriceCalculationTest extends TestCase
         $currencyData->code = 'currency code';
         $currency = new Currency($currencyData);
 
-        $actualVatAmount = $priceCalculation->getVatAmountByPriceWithVat($priceWithVat, $vat, $currency);
+        $actualVatAmount = $priceCalculation->getVatAmountByPriceWithVat($priceWithVat, $vat, $currency->getRoundingPlacesPriceWithoutVat());
 
         $this->assertThat($actualVatAmount, new IsMoneyEqual($expectedVatAmount));
     }

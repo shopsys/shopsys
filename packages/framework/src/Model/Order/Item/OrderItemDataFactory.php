@@ -82,6 +82,7 @@ class OrderItemDataFactory
                 $calculatedPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVatForInputPriceWithVat(
                     $orderItemData,
                     $orderItem->getOrder()->getDomainId(),
+                    $orderItem->getOrder()->getCurrencyRoundingPlacesPriceWithoutVat(),
                 );
 
                 if (!$orderItemData->unitPriceWithoutVat->equals($calculatedPriceWithoutVat)) {
@@ -96,7 +97,7 @@ class OrderItemDataFactory
                 $calculatedPriceWithVat = $this->orderItemPriceCalculation->calculatePriceWithVatForInputPriceWithoutVat(
                     $orderItemData,
                     $orderItem->getOrder()->getDomainId(),
-                    $orderItem->getOrder()->getCurrency(),
+                    $orderItem->getOrder()->getCurrencyRoundingType(),
                 );
 
                 if (!$orderItemData->unitPriceWithVat->equals($calculatedPriceWithVat)) {

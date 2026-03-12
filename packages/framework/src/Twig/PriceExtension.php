@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Twig\Extension\AbstractExtension;
@@ -72,6 +73,16 @@ class PriceExtension extends AbstractExtension
                 'priceFromDecimalStringWithCurrencyAdmin',
                 $this->priceFromDecimalStringWithCurrencyAdmin(...),
             ),
+            new TwigFilter(
+                'priceWithCurrencyByOrder',
+                $this->priceWithCurrencyByOrderFilter(...),
+                ['is_safe' => ['html']],
+            ),
+            new TwigFilter(
+                'priceTextWithCurrencyByOrderAndLocale',
+                $this->priceTextWithCurrencyByOrderAndLocaleFilter(...),
+                ['is_safe' => ['html']],
+            ),
         ];
     }
 
@@ -97,6 +108,11 @@ class PriceExtension extends AbstractExtension
             new TwigFunction(
                 'currencyCode',
                 $this->getCurrencyCodeByDomainId(...),
+            ),
+            new TwigFunction(
+                'currencySymbolByCode',
+                $this->getCurrencySymbolByCode(...),
+                ['is_safe' => ['html']],
             ),
         ];
     }
@@ -156,17 +172,37 @@ class PriceExtension extends AbstractExtension
         return $this->formatCurrency($price, $currency);
     }
 
+    public function priceWithCurrencyByOrderFilter(Money $price, Order $order): string
+    {
+        return $this->formatCurrencyByFrozenValues($price, $order->getCurrencyCode(), $order->getCurrencyMinFractionDigits());
+    }
+
+    public function priceTextWithCurrencyByOrderAndLocaleFilter(Money $price, Order $order, string $locale): string
+    {
+        if ($price->isZero()) {
+            return t('Free', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $locale);
+        }
+
+        return $this->formatCurrencyByFrozenValues($price, $order->getCurrencyCode(), $order->getCurrencyMinFractionDigits(), $locale);
+    }
+
     protected function formatCurrency(Money $price, Currency $currency, ?string $locale = null): string
     {
+        return $this->formatCurrencyByFrozenValues($price, $currency->getCode(), $currency->getMinFractionDigits(), $locale);
+    }
+
+    protected function formatCurrencyByFrozenValues(
+        Money $price,
+        string $currencyCode,
+        int $minFractionDigits,
+        ?string $locale = null,
+    ): string {
         if ($locale === null) {
             $locale = $this->localization->getRequestLocale();
         }
 
-        $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency($locale, $currency);
-        $intlCurrency = $this->intlCurrencyRepository->get(
-            $currency->getCode(),
-            $locale,
-        );
+        $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndMinFractionDigits($locale, $minFractionDigits);
+        $intlCurrency = $this->intlCurrencyRepository->get($currencyCode, $locale);
 
         return $currencyFormatter->format($price->getAmount(), $intlCurrency->getCurrencyCode());
     }
@@ -227,6 +263,14 @@ class PriceExtension extends AbstractExtension
     {
         $currency = $this->currencyFacade->getById($currencyId);
         $intlCurrency = $this->intlCurrencyRepository->get($currency->getCode(), $locale);
+
+        return $intlCurrency->getSymbol();
+    }
+
+    public function getCurrencySymbolByCode(string $currencyCode): string
+    {
+        $locale = $this->localization->getRequestLocale();
+        $intlCurrency = $this->intlCurrencyRepository->get($currencyCode, $locale);
 
         return $intlCurrency->getSymbol();
     }

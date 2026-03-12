@@ -33,7 +33,7 @@
 {% endblock %}
 
 {% block grid_value_cell_id_total_price %}
-    {{ value|priceWithCurrency(row.order.currency) }}
+    {{ value|priceWithCurrencyByOrder(row.order) }}
 {% endblock %}
 
 {% block grid_value_cell_id_created_at %}

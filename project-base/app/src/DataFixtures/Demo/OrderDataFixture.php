@@ -92,7 +92,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-3 day')->setTime(12, 40, 22);
         $orderData->deliveredAt = (new DatePoint('now -2 day'))->setTime(14, 15, 10);
 
@@ -120,7 +120,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-11 day')->setTime(4, 34, 19);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR, Administrator::class);
         $orderData->promoCode = 'promoCode123';
@@ -149,7 +149,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-3 day')->setTime(18, 27, 36);
         $this->createOrder(
             $orderData,
@@ -175,7 +175,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-1 day')->setTime(18, 30, 01);
         $this->createOrder(
             $orderData,
@@ -199,7 +199,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-2 day')->setTime(1, 46, 6);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
         $this->createOrder(
@@ -226,7 +226,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-12 day')->setTime(0, 49, 0);
         $this->createOrder(
             $orderData,
@@ -255,7 +255,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-13 day')->setTime(23, 35, 15);
         $order = $this->createOrder(
             $orderData,
@@ -281,7 +281,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-5 day')->setTime(9, 11, 59);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
         $orderData->deliveredAt = (new DatePoint('now -1 day'))->setTime(16, 45, 30);
@@ -309,7 +309,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-14 day')->setTime(12, 54, 07);
         $this->createOrder(
             $orderData,
@@ -334,7 +334,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-7 day')->setTime(7, 2, 31);
         $orderData->promoCode = 'promoCode123';
         $order = $this->createOrder(
@@ -362,7 +362,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-7 day')->setTime(11, 28, 20);
         $this->createOrder(
             $orderData,
@@ -387,7 +387,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-10 day')->setTime(18, 3, 36);
         $orderData->deliveredAt = (new DatePoint('now -8 day'))->setTime(11, 30, 45);
         $this->createOrder(
@@ -412,7 +412,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-10 day')->setTime(23, 47, 11);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR, Administrator::class);
         $this->createOrder(
@@ -438,7 +438,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-35 day')->setTime(8, 14, 8);
         $orderData->deliveredAt = (new DatePoint('now -30 day'))->setTime(10, 20, 15);
         $order = $this->createOrder(
@@ -467,7 +467,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-11 day')->setTime(4, 43, 25);
         $this->createOrder(
             $orderData,
@@ -495,7 +495,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->companyNumber = '555555';
         $orderData->note = 'Doufám, že vše dorazí v pořádku a co nejdříve :)';
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-5 day')->setTime(3, 3, 12);
         $this->createOrder(
             $orderData,
@@ -533,7 +533,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->companyNumber = '555555';
         $orderData->note = 'Doufám, že vše dorazí v pořádku a co nejdříve :)';
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-13 day')->setTime(17, 34, 40);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR, Administrator::class);
         $this->createOrder(
@@ -577,7 +577,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->companyNumber = '555555';
         $orderData->note = 'Doufám, že vše dorazí v pořádku a co nejdříve :)';
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-6 day')->setTime(5, 7, 38);
         $order = $this->createOrder(
             $orderData,
@@ -621,7 +621,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->companyNumber = '555555';
         $orderData->note = 'Doufám, že vše dorazí v pořádku a co nejdříve :)';
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = new DatePoint();
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR, Administrator::class);
         $this->createOrder(
@@ -654,7 +654,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-1 day')->setTime(22, 51, 55);
         $order = $this->createOrder(
             $orderData,
@@ -699,7 +699,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
         $orderData->note = 'Prosím o dodání do pátku. Děkuji.';
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-4 day')->setTime(21, 23, 5);
         $this->createOrder(
             $orderData,
@@ -729,7 +729,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-4 day')->setTime(11, 14, 2);
         $this->createOrder(
             $orderData,
@@ -754,7 +754,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-7 day')->setTime(11, 10, 47);
         $this->createOrder(
             $orderData,
@@ -777,7 +777,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-7 day')->setTime(11, 10, 47);
         $this->createOrder(
             $orderData,
@@ -879,7 +879,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = new DatePoint();
         $this->createOrder(
             $orderData,

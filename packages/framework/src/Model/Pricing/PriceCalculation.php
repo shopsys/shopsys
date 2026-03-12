@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Pricing;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class PriceCalculation
@@ -16,25 +15,28 @@ class PriceCalculation
     {
     }
 
-    public function getVatAmountByPriceWithVat(Money $priceWithVat, Vat $vat, Currency $currency): Money
-    {
+    public function getVatAmountByPriceWithVat(
+        Money $priceWithVat,
+        Vat $vat,
+        int $roundingPlaces,
+    ): Money {
         $divisor = (string)(1 + (float)$vat->getPercent() / 100);
 
         $priceWithoutVat = $priceWithVat->divide($divisor, static::PRICE_CALCULATION_MAX_SCALE);
 
-        return $this->rounding->roundVatAmount($priceWithVat->subtract($priceWithoutVat), $currency);
+        return $this->rounding->roundVatAmount($priceWithVat->subtract($priceWithoutVat), $roundingPlaces);
     }
 
     public function getVatAmountByPriceWithVatForVatPercent(
         Money $priceWithVat,
         float $vatPercent,
-        Currency $currency,
+        int $roundingPlaces,
     ): Money {
         $divisor = (string)(1 + $vatPercent / 100);
 
         $priceWithoutVat = $priceWithVat->divide($divisor, static::PRICE_CALCULATION_MAX_SCALE);
 
-        return $this->rounding->roundVatAmount($priceWithVat->subtract($priceWithoutVat), $currency);
+        return $this->rounding->roundVatAmount($priceWithVat->subtract($priceWithoutVat), $roundingPlaces);
     }
 
     public function applyVatPercent(Money $priceWithoutVat, Vat $vat): Money

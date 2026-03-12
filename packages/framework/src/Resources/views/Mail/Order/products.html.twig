@@ -63,7 +63,7 @@
                                                                 {% if displayBoth %}
                                                                     {% trans into orderLocale %}ex VAT{% endtrans %}
                                                                 {% endif %}
-                                                                <span style="white-space: nowrap;">{{ orderItem.unitPriceWithoutVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}</span><br>
+                                                                <span style="white-space: nowrap;">{{ orderItem.unitPriceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}</span><br>
                                                             {% endif %}
                                                         {% endif %}
 
@@ -72,7 +72,7 @@
                                                             {% if displayBoth %}
                                                                 {% trans into orderLocale %}inc VAT{% endtrans %}
                                                             {% endif %}
-                                                            <span style="white-space: nowrap;">{{ orderItem.unitPriceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}</span><br>
+                                                            <span style="white-space: nowrap;">{{ orderItem.unitPriceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}</span><br>
                                                         {% endif %}
 
                                                         {% trans into orderLocale %}Catalog number{% endtrans %}: <span style="white-space: nowrap;">{{ orderItem.catnum }}</span><br>
@@ -85,7 +85,7 @@
                                                                 <strong style="white-space: nowrap; padding-left: 10px;">
                                                             {% endif %}
 
-                                                            {{ orderItemTotalPricesById[orderItem.id].priceWithoutVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}
+                                                            {{ orderItemTotalPricesById[orderItem.id].priceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}
                                                             {% if displayBoth %}
                                                                 {{ 'ex VAT'|trans }}
                                                             {% endif %}
@@ -102,7 +102,7 @@
 
                                                     {% if displayWithVat %}
                                                         <strong style="white-space: nowrap; padding-left: 10px;">
-                                                            {{ orderItemTotalPricesById[orderItem.id].priceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}
+                                                            {{ orderItemTotalPricesById[orderItem.id].priceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}
                                                             {% if displayBoth and not isZeroTotalPrice %}
                                                                 {{ 'inc VAT'|trans }}&nbsp;
                                                             {% endif %}

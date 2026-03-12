@@ -68,7 +68,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $this->mapCompanyAddressDataToOrderData($orderData, $companyCustomer);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-3 day')->setTime(12, 40, 22);
 
         $this->createOrder(
@@ -89,7 +89,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $this->mapCompanyAddressDataToOrderData($orderData, $companyCustomer);
         $this->mapDeliveryAddressDataToOrderData($orderData, $customerUser);
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-11 day')->setTime(4, 34, 19);
         $orderData->promoCode = 'promoCode123';
         $this->createOrder(
@@ -113,7 +113,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $this->mapCompanyAddressDataToOrderData($orderData, $companyCustomer);
         $this->mapDeliveryAddressDataToOrderData($orderData, $customerUser);
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-3 day')->setTime(18, 27, 36);
         $order = $this->createOrder(
             $orderData,
@@ -133,7 +133,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $this->mapCompanyAddressDataToOrderData($orderData, $companyCustomer);
         $this->mapDeliveryAddressDataToOrderData($orderData, $customerUser);
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-1 day')->setTime(18, 30, 01);
         $order = $this->createOrder(
             $orderData,
@@ -152,7 +152,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $this->mapCompanyAddressDataToOrderData($orderData, $companyCustomer);
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-2 day')->setTime(1, 46, 6);
         $this->createOrder(
             $orderData,
@@ -174,7 +174,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $this->mapCompanyAddressDataToOrderData($orderData, $companyCustomer);
         $this->mapDeliveryAddressDataToOrderData($orderData, $customerUser);
         $orderData->domainId = $domainId;
-        $orderData->currency = $domainDefaultCurrency;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-1 day')->setTime(18, 30, 01);
         $this->createOrder(
             $orderData,

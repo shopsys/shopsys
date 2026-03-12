@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Payment\Exception\PaymentNotFoundUserError;
 use Symfony\Component\Validator\Constraint;
@@ -24,6 +25,7 @@ class PaymentInExistingOrderValidator extends ConstraintValidator
         protected readonly OrderFacade $orderFacade,
         protected readonly PaymentFacade $paymentFacade,
         protected readonly GoPayBankSwiftFacade $goPayBankSwiftFacade,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -61,10 +63,11 @@ class PaymentInExistingOrderValidator extends ConstraintValidator
             return;
         }
 
+        $currency = $this->currencyFacade->getByCode($order->getCurrencyCode());
         $goPayBankSwift = $this->goPayBankSwiftFacade->findBySwiftAndPaymentMethodAndCurrency(
             $paymentGoPayBankSwift,
             $goPayPaymentMethod,
-            $order->getCurrency(),
+            $currency,
         );
 
         if ($goPayBankSwift !== null) {
