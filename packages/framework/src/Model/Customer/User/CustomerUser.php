@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
@@ -110,8 +111,20 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var string|null
      */
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    protected $telephonePrefix;
+
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 2, nullable: true)]
+    protected $telephonePrefixCountryCode;
+
+    /**
+     * @var string|null
+     */
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    protected $telephone;
+    protected $telephoneNumber;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
@@ -168,7 +181,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->lastName = $customerUserData->lastName;
         $this->pricingGroup = $customerUserData->pricingGroup;
         $this->salesRepresentative = $customerUserData->salesRepresentative;
-        $this->telephone = $customerUserData->telephone;
+        $this->setTelephoneData($customerUserData->telephone);
         $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
         $this->roleGroup = $customerUserData->roleGroup;
     }
@@ -380,12 +393,33 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         return $this->roleGroup->getRoles();
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTelephone()
+    public function getTelephone(): ?string
     {
-        return $this->telephone;
+        return $this->getTelephoneData()?->toPhoneNumber();
+    }
+
+    public function getTelephoneData(): ?PhoneData
+    {
+        if ($this->telephoneNumber === null) {
+            return null;
+        }
+
+        return new PhoneData($this->telephonePrefixCountryCode, $this->telephonePrefix, $this->telephoneNumber);
+    }
+
+    public function setTelephoneData(?PhoneData $phoneData): void
+    {
+        if ($phoneData === null) {
+            $this->telephonePrefix = null;
+            $this->telephonePrefixCountryCode = null;
+            $this->telephoneNumber = null;
+
+            return;
+        }
+
+        $this->telephonePrefix = $phoneData->prefix;
+        $this->telephonePrefixCountryCode = $phoneData->countryCode;
+        $this->telephoneNumber = $phoneData->number;
     }
 
     /**

@@ -265,7 +265,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $orderData->firstName = $customerUser->getFirstName();
         $orderData->lastName = $customerUser->getLastName();
         $orderData->email = $customerUser->getEmail();
-        $orderData->telephone = $customerUser->getTelephone();
+        $orderData->telephone = $customerUser->getTelephoneData();
     }
 
     private function mapDeliveryAddressDataToOrderData(

@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -95,7 +96,7 @@ class CustomerUserDataFixture
         $customerUserData->password = $this->faker->password;
         $customerUserData->domainId = $domainId;
         $customerUserData->createdAt = DatePoint::createFromMutable($this->faker->dateTimeBetween('-1 year', 'now'));
-        $customerUserData->telephone = $this->faker->phoneNumber;
+        $customerUserData->telephone = new PhoneData(number: $this->faker->numerify('#########'));
         $customerUserData->customer = $customerUserUpdateData->billingAddressData->customer;
         $customerUserUpdateData->customerUserData = $customerUserData;
 

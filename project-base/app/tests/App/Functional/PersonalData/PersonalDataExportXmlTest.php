@@ -148,7 +148,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->createdAt = new DatePoint('2018-04-13');
         $customerUserData->email = 'no-reply@shopsys.com';
-        $customerUserData->telephone = '+420987654321';
+        $customerUserData->telephone = new PhoneData('CZ', '+420', '987654321');
         $customerUserData->customer = $customer;
         $customerUserData->pricingGroup = $pricingGroup;
 

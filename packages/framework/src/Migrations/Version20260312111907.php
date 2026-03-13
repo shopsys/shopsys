@@ -18,6 +18,11 @@ class Version20260312111907 extends AbstractMigration
         $this->migrateCountryAwarePhoneNumberColumn('orders', 'telephone', 'country_id');
         $this->migrateCountryAwarePhoneNumberColumn('orders', 'delivery_telephone', 'delivery_country_id');
         $this->migrateCountryAwarePhoneNumberColumn('delivery_addresses', 'telephone', 'country_id');
+        $this->migrateCountryAwarePhoneNumberColumn(
+            'customer_users',
+            'telephone',
+            '(SELECT ba.country_id FROM billing_addresses ba WHERE ba.customer_id = customer_users.customer_id LIMIT 1)',
+        );
     }
 
     private function migrateCountryAwarePhoneNumberColumn(

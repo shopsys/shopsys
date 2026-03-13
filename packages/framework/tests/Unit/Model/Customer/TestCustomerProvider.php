@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Symfony\Component\Clock\DatePoint;
@@ -47,7 +48,7 @@ class TestCustomerProvider
         $customerUserData->firstName = 'Firstname';
         $customerUserData->lastName = 'Lastname';
         $customerUserData->email = 'no-reply@shopsys.com';
-        $customerUserData->telephone = 'telephone';
+        $customerUserData->telephone = new PhoneData(number: 'telephone');
         $customerUserData->password = 'pa55w0rd';
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->customer = $customer;
@@ -138,7 +139,7 @@ class TestCustomerProvider
         $deliveryAddressData->companyName = 'deliveryCompanyName';
         $deliveryAddressData->firstName = 'deliveryFirstName';
         $deliveryAddressData->lastName = 'deliveryLastName';
-        $deliveryAddressData->telephone = 'deliveryTelephone';
+        $deliveryAddressData->telephone = new PhoneData(number: 'deliveryTelephone');
         $deliveryAddressData->country = $deliveryCountry;
         $deliveryAddressData->customer = $customer;
         $deliveryAddressData->uuid = '1f339571-4066-4c77-99ab-7b5172fbc2e9';

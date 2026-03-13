@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Symfony\Component\Clock\DatePoint;
 
@@ -186,7 +187,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Novotný',
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_OWNER_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060605',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('SK', '+421', '606060605'),
                     self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_OWNER_EMAIL,
                     self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_OWNER, CustomerUserRoleGroup::class),
                 ],
@@ -206,7 +207,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Kováč',
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_LIMITED_USER_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('SK', '+421', '606060606'),
                     self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_LIMITED_USER_EMAIL,
                     self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_LIMITED_USER, CustomerUserRoleGroup::class),
                 ],
@@ -226,7 +227,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Horváth',
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_USER_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060607',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('SK', '+421', '606060607'),
                     self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_USER_EMAIL,
                     self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_USER, CustomerUserRoleGroup::class),
                 ],
@@ -246,7 +247,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Katalogový',
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_CATALOG_USER_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060608',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('SK', '+421', '606060608'),
                     self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_CATALOG_USER_EMAIL,
                     self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_CATALOG_USER, CustomerUserRoleGroup::class),
                 ],
@@ -266,7 +267,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Účetní',
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_ACCOUNTANT_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060609',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('SK', '+421', '606060609'),
                     self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_ACCOUNTANT_EMAIL,
                     self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_ACCOUNTANT, CustomerUserRoleGroup::class),
                 ],
