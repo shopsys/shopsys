@@ -52,9 +52,9 @@ class HeurekaController extends AdminBaseController
             if ($form->isSubmitted() && $form->isValid()) {
                 $heurekaShopCertificationData = $form->getData();
 
-                $this->heurekaSetting->setApiKeyForDomain($heurekaShopCertificationData['heurekaApiKey'], $domainId);
+                $this->heurekaSetting->setApiKeyForDomain($heurekaShopCertificationData['heurekaApiKey'] ?? '', $domainId);
                 $this->heurekaSetting->setHeurekaShopCertificationWidgetForDomain(
-                    $heurekaShopCertificationData['heurekaWidgetCode'],
+                    $heurekaShopCertificationData['heurekaWidgetCode'] ?? '',
                     $domainId,
                 );
 

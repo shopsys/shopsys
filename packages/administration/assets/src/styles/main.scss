@@ -1,4 +1,9 @@
 @import '@tabler/core/scss/tabler';
+
+.breadcrumb-arrows {
+    --tblr-breadcrumb-divider: #{'"\\203a"'};
+}
+
 @import 'tom-select/src/scss/tom-select.bootstrap5';
 @import '@tabler/core/scss/vendor/tom-select';
 @import '@melloware/coloris/dist/coloris.css';

@@ -36,10 +36,14 @@ class GiftPlanFacade
     public function edit(int $id, GiftPlanData $giftPlanData): GiftPlan
     {
         $giftPlan = $this->getById($id);
+        $originalMainProducts = $giftPlan->getMainProducts();
         $giftPlan->edit($giftPlanData);
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(new GiftPlanEvent($giftPlan->getMainProducts()), GiftPlanEvent::UPDATE);
+        $this->eventDispatcher->dispatch(
+            new GiftPlanEvent(array_merge($originalMainProducts, $giftPlan->getMainProducts())),
+            GiftPlanEvent::UPDATE,
+        );
 
         return $giftPlan;
     }
