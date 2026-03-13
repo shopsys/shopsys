@@ -17,6 +17,7 @@ class Version20260312111907 extends AbstractMigration
     {
         $this->migrateCountryAwarePhoneNumberColumn('orders', 'telephone', 'country_id');
         $this->migrateCountryAwarePhoneNumberColumn('orders', 'delivery_telephone', 'delivery_country_id');
+        $this->migrateCountryAwarePhoneNumberColumn('delivery_addresses', 'telephone', 'country_id');
     }
 
     private function migrateCountryAwarePhoneNumberColumn(

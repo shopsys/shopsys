@@ -27,7 +27,7 @@ class DeliveryAddressData
     public $lastName;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData|null
      */
     public $telephone;
 

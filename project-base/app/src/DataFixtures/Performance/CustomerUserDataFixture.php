@@ -122,7 +122,7 @@ class CustomerUserDataFixture
         $deliveryAddressData->postcode = $this->faker->postcode;
         $deliveryAddressData->country = $country;
         $deliveryAddressData->street = $this->faker->streetAddress;
-        $deliveryAddressData->telephone = $this->faker->phoneNumber;
+        $deliveryAddressData->telephone = new PhoneData(number: $this->faker->numerify('#########'));
         $customerUserUpdateData->deliveryAddressData = $deliveryAddressData;
 
         return $customerUserUpdateData;

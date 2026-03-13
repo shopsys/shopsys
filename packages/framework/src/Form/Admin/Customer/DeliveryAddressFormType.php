@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Form\PhoneType;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
@@ -100,15 +101,10 @@ final class DeliveryAddressFormType extends AbstractType
                 'choice_value' => 'id',
                 'label' => 'Country',
             ])
-            ->add('telephone', TextType::class, [
-                'required' => false,
-                'constraints' => [
-                    new Constraints\Length(
-                        max: 30,
-                        maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
-                    ),
-                ],
+            ->add('telephone', PhoneType::class, [
                 'label' => 'Telephone',
+                'domain_id' => $options['domain_id'],
+                'required' => false,
             ])
             ->add('actionBar', ActionBarType::class, [
                 'back_url' => $options['back_url'],

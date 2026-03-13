@@ -16,6 +16,7 @@ class Version20260312111807 extends AbstractMigration
         $this->createPhonePrefixesTable();
 
         $this->updateOrdersTable();
+        $this->updateDeliveryAddressesTable();
     }
 
     private function createPhonePrefixesTable(): void
@@ -41,5 +42,12 @@ class Version20260312111807 extends AbstractMigration
         $this->sql('ALTER TABLE orders RENAME COLUMN delivery_telephone TO delivery_telephone_number');
         $this->sql('ALTER TABLE orders ADD delivery_telephone_prefix VARCHAR(10) DEFAULT NULL');
         $this->sql('ALTER TABLE orders ADD delivery_telephone_prefix_country_code VARCHAR(2) DEFAULT NULL');
+    }
+
+    private function updateDeliveryAddressesTable(): void
+    {
+        $this->sql('ALTER TABLE delivery_addresses RENAME COLUMN telephone TO telephone_number');
+        $this->sql('ALTER TABLE delivery_addresses ADD telephone_prefix VARCHAR(10) DEFAULT NULL');
+        $this->sql('ALTER TABLE delivery_addresses ADD telephone_prefix_country_code VARCHAR(2) DEFAULT NULL');
     }
 }

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\SetDeliveryAddressByDeliveryAddressUuidMiddleware;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrameworkBundle\Test\MiddlewareTestCase;
 
 class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTestCase
@@ -39,7 +40,7 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
         $deliveryAddressData->firstName = $expectedFirstName;
         $deliveryAddressData->lastName = $expectedLastName;
         $deliveryAddressData->companyName = $expectedCompanyName;
-        $deliveryAddressData->telephone = $expectedTelephone;
+        $deliveryAddressData->telephone = new PhoneData('CZ', '+420', $expectedTelephone);
         $deliveryAddressData->street = $expectedStreet;
         $deliveryAddressData->city = $expectedCity;
         $deliveryAddressData->postcode = $expectedPostCode;
@@ -59,7 +60,7 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
         $this->assertSame($expectedFirstName, $actualOrderData->deliveryFirstName);
         $this->assertSame($expectedLastName, $actualOrderData->deliveryLastName);
         $this->assertSame($expectedCompanyName, $actualOrderData->deliveryCompanyName);
-        $this->assertSame($expectedTelephone, $actualOrderData->deliveryTelephone);
+        $this->assertSame($expectedTelephone, $actualOrderData->deliveryTelephone->number);
         $this->assertSame($expectedStreet, $actualOrderData->deliveryStreet);
         $this->assertSame($expectedCity, $actualOrderData->deliveryCity);
         $this->assertSame($expectedPostCode, $actualOrderData->deliveryPostcode);

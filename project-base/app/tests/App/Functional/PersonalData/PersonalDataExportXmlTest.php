@@ -126,7 +126,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
     {
         $deliveryAddressData = new DeliveryAddressData();
         $deliveryAddressData->country = $country;
-        $deliveryAddressData->telephone = '+420987654321';
+        $deliveryAddressData->telephone = new PhoneData('CZ', '+420', '987654321');
         $deliveryAddressData->postcode = '70200';
         $deliveryAddressData->companyName = 'Shopsys';
         $deliveryAddressData->street = 'Hlubinská';
