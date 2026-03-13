@@ -155,6 +155,9 @@ export enum TIDs {
     comparison_popup = 'comparison_popup',
     comparison_popup_link = 'comparison_popup_link',
 
+    // Product Wishlist
+    product_wishlist_button = 'product_wishlist_button',
+
     // Contact Form
     contact_form_submit_button = 'contact_form_submit_button',
     contact_form_success = 'contact_form_success',

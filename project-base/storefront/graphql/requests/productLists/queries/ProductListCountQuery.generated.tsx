@@ -9,12 +9,13 @@ export type TypeProductListCountQueryVariables = Types.Exact<{
 }>;
 
 
-export type TypeProductListCountQuery = { __typename?: 'Query', productList: { __typename?: 'ProductList', itemsCount: number } | null };
+export type TypeProductListCountQuery = { __typename?: 'Query', productList: { __typename?: 'ProductList', uuid: string, itemsCount: number } | null };
 
 
 export const ProductListCountQueryDocument = gql`
     query ProductListCountQuery($input: ProductListInput!) {
   productList(input: $input) {
+    uuid
     itemsCount
   }
 }

@@ -3,14 +3,12 @@ import { useEffect, useRef } from 'react';
 import { isClient } from 'utils/isClient';
 import { v4 as uuid } from 'uuid';
 
-type BroadcastChannelsType = 'reloadPage' | 'refetchCart' | 'refetchComparedProducts' | 'refetchWishedProducts';
+type BroadcastChannelsType = 'reloadPage' | 'refetchCart';
 const tabId = uuid();
 
 const broadcastChannelSameTabConfig: Record<BroadcastChannelsType, boolean> = {
     refetchCart: false,
     reloadPage: false,
-    refetchComparedProducts: false,
-    refetchWishedProducts: false,
 };
 
 export const dispatchBroadcastChannel = (
