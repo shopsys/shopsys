@@ -1,45 +1,40 @@
 import { useChangePaymentInCart } from './useChangePaymentInCart';
 import { useCurrentCart } from './useCurrentCart';
 import { handleCartModifications } from 'connectors/cart/Cart';
-import { useEffect, useEffectEvent, useRef } from 'react';
-import { useSessionStore } from 'store/useSessionStore';
+import {
+    CartQueryDocument,
+    TypeCartQuery,
+    TypeCartQueryVariables,
+} from 'graphql/requests/cart/queries/CartQuery.generated';
+import { useCallback, useEffect, useEffectEvent } from 'react';
+import { usePersistStore } from 'store/usePersistStore';
+import { useClient } from 'urql';
+import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { useBroadcastChannel } from 'utils/useBroadcastChannel';
+import { useRefetchOnTabFocus } from 'utils/useRefetchOnTabFocus';
 
 export const useReloadCart = (): void => {
-    const { modifications, fetchCart } = useCurrentCart(false);
+    const { modifications } = useCurrentCart();
     const { changePaymentInCart } = useChangePaymentInCart();
     const { t } = useTranslation();
-    const isCartStale = useSessionStore((s) => s.isCartStale);
-    const setCartStale = useSessionStore((s) => s.setCartStale);
-    const fetchCartRef = useRef(fetchCart);
+    const client = useClient();
+    const cartUuid = usePersistStore((store) => store.cartUuid);
+    const isUserLoggedIn = useIsUserLoggedIn();
 
-    useEffect(() => {
-        fetchCartRef.current = fetchCart;
-    }, [fetchCart]);
-
-    useBroadcastChannel('refetchCart', () => {
-        if (document.visibilityState === 'visible') {
-            fetchCartRef.current();
-        } else {
-            setCartStale(true);
+    const refetchCart = useCallback(() => {
+        if (!cartUuid && !isUserLoggedIn) {
+            return;
         }
-    });
 
-    useEffect(() => {
-        const handleVisibilityChange = () => {
-            if (document.visibilityState === 'visible' && isCartStale) {
-                fetchCartRef.current();
-                setCartStale(false);
-            }
-        };
+        client
+            .query<
+                TypeCartQuery,
+                TypeCartQueryVariables
+            >(CartQueryDocument, { cartUuid }, { requestPolicy: 'network-only' })
+            .toPromise();
+    }, [client, cartUuid, isUserLoggedIn]);
 
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-
-        return () => {
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        };
-    }, [isCartStale, setCartStale]);
+    useRefetchOnTabFocus(refetchCart);
 
     const onHandleModifications = useEffectEvent(() => {
         if (modifications) {
