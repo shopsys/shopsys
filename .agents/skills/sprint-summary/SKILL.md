@@ -1,11 +1,11 @@
 ---
 name: sprint-summary
-description: Generates a Czech sprint summary article from a Jira CSV export.
+description: Generates a Czech sprint summary article from a Jira CSV export and can optionally prepare Playwright screenshots/videos as side attachments for relevant UX tasks.
 ---
 
 # Sprint Summary
 
-Generates a sprint summary from a Jira CSV export. Creates a structured article in Czech suitable for Confluence.
+Generates a sprint summary from a Jira CSV export. Creates a structured article in Czech suitable for Confluence. If Playwright MCP is available, it can optionally prepare screenshots/videos for relevant UI/UX tasks as side attachments.
 
 ## Initial Setup
 
@@ -173,16 +173,67 @@ For each task:
      - Impact on users/developers
    - Max 3-5 bullet points per task
 
-### Step 6: Save and Present
+### Step 6: Save Markdown
 
-1. Save the file using Write tool
-2. Offer to open in editor (PhpStorm)
-3. Display summary:
+1. Save the markdown file
+2. Keep the markdown article clean and copy-friendly
+3. Do not automatically embed screenshots into the markdown
+
+### Step 7: Offer Visual Attachments (Optional)
+
+After the markdown is generated, check whether Playwright MCP/browser tools are available and whether the application is reachable.
+
+If yes, explicitly ask the user whether they want visual attachments for relevant tasks:
+- The user may name concrete Jira tickets
+- Or the user may let the agent choose relevant tasks
+
+When choosing tasks automatically, prefer:
+- Storefront/Admin UX changes
+- Validation fixes
+- Modal/z-index issues
+- Skeleton/loading states
+- Widget behavior
+- Checkout and form interactions
+
+Usually skip:
+- Backend-only changes
+- DX/infrastructure tasks
+- API/internal refactors without visible UI impact
+
+If the user wants visuals:
+1. Use Playwright MCP only; do not install Playwright into the project
+2. Save assets into a sibling directory next to the markdown output
+3. Default asset directory name:
+   - if output is `sprint-summary.md`, use `sprint-summary-assets/`
+4. Naming convention:
+   - `{ISSUE_KEY}-{short-slug}.png`
+   - `{ISSUE_KEY}-{short-slug}.gif`
+   - `{ISSUE_KEY}-{short-slug}.mp4`
+5. Prefer full viewport screenshots over tight crops
+6. Crop only when the full viewport is unusable or hides the relevant change
+7. Use video/GIF only for interaction-heavy changes where a screenshot is insufficient
+8. If a scenario cannot be reproduced, skip the asset and report that clearly
+
+When assets are generated, update the markdown item only with a short textual reference, not an embedded image. Use this format:
+
+```markdown
+- Příloha: `sprint-summary-assets/SSP-3891-variant-parameters.png`
+```
+
+This keeps the article easy to preview in IDEs and easy to copy to Confluence.
+
+### Step 8: Present Result
+
+1. Display the generated markdown file path
+2. If attachments were generated, mention the asset directory
+3. Offer to open in editor (PhpStorm)
+4. Display summary:
 
 ```
 Sprint summary has been generated.
 
 File: {path to file}
+Assets: {path to assets directory, if any}
 
 Statistics:
 - Total tasks: XX
@@ -202,6 +253,7 @@ Would you like to open the file in PhpStorm?
 4. **Focus on impact** - what it means for users/developers
 5. **Omit internal details** - implementation details only if relevant
 6. **Keep technical terms** - do not translate GraphQL, API, Docker, etc.
+7. **Keep article copy-friendly** - references to attachments are allowed, embedded media is not the default output
 
 ## Cleaning Jira Markup
 
@@ -239,6 +291,7 @@ When processing Description field, remove or convert Jira-specific markup:
 #### Formulář se neskryje po odeslání
 - **Jira:** [SSP-3674](https://shopsys.atlassian.net/browse/SSP-3674) | **PR:** [#4303](https://github.com/shopsys/shopsys/pull/4303)
 - Po odeslání se nyní skryje/vyčistí formulář na kontaktní stránce a stránkách osobních údajů
+- Příloha: `sprint-summary-assets/SSP-3674-contact-form-state.png`
 
 #### Admin: Chyba ve vyhledávání rozšířeného filtru
 - **Jira:** [SSP-3748](https://shopsys.atlassian.net/browse/SSP-3748) | **PR:** [#4334](https://github.com/shopsys/shopsys/pull/4334)
