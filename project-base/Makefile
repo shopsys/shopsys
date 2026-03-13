@@ -2,6 +2,10 @@
 # Default target: Help
 # ------------------------------------------------------------------------------
 
+TEST_LOCALE ?= en
+B2B_DOMAIN_ID ?=
+B2B_BASE_URL ?=
+
 .DEFAULT_GOAL := help
 
 help: ## Displays list of available commands
@@ -120,7 +124,7 @@ define run_acceptance_tests
 	$(call prepare-data-for-acceptance-tests)
 	$(call cypress-prepare)
 	@echo "▶️ Running acceptance tests of type $(1)..."
-	-docker compose run --rm -e TYPE=$(1) -e COMMAND=run cypress || true
+	-docker compose run --rm -e TYPE=$(1) -e COMMAND=run -e TEST_LOCALE=$(TEST_LOCALE) -e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress || true
 	@echo "✅ Acceptance tests of type $(1) finished."
 	$(call cypress-cleanup)
 endef
@@ -129,7 +133,7 @@ define selected_acceptance_tests
 	$(call prepare-data-for-acceptance-tests)
 	$(call cypress-prepare)
 	@echo "▶️ Running selected acceptance tests of type $(1)..."
-	-docker compose run --rm -e TYPE=$(1) -e COMMAND=selected cypress || true
+	-docker compose run --rm -e TYPE=$(1) -e COMMAND=selected -e TEST_LOCALE=$(TEST_LOCALE) -e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress || true
 	@echo "✅ Selected acceptance tests of type $(1) finished."
 	$(call cypress-cleanup)
 endef
@@ -139,7 +143,7 @@ define run_specific_acceptance_test
 	$(call cypress-prepare)
 	@echo "▶️ Running specific acceptance test: $(2) of type $(1)..."
 	docker compose build cypress
-	-docker compose run --rm -e TYPE=$(1) -e SPEC=$(2) cypress || true
+	-docker compose run --rm -e TYPE=$(1) -e SPEC=$(2) -e TEST_LOCALE=$(TEST_LOCALE) -e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress || true
 	@echo "✅ Specific acceptance test $(2) of type $(1) finished."
 	$(call cypress-cleanup)
 endef
@@ -160,7 +164,7 @@ define open_acceptance_tests
 		xhost + $(get_ip); \
 	fi
 	@echo "▶️ Opening acceptance tests of type $(1)..."
-	-docker compose run --rm -e TYPE=$(1) -e DISPLAY=$(get_ip):0 -e COMMAND=open cypress || true
+	-docker compose run --rm -e TYPE=$(1) -e DISPLAY=$(get_ip):0 -e COMMAND=open -e TEST_LOCALE=$(TEST_LOCALE) -e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress || true
 	@echo "✅ Acceptance tests of type $(1) finished."
 	$(call cypress-cleanup)
 endef
@@ -203,7 +207,7 @@ run-smoke-tests: ## Runs smoke tests (Cypress)
 	$(call prepare-data-for-acceptance-tests)
 	$(call cypress-prepare)
 	@echo "▶️ Running smoke tests..."
-	-docker compose run --rm -e TYPE=null -e COMMAND=smoke cypress || true
+	-docker compose run --rm -e TYPE=null -e COMMAND=smoke -e TEST_LOCALE=$(TEST_LOCALE) -e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress || true
 	@echo "✅ Smoke tests finished."
 	$(call cypress-cleanup)
 

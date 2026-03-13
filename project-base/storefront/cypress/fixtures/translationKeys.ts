@@ -63,6 +63,9 @@ export const translationKeys = {
             promoCodeAdded: 'Promo code was added to the order.',
             promoCodeRemoved: 'Promo code was removed from the order.',
             deliveryAddressCreated: 'Your delivery address has been created',
+            userDeleted: 'User has been deleted',
+            userSaved: 'User profile has been changed successfully',
+            userAdded: 'User has been added successfully',
         },
         error: {
             emailAlreadyRegistered: 'This email is already registered',

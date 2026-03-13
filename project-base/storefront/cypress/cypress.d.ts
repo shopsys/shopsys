@@ -16,12 +16,29 @@ declare global {
             waitForStableAndInteractiveDOM(): Cypress.Chainable<JQuery<HTMLElement>>;
             visitAndWaitForStableAndInteractiveDOM(url: string): Cypress.Chainable<JQuery<HTMLElement>>;
             reloadAndWaitForStableAndInteractiveDOM(): Cypress.Chainable<JQuery<HTMLElement>>;
+            visitB2bAndWaitForStableAndInteractiveDOM(
+                path: string,
+                options?: Partial<Cypress.VisitOptions>,
+            ): Cypress.Chainable<JQuery<HTMLElement>>;
             waitForHydration(): Cypress.Chainable<void>;
             addProductToCartForTest(productUuid?: string, quantity?: number): Cypress.Chainable<any>;
             addPromoCodeToCartForTest(promoCode: string): Cypress.Chainable<any>;
             preselectTransportForTest(transportUuid: string, pickupPlaceIdentifier?: string): Cypress.Chainable<any>;
             preselectPaymentForTest(paymentUuid: string): Cypress.Chainable<any>;
             login(email?: string, password?: string): Cypress.Chainable<any>;
+            loginB2b(email: string, password: string): Cypress.Chainable<any>;
+            createB2bOrderForTest(): Cypress.Chainable<{ urlHash: string }>;
+            getCustomerUserRoleGroupUuidForTest(): Cypress.Chainable<string>;
+            addCustomerUserViaApi(input: {
+                email: string;
+                firstName: string;
+                lastName: string;
+                telephone: string;
+                roleGroupUuid: string;
+                newsletterSubscription?: boolean;
+            }): Cypress.Chainable<{ uuid: string; firstName: string; lastName: string; email: string }>;
+            removeCustomerUserViaApi(customerUserUuid: string): Cypress.Chainable<any>;
+            removeCustomerUserByEmailIfExistsViaApi(email: string): Cypress.Chainable<any>;
             logout(): Cypress.Chainable<any>;
             createOrder(createOrderInput: CreateOrderMutationVariables): Cypress.Chainable<{ urlHash: string }>;
             registerAsNewUser(

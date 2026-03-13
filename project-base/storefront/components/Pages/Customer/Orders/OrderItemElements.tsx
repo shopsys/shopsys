@@ -1,4 +1,5 @@
 import { Image } from 'components/Basic/Image/Image';
+import { TIDs } from 'cypress/tids';
 import { ReactNode } from 'react';
 
 type ElementWithImageProps = {
@@ -9,7 +10,10 @@ type ElementWithImageProps = {
 export const ElementWithImage: FC<ElementWithImageProps> = ({ image, name }) => {
     return (
         <div className="font-secondary flex items-center gap-4 font-semibold">
-            <div className="bg-background-default flex h-12 w-20 shrink-0 items-center justify-center rounded-xl">
+            <div
+                className="bg-background-default flex h-12 w-20 shrink-0 items-center justify-center rounded-xl"
+                data-tid={TIDs.order_list_transport_and_payment_image}
+            >
                 <Image
                     alt={name}
                     className="aspect-video h-7 object-contain object-center mix-blend-multiply"

@@ -1,4 +1,5 @@
 import { Flag } from 'components/Basic/Flag/Flag';
+import { TIDs } from 'cypress/tids';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -31,7 +32,10 @@ export const ProductPrice: FC<ProductPriceProps> = ({
     }
 
     return (
-        <div className={twMergeCustom('flex flex-wrap items-center gap-x-2 gap-y-0.5', className)}>
+        <div
+            className={twMergeCustom('flex flex-wrap items-center gap-x-2 gap-y-0.5', className)}
+            data-tid={TIDs.product_price}
+        >
             <div
                 className={twMergeCustom(
                     'font-secondary text-price-default text-lg font-bold whitespace-nowrap',

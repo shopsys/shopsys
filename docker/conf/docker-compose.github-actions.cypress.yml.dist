@@ -90,6 +90,8 @@ services:
         environment:
             - GROUP=${GROUP}
             - TEST_LOCALE=${TEST_LOCALE:-en}
+            - B2B_DOMAIN_ID=${B2B_DOMAIN_ID:-2}
+            - B2B_BASE_URL=${B2B_BASE_URL:-http://127.0.0.2:8000}
         volumes:
             - ./videos:/app/videos
             - ./screenshots:/app/screenshots
@@ -118,6 +120,8 @@ services:
             - COMMAND=run
             - GROUP=${GROUP}
             - TEST_LOCALE=${TEST_LOCALE:-en}
+            - B2B_DOMAIN_ID=${B2B_DOMAIN_ID:-2}
+            - B2B_BASE_URL=${B2B_BASE_URL:-http://127.0.0.2:8000}
 
     img-proxy:
         image: ghcr.io/imgproxy/imgproxy:latest

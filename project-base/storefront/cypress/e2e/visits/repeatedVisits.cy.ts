@@ -7,7 +7,7 @@ describe('Repeated Page Visits Tests (Defer Testing)', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Slow Homepage] 5 homepage visits with wait', () => {
+    it('[Slow Homepage] 5 homepage visits with wait', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
         cy.wait(1000);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
@@ -20,7 +20,7 @@ describe('Repeated Page Visits Tests (Defer Testing)', () => {
         cy.wait(1000);
     });
 
-    it('[Fast Homepage] 5 homepage visits without wait', () => {
+    it('[Fast Homepage] 5 homepage visits without wait', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
         cy.visitAndWaitForStableAndInteractiveDOM('/');
         cy.visitAndWaitForStableAndInteractiveDOM('/');
@@ -28,7 +28,7 @@ describe('Repeated Page Visits Tests (Defer Testing)', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
     });
 
-    it('[Slow Product Detail] 5 product detail page visits with wait', () => {
+    it('[Slow Product Detail] 5 product detail page visits with wait', function () {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
         cy.wait(1000);
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
@@ -41,7 +41,7 @@ describe('Repeated Page Visits Tests (Defer Testing)', () => {
         cy.wait(1000);
     });
 
-    it('[Fast Product Detail] 5 product detail page visits without wait', () => {
+    it('[Fast Product Detail] 5 product detail page visits without wait', function () {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
@@ -49,7 +49,7 @@ describe('Repeated Page Visits Tests (Defer Testing)', () => {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
     });
 
-    it('[Slow Category Detail] 5 category detail page visits with wait', () => {
+    it('[Slow Category Detail] 5 category detail page visits with wait', function () {
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
         cy.wait(1000);
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
@@ -62,7 +62,7 @@ describe('Repeated Page Visits Tests (Defer Testing)', () => {
         cy.wait(1000);
     });
 
-    it('[Fast Category Detail] 5 category detail page visits without wait', () => {
+    it('[Fast Category Detail] 5 category detail page visits without wait', function () {
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
         visitEntityByUuid('category', staticData.categories.electronics.uuid);

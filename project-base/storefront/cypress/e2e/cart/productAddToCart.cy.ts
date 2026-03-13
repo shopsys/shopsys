@@ -37,6 +37,7 @@ describe('Product Add To Cart Tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
+            preserveFixed: [TIDs.layout_popup],
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
                 { tid: TIDs.product_list_item_image, zIndex: 5 },
@@ -54,6 +55,7 @@ describe('Product Add To Cart Tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
+            preserveFixed: [TIDs.layout_popup],
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
                 { tid: TIDs.product_detail_main_image, zIndex: 5 },
@@ -71,6 +73,7 @@ describe('Product Add To Cart Tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
+            preserveFixed: [TIDs.layout_popup],
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
                 { tid: TIDs.simple_navigation_image, zIndex: 9999 },
@@ -88,6 +91,7 @@ describe('Product Add To Cart Tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
+            preserveFixed: [TIDs.layout_popup],
             blackout: [{ tid: TIDs.product_detail_main_image, zIndex: 5 }],
         });
         checkPopupIsVisible(true);
@@ -102,6 +106,7 @@ describe('Product Add To Cart Tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
+            preserveFixed: [TIDs.layout_popup],
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
                 { tid: TIDs.banners_slider, zIndex: 9999 },
@@ -124,6 +129,7 @@ describe('Product Add To Cart Tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
+            preserveFixed: [TIDs.layout_popup],
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
                 { tid: TIDs.product_list_item_image, zIndex: 5 },

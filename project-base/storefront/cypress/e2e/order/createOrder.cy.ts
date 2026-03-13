@@ -196,11 +196,18 @@ describe('Create Order Tests', () => {
         );
     });
 
-    it('[Anon Promo Code] should create order with promo code and check it in order detail', function () {
+    it('[Anon Promo Code] should create order with promo code, verify promo code summary visibility on steps 2 and 3, and check it in order detail', function () {
         cy.addPromoCodeToCartForTest(staticData.promoCode);
         cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
         cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
+
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
+        cy.getByTID([TIDs.pages_cart_cart_preview_total]).scrollIntoView().should('be.visible');
+        cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).should('contain.text', staticData.promoCode);
+
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
+        cy.getByTID([TIDs.pages_cart_cart_preview_total]).scrollIntoView().should('be.visible');
+        cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).should('contain.text', staticData.promoCode);
 
         fillEmailInThirdStep(staticData.customer1.emailRegistered);
         fillCustomerInformationInThirdStep(

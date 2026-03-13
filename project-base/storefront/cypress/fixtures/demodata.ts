@@ -78,10 +78,21 @@ export const staticData = {
         a4techMouse: {
             uuid: 'd5a669ed-46aa-5c55-b1fe-54e7b81de4cd',
             catnum: '5960453',
+            name: 'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black',
         },
         philips54CRT: {
             uuid: 'eff2bd27-7a46-5ccf-879c-915095bfb8fb',
             catnum: '9176588',
+        },
+        delonghi: {
+            uuid: '7c476c2b-55a9-5195-9415-6a0874560a32',
+            catnum: '9771339',
+            name: 'DeLonghi ECAM 44.660 B Eletta Plus',
+        },
+        giftTicket100czk: {
+            uuid: '7a1a818d-df2a-53e8-8c12-016fb4ca781e',
+            catnum: '9176544MS',
+            name: '100 Czech crowns ticket',
         },
     } as const,
     order: {
@@ -95,8 +106,29 @@ export const staticData = {
             uuid: 'cf500b03-d2e4-5549-b3af-cefed894c1b4',
         },
     },
+    b2bOwner: {
+        email: 'jozef.novotny@shopsys.com',
+        password: 'user123',
+    },
+    b2bUser: {
+        email: 'marek.horvat@shopsys.com',
+        password: 'user123',
+    },
+    b2bLimitedUser: {
+        email: 'peter.kovac@shopsys.com',
+        password: 'user123',
+    },
+    b2bCatalogUser: {
+        email: 'jiri.katalogovy@shopsys.com',
+        password: 'user123',
+    },
+    b2bAccountant: {
+        email: 'jana.ucetni@shopsys.com',
+        password: 'user123',
+    },
     promoCode: 'test',
     openingHours: '09:00 - 11:00, 13:00 - 17:00',
+    openingStatus: 'Open',
     orderNote: 'Just a tiny note in the order.',
     smokeTestRoutesUuids: {
         category: '9808de4b-f953-544e-82ec-8417c2893cbd',
@@ -120,6 +152,8 @@ export const url = {
     login: route['/login'] as string,
     registration: route['/registration'] as string,
     stores: route['/stores'] as string,
+    contactForm: route['/contact-form'] as string,
+    productComparison: route['/product-comparison'] as string,
     order: {
         transportAndPayment: route['/order/transport-and-payment'] as string,
         contactInformation: route['/order/contact-information'] as string,
@@ -129,10 +163,51 @@ export const url = {
     customer: {
         orders: route['/customer/orders'] as string,
         editProfile: route['/customer/edit-profile'] as string,
+        complaints: route['/customer/complaints'] as string,
+        newComplaint: route['/customer/new-complaint'] as string,
+        complaintDetail: route['/customer/complaint-detail'] as string,
+    },
+};
+
+type RouteMap = Record<string, string>;
+
+const b2bDomainId = Cypress.env('B2B_DOMAIN_ID') ? Number(Cypress.env('B2B_DOMAIN_ID')) : null;
+const b2bBaseUrl = (Cypress.env('B2B_BASE_URL') as string) || null;
+
+// null when B2B is not configured — B2B test files check this and skip
+export const b2bDomain =
+    b2bDomainId && b2bBaseUrl ? { baseUrl: b2bBaseUrl, domainId: b2bDomainId, routes: routes[b2bDomainId - 1] } : null;
+
+const b2bRoute: RouteMap = b2bDomain?.routes ?? {};
+
+export const b2bUrl = {
+    login: b2bRoute['/login'] as string,
+    cart: b2bRoute['/cart'] as string,
+    registration: b2bRoute['/registration'] as string,
+    order: {
+        transportAndPayment: b2bRoute['/order/transport-and-payment'] as string,
+        contactInformation: b2bRoute['/order/contact-information'] as string,
+        orderConfirmation: b2bRoute['/order-confirmation'] as string,
+        orderDetail: b2bRoute['/order-detail/:urlHash']?.replace('/:urlHash', '') as string,
+        orderWithdrawal: b2bRoute['/order-withdrawal/:orderUrlHash']?.replace('/:orderUrlHash', '') as string,
+        orderWithdrawalSuccess: b2bRoute['/order-withdrawal-success/:orderUrlHash']?.replace(
+            '/:orderUrlHash',
+            '',
+        ) as string,
+    },
+    customer: {
+        users: b2bRoute['/customer/users'] as string,
+        complaints: b2bRoute['/customer/complaints'] as string,
+        newComplaint: b2bRoute['/customer/new-complaint'] as string,
+        complaintDetail: b2bRoute['/customer/complaint-detail'] as string,
+        orders: b2bRoute['/customer/orders'] as string,
+        editProfile: b2bRoute['/customer/edit-profile'] as string,
+        changePassword: b2bRoute['/customer/change-password'] as string,
     },
 };
 
 export const PERSIST_STORE_NAME = 'shopsys-platform-persist-store-1';
+export const B2B_PERSIST_STORE_NAME = `shopsys-platform-persist-store-${b2bDomain?.domainId ?? 1}`;
 
 export const DEFAULT_PERSIST_STORE_STATE = {
     state: {

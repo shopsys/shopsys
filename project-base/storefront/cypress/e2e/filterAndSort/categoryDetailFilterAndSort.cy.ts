@@ -16,12 +16,8 @@ describe('Product Filtering E2E Tests', () => {
         cy.waitForStableAndInteractiveDOM();
 
         cy.get(`[id="${translations.filter.price} - from"]`).should('be.visible').clear().type('100').blur();
-
-        cy.wait(500);
-
         cy.get(`[id="${translations.filter.price} - to"]`).should('be.visible').clear().type('500').blur();
-
-        cy.wait(1500);
+        cy.waitForStableAndInteractiveDOM();
 
         cy.url().should('satisfy', (url) => {
             const decodedUrl = decodeURIComponent(url);
@@ -52,12 +48,14 @@ describe('Product Filtering E2E Tests', () => {
         cy.waitForStableAndInteractiveDOM();
 
         cy.get(`[id="${translations.filter.price} - from"]`).should('be.visible').clear().type('50').blur();
+        cy.waitForStableAndInteractiveDOM();
 
-        cy.wait(1000);
-
-        cy.get('input[type="checkbox"]').should('have.length.greaterThan', 0).first().check({ force: true });
-
-        cy.wait(1000);
+        cy.getByTID([TIDs.filter_panel])
+            .find('input[type="checkbox"]')
+            .should('have.length.greaterThan', 0)
+            .first()
+            .check({ force: true });
+        cy.waitForStableAndInteractiveDOM();
 
         cy.url().should('satisfy', (url) => {
             const decodedUrl = decodeURIComponent(url);
@@ -88,12 +86,10 @@ describe('Product Filtering E2E Tests', () => {
             .type('100')
             .should('have.value', '100')
             .blur();
+        cy.waitForStableAndInteractiveDOM();
 
-        cy.wait(1000);
-
-        cy.get('[data-tid^="blocks_sortingbar_option_"]').should('exist').first().click({ force: true });
-
-        cy.wait(1500);
+        cy.getByTID([[TIDs.blocks_sortingbar_option_, 'PRICE_ASC']]).click({ force: true });
+        cy.waitForStableAndInteractiveDOM();
 
         cy.url().should('satisfy', (url) => {
             const decodedUrl = decodeURIComponent(url);
@@ -131,12 +127,10 @@ describe('Product Filtering E2E Tests', () => {
         cy.waitForStableAndInteractiveDOM();
 
         cy.get(`[id="${translations.filter.price} - from"]`).should('be.visible').clear().type('200').blur();
+        cy.waitForStableAndInteractiveDOM();
 
-        cy.wait(1000);
-
-        cy.get('input[type="checkbox"]').first().check({ force: true });
-
-        cy.wait(1000);
+        cy.getByTID([TIDs.filter_panel]).find('input[type="checkbox"]').first().check({ force: true });
+        cy.waitForStableAndInteractiveDOM();
 
         cy.url().should('satisfy', (url) => {
             const decodedUrl = decodeURIComponent(url);
@@ -144,30 +138,11 @@ describe('Product Filtering E2E Tests', () => {
         });
 
         cy.get('body').then(($body) => {
-            const resetSelectors = [
-                'button:contains("Clear")',
-                'button:contains("Reset")',
-                'a:contains("Clear")',
-                '[role="button"]:contains("Clear")',
-                'button[type="reset"]',
-                'button:contains("Remove")',
-            ];
-
-            let found = false;
-            for (const selector of resetSelectors) {
-                if ($body.find(selector).length > 0) {
-                    cy.get(selector).first().click({ force: true });
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                cy.get(`[id="${translations.filter.price} - from"]`).clear().blur();
+            if ($body.find(`[data-tid="${TIDs.clear_all_filters_button}"]`).length > 0) {
+                cy.getByTID([TIDs.clear_all_filters_button]).first().click({ force: true });
             }
         });
-
-        cy.wait(1000);
+        cy.waitForStableAndInteractiveDOM();
 
         cy.url().should('satisfy', (url) => {
             const decodedUrl = decodeURIComponent(url);

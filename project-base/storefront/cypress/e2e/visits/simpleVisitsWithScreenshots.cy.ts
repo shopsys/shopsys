@@ -1,8 +1,5 @@
-import {
-    changeBlogArticleDynamicPartsToStaticDemodata,
-    changeStoreOpeningHoursToStaticDemodata,
-} from './visitsSupport';
-import { staticData, url } from 'fixtures/demodata';
+import { changeBlogArticleDynamicPartsToStaticDemodata } from './visitsSupport';
+import { staticData } from 'fixtures/demodata';
 import {
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
@@ -43,6 +40,7 @@ describe('Simple page visit tests with screenshots', () => {
                 { tid: TIDs.product_list_item_image },
                 { tid: TIDs.product_detail_main_image },
                 { tid: TIDs.product_gallery_image },
+                { tid: TIDs.product_gallery_video },
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
@@ -59,20 +57,6 @@ describe('Simple page visit tests with screenshots', () => {
                 { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
                 { tid: TIDs.category_bestseller_image },
-            ],
-        });
-    });
-
-    it('[Stores] should visit stores page with screenshot', function () {
-        cy.visitAndWaitForStableAndInteractiveDOM(url.stores);
-        changeStoreOpeningHoursToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'stores page', {
-            blackout: [
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_payment_images },
-                { tid: TIDs.footer_copyright },
-                { tid: TIDs.stores_map },
-                { tid: TIDs.store_opening_status },
             ],
         });
     });

@@ -130,7 +130,10 @@ export const CartPreview: FC<CartPreviewProps> = ({
                     )}
 
                     {promoCodes.length > 0 && (
-                        <div className="flex w-full items-center gap-2">
+                        <div
+                            className="flex w-full items-center gap-2"
+                            data-tid={TIDs.blocks_promocode_promocodeinfo_code}
+                        >
                             <span>{t('Promo code')}</span>
 
                             <Flag className={hasPromoCodeDiscount ? '' : 'ml-auto'} type="discount">
@@ -140,7 +143,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
                             {isFirstStep && (
                                 <button
                                     className="text-link-default hover:text-link-hovered cursor-pointer text-xs underline hover:no-underline"
-                                    data-tid={TIDs.blocks_promocode_promocodeinfo_code}
+                                    data-tid={TIDs.blocks_promocode_remove_button}
                                     tabIndex={0}
                                     aria-label={t('Remove promo code {{ promoCode }}', {
                                         ns: 'accessibility',

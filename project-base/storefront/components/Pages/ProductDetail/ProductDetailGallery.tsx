@@ -130,6 +130,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                                     className="aspect-square object-contain object-center p-1 mix-blend-multiply"
                                                     height={64}
                                                     src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
+                                                    tid={TIDs.product_gallery_video}
                                                     width={64}
                                                 />
                                                 <span className="bg-overlay-image absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg">

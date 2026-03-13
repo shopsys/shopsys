@@ -1,6 +1,7 @@
 import { CollapsibleText } from 'components/Basic/CollapsibleText/CollapsibleText';
 import { Image } from 'components/Basic/Image/Image';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { TIDs } from 'cypress/tids';
 import { useRef } from 'react';
 
 type CollapsibleDescriptionWithImageProps = {
@@ -22,7 +23,11 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
 
     return (
         <Webline>
-            {!!title && <h1 className="mb-5">{title}</h1>}
+            {!!title && (
+                <h1 className="mb-5" data-tid={TIDs.page_title}>
+                    {title}
+                </h1>
+            )}
 
             <section className="vl:flex-row flex w-full flex-col-reverse justify-between gap-5" ref={scrollTargetRef}>
                 {!!description && currentPage === 1 && (

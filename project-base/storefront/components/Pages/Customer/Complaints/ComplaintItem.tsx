@@ -3,6 +3,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -21,7 +22,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
     return (
         <div className="bg-background-more vl:p-6 flex flex-col gap-5 rounded-md p-4">
             <div className="vl:flex-row vl:items-start vl:justify-between flex flex-col gap-4">
-                <div className="flex size-20 shrink-0">
+                <div className="flex size-20 shrink-0" data-tid={TIDs.complaint_item_image}>
                     <Image
                         priority
                         alt={complaintItem.items[0].orderItem?.product?.mainImage?.name || ''}

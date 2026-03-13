@@ -591,9 +591,14 @@ jobs:
                 with:
                     name: docker-compose-cypress
             -   name: Build application
+                env:
+                    COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d --wait
+                    if [ -n "$COMPOSER_GITHUB_TOKEN" ]; then
+                        docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
+                    fi
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress smoke tests
                 run: docker compose run --rm -e TYPE=null -e COMMAND=smoke -e TEST_LOCALE=en cypress;
@@ -625,7 +630,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                group: [ authentication, cart, order, transportAndPayment, visits, ssr, others ]
+                group: [ authentication, b2b, cart, comparison, complaints, customerUsers, filterAndSort, freeShipping, limitedUser, order, seoCategory, ssr, stores, transportAndPayment, visits, others ]
         env:
             GH_TOKEN: ${{ github.token }}
         steps:
@@ -653,6 +658,8 @@ jobs:
                     name: docker-compose-cypress
             -   name: Build application
                 if: env.SHOULD_RUN_TESTS == 'true'
+                env:
+                    COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
                     for i in {1..2}; do
@@ -665,6 +672,9 @@ jobs:
                             [ $i -eq 2 ] && exit 1
                         fi
                     done
+                    if [ -n "$COMPOSER_GITHUB_TOKEN" ]; then
+                        docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
+                    fi
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress tests for ${{ matrix.group }}
                 if: env.SHOULD_RUN_TESTS == 'true'
@@ -672,6 +682,8 @@ jobs:
                 env:
                     GROUP: ${{ matrix.group }}
                     TEST_LOCALE: en
+                    B2B_DOMAIN_ID: 2
+                    B2B_BASE_URL: http://127.0.0.2:8000
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
@@ -718,7 +730,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                group: [ authentication, cart, order, transportAndPayment, visits, ssr, others ]
+                group: [ authentication, b2b, cart, comparison, complaints, customerUsers, filterAndSort, freeShipping, limitedUser, order, seoCategory, ssr, stores, transportAndPayment, visits, others ]
         env:
             GH_TOKEN: ${{ github.token }}
         outputs:
@@ -749,6 +761,8 @@ jobs:
                     name: docker-compose-cypress
             -   name: Build application
                 if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
+                env:
+                    COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
                      for i in {1..2}; do
@@ -761,6 +775,9 @@ jobs:
                             [ $i -eq 2 ] && exit 1
                         fi
                     done
+                    if [ -n "$COMPOSER_GITHUB_TOKEN" ]; then
+                        docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
+                    fi
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Run regenerate Cypress tests for ${{ matrix.group }}
                 if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
@@ -769,6 +786,8 @@ jobs:
                 env:
                     GROUP: ${{ matrix.group }}
                     TEST_LOCALE: en
+                    B2B_DOMAIN_ID: 2
+                    B2B_BASE_URL: http://127.0.0.2:8000
             -   name: Upload generated snapshots for ${{ matrix.group }}
                 if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 uses: actions/upload-artifact@v4

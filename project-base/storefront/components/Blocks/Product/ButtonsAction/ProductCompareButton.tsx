@@ -1,5 +1,6 @@
 import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
+import { TIDs } from 'cypress/tids';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -24,6 +25,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     return (
         <button
             aria-haspopup={isProductInComparison ? 'dialog' : undefined}
+            data-tid={TIDs.product_compare_button}
             tabIndex={tabIndex}
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             aria-label={

@@ -13,6 +13,7 @@ import { Popup } from 'components/Layout/Popup/Popup';
 import { useComplaintForm, useComplaintFormMeta } from 'components/Pages/Customer/Complaints/complaintFormMeta';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { TIDs } from 'cypress/tids';
 import { useCreateComplaint } from 'graphql/requests/complaints/mutations/CreateComplaintMutation.generated';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -498,7 +499,10 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton aria-label={t('Submit your complaint', { ns: 'accessibility' })}>
+                            <SubmitButton
+                                aria-label={t('Submit your complaint', { ns: 'accessibility' })}
+                                data-tid={TIDs.complaint_create_submit_button}
+                            >
                                 {t('Send complaint')}
                             </SubmitButton>
                         </FormButtonWrapper>

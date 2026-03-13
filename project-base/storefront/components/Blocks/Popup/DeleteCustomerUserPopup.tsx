@@ -1,5 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { TIDs } from 'cypress/tids';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -19,6 +20,7 @@ export const DeleteCustomerUserPopup: FC<DeleteCustomerUserPopupProps> = ({ dele
         >
             <div className="flex flex-row flex-nowrap justify-between">
                 <Button
+                    data-tid={TIDs.customer_users_delete_cancel_button}
                     variant="inverted"
                     onClick={() => {
                         updatePortalContent(null);
@@ -26,7 +28,9 @@ export const DeleteCustomerUserPopup: FC<DeleteCustomerUserPopupProps> = ({ dele
                 >
                     {t('No')}
                 </Button>
-                <Button onClick={deleteCustomerUserHandler}>{t('Yes')}</Button>
+                <Button data-tid={TIDs.customer_users_delete_confirm_button} onClick={deleteCustomerUserHandler}>
+                    {t('Yes')}
+                </Button>
             </div>
         </Popup>
     );

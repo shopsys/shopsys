@@ -8,6 +8,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { TIDs } from 'cypress/tids';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
 import { useSessionStore } from 'store/useSessionStore';
@@ -39,10 +40,11 @@ export const ProductComparison: FC = () => {
                 {comparison?.products && !isProductListFetching && (
                     <>
                         <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
-                            <h1>{title}</h1>
+                            <h1 data-tid={TIDs.page_title}>{title}</h1>
 
                             <Button
                                 aria-label={t('Remove all products from comparison', { ns: 'accessibility' })}
+                                data-tid={TIDs.comparison_remove_all_button}
                                 variant="inverted"
                                 onClick={handleRemoveAllClick}
                             >
@@ -56,16 +58,18 @@ export const ProductComparison: FC = () => {
                 )}
 
                 {!comparison?.products && !isProductListFetching && (
-                    <PageHero
-                        actionHref="/"
-                        actionSkeletonType="homepage"
-                        actionTitle={t('Find products')}
-                        icon={CompareIcon}
-                        title={t('Comparison')}
-                        description={t(
-                            'Your comparison list is empty! Start comparing products to see their features side by side.',
-                        )}
-                    />
+                    <div data-tid={TIDs.comparison_empty_state}>
+                        <PageHero
+                            actionHref="/"
+                            actionSkeletonType="homepage"
+                            actionTitle={t('Find products')}
+                            icon={CompareIcon}
+                            title={t('Comparison')}
+                            description={t(
+                                'Your comparison list is empty! Start comparing products to see their features side by side.',
+                            )}
+                        />
+                    </div>
                 )}
             </Webline>
 

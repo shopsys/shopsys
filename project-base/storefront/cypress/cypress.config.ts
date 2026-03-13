@@ -38,6 +38,8 @@ export default defineConfig({
     trashAssetsBeforeRuns: true,
     env: {
         TEST_LOCALE: process.env.TEST_LOCALE,
+        B2B_DOMAIN_ID: process.env.B2B_DOMAIN_ID || '',
+        B2B_BASE_URL: process.env.B2B_BASE_URL || '',
         skipSnapshots: false,
         visualRegressionErrorThreshold: 0.005,
         visualRegressionFailSilently: false,
@@ -98,11 +100,20 @@ export default defineConfig({
             } else {
                 const patternsMap: { [key: string]: string[] } = {
                     authentication: ['e2e/authentication/*.cy.ts'],
+                    b2b: ['e2e/b2b/*.cy.ts'],
                     cart: ['e2e/cart/*.cy.ts'],
+                    comparison: ['e2e/comparison/*.cy.ts'],
+                    complaints: ['e2e/complaints/*.cy.ts'],
+                    customerUsers: ['e2e/customerUsers/*.cy.ts'],
+                    filterAndSort: ['e2e/filterAndSort/*.cy.ts'],
+                    freeShipping: ['e2e/freeShipping/*.cy.ts'],
+                    limitedUser: ['e2e/limitedUser/*.cy.ts'],
                     order: ['e2e/order/*.cy.ts'],
+                    seoCategory: ['e2e/seoCategory/*.cy.ts'],
+                    ssr: ['e2e/ssr/*.cy.ts'],
+                    stores: ['e2e/stores/*.cy.ts'],
                     transportAndPayment: ['e2e/transportAndPayment/*.cy.ts'],
                     visits: ['e2e/visits/*.cy.ts'],
-                    ssr: ['e2e/ssr/*.cy.ts'],
                 };
 
                 const usedPatterns = Object.values(patternsMap).flat();
