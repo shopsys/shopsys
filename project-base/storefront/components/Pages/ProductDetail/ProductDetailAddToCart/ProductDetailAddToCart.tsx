@@ -88,6 +88,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                     aria-haspopup="dialog"
                     aria-label={ariaLabel}
                     className="whitespace-nowrap"
+                    disabled={isAddingToCart}
                     hasDisabledLook={isAddingToCart}
                     size="xlarge"
                     tid={TIDs.pages_productdetail_addtocart_button}

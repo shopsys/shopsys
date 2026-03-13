@@ -86,6 +86,7 @@ export const AddToCart: FC<AddToCartProps> = ({
                 <Button
                     aria-haspopup="dialog"
                     aria-label={ariaLabel}
+                    disabled={isAddingToCart}
                     hasDisabledLook={isAddingToCart}
                     name="add-to-cart"
                     size={buttonSize}
