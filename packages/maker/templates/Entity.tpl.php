@@ -16,7 +16,7 @@ namespace <?= $namespace; ?>;
 <?php if ($entity_config->isTranslatable): ?>
 /**
  * @method \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?> translation(?string $locale = null)
- * @method \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>> getTranslations()
+ * @method \Doctrine\Common\Collections\Collection<string, \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>> getTranslations()
  */
 <?php endif; ?>
 #[ORM\Table(name: '<?= $entity_config->tableName ?>')]
@@ -43,7 +43,7 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
 
 <?php if ($entity_config->isTranslatable): ?>
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>>
+     * @var \Doctrine\Common\Collections\Collection<string, \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>>
      */
     #[Prezent\Translations(targetEntity: \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>::class)]
     protected $translations;
