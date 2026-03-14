@@ -1,0 +1,39 @@
+name: Mark stale issues and pull requests
+on:
+    schedule:
+        -   cron: '0 4 * * *'
+    workflow_dispatch:
+permissions:
+    actions: write
+    issues: write
+    pull-requests: write
+jobs:
+    stale:
+        name: Mark stale issues and pull requests
+        runs-on: ubuntu-22.04
+        env:
+            EXEMPT_LABELS: 'Security :skull_and_crossbones:,Priority :warning:,Status: in implementation,In Backlog'
+        steps:
+            -   name: Mark stale issues and pull requests
+                uses: actions/stale@v10
+                with:
+                    days-before-stale: 120
+                    days-before-close: 60
+                    exempt-issue-labels: ${{ env.EXEMPT_LABELS }}
+                    exempt-pr-labels: ${{ env.EXEMPT_LABELS }}
+                    exempt-all-milestones: true
+                    stale-issue-label: Stale
+                    stale-pr-label: Stale
+                    stale-issue-message: >
+                        This issue has been automatically marked as stale because there was no activity within the last 4 months (and it is quite a long time).
+                        It will be closed if no further activity occurs.
+                        Thank you for your contributions.
+                    stale-pr-message: >
+                        This pull request has been automatically marked as stale because there was no activity within the last 4 months (and it is quite a long time).
+                        It will be closed if no further activity occurs.
+                        Thank you for your contributions.
+                    close-issue-message: >
+                        This issue has been automatically closed because there was no activity within the last half a year.
+                    close-pr-message: >
+                        This pull request has been automatically closed because there was no activity within the last half a year.
+                    operations-per-run: 30
