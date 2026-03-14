@@ -225,3 +225,9 @@ If you're using a different IDE than PHPStorm, you need to update environment va
 
 Each version of Shopsys Platform has its own upgrading notes file located in the [root of the repository](https://github.com/shopsys/shopsys) in the `UPGRADE-x.y.md` file.
 To find the desired version, you need to switch to the proper branch, see [What is new and how to upgrade](../index.md#what-is-new-and-how-to-upgrade) section for more information.
+
+## My Elasticsearch aggregation results are limited, how can I increase the limit?
+
+We limit the number of aggregation results using `Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery::MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT` constant.
+You can override this constant in your project to increase the limit.
+Refer to the [Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html#search-aggregations-bucket-terms-aggregation-size) for more information about the setting.
