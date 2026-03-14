@@ -3,7 +3,7 @@
     <div class="js-cke-preview" id="{{ id }}-preview">
         <div class="card">
             <div class="card-body overflow-hidden cursor-pointer" style="min-height: 92px; max-height: 200px;">
-                {{ value|raw }}
+                {{ value|sanitize_html('shopsys.ckeditor_preview') }}
             </div>
             <div class="card-footer">
                 <div class="btn btn-primary btn-sm js-cke-preview-edit">{{ 'Edit'|trans }}</div>
