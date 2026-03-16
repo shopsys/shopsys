@@ -9,6 +9,7 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
@@ -46,6 +47,7 @@ class ProductEntityFieldMapper
         protected readonly ProductRepository $productRepository,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly ParameterValueFileResolver $parameterValueFileResolver,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
     ) {
     }
 
@@ -297,5 +299,40 @@ class ProductEntityFieldMapper
     public function getPromotionFreeQuantity(Product $product): ?int
     {
         return $product->getPromotionXy($this->domain->getId())?->getFreeQuantity();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    public function getFlags(Product $product): array
+    {
+        $flags = $product->getFlags($this->domain->getId());
+
+        $flagsIndexedById = [];
+
+        foreach ($flags as $flag) {
+            $flagsIndexedById[$flag->getId()] = $flag;
+        }
+
+        $variants = [];
+
+        if ($product->isMainVariant() === true) {
+            $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
+                $product,
+                $this->domain->getId(),
+                $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($this->domain->getId()),
+            );
+        }
+
+        foreach ($variants as $variant) {
+            $variantFlags = $variant->getFlags($this->domain->getId());
+
+            foreach ($variantFlags as $variantFlag) {
+                $flagsIndexedById[$variantFlag->getId()] = $variantFlag;
+            }
+        }
+        ksort($flagsIndexedById);
+
+        return array_values($flagsIndexedById);
     }
 }

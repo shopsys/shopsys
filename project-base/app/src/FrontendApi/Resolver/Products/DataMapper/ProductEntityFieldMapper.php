@@ -64,6 +64,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @method array getParameters(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getRelatedProductsPromise(\App\Model\Product\Product $product)
+ * @method \App\Model\Product\Flag\Flag[] getFlags(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -89,7 +90,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductRepository $productRepository,
         ParameterRepository $parameterRepository,
         ParameterValueFileResolver $parameterValueFileResolver,
-        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
         protected readonly DataLoaderInterface $brandsBatchLoader,
@@ -113,6 +114,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productRepository,
             $parameterRepository,
             $parameterValueFileResolver,
+            $pricingGroupSettingFacade,
         );
     }
 
@@ -129,41 +131,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     public function getCatalogNumber(Product $product): string
     {
         return $product->getCatnum();
-    }
-
-    /**
-     * @return \App\Model\Product\Flag\Flag[]
-     */
-    public function getFlags(Product $product): array
-    {
-        $flags = $product->getFlags($this->domain->getId());
-
-        $flagsIndexedById = [];
-
-        foreach ($flags as $flag) {
-            $flagsIndexedById[$flag->getId()] = $flag;
-        }
-
-        $variants = [];
-
-        if ($product->isMainVariant() === true) {
-            $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
-                $product,
-                $this->domain->getId(),
-                $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($this->domain->getId()),
-            );
-        }
-
-        foreach ($variants as $variant) {
-            $variantFlags = $variant->getFlags($this->domain->getId());
-
-            foreach ($variantFlags as $variantFlag) {
-                $flagsIndexedById[$variantFlag->getId()] = $variantFlag;
-            }
-        }
-        ksort($flagsIndexedById);
-
-        return array_values($flagsIndexedById);
     }
 
     /**
