@@ -308,4 +308,6 @@ class VolumeDriver extends Driver
     }
 }
 
-class_alias(VolumeDriver::class, 'elFinderVolumeFlysystem');
+if (!class_exists('elFinderVolumeFlysystem', false)) {
+    class_alias(VolumeDriver::class, 'elFinderVolumeFlysystem');
+}
