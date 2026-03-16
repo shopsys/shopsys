@@ -98,7 +98,11 @@ export const staticData = {
     order: {
         number: '1234567890',
         numberHeading: 'Order number 1234567890',
-        creationDate: '10/26/1999 10:10 AM',
+        creationDate: '10/26/1999',
+    },
+    complaint: {
+        number: '1234567890',
+        creationDate: '10/26/1999',
     },
     blogArticle: {
         publicationDate: '10/26/1999',

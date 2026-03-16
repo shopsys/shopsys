@@ -1,6 +1,6 @@
-import { getPublicConfigProperty } from 'utils/config/getNextConfig';
+import { getPublicConfigProperty } from 'envConfig';
 
-const errorDebuggingLevel = getPublicConfigProperty('errorDebuggingLevel', '');
+const errorDebuggingLevel = getPublicConfigProperty('errorDebuggingLevel');
 
 const isWithConsoleErrorDebugging = errorDebuggingLevel === 'console';
 

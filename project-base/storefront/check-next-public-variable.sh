@@ -4,7 +4,6 @@ grep -rl --exclude=check-next-public-variable.sh --exclude-dir=.next --exclude-d
 
 if [[ "$?" == 0 ]]; then
     1>&2 echo "Use of NEXT_PUBLIC_* variable is forbidden because they can't be set during app start"
-    1>&2 echo "Use publicRuntimeConfig in next.config.js instead"
-    1>&2 echo " -- see more https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser"
+    1>&2 echo "Use buildPublicConfig() in buildPublicEnvConfig.ts and window.__ENV injection instead"
     exit 1
 fi

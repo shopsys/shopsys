@@ -1,4 +1,6 @@
 import {
+    changeComplaintsListDynamicPartsToStaticDemodata,
+    changeNewComplaintPageDynamicPartsToStaticDemodata,
     checkManualComplaintButtonIsVisible,
     clickManualComplaintButton,
     visitComplaintsListPage,
@@ -33,28 +35,38 @@ describe('Complaints (B2B) Tests', () => {
         it('should display the complaints list page', () => {
             visitComplaintsListPage();
             cy.getByTID([TIDs.complaints_list_create_complaint_manually_button]).should('exist');
-            takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'complaints-list', {
-                blackout: [
-                    { tid: TIDs.complaint_item_image },
-                    { tid: TIDs.footer_social_links },
-                    { tid: TIDs.footer_payment_images },
-                    { tid: TIDs.footer_copyright },
-                ],
-            });
+            takeSnapshotAndCompare(
+                getSnapshotFullIndexAsString(),
+                'complaints-list',
+                {
+                    blackout: [
+                        { tid: TIDs.complaint_item_image },
+                        { tid: TIDs.footer_social_links },
+                        { tid: TIDs.footer_payment_images },
+                        { tid: TIDs.footer_copyright },
+                    ],
+                },
+                changeComplaintsListDynamicPartsToStaticDemodata,
+            );
         });
 
         it('should navigate to the new complaint page', () => {
             visitNewComplaintPage();
             cy.waitForStableAndInteractiveDOM();
             cy.url().should('contain', b2bUrl.customer.newComplaint);
-            takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'new-complaint-page', {
-                blackout: [
-                    { tid: TIDs.ordered_item_image },
-                    { tid: TIDs.footer_social_links },
-                    { tid: TIDs.footer_payment_images },
-                    { tid: TIDs.footer_copyright },
-                ],
-            });
+            takeSnapshotAndCompare(
+                getSnapshotFullIndexAsString(),
+                'new-complaint-page',
+                {
+                    blackout: [
+                        { tid: TIDs.ordered_item_image },
+                        { tid: TIDs.footer_social_links },
+                        { tid: TIDs.footer_payment_images },
+                        { tid: TIDs.footer_copyright },
+                    ],
+                },
+                changeNewComplaintPageDynamicPartsToStaticDemodata,
+            );
         });
 
         it('should open manual complaint creation popup and show validation errors', () => {
@@ -73,14 +85,19 @@ describe('Complaints (B2B) Tests', () => {
             loginAsB2bAccountant();
             visitComplaintsListPage();
             cy.url().should('contain', b2bUrl.customer.complaints);
-            takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'complaints-list-accountant', {
-                blackout: [
-                    { tid: TIDs.complaint_item_image },
-                    { tid: TIDs.footer_social_links },
-                    { tid: TIDs.footer_payment_images },
-                    { tid: TIDs.footer_copyright },
-                ],
-            });
+            takeSnapshotAndCompare(
+                getSnapshotFullIndexAsString(),
+                'complaints-list-accountant',
+                {
+                    blackout: [
+                        { tid: TIDs.complaint_item_image },
+                        { tid: TIDs.footer_social_links },
+                        { tid: TIDs.footer_payment_images },
+                        { tid: TIDs.footer_copyright },
+                    ],
+                },
+                changeComplaintsListDynamicPartsToStaticDemodata,
+            );
         });
 
         it('should show 403 for Catalog User trying to access complaints page', () => {

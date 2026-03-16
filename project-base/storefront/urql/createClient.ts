@@ -1,3 +1,4 @@
+import { getServerConfigProperty } from 'envConfig';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
 // eslint-disable-next-line no-restricted-imports
@@ -6,7 +7,6 @@ import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'red
 import { Client, SSRExchange } from 'urql';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
-import { getServerConfigProperty } from 'utils/config/getNextConfig';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getExplicitPathDomainLocaleOrDefault, getInternalGraphqlEndpoint } from 'utils/domain/domainUtils';
 

@@ -1,10 +1,10 @@
+import { getPublicConfigProperty } from 'envConfig';
 import {
     RobotsTxtQueryDocument,
     TypeRobotsTxtQuery,
     TypeRobotsTxtQueryVariables,
 } from 'graphql/requests/robotsTxt/RobotsTxtQuery.generated';
 import { createClient } from 'urql/createClient';
-import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 import { DomainConfigType, getDomainConfig } from 'utils/domain/domainConfig';
 import { DEFAULT_LOCALE, getHostFromDomain, getLocalePrefix } from 'utils/domain/domainUtils';
 import {
@@ -20,7 +20,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 const Robots: FC = (): null => {
     return null;
 };
-const domains = getPublicConfigProperty('domains', []) as DomainConfigType[];
+const domains = getPublicConfigProperty('domains');
 
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, t, ssrExchange }) => async (context) => {
     const domainConfig = getDomainConfig(context);

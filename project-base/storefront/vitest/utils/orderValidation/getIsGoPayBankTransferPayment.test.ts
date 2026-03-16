@@ -1,15 +1,5 @@
 import { getIsGoPayBankTransferPayment } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
-import { describe, expect, test, vi } from 'vitest';
-
-vi.mock('next/config', () => ({
-    default: () => ({
-        serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/' },
-        publicRuntimeConfig: {
-            errorDebuggingLevel: 'no-debug',
-            domains: [{ url: 'https://test.ts/' }, { url: 'https://test.ts/' }],
-        },
-    }),
-}));
+import { describe, expect, test } from 'vitest';
 
 describe('getIsGoPayBankTransferPayment', () => {
     describe('GoPay bank transfer payment detection', () => {

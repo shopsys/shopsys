@@ -1,4 +1,5 @@
-import { b2bUrl } from 'fixtures/demodata';
+import { b2bUrl, staticData } from 'fixtures/demodata';
+import { changeElementText } from 'support';
 import { TIDs } from 'tids';
 
 export const visitComplaintsListPage = () => {
@@ -16,4 +17,14 @@ export const checkManualComplaintButtonIsVisible = () => {
 export const clickManualComplaintButton = () => {
     cy.getByTID([TIDs.complaints_list_create_complaint_manually_button]).should('be.visible').click();
     cy.waitForStableAndInteractiveDOM();
+};
+
+export const changeComplaintsListDynamicPartsToStaticDemodata = () => {
+    changeElementText(TIDs.complaint_list_item_number, staticData.complaint.number, false);
+    changeElementText(TIDs.complaint_list_item_date, staticData.complaint.creationDate, false);
+};
+
+export const changeNewComplaintPageDynamicPartsToStaticDemodata = () => {
+    changeElementText(TIDs.ordered_item_number, staticData.order.number, false);
+    changeElementText(TIDs.ordered_item_date, staticData.order.creationDate, false);
 };

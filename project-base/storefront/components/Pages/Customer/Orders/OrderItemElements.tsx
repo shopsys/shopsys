@@ -31,13 +31,14 @@ export const ElementWithImage: FC<ElementWithImageProps> = ({ image, name }) => 
 type OrderItemColumnInfoProps = {
     title: string;
     children: ReactNode;
+    tid?: string;
 };
 
-export const OrderItemColumnInfo: FC<OrderItemColumnInfoProps> = ({ title, children }) => {
+export const OrderItemColumnInfo: FC<OrderItemColumnInfoProps> = ({ title, children, tid }) => {
     return (
         <div className="font-secondary flex min-w-[100px] flex-col gap-1 text-sm font-semibold">
             <span className="text-text-less">{title}</span>
-            {children}
+            <span data-tid={tid}>{children}</span>
         </div>
     );
 };

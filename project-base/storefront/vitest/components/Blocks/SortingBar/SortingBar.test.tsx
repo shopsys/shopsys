@@ -3,9 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
-import { CustomerUserAreaEnum } from 'types/customer';
-import { DomainConfigType } from 'utils/domain/domainConfig';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { defaultTestDomainConfig } from 'vitest/helpers/mockPublicConfig';
 import { testFocusManagement } from 'vitest/utils/accessibility/a11y-testing';
 import {
     navigateWithArrows,
@@ -19,22 +18,6 @@ import {
 
 const mockUpdateSortQuery = vi.fn();
 const mockCanSeePrices = vi.fn().mockReturnValue(true);
-
-const MOCKED_DOMAIN_CONFIG: DomainConfigType = {
-    url: '',
-    currencyCode: '',
-    defaultLocale: '',
-    domainId: 0,
-    fallbackTimezone: '',
-    isLuigisBoxActive: false,
-    mapSetting: {
-        latitude: 0,
-        longitude: 0,
-        zoom: 0,
-    },
-    publicGraphqlEndpoint: '',
-    type: CustomerUserAreaEnum.B2C,
-};
 
 vi.mock('utils/auth/useAuth', () => ({
     useAuth: () => ({
@@ -111,7 +94,7 @@ const defaultProps = {
 const renderSortingBar = (props?: any) => {
     const finalProps = { ...defaultProps, ...props };
     return render(
-        <DomainConfigProvider domainConfig={MOCKED_DOMAIN_CONFIG}>
+        <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
             <SortingBar {...finalProps} />
         </DomainConfigProvider>,
     );
@@ -280,7 +263,7 @@ describe('SortingBar', () => {
             const user = userEvent.setup();
 
             render(
-                <DomainConfigProvider domainConfig={MOCKED_DOMAIN_CONFIG}>
+                <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
                     <div>
                         <SortingBar {...defaultProps} />
                         <div data-testid="outside-element">Outside</div>

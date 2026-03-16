@@ -53,6 +53,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
 
                     <div className="flex flex-wrap gap-x-8 gap-y-2">
                         <ComplaintItemColumnInfo
+                            tid={TIDs.complaint_list_item_number}
                             title={t('Complaint number')}
                             value={
                                 <ExtendedNextLink
@@ -72,6 +73,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                         />
 
                         <ComplaintItemColumnInfo
+                            tid={TIDs.complaint_list_item_date}
                             title={t('Creation date')}
                             value={formatDate(complaintItem.createdAt)}
                         />

@@ -5,16 +5,6 @@ vi.mock('utils/packetery', () => ({
     isPacketeryTransport: vi.fn((transportTypeCode: string) => transportTypeCode === 'packetery'),
 }));
 
-vi.mock('next/config', () => ({
-    default: () => ({
-        serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/' },
-        publicRuntimeConfig: {
-            errorDebuggingLevel: 'no-debug',
-            domains: [{ url: 'https://test.ts/' }, { url: 'https://test.ts/' }],
-        },
-    }),
-}));
-
 describe('getSelectedPickupPlace', () => {
     const mockPacketeryPoint = {
         identifier: 'packetery-123',

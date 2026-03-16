@@ -118,7 +118,7 @@ Cypress.Commands.add('reloadAndWaitForStableAndInteractiveDOM', () => {
 Cypress.Commands.add(
     'visitB2bAndWaitForStableAndInteractiveDOM',
     (path: string, options?: Partial<Cypress.VisitOptions>) => {
-        cy.visit(b2bDomain.baseUrl + path, {
+        cy.visit(b2bDomain?.baseUrl + path, {
             ...options,
             onBeforeLoad: (win) => {
                 win.localStorage.setItem(B2B_PERSIST_STORE_NAME, JSON.stringify(DEFAULT_PERSIST_STORE_STATE));

@@ -7,7 +7,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 // Sentry feature flags
 const isSentryReplaysEnabled = process.env.SENTRY_REPLAYS_ENABLE === '1';
-const isSentryFeedbackEnabled = process.env.SENTRY_FEEDBACK_ENABLE === '1';
 const sentryDsn = process.env.SENTRY_DSN?.trim() ?? '';
 const isSentryEnabled = sentryDsn !== '';
 
@@ -41,76 +40,6 @@ const nextConfig = {
         reactRemoveProperties: process.env.CYPRESS_KEEP_TID === '1' ? false : { properties: ['^data-tid$'] },
     },
 
-    serverRuntimeConfig: {
-        internalGraphqlEndpoint: process.env.INTERNAL_ENDPOINT,
-    },
-    publicRuntimeConfig: {
-        googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
-        packeteryApiKey: process.env.PACKETERY_API_KEY,
-        cdnDomain: process.env.CDN_DOMAIN ?? '',
-        sentryDsn: sentryDsn,
-        sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? '',
-        sentryFeedbackEnable: isSentryFeedbackEnabled,
-        sentryReplaysEnable: isSentryReplaysEnabled,
-        errorDebuggingLevel: process.env.ERROR_DEBUGGING_LEVEL,
-        showSymfonyToolbar: process.env.SHOW_SYMFONY_TOOLBAR,
-        shouldUseDefer: process.env.SHOULD_USE_DEFER === '1',
-        userSnapApiKey: process.env.USERSNAP_PROJECT_API_KEY,
-        userSnapEnabledDefaultValue: process.env.USERSNAP_STOREFRONT_ENABLED_BY_DEFAULT === '1',
-        domains: [
-            {
-                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,
-                url: process.env.DOMAIN_HOSTNAME_1,
-                defaultLocale: 'en',
-                currencyCode: 'EUR',
-                fallbackTimezone: 'Europe/Prague',
-                domainId: 1,
-                mapSetting: {
-                    latitude: 49.8175,
-                    longitude: 15.473,
-                    zoom: 7,
-                },
-                gtmId: process.env.GTM_ID,
-                isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('1'),
-                packeteryCountry: 'cz',
-                type: 'B2C',
-            },
-            {
-                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2,
-                url: process.env.DOMAIN_HOSTNAME_2,
-                defaultLocale: 'cs',
-                currencyCode: 'CZK',
-                fallbackTimezone: 'Europe/Prague',
-                domainId: 2,
-                mapSetting: {
-                    latitude: 48.669,
-                    longitude: 19.699,
-                    zoom: 7,
-                },
-                gtmId: process.env.GTM_ID,
-                isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('2'),
-                packeteryCountry: 'cz',
-                type: 'B2B',
-            },
-            {
-                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_3,
-                url: process.env.DOMAIN_HOSTNAME_3,
-                defaultLocale: 'sk',
-                currencyCode: 'EUR',
-                fallbackTimezone: 'Europe/Prague',
-                domainId: 3,
-                mapSetting: {
-                    latitude: 48.669,
-                    longitude: 19.699,
-                    zoom: 7,
-                },
-                gtmId: process.env.GTM_ID,
-                isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('2'),
-                packeteryCountry: 'sk',
-                type: 'B2B',
-            },
-        ],
-    },
     eslint: {
         ignoreDuringBuilds: true,
     },
@@ -134,6 +63,10 @@ const nextConfig = {
         if (!isServer) {
             config.resolve.alias.redis = false;
         }
+
+        // Suppress "Critical dependency" warnings from OpenTelemetry's require-in-the-middle
+        // (used by Sentry for instrumentation). These dynamic requires are intentional and harmless.
+        config.ignoreWarnings = [...(config.ignoreWarnings ?? []), { module: /require-in-the-middle/ }];
 
         return config;
     },

@@ -1,12 +1,12 @@
 import { routes } from './routes';
-import { getNextConfig } from 'utils/config/getNextConfig';
+import { getPublicConfigProperty } from 'envConfig';
 
-const nextConfig = getNextConfig();
+const domains = getPublicConfigProperty('domains');
 
 export const STATIC_REWRITE_PATHS = {
-    [(nextConfig?.publicRuntimeConfig?.domains?.[0]?.url || process.env.DOMAIN_HOSTNAME_1) as string]: routes[0],
-    [(nextConfig?.publicRuntimeConfig?.domains?.[1]?.url || process.env.DOMAIN_HOSTNAME_2) as string]: routes[1],
-    [(nextConfig?.publicRuntimeConfig?.domains?.[2]?.url || process.env.DOMAIN_HOSTNAME_3) as string]: routes[2],
+    [domains[0].url]: routes[0],
+    [domains[1].url]: routes[1],
+    [domains[2].url]: routes[2],
 } as const;
 
 export type StaticRewritePathKeyType = keyof (typeof STATIC_REWRITE_PATHS)[string];
