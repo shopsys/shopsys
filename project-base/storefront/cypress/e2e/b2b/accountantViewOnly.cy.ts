@@ -4,6 +4,8 @@ import {
     loginAndVisitB2bPage,
     skipIfB2bNotConfigured,
 } from './b2bSupport';
+import { changeComplaintsListDynamicPartsToStaticDemodata } from 'e2e/complaints/complaintsSupport';
+import { changeOrdersListDynamicPartsToStaticDemodata } from 'e2e/order/orderSupport';
 import { b2bUrl } from 'fixtures/demodata';
 import {
     getSnapshotIndexingFunction,
@@ -27,14 +29,19 @@ describe('Accountant View-Only (B2B) Tests', () => {
         it('should be able to view the orders list page', () => {
             loginAndVisitB2bPage('accountant', b2bUrl.customer.orders);
             cy.url().should('contain', b2bUrl.customer.orders);
-            takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'accountant-orders-list', {
-                blackout: [
-                    ...B2B_FOOTER_BLACKOUTS,
-                    { tid: TIDs.ordered_item_image },
-                    { tid: TIDs.order_list_product_image },
-                    { tid: TIDs.order_list_transport_and_payment_image },
-                ],
-            });
+            takeSnapshotAndCompare(
+                getSnapshotFullIndexAsString(),
+                'accountant-orders-list',
+                {
+                    blackout: [
+                        ...B2B_FOOTER_BLACKOUTS,
+                        { tid: TIDs.ordered_item_image },
+                        { tid: TIDs.order_list_product_image },
+                        { tid: TIDs.order_list_transport_and_payment_image },
+                    ],
+                },
+                changeOrdersListDynamicPartsToStaticDemodata,
+            );
         });
     });
 
@@ -42,9 +49,14 @@ describe('Accountant View-Only (B2B) Tests', () => {
         it('should be able to view the complaints list page', () => {
             loginAndVisitB2bPage('accountant', b2bUrl.customer.complaints);
             cy.url().should('contain', b2bUrl.customer.complaints);
-            takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'accountant-complaints-list', {
-                blackout: [...B2B_FOOTER_BLACKOUTS, { tid: TIDs.complaint_item_image }],
-            });
+            takeSnapshotAndCompare(
+                getSnapshotFullIndexAsString(),
+                'accountant-complaints-list',
+                {
+                    blackout: [...B2B_FOOTER_BLACKOUTS, { tid: TIDs.complaint_item_image }],
+                },
+                changeComplaintsListDynamicPartsToStaticDemodata,
+            );
         });
 
         it('should NOT see the create complaint manually button', () => {

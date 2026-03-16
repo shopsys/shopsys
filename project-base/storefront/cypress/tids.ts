@@ -110,6 +110,8 @@ export enum TIDs {
     order_detail_create_complaint_button = 'order_detail_create_complaint_button',
     order_detail_repeat_order_button = 'order_detail_repeat_order_button',
     my_orders_link_ = 'my_orders_link_',
+    order_list_item_number = 'order_list_item_number',
+    order_list_item_date = 'order_list_item_date',
     order_list_product_image = 'order_list_product_image',
     order_list_transport_and_payment_image = 'order_list_transport_and_payment_image',
     order_list_repeat_order_button = 'order_list_repeat_order_button',
@@ -120,7 +122,11 @@ export enum TIDs {
     complaints_list = 'complaints_list',
     complaint_item_ = 'complaint_item_',
     complaint_item_image = 'complaint_item_image',
+    complaint_list_item_number = 'complaint_list_item_number',
+    complaint_list_item_date = 'complaint_list_item_date',
     ordered_item_image = 'ordered_item_image',
+    ordered_item_number = 'ordered_item_number',
+    ordered_item_date = 'ordered_item_date',
     complaint_create_submit_button = 'complaint_create_submit_button',
     complaints_list_create_complaint_manually_button = 'complaints_list_create_complaint_manually_button',
     complaint_detail_number_heading = 'complaint_detail_number_heading',
@@ -190,6 +196,7 @@ export enum TIDs {
     clear_all_filters_button = 'clear_all_filters_button',
 
     // Order Withdrawal
+    order_withdrawal_description = 'order_withdrawal_description',
     order_withdrawal_form = 'order_withdrawal_form',
     order_withdrawal_submit_button = 'order_withdrawal_submit_button',
 

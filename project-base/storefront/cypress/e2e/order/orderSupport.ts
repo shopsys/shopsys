@@ -223,6 +223,11 @@ export const changeOrderDetailDynamicPartsToStaticDemodata = (shouldChangeBreadc
     }
 };
 
+export const changeOrdersListDynamicPartsToStaticDemodata = () => {
+    changeElementText(TIDs.order_list_item_number, staticData.order.number, false);
+    changeElementText(TIDs.order_list_item_date, staticData.order.creationDate, false);
+};
+
 export const changeOrderConfirmationDynamicPartsToStaticDemodata = () => {
     cy.getByTID([TIDs.order_confirmation_page_text_wrapper]).then((element) => {
         const originalText = element.html();

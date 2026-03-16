@@ -1,6 +1,7 @@
 import { B2B_FOOTER_BLACKOUTS, loginAndVisitB2bPage, skipIfB2bNotConfigured } from './b2bSupport';
-import { b2bUrl } from 'fixtures/demodata';
+import { b2bUrl, staticData } from 'fixtures/demodata';
 import {
+    changeElementText,
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
     loginAsB2bOwner,
@@ -8,6 +9,20 @@ import {
     takeSnapshotAndCompare,
 } from 'support';
 import { TIDs } from 'tids';
+
+const changeWithdrawalFormDynamicPartsToStaticDemodata = () => {
+    changeElementText(
+        TIDs.order_withdrawal_description,
+        `Please fill in the following data to request a withdrawal from the order ${staticData.order.number}.`,
+    );
+};
+
+const changeWithdrawalSuccessDynamicPartsToStaticDemodata = () => {
+    cy.getByTID([TIDs.order_confirmation_page_text_wrapper]).then((element) => {
+        const originalText = element.html();
+        element.html(originalText.replace(/\d{7,}/g, staticData.order.number));
+    });
+};
 
 const SUBGROUP_INDEX = 3;
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.B2B, SUBGROUP_INDEX);
@@ -29,9 +44,14 @@ describe('Order Withdrawal (B2B) Tests', () => {
             cy.get('#order-withdrawal-form-firstName').should('not.have.value', '');
             cy.get('#order-withdrawal-form-lastName').should('not.have.value', '');
 
-            takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'withdrawal-form-prefilled', {
-                blackout: B2B_FOOTER_BLACKOUTS,
-            });
+            takeSnapshotAndCompare(
+                getSnapshotFullIndexAsString(),
+                'withdrawal-form-prefilled',
+                {
+                    blackout: B2B_FOOTER_BLACKOUTS,
+                },
+                changeWithdrawalFormDynamicPartsToStaticDemodata,
+            );
         });
     });
 
@@ -41,9 +61,14 @@ describe('Order Withdrawal (B2B) Tests', () => {
             cy.getByTID([TIDs.order_withdrawal_submit_button]).should('be.visible').click();
             cy.url().should('contain', b2bUrl.order.orderWithdrawalSuccess);
 
-            takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'withdrawal-success', {
-                blackout: B2B_FOOTER_BLACKOUTS,
-            });
+            takeSnapshotAndCompare(
+                getSnapshotFullIndexAsString(),
+                'withdrawal-success',
+                {
+                    blackout: B2B_FOOTER_BLACKOUTS,
+                },
+                changeWithdrawalSuccessDynamicPartsToStaticDemodata,
+            );
         });
     });
 

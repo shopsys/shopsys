@@ -67,6 +67,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                     </span>
                     <div className="flex flex-wrap gap-x-8 gap-y-2">
                         <OrderedItemColumnInfo
+                            tid={TIDs.ordered_item_number}
                             title={t('Order number')}
                             value={
                                 <ExtendedNextLink
@@ -81,6 +82,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                             }
                         />
                         <OrderedItemColumnInfo
+                            tid={TIDs.ordered_item_date}
                             title={t('Creation date')}
                             value={formatDateAndTime(orderedItem.order.creationDate)}
                         />
@@ -119,13 +121,22 @@ type OrderedItemColumnInfoProps = {
     value: ReactNode;
     valueClassName?: string;
     wrapperClassName?: string;
+    tid?: string;
 };
 
-const OrderedItemColumnInfo: FC<OrderedItemColumnInfoProps> = ({ title, value, valueClassName, wrapperClassName }) => {
+const OrderedItemColumnInfo: FC<OrderedItemColumnInfoProps> = ({
+    title,
+    value,
+    valueClassName,
+    wrapperClassName,
+    tid,
+}) => {
     return (
         <div className={twMergeCustom('flex flex-col gap-1', wrapperClassName)}>
             <span className="text-sm">{title}</span>
-            <span className={twMergeCustom('font-bold', valueClassName)}>{value}</span>
+            <span className={twMergeCustom('font-bold', valueClassName)} data-tid={tid}>
+                {value}
+            </span>
         </div>
     );
 };

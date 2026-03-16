@@ -49,7 +49,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
         <div className="bg-background-more vl:flex-row flex flex-col flex-wrap justify-between gap-4 rounded-xl p-5">
             <div className="flex flex-1 flex-col gap-2.5">
                 <div className="vl:flex-row flex flex-col gap-x-8 gap-y-2">
-                    <OrderItemColumnInfo title={t('Order number')}>
+                    <OrderItemColumnInfo tid={TIDs.order_list_item_number} title={t('Order number')}>
                         <ExtendedNextLink
                             className="font-bold"
                             type="orderDetail"
@@ -66,7 +66,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                         </ExtendedNextLink>
                     </OrderItemColumnInfo>
 
-                    <OrderItemColumnInfo title={t('Date of order')}>
+                    <OrderItemColumnInfo tid={TIDs.order_list_item_date} title={t('Date of order')}>
                         {formatDate(order.creationDate)}
                     </OrderItemColumnInfo>
 

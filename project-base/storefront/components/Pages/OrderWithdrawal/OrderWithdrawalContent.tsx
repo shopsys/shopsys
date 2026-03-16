@@ -63,6 +63,7 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
         <Webline width="lg">
             <VerticalStack gap="sm">
                 <PageHero
+                    descriptionTid={TIDs.order_withdrawal_description}
                     icon={DocumentDeleteIcon}
                     title={t('Withdrawal from contract')}
                     description={t(
