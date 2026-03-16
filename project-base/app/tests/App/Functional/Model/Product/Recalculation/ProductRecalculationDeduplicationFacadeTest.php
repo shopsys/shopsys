@@ -8,6 +8,7 @@ use Nette\Utils\Json;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Redis;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDeduplicationFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -60,8 +61,8 @@ class ProductRecalculationDeduplicationFacadeTest extends TransactionFunctionalT
                 'initialData' => [],
                 'productIds' => [1, 2],
                 'expectedOutput' => [
-                    1 => [],
-                    2 => [],
+                    1 => ProductExportScopeConfig::ALL_SCOPES,
+                    2 => ProductExportScopeConfig::ALL_SCOPES,
                 ],
             ],
             'requested already stored id' => [
@@ -82,7 +83,7 @@ class ProductRecalculationDeduplicationFacadeTest extends TransactionFunctionalT
                 ],
                 'productIds' => [3],
                 'expectedOutput' => [
-                    3 => [],
+                    3 => ProductExportScopeConfig::ALL_SCOPES,
                 ],
             ],
             'requested mixed' => [
@@ -93,7 +94,7 @@ class ProductRecalculationDeduplicationFacadeTest extends TransactionFunctionalT
                 'productIds' => [1, 3],
                 'expectedOutput' => [
                     1 => ['scope1'],
-                    3 => [],
+                    3 => ProductExportScopeConfig::ALL_SCOPES,
                 ],
             ],
         ];
@@ -146,19 +147,19 @@ class ProductRecalculationDeduplicationFacadeTest extends TransactionFunctionalT
                 'expectedOutput' => [2],
                 'expectedStoredData' => [1 => ['scope1'], 2 => ['scope1']],
             ],
-            'already stored product id with scope [] (all); no id returned, no change in stored data' => [
-                'initialData' => [1 => []],
+            'already stored product id with all scopes (represented by an empty array); no id returned, no change in stored data' => [
+                'initialData' => [1 => ProductExportScopeConfig::ALL_SCOPES],
                 'productIds' => [1],
-                'scopes' => [],
+                'scopes' => ProductExportScopeConfig::ALL_SCOPES,
                 'expectedOutput' => [],
-                'expectedStoredData' => [1 => []],
+                'expectedStoredData' => [1 => ProductExportScopeConfig::ALL_SCOPES],
             ],
-            'initial data has some scope; passing scope []; scope [] is stored; product id is not returned' => [
+            'initial data has some scope; passing all scopes (represented by an empty array); all scopes are stored; product id is not returned' => [
                 'initialData' => [1 => ['scope1']],
                 'productIds' => [1],
-                'scopes' => [],
+                'scopes' => ProductExportScopeConfig::ALL_SCOPES,
                 'expectedOutput' => [],
-                'expectedStoredData' => [1 => []],
+                'expectedStoredData' => [1 => ProductExportScopeConfig::ALL_SCOPES],
             ],
             'passing new scope; scope is added to stored data; product id is not returned' => [
                 'initialData' => [1 => ['scope1']],

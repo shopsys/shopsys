@@ -31,7 +31,7 @@ class ProductExportScopeConfigFacade
      */
     public function shouldRecalculateVisibility(array $exportScopes): bool
     {
-        if (count($exportScopes) === 0) {
+        if ($exportScopes === ProductExportScopeConfig::ALL_SCOPES) {
             return true;
         }
 
@@ -49,7 +49,7 @@ class ProductExportScopeConfigFacade
      */
     public function shouldRecalculateSellingDenied(array $exportScopes): bool
     {
-        if (count($exportScopes) === 0) {
+        if ($exportScopes === ProductExportScopeConfig::ALL_SCOPES) {
             return true;
         }
 
@@ -67,7 +67,7 @@ class ProductExportScopeConfigFacade
      */
     public function shouldRecalculateGiftFlags(array $exportScopes): bool
     {
-        if (count($exportScopes) === 0) {
+        if ($exportScopes === ProductExportScopeConfig::ALL_SCOPES) {
             return true;
         }
 
@@ -86,7 +86,7 @@ class ProductExportScopeConfigFacade
      */
     protected function getMatchingRules(array $exportScopes): array
     {
-        if (count($exportScopes) === 0) {
+        if ($exportScopes === ProductExportScopeConfig::ALL_SCOPES) {
             return [];
         }
 

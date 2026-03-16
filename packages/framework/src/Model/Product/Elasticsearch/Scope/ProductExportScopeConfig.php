@@ -9,6 +9,8 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\Exception\ScopeRul
 
 class ProductExportScopeConfig
 {
+    public const array ALL_SCOPES = [];
+
     public const string SCOPE_NAME = 'product_name_scope';
     public const string SCOPE_UNIT = 'product_unit_scope';
     public const string SCOPE_BRAND = 'product_brand_scope';

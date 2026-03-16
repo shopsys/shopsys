@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 /**
@@ -26,7 +27,7 @@ class ProductRecalculationDispatcherExecutor
     public function dispatchProductIds(
         array $productIds,
         string $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
-        array $exportScopes = [],
+        array $exportScopes = ProductExportScopeConfig::ALL_SCOPES,
     ): array {
         $productIdsWithMainVariants = $this->productRecalculationRepository->replaceVariantIdsWithMainVariantIds($productIds);
 
