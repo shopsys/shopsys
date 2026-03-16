@@ -10,6 +10,7 @@ use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
@@ -70,7 +71,7 @@ class ProductExportRepository
         string $locale,
         int $lastProcessedId,
         int $batchSize,
-        array $fields = [],
+        array $fields = AbstractIndex::ALL_FIELDS,
     ): array {
         $queryBuilder = $this->createQueryBuilder($domainId)
             ->andWhere('p.id > :lastProcessedId')
@@ -419,7 +420,7 @@ class ProductExportRepository
     {
         $query = $queryBuilder->getQuery();
 
-        if (count($fields) === 0) {
+        if ($fields === AbstractIndex::ALL_FIELDS) {
             $fields = $this->productExportFieldProvider->getAll();
         }
 

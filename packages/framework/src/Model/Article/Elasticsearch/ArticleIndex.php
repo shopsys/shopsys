@@ -31,9 +31,9 @@ class ArticleIndex extends AbstractIndex
         int $domainId,
         int $lastProcessedId,
         int $batchSize,
-        array $fields = [],
+        array $fields = self::ALL_FIELDS,
     ): array {
-        if ($fields !== []) {
+        if ($fields !== self::ALL_FIELDS) {
             throw new UnsupportedFeatureException('Scoping export by fields is not supported for articles.');
         }
         $results = [];
@@ -49,9 +49,12 @@ class ArticleIndex extends AbstractIndex
      * @param string[] $fields
      */
     #[Override]
-    public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
-    {
-        if ($fields !== []) {
+    public function getExportDataForIds(
+        int $domainId,
+        array $restrictToIds,
+        array $fields = self::ALL_FIELDS,
+    ): array {
+        if ($fields !== self::ALL_FIELDS) {
             throw new UnsupportedFeatureException('Scoping export by fields is not supported for articles.');
         }
         $results = [];

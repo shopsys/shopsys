@@ -36,9 +36,9 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
         int $domainId,
         int $lastProcessedId,
         int $batchSize,
-        array $fields = [],
+        array $fields = self::ALL_FIELDS,
     ): array {
-        if ($fields !== []) {
+        if ($fields !== self::ALL_FIELDS) {
             throw new UnsupportedFeatureException('Scoping export by fields is not supported for blog articles.');
         }
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
@@ -56,9 +56,12 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
      * @param string[] $fields
      */
     #[Override]
-    public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
-    {
-        if ($fields !== []) {
+    public function getExportDataForIds(
+        int $domainId,
+        array $restrictToIds,
+        array $fields = self::ALL_FIELDS,
+    ): array {
+        if ($fields !== self::ALL_FIELDS) {
             throw new UnsupportedFeatureException('Scoping export by fields is not supported for blog articles.');
         }
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
