@@ -6,6 +6,7 @@ import {
     visitComplaintsListPage,
     visitNewComplaintPage,
 } from './complaintsSupport';
+import { skipIfB2bNotConfigured } from 'e2e/b2b/b2bSupport';
 import { b2bUrl } from 'fixtures/demodata';
 import {
     check403PageIsVisible,
@@ -23,6 +24,8 @@ const SUBGROUP_INDEX = 0;
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.COMPLAINTS, SUBGROUP_INDEX);
 
 describe('Complaints (B2B) Tests', () => {
+    skipIfB2bNotConfigured();
+
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });

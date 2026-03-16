@@ -4,6 +4,7 @@ import {
     checkPricesAreVisible,
     visitB2bHomepageWithProducts,
 } from './limitedUserSupport';
+import { skipIfB2bNotConfigured } from 'e2e/b2b/b2bSupport';
 import { changeBlogArticleDynamicPartsToStaticDemodata } from 'e2e/visits/visitsSupport';
 import { b2bUrl } from 'fixtures/demodata';
 import {
@@ -22,6 +23,8 @@ const SUBGROUP_INDEX = 0;
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.LIMITED_USER, SUBGROUP_INDEX);
 
 describe('Limited User - Price Hiding (B2B) Tests', () => {
+    skipIfB2bNotConfigured();
+
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
