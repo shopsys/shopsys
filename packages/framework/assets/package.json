@@ -24,11 +24,11 @@
         "sortablejs": "^1.15.6"
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.14.4",
-        "@biomejs/biome": "^2.2.0",
+        "@babel/preset-env": "^7.29.0",
+        "@biomejs/biome": "^2.4.7",
         "@shopsys/biome-config": "file:vendor/shopsys/biome-config",
-        "babel-jest": "^27.0.1",
-        "core-js": "^3.13.1",
-        "jest": "^27.0.1"
+        "babel-jest": "^30.3.0",
+        "core-js": "^3.48.0",
+        "jest": "^30.3.0"
     }
 }

@@ -12,7 +12,7 @@
         } ],
         "declaration-colon-space-after": "always",
         "declaration-block-no-duplicate-properties": [ true, {
-            ignore: ["consecutive-duplicates"]
+            "ignore": ["consecutive-duplicates"]
         } ],
         "function-calc-no-unspaced-operator": true,
         "indentation": [ 4, {
@@ -23,14 +23,14 @@
         "max-empty-lines": 2,
         "media-feature-name-case": "lower",
         "no-extra-semicolons": true,
-        "property-blacklist": [ "widht", "marign", "pading", "blcok" ],
+        "property-disallowed-list": [ "widht", "marign", "pading", "blcok" ],
         "property-case": "lower",
         "rule-empty-line-before": [ "always", {
             "except": ["first-nested"],
             "ignore": ["after-comment"]
         } ],
         "unit-case": "lower",
-        "unit-whitelist": ["em", "rem", "%", "px", "s", "ms", "deg", "vh", "vw"],
+        "unit-allowed-list": ["em", "rem", "%", "px", "s", "ms", "deg", "vh", "vw"],
         "no-missing-end-of-source-newline": true
     }
 }
