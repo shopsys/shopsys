@@ -9,6 +9,7 @@ import {
     submitManageUserForm,
     visitCustomerUsersPage,
 } from './customerUsersSupport';
+import { skipIfB2bNotConfigured } from 'e2e/b2b/b2bSupport';
 import { b2bUrl } from 'fixtures/demodata';
 import {
     check403PageIsVisible,
@@ -26,6 +27,8 @@ const SUBGROUP_INDEX = 0;
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.CUSTOMER_USERS, SUBGROUP_INDEX);
 
 describe('Customer Users (B2B) Tests', () => {
+    skipIfB2bNotConfigured();
+
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
