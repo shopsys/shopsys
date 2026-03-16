@@ -56,7 +56,7 @@ jobs:
                     docker compose down storefront
                     docker compose up -d --wait storefront-cypress
             -   name: Run Cypress tests
-                run: docker compose run -e TEST_LOCALE=en cypress
+                run: docker compose run -e TEST_LOCALE=en -e B2B_DOMAIN_ID=2 -e B2B_BASE_URL=http://127.0.0.2:8000 cypress
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
