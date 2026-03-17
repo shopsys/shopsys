@@ -2,12 +2,29 @@
 
 set -e
 
+install_with_retry() {
+  for i in 1 2 3 4 5; do
+    # pnpm 10 asks for confirmation before purging node_modules; detached containers have no TTY.
+    if CI=true pnpm install "$@"; then
+      return 0
+    fi
+
+    if [ "$i" -eq 5 ]; then
+      return 1
+    fi
+
+    sleep_time=$((i * 5))
+    echo "pnpm install failed (attempt $i/5). Retrying in ${sleep_time}s..."
+    sleep "$sleep_time"
+  done
+}
+
 case "$1" in
   "dev")
-    pnpm install
+    install_with_retry
     exec pnpm run dev ;;
   "build")
-    pnpm install --frozen-lockfile
+    install_with_retry --frozen-lockfile
     pnpm run build
     exec pnpm run start ;;
   *)

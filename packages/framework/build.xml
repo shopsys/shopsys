@@ -895,8 +895,9 @@
     </target>
 
     <target name="npm-install-dependencies" description="Installs node modules dependencies." hidden="true">
-        <exec executable="${path.npm.executable}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="install"/>
+        <exec executable="/bin/sh" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="${path.framework}/scripts/npm-install-with-retry.sh"/>
+            <arg value="${path.npm.executable}"/>
         </exec>
     </target>
 

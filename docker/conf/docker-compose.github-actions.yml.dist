@@ -29,6 +29,7 @@ services:
     storefront:
         restart: always
         image: storefront-image
+        user: root
         container_name: shopsys-framework-storefront
         command:
             - dev

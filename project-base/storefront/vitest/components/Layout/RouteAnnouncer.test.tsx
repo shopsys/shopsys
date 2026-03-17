@@ -68,7 +68,7 @@ const advanceTimersBy = (ms: number) => {
 const waitForAnnouncement = (expected: string, stepMs = 80, maxIterations = 120) => {
     let lastText = '';
     for (let iteration = 0; iteration < maxIterations; iteration += 1) {
-        lastText = screen.getByRole('status').textContent || '';
+        lastText = String(screen.getByRole('status').textContent);
         if (lastText.includes(expected)) {
             return lastText;
         }

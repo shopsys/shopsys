@@ -13,7 +13,7 @@ export function getDomainConfig(context: GetServerSidePropsContext | NextPageCon
     }
 
     const domainUrl = context.req.headers.host;
-    const locale = context.locale;
+    const locale = context.locale || DEFAULT_LOCALE;
 
     const normalizedDomain = domainUrl.replace(':3000', ':8000');
     const hostWithLocale = getBaseUrlWithLocale(normalizedDomain, locale);
