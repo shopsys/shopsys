@@ -19,6 +19,9 @@ BaseCustomerUserDecorator:
             telephone:
                 type: "String"
                 description: "Phone number"
+            telephoneData:
+                type: "PhoneData"
+                description: "Phone number data"
             newsletterSubscription:
                 type: "Boolean!"
                 description: "Whether customer user receives newsletters or not"

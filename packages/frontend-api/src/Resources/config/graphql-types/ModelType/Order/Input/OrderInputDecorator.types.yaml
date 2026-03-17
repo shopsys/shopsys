@@ -47,15 +47,9 @@ OrderInputDecorator:
                             maxMessage: "Email cannot be longer than {{ limit }} characters"
                             groups: ["anonymousUser"]
             telephone:
-                type: "String!"
+                type: "PhoneDataInput!"
                 description: "The customer's phone number"
-                validation:
-                    -   NotBlank:
-                            message: "Please enter telephone number"
-                    -   Length:
-                            max: 30
-                            maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
-
+                validation: cascade
             onCompanyBehalf:
                 type: "Boolean!"
                 description: "Determines whether the order is made on the company behalf."
@@ -169,12 +163,9 @@ OrderInputDecorator:
                             max: 100
                             maxMessage: "Company name cannot be longer than {{ limit }} characters"
             deliveryTelephone:
-                type: "String"
-                description: "Contact telephone number for delivery"
-                validation:
-                    -   Length:
-                            max: 30
-                            maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
+                type: "PhoneDataInput"
+                description: "Contact telephone for delivery"
+                validation: cascade
             deliveryStreet:
                 type: "String"
                 description: "Street name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"

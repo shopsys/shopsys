@@ -61,18 +61,10 @@ DeliveryAddressInputObjectDecorator:
                             max: 30
                             maxMessage: "Zip code cannot be longer than {{ limit }} characters"
             telephone:
-                type: "String"
+                type: "PhoneDataInput"
                 description: "Delivery address telephone"
                 defaultValue: null
-                validation:
-                    -   Length:
-                            min: 9
-                            minMessage: "Telephone number cannot be shorter than {{ limit }} characters"
-                            max: 30
-                            maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
-                    -   Regex:
-                            pattern: '/^[0-9\+]+$/'
-                            message: "Please enter only numbers and the + character"
+                validation: cascade
             country:
                 type: "String!"
                 description: "Delivery address country"

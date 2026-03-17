@@ -39,8 +39,10 @@ OrderDecorator:
                 description: "The customer's email address"
             telephone:
                 type: "String!"
-                description: "The customer's telephone number"
-
+                description: "The customer's formatted telephone number"
+            telephoneData:
+                type: "PhoneData!"
+                description: "The customer's telephone number split into country code, prefix, and number"
             companyName:
                 type: "String"
                 description: "The customer’s company name (only when ordered on the company behalf)"
@@ -80,6 +82,9 @@ OrderDecorator:
             deliveryTelephone:
                 type: "String"
                 description: "Contact telephone number for delivery"
+            deliveryTelephoneData:
+                type: "PhoneData"
+                description: "Contact phone number data for delivery"
             deliveryStreet:
                 type: "String"
                 description: "Street name for delivery"

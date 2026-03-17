@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 
 class RegistrationDataFactory
 {
@@ -31,6 +32,7 @@ class RegistrationDataFactory
             }
         }
 
+        $registrationData->telephone = PhoneData::fromArray($input['telephone']);
         $registrationData->country = $this->countryFacade->findByCode($input['country']);
 
         return $registrationData;

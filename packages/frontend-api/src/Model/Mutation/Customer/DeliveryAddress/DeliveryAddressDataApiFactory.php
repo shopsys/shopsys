@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 
 class DeliveryAddressDataApiFactory
 {
@@ -64,7 +65,9 @@ class DeliveryAddressDataApiFactory
         $deliveryAddressData->street = $input['street'];
         $deliveryAddressData->city = $input['city'];
         $deliveryAddressData->postcode = $input['postcode'];
-        $deliveryAddressData->telephone = $input['telephone'];
+        $telephoneInput = $input['telephone'] ?? null;
+
+        $deliveryAddressData->telephone = $telephoneInput !== null ? PhoneData::fromArray($telephoneInput) : null;
         $deliveryAddressData->country = $country;
         $deliveryAddressData->customer = $customer;
 
