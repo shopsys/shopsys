@@ -7,17 +7,19 @@ const cdnDomain = getPublicConfigProperty('cdnDomain');
 
 export type DomainConfigType = DomainConfig;
 
-export function getDomainConfig(context: GetServerSidePropsContext | NextPageContext): DomainConfigType {
-    if (!context.req?.headers.host) {
-        throw new Error('getDomainConfig requires server-side context with req.headers.host');
-    }
+type DomainConfigResolutionResult = {
+    domainConfig?: DomainConfigType;
+    hostWithLocale: string;
+};
 
-    const domainUrl = context.req.headers.host;
-    const locale = context.locale || DEFAULT_LOCALE;
-
+export const resolveDomainConfigByHost = (
+    domainUrl: string,
+    locale: string = DEFAULT_LOCALE,
+): DomainConfigResolutionResult => {
     const normalizedDomain = domainUrl.replace(':3000', ':8000');
     const hostWithLocale = getBaseUrlWithLocale(normalizedDomain, locale);
     const isDefaultLocale = locale === DEFAULT_LOCALE;
+    const requestUrl = new URL(`http://${normalizedDomain}`);
 
     for (const domainConfig of domainsConfig) {
         const configDomainUrl = new URL(domainConfig.url || '');
@@ -26,17 +28,15 @@ export function getDomainConfig(context: GetServerSidePropsContext | NextPageCon
 
         // For non-default locales, match both host and locale
         if (!isDefaultLocale && domainConfig.defaultLocale === locale) {
-            const requestUrl = new URL(`http://${normalizedDomain}`);
-
             // Check if hosts match
             if (configDomainHost === requestUrl.host) {
                 // For domains with locale in path (like /sk/), check if config path matches locale
                 if (configDomainPath !== '/' && configDomainPath.startsWith(`/${locale}`)) {
-                    return domainConfig;
+                    return { domainConfig, hostWithLocale };
                 }
                 // For domains without path but matching locale
                 if (configDomainPath === '/') {
-                    return domainConfig;
+                    return { domainConfig, hostWithLocale };
                 }
             }
             continue;
@@ -44,12 +44,10 @@ export function getDomainConfig(context: GetServerSidePropsContext | NextPageCon
 
         // For default locale, match host and ensure no conflicting locale path
         if (isDefaultLocale) {
-            const requestUrl = new URL(`http://${normalizedDomain}`);
-
             if (configDomainHost === requestUrl.host) {
                 // Prefer domains without locale path for default locale
                 if (configDomainPath === '/' || configDomainPath === '') {
-                    return domainConfig;
+                    return { domainConfig, hostWithLocale };
                 }
             }
         }
@@ -57,22 +55,35 @@ export function getDomainConfig(context: GetServerSidePropsContext | NextPageCon
 
     // Fallback for default locale when only locale-suffixed domains exist
     if (isDefaultLocale) {
-        const requestUrl = new URL(`http://${normalizedDomain}`);
         const fallbackDomain = domainsConfig.find((domainConfig) => {
             const configDomainHost = new URL(domainConfig.url || '').host;
             return configDomainHost === requestUrl.host;
         });
 
         if (fallbackDomain) {
-            return fallbackDomain;
+            return { domainConfig: fallbackDomain, hostWithLocale };
         }
     }
 
     if (cdnDomain.length > 0) {
         const cdnDomainHost = getBaseUrlWithLocale(new URL(cdnDomain).host, locale);
         if (hostWithLocale === cdnDomainHost) {
-            return domainsConfig[0];
+            return { domainConfig: domainsConfig[0], hostWithLocale };
         }
+    }
+
+    return { hostWithLocale };
+};
+
+export function getDomainConfig(context: GetServerSidePropsContext | NextPageContext): DomainConfigType {
+    if (!context.req?.headers.host) {
+        throw new Error('getDomainConfig requires server-side context with req.headers.host');
+    }
+
+    const { domainConfig, hostWithLocale } = resolveDomainConfigByHost(context.req.headers.host, context.locale);
+
+    if (domainConfig) {
+        return domainConfig;
     }
 
     throw new Error(`Domain '${hostWithLocale}' is not configured`);

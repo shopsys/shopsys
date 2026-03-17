@@ -9,10 +9,6 @@ import {
 } from 'components/Pages/CategoryDetail/categoryDetailUtils';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
-    AdvertsQueryDocument,
-    TypeAdvertsQueryVariables,
-} from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
-import {
     CategoryDetailQueryDocument,
     TypeCategoryDetailQuery,
     TypeCategoryDetailQueryVariables,
@@ -23,7 +19,6 @@ import dynamic from 'next/dynamic';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
-import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getProductListSortFromUrlQuery } from 'utils/parsing/getProductListSortFromUrlQuery';
@@ -38,7 +33,7 @@ import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
+import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const Error404Content = dynamic(
     () => import('components/Pages/ErrorPage/Error404Content').then((m) => m.Error404Content),
@@ -104,12 +99,10 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 t,
             });
 
-            let categoryUuid: string | null = null;
-
             const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
             const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
             const categoryDetailResponsePromise = client
-                ?.query<TypeCategoryDetailQuery, TypeCategoryDetailQueryVariables>(CategoryDetailQueryDocument, {
+                .query<TypeCategoryDetailQuery, TypeCategoryDetailQueryVariables>(CategoryDetailQueryDocument, {
                     urlSlug,
                     filter,
                     orderingMode,
@@ -117,7 +110,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 .toPromise();
 
             const categoryProductsResponsePromise = client
-                ?.query(CategoryProductsQueryDocument, {
+                .query(CategoryProductsQueryDocument, {
                     endCursor: getEndCursor(page),
                     orderingMode,
                     filter,
@@ -126,56 +119,44 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 })
                 .toPromise();
 
-            const [categoryDetailResponse, categoryProductsResponse] = await Promise.all([
+            const [categoryDetailResponse, categoryProductsResponse, layoutResult] = await Promise.all([
                 categoryDetailResponsePromise,
                 categoryProductsResponsePromise,
+                prefetchLayoutQueries({ client, context, domainConfig }),
             ]);
 
-            categoryUuid = categoryDetailResponse.data?.category?.uuid || null;
+            const serverSideCategoryDetailErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                categoryDetailResponse.error,
+                categoryDetailResponse.data?.category,
+                context,
+                domainConfig.url,
+                urlSlug,
+            );
 
-            if (getIsRedirectedFromSsr(context.req.headers)) {
-                const serverSideCategoryDetailErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    categoryDetailResponse.error,
-                    categoryDetailResponse.data?.category,
-                    context,
-                    domainConfig.url,
-                    urlSlug,
-                );
-
-                if (serverSideCategoryDetailErrorResponse) {
-                    return serverSideCategoryDetailErrorResponse;
-                }
-
-                const serverSideCategoryProductsErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    categoryProductsResponse.error,
-                    categoryProductsResponse.data?.products,
-                    context,
-                    domainConfig.url,
-                    urlSlug,
-                );
-
-                if (serverSideCategoryProductsErrorResponse) {
-                    return serverSideCategoryProductsErrorResponse;
-                }
+            if (serverSideCategoryDetailErrorResponse) {
+                return serverSideCategoryDetailErrorResponse;
             }
 
-            const initServerSideData = await initServerSideProps<TypeAdvertsQueryVariables>({
-                domainConfig,
+            const serverSideCategoryProductsErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                categoryProductsResponse.error,
+                categoryProductsResponse.data?.products,
                 context,
+                domainConfig.url,
+                urlSlug,
+            );
+
+            if (serverSideCategoryProductsErrorResponse) {
+                return serverSideCategoryProductsErrorResponse;
+            }
+
+            return buildServerSideProps({
+                layoutResult,
                 client,
                 ssrExchange,
-                prefetchedQueries: [
-                    {
-                        query: AdvertsQueryDocument,
-                        variables: {
-                            positionNames: ['productListSecondRow'],
-                            categoryUuid,
-                        },
-                    },
-                ],
+                context,
+                domainConfig,
+                pageQueryResults: [categoryDetailResponse, categoryProductsResponse],
             });
-
-            return initServerSideData;
         },
 );
 

@@ -1,5 +1,5 @@
 import { NextIncomingMessage } from 'next/dist/server/request-meta';
-import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
+import { isFullPageRequest } from 'utils/isFullPageRequest';
 import { getUrlWithoutGetParameters } from './getUrlWithoutGetParameters';
 import { getStringWithoutLeadingSlash } from './stringWIthoutSlash';
 
@@ -7,7 +7,7 @@ export const getSlugFromServerSideUrl = (
     originalUrl: string,
     requestHeaders: NextIncomingMessage['headers'],
 ): string => {
-    if (getIsRedirectedFromSsr(requestHeaders)) {
+    if (isFullPageRequest(requestHeaders)) {
         return getStringWithoutLeadingSlash(getUrlWithoutGetParameters(originalUrl));
     }
 

@@ -1,8 +1,6 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import {
     StoreDetailQueryDocument,
-    TypeStoreDetailQuery,
-    TypeStoreDetailQueryVariables,
     useStoreDetailQuery,
 } from 'graphql/requests/stores/queries/StoreDetailQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
@@ -10,16 +8,14 @@ import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEven
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { getPrefixedSeoTitle } from 'utils/seo/getPrefixedSeoTitle';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
 
 const StoreDetailContent = dynamic(() =>
     import('components/Pages/StoreDetail/StoreDetailContent').then((mod) => mod.StoreDetailContent),
@@ -63,33 +59,36 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            const storeResponse: OperationResult<TypeStoreDetailQuery, TypeStoreDetailQueryVariables> = await client
-                ?.query(StoreDetailQueryDocument, {
+            const storePromise = client
+                .query(StoreDetailQueryDocument, {
                     urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
                 })
                 .toPromise();
 
-            if (getIsRedirectedFromSsr(context.req.headers)) {
-                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    storeResponse.error,
-                    storeResponse.data?.store,
-                    context,
-                    domainConfig.url,
-                );
+            const [storeResponse, layoutResult] = await Promise.all([
+                storePromise,
+                prefetchLayoutQueries({ client, context, domainConfig }),
+            ]);
 
-                if (serverSideErrorResponse) {
-                    return serverSideErrorResponse;
-                }
+            const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                storeResponse.error,
+                storeResponse.data?.store,
+                context,
+                domainConfig.url,
+            );
+
+            if (serverSideErrorResponse) {
+                return serverSideErrorResponse;
             }
 
-            const initServerSideData = await initServerSideProps({
-                context,
+            return buildServerSideProps({
+                layoutResult,
                 client,
                 ssrExchange,
+                context,
                 domainConfig,
+                pageQueryResults: [storeResponse],
             });
-
-            return initServerSideData;
         },
 );
 

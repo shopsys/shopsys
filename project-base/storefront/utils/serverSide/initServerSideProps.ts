@@ -1,100 +1,14 @@
+import { buildServerSideProps } from './buildServerSideProps';
+import { prefetchLayoutQueries } from './prefetchLayoutQueries';
+import { InitServerSidePropsParameters, ServerSidePropsType } from './types';
 import { Variables } from '@urql/exchange-graphcache';
-import { DocumentNode } from 'graphql';
-import {
-    AdvertsQueryDocument,
-    TypeAdvertsQueryVariables,
-} from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
-import {
-    ArticlesQueryDocument,
-    TypeArticlesQueryVariables,
-} from 'graphql/requests/articlesInterface/articles/queries/ArticlesQuery.generated';
-import { CurrentCustomerUserQueryDocument } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
-import { NavigationQueryDocument } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
-import { NotificationBarsDocument } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
-import {
-    SeoPageQueryDocument,
-    TypeSeoPageQueryVariables,
-} from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
-import {
-    SettingsQueryDocument,
-    TypeSettingsQueryVariables,
-} from 'graphql/requests/settings/queries/SettingsQuery.generated';
-import { TypeArticlePlacementTypeEnum, TypeCustomerUserRoleEnum } from 'graphql/types';
-import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { Translate } from 'next-translate';
-import loadNamespaces from 'next-translate/loadNamespaces';
-import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
-import { CustomerUserAreaEnum } from 'types/customer';
-import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
+import { GetServerSidePropsResult } from 'next';
+import { ssrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
-import { getCurrentCustomerUserRoles } from 'utils/auth/getCurrentCustomerUserRoles';
-import { getIsUserAuthorizedToViewPage } from 'utils/auth/getIsUserAuthorizedToViewPage';
-import { getUnauthenticatedRedirectSSR } from 'utils/auth/getUnauthenticatedRedirectSSR';
-import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
-import { CookiesStoreState } from 'utils/cookies/cookiesStore';
-import { DomainConfigType } from 'utils/domain/domainConfig';
-import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
-import { isEnvironment } from 'utils/isEnvironment';
-import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
-import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
-import { getServerSideInternationalizedStaticUrl } from 'utils/staticUrls/getServerSideInternationalizedStaticUrl';
 
-export type ServerSidePropsType = {
-    urqlState: SSRData;
-    isMaintenance: boolean;
-    isForbidden: boolean;
-    customerUserRoles: TypeCustomerUserRoleEnum[];
-    domainConfig: DomainConfigType;
-    cookiesStore: CookiesStoreState;
-} & Record<string, any>;
-
-type QueriesArray<VariablesType> = { query: string | DocumentNode; variables?: VariablesType }[];
-
-type InitServerSidePropsParameters<VariablesType> = {
-    domainConfig: DomainConfigType;
-    context: GetServerSidePropsContext;
-    authenticationConfig?: {
-        authenticationRequired?: boolean;
-        authorizedRoles?: TypeCustomerUserRoleEnum[];
-        authorizedAreas?: CustomerUserAreaEnum[];
-    };
-    prefetchedQueries?: QueriesArray<VariablesType>;
-    additionalProps?: Record<string, any>;
-} & (
-    | {
-          client: Client;
-          redisClient?: never;
-          ssrExchange: SSRExchange;
-          t?: never;
-      }
-    | {
-          client?: never;
-          redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
-          ssrExchange?: SSRExchange;
-          t: Translate;
-      }
-);
-
-const appendSourceToDirective = (cspHeader: string, directiveName: string, source: string): string => {
-    const directives = cspHeader.split(';');
-
-    for (let index = 0; index < directives.length; index++) {
-        const trimmedDirective = directives[index].trim();
-
-        if (!trimmedDirective.startsWith(`${directiveName} `)) {
-            continue;
-        }
-
-        directives[index] = trimmedDirective.includes(source) ? trimmedDirective : `${trimmedDirective} ${source}`;
-
-        return directives.map((directive) => directive.trim()).join('; ');
-    }
-
-    return cspHeader;
-};
-
-const applyStorefrontDevelopmentCspAppendices = (cspHeader: string): string =>
-    appendSourceToDirective(cspHeader, 'script-src', "'unsafe-eval'");
+export { buildServerSideProps } from './buildServerSideProps';
+export { prefetchLayoutQueries } from './prefetchLayoutQueries';
+export type { ServerSidePropsType } from './types';
 
 export const initServerSideProps = async <VariablesType extends Variables>({
     domainConfig,
@@ -122,129 +36,20 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             context,
         });
 
-    const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);
-    const queriesNotToBeFetchedDuringClientSideNavigation = [
-        { query: NotificationBarsDocument },
-        { query: NavigationQueryDocument },
-        {
-            query: ArticlesQueryDocument,
-            variables: {
-                placement: [
-                    TypeArticlePlacementTypeEnum.Footer1,
-                    TypeArticlePlacementTypeEnum.Footer2,
-                    TypeArticlePlacementTypeEnum.Footer3,
-                    TypeArticlePlacementTypeEnum.Footer4,
-                ],
-                first: 100,
-            },
-        },
-        { query: AdvertsQueryDocument, variables: { positionNames: ['header', 'footer'], categoryUuid: null } },
-        { query: SettingsQueryDocument },
-        ...(seoPageSlug
-            ? [
-                  {
-                      query: SeoPageQueryDocument,
-                      variables: {
-                          pageSlug: seoPageSlug,
-                      },
-                  },
-              ]
-            : []),
-    ];
-
-    const isRedirectedFromSsr = getIsRedirectedFromSsr(context.req.headers);
-    const prefetchQueries: QueriesArray<
-        | TypeAdvertsQueryVariables
-        | TypeArticlesQueryVariables
-        | TypeSettingsQueryVariables
-        | TypeSeoPageQueryVariables
-        | VariablesType
-    > = [
-        { query: CurrentCustomerUserQueryDocument },
-        ...(isRedirectedFromSsr ? queriesNotToBeFetchedDuringClientSideNavigation : []),
-        ...additionalPrefetchQueries,
-    ];
-
-    const resolvedQueries = await Promise.all(
-        prefetchQueries.map((queryObject) => currentClient.query(queryObject.query, queryObject.variables).toPromise()),
-    );
-
-    const settingsResult = resolvedQueries.find((query) => query.data?.settings?.cspHeader !== undefined);
-    let cspHeaderValue = settingsResult?.data?.settings?.cspHeader;
-
-    if (cspHeaderValue) {
-        if (isEnvironment('development')) {
-            cspHeaderValue = applyStorefrontDevelopmentCspAppendices(cspHeaderValue);
-        }
-
-        context.res.setHeader('Content-Security-Policy', cspHeaderValue);
-    }
-
-    const slugResult = resolvedQueries.find((query) => !!query.data?.slug?.slug);
-    const parsedSlug = slugResult?.data.slug.slug;
-
-    const { trimmedUrlWithoutQueryParams, queryParams } = getServerSideInternationalizedStaticUrl(
+    const layoutResult = await prefetchLayoutQueries({
+        client: currentClient,
         context,
-        domainConfig.url,
-    );
+        domainConfig,
+        prefetchedQueries: additionalPrefetchQueries,
+    });
 
-    if (parsedSlug && parsedSlug !== trimmedUrlWithoutQueryParams) {
-        return {
-            redirect: {
-                statusCode: 301,
-                destination: `${parsedSlug}${queryParams ?? ''}`,
-            },
-        };
-    }
-
-    if (authenticationConfig.authenticationRequired) {
-        const isUserLoggedIn = isUserLoggedInSSR(currentClient);
-
-        if (!isUserLoggedIn) {
-            return getUnauthenticatedRedirectSSR(
-                getUrlWithoutGetParameters(context.resolvedUrl),
-                domainConfig.url,
-                context,
-            );
-        }
-    }
-
-    let isForbidden = false;
-    const customerUserRoles = getCurrentCustomerUserRoles(currentClient);
-
-    if (authenticationConfig.authorizedRoles || authenticationConfig.authorizedAreas) {
-        const isUserAuthorized = getIsUserAuthorizedToViewPage(
-            customerUserRoles,
-            domainConfig.type,
-            authenticationConfig.authorizedRoles,
-            authenticationConfig.authorizedAreas,
-        );
-
-        if (!isUserAuthorized) {
-            context.res.statusCode = 403;
-            isForbidden = true;
-        }
-    }
-
-    const isMaintenance = resolvedQueries.some((query) => query.error?.response?.status === 503);
-    if (isMaintenance) {
-        context.res.statusCode = 503;
-    }
-
-    return {
-        props: {
-            ...(await loadNamespaces({
-                locale: domainConfig.defaultLocale,
-                pathname: trimmedUrlWithoutQueryParams,
-                namespaces: ['common', 'accessibility'],
-            })),
-            domainConfig,
-            // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993
-            urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
-            isMaintenance,
-            isForbidden,
-            customerUserRoles,
-            ...additionalProps,
-        },
-    };
+    return buildServerSideProps({
+        layoutResult,
+        client: currentClient,
+        ssrExchange: currentSsrCache,
+        context,
+        domainConfig,
+        authenticationConfig,
+        additionalProps,
+    });
 };
