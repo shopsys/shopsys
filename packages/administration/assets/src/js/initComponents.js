@@ -81,7 +81,7 @@ function initPopover($container) {
     $container.filterAllNodes('[data-bs-toggle="popover"]').each(function () {
         const originalTrigger = this.getAttribute('data-bs-trigger');
 
-        if (isTouchDevice && originalTrigger && originalTrigger.includes('hover')) {
+        if (isTouchDevice && originalTrigger?.includes('hover')) {
             this.setAttribute('data-bs-trigger', 'click');
         }
 
