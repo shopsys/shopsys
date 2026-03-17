@@ -38,7 +38,7 @@ class InquiryGridFactory
         $grid->addColumn('fullName', 'fullName', t('Full name'), true);
         $grid->addColumn('company', 'company', t('Company (Company number)'), true);
         $grid->addColumn('email', 'i.email', t('Email'), true);
-        $grid->addColumn('telephone', 'i.telephone', t('Phone'));
+        $grid->addColumn('telephone', 'telephone', t('Phone'));
 
         $grid->addActionColumn('file-all', t('Show detail'), 'admin_inquiry_detail', ['id' => 'i.id']);
 

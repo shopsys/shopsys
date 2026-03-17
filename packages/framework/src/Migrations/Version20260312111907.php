@@ -23,6 +23,8 @@ class Version20260312111907 extends AbstractMigration
             'telephone',
             '(SELECT ba.country_id FROM billing_addresses ba WHERE ba.customer_id = customer_users.customer_id LIMIT 1)',
         );
+
+        $this->migratePhoneNumberColumn('inquiries', 'telephone', null);
     }
 
     private function migrateCountryAwarePhoneNumberColumn(

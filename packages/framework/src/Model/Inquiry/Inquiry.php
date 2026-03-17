@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Inquiry;
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\Clock\DatePoint;
 
@@ -47,10 +48,22 @@ class Inquiry
     protected $email;
 
     /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    protected $telephonePrefix;
+
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 2, nullable: true)]
+    protected $telephonePrefixCountryCode;
+
+    /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 30)]
-    protected $telephone;
+    protected $telephoneNumber;
 
     /**
      * @var string|null
@@ -123,7 +136,7 @@ class Inquiry
         $this->firstName = $inquiryData->firstName;
         $this->lastName = $inquiryData->lastName;
         $this->email = $inquiryData->email;
-        $this->telephone = $inquiryData->telephone;
+        $this->setTelephoneData($inquiryData->telephone);
         $this->companyName = $inquiryData->companyName;
         $this->companyNumber = $inquiryData->companyNumber;
         $this->companyTaxNumber = $inquiryData->companyTaxNumber;
@@ -183,7 +196,26 @@ class Inquiry
      */
     public function getTelephone()
     {
-        return $this->telephone;
+        return $this->getTelephoneData()->toPhoneNumber();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData
+     */
+    public function getTelephoneData()
+    {
+        return new PhoneData(
+            $this->telephonePrefixCountryCode,
+            $this->telephonePrefix,
+            $this->telephoneNumber,
+        );
+    }
+
+    public function setTelephoneData(PhoneData $phoneData): void
+    {
+        $this->telephonePrefix = $phoneData->prefix;
+        $this->telephonePrefixCountryCode = $phoneData->countryCode;
+        $this->telephoneNumber = $phoneData->number;
     }
 
     /**

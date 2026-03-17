@@ -1,5 +1,5 @@
 mutation CreateInquiryMutation(
-    $telephone: String!
+    $telephone: PhoneDataInput!
     $firstName: String!
     $lastName: String!
     $email: String!

@@ -41,6 +41,7 @@ class InquiryRepository
             ->addSelect('pt.name as productName')
             ->addSelect('CONCAT(i.lastName, \' \', i.firstName) as fullName')
             ->addSelect('CONCAT(i.companyName, \' (\', i.companyNumber, \')\') as company')
+            ->addSelect('CONCAT(COALESCE(i.telephonePrefix, \'\'), i.telephoneNumber) as telephone')
             ->leftJoin('i.product', 'p')
             ->leftJoin('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameter('locale', $locale)

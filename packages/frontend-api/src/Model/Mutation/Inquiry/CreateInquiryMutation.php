@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Inquiry\InquiryData;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryDataFactory;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade;
 use Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
@@ -54,7 +55,7 @@ class CreateInquiryMutation extends AbstractMutation
         $inquiryData->firstName = $input['firstName'];
         $inquiryData->lastName = $input['lastName'];
         $inquiryData->email = $input['email'];
-        $inquiryData->telephone = $input['telephone'];
+        $inquiryData->telephone = PhoneData::fromArray($input['telephone']);
         $inquiryData->companyName = $input['companyName'] ?? null;
         $inquiryData->companyNumber = $input['companyNumber'] ?? null;
         $inquiryData->companyTaxNumber = $input['companyTaxNumber'] ?? null;
