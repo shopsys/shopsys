@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation> getTranslations()
  */
 #[ORM\Table(name: 'flags')]
 #[ORM\Entity]
@@ -35,7 +36,7 @@ class Flag extends AbstractTranslatableEntity
     protected $uuid;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation>
      */
     #[Prezent\Translations(targetEntity: FlagTranslation::class)]
     #[Override]

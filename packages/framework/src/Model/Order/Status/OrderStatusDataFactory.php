@@ -42,7 +42,6 @@ class OrderStatusDataFactory
 
     protected function fillFromOrderStatus(OrderStatusData $orderStatusData, OrderStatus $orderStatus): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation[] $translations */
         $translations = $orderStatus->getTranslations();
         $names = [];
 

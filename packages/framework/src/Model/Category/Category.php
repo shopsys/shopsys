@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation> getTranslations()
  */
 #[ORM\Table(name: 'categories')]
 #[ORM\Index(columns: ['lft'])]
@@ -42,7 +43,7 @@ class Category extends AbstractTranslatableEntity
     protected $uuid;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation>
      */
     #[Prezent\Translations(targetEntity: CategoryTranslation::class)]
     #[Override]

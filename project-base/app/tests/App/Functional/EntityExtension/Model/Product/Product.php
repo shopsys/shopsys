@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * Product
  *
  * @method \Tests\App\Functional\EntityExtension\Model\Product\ProductTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Tests\App\Functional\EntityExtension\Model\Product\ProductTranslation> getTranslations()
  */
 #[ORM\Table(name: 'products')]
 #[ORM\Index(columns: ['variant_type'])]
@@ -32,7 +33,7 @@ class Product extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Product\ProductTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Tests\App\Functional\EntityExtension\Model\Product\ProductTranslation>
      */
     #[Prezent\Translations(targetEntity: ProductTranslation::class)]
     #[Override]

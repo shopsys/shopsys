@@ -36,7 +36,6 @@ class ParameterGroupDataFactory
         ParameterGroupData $parameterGroupData,
         ParameterGroup $parameterGroup,
     ): void {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation[] $translations */
         $translations = $parameterGroup->getTranslations();
         $names = [];
 

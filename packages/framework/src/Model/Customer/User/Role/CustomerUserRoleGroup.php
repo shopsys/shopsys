@@ -12,7 +12,8 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @method \Shopsys\FrameworkBundle\Model\Country\CountryTranslation translation(?string $locale = null)
+ * @method \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupTranslation> getTranslations()
  */
 #[ORM\Table(name: 'customer_user_role_groups')]
 #[ORM\Entity]
@@ -25,7 +26,7 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupTranslation>
      */
     #[Prezent\Translations(targetEntity: CustomerUserRoleGroupTranslation::class)]
     #[Override]

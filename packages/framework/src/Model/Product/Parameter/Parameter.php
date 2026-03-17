@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation> getTranslations()
  */
 #[ORM\Table(name: 'parameters')]
 #[ORM\Entity]
@@ -44,7 +45,7 @@ class Parameter extends AbstractTranslatableEntity
     protected $uuid;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation>
      */
     #[Prezent\Translations(targetEntity: ParameterTranslation::class)]
     #[Override]

@@ -44,7 +44,6 @@ class ComplaintStatusDataFactory
         ComplaintStatusData $complaintStatusData,
         ComplaintStatus $complaintStatus,
     ): void {
-        /** @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation[] $translations */
         $translations = $complaintStatus->getTranslations();
         $names = [];
 

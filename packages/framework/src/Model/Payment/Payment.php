@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation> getTranslations()
  */
 #[ORM\Table(name: 'payments')]
 #[ORM\Entity]
@@ -40,7 +41,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation>
      */
     #[Prezent\Translations(targetEntity: PaymentTranslation::class)]
     #[Override]

@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Localization\TranslatableEntityTrait;
 
 /**
  * @method \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation> getTranslations()
  */
 #[ORM\Table(name: 'uploaded_files')]
 #[ORM\Entity]

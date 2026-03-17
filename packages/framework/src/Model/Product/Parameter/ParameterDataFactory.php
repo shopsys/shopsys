@@ -45,7 +45,6 @@ class ParameterDataFactory
 
     protected function fillFromParameter(ParameterData $parameterData, Parameter $parameter): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation[] $translations */
         $translations = $parameter->getTranslations();
         $names = [];
 

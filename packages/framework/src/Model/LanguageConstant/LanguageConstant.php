@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation> getTranslations()
  */
 #[ORM\Table(name: 'language_constants')]
 #[ORM\UniqueConstraint(name: 'language_constants_key_namespace', columns: ['key', 'namespace'])]
@@ -42,7 +43,7 @@ class LanguageConstant extends AbstractTranslatableEntity
     protected $namespace;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation>
      */
     #[Prezent\Translations(targetEntity: LanguageConstantTranslation::class)]
     #[Override]

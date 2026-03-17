@@ -18,6 +18,7 @@ use Symfony\Component\Clock\DatePoint;
 
 /**
  * @method \Shopsys\FrameworkBundle\Component\Image\ImageTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Component\Image\ImageTranslation> getTranslations()
  */
 #[ORM\Table(name: 'images')]
 #[ORM\Index(columns: ['entity_name', 'entity_id', 'type'])]
@@ -37,7 +38,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Component\Image\ImageTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Component\Image\ImageTranslation>
      */
     #[Prezent\Translations(targetEntity: ImageTranslation::class)]
     #[Override]

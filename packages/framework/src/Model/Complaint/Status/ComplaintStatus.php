@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation> getTranslations()
  */
 #[ORM\Table(name: 'complaint_statuses')]
 #[ORM\Entity]
@@ -28,7 +29,7 @@ class ComplaintStatus extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation>
      */
     #[Prezent\Translations(targetEntity: ComplaintStatusTranslation::class)]
     #[Override]
