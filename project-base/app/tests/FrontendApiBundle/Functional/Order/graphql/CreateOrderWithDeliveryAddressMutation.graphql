@@ -1,0 +1,44 @@
+mutation CreateOrderWithDeliveryAddressMutation(
+    $cartUuid: Uuid!,
+    $firstName: String!,
+    $lastName: String!,
+    $email: String!,
+    $telephone: PhoneDataInput!,
+    $onCompanyBehalf: Boolean!,
+    $companyName: String!,
+    $street: String!,
+    $city: String!,
+    $postcode: String!,
+    $country: String!,
+    $isDeliveryAddressDifferentFromBilling: Boolean!,
+) {
+    CreateOrder(
+        input: {
+            cartUuid: $cartUuid
+            firstName: $firstName
+            lastName: $lastName
+            email: $email
+            telephone: $telephone
+            onCompanyBehalf: $onCompanyBehalf
+            companyName: $companyName
+            street: $street
+            city: $city
+            postcode: $postcode
+            country: $country
+            isDeliveryAddressDifferentFromBilling: $isDeliveryAddressDifferentFromBilling
+        }
+    ) {
+        order {
+            deliveryFirstName
+            deliveryLastName
+            deliveryCompanyName
+            deliveryTelephone
+            deliveryStreet
+            deliveryCity
+            deliveryPostcode
+            deliveryCountry {
+                code
+            }
+        }
+    }
+}

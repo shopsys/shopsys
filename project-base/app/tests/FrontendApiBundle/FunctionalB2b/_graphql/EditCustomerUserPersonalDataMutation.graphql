@@ -3,7 +3,11 @@ mutation EditCustomerUserPersonalDataMutation(
     $firstName: String! = "",
     $lastName: String! = "",
     $roleGroupUuid: Uuid! = "00000000-0000-0000-0000-000000000000",
-    $telephone: String = ""
+    $telephone: PhoneDataInput! = {
+        countryCode: "CZ"
+        prefix: "+420"
+        number: "123456789",
+    }
 ) {
     EditCustomerUserPersonalData(input: {
         customerUserUuid: $customerUserUuid,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Customer;
 
 use Shopsys\FrameworkBundle\Form\Constraints\Country;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class CreateDeliveryAddressTest extends GraphQlWithLoginTestCase
@@ -19,7 +20,7 @@ class CreateDeliveryAddressTest extends GraphQlWithLoginTestCase
             'postcode' => '46014',
             'country' => 'CZ',
             'companyName' => 'Shopsys',
-            'telephone' => '777777777',
+            'telephone' => new PhoneData('CZ', '+420', '777777777'),
         ];
 
         $response = $this->getResponseContentForGql(
@@ -42,7 +43,7 @@ class CreateDeliveryAddressTest extends GraphQlWithLoginTestCase
             'postcode' => '46014',
             'country' => 'CZ1',
             'companyName' => 'Shopsys',
-            'telephone' => '777777777',
+            'telephone' => new PhoneData('CZ', '+420', '777777777'),
         ];
 
         $response = $this->getResponseContentForGql(

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Functional\Order\OrderTestTrait;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
@@ -177,35 +178,25 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
         $this->addPplTransportToCart($cartUuid);
         $this->addCardPaymentToCart($cartUuid);
 
-        $response = $this->getResponseContentForQuery($this->getMutation($cartUuid));
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../Order/graphql/CreateOrderWithDynamicFieldsMutation.graphql',
+            [
+                'cartUuid' => $cartUuid,
+                'firstName' => 'firstName',
+                'lastName' => 'lastName',
+                'email' => 'user@example.com',
+                'telephone' => new PhoneData('CU', '+53', '123456789'),
+                'onCompanyBehalf' => false,
+                'street' => '123 Fake Street',
+                'city' => 'Springfield',
+                'postcode' => '12345',
+                'country' => 'CZ',
+                'isDeliveryAddressDifferentFromBilling' => false,
+            ],
+        );
         $data = $this->getResponseDataForGraphQlType($response, 'CreateOrder');
 
         return $data['order']['uuid'];
-    }
-
-    private function getMutation(?string $cartUuid): string
-    {
-        return 'mutation {
-                        CreateOrder(
-                            input: {
-                                ' . ($cartUuid !== null ? 'cartUuid: "' . $cartUuid . '"' : '') . '
-                                firstName: "firstName"
-                                lastName: "lastName"
-                                email: "user@example.com"
-                                telephone: "+53 123456789"
-                                onCompanyBehalf: false
-                                street: "123 Fake Street"
-                                city: "Springfield"
-                                postcode: "12345"
-                                country: "CZ"
-                                isDeliveryAddressDifferentFromBilling: false
-                            }
-                        ) {
-                            order {
-                                uuid
-                            }
-                        }
-                    }';
     }
 
     private function getOrderRepeatMutation(string $orderUuid, string $cartUuid = ''): string

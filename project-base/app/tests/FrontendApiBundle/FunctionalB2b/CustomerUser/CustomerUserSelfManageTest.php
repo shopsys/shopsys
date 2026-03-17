@@ -11,6 +11,7 @@ use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalAndCompanyDataInputProvider;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
 
@@ -26,7 +27,7 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
     {
         $response = $this->getResponseContentForGql(
             __DIR__ . '/../_graphql/ChangeCompanyDataMutation.graphql',
-            ChangePersonalAndCompanyDataInputProvider::COMPANY_DATA_INPUT_ARRAY,
+            ChangePersonalAndCompanyDataInputProvider::getCompanyDataInputArray(),
         );
 
         $this->assertAccessDeniedError($response);
@@ -194,7 +195,7 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
                         'street' => 'street 1',
                         'city' => 'Ostrava',
                         'postcode' => '71200',
-                        'telephone' => '+420123456789',
+                        'telephone' => new PhoneData('CZ', '+420', '123456789'),
                         'country' => 'CZ',
                     ],
                 ],

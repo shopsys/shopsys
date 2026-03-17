@@ -7,25 +7,29 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
+    use OrderTestTrait;
+
     public const string DEFAULT_USER_EMAIL = CustomerUserDataFixture::USER_WITH_DELIVERY_ADDRESS_PERSISTENT_REFERENCE_EMAIL;
 
-    public const array DEFAULT_INPUT_VALUES = [
-        'firstName' => 'firstName',
-        'lastName' => 'lastName',
-        'email' => 'user@example.com',
-        'telephone' => '+53 123456789',
-        'street' => '123 Fake Street',
-        'city' => 'Springfield',
-        'postcode' => '12345',
-        'country' => 'CZ',
-        'onCompanyBehalf' => false,
-    ];
-
-    use OrderTestTrait;
+    public static function getDefaultInputValues(): array
+    {
+        return [
+            'firstName' => 'firstName',
+            'lastName' => 'lastName',
+            'email' => 'user@example.com',
+            'telephone' => new PhoneData('CU', '+53', '123456789'),
+            'street' => '123 Fake Street',
+            'city' => 'Springfield',
+            'postcode' => '12345',
+            'country' => 'CZ',
+            'onCompanyBehalf' => false,
+        ];
+    }
 
     public function testMinimalOrderAsAuthenticatedUser(): void
     {
@@ -46,7 +50,7 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
                 'firstName' => 'firstName',
                 'lastName' => 'lastName',
                 'email' => self::DEFAULT_USER_EMAIL,
-                'telephone' => '+53 123456789',
+                'telephone' => '+53123456789',
                 'companyName' => null,
                 'companyNumber' => null,
                 'companyTaxNumber' => null,
@@ -60,7 +64,7 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
                 'deliveryFirstName' => 'firstName',
                 'deliveryLastName' => 'lastName',
                 'deliveryCompanyName' => null,
-                'deliveryTelephone' => '+53 123456789',
+                'deliveryTelephone' => '+53123456789',
                 'deliveryStreet' => '123 Fake Street',
                 'deliveryCity' => 'Springfield',
                 'deliveryPostcode' => '12345',
@@ -73,7 +77,7 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
         ];
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
-            ...self::DEFAULT_INPUT_VALUES,
+            ...self::getDefaultInputValues(),
             'isDeliveryAddressDifferentFromBilling' => false,
         ]);
 
@@ -98,7 +102,7 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
         $expectedCountryCode = $deliveryAddress->getCountry()->getCode();
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
-            ...self::DEFAULT_INPUT_VALUES,
+            ...self::getDefaultInputValues(),
             'isDeliveryAddressDifferentFromBilling' => true,
             'deliveryAddressUuid' => $deliveryAddress->getUuid(),
         ]);

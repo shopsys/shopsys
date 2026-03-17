@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\Model\Customer\BillingAddress;
 use App\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -33,7 +34,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             'firstName' => 'Jaromír',
             'lastName' => 'Jágr',
             'email' => 'no-reply@shopsys.com',
-            'telephone' => '605000123',
+            'telephone' => '+420605000123',
             'newsletterSubscription' => true,
             'street' => 'Hlubinská 10',
             'city' => 'Ostrava',
@@ -48,7 +49,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 'street' => 'Rudná 123',
                 'city' => 'Ostrava',
                 'postcode' => '70030',
-                'telephone' => '123456789',
+                'telephone' => '+420123456789',
                 'country' => [
                     'code' => 'CZ',
                 ],
@@ -62,7 +63,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                     'street' => 'Rudná 123',
                     'city' => 'Ostrava',
                     'postcode' => '70030',
-                    'telephone' => '123456789',
+                    'telephone' => '+420123456789',
                     'country' => [
                         'code' => 'CZ',
                     ],
@@ -92,12 +93,12 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @return array{telephone: string, firstName: string, lastName: string, newsletterSubscription: false, street: string, city: string, country: string, postcode: string}
+     * @return array{telephone: \Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData, firstName: string, lastName: string, newsletterSubscription: false, street: string, city: string, country: string, postcode: string}
      */
     private function getJohnDoeBaseData(): array
     {
         return [
-            'telephone' => '123456321',
+            'telephone' => new PhoneData('CZ', '+420', '123456321'),
             'firstName' => 'John',
             'lastName' => 'Doe',
             'newsletterSubscription' => false,
@@ -115,7 +116,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
     {
         $this->assertSame('John', $data['firstName']);
         $this->assertSame('Doe', $data['lastName']);
-        $this->assertSame('123456321', $data['telephone']);
+        $this->assertSame(new PhoneData('CZ', '+420', '123456321')->toPhoneNumber(), $data['telephone']);
         $this->assertSame('no-reply@shopsys.com', $data['email']);
         $this->assertSame('123 Fake street', $data['street']);
         $this->assertSame('Springfield', $data['city']);
@@ -215,7 +216,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/ChangePersonalAndCompanyDataMutation.graphql',
             [
-                'telephone' => '1234567890123456789012345678901',
+                'telephone' => new PhoneData('CZ', '+420', '1234567890123456789012345678901'),
                 'firstName' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s',
                 'lastName' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s',
                 'newsletterSubscription' => false,
@@ -240,7 +241,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale,
             ),
-            'input.telephone' => t(
+            'input.telephone.number' => t(
                 'Telephone number cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 30],
                 Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN,

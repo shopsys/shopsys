@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class MinimalOrderTest extends GraphQlTestCase
@@ -28,7 +29,7 @@ class MinimalOrderTest extends GraphQlTestCase
                 'firstName' => 'firstName',
                 'lastName' => 'lastName',
                 'email' => 'user@example.com',
-                'telephone' => '+53 123456789',
+                'telephone' => '+53123456789',
                 'companyName' => null,
                 'companyNumber' => null,
                 'companyTaxNumber' => null,
@@ -42,7 +43,7 @@ class MinimalOrderTest extends GraphQlTestCase
                 'deliveryFirstName' => 'firstName',
                 'deliveryLastName' => 'lastName',
                 'deliveryCompanyName' => null,
-                'deliveryTelephone' => '+53 123456789',
+                'deliveryTelephone' => '+53123456789',
                 'deliveryStreet' => '123 Fake Street',
                 'deliveryCity' => 'Springfield',
                 'deliveryPostcode' => '12345',
@@ -72,7 +73,7 @@ class MinimalOrderTest extends GraphQlTestCase
             'firstName' => 'firstName',
             'lastName' => 'lastName',
             'email' => 'user@example.com',
-            'telephone' => '+53 123456789',
+            'telephone' => new PhoneData('CU', '+53', '123456789'),
             'onCompanyBehalf' => false,
             'street' => '123 Fake Street',
             'city' => 'Springfield',

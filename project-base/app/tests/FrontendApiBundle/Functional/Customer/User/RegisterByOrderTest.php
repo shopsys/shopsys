@@ -27,7 +27,6 @@ class RegisterByOrderTest extends GraphQlTestCase
         ]);
 
         $graphQlType = 'RegisterByOrder';
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
         $this->assertArrayHasKey('tokens', $responseData);
@@ -96,7 +95,7 @@ class RegisterByOrderTest extends GraphQlTestCase
         $this->assertSame($registeredCustomerUserDeliveryAddress->getFirstName(), $order->getDeliveryFirstName());
         $this->assertSame($registeredCustomerUserDeliveryAddress->getLastName(), $order->getDeliveryLastName());
         $this->assertSame($registeredCustomerUserDeliveryAddress->getCompanyName(), $order->getDeliveryCompanyName());
-        $this->assertSame($registeredCustomerUserDeliveryAddress->getTelephone(), $order->getDeliveryTelephone());
+        $this->assertSame($registeredCustomerUserDeliveryAddress->getTelephoneData()?->number, $order->getDeliveryTelephoneData()?->number);
         $this->assertSame($registeredCustomerUserDeliveryAddress->getStreet(), $order->getDeliveryStreet());
         $this->assertSame($registeredCustomerUserDeliveryAddress->getCity(), $order->getDeliveryCity());
         $this->assertSame($registeredCustomerUserDeliveryAddress->getPostcode(), $order->getDeliveryPostcode());

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -35,19 +36,6 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
      * @inject
      */
     private PromoCodeDataFactory $promoCodeDataFactory;
-
-    private const array DEFAULT_ORDER_INPUT_VALUES = [
-        'firstName' => 'firstName',
-        'lastName' => 'lastName',
-        'email' => 'user@example.com',
-        'telephone' => '+53 123456789',
-        'onCompanyBehalf' => false,
-        'street' => '123 Fake Street',
-        'city' => 'Springfield',
-        'postcode' => '12345',
-        'country' => 'CZ',
-        'isDeliveryAddressDifferentFromBilling' => false,
-    ];
 
     public function testCreateOrderWithPromoCode(): void
     {
@@ -170,7 +158,16 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
             'cartUuid' => $cartUuid,
-            ...self::DEFAULT_ORDER_INPUT_VALUES,
+            'firstName' => 'firstName',
+            'lastName' => 'lastName',
+            'email' => 'user@example.com',
+            'telephone' => new PhoneData('CU', '+53', '123456789'),
+            'onCompanyBehalf' => false,
+            'street' => '123 Fake Street',
+            'city' => 'Springfield',
+            'postcode' => '12345',
+            'country' => 'CZ',
+            'isDeliveryAddressDifferentFromBilling' => false,
         ]);
 
         return $this->getResponseDataForGraphQlType($response, 'CreateOrder');

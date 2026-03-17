@@ -7,7 +7,7 @@ mutation EditDeliveryAddress(
     $postcode: String!,
     $country: String!,
     $companyName: String,
-    $telephone: String,
+    $telephone: PhoneDataInput,
 ) {
     EditDeliveryAddress(input: {
         uuid: $uuid

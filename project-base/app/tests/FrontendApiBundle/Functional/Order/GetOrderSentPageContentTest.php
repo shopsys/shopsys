@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFactory;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPageStatusEnum;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -223,7 +224,7 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
             'firstName' => 'firstName',
             'lastName' => 'lastName',
             'email' => 'user@example.com',
-            'telephone' => '+53 123456789',
+            'telephone' => new PhoneData('CU', '+53', '123456789'),
             'onCompanyBehalf' => false,
             'street' => '123 Fake Street',
             'city' => 'Springfield',

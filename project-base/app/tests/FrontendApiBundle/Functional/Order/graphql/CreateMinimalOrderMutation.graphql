@@ -3,7 +3,7 @@ mutation CreateMinimalOrderMutation(
     $firstName: String!,
     $lastName: String!,
     $email: String!,
-    $telephone: String!,
+    $telephone: PhoneDataInput!,
     $street: String!,
     $city: String!,
     $postcode: String!,
@@ -11,6 +11,12 @@ mutation CreateMinimalOrderMutation(
     $onCompanyBehalf: Boolean!,
     $isDeliveryAddressDifferentFromBilling: Boolean!,
     $deliveryAddressUuid: Uuid,
+    $deliveryFirstName: String
+    $deliveryLastName: String
+    $deliveryStreet: String
+    $deliveryCity: String
+    $deliveryCountry: String
+    $deliveryPostcode: String
 ) {
     CreateOrder(
         input: {
@@ -26,6 +32,12 @@ mutation CreateMinimalOrderMutation(
             onCompanyBehalf: $onCompanyBehalf
             isDeliveryAddressDifferentFromBilling: $isDeliveryAddressDifferentFromBilling
             deliveryAddressUuid: $deliveryAddressUuid
+            deliveryFirstName: $deliveryFirstName
+            deliveryLastName: $deliveryLastName
+            deliveryStreet: $deliveryStreet
+            deliveryCity: $deliveryCity
+            deliveryCountry: $deliveryCountry
+            deliveryPostcode: $deliveryPostcode
         }
     ) {
         orderCreated

@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -30,7 +31,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
                 'firstName' => 'firstName',
                 'lastName' => 'lastName',
                 'email' => 'user@example.com',
-                'telephone' => '+53 123456789',
+                'telephone' => '+53123456789',
                 'companyName' => 'Airlocks s.r.o.',
                 'companyNumber' => '1234',
                 'companyTaxNumber' => 'EU4321',
@@ -126,7 +127,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
             'firstName' => 'firstName',
             'lastName' => 'lastName',
             'email' => 'user@example.com',
-            'telephone' => '+53 123456789',
+            'telephone' => new PhoneData('CU', '+53', '123456789'),
             'onCompanyBehalf' => true,
             'companyName' => 'Airlocks s.r.o.',
             'companyNumber' => '1234',

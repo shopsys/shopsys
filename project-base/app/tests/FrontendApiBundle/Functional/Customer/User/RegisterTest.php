@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Customer\User;
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RegisterTest extends GraphQlTestCase
@@ -142,7 +143,7 @@ class RegisterTest extends GraphQlTestCase
             'firstName' => $firstName,
             'lastName' => $lastName,
             'password' => $password,
-            'telephone' => '145612314',
+            'telephone' => new PhoneData('CZ', '+420', '145612314'),
             'newsletterSubscription' => false,
             'street' => '123 Fake Street',
             'city' => 'Springfield',

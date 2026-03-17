@@ -1,7 +1,7 @@
 mutation ChangePersonalData(
     $firstName: String!
     $lastName: String!
-    $telephone: String!
+    $telephone: PhoneDataInput!
     $newsletterSubscription: Boolean!
 ) {
     ChangePersonalData(input: {

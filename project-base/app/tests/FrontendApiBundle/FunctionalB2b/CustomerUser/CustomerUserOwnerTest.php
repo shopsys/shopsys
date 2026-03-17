@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrontendApiBundle\Component\Constraints\UniqueBillingAddressApi;
 use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalAndCompanyDataInputProvider;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
@@ -37,7 +38,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
     {
         $existingBillingAddress = $this->getReferenceForDomain(CompanyDataFixture::SHOPSYS_COMPANY, $this->domain->getId(), Customer::class)->getBillingAddress();
 
-        $input = ChangePersonalAndCompanyDataInputProvider::INPUT_ARRAY;
+        $input = ChangePersonalAndCompanyDataInputProvider::getInputArray();
         $input['companyNumber'] = $existingBillingAddress->getCompanyNumber();
 
         $response = $this->getResponseContentForGql(
@@ -55,7 +56,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
      */
     public function testChangePersonalAndCompanyDataMutation(): void
     {
-        $personalData = ChangePersonalAndCompanyDataInputProvider::INPUT_ARRAY;
+        $personalData = ChangePersonalAndCompanyDataInputProvider::getInputArray();
         $response = $this->getResponseContentForGql(
             __DIR__ . '/../../Functional/Customer/User/graphql/ChangePersonalAndCompanyDataMutation.graphql',
             $personalData,
@@ -65,7 +66,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
             ...$this->getResponseDataForGraphQlType($response, 'ChangeCompanyData'),
         ];
 
-        $this->assertSame($personalData['telephone'], $responseData['telephone']);
+        $this->assertSame($personalData['telephone']->toPhoneNumber(), $responseData['telephone']);
         $this->assertSame($personalData['firstName'], $responseData['firstName']);
         $this->assertSame($personalData['lastName'], $responseData['lastName']);
         $this->assertSame($personalData['newsletterSubscription'], $responseData['newsletterSubscription']);
@@ -143,7 +144,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
 
         $editedFirstName = 'Edited first name';
         $editedLastName = 'Edited last name';
-        $editedTelephone = '001122456';
+        $editedTelephone = new PhoneData('CZ', '+420', '001122456');
         $editedRoleGroupUuid = $newRoleGroup->getUuid();
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/EditCustomerUserPersonalDataMutation.graphql', [
@@ -158,13 +159,13 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
 
         $this->assertSame($editedFirstName, $responseData['firstName']);
         $this->assertSame($editedLastName, $responseData['lastName']);
-        $this->assertSame($editedTelephone, $responseData['telephone']);
+        $this->assertSame($editedTelephone->toPhoneNumber(), $responseData['telephone']);
         $this->assertSame($editedRoleGroupUuid, $responseData['roleGroup']['uuid']);
 
         $refreshedUserToEdit = $this->customerUserFacade->getCustomerUserById($userToEdit->getId());
         $this->assertSame($editedFirstName, $refreshedUserToEdit->getFirstName());
         $this->assertSame($editedLastName, $refreshedUserToEdit->getLastName());
-        $this->assertSame($editedTelephone, $refreshedUserToEdit->getTelephone());
+        $this->assertSame($editedTelephone->toPhoneNumber(), $refreshedUserToEdit->getTelephone());
         $this->assertSame($newRoleGroup->getUuid(), $refreshedUserToEdit->getRoleGroup()->getUuid());
     }
 
@@ -187,7 +188,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
         $firstName = 'First name';
         $lastName = 'Last name';
         $email = 'no-reply1111@shopsys.com';
-        $telephone = '123456789';
+        $telephone = new PhoneData('CZ', '+420', '123456789');
         $roleGroupUuid = $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_USER, CustomerUserRoleGroup::class)->getUuid();
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/AddNewCustomerUserMutation.graphql', [
@@ -203,7 +204,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
         $this->assertSame($firstName, $responseData['firstName']);
         $this->assertSame($lastName, $responseData['lastName']);
         $this->assertSame($email, $responseData['email']);
-        $this->assertSame($telephone, $responseData['telephone']);
+        $this->assertSame($telephone->toPhoneNumber(), $responseData['telephone']);
         $this->assertSame($roleGroupUuid, $responseData['roleGroup']['uuid']);
         $this->assertSame($currentCustomerUser->getCustomer()->getBillingAddress()->getUuid(), $responseData['billingAddressUuid']);
     }
@@ -312,7 +313,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
                         'street' => 'street 1',
                         'city' => 'Ostrava',
                         'postcode' => '71200',
-                        'telephone' => '+420123456789',
+                        'telephone' => new PhoneData('CZ', '+420', '123456789'),
                         'country' => 'CZ',
                     ],
                 ],

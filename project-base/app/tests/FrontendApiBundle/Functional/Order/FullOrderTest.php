@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class FullOrderTest extends GraphQlTestCase
@@ -27,7 +28,7 @@ class FullOrderTest extends GraphQlTestCase
                 'firstName' => 'firstName',
                 'lastName' => 'lastName',
                 'email' => 'user@example.com',
-                'telephone' => '+53 123456789',
+                'telephone' => '+53123456789',
                 'companyName' => 'Airlocks s.r.o.',
                 'companyNumber' => '1234',
                 'companyTaxNumber' => 'EU4321',
@@ -76,7 +77,7 @@ class FullOrderTest extends GraphQlTestCase
             'firstName' => 'firstName',
             'lastName' => 'lastName',
             'email' => 'user@example.com',
-            'telephone' => '+53 123456789',
+            'telephone' => new PhoneData('CU', '+53', '123456789'),
             'onCompanyBehalf' => true,
             'companyName' => 'Airlocks s.r.o.',
             'companyNumber' => '1234',
