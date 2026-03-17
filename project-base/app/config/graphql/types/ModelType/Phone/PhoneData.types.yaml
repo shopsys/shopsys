@@ -1,0 +1,4 @@
+PhoneData:
+    type: object
+    inherits:
+        - 'PhoneDataDecorator'

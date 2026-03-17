@@ -1,0 +1,16 @@
+PhoneDataDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents phone number data"
+        fields:
+            countryCode:
+                type: "String"
+                description: "Phone prefix country code in ISO 3166-1 alpha-2"
+                resolve: "@=value.countryCode"
+            prefix:
+                type: "String"
+                description: "Phone prefix (eg. +420)"
+            number:
+                type: "String!"
+                description: "Phone number without prefix"

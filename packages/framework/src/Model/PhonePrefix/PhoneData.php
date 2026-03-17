@@ -21,4 +21,16 @@ final class PhoneData
 
         return trim(($this->prefix ?? '') . ($this->number ?? ''));
     }
+
+    /**
+     * @param array{countryCode: string, prefix: string, number: string} $data
+     */
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            countryCode: $data['countryCode'],
+            prefix: $data['prefix'],
+            number: $data['number'],
+        );
+    }
 }

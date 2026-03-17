@@ -1,0 +1,29 @@
+PhoneDataInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Represents phone number input"
+        fields:
+            countryCode:
+                type: "String!"
+                description: "Phone prefix country code in ISO 3166-1 alpha-2"
+            prefix:
+                type: "String!"
+                description: "Phone prefix (eg. +420)"
+                validation:
+                    -   Length:
+                            max: 10
+                            maxMessage: "Telephone prefix cannot be longer than {{ limit }} characters"
+                    -   Regex:
+                            pattern: '/^\+[1-9]\d{0,8}$/'
+                            message: "Please enter valid phone prefix"
+            number:
+                type: "String!"
+                description: "Phone number without prefix"
+                validation:
+                    -   Length:
+                            max: 30
+                            maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
+                    -   Regex:
+                            pattern: '/^[0-9]+$/'
+                            message: "Please enter only numbers"
