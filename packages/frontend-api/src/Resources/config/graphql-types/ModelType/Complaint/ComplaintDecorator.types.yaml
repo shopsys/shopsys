@@ -24,6 +24,9 @@ ComplaintDecorator:
             deliveryTelephone:
                 type: "String!"
                 description: "Contact telephone number for delivery"
+            deliveryTelephoneData:
+                type: "PhoneData!"
+                description: "Structured delivery telephone data with prefix and number"
             deliveryStreet:
                 type: "String!"
                 description: "Street name for delivery"

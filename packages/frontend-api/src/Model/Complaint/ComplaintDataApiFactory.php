@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 
 class ComplaintDataApiFactory
 {
@@ -53,7 +54,8 @@ class ComplaintDataApiFactory
         $complaintData->deliveryFirstName = $delivery['firstName'];
         $complaintData->deliveryLastName = $delivery['lastName'];
         $complaintData->deliveryCompanyName = $delivery['companyName'];
-        $complaintData->deliveryTelephone = $delivery['telephone'];
+        $telephoneInput = $delivery['telephone'] ?? null;
+        $complaintData->deliveryTelephone = $telephoneInput ? PhoneData::fromArray($telephoneInput) : null;
         $complaintData->deliveryStreet = $delivery['street'];
         $complaintData->deliveryCity = $delivery['city'];
         $complaintData->deliveryPostcode = $delivery['postcode'];

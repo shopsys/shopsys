@@ -50,7 +50,7 @@ class ComplaintDataFactory
         $complaintData->deliveryFirstName = $complaint->getDeliveryFirstName();
         $complaintData->deliveryLastName = $complaint->getDeliveryLastName();
         $complaintData->deliveryCompanyName = $complaint->getDeliveryCompanyName();
-        $complaintData->deliveryTelephone = $complaint->getDeliveryTelephone();
+        $complaintData->deliveryTelephone = $complaint->getDeliveryTelephoneData();
         $complaintData->deliveryStreet = $complaint->getDeliveryStreet();
         $complaintData->deliveryCity = $complaint->getDeliveryCity();
         $complaintData->deliveryPostcode = $complaint->getDeliveryPostcode();

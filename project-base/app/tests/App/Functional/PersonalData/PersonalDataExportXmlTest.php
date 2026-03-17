@@ -192,7 +192,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $complaintData->deliveryFirstName = 'Adam';
         $complaintData->deliveryLastName = 'Bořič';
         $complaintData->deliveryCompanyName = 'Shopsys';
-        $complaintData->deliveryTelephone = '+420987654321';
+        $complaintData->deliveryTelephone = new PhoneData('CZ', '+420', '987654321');
         $complaintData->deliveryStreet = 'Cihelní 5';
         $complaintData->deliveryCity = 'Liberec';
         $complaintData->deliveryPostcode = '65421';
