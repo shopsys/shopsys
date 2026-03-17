@@ -17,14 +17,13 @@ import { useRegistration } from 'utils/auth/useRegistration';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
-import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const RegistrationContent: FC = () => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const [formProviderMethods, defaultValues] = useRegistrationForm();
-    const formMeta = useRegistrationFormMeta(formProviderMethods);
+    const formMeta = useRegistrationFormMeta();
     const { register } = useRegistration();
     const handleError = useErrorHandler({
         form: formProviderMethods,
@@ -47,8 +46,6 @@ export const RegistrationContent: FC = () => {
         clearForm(registrationError, formProviderMethods, defaultValues);
     };
 
-    useScrollToFirstError(formMeta.formName, formProviderMethods);
-
     return (
         <Webline width="lg">
             <VerticalStack gap="sm">
@@ -61,6 +58,7 @@ export const RegistrationContent: FC = () => {
                 <FormProvider {...formProviderMethods}>
                     <Form
                         className="flex w-full max-w-3xl justify-center"
+                        formName={formMeta.formName}
                         onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
                     >
                         <FormContentWrapper>

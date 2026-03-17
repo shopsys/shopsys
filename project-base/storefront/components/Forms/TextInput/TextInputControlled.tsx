@@ -1,11 +1,13 @@
 import { TextInput, TextInputProps } from './TextInput';
+import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
 
 type TextInputControlledProps = {
     name: string;
-    render: (input: ReactElement) => ReactElement<any, any> | null;
+    render?: (input: ReactElement) => ReactElement<any, any> | null;
+    gridClassName?: string;
     textInputProps: Pick<
         TextInputProps,
         | 'disabled'
@@ -31,6 +33,7 @@ type TextInputControlledProps = {
 export const TextInputControlled: FC<TextInputControlledProps> = ({
     name,
     render,
+    gridClassName,
     control,
     textInputProps,
     formName,
@@ -60,7 +63,7 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
         }
     };
 
-    return render(
+    const element = (
         <>
             <TextInput
                 {...textInputProps}
@@ -74,6 +77,12 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
             {!isWithoutFormLineError && (
                 <FormLineError error={error} inputType="text-input" textInputSize={textInputProps.inputSize} />
             )}
-        </>,
+        </>
     );
+
+    if (render) {
+        return render(element);
+    }
+
+    return <FormLine className={gridClassName}>{element}</FormLine>;
 };

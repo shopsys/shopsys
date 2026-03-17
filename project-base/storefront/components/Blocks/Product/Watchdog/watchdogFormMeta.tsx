@@ -3,9 +3,10 @@ import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import { ReactElement } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { WatchdogFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
@@ -26,65 +27,37 @@ export const useWatchdogForm = (
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-type WatchdogFormMetaType = {
-    formName: string;
-    messages: {
-        error: string;
-    };
-    fields: {
-        [key in keyof WatchdogFormType]: {
-            name: key;
-            label: string | ReactElement;
-            errorMessage?: string;
-        };
-    };
-};
-
-export const useWatchdogFormMeta = (formProviderMethods: UseFormReturn<WatchdogFormType>): WatchdogFormMetaType => {
+export const useWatchdogFormMeta = (): FormMeta<WatchdogFormType, { error: string }> => {
     const { t } = useTranslation();
     const [{ data: settingsData }] = useSettingsQuery();
     const privacyPolicyArticleUrl = settingsData?.settings?.privacyPolicyArticleUrl;
-
-    const errors = formProviderMethods.formState.errors;
 
     return {
         formName: 'watchdog-form',
         messages: {
             error: t('An error occurred while creating your watchdog'),
         },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: errors.email?.message,
-            },
-            productUuid: {
-                name: 'productUuid' as const,
-                label: t('Product'),
-                errorMessage: errors.productUuid?.message,
-            },
-            gdprAgreement: {
-                name: 'gdprAgreement' as const,
-                label: (
-                    <Trans
-                        defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
-                        i18nKey="GdprAgreementCheckbox"
-                        components={{
-                            lnk1: privacyPolicyArticleUrl ? (
-                                <Link
-                                    aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                    className="inline text-sm"
-                                    href={privacyPolicyArticleUrl}
-                                    target="_blank"
-                                />
-                            ) : (
-                                <span className={linkPlaceholderTwClass} />
-                            ),
-                        }}
-                    />
-                ),
-                errorMessage: errors.gdprAgreement?.message,
-            },
-        },
+        fields: createFields<WatchdogFormType>({
+            email: t('Your email'),
+            productUuid: t('Product'),
+            gdprAgreement: (
+                <Trans
+                    defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
+                    i18nKey="GdprAgreementCheckbox"
+                    components={{
+                        lnk1: privacyPolicyArticleUrl ? (
+                            <Link
+                                aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
+                                className="inline text-sm"
+                                href={privacyPolicyArticleUrl}
+                                target="_blank"
+                            />
+                        ) : (
+                            <span className={linkPlaceholderTwClass} />
+                        ),
+                    }}
+                />
+            ),
+        }),
     };
 };

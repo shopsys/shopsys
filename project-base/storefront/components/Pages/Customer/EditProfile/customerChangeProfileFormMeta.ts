@@ -12,8 +12,10 @@ import {
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
-import { FieldError, UseFormReturn } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
@@ -56,99 +58,31 @@ export const useCustomerChangeProfileForm = (
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-type CustomerChangeProfileFormMetaType = {
-    formName: string;
-    messages: {
-        error: string;
-        success: string;
-    };
-    fields: {
-        [key in keyof CustomerChangeProfileFormType]: {
-            name: key;
-            label: string;
-            errorMessage?: string;
-        };
-    };
-};
-
-export const useCustomerChangeProfileFormMeta = (
-    formProviderMethods: UseFormReturn<CustomerChangeProfileFormType>,
-): CustomerChangeProfileFormMetaType => {
+export const useCustomerChangeProfileFormMeta = (): FormMeta<
+    CustomerChangeProfileFormType,
+    { error: string; success: string }
+> => {
     const { t } = useTranslation();
-    const companyCustomer = formProviderMethods.formState.dirtyFields.companyCustomer;
-    const errors = formProviderMethods.formState.errors;
-
     return {
         formName: 'customer-change-profile-form',
         messages: {
             error: t('An error occurred while saving your profile'),
             success: t('Your profile has been changed successfully'),
         },
-        fields: {
-            companyCustomer: {
-                name: 'companyCustomer' as const,
-                label: '',
-            },
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: errors.email?.message,
-            },
-            telephone: {
-                name: 'telephone' as const,
-                label: t('Phone'),
-                errorMessage: errors.telephone?.message,
-            },
-            firstName: {
-                name: 'firstName' as const,
-                label: t('First name'),
-                errorMessage: errors.firstName?.message,
-            },
-            lastName: {
-                name: 'lastName' as const,
-                label: t('Last name'),
-                errorMessage: errors.lastName?.message,
-            },
-            companyName: {
-                name: 'companyName' as const,
-                label: t('Company name'),
-                errorMessage: companyCustomer ? errors.companyName?.message : undefined,
-            },
-            companyNumber: {
-                name: 'companyNumber' as const,
-                label: t('Company number'),
-                errorMessage: companyCustomer ? errors.companyNumber?.message : undefined,
-            },
-            companyTaxNumber: {
-                name: 'companyTaxNumber' as const,
-                label: t('Tax number'),
-                errorMessage: companyCustomer ? errors.companyTaxNumber?.message : undefined,
-            },
-            street: {
-                name: 'street' as const,
-                label: t('Street and house no.'),
-                errorMessage: errors.street?.message,
-            },
-            city: {
-                name: 'city' as const,
-                label: t('City'),
-                errorMessage: errors.city?.message,
-            },
-            postcode: {
-                name: 'postcode' as const,
-                label: t('Postcode'),
-                errorMessage: errors.postcode?.message,
-            },
-            country: {
-                name: 'country' as const,
-                label: t('Country'),
-                errorMessage: (errors.country as FieldError | undefined)?.message,
-            },
-            newsletterSubscription: {
-                name: 'newsletterSubscription' as const,
-                label: t('I agree to receive the newsletter'),
-                errorMessage: errors.newsletterSubscription?.message,
-            },
-        },
+        fields: createFields<CustomerChangeProfileFormType>({
+            companyCustomer: '',
+            email: t('Your email'),
+            telephone: t('Phone'),
+            firstName: t('First name'),
+            lastName: t('Last name'),
+            companyName: t('Company name'),
+            companyNumber: t('Company number'),
+            companyTaxNumber: t('Tax number'),
+            street: t('Street and house no.'),
+            city: t('City'),
+            postcode: t('Postcode'),
+            country: t('Country'),
+            newsletterSubscription: t('I agree to receive the newsletter'),
+        }),
     };
 };

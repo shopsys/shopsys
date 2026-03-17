@@ -11,7 +11,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 export const ContactInformationCustomer: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
-    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const formMeta = useContactInformationFormMeta();
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { isCompanyUser } = useAuthorization();
 

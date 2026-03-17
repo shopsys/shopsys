@@ -11,7 +11,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 export const PersonalData: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
-    const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
+    const formMeta = useCustomerChangeProfileFormMeta();
     const { canManagePersonalData } = useAuthorization();
 
     return (
@@ -22,7 +22,6 @@ export const PersonalData: FC = () => {
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.email.name}
-                render={(textInput) => <FormLine>{textInput}</FormLine>}
                 textInputProps={{
                     label: formMeta.fields.email.label,
                     required: false,
@@ -44,8 +43,8 @@ export const PersonalData: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.firstName.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.firstName.label,
                         required: true,
@@ -57,8 +56,8 @@ export const PersonalData: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.lastName.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.lastName.label,
                         required: true,
@@ -73,8 +72,8 @@ export const PersonalData: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.telephone.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.telephone.label,
                         required: true,

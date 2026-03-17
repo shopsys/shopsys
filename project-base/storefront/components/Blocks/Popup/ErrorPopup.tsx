@@ -4,6 +4,7 @@ import { GtmMessageType } from 'gtm/enums/GtmMessageType';
 import { getGtmShowMessageEvent } from 'gtm/factories/getGtmShowMessageEvent';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 import { ReactElement, useEffect } from 'react';
+import { FieldErrors } from 'react-hook-form';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ErrorPopupProps = {
@@ -14,33 +15,56 @@ type ErrorPopupProps = {
             errorMessage?: string | undefined;
         };
     };
+    errors?: FieldErrors;
     gtmMessageOrigin?: GtmMessageOriginType;
 };
 
-export const ErrorPopup: FC<ErrorPopupProps> = ({ fields, gtmMessageOrigin = GtmMessageOriginType.other }) => {
+export const getErrorMessage = (
+    fieldName: string,
+    field: { errorMessage?: string | undefined },
+    errors?: FieldErrors,
+): string | undefined => {
+    if (errors) {
+        const message = errors[fieldName]?.message;
+
+        return typeof message === 'string' ? message : undefined;
+    }
+
+    return field.errorMessage;
+};
+
+export const ErrorPopup: FC<ErrorPopupProps> = ({ fields, errors, gtmMessageOrigin = GtmMessageOriginType.other }) => {
     const { t } = useTranslation();
 
+    const fieldsWithErrors = Object.entries(fields).filter(
+        ([fieldName, field]) => getErrorMessage(fieldName, field, errors) !== undefined,
+    );
+
     useEffect(() => {
-        for (const fieldName in fields) {
-            const errorMessage = fields[fieldName].errorMessage;
+        const entries = Object.entries(fields).filter(
+            ([fieldName, field]) => getErrorMessage(fieldName, field, errors) !== undefined,
+        );
+        for (const [fieldName, field] of entries) {
+            const errorMessage = getErrorMessage(fieldName, field, errors);
             if (errorMessage !== undefined) {
                 const event = getGtmShowMessageEvent(GtmMessageType.error, errorMessage, fieldName, gtmMessageOrigin);
                 gtmSafePushEvent(event);
             }
         }
-    }, [fields, gtmMessageOrigin]);
+    }, [fields, errors, gtmMessageOrigin]);
 
-    const fieldsWithErrors = Object.entries(fields).filter(([, field]) => field.errorMessage !== undefined);
-
-    const mappedErrors = fieldsWithErrors.map(([, field]) => (
+    const mappedErrors = fieldsWithErrors.map(([fieldName, field]) => (
         <li key={field.name} className="border-border-default mb-2 border-b pb-2 last:mb-0 last:border-none last:pb-0">
             {field.label}
             <br />
-            <span className="text-text-error">{field.errorMessage}</span>
+            <span className="text-text-error">{getErrorMessage(fieldName, field, errors)}</span>
         </li>
     ));
 
-    const mappedAriaLabel = fieldsWithErrors.map(([, field]) => field.errorMessage).join(', ');
+    const mappedAriaLabel = fieldsWithErrors
+        .map(([fieldName, field]) => getErrorMessage(fieldName, field, errors))
+        .filter((msg): msg is string => typeof msg === 'string')
+        .join(', ');
 
     return (
         <Popup

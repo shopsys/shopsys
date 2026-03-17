@@ -5,7 +5,7 @@ export const useFormWrapper = <T extends FieldValues>(
     defaultValues: DefaultValues<T>,
 ): UseFormReturn<T> =>
     useForm<T>({
-        mode: 'all',
+        mode: 'onTouched',
         reValidateMode: 'onChange',
         criteriaMode: 'firstError',
         resolver: resolver,

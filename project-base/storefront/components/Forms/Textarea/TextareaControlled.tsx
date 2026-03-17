@@ -1,17 +1,26 @@
 import { Textarea, TextareaProps } from './Textarea';
+import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
 
 type TextareaControlledProps = {
     name: string;
-    render: (input: ReactElement) => ReactElement<any, any> | null;
+    render?: (input: ReactElement) => ReactElement<any, any> | null;
+    gridClassName?: string;
     textareaProps: Pick<TextareaProps, 'disabled' | 'label' | 'required' | 'rows' | 'onBlur' | 'onChange'>;
     control: Control<any>;
     formName: string;
 };
 
-export const TextareaControlled: FC<TextareaControlledProps> = ({ name, render, control, formName, textareaProps }) => {
+export const TextareaControlled: FC<TextareaControlledProps> = ({
+    name,
+    render,
+    gridClassName,
+    control,
+    formName,
+    textareaProps,
+}) => {
     const {
         fieldState: { error },
         field,
@@ -36,7 +45,7 @@ export const TextareaControlled: FC<TextareaControlledProps> = ({ name, render, 
         }
     };
 
-    return render(
+    const element = (
         <>
             <Textarea
                 {...textareaProps}
@@ -47,6 +56,12 @@ export const TextareaControlled: FC<TextareaControlledProps> = ({ name, render, 
                 onChange={onChangeHandler}
             />
             <FormLineError error={error} inputType="textarea" />
-        </>,
+        </>
     );
+
+    if (render) {
+        return render(element);
+    }
+
+    return <FormLine className={gridClassName}>{element}</FormLine>;
 };

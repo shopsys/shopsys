@@ -3,12 +3,12 @@ import { FieldValues, UseFormReturn } from 'react-hook-form';
 
 export const useScrollToFirstError = <T extends FieldValues>(
     formName: string,
-    formProviderMethods: UseFormReturn<T>,
+    formProviderMethods?: UseFormReturn<T>,
 ) => {
-    const { submitCount, errors, isSubmitted } = formProviderMethods.formState;
+    const { submitCount, errors, isSubmitted } = formProviderMethods?.formState ?? {};
 
     useEffect(() => {
-        if (isSubmitted && Object.keys(errors).length > 0) {
+        if (isSubmitted && errors && Object.keys(errors).length > 0) {
             const firstErrorField = Object.keys(errors)[0];
             const errorElement = document.getElementById(`${formName}-${firstErrorField}`);
 

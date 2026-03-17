@@ -1,6 +1,5 @@
 import { ContactInformationBillingAddress } from './FormBlocks/ContactInformationBillingAddress';
 import { FormBlockWrapper } from 'components/Forms/Form/Form';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationDeliveryAddress';
 import { ContactInformationPersonalInformation } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationPersonalInformation';
@@ -12,7 +11,7 @@ import { usePersistStore } from 'store/usePersistStore';
 export const ContactInformationFormContent: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const formProviderMethods = useFormContext<ContactInformation>();
-    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const formMeta = useContactInformationFormMeta();
 
     return (
         <>
@@ -27,7 +26,6 @@ export const ContactInformationFormContent: FC = () => {
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.note.name}
-                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.note.label,
                         type: 'text',

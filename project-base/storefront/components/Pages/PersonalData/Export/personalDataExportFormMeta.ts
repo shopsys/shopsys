@@ -2,6 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { validateEmail } from 'components/Forms/validationRules';
 import { UseFormReturn } from 'react-hook-form';
 import { PersonalDataExportFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
@@ -21,39 +23,19 @@ export const usePersonalDataExportForm = (): [
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-type PersonalDataExportFormMetaType = {
-    formName: string;
-    messages: {
-        error: string;
-        success: string;
-    };
-    fields: {
-        [key in keyof PersonalDataExportFormType]: {
-            name: key;
-            label: string;
-            errorMessage: string | undefined;
-        };
-    };
-};
-
-export const usePersonalDataExportFormMeta = (
-    formProviderMethods: UseFormReturn<PersonalDataExportFormType>,
-): PersonalDataExportFormMetaType => {
+export const usePersonalDataExportFormMeta = (): FormMeta<
+    PersonalDataExportFormType,
+    { error: string; success: string }
+> => {
     const { t } = useTranslation();
-    const errors = formProviderMethods.formState.errors;
-
     return {
         formName: 'personal-data-export-form',
         messages: {
             error: t('Could not sent personal data export request'),
             success: t('We sent an email with link to export your personal data'),
         },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: errors.email?.message,
-            },
-        },
+        fields: createFields<PersonalDataExportFormType>({
+            email: t('Your email'),
+        }),
     };
 };

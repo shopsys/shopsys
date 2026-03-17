@@ -16,7 +16,6 @@ import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
-import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -37,7 +36,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
             value: currentCustomerUser.country.code,
         },
     });
-    const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
+    const formMeta = useCustomerChangeProfileFormMeta();
     const isSubmitting = formProviderMethods.formState.isSubmitting;
     const handleError = useErrorHandler({
         form: formProviderMethods,
@@ -92,11 +91,12 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
         handleError(changeProfileResult.error);
     };
 
-    useScrollToFirstError(formMeta.formName, formProviderMethods);
-
     return (
         <FormProvider {...formProviderMethods}>
-            <Form onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerChangeProfileFormHandler)}>
+            <Form
+                formName={formMeta.formName}
+                onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerChangeProfileFormHandler)}
+            >
                 <FormContentWrapper>
                     <PersonalData />
 

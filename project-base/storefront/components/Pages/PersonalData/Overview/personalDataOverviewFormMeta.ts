@@ -2,6 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { validateEmail } from 'components/Forms/validationRules';
 import { UseFormReturn } from 'react-hook-form';
 import { PersonalDataOverviewFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
@@ -21,39 +23,19 @@ export const usePersonalDataOverviewForm = (): [
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-type PersonalDataOverviewFormMetaType = {
-    formName: string;
-    messages: {
-        error: string;
-        success: string;
-    };
-    fields: {
-        [key in keyof PersonalDataOverviewFormType]: {
-            name: key;
-            label: string;
-            errorMessage: string | undefined;
-        };
-    };
-};
-
-export const usePersonalDataOverviewFormMeta = (
-    formProviderMethods: UseFormReturn<PersonalDataOverviewFormType>,
-): PersonalDataOverviewFormMetaType => {
+export const usePersonalDataOverviewFormMeta = (): FormMeta<
+    PersonalDataOverviewFormType,
+    { error: string; success: string }
+> => {
     const { t } = useTranslation();
-    const errors = formProviderMethods.formState.errors;
-
     return {
         formName: 'personal-data-overview-form',
         messages: {
             error: t('Could not sent personal data request'),
             success: t('We sent an email with link to your personal data'),
         },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: errors.email?.message,
-            },
-        },
+        fields: createFields<PersonalDataOverviewFormType>({
+            email: t('Your email'),
+        }),
     };
 };

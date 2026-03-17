@@ -3,8 +3,6 @@ import { useWatchdogForm } from 'components/Blocks/Product/Watchdog/watchdogForm
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
-import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
@@ -16,7 +14,6 @@ import { useSessionStore } from 'store/useSessionStore';
 import { WatchdogFormType } from 'types/form';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
-import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -35,7 +32,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
         productUuid,
         gdprAgreement: false,
     });
-    const formMeta = useWatchdogFormMeta(formProviderMethods);
+    const formMeta = useWatchdogFormMeta();
     const handleError = useErrorHandler({
         form: formProviderMethods,
         gtmOrigin: GtmMessageOriginType.watchdog,
@@ -63,8 +60,6 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
         onGtmCreateWatchdotEventHandler(watchdogFormData);
     };
 
-    useScrollToFirstError(formMeta.formName, formProviderMethods);
-
     return (
         <Popup
             className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5"
@@ -75,14 +70,13 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
             )}
         >
             <FormProvider {...formProviderMethods}>
-                <Form onSubmit={formProviderMethods.handleSubmit(watchdogHandler)}>
+                <Form formName={formMeta.formName} onSubmit={formProviderMethods.handleSubmit(watchdogHandler)}>
                     <FormContentWrapper>
                         <FormBlockWrapper>
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.email.name}
-                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     label: formMeta.fields.email.label,
                                     required: true,
@@ -95,7 +89,6 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.gdprAgreement.name}
-                                render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
                                 checkboxProps={{
                                     label: formMeta.fields.gdprAgreement.label,
                                     required: true,

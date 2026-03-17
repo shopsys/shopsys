@@ -1,6 +1,7 @@
 import { usePromoCodeForm, usePromoCodeFormMeta } from './promoCodeFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { Form } from 'components/Forms/Form/Form';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
@@ -11,13 +12,12 @@ import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { blurInput } from 'utils/forms/blurInput';
-import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const PromoCode: FC = () => {
     const { promoCodes } = useCurrentCart();
     const [formProviderMethods, defaultValues] = usePromoCodeForm();
-    const formMeta = usePromoCodeFormMeta(formProviderMethods);
+    const formMeta = usePromoCodeFormMeta();
     const { t } = useTranslation();
     const { applyPromoCodeToCart } = useApplyPromoCodeToCart({
         success: t('Promo code was added to the order.'),
@@ -29,8 +29,6 @@ export const PromoCode: FC = () => {
         blurInput();
         await applyPromoCodeToCart(promoCodeFormData.promoCode);
     };
-
-    useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     if (promoCodes.length > 0) {
         return null;
@@ -50,42 +48,46 @@ export const PromoCode: FC = () => {
             </div>
             <AnimatePresence initial={false}>
                 {isContentVisible && (
-                    <FormProvider {...formProviderMethods}>
-                        <m.form
-                            key="promo-code"
-                            animate="open"
-                            className="flex! flex-col gap-2.5 sm:flex-row"
-                            exit="closed"
-                            initial="closed"
-                            variants={collapseExpandAnimation}
-                            onSubmit={formProviderMethods.handleSubmit(onApplyPromoCodeHandler)}
-                        >
-                            <div className="max-w-60">
-                                <TextInputControlled
-                                    isWithoutFormLineError
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.promoCode.name}
-                                    render={(textInput) => textInput}
-                                    textInputProps={{
-                                        label: formMeta.fields.promoCode.label,
-                                        required: true,
-                                    }}
-                                />
-                            </div>
-
-                            <SubmitButton
-                                aria-label={t('Submit form to apply promo code', { ns: 'accessibility' })}
-                                className="self-start"
-                                hasDisabledCursor={!formProviderMethods.formState.isValid}
-                                size="xlarge"
-                                tid={TIDs.blocks_promocode_apply_button}
-                                variant="inverted"
+                    <m.div
+                        key="promo-code"
+                        animate="open"
+                        className="flex!"
+                        exit="closed"
+                        initial="closed"
+                        variants={collapseExpandAnimation}
+                    >
+                        <FormProvider {...formProviderMethods}>
+                            <Form
+                                className="flex flex-col gap-2.5 sm:flex-row"
+                                formName={formMeta.formName}
+                                onSubmit={formProviderMethods.handleSubmit(onApplyPromoCodeHandler)}
                             >
-                                {t('Apply code')}
-                            </SubmitButton>
-                        </m.form>
-                    </FormProvider>
+                                <div className="max-w-60">
+                                    <TextInputControlled
+                                        isWithoutFormLineError
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.promoCode.name}
+                                        textInputProps={{
+                                            label: formMeta.fields.promoCode.label,
+                                            required: true,
+                                        }}
+                                    />
+                                </div>
+
+                                <SubmitButton
+                                    aria-label={t('Submit form to apply promo code', { ns: 'accessibility' })}
+                                    className="self-start"
+                                    hasDisabledCursor={!formProviderMethods.formState.isValid}
+                                    size="xlarge"
+                                    tid={TIDs.blocks_promocode_apply_button}
+                                    variant="inverted"
+                                >
+                                    {t('Apply code')}
+                                </SubmitButton>
+                            </Form>
+                        </FormProvider>
+                    </m.div>
                 )}
             </AnimatePresence>
         </div>

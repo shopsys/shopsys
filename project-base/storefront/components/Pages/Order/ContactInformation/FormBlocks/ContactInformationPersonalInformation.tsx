@@ -1,6 +1,5 @@
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { TIDs } from 'cypress/tids';
@@ -23,7 +22,7 @@ export const ContactInformationPersonalInformation: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
-    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const formMeta = useContactInformationFormMeta();
     const { formState } = formProviderMethods;
     const isUserLoggedIn = useIsUserLoggedIn();
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
@@ -59,7 +58,6 @@ export const ContactInformationPersonalInformation: FC = () => {
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.email.name}
-                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                     textInputProps={{
                         hasWarning: isEmailAlreadyRegistered,
                         label: formMeta.fields.email.label,
@@ -92,8 +90,8 @@ export const ContactInformationPersonalInformation: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.firstName.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.firstName.label,
                         required: true,
@@ -106,8 +104,8 @@ export const ContactInformationPersonalInformation: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.lastName.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.lastName.label,
                         required: true,
@@ -122,8 +120,8 @@ export const ContactInformationPersonalInformation: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.telephone.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.telephone.label,
                         required: true,

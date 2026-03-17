@@ -8,7 +8,7 @@ import { CustomerChangeProfileFormType } from 'types/form';
 
 export const NewsletterSubscription: FC = () => {
     const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
-    const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
+    const formMeta = useCustomerChangeProfileFormMeta();
     const { canManagePersonalData } = useAuthorization();
 
     return (

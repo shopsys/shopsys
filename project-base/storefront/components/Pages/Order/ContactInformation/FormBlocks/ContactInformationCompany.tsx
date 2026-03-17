@@ -1,5 +1,4 @@
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useFormContext } from 'react-hook-form';
@@ -9,7 +8,7 @@ import { usePersistStore } from 'store/usePersistStore';
 export const ContactInformationCompany: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const formProviderMethods = useFormContext<ContactInformation>();
-    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const formMeta = useContactInformationFormMeta();
 
     return (
         <>
@@ -17,7 +16,6 @@ export const ContactInformationCompany: FC = () => {
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.companyName.name}
-                render={(textInput) => <FormLine>{textInput}</FormLine>}
                 textInputProps={{
                     disabled: formMeta.fields.customer.disabled,
                     label: formMeta.fields.companyName.label,
@@ -32,8 +30,8 @@ export const ContactInformationCompany: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.companyNumber.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         disabled: formMeta.fields.customer.disabled,
                         label: formMeta.fields.companyNumber.label,
@@ -46,8 +44,8 @@ export const ContactInformationCompany: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.companyTaxNumber.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         disabled: formMeta.fields.customer.disabled,
                         label: formMeta.fields.companyTaxNumber.label,

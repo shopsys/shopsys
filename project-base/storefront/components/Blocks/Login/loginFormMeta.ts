@@ -2,6 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { validateEmail, validatePassword } from 'components/Forms/validationRules';
 import { UseFormReturn } from 'react-hook-form';
 import { LoginFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -28,34 +30,15 @@ export const useLoginForm = (defaultEmail?: string): [UseFormReturn<LoginFormTyp
     return [formProviderMethods, defaultValues];
 };
 
-type LoginFormMetaType = {
-    formName: string;
-    fields: {
-        [key in keyof LoginFormType]: {
-            name: key;
-            label: string;
-            errorMessage: string | undefined;
-        };
-    };
-};
-
-export const useLoginFormMeta = (formProviderMethods: UseFormReturn<LoginFormType>): LoginFormMetaType => {
+export const useLoginFormMeta = (): FormMeta<LoginFormType> => {
     const { t } = useTranslation();
-    const errors = formProviderMethods.formState.errors;
 
     return {
         formName: 'login-form',
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: errors.email?.message,
-            },
-            password: {
-                name: 'password' as const,
-                label: t('Password'),
-                errorMessage: errors.password?.message,
-            },
-        },
+        messages: {},
+        fields: createFields<LoginFormType>({
+            email: t('Your email'),
+            password: t('Password'),
+        }),
     };
 };

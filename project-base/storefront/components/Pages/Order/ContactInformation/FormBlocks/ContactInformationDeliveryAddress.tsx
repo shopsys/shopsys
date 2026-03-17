@@ -24,7 +24,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
     const { transport, pickupPlace } = useCurrentCart();
     const user = useCurrentCustomerData();
     const formProviderMethods = useFormContext<ContactInformation>();
-    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const formMeta = useContactInformationFormMeta();
     const [isDeliveryAddressDifferentFromBilling, deliveryAddressUuid] = useWatch({
         name: [formMeta.fields.isDeliveryAddressDifferentFromBilling.name, formMeta.fields.deliveryAddressUuid.name],
         control: formProviderMethods.control,
@@ -47,9 +47,9 @@ export const ContactInformationDeliveryAddress: FC = () => {
         }
 
         if (defaultDeliveryAddressUuid) {
-            setValue(deliveryAddressUuidFieldName, defaultDeliveryAddressUuid);
+            setValue(deliveryAddressUuidFieldName, defaultDeliveryAddressUuid, { shouldValidate: true });
         } else if (firstDeliveryAddressUuid) {
-            setValue(deliveryAddressUuidFieldName, firstDeliveryAddressUuid);
+            setValue(deliveryAddressUuidFieldName, firstDeliveryAddressUuid, { shouldValidate: true });
         }
     }, [
         defaultDeliveryAddressUuid,

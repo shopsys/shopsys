@@ -28,7 +28,7 @@ export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
 }) => {
     const { t } = useTranslation();
     const [formProviderMethods] = useRegistrationAfterOrderForm();
-    const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
+    const formMeta = useRegistrationAfterOrderFormMeta();
     const { registerByOrder } = useRegistration();
     const [isInvalidRegistration, setIsInvalidRegistration] = useState(false);
     const isUserLoggedIn = useIsUserLoggedIn();
@@ -108,6 +108,7 @@ export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
             <FormProvider {...formProviderMethods}>
                 <Form
                     className="flex flex-col gap-4"
+                    formName={formMeta.formName}
                     onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
                 >
                     <fieldset>
@@ -117,8 +118,8 @@ export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
                             <PasswordInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
+                                gridClassName="col-span-2"
                                 name={formMeta.fields.password.name}
-                                render={(passwordInput) => <FormLine className="col-span-2">{passwordInput}</FormLine>}
                                 passwordInputProps={{
                                     label: formMeta.fields.password.label,
                                     autoComplete: 'new-password',
@@ -129,8 +130,8 @@ export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
                             <PasswordInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
+                                gridClassName="col-span-2"
                                 name={formMeta.fields.passwordConfirm.name}
-                                render={(passwordInput) => <FormLine className="col-span-2">{passwordInput}</FormLine>}
                                 passwordInputProps={{
                                     label: formMeta.fields.passwordConfirm.label,
                                     autoComplete: 'new-password-confirm',

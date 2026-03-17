@@ -6,8 +6,10 @@ import {
     validateRoleGroup,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
-import { FieldError, UseFormReturn } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 import { CustomerUserManageProfileFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
@@ -30,28 +32,10 @@ export const useCustomerUserManageProfileForm = (
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-type CustomerUserManageProfileFormMetaType = {
-    formName: string;
-    messages: {
-        error: string;
-        success: string;
-    };
-    fields: {
-        [key in keyof CustomerUserManageProfileFormType]: {
-            name: key;
-            label: string;
-            errorMessage?: string;
-        };
-    };
-};
-
 export const useCustomerUserManageProfileFormMeta = (
-    formProviderMethods: UseFormReturn<CustomerUserManageProfileFormType>,
     mode: 'add' | 'edit',
-): CustomerUserManageProfileFormMetaType => {
+): FormMeta<CustomerUserManageProfileFormType, { error: string; success: string }> => {
     const { t } = useTranslation();
-    const errors = formProviderMethods.formState.errors;
-
     return {
         formName: 'customer-user-manage-profile-form',
         messages: {
@@ -64,32 +48,12 @@ export const useCustomerUserManageProfileFormMeta = (
                     ? t('User profile has been changed successfully')
                     : t('User has been added successfully'),
         },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('User email'),
-                errorMessage: errors.email?.message,
-            },
-            telephone: {
-                name: 'telephone' as const,
-                label: t('Phone'),
-                errorMessage: errors.telephone?.message,
-            },
-            firstName: {
-                name: 'firstName' as const,
-                label: t('First name'),
-                errorMessage: errors.firstName?.message,
-            },
-            lastName: {
-                name: 'lastName' as const,
-                label: t('Last name'),
-                errorMessage: errors.lastName?.message,
-            },
-            roleGroup: {
-                name: 'roleGroup' as const,
-                label: t('Role group'),
-                errorMessage: (errors.roleGroup as FieldError | undefined)?.message,
-            },
-        },
+        fields: createFields<CustomerUserManageProfileFormType>({
+            email: t('User email'),
+            telephone: t('Phone'),
+            firstName: t('First name'),
+            lastName: t('Last name'),
+            roleGroup: t('Role group'),
+        }),
     };
 };

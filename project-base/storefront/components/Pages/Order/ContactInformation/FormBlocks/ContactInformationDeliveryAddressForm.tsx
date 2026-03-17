@@ -16,7 +16,7 @@ export const ContactInformationDeliveryAddressForm = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
-    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const formMeta = useContactInformationFormMeta();
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
     const { pickupPlace } = useCurrentCart();
 
@@ -26,8 +26,8 @@ export const ContactInformationDeliveryAddressForm = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.deliveryFirstName.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.deliveryFirstName.label,
                         required: true,
@@ -44,8 +44,8 @@ export const ContactInformationDeliveryAddressForm = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.deliveryLastName.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.deliveryLastName.label,
                         required: true,
@@ -63,8 +63,8 @@ export const ContactInformationDeliveryAddressForm = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.deliveryTelephone.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.deliveryTelephone.label,
                         required: false,
@@ -84,7 +84,6 @@ export const ContactInformationDeliveryAddressForm = () => {
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
                         name={formMeta.fields.deliveryCompanyName.name}
-                        render={(textInput) => <FormLine>{textInput}</FormLine>}
                         textInputProps={{
                             label: formMeta.fields.deliveryCompanyName.label,
                             type: 'text',
@@ -99,7 +98,6 @@ export const ContactInformationDeliveryAddressForm = () => {
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
                         name={formMeta.fields.deliveryStreet.name}
-                        render={(textInput) => <FormLine>{textInput}</FormLine>}
                         textInputProps={{
                             label: formMeta.fields.deliveryStreet.label,
                             required: true,
@@ -116,8 +114,8 @@ export const ContactInformationDeliveryAddressForm = () => {
                         <TextInputControlled
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
+                            gridClassName="col-span-3"
                             name={formMeta.fields.deliveryCity.name}
-                            render={(textInput) => <FormLine className="col-span-3">{textInput}</FormLine>}
                             textInputProps={{
                                 label: formMeta.fields.deliveryCity.label,
                                 required: true,
@@ -133,8 +131,8 @@ export const ContactInformationDeliveryAddressForm = () => {
                         <TextInputControlled
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
+                            gridClassName="col-start-4"
                             name={formMeta.fields.deliveryPostcode.name}
-                            render={(textInput) => <FormLine className="col-start-4">{textInput}</FormLine>}
                             textInputProps={{
                                 label: formMeta.fields.deliveryPostcode.label,
                                 required: true,

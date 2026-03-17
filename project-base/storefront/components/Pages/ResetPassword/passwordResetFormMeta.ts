@@ -2,6 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { validateEmail } from 'components/Forms/validationRules';
 import { UseFormReturn } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
@@ -18,27 +20,8 @@ export const usePasswordResetForm = (): [UseFormReturn<PasswordResetFormType>, P
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-type PasswordResetFormMetaType = {
-    formName: string;
-    messages: {
-        error: string;
-        success: string;
-    };
-    fields: {
-        [key in keyof PasswordResetFormType]: {
-            name: key;
-            label: string;
-            errorMessage: string | undefined;
-        };
-    };
-};
-
-export const usePasswordResetFormMeta = (
-    formProviderMethods: UseFormReturn<PasswordResetFormType>,
-): PasswordResetFormMetaType => {
+export const usePasswordResetFormMeta = (): FormMeta<PasswordResetFormType, { error: string; success: string }> => {
     const { t } = useTranslation();
-    const errors = formProviderMethods.formState.errors;
-
     return {
         formName: 'password-reset-form',
         messages: {
@@ -47,12 +30,8 @@ export const usePasswordResetFormMeta = (
                 'We have sent password reset instructions to your email address. Please check your inbox and follow the link to create a new password.',
             ),
         },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: errors.email?.message,
-            },
-        },
+        fields: createFields<PasswordResetFormType>({
+            email: t('Your email'),
+        }),
     };
 };

@@ -1,5 +1,4 @@
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
-import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
 import { useFormContext } from 'react-hook-form';
@@ -7,7 +6,7 @@ import { RegistrationFormType } from 'types/form';
 
 export const RegistrationCompany: FC = () => {
     const formProviderMethods = useFormContext<RegistrationFormType>();
-    const formMeta = useRegistrationFormMeta(formProviderMethods);
+    const formMeta = useRegistrationFormMeta();
 
     return (
         <>
@@ -15,7 +14,6 @@ export const RegistrationCompany: FC = () => {
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.companyName.name}
-                render={(textInput) => <FormLine>{textInput}</FormLine>}
                 textInputProps={{
                     label: formMeta.fields.companyName.label,
                     required: true,
@@ -28,8 +26,8 @@ export const RegistrationCompany: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.companyNumber.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.companyNumber.label,
                         required: true,
@@ -40,8 +38,8 @@ export const RegistrationCompany: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    gridClassName="col-span-2"
                     name={formMeta.fields.companyTaxNumber.name}
-                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.companyTaxNumber.label,
                         required: false,

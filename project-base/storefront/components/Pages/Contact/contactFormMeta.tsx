@@ -4,9 +4,10 @@ import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validatio
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import { ReactElement } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -37,66 +38,33 @@ export const useContactForm = (): [UseFormReturn<ContactFormType>, ContactFormTy
     return [formProviderMethods, defaultValues];
 };
 
-type ContactFormMetaType = {
-    formName: string;
-    messages: {
-        error: string;
-        success: string;
-    };
-    fields: {
-        [key in keyof ContactFormType]: {
-            name: key;
-            label: string | ReactElement;
-            errorMessage: string | undefined;
-        };
-    };
-};
-
-export const useContactFormMeta = (formProviderMethods: UseFormReturn<ContactFormType>): ContactFormMetaType => {
+export const useContactFormMeta = (): FormMeta<ContactFormType, { error: string; success: string }> => {
     const { t } = useTranslation();
     const [{ data: settingsData }] = useSettingsQuery();
     const privacyPolicyUrl = settingsData?.settings?.privacyPolicyArticleUrl;
-    const errors = formProviderMethods.formState.errors;
-
     return {
         formName: 'contact-form',
         messages: {
             error: t('The message could not be sent'),
             success: t('Thank you! Your message was successfully sent.'),
         },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: errors.email?.message,
-            },
-            name: {
-                name: 'name' as const,
-                label: t('Your name'),
-                errorMessage: errors.name?.message,
-            },
-            message: {
-                name: 'message' as const,
-                label: t('Message'),
-                errorMessage: errors.message?.message,
-            },
-            privacyPolicy: {
-                name: 'privacyPolicy' as const,
-                label: (
-                    <Trans
-                        defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
-                        i18nKey="GdprAgreementCheckbox"
-                        components={{
-                            lnk1: privacyPolicyUrl ? (
-                                <Link className="inline text-sm" href={privacyPolicyUrl} target="_blank" />
-                            ) : (
-                                <span className={linkPlaceholderTwClass} />
-                            ),
-                        }}
-                    />
-                ),
-                errorMessage: errors.privacyPolicy?.message,
-            },
-        },
+        fields: createFields<ContactFormType>({
+            email: t('Your email'),
+            name: t('Your name'),
+            message: t('Message'),
+            privacyPolicy: (
+                <Trans
+                    defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
+                    i18nKey="GdprAgreementCheckbox"
+                    components={{
+                        lnk1: privacyPolicyUrl ? (
+                            <Link className="inline text-sm" href={privacyPolicyUrl} target="_blank" />
+                        ) : (
+                            <span className={linkPlaceholderTwClass} />
+                        ),
+                    }}
+                />
+            ),
+        }),
     };
 };

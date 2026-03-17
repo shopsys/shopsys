@@ -9,6 +9,8 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeOrderWithdrawalDataFragment } from 'graphql/requests/orders/fragments/OrderWithdrawalDataFragment.generated';
 import { UseFormReturn } from 'react-hook-form';
 import { OrderWithdrawalFormType } from 'types/form';
+import { FormMeta } from 'types/formMeta';
+import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -44,59 +46,20 @@ export const useOrderWithdrawalForm = (
     return [formProviderMethods, defaultValues];
 };
 
-type OrderWithdrawalFormMetaType = {
-    formName: string;
-    messages: {
-        error: string;
-        success: string;
-    };
-    fields: {
-        [key in keyof OrderWithdrawalFormType]: {
-            name: key;
-            label: string;
-            errorMessage: string | undefined;
-        };
-    };
-};
-
-export const useOrderWithdrawalFormMeta = (
-    formProviderMethods: UseFormReturn<OrderWithdrawalFormType>,
-): OrderWithdrawalFormMetaType => {
+export const useOrderWithdrawalFormMeta = (): FormMeta<OrderWithdrawalFormType, { error: string; success: string }> => {
     const { t } = useTranslation();
-    const errors = formProviderMethods.formState.errors;
-
     return {
         formName: 'order-withdrawal-form',
         messages: {
             error: t('The withdrawal request could not be submitted'),
             success: t('Your withdrawal request has been submitted'),
         },
-        fields: {
-            firstName: {
-                name: 'firstName' as const,
-                label: t('First name'),
-                errorMessage: errors.firstName?.message,
-            },
-            lastName: {
-                name: 'lastName' as const,
-                label: t('Last name'),
-                errorMessage: errors.lastName?.message,
-            },
-            email: {
-                name: 'email' as const,
-                label: t('Email'),
-                errorMessage: errors.email?.message,
-            },
-            telephone: {
-                name: 'telephone' as const,
-                label: t('Phone number (optional)'),
-                errorMessage: errors.telephone?.message,
-            },
-            note: {
-                name: 'note' as const,
-                label: t('Note (optional)'),
-                errorMessage: errors.note?.message,
-            },
-        },
+        fields: createFields<OrderWithdrawalFormType>({
+            firstName: t('First name'),
+            lastName: t('Last name'),
+            email: t('Email'),
+            telephone: t('Phone number (optional)'),
+            note: t('Note (optional)'),
+        }),
     };
 };
