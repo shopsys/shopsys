@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
 use Nette\Utils\Json;
 use Redis;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 
 class ProductRecalculationDeduplicationFacade
 {
@@ -40,14 +41,14 @@ class ProductRecalculationDeduplicationFacade
         string $priority,
     ): array {
         if (!$this->isDeduplicationActive) {
-            return array_fill_keys($productIds, []);
+            return array_fill_keys($productIds, ProductExportScopeConfig::ALL_SCOPES);
         }
 
         $exportScopesIndexedByProductIds = $this->doGetStoredExportScopes($productIds, $priority);
 
         foreach ($exportScopesIndexedByProductIds as $productId => $exportScopesJson) {
             if ($exportScopesJson === false) {
-                $exportScopesJson = '[]';
+                $exportScopesJson = Json::encode(ProductExportScopeConfig::ALL_SCOPES);
             }
 
             $exportScopes = Json::decode($exportScopesJson, true);
@@ -117,13 +118,13 @@ class ProductRecalculationDeduplicationFacade
         $storedScopes = Json::decode($storedScopesJson, true);
 
         // all scopes are already stored; do not modify stored scopes
-        if ($storedScopes === []) {
+        if ($storedScopes === ProductExportScopeConfig::ALL_SCOPES) {
             return $storedScopesJson;
         }
 
         // requested all scopes; store all scopes
-        if ($requestedExportScopes === []) {
-            return '[]';
+        if ($requestedExportScopes === ProductExportScopeConfig::ALL_SCOPES) {
+            return Json::encode(ProductExportScopeConfig::ALL_SCOPES);
         }
 
         // all requested scopes already stored; do not modify stored scopes

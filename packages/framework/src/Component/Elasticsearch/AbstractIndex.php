@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 abstract class AbstractIndex
 {
     public const BATCH_SIZE = 100;
+    public const array ALL_FIELDS = [];
 
     abstract public static function getName(): string;
 
@@ -15,7 +16,11 @@ abstract class AbstractIndex
     /**
      * @param string[] $fields
      */
-    abstract public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array;
+    abstract public function getExportDataForIds(
+        int $domainId,
+        array $restrictToIds,
+        array $fields = self::ALL_FIELDS,
+    ): array;
 
     /**
      * @param string[] $fields
@@ -24,7 +29,7 @@ abstract class AbstractIndex
         int $domainId,
         int $lastProcessedId,
         int $batchSize,
-        array $fields = [],
+        array $fields = self::ALL_FIELDS,
     ): array;
 
     public function getExportBatchSize(): int

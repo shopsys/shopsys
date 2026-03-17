@@ -208,7 +208,7 @@ class IndexFacade
         AbstractIndex $index,
         IndexDefinition $indexDefinition,
         array $restrictToIds,
-        array $fields = [],
+        array $fields = AbstractIndex::ALL_FIELDS,
     ): void {
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 

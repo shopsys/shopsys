@@ -29,8 +29,11 @@ class CategoryIndex extends AbstractIndex
      * {@inheritdoc}
      */
     #[Override]
-    public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
-    {
+    public function getExportDataForIds(
+        int $domainId,
+        array $restrictToIds,
+        array $fields = self::ALL_FIELDS,
+    ): array {
         throw new RuntimeException(sprintf('The %s() is not implemented.', __METHOD__));
     }
 
@@ -42,7 +45,7 @@ class CategoryIndex extends AbstractIndex
         int $domainId,
         int $lastProcessedId,
         int $batchSize,
-        array $fields = [],
+        array $fields = self::ALL_FIELDS,
     ): array {
         throw new RuntimeException(sprintf('The %s() is not implemented.', __METHOD__));
     }

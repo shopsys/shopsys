@@ -26,7 +26,7 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
     public function dispatchProducts(
         array $products,
         string $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
-        array $exportScopes = [],
+        array $exportScopes = ProductExportScopeConfig::ALL_SCOPES,
     ): void {
         $this->dispatchProductIds(
             array_map(static fn (Product $product) => $product->getId(), $products),
@@ -42,7 +42,7 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
     public function dispatchProductIds(
         array $productIds,
         string $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
-        array $exportScopes = [],
+        array $exportScopes = ProductExportScopeConfig::ALL_SCOPES,
     ): void {
         $this->verifyExportScopes($exportScopes);
         $productIds = array_unique($productIds);
@@ -78,7 +78,7 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
     public function dispatchSingleProductId(
         int $productId,
         string $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
-        array $exportScopes = [],
+        array $exportScopes = ProductExportScopeConfig::ALL_SCOPES,
     ): void {
         $this->dispatchProductIds([$productId], $productRecalculationPriorityEnum, $exportScopes);
     }
@@ -86,7 +86,7 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
     /**
      * @param string[] $exportScopes
      */
-    public function dispatchAllProducts(array $exportScopes = []): void
+    public function dispatchAllProducts(array $exportScopes = ProductExportScopeConfig::ALL_SCOPES): void
     {
         $this->verifyExportScopes($exportScopes);
         $this->messageBus->dispatch(new DispatchAllProductsMessage($exportScopes));
