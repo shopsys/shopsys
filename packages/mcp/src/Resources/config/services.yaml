@@ -3,3 +3,6 @@ services:
         autoconfigure: true
         autowire: true
         public: false
+
+    Shopsys\McpBundle\:
+        resource: '../../**/*{Authenticator,DataFactory,Facade,Factory,Generator,Hasher,Lookup,Repository}.php'
