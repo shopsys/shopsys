@@ -1956,8 +1956,6 @@ export type TypeOrder = {
   note: Maybe<Scalars['String']['output']>;
   /** Unique order number */
   number: Scalars['String']['output'];
-  /** Payment method applied to the order */
-  payment: TypePayment;
   /** Selected pickup place identifier */
   pickupPlaceIdentifier: Maybe<Scalars['String']['output']>;
   /** Billing address zip code */
@@ -1980,8 +1978,6 @@ export type TypeOrder = {
   trackingNumber: Maybe<Scalars['String']['output']>;
   /** The order tracking link */
   trackingUrl: Maybe<Scalars['String']['output']>;
-  /** Transport method applied to the order */
-  transport: TypeTransport;
   /** Unique url hash that can be used to  */
   urlHash: Scalars['String']['output'];
   /** UUID */
@@ -2091,12 +2087,16 @@ export type TypeOrderItem = {
   name: Scalars['String']['output'];
   /** Order to which the order item belongs */
   order: TypeOrder;
+  /** Payment method applied to the order */
+  payment: Maybe<TypePayment>;
   /** Product of the order item */
   product: Maybe<TypeProduct>;
   /** Quantity of order items in the order */
   quantity: Scalars['Int']['output'];
   /** Total price for the quantity of order item */
   totalPrice: TypePrice;
+  /** Transport method applied to the order */
+  transport: Maybe<TypeTransport>;
   /** Type of the order item */
   type: TypeOrderItemTypeEnum;
   /** Unit of measurement used for the order item */

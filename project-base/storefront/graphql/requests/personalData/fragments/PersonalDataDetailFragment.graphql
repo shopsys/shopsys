@@ -31,12 +31,6 @@ fragment PersonalDataDetailFragment on PersonalData {
         deliveryCountry {
             ...CountryFragment
         }
-        payment {
-            ...SimplePaymentFragment
-        }
-        transport {
-            ...SimpleTransportFragment
-        }
         productItems {
             ...OrderDetailItemFragment
         }

@@ -11,6 +11,7 @@ import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/Liste
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getOrderPaymentItem, getOrderTransportItem } from 'utils/mappers/order';
 import { isPriceVisible } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -27,6 +28,8 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
     const formatPrice = useFormatPrice();
     const { url } = useDomainConfig();
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
+    const orderTransport = getOrderTransportItem(order.items);
+    const orderPayment = getOrderPaymentItem(order.items);
 
     const orderLink = {
         pathname: customerOrderDetailUrl,
@@ -85,13 +88,23 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     <OrderItemColumnInfo title={t('State')}>{order.status}</OrderItemColumnInfo>
                 </div>
 
-                <OrderItemRowInfo title={t('Payment')}>
-                    <ElementWithImage image={order.payment.mainImage?.url} name={order.payment.name} />
-                </OrderItemRowInfo>
+                {orderPayment && (
+                    <OrderItemRowInfo title={t('Payment')}>
+                        <ElementWithImage
+                            image={orderPayment.payment?.mainImage?.url}
+                            name={orderPayment.payment?.name || ''}
+                        />
+                    </OrderItemRowInfo>
+                )}
 
-                <OrderItemRowInfo title={t('Transport')}>
-                    <ElementWithImage image={order.transport.mainImage?.url} name={order.transport.name} />
-                </OrderItemRowInfo>
+                {orderTransport && (
+                    <OrderItemRowInfo title={t('Transport')}>
+                        <ElementWithImage
+                            image={orderTransport.transport?.mainImage?.url}
+                            name={orderTransport.transport?.name || ''}
+                        />
+                    </OrderItemRowInfo>
+                )}
 
                 <OrderItemProducts items={order.productItems} orderLink={orderLink} />
             </div>

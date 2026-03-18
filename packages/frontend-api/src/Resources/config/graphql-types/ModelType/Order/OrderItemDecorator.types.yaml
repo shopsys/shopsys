@@ -37,3 +37,9 @@ OrderItemDecorator:
             order:
                 type: "Order!"
                 description: "Order to which the order item belongs"
+            transport:
+                type: "Transport"
+                description: "Transport method applied to the order"
+            payment:
+                type: "Payment"
+                description: "Payment method applied to the order"

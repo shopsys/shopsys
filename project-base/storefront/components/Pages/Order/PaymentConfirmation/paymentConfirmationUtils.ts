@@ -14,6 +14,7 @@ import { Translate } from 'next-translate';
 import { useEffect, useRef } from 'react';
 import { CombinedError } from 'urql';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
+import { getOrderPaymentItem } from 'utils/mappers/order';
 
 export const getPaymentSessionExpiredErrorMessage = (
     t: Translate,
@@ -65,11 +66,12 @@ export const useUpdatePaymentStatus = (orderUuid: string, orderPaymentStatusPage
 
     useEffect(() => {
         if (paymentStatusData) {
-            const { isPaid, payment, number } = paymentStatusData.UpdatePaymentStatus;
+            const { isPaid, items, number } = paymentStatusData.UpdatePaymentStatus;
+            const paymentItem = getOrderPaymentItem(items);
             const { gtmPaymentEvent } = getGtmPaymentEventFromLocalStorage();
 
             const retryCount = gtmPaymentEvent ? gtmPaymentEvent.ecommerce.paymentRetryCount + 1 : 0;
-            const newGtmPaymentEvent = getGtmPaymentEvent(number, payment.name, isPaid, retryCount);
+            const newGtmPaymentEvent = getGtmPaymentEvent(number, paymentItem?.payment?.name || '', isPaid, retryCount);
 
             gtmSafePushEvent(newGtmPaymentEvent);
 

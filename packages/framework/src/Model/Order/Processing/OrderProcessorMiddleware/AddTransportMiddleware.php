@@ -63,7 +63,6 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
         $orderData->addTotalPrice($transportPrice, OrderItemTypeEnum::TYPE_TRANSPORT);
 
         $orderData->orderTransport = $orderItemData;
-        $orderData->transport = $transport;
 
         $orderData->addItem($orderItemData);
 

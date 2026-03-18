@@ -11,7 +11,7 @@ export type TypeUpdatePaymentStatusMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename: 'Order', isPaid: boolean, number: string, hasPaymentInProcess: boolean, urlHash: string, payment: { __typename?: 'Payment', name: string, type: Types.TypePaymentTypeEnum } } };
+export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename: 'Order', isPaid: boolean, number: string, hasPaymentInProcess: boolean, urlHash: string, items: Array<{ __typename?: 'OrderItem', type: Types.TypeOrderItemTypeEnum, payment: { __typename?: 'Payment', name: string, type: Types.TypePaymentTypeEnum } | null }> } };
 
 
 export const UpdatePaymentStatusMutationDocument = gql`

@@ -38,7 +38,7 @@ class AddPaymentMiddlewareTest extends MiddlewareTestCase
         $result = $addPaymentMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
         $actualOrderData = $result->orderData;
 
-        $this->assertSame($actualOrderData->payment, $payment);
+        $this->assertSame($actualOrderData->orderPayment?->payment, $payment);
 
         $this->assertThat(
             $actualOrderData->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_PAYMENT]),
@@ -69,7 +69,7 @@ class AddPaymentMiddlewareTest extends MiddlewareTestCase
         $result = $addPaymentMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
         $actualOrderData = $result->orderData;
 
-        $this->assertNull($actualOrderData->payment);
+        $this->assertNull($actualOrderData->orderPayment);
         $actualPaymentItemsType = $actualOrderData->getItemsByType(OrderItemTypeEnum::TYPE_PAYMENT);
 
         $this->assertCount(0, $actualPaymentItemsType);

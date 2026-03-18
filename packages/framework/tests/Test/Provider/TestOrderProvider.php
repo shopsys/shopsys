@@ -54,15 +54,6 @@ class TestOrderProvider
         $orderStatusData->name = ['en' => 'orderStatusName'];
         $orderData->status = static::createOrderStatusInstance($orderStatusData);
 
-        $transportData = static::createTransportDataInstance();
-        $transportData->name = ['cs' => 'transportName'];
-        $transportData->type = TransportTypeEnum::TYPE_COMMON;
-        $orderData->transport = static::createTransportInstance($transportData);
-
-        $paymentData = static::createPaymentDataInstance();
-        $paymentData->name = ['cs' => 'paymentName'];
-        $orderData->payment = static::createPaymentInstance($paymentData);
-
         $orderData->currency = TestCurrencyProvider::getTestCurrency();
 
         return $orderData;

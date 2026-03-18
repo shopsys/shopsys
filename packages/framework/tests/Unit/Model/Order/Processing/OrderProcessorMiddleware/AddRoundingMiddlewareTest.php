@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Order\Processing\OrderProcessorMiddle
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
@@ -43,7 +44,9 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         $paymentData->czkRounding = $czkRounding;
         $payment = new Payment($paymentData);
 
-        $orderProcessingData->orderData->payment = $payment;
+        $orderItemData = new OrderItemData();
+        $orderItemData->payment = $payment;
+        $orderProcessingData->orderData->orderPayment = $orderItemData;
 
         $addRoundingMiddleware = $this->createAddRoundingMiddleware($currencyCode);
 
@@ -113,7 +116,9 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         $paymentData->czkRounding = true;
         $payment = new Payment($paymentData);
 
-        $orderProcessingData->orderData->payment = $payment;
+        $orderItemData = new OrderItemData();
+        $orderItemData->payment = $payment;
+        $orderProcessingData->orderData->orderPayment = $orderItemData;
 
         $addRoundingMiddleware = $this->createAddRoundingMiddleware(Currency::CODE_CZK);
 

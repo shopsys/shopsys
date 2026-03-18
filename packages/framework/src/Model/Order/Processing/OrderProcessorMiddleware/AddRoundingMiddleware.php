@@ -34,7 +34,7 @@ class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
     ): OrderProcessingData {
         $orderData = $orderProcessingData->orderData;
 
-        $payment = $orderData->payment;
+        $payment = $orderData->orderPayment?->payment;
 
         if ($payment === null) {
             return $orderProcessingStack->processNext($orderProcessingData);

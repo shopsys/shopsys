@@ -30,12 +30,6 @@ mutation CreateMinimalOrderMutation(
     ) {
         orderCreated
         order {
-            transport {
-                name
-            }
-            payment {
-                name
-            }
             status
             totalPrice {
                 priceWithVat

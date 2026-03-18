@@ -6,24 +6,6 @@ fragment ListedOrderFragment on Order {
     productItems {
         ...OrderItemFragment
     }
-    transport {
-        __typename
-        name
-        mainImage {
-            ...ImageFragment
-        }
-        mainImage {
-            url
-        }
-    }
-    payment {
-        __typename
-        name
-        type
-        mainImage {
-            url
-        }
-    }
     totalPrice {
         ...PriceFragment
     }
@@ -32,4 +14,19 @@ fragment ListedOrderFragment on Order {
     hasPaymentInProcess
     status
     note
+    items {
+        type
+        payment {
+            name
+            mainImage {
+                url
+            }
+        }
+        transport {
+            name
+            mainImage {
+                url
+            }
+        }
+    }
 }

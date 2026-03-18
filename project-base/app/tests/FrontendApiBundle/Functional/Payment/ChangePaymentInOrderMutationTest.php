@@ -69,8 +69,9 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
 
         $responseData = $this->getResponseDataForGraphQlType($response, 'ChangePaymentInOrder');
 
-        $this->assertSame($paymentGoPayBankAccount->getUuid(), $responseData['payment']['uuid']);
-        $this->assertSame($paymentGoPayBankAccount->getName(), $responseData['payment']['name']);
+        $paymentItem = $this->findPaymentItem($responseData['items']);
+        $this->assertSame($paymentGoPayBankAccount->getUuid(), $paymentItem['payment']['uuid']);
+        $this->assertSame($paymentGoPayBankAccount->getName(), $paymentItem['payment']['name']);
     }
 
     public function testChangePaymentInOrderMutationNonExistingOrder(): void
@@ -203,5 +204,16 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $violations = $this->getErrorsExtensionValidationFromResponse($response);
 
         self::assertSame(PaymentInExistingOrder::INVALID_PAYMENT_SWIFT_ERROR, $violations['input'][0]['code']);
+    }
+
+    private function findPaymentItem(array $items): array
+    {
+        foreach ($items as $item) {
+            if ($item['type'] === 'payment') {
+                return $item;
+            }
+        }
+
+        $this->fail('Payment item not found in order items');
     }
 }

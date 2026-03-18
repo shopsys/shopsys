@@ -210,11 +210,11 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                                     </Row>
                                                     <Row>
                                                         <CellMinor>{t('Shipping')}</CellMinor>
-                                                        <Cell>{orderTransport?.name ?? order.transport.name}</Cell>
+                                                        <Cell>{orderTransport?.name}</Cell>
                                                     </Row>
                                                     <Row>
                                                         <CellMinor>{t('Payment')}</CellMinor>
-                                                        <Cell>{orderPayment?.name ?? order.payment.name}</Cell>
+                                                        <Cell>{orderPayment?.name}</Cell>
                                                     </Row>
                                                     {isPriceVisible(order.totalPrice.priceWithVat) && (
                                                         <Row>

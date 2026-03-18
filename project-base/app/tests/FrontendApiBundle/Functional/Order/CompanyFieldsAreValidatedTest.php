@@ -65,12 +65,6 @@ class CompanyFieldsAreValidatedTest extends GraphQlTestCase
                     }
                 ) {
                     order {
-                        transport {
-                            name
-                        }
-                        payment {
-                            name
-                        }
                         status
                         totalPrice {
                             priceWithVat

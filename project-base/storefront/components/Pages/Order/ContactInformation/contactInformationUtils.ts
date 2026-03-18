@@ -36,6 +36,7 @@ import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getOrderPaymentItem } from 'utils/mappers/order';
 import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
 import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
@@ -157,11 +158,12 @@ const useHandleCreateOrderResult = (
         const modifiedCartAfterUnsuccessfulOrderCreation = createOrderResult.data?.CreateOrder.cart;
 
         if (wasOrderCreated && createdOrder) {
+            const orderPayment = getOrderPaymentItem(createdOrder.items);
             const orderConfirmationUrlQuery: OrderConfirmationUrlQuery = {
                 orderUuid: createdOrder.uuid,
                 companyNumber: user?.companyNumber ?? formValues.companyNumber,
                 orderEmail: user?.email ?? formValues.email,
-                orderPaymentType: createdOrder.payment.type,
+                orderPaymentType: orderPayment?.payment?.type,
                 orderPaymentStatusPageValidityHash: undefined,
             };
 

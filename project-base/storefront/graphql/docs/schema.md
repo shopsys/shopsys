@@ -6789,15 +6789,6 @@ Unique order number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="order.payment">payment</strong></td>
-<td valign="top"><a href="#payment">Payment</a>!</td>
-<td>
-
-Payment method applied to the order
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="order.pickupplaceidentifier">pickupPlaceIdentifier</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -6893,15 +6884,6 @@ The order tracking number
 <td>
 
 The order tracking link
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="order.transport">transport</strong></td>
-<td valign="top"><a href="#transport">Transport</a>!</td>
-<td>
-
-Transport method applied to the order
 
 </td>
 </tr>
@@ -7074,6 +7056,15 @@ Order to which the order item belongs
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="orderitem.payment">payment</strong></td>
+<td valign="top"><a href="#payment">Payment</a></td>
+<td>
+
+Payment method applied to the order
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="orderitem.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a></td>
 <td>
@@ -7097,6 +7088,15 @@ Quantity of order items in the order
 <td>
 
 Total price for the quantity of order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderitem.transport">transport</strong></td>
+<td valign="top"><a href="#transport">Transport</a></td>
+<td>
+
+Transport method applied to the order
 
 </td>
 </tr>

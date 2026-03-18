@@ -6,6 +6,7 @@ import { InformationCard } from 'components/Basic/InformationCard/InformationCar
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getOrderTransportItem } from 'utils/mappers/order';
 import { isPacketeryTransport } from 'utils/packetery';
 
 type OrderCustomerInfoProps = {
@@ -14,8 +15,11 @@ type OrderCustomerInfoProps = {
 
 export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
     const { t } = useTranslation();
+    const orderTransport = getOrderTransportItem(order.items);
     const isPickupPlaceTransport =
-        order.transport.isPersonalPickup || isPacketeryTransport(order.transport.transportTypeCode);
+        orderTransport &&
+        (orderTransport.transport?.isPersonalPickup ||
+            isPacketeryTransport(orderTransport.transport?.transportTypeCode));
 
     return (
         <div className="bg-background-more vl:grid-cols-3 grid grid-cols-1 gap-2.5 rounded-xl p-5 lg:grid-cols-2">
