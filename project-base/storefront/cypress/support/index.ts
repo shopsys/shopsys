@@ -268,6 +268,7 @@ export const takeSnapshotAndCompare = (
         throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
     }
 
+    cy.document().its('fonts.status').should('equal', 'loaded');
     scrollPageBeforeScreenshot(optionsWithDefaultValues);
     hideScrollbars();
     disableStickyPositioningBeforeScreenshot(optionsWithDefaultValues.capture, optionsWithDefaultValues.preserveFixed);
@@ -447,6 +448,8 @@ const disableAnimationsBeforeScreenshot = () => {
                 transition: none !important;
                 animation: none !important;
                 caret-color: transparent !important;
+                -webkit-font-smoothing: antialiased !important;
+                -moz-osx-font-smoothing: grayscale !important;
             }
         `;
         doc.head.appendChild(style);
