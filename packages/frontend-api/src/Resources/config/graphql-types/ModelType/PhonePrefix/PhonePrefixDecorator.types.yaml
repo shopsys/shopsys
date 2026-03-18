@@ -1,0 +1,18 @@
+PhonePrefixDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents phone prefix"
+        fields:
+            code:
+                type: "String!"
+                description: "ISO 3166-1 alpha-2 country code"
+            dialCode:
+                type: "String!"
+                description: "International dial code (eg. +420)"
+            countryName:
+                type: "String!"
+                description: "Country name"
+            flagEmoji:
+                type: "String!"
+                description: "Country flag"

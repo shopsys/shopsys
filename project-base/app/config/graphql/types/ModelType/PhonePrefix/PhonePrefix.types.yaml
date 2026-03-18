@@ -1,0 +1,4 @@
+PhonePrefix:
+    type: object
+    inherits:
+        - 'PhonePrefixDecorator'

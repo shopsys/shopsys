@@ -77,11 +77,44 @@ class CountryDialCodeProvider
      */
     public function getAllEnabledOnDomain(int $domainId): array
     {
+        return $this->mapPhonePrefixesToCountryDialCodes($this->phonePrefixRepository->findAllByDomainId($domainId));
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\PhonePrefix\CountryDialCode[]
+     */
+    public function getAllEnabledOnDomainWithDefaultFirst(int $domainId): array
+    {
+        $phonePrefixes = $this->phonePrefixRepository->findAllByDomainId($domainId);
+
+        usort(
+            $phonePrefixes,
+            static function (PhonePrefix $first, PhonePrefix $second): int {
+                if ($first->isDefault() !== $second->isDefault()) {
+                    return $first->isDefault() ? -1 : 1;
+                }
+
+                return strcmp($first->getCode(), $second->getCode());
+            },
+        );
+
+        return $this->mapPhonePrefixesToCountryDialCodes($phonePrefixes);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\PhonePrefix\Settings\PhonePrefix[] $phonePrefixes
+     * @return \Shopsys\FrameworkBundle\Model\PhonePrefix\CountryDialCode[]
+     */
+    protected function mapPhonePrefixesToCountryDialCodes(array $phonePrefixes): array
+    {
         $phoneUtil = PhoneNumberUtil::getInstance();
 
         return array_map(
-            static fn (PhonePrefix $phonePrefixSetting): CountryDialCode => new CountryDialCode($phonePrefixSetting->getCode(), '+' . $phoneUtil->getCountryCodeForRegion($phonePrefixSetting->getCode())),
-            $this->phonePrefixRepository->findAllByDomainId($domainId),
+            static fn (PhonePrefix $phonePrefixSetting): CountryDialCode => new CountryDialCode(
+                $phonePrefixSetting->getCode(),
+                '+' . $phoneUtil->getCountryCodeForRegion($phonePrefixSetting->getCode()),
+            ),
+            $phonePrefixes,
         );
     }
 }
