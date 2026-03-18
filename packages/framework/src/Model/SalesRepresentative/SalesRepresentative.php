@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 
 #[ORM\Table(name: 'sales_representatives')]
 #[ORM\Entity]
@@ -48,8 +49,20 @@ class SalesRepresentative
     /**
      * @var string|null
      */
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    protected $telephonePrefix;
+
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 2, nullable: true)]
+    protected $telephonePrefixCountryCode;
+
+    /**
+     * @var string|null
+     */
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    protected $telephone;
+    protected $telephoneNumber;
 
     public function __construct(SalesRepresentativeData $salesRepresentativeData)
     {
@@ -67,7 +80,7 @@ class SalesRepresentative
         $this->firstName = $salesRepresentativeData->firstName;
         $this->lastName = $salesRepresentativeData->lastName;
         $this->email = $salesRepresentativeData->email;
-        $this->telephone = $salesRepresentativeData->telephone;
+        $this->setTelephoneData($salesRepresentativeData->telephone);
     }
 
     /**
@@ -115,7 +128,38 @@ class SalesRepresentative
      */
     public function getTelephone()
     {
-        return $this->telephone;
+        return $this->getTelephoneData()?->toPhoneNumber();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData|null
+     */
+    public function getTelephoneData()
+    {
+        if ($this->telephoneNumber === null) {
+            return null;
+        }
+
+        return new PhoneData(
+            $this->telephonePrefixCountryCode,
+            $this->telephonePrefix,
+            $this->telephoneNumber,
+        );
+    }
+
+    public function setTelephoneData(?PhoneData $phoneData): void
+    {
+        if ($phoneData === null) {
+            $this->telephonePrefix = null;
+            $this->telephonePrefixCountryCode = null;
+            $this->telephoneNumber = null;
+
+            return;
+        }
+
+        $this->telephonePrefix = $phoneData->prefix;
+        $this->telephonePrefixCountryCode = $phoneData->countryCode;
+        $this->telephoneNumber = $phoneData->number;
     }
 
     /**

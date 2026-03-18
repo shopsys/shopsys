@@ -26,6 +26,8 @@ class Version20260312111907 extends AbstractMigration
 
         $this->migrateCountryAwarePhoneNumberColumn('complaints', 'delivery_telephone', 'delivery_country_id');
 
+        $this->migratePhoneNumberColumn('sales_representatives', 'telephone', null);
+
         $this->migratePhoneNumberColumn('inquiries', 'telephone', null);
     }
 

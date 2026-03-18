@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Form\PhoneType;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData;
 use Symfony\Component\Form\AbstractType;
@@ -77,14 +78,8 @@ final class SalesRepresentativeFormType extends AbstractType
                 ],
                 'label' => 'Email',
             ])
-            ->add('telephone', TextType::class, [
+            ->add('telephone', PhoneType::class, [
                 'required' => false,
-                'constraints' => [
-                    new Constraints\Length(
-                        max: 30,
-                        maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
-                    ),
-                ],
                 'label' => 'Telephone',
             ]);
 

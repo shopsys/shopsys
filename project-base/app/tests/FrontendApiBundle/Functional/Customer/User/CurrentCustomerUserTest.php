@@ -82,7 +82,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 'firstName' => 'Jan',
                 'lastName' => 'Dvořák',
                 'email' => 'no-reply99@shopsys.com',
-                'telephone' => '585425321',
+                'telephone' => '+420585425321',
             ],
         ];
 

@@ -54,7 +54,9 @@ final class PhoneType extends AbstractType
         $form = $event->getForm();
 
         $countryDialCodes = $this->countryDialCodeProvider->getAll();
-        $preferredCountryDialCodes = $this->getEnabledDialCodesOnDomain($options['domain_id'], $countryDialCodes);
+        $preferredCountryDialCodes = $options['domain_id'] !== null
+            ? $this->getEnabledDialCodesOnDomain($options['domain_id'], $countryDialCodes)
+            : [];
 
         $this->originalUnknownPrefix = null;
 
@@ -136,8 +138,8 @@ final class PhoneType extends AbstractType
             ])
             ->setAllowedTypes('constraints', ['array', Constraint::class])
             ->setAllowedTypes('constraint_groups', ['array'])
-            ->setRequired('domain_id')
-            ->setAllowedTypes('domain_id', 'int');
+            ->setDefault('domain_id', null)
+            ->setAllowedTypes('domain_id', ['int', 'null']);
     }
 
     #[Override]
