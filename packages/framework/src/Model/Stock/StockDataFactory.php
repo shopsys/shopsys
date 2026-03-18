@@ -18,10 +18,10 @@ class StockDataFactory
         return new StockData();
     }
 
-    public function create(): StockData
+    public function create(bool $withFirstDefaults = false): StockData
     {
         $stockData = $this->createInstance();
-        $this->fillNew($stockData);
+        $this->fillNew($stockData, $withFirstDefaults);
 
         return $stockData;
     }
@@ -38,18 +38,19 @@ class StockDataFactory
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $stockData->isEnabledByDomain[$domainId] = $stock->isEnabled($domainId);
+            $stockData->isDefaultByDomain[$domainId] = $stock->isDefault($domainId);
         }
 
         $stockData->name = $stock->getName();
-        $stockData->isDefault = $stock->isDefault();
         $stockData->externalId = $stock->getExternalId();
         $stockData->note = $stock->getNote();
     }
 
-    protected function fillNew(StockData $stockData): void
+    protected function fillNew(StockData $stockData, bool $withFirstDefaults = false): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
-            $stockData->isEnabledByDomain[$domainId] = false;
+            $stockData->isEnabledByDomain[$domainId] = $withFirstDefaults;
+            $stockData->isDefaultByDomain[$domainId] = $withFirstDefaults;
         }
     }
 }

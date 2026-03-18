@@ -2260,6 +2260,9 @@ msgstr "zákazníků"
 msgid "default"
 msgstr "výchozí"
 
+msgid "default (%domainName%)"
+msgstr "výchozí (%domainName%)"
+
 msgid "discount"
 msgstr "sleva"
 

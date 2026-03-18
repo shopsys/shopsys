@@ -5,10 +5,3 @@
 
 {% block h1 %}{{ 'Editing warehouse'|trans }} - {{ stock.name }}{% endblock %}
 
-{% block btn %}
-    {% if not stock.isDefault %}
-        <a href="{{ protectedUrl('admin_stock_setdefault', { id: stock.id }) }}" class="btn btn-secondary">
-            {{ 'Set as default'|trans }}
-        </a>
-    {% endif %}
-{% endblock %}

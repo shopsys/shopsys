@@ -80,21 +80,84 @@ class StockRepository
             ->orderBy('s.position', 'ASC');
     }
 
+    /**
+     * @return array<int, int[]> stock ID => array of domain IDs where stock is default
+     */
+    public function getDefaultDomainIdsIndexedByStockId(): array
+    {
+        $rows = $this->em->createQueryBuilder()
+            ->select('IDENTITY(sd.stock) AS stockId, sd.domainId')
+            ->from(StockDomain::class, 'sd')
+            ->where('sd.isDefault = true')
+            ->getQuery()
+            ->getArrayResult();
+
+        $result = [];
+
+        foreach ($rows as $row) {
+            $result[(int)$row['stockId']][] = (int)$row['domainId'];
+        }
+
+        return $result;
+    }
+
     public function findStockByExternalId(string $externalId): ?Stock
     {
         return $this->getStockRepository()->findOneBy(['externalId' => $externalId]);
     }
 
-    public function changeDefaultStock(Stock $stock): void
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Stock\StockDomain[]
+     */
+    public function getDefaultStockDomainsForDomainExcept(?int $stockId, int $domainId): array
     {
-        $this->em->createQueryBuilder()
-            ->update(Stock::class, 's')
-            ->set('s.isDefault', 'FALSE')
-            ->getQuery()
-            ->execute();
+        $qb = $this->em->createQueryBuilder()
+            ->select('sd')
+            ->from(StockDomain::class, 'sd')
+            ->where('sd.domainId = :domainId')
+            ->andWhere('sd.isDefault = true')
+            ->setParameter('domainId', $domainId);
 
-        $stock->setDefault();
-        $this->em->flush();
+        if ($stockId !== null) {
+            $qb->andWhere('sd.stock != :stockId')
+                ->setParameter('stockId', $stockId);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int[] $allDomainIds
+     * @return int[] domain IDs that have no default stock
+     */
+    public function getDomainIdsWithoutDefaultStock(array $allDomainIds): array
+    {
+        $domainIdsWithDefault = array_map(
+            static fn (array $row) => (int)$row['domainId'],
+            $this->em->createQueryBuilder()
+                ->select('sd.domainId')
+                ->from(StockDomain::class, 'sd')
+                ->where('sd.isDefault = true')
+                ->getQuery()
+                ->getArrayResult(),
+        );
+
+        return array_values(array_diff($allDomainIds, $domainIdsWithDefault));
+    }
+
+    /**
+     * @return array{stockId: int, stockName: string, domainId: int}[]
+     */
+    public function getDefaultButDisabledStockDomains(): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('s.id AS stockId, s.name AS stockName, sd.domainId')
+            ->from(StockDomain::class, 'sd')
+            ->join('sd.stock', 's')
+            ->where('sd.isDefault = true')
+            ->andWhere('sd.isEnabled = false')
+            ->getQuery()
+            ->getArrayResult();
     }
 
     public function getCount(): int

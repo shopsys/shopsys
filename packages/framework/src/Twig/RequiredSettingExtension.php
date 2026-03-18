@@ -84,6 +84,8 @@ class RequiredSettingExtension extends AbstractExtension
 
         $this->checkEnabledMailTemplatesHaveTheirBodyAndSubjectFilled();
         $this->checkAtLeastOneStockExists();
+        $this->checkEveryDomainHasDefaultStock();
+        $this->checkDefaultStockIsEnabledOnItsDomain();
         $this->checkAtLeastOneCountryExists();
         $this->checkPhonePrefixIsConfigured();
         $this->checkMandatoryArticlesExist();
@@ -134,6 +136,45 @@ class RequiredSettingExtension extends AbstractExtension
                 '<a href="%url%">There are no warehouses, you need to create some.</a>',
                 [
                     '%url%' => $this->router->generate('admin_stock_list'),
+                ],
+            );
+        }
+    }
+
+    protected function checkEveryDomainHasDefaultStock(): void
+    {
+        if ($this->stockFacade->getCount() === 0) {
+            return;
+        }
+
+        $domainIdsWithoutDefault = $this->stockFacade->getDomainIdsWithoutDefaultStock($this->domain->getAllIds());
+
+        foreach ($domainIdsWithoutDefault as $domainId) {
+            $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+            $this->requiredSettingsMessages[] = t(
+                '<a href="%url%">Domain "%domainName%" has no default warehouse.</a>',
+                [
+                    '%url%' => $this->router->generate('admin_stock_list'),
+                    '%domainName%' => $domainConfig->getName(),
+                ],
+            );
+        }
+    }
+
+    protected function checkDefaultStockIsEnabledOnItsDomain(): void
+    {
+        $defaultButDisabled = $this->stockFacade->getDefaultButDisabledStockDomains();
+
+        foreach ($defaultButDisabled as $row) {
+            $domainConfig = $this->domain->getDomainConfigById($row['domainId']);
+
+            $this->requiredSettingsMessages[] = t(
+                'Warehouse <a href="%url%">%stockName%</a> is set as default on domain "%domainName%" but is not enabled there.',
+                [
+                    '%url%' => $this->router->generate('admin_stock_edit', ['id' => $row['stockId']]),
+                    '%stockName%' => $row['stockName'],
+                    '%domainName%' => $domainConfig->getName(),
                 ],
             );
         }

@@ -36,13 +36,20 @@ class StockDomain
      * @var bool
      */
     #[ORM\Column(type: 'boolean')]
-    protected $isEnabled = false;
+    protected $isEnabled;
+
+    /**
+     * @var bool
+     */
+    #[ORM\Column(type: 'boolean')]
+    protected $isDefault;
 
     public function __construct(Stock $stock, int $domainId)
     {
         $this->stock = $stock;
         $this->domainId = $domainId;
         $this->isEnabled = true;
+        $this->isDefault = false;
     }
 
     /**
@@ -61,5 +68,15 @@ class StockDomain
     public function isEnabled(): bool
     {
         return $this->isEnabled;
+    }
+
+    public function isDefault(): bool
+    {
+        return $this->isDefault;
+    }
+
+    public function setDefault(bool $isDefault): void
+    {
+        $this->isDefault = $isDefault;
     }
 }

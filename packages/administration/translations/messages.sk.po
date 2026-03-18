@@ -2260,6 +2260,9 @@ msgstr "zákazníkov"
 msgid "default"
 msgstr "predvolené"
 
+msgid "default (%domainName%)"
+msgstr "predvolené (%domainName%)"
+
 msgid "discount"
 msgstr "zľava"
 

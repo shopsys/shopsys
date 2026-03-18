@@ -116,10 +116,12 @@ class StockController extends AdminBaseController
     #[CanCreate]
     public function newAction(Request $request): Response
     {
-        $stockData = $this->stockDataFactory->create();
+        $isFirstStock = $this->stockFacade->getCount() === 0;
+        $stockData = $this->stockDataFactory->create($isFirstStock);
 
         $form = $this->createForm(StockFormType::class, $stockData, [
             'stock' => null,
+            'is_first_stock' => $isFirstStock,
         ]);
         $form->handleRequest($request);
 
@@ -189,30 +191,6 @@ class StockController extends AdminBaseController
         ]);
     }
 
-    #[Route(path: '/stock/setdefault/{id}', requirements: ['id' => '\d+'])]
-    #[CanEdit]
-    #[CsrfProtection]
-    public function setDefaultAction(int $id): Response
-    {
-        try {
-            $stock = $this->stockFacade->getById($id);
-
-            $this->stockFacade->changeDefaultStock($stock);
-
-            $this->addSuccessFlashTwig(
-                t('Warehouse <strong><a href="{{ url }}">{{ name }}</a></strong> was set as default.'),
-                [
-                    'name' => $stock->getName(),
-                    'url' => $this->generateUrl('admin_stock_edit', ['id' => $stock->getId()]),
-                ],
-            );
-        } catch (StockNotFoundException) {
-            $this->addErrorFlash(t('Selected warehouse does not exist.'));
-        }
-
-        return $this->redirectToRoute('admin_stock_list');
-    }
-
     #[Route(path: '/stock/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
     #[CsrfProtection]
@@ -221,8 +199,8 @@ class StockController extends AdminBaseController
         try {
             $stock = $this->stockFacade->getById($id);
 
-            if ($stock->isDefault()) {
-                $this->addErrorFlash('Cannot delete the default stock');
+            if ($stock->isDefaultOnAnyDomain()) {
+                $this->addErrorFlash(t('This warehouse is default on at least one domain. You cannot delete it.'));
 
                 return $this->redirectToRoute('admin_stock_list');
             }
@@ -259,7 +237,9 @@ class StockController extends AdminBaseController
                 . 'remove all stock quantities from products and association to stores. This step is irreversible!'));
         $grid->enableDragAndDrop(Stock::class);
 
-        $grid->setTheme('@ShopsysAdministration/content/stock/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/stock/listGrid.html.twig', [
+            'defaultDomainIdsByStockId' => $this->stockFacade->getDefaultDomainIdsIndexedByStockId(),
+        ]);
 
         return $grid;
     }
