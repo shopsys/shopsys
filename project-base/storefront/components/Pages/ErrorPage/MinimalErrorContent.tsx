@@ -46,7 +46,7 @@ export const MinimalErrorContent: FC<MinimalErrorContentProps> = ({ statusCode, 
                         href="/"
                         className={twMergeCustom(
                             'bg-background-accent text-text-inverted hover:bg-background-accent-less',
-                            'inline-block rounded-md px-6 py-3 font-medium',
+                            'inline-block rounded-md px-6 py-3 font-semibold',
                         )}
                     >
                         Back to Home
