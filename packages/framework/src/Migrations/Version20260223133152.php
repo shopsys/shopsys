@@ -20,6 +20,8 @@ class Version20260223133152 extends AbstractMigration
         $this->sql('ALTER TABLE heureka_category ALTER heureka_id DROP DEFAULT');
         $this->sql('UPDATE heureka_category SET heureka_id = id');
 
+        $this->sql('DROP SEQUENCE IF EXISTS heureka_category_id_seq');
+
         $this->sql('CREATE SEQUENCE heureka_category_id_seq');
         $this->sqlQuery('SELECT setval(\'heureka_category_id_seq\', (SELECT MAX(id) FROM heureka_category))');
         $this->sql('ALTER TABLE heureka_category ALTER id SET DEFAULT nextval(\'heureka_category_id_seq\')');
