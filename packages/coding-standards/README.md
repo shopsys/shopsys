@@ -12,7 +12,7 @@ This repository is maintained by [shopsys/shopsys] monorepo, information about c
 Provided tools:
 
 - [PHP-Parallel-Lint](https://github.com/JakubOnderka/PHP-Parallel-Lint)
-- [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard) that combines [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) and [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+- [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard) that combines [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) and [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer)
 
 For further information see official documentation of those tools.
 
@@ -52,7 +52,7 @@ Doctrine attributes `#[ORM\ManyToOne]` and `#[ORM\OneToOne]` must have `nullable
 If the `nullable` option is not specified it will be fixed to `nullable: false` because the implicit value is `true` but this is the opposite to the implicit value of `nullable` for `#[ORM\Column]` attribute.
 This makes it consistent.
 
-### Rules for [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+### Rules for [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer)
 
 #### `ForbiddenExitSniff`
 
