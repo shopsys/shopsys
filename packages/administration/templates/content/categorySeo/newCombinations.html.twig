@@ -6,58 +6,5 @@
 {% block h1 %}{{ '%categoryName% - Combinations'|trans({'%categoryName%': category.name(locale)}) }}{% endblock %}
 
 {% block main_content %}
-    <div class="card">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table">
-                    <tr>
-                        {% for parameter in categorySeoFiltersData.parameters %}
-                            <th>{{ parameter.name }}</th>
-                        {% endfor %}
-
-                        {% if categorySeoFiltersData.useFlags %}
-                            <th>{{ 'Flag'|trans }}</th>
-                        {% endif %}
-
-                        {% if categorySeoFiltersData.useOrdering %}
-                            <th>{{ 'Ordering'|trans }}</th>
-                        {% endif %}
-
-                        <th class="w-1 text-end">{{ 'Action'|trans }}</th>
-                    </tr>
-
-                    {% for key, categorySeoMix in categorySeoMixes %}
-                        <tr>
-                            {% for parameterValue in categorySeoMix.parameterValues %}
-                                <td>{{ parameterValue.text }}</td>
-                            {% endfor %}
-
-                            {% if categorySeoMix.flag %}
-                                <td>{{ categorySeoMix.flag.name }}</td>
-                            {% endif %}
-
-                            {% if categorySeoMix.ordering %}
-                                <td>{{ getOrderingNameByOrderingId(categorySeoMix.ordering) }}</td>
-                            {% endif %}
-
-                            <td>
-                                {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\CategorySeoController::readyCombinationButtonAction', {
-                                    categoryId: categoryId,
-                                    categorySeoFilterFormTypeAllQueries: categorySeoFilterFormTypeAllQueries,
-                                    selectedCategorySeoMixCombination: selectedCategorySeoMixCombinations[key],
-                                })) }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        </div>
-    </div>
-
-    {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
-        {% block fixed_bar_content %}
-            <a href="{{ backLink }}">{{ 'Back to parameter selection'|trans }}</a>
-        {% endblock %}
-    {% endembed %}
-
+    {{ form(combinationSelectorForm) }}
 {% endblock %}

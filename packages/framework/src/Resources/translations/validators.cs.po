@@ -229,6 +229,9 @@ msgstr "Prosím vyberte typ omezení"
 msgid "Please choose unit"
 msgstr "Prosím vyberte jednotku"
 
+msgid "Please define at least one URL."
+msgstr "Definujte prosím alespoň jednu URL adresu."
+
 msgid "Please enter BIC/SWIFT for domain %domainName%."
 msgstr "Zadejte prosím BIC/SWIFT pro doménu %domainName%."
 

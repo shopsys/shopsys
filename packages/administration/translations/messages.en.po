@@ -184,9 +184,6 @@ msgstr ""
 msgid "Back to overview"
 msgstr ""
 
-msgid "Back to parameter selection"
-msgstr ""
-
 msgid "Back to top"
 msgstr ""
 

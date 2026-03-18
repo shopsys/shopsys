@@ -184,9 +184,6 @@ msgstr "Späť na nástennú dosku"
 msgid "Back to overview"
 msgstr "Späť na prehľad"
 
-msgid "Back to parameter selection"
-msgstr "Späť na výber parametrov"
-
 msgid "Back to top"
 msgstr "Späť nahor"
 
