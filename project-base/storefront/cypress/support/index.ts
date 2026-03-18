@@ -541,12 +541,23 @@ export const checkCanGoToNextOrderStep = () => {
 
 export const getSnapshotIndexingFunction = (snapshotGroupIndex: number, snapshotSubgroupIndex: number) => {
     let snapshotCounter = 0;
+    let counterAtTestStart = 0;
+    let lastTestTitle = '';
+    let lastRetryAttempt = 0;
+
     return () => {
-        const attempt = Cypress.currentRetry;
-        // if the test is retried, decrement the snapshot counter
-        if (attempt > 0) {
-            snapshotCounter -= 1;
+        const currentTest = Cypress.currentTest?.title ?? '';
+        const currentRetry = Cypress.currentRetry;
+
+        if (currentTest !== lastTestTitle) {
+            lastTestTitle = currentTest;
+            counterAtTestStart = snapshotCounter;
+            lastRetryAttempt = 0;
+        } else if (currentRetry > lastRetryAttempt) {
+            snapshotCounter = counterAtTestStart;
+            lastRetryAttempt = currentRetry;
         }
+
         return `${snapshotGroupIndex}-${snapshotSubgroupIndex}-${snapshotCounter++}`;
     };
 };
