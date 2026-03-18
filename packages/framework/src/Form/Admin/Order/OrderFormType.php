@@ -187,7 +187,7 @@ final class OrderFormType extends AbstractType
                 ],
             ]);
 
-        $builderBasicInformationGroup->add($this->createWithdrawalRequestGroup($builderBasicInformationGroup, $withdrawalRequest));
+        $builderBasicInformationGroup->add($this->createWithdrawalRequestGroup($builderBasicInformationGroup, $withdrawalRequest, $order->getDomainId()));
 
         if ($order->getCreatedAsAdministrator() || $order->getCreatedAsAdministratorName()) {
             $builderBasicInformationGroup
@@ -596,6 +596,7 @@ final class OrderFormType extends AbstractType
     private function createWithdrawalRequestGroup(
         FormBuilderInterface $builder,
         ?WithdrawalRequest $withdrawalRequest,
+        int $domainId,
     ): FormBuilderInterface {
         $rowAttr = [
             'data-withdrawal-request-exists' => $withdrawalRequest !== null ? 'true' : 'false',
@@ -613,6 +614,7 @@ final class OrderFormType extends AbstractType
         $builderWithdrawalRequestGroup
             ->add('withdrawalRequestData', OrderWithdrawalFormType::class, [
                 'label' => false,
+                'domain_id' => $domainId,
             ]);
 
         return $builderWithdrawalRequestGroup;

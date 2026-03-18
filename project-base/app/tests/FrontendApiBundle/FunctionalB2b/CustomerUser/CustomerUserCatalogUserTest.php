@@ -312,7 +312,7 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
                 'firstName' => 'John',
                 'lastName' => 'Doe',
                 'email' => 'john.doe@example.com',
-                'telephone' => '+420123456789',
+                'telephone' => new PhoneData('CZ', '+420', '123456789'),
                 'note' => 'Test withdrawal request',
             ],
         );

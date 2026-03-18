@@ -341,7 +341,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
             'firstName' => 'Owner',
             'lastName' => 'User',
             'email' => 'owner@shopsys.com',
-            'telephone' => '+420777888999',
+            'telephone' => new PhoneData('CZ', '+420', '777888999'),
             'note' => 'Requesting withdrawal for company order.',
         ];
 

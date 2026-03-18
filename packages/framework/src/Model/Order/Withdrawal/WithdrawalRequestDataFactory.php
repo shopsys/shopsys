@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
+
 class WithdrawalRequestDataFactory
 {
     public function create(): WithdrawalRequestData
@@ -21,7 +23,7 @@ class WithdrawalRequestDataFactory
         $withdrawalRequestData->firstName = $data['firstName'];
         $withdrawalRequestData->lastName = $data['lastName'];
         $withdrawalRequestData->email = $data['email'];
-        $withdrawalRequestData->telephone = $data['telephone'] ?? null;
+        $withdrawalRequestData->telephone = isset($data['telephone']) ? PhoneData::fromArray($data['telephone']) : null;
         $withdrawalRequestData->note = $data['note'] ?? null;
 
         return $withdrawalRequestData;
@@ -34,7 +36,7 @@ class WithdrawalRequestDataFactory
         $withdrawalRequestData->firstName = $withdrawalRequest->getFirstName();
         $withdrawalRequestData->lastName = $withdrawalRequest->getLastName();
         $withdrawalRequestData->email = $withdrawalRequest->getEmail();
-        $withdrawalRequestData->telephone = $withdrawalRequest->getTelephone();
+        $withdrawalRequestData->telephone = $withdrawalRequest->getTelephoneData();
         $withdrawalRequestData->note = $withdrawalRequest->getNote();
         $withdrawalRequestData->requestedAt = $withdrawalRequest->getRequestedAt();
 

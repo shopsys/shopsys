@@ -40,16 +40,9 @@ OrderWithdrawalRequestInputDecorator:
                             max: 255
                             maxMessage: "Email cannot be longer than {{ limit }} characters"
             telephone:
-                type: "String"
-                description: "Telephone number (optional)"
+                type: "PhoneDataInput"
+                description: "Telephone number data (optional)"
                 defaultValue: null
-                validation:
-                    -   Length:
-                            max: 30
-                            maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
-                    -   Regex:
-                            pattern: '/^[0-9\+]+$/'
-                            message: "Please enter only numbers and the + character"
             note:
                 type: "String"
                 description: "Additional note or reason for withdrawal (optional)"

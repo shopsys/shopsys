@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
 use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
@@ -26,7 +27,7 @@ class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
             'firstName' => 'Jane',
             'lastName' => 'Smith',
             'email' => 'jane.smith@example.com',
-            'telephone' => '+420777888999',
+            'telephone' => new PhoneData('CZ', '+420', '777888999'),
             'note' => 'Product does not match description, I want to return the entire order.',
         ];
 
@@ -45,7 +46,7 @@ class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
         $this->assertSame($inputData['firstName'], $withdrawalRequest->getFirstName());
         $this->assertSame($inputData['lastName'], $withdrawalRequest->getLastName());
         $this->assertSame($inputData['email'], $withdrawalRequest->getEmail());
-        $this->assertSame($inputData['telephone'], $withdrawalRequest->getTelephone());
+        $this->assertSame($inputData['telephone']->toPhoneNumber(), $withdrawalRequest->getTelephone());
         $this->assertSame($inputData['note'], $withdrawalRequest->getNote());
         $this->assertInstanceOf(DateTimeImmutable::class, $withdrawalRequest->getRequestedAt());
     }
@@ -59,7 +60,7 @@ class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
             'firstName' => 'John',
             'lastName' => 'Doe',
             'email' => 'john.doe@example.com',
-            'telephone' => '+420777888999',
+            'telephone' => new PhoneData('CZ', '+420', '777888999'),
             'note' => 'I want to return this order.',
         ];
 
