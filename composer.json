@@ -178,6 +178,7 @@
         "symfony/http-kernel": "^7.4",
         "symfony/intl": "^7.4",
         "symfony/mailer": "^7.4",
+        "symfony/mcp-bundle": "^0.8",
         "symfony/messenger": "^7.4",
         "symfony/monolog-bridge": "^7.4",
         "symfony/monolog-bundle": "^4.0",

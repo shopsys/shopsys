@@ -17,3 +17,6 @@ framework:
                 adapter: cache.adapter.redis
                 provider: snc_redis.image
                 default_lifetime: 43200
+            mcp_http_session_cache:
+                adapter: cache.adapter.redis
+                provider: snc_redis.mcp_http_session

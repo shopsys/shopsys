@@ -10,3 +10,6 @@ framework:
             main_friendly_url_slug_cache:
                 adapter: cache.adapter.array
                 provider: ~
+            mcp_http_session_cache:
+                adapter: cache.adapter.filesystem
+                provider: ~
