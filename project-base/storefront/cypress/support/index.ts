@@ -507,13 +507,17 @@ export const checkNumberOfApiRequestsTriggeredByActions = (
 ) => {
     let requestCounter = 0;
 
-    cy.intercept(`/graphql/${requestName}`, () => {
+    cy.intercept(`/graphql/${requestName}`, (req) => {
         requestCounter += 1;
+        req.continue((res) => {
+            // delay the response so the mutation stays "in flight" while rapid actions fire
+            res.setDelay(2000);
+        });
     });
 
     actions();
 
-    cy.wait(1000).then(() => {
+    cy.wait(3000).then(() => {
         expect(requestCounter).to.eq(numberOfRequests);
     });
 };
