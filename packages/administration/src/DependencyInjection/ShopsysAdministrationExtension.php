@@ -16,6 +16,8 @@ use Symfony\Component\Finder\Finder;
 
 class ShopsysAdministrationExtension extends Extension implements PrependExtensionInterface
 {
+    protected const string CKEDITOR_PREVIEW_SANITIZER_NAME = 'shopsys.ckeditor_preview';
+
     /**
      * {@inheritdoc}
      */
@@ -55,6 +57,18 @@ class ShopsysAdministrationExtension extends Extension implements PrependExtensi
         $container->prependExtensionConfig('doctrine_migrations', [
             'migrations_paths' => [
                 'Shopsys\AdministrationBundle\Migrations' => __DIR__ . '/../Migrations',
+            ],
+        ]);
+
+        $container->prependExtensionConfig('framework', [
+            'html_sanitizer' => [
+                'sanitizers' => [
+                    static::CKEDITOR_PREVIEW_SANITIZER_NAME => [
+                        'allow_safe_elements' => true,
+                        'allow_relative_links' => true,
+                        'allow_relative_medias' => true,
+                    ],
+                ],
             ],
         ]);
 
