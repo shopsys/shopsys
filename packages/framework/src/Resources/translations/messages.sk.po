@@ -37,8 +37,14 @@ msgstr "-- Vyberte pozíciu článku --"
 msgid "-- Choose brand --"
 msgstr "-- Vyberte značku --"
 
+msgid "-- Choose default prefix --"
+msgstr "-- Vyberte predvolenú predvoľbu --"
+
 msgid "-- Choose group --"
 msgstr "-- Vyberte skupinu --"
+
+msgid "-- Choose prefix --"
+msgstr "-- Vyberte predvoľbu --"
 
 msgid "-- Choose unit --"
 msgstr "-- Vyberte jednotku --"
@@ -63,6 +69,9 @@ msgstr "301 (Trvalé presmerovanie)"
 
 msgid "302 (Temporary redirect)"
 msgstr "302 (Dočasné presmerovanie)"
+
+msgid "<a href=\"%url%\">Phone prefixes are not configured for domain %domainName%.</a>"
+msgstr "<a href=\"%url%\">Telefónne predvoľby nie sú nakonfigurované pre doménu %domainName%.</a>"
 
 msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
 msgstr "<a href=\"%url%\">Článok zásad ochrany osobných údajov pre doménu %domainName% nie je nastavený.</a>"
@@ -1411,6 +1420,9 @@ msgstr "Povoliť bielu listinu"
 msgid "Enabled"
 msgstr "Povolené"
 
+msgid "Enabled phone prefixes"
+msgstr "Povolené telefónne predvoľby"
+
 msgid "Enter 32-digit code which will be sent to server"
 msgstr "Zadajte 32-miestny kód, ktorý bude poslaný na server"
 
@@ -2554,11 +2566,23 @@ msgstr "Osobný odber"
 msgid "Phone"
 msgstr "Telefón"
 
+msgid "Phone number {{ value }} is too long. Maximum length is {{ limit }} characters."
+msgstr "Telefónne číslo {{ value }} je príliš dlhé. Maximálna dĺžka je {{ limit }} znakov."
+
+msgid "Phone prefix settings modified."
+msgstr "Nastavenia telefónnych predvolieb boli upravené."
+
+msgid "Phone prefixes"
+msgstr "Telefónne predvoľby"
+
 msgid "Please check following information:"
 msgstr "Prosím, skontrolujte nasledujúce informácie:"
 
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím, skontrolujte správnosť všetkých vyplnených údajov."
+
+msgid "Please enter phone prefix"
+msgstr "Prosím, zadajte telefónnu predvoľbu"
 
 msgid "Please fill all default values before creating a product"
 msgstr "Prosím, vyplňte všetky predvolené hodnoty pred vytvorením produktu"
@@ -3427,6 +3451,9 @@ msgstr "Jednotka <strong>{{ name }}</strong> odstránená a nahradená jednotkou
 msgid "Unknown configuration"
 msgstr "Konfigurácia Unknown"
 
+msgid "Unknown prefix"
+msgstr "Neznáma predvoľba"
+
 msgid "Unsaved changes"
 msgstr "Neuložené zmeny"
 
@@ -3765,3 +3792,4 @@ msgstr "{1}<strong>%count%</strong> promo kód bol vytvorený|[2,Inf]<strong>%co
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr "{1}Obchodný zástupca \"%label%\" je priradený %count% zákazníkovi a bude odstránený ak budete pokračovať.<br><br> Zákazník:<br> %customersEnumeration%<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo? |[2,10]Obchodný zástupca \"%label%\" je priradený %count% zákazníkom a bude odstránený ak budete pokračovať.<br><br> Zákazníci:<br> %customersEnumeration%<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo? |[11,Inf]Obchodný zástupca \"%label%\" je priradený %count% zákazníkom a bude odstránený ak budete pokračovať.<br><br> Zákazníci:<br> %customersEnumeration%<br> +%extraCount% viac<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo?"
+

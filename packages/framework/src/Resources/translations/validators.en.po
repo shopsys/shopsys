@@ -25,6 +25,9 @@ msgstr ""
 msgid "Amount of money should be greater to zero."
 msgstr ""
 
+msgid "At least one phone prefix is required"
+msgstr ""
+
 msgid "At least two domains must be selected"
 msgstr ""
 
@@ -193,9 +196,6 @@ msgstr ""
 msgid "Passwords do not match"
 msgstr ""
 
-msgid "Phone number cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Please choose advertisement area"
 msgstr ""
 
@@ -206,6 +206,9 @@ msgid "Please choose article placement"
 msgstr ""
 
 msgid "Please choose country"
+msgstr ""
+
+msgid "Please choose default phone prefix"
 msgstr ""
 
 msgid "Please choose default unit"
@@ -433,6 +436,9 @@ msgstr ""
 msgid "Please enter password"
 msgstr ""
 
+msgid "Please enter phone prefix"
+msgstr ""
+
 msgid "Please enter postcode"
 msgstr ""
 
@@ -641,9 +647,6 @@ msgid "Street name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Tax number cannot be longer than {{ limit }} characters"
-msgstr ""
-
-msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "The \"{{ value }}\" value of \"{{ fieldName }}\" field must be unique"

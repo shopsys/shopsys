@@ -1510,6 +1510,12 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
+msgid "Phone prefixes"
+msgstr ""
+
+msgid "Phone prefixes settings"
+msgstr ""
+
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
 msgstr ""
 
@@ -2066,6 +2072,9 @@ msgid "Unit price excluding VAT"
 msgstr ""
 
 msgid "Unit price including VAT"
+msgstr ""
+
+msgid "Unknown phone prefix \"%prefix%\" is stored. Please verify it."
 msgstr ""
 
 msgid "Unlimited"

@@ -37,7 +37,13 @@ msgstr ""
 msgid "-- Choose brand --"
 msgstr ""
 
+msgid "-- Choose default prefix --"
+msgstr ""
+
 msgid "-- Choose group --"
+msgstr ""
+
+msgid "-- Choose prefix --"
 msgstr ""
 
 msgid "-- Choose unit --"
@@ -62,6 +68,9 @@ msgid "301 (Permanent redirect)"
 msgstr ""
 
 msgid "302 (Temporary redirect)"
+msgstr ""
+
+msgid "<a href=\"%url%\">Phone prefixes are not configured for domain %domainName%.</a>"
 msgstr ""
 
 msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
@@ -1411,6 +1420,9 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
+msgid "Enabled phone prefixes"
+msgstr ""
+
 msgid "Enter 32-digit code which will be sent to server"
 msgstr ""
 
@@ -2554,10 +2566,22 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
+msgid "Phone number {{ value }} is too long. Maximum length is {{ limit }} characters."
+msgstr ""
+
+msgid "Phone prefix settings modified."
+msgstr ""
+
+msgid "Phone prefixes"
+msgstr ""
+
 msgid "Please check following information:"
 msgstr ""
 
 msgid "Please check the correctness of all data filled."
+msgstr ""
+
+msgid "Please enter phone prefix"
 msgstr ""
 
 msgid "Please fill all default values before creating a product"
@@ -3427,6 +3451,9 @@ msgstr ""
 msgid "Unknown configuration"
 msgstr ""
 
+msgid "Unknown prefix"
+msgstr ""
+
 msgid "Unsaved changes"
 msgstr ""
 
@@ -3765,3 +3792,4 @@ msgstr ""
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr ""
+

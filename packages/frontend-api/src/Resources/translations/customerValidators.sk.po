@@ -145,11 +145,8 @@ msgstr "Prosím, zadajte nové heslo"
 msgid "Please enter old password"
 msgstr "Prosím, zadajte staré heslo"
 
-msgid "Please enter only numbers and the + character"
-msgstr "Prosím, zadajte iba čísla a znak +"
-
-msgid "Please enter only numbers and the + sign"
-msgstr "Prosím, zadajte iba čísla a znak +"
+msgid "Please enter only numbers"
+msgstr "Prosím, zadajte iba čísla"
 
 msgid "Please enter order URL hash"
 msgstr "Prosím, zadajte hash objednávky"
@@ -160,9 +157,6 @@ msgstr "Prosím, zadajte množstvo"
 msgid "Please enter street"
 msgstr "Prosím, zadajte ulicu"
 
-msgid "Please enter telephone number"
-msgstr "Prosím, zadajte telefónne číslo"
-
 msgid "Please enter the message"
 msgstr "Prosím, zadajte správu"
 
@@ -171,6 +165,9 @@ msgstr "Prosím, zadajte UUID"
 
 msgid "Please enter valid email"
 msgstr "Prosím, zadajte platný e-mail"
+
+msgid "Please enter valid phone prefix"
+msgstr "Prosím, zadajte platnú telefónnu predvoľbu"
 
 msgid "Please enter your city"
 msgstr "Prosím, zadajte vaše mesto"
@@ -256,8 +253,8 @@ msgstr "DIČ nemôže byť dlhšie ako {{ limit }} znakov"
 msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr "Telefónne číslo nemôže byť dlhšie ako {{ limit }} znakov"
 
-msgid "Telephone number cannot be shorter than {{ limit }} characters"
-msgstr "Telefónne číslo nemôže byť kratšie ako {{ limit }} znakov"
+msgid "Telephone prefix cannot be longer than {{ limit }} characters"
+msgstr "Telefónna predvoľba nemôže byť dlhšia ako {{ limit }} znakov"
 
 msgid "The file {{ fileName }} is too big."
 msgstr "Súbor {{ fileName }} je príliš veľký."

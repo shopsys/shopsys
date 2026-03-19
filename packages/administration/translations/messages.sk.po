@@ -1510,6 +1510,12 @@ msgstr "Prehľad osobných informácií"
 msgid "Phone"
 msgstr "Telefón"
 
+msgid "Phone prefixes"
+msgstr "Telefónne predvoľby"
+
+msgid "Phone prefixes settings"
+msgstr "Nastavenia telefónnych predvolieb"
+
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
 msgstr "Ospravedlňujeme sa za túto chybu, pracujeme na jej oprave. V prípade potreby nás kontaktujte e-mailom alebo telefonicky."
 
@@ -2067,6 +2073,9 @@ msgstr "Jednotková cena bez DPH"
 
 msgid "Unit price including VAT"
 msgstr "Jednotková cena s DPH"
+
+msgid "Unknown phone prefix \"%prefix%\" is stored. Please verify it."
+msgstr "Je uložená neznáma telefónna predvoľba \"%prefix%\". Prosím, overte ju."
 
 msgid "Unlimited"
 msgstr "Neobmedzené"
