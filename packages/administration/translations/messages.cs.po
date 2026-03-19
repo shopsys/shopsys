@@ -1969,6 +1969,9 @@ msgstr "Tento příznak nelze smazat."
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr "Toto je poslední zákaznický účet. Odstraní všechna související data. Opravdu to chcete smazat?"
 
+msgid "This phone number may not be valid. Please verify it."
+msgstr "Toto telefonní číslo nemusí být platné. Prosím ověřte ho."
+
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies complaints that were successfully processed."
 msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje reklamace, které nebyly úspěšně vyřízeny."
 

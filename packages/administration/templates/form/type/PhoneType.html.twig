@@ -2,7 +2,15 @@
     <div class="row">
         {% for child in form %}
             <div class="{{ loop.first ? 'col-3' : 'col' }}">
-                {{- form_widget(child) -}}
+                {% set options = loop.last and form.vars.isSuspicious ? { rawSymbolAfterInput: ux_icon('warning', {
+                    class: 'cursor-help icon icon-sm text-warning',
+                    'data-bs-toggle': "popover",
+                    'data-bs-content': 'This phone number may not be valid. Please verify it.'|trans,
+                    'data-bs-trigger': "hover",
+                    "data-bs-html": 'true',
+                }) } : {} %}
+
+                {{- form_widget(child, options) -}}
                 {{- form_errors(child) -}}
             </div>
         {% endfor %}

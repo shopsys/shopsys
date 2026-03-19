@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use libphonenumber\PhoneNumberUtil;
 use Override;
 use Shopsys\FrameworkBundle\Component\Country\CountryFlag;
 use Shopsys\FrameworkBundle\Form\Admin\PhonePrefix\CountryDialCodeTransformer;
@@ -146,12 +147,17 @@ final class PhoneType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['unknownPrefix'] = null;
+        $view->vars['isSuspicious'] = false;
+
         $data = $form->getData();
 
         if (!$data instanceof PhoneData) {
             return;
         }
 
+        $phoneUtil = PhoneNumberUtil::getInstance();
+
+        $view->vars['isSuspicious'] = !$phoneUtil->isValidNumber($data->toLibPhoneNumberObject());
         $view->vars['unknownPrefix'] = $data->countryCode === CountryDialCodeProvider::UNKNOWN_COUNTRY_CODE ? $data->prefix : null;
     }
 

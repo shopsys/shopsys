@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\PhonePrefix;
 
+use libphonenumber;
+
 final class PhoneData
 {
     public function __construct(
@@ -32,5 +34,17 @@ final class PhoneData
             prefix: $data['prefix'],
             number: $data['number'],
         );
+    }
+
+    public function toLibPhoneNumberObject(): libphonenumber\PhoneNumber
+    {
+        $libPhoneNumber = new libphonenumber\PhoneNumber()
+            ->setCountryCode((int)($this->prefix ? ltrim($this->prefix, '+') : 0));
+
+        if ($this->number !== null) {
+            $libPhoneNumber->setNationalNumber($this->number);
+        }
+
+        return $libPhoneNumber;
     }
 }
