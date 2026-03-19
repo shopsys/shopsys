@@ -61,6 +61,11 @@ import {
     TypeRemoveProductListMutationVariables,
 } from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
 import {
+    TypeProductListCountQuery,
+    TypeProductListCountQueryVariables,
+    ProductListCountQueryDocument,
+} from 'graphql/requests/productLists/queries/ProductListCountQuery.generated';
+import {
     TypeProductListQuery,
     TypeProductListQueryVariables,
     ProductListQueryDocument,
@@ -190,21 +195,61 @@ const manuallyUpdateCartQuery = (cache: Cache, newCart: TypeCartFragment, cartUu
 };
 
 const manuallyRemoveProductListQuery = (cache: Cache, args: TypeProductListInput) => {
+    const nullData = { __typename: 'Query' as const, productList: null };
+
     cache.updateQuery<TypeProductListQuery, TypeProductListQueryVariables>(
         { query: ProductListQueryDocument, variables: { input: args } },
-        () => ({ __typename: 'Query', productList: null }),
+        () => nullData,
     );
+    cache.updateQuery<TypeProductListCountQuery, TypeProductListCountQueryVariables>(
+        { query: ProductListCountQueryDocument, variables: { input: args } },
+        () => nullData,
+    );
+
+    // Also clear the cache entry for uuid: null, which may have been written
+    // by the dual-write in manuallyUpdateProductListQuery when the list was first created
+    if (args.uuid) {
+        const nullUuidInput = { type: args.type, uuid: null };
+        cache.updateQuery<TypeProductListQuery, TypeProductListQueryVariables>(
+            { query: ProductListQueryDocument, variables: { input: nullUuidInput } },
+            () => nullData,
+        );
+        cache.updateQuery<TypeProductListCountQuery, TypeProductListCountQueryVariables>(
+            { query: ProductListCountQueryDocument, variables: { input: nullUuidInput } },
+            () => nullData,
+        );
+    }
 };
 
 const manuallyUpdateProductListQuery = (input: TypeProductListInput, result: TypeProductListFragment, cache: Cache) => {
     const uuid = input.uuid ?? result.uuid;
+    const queryInput = { type: input.type, uuid };
+    const countData = {
+        __typename: 'Query' as const,
+        productList: { __typename: 'ProductList' as const, uuid, itemsCount: result.products.length },
+    };
+
     cache.updateQuery<TypeProductListQuery, TypeProductListQueryVariables>(
-        {
-            query: ProductListQueryDocument,
-            variables: {
-                input: { type: input.type, uuid },
-            },
-        },
+        { query: ProductListQueryDocument, variables: { input: queryInput } },
         () => ({ __typename: 'Query', productList: result }),
     );
+    cache.updateQuery<TypeProductListCountQuery, TypeProductListCountQueryVariables>(
+        { query: ProductListCountQueryDocument, variables: { input: queryInput } },
+        () => countData,
+    );
+
+    // When the mutation was sent with a different UUID than what the result contains
+    // (e.g. null UUID when creating a new list), also update the cache entry
+    // that the count query hook is currently subscribed to
+    if (input.uuid !== uuid) {
+        const originalInput = { type: input.type, uuid: input.uuid ?? null };
+        cache.updateQuery<TypeProductListCountQuery, TypeProductListCountQueryVariables>(
+            { query: ProductListCountQueryDocument, variables: { input: originalInput } },
+            () => countData,
+        );
+        cache.updateQuery<TypeProductListQuery, TypeProductListQueryVariables>(
+            { query: ProductListQueryDocument, variables: { input: originalInput } },
+            () => ({ __typename: 'Query', productList: result }),
+        );
+    }
 };

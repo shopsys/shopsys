@@ -268,6 +268,7 @@ export const takeSnapshotAndCompare = (
         throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
     }
 
+    cy.document().its('fonts.status').should('equal', 'loaded');
     scrollPageBeforeScreenshot(optionsWithDefaultValues);
     hideScrollbars();
     disableStickyPositioningBeforeScreenshot(optionsWithDefaultValues.capture, optionsWithDefaultValues.preserveFixed);
@@ -447,6 +448,8 @@ const disableAnimationsBeforeScreenshot = () => {
                 transition: none !important;
                 animation: none !important;
                 caret-color: transparent !important;
+                -webkit-font-smoothing: antialiased !important;
+                -moz-osx-font-smoothing: grayscale !important;
             }
         `;
         doc.head.appendChild(style);
@@ -504,13 +507,17 @@ export const checkNumberOfApiRequestsTriggeredByActions = (
 ) => {
     let requestCounter = 0;
 
-    cy.intercept(`/graphql/${requestName}`, () => {
+    cy.intercept(`/graphql/${requestName}`, (req) => {
         requestCounter += 1;
+        req.continue((res) => {
+            // delay the response so the mutation stays "in flight" while rapid actions fire
+            res.setDelay(2000);
+        });
     });
 
     actions();
 
-    cy.wait(1000).then(() => {
+    cy.wait(3000).then(() => {
         expect(requestCounter).to.eq(numberOfRequests);
     });
 };
@@ -534,12 +541,23 @@ export const checkCanGoToNextOrderStep = () => {
 
 export const getSnapshotIndexingFunction = (snapshotGroupIndex: number, snapshotSubgroupIndex: number) => {
     let snapshotCounter = 0;
+    let counterAtTestStart = 0;
+    let lastTestTitle = '';
+    let lastRetryAttempt = 0;
+
     return () => {
-        const attempt = Cypress.currentRetry;
-        // if the test is retried, decrement the snapshot counter
-        if (attempt > 0) {
-            snapshotCounter -= 1;
+        const currentTest = Cypress.currentTest?.title ?? '';
+        const currentRetry = Cypress.currentRetry;
+
+        if (currentTest !== lastTestTitle) {
+            lastTestTitle = currentTest;
+            counterAtTestStart = snapshotCounter;
+            lastRetryAttempt = 0;
+        } else if (currentRetry > lastRetryAttempt) {
+            snapshotCounter = counterAtTestStart;
+            lastRetryAttempt = currentRetry;
         }
+
         return `${snapshotGroupIndex}-${snapshotSubgroupIndex}-${snapshotCounter++}`;
     };
 };

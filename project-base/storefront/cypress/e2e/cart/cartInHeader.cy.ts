@@ -2,6 +2,7 @@ import { openHeaderCartByMouseover, removeFirstProductFromHeaderCart } from './c
 import { changeBlogArticleDynamicPartsToStaticDemodata } from 'e2e/visits/visitsSupport';
 import { staticData } from 'fixtures/demodata';
 import {
+    checkNumberOfApiRequestsTriggeredByActions,
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
@@ -53,5 +54,21 @@ describe('Cart In Header Tests', () => {
             ],
             preserveFixed: [TIDs.header_cart],
         });
+    });
+
+    it('[Cart Header Remove - Rapid Click] should send only one RemoveFromCart request when clicking rapidly', function () {
+        openHeaderCartByMouseover();
+
+        checkNumberOfApiRequestsTriggeredByActions(
+            () => {
+                cy.getByTID([TIDs.pages_cart_removecartitembutton]).first().should('be.visible').focus();
+                cy.realPress('{enter}');
+                cy.realPress('{enter}');
+                cy.realPress('{enter}');
+                cy.realPress('{enter}');
+            },
+            1,
+            'RemoveFromCartMutation',
+        );
     });
 });

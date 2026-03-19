@@ -32,6 +32,7 @@ export const CartList: FC<CartListProps> = ({ items: cartItems }) => {
                 {cartItems.map((cartItem, listIndex) => (
                     <CartListItem
                         key={cartItem.uuid}
+                        isRemovingFromCart={isRemovingFromCart}
                         item={cartItem}
                         listIndex={listIndex}
                         onAddToCart={addToCart}

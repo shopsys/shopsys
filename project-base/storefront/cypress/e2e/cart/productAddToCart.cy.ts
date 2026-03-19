@@ -7,6 +7,7 @@ import {
 } from './cartSupport';
 import { staticData, url } from 'fixtures/demodata';
 import {
+    checkNumberOfApiRequestsTriggeredByActions,
     checkPopupIsVisible,
     checkUrl,
     getSnapshotIndexingFunction,
@@ -62,6 +63,49 @@ describe('Product Add To Cart Tests', () => {
             ],
         });
         checkPopupIsVisible(true);
+    });
+
+    it('[Product Detail Add - Rapid Enter] should send only one AddToCart request while button is processing', function () {
+        visitEntityByUuid('product', staticData.products.helloKitty.uuid);
+
+        checkNumberOfApiRequestsTriggeredByActions(
+            () => {
+                cy.getByTID([TIDs.pages_productdetail_addtocart_button]).should('be.visible').focus();
+                cy.realPress('{enter}');
+                cy.realPress('{enter}');
+                cy.realPress('{enter}');
+                cy.realPress('{enter}');
+            },
+            1,
+            'AddToCartMutation',
+        );
+
+        checkPopupIsVisible(true);
+    });
+
+    it('[Cart Page Remove - Rapid Click] should send only one RemoveFromCart request when clicking rapidly', function () {
+        cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 2).then((cart) =>
+            cy.storeCartUuidInLocalStorage(cart.uuid),
+        );
+        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
+
+        checkNumberOfApiRequestsTriggeredByActions(
+            () => {
+                cy.getByTID([
+                    [TIDs.pages_cart_list_item_, staticData.products.helloKitty.catnum],
+                    TIDs.pages_cart_removecartitembutton,
+                ])
+                    .should('be.visible')
+                    .focus();
+                cy.realPress('{enter}');
+                cy.realPress('{enter}');
+                cy.realPress('{enter}');
+                cy.realPress('{enter}');
+            },
+            1,
+            'RemoveFromCartMutation',
+        );
     });
 
     it('[Category Page Add] should add product to cart from category page', function () {

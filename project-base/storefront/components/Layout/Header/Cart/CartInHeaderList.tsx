@@ -45,6 +45,7 @@ export const CartInHeaderList: FC = () => {
                     <CartInHeaderListItem
                         key={cartItem.uuid}
                         cartItem={cartItem}
+                        isRemovingFromCart={isRemovingFromCart}
                         onRemoveFromCart={() => removeFromCart(cartItem, listIndex)}
                     />
                 ))}

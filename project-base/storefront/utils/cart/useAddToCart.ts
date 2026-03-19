@@ -6,6 +6,7 @@ import {
 } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { useRef } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -29,65 +30,74 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const { canSeePrices } = useAuthorization();
+    const addingToCartProductUuidsRef = useRef(new Set<string>());
 
     const addToCart: AddToCart = async (productUuid, quantity, listIndex, isAbsoluteQuantity = false) => {
-        const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
-        const initialQuantity = itemToBeAdded?.quantity ?? 0;
-        const addToCartActionResult = await addToCartMutation({
-            input: { cartUuid, productUuid, quantity, isAbsoluteQuantity },
-        });
-
-        if (!cartUuid) {
-            updateCartUuid(addToCartActionResult.data?.AddToCart.cart.uuid ?? null);
+        if (addingToCartProductUuidsRef.current.has(productUuid)) {
+            return null;
         }
 
-        // EXTEND ADDING TO CART HERE
+        addingToCartProductUuidsRef.current.add(productUuid);
 
-        const addProductResult = addToCartActionResult.data?.AddToCart.addProductResult;
+        try {
+            const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
+            const initialQuantity = itemToBeAdded?.quantity ?? 0;
+            const addToCartActionResult = await addToCartMutation({
+                input: { cartUuid, productUuid, quantity, isAbsoluteQuantity },
+            });
 
-        if (addProductResult && addProductResult.notOnStockQuantity > 0) {
-            const actualQuantity = addProductResult.cartItem.quantity;
-            const requestedQuantity = isAbsoluteQuantity ? quantity : initialQuantity + quantity;
-
-            if (actualQuantity < requestedQuantity) {
-                showInfoMessage(
-                    t('Product quantity was adjusted to available stock ({{ quantity }})', {
-                        quantity: actualQuantity,
-                    }),
-                    gtmMessageOrigin,
-                );
+            if (!cartUuid) {
+                updateCartUuid(addToCartActionResult.data?.AddToCart.cart.uuid ?? null);
             }
+
+            const addProductResult = addToCartActionResult.data?.AddToCart.addProductResult;
+
+            if (addProductResult && addProductResult.notOnStockQuantity > 0) {
+                const actualQuantity = addProductResult.cartItem.quantity;
+                const requestedQuantity = isAbsoluteQuantity ? quantity : initialQuantity + quantity;
+
+                if (actualQuantity < requestedQuantity) {
+                    showInfoMessage(
+                        t('Product quantity was adjusted to available stock ({{ quantity }})', {
+                            quantity: actualQuantity,
+                        }),
+                        gtmMessageOrigin,
+                    );
+                }
+            }
+
+            if (addToCartActionResult.error) {
+                return null;
+            }
+
+            const addToCartResult = addToCartActionResult.data?.AddToCart;
+
+            if (!addToCartResult) {
+                return null;
+            }
+
+            dispatchBroadcastChannel('refetchCart', domainConfig.domainId);
+
+            const addedCartItem = addToCartResult.addProductResult.cartItem;
+
+            import('gtm/handlers/onGtmChangeCartItemEventHandler').then(({ onGtmChangeCartItemEventHandler }) => {
+                onGtmChangeCartItemEventHandler(
+                    initialQuantity,
+                    isAbsoluteQuantity,
+                    addToCartResult,
+                    addedCartItem,
+                    domainConfig,
+                    listIndex,
+                    gtmProductListName,
+                    isUserLoggedIn,
+                    !canSeePrices,
+                );
+            });
+
+            return addToCartResult;
+        } finally {
+            addingToCartProductUuidsRef.current.delete(productUuid);
         }
-
-        if (addToCartActionResult.error) {
-            return null;
-        }
-
-        const addToCartResult = addToCartActionResult.data?.AddToCart;
-
-        if (!addToCartResult) {
-            return null;
-        }
-
-        dispatchBroadcastChannel('refetchCart', domainConfig.domainId);
-
-        const addedCartItem = addToCartResult.addProductResult.cartItem;
-
-        import('gtm/handlers/onGtmChangeCartItemEventHandler').then(({ onGtmChangeCartItemEventHandler }) => {
-            onGtmChangeCartItemEventHandler(
-                initialQuantity,
-                isAbsoluteQuantity,
-                addToCartResult,
-                addedCartItem,
-                domainConfig,
-                listIndex,
-                gtmProductListName,
-                isUserLoggedIn,
-                !canSeePrices,
-            );
-        });
-
-        return addToCartResult;
     };
 
     return { addToCart, isAddingToCart };
