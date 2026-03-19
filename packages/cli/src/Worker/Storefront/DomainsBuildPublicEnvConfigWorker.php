@@ -13,36 +13,27 @@ use Shopsys\Cli\Model\FileHandler;
 use Shopsys\Cli\Worker\AbstractWorker;
 use Shopsys\Cli\Worker\WorkerResult;
 
-final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
+final class DomainsBuildPublicEnvConfigWorker extends AbstractWorker
 {
-    private const string FILE_PATH = 'storefront/next.config.js';
+    private const string FILE_PATH = 'storefront/buildPublicEnvConfig.ts';
 
     public function __construct(
         private readonly FileHandler $fileHandler,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getDescription(): string
     {
-        return 'Updates domains array in publicRuntimeConfig and remotePatterns in storefront/next.config.js';
+        return 'Updates domains array in storefront/buildPublicEnvConfig.ts';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function getPriority(): int
     {
         return 488;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
     public function execute(CoreProjectConfig $config, string $projectPath): WorkerResult
     {
@@ -50,41 +41,56 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
 
         $content = $this->fileHandler->readFile($filePath);
 
-        $content = $this->replaceRemotePatterns($content, $config);
+        $content = $this->replaceDomainUrlDeclarations($content, $config);
+        $content = $this->replaceDomainUrlsValidation($content, $config);
         $content = $this->replaceDomainsArray($content, $config);
 
         $this->fileHandler->writeFile($filePath, $content);
 
         return WorkerResult::success(
-            'Updated next.config.js domains and remotePatterns',
+            'Updated buildPublicEnvConfig.ts domains',
             filesModified: [self::FILE_PATH],
         );
     }
 
-    private function replaceRemotePatterns(string $content, CoreProjectConfig $config): string
+    private function replaceDomainUrlDeclarations(string $content, CoreProjectConfig $config): string
     {
-        $remotePatterns = $this->generateRemotePatterns($config);
-        $pattern = '/(remotePatterns:\s*)\[[\s\S]*?],/';
-        $replacement = '${1}' . $remotePatterns . ',';
+        $declarations = [];
+
+        foreach ($config->domains as $domain) {
+            $declarations[] = sprintf("    const domainUrl%d = process.env.DOMAIN_HOSTNAME_%d ?? '';", $domain->id, $domain->id);
+        }
+
+        $pattern = '/(const sentryDsn.*\n)\n(\s*const domainUrl\d+.*\n)+/';
+        $replacement = '${1}' . "\n" . implode("\n", $declarations) . "\n";
 
         $result = preg_replace($pattern, $replacement, $content);
 
         if ($result === null) {
-            throw new RuntimeException('Unable to replace remotePatterns block in next.config.js');
+            throw new RuntimeException('Unable to replace domain URL declarations in buildPublicEnvConfig.ts');
         }
 
         return $result;
     }
 
-    private function generateRemotePatterns(CoreProjectConfig $config): string
+    private function replaceDomainUrlsValidation(string $content, CoreProjectConfig $config): string
     {
-        $patterns = [];
+        $entries = [];
 
         foreach ($config->domains as $domain) {
-            $patterns[] = "            {\n                hostname: process.env.DOMAIN_HOSTNAME_{$domain->id},\n            }";
+            $entries[] = sprintf('DOMAIN_HOSTNAME_%d: domainUrl%d', $domain->id, $domain->id);
         }
 
-        return "[\n" . implode(",\n", $patterns) . ",\n        ]";
+        $pattern = '/const domainUrls = \{[^}]+\};/';
+        $replacement = 'const domainUrls = { ' . implode(', ', $entries) . ' };';
+
+        $result = preg_replace($pattern, $replacement, $content);
+
+        if ($result === null) {
+            throw new RuntimeException('Unable to replace domainUrls validation object in buildPublicEnvConfig.ts');
+        }
+
+        return $result;
     }
 
     private function replaceDomainsArray(string $content, CoreProjectConfig $config): string
@@ -97,7 +103,7 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
         $result = preg_replace($pattern, $replacement, $content);
 
         if ($result === null) {
-            throw new RuntimeException('Unable to replace domains block in next.config.js');
+            throw new RuntimeException('Unable to replace domains block in buildPublicEnvConfig.ts');
         }
 
         return $result;
@@ -108,9 +114,8 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
      */
     private function extractDomainPrototype(string $content): array
     {
-        // Match first domain object only (ends with },) and closing bracket indentation
         if (!preg_match('/domains:\s*\[\n((\s+)\{[\s\S]*?\n\2}),[\s\S]*?\n(\s*)],/', $content, $match)) {
-            throw new RuntimeException('Unable to find domains array in next.config.js');
+            throw new RuntimeException('Unable to find domains array in buildPublicEnvConfig.ts');
         }
 
         return [
@@ -140,6 +145,7 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
         $replacements = [
             '/PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_\d+/' => 'PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_' . $domain->id,
             '/DOMAIN_HOSTNAME_\d+/' => 'DOMAIN_HOSTNAME_' . $domain->id,
+            '/domainUrl\d+/' => 'domainUrl' . $domain->id,
             '/defaultLocale:\s*[\'"][\w-]+[\'"]/' => "defaultLocale: '" . $domain->locale . "'",
             '/currencyCode:\s*[\'"][\w]+[\'"]/' => "currencyCode: '" . $domain->currencyCode . "'",
             '/fallbackTimezone:\s*[\'"][\w\/]+[\'"]/' => "fallbackTimezone: '" . $domain->timezone . "'",
@@ -148,7 +154,8 @@ final class DomainsPublicRuntimeConfigWorker extends AbstractWorker
             '/longitude:\s*[\d.]+/' => 'longitude: ' . $mapSettings->longitude,
             '/zoom:\s*\d+/' => 'zoom: ' . $mapSettings->zoom,
             "/includes\(['\"]\\d+['\"]\)/" => "includes('" . $domain->id . "')",
-            '/type:\s*[\'"][\w]+[\'"]/' => "type: '" . strtoupper($domain->type) . "'",
+            '/GTM_ID_\d+/' => 'GTM_ID_' . $domain->id,
+            '/type:\s*CustomerUserAreaEnum\.\w+/' => 'type: CustomerUserAreaEnum.' . strtoupper($domain->type),
         ];
 
         $result = $prototype;
