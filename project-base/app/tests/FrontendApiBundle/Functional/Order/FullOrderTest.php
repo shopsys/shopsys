@@ -28,7 +28,7 @@ class FullOrderTest extends GraphQlTestCase
                 'firstName' => 'firstName',
                 'lastName' => 'lastName',
                 'email' => 'user@example.com',
-                'telephone' => '+53123456789',
+                'telephone' => '+53 123456789',
                 'companyName' => 'Airlocks s.r.o.',
                 'companyNumber' => '1234',
                 'companyTaxNumber' => 'EU4321',

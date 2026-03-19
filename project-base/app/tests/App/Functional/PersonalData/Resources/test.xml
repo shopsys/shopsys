@@ -4,7 +4,7 @@
     <customer_name>
       <firstname><![CDATA[Jaromír]]></firstname>
       <lastname><![CDATA[Jágr]]></lastname>
-      <phone><![CDATA[+420987654321]]></phone>
+      <phone><![CDATA[+420 987654321]]></phone>
       <email><![CDATA[no-reply@shopsys.com]]></email>
     </customer_name>
     <customer_addresses>
@@ -67,7 +67,7 @@
         </order_items>
         <order_other_data>
           <order_status>{order_status}</order_status>
-          <phone><![CDATA[+420987654321]]></phone>
+          <phone><![CDATA[+420 987654321]]></phone>
           <email><![CDATA[no-reply@shopsys.com]]></email>
         </order_other_data>
       </order>
@@ -84,7 +84,7 @@
             <street><![CDATA[Cihelní 5]]></street>
             <city><![CDATA[Liberec]]></city>
             <postal_code><![CDATA[65421]]></postal_code>
-            <telephone><![CDATA[+420987654321]]></telephone>
+            <telephone><![CDATA[+420 987654321]]></telephone>
             <country_code><![CDATA[CZ]]></country_code>
           </address>
         </complaint_addresses>

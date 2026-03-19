@@ -34,7 +34,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             'firstName' => 'Jaromír',
             'lastName' => 'Jágr',
             'email' => 'no-reply@shopsys.com',
-            'telephone' => '+420605000123',
+            'telephone' => '+420 605 000 123',
             'newsletterSubscription' => true,
             'street' => 'Hlubinská 10',
             'city' => 'Ostrava',
@@ -49,7 +49,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 'street' => 'Rudná 123',
                 'city' => 'Ostrava',
                 'postcode' => '70030',
-                'telephone' => '+420123456789',
+                'telephone' => '+420 123456789',
                 'country' => [
                     'code' => 'CZ',
                 ],
@@ -63,7 +63,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                     'street' => 'Rudná 123',
                     'city' => 'Ostrava',
                     'postcode' => '70030',
-                    'telephone' => '+420123456789',
+                    'telephone' => '+420 123456789',
                     'country' => [
                         'code' => 'CZ',
                     ],
@@ -82,7 +82,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 'firstName' => 'Jan',
                 'lastName' => 'Dvořák',
                 'email' => 'no-reply99@shopsys.com',
-                'telephone' => '+420585425321',
+                'telephone' => '+420 585 425 321',
             ],
         ];
 

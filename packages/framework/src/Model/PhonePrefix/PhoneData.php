@@ -15,13 +15,21 @@ final class PhoneData
     ) {
     }
 
-    public function toPhoneNumber(): ?string
+    /**
+     * @phpstan-param \libphonenumber\PhoneNumberFormat::* $phoneNumberFormat
+     */
+    public function toPhoneNumber(int $phoneNumberFormat = libphonenumber\PhoneNumberFormat::INTERNATIONAL): ?string
     {
         if ($this->prefix === null && $this->number === null) {
             return null;
         }
 
-        return trim(($this->prefix ?? '') . ($this->number ?? ''));
+        $phoneUtil = libphonenumber\PhoneNumberUtil::getInstance();
+
+        return $phoneUtil->format(
+            $this->toLibPhoneNumberObject(),
+            $phoneNumberFormat,
+        );
     }
 
     /**
