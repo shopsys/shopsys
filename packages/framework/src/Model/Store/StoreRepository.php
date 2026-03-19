@@ -134,4 +134,28 @@ class StoreRepository
 
         return $queryBuilder->getQuery()->execute();
     }
+
+    /**
+     * @return int[]
+     */
+    public function getStoreCountsByDomainIdIndexedByStockId(int $domainId): array
+    {
+        $rows = $this->getQueryBuilder()
+            ->select('IDENTITY(s.stock) AS stockId, COUNT(s.id) AS storeCount')
+            ->where('s.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->groupBy('s.stock')
+            ->getQuery()
+            ->getArrayResult();
+
+        $result = [];
+
+        foreach ($rows as $row) {
+            if ($row['stockId'] !== null) {
+                $result[$row['stockId']] = $row['storeCount'];
+            }
+        }
+
+        return $result;
+    }
 }

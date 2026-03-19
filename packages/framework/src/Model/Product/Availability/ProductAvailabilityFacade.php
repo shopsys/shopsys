@@ -65,12 +65,15 @@ class ProductAvailabilityFacade
         }
 
         $productStocks = $this->productStockFacade->getProductStocksByProduct($product);
+        $storeCountsByStockId = $this->storeFacade->getStoreCountsByDomainIdIndexedByStockId($domainId);
 
         $count = 0;
 
         foreach ($productStocks as $productStock) {
+            $stock = $productStock->getStock();
+
             if ($productStock->getProductQuantity() > 0 && $productStock->getStock()->isEnabled($domainId)) {
-                $count += count($productStock->getStock()->getStores());
+                $count += $storeCountsByStockId[$stock->getId()] ?? 0;
             }
         }
 
