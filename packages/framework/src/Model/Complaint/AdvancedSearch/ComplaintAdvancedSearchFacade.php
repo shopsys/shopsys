@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\Filter\ComplaintNumberFilter;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintRepository;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
 
 class ComplaintAdvancedSearchFacade extends AbstractAdvancedSearchFacade
 {
@@ -54,6 +55,8 @@ class ComplaintAdvancedSearchFacade extends AbstractAdvancedSearchFacade
                 $queryBuilder->setParameter('exactText', $quickSearchData->text);
             }
 
+            $phoneExpr = PhoneNumberSearchHelper::getDqlExpression('cmp', 'deliveryTelephone');
+
             $queryBuilder
                 ->andWhere('
                     (
@@ -69,6 +72,8 @@ class ComplaintAdvancedSearchFacade extends AbstractAdvancedSearchFacade
                         NORMALIZED(cmp.deliveryLastName) LIKE NORMALIZED(:text)
                         OR
                         NORMALIZED(cmp.deliveryCompanyName) LIKE NORMALIZED(:text)
+                        OR
+                        NORMALIZED(' . $phoneExpr . ') LIKE NORMALIZED(:text)
                         OR
                         NORMALIZED(o.lastName) LIKE NORMALIZED(:text)
                         OR

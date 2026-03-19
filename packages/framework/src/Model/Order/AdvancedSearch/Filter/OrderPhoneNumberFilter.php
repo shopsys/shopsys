@@ -8,6 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
 
 class OrderPhoneNumberFilter extends AbstractAdvancedSearchFilter
 {
@@ -41,7 +42,8 @@ class OrderPhoneNumberFilter extends AbstractAdvancedSearchFilter
             $searchValue = $this->getSearchValue($ruleData);
             $dqlOperator = $this->getDqlOperator($ruleData->operator);
             $parameterName = 'phoneNumber_' . $index;
-            $queryBuilder->andWhere('NORMALIZED(o.telephone) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
+            $phoneExpr = PhoneNumberSearchHelper::getDqlExpression('o');
+            $queryBuilder->andWhere('NORMALIZED(' . $phoneExpr . ') ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
     }

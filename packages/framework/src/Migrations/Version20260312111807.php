@@ -43,6 +43,8 @@ class Version20260312111807 extends AbstractMigration
         $this->sql('ALTER TABLE orders RENAME COLUMN delivery_telephone TO delivery_telephone_number');
         $this->sql('ALTER TABLE orders ADD delivery_telephone_prefix VARCHAR(10) DEFAULT NULL');
         $this->sql('ALTER TABLE orders ADD delivery_telephone_prefix_country_code VARCHAR(2) DEFAULT NULL');
+
+        $this->sql('CREATE INDEX orders_telephone_trgm_idx ON orders USING gin (normalized(COALESCE(telephone_prefix, \'\')::text || COALESCE(telephone_number, \'\')::text) gin_trgm_ops)');
     }
 
     private function updateDeliveryAddressesTable(): void
@@ -57,5 +59,8 @@ class Version20260312111807 extends AbstractMigration
         $this->sql('ALTER TABLE customer_users RENAME COLUMN telephone TO telephone_number');
         $this->sql('ALTER TABLE customer_users ADD telephone_prefix VARCHAR(10) DEFAULT NULL');
         $this->sql('ALTER TABLE customer_users ADD telephone_prefix_country_code VARCHAR(2) DEFAULT NULL');
+
+        $this->sql('DROP INDEX IF EXISTS customer_users_telephone_trgm_idx');
+        $this->sql('CREATE INDEX customer_users_telephone_trgm_idx ON customer_users USING gin (normalized(COALESCE(telephone_prefix, \'\')::text || COALESCE(telephone_number, \'\')::text) gin_trgm_ops)');
     }
 }

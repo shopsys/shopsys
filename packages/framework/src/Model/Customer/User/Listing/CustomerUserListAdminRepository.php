@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
 
 class CustomerUserListAdminRepository
 {
@@ -40,13 +41,15 @@ class CustomerUserListAdminRepository
             ->from(Order::class, 'o3')
             ->where('o3.customer = c.id AND o3.deleted = false');
 
+        $phoneExpr = PhoneNumberSearchHelper::getDqlExpression('cu');
+
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('
                 ba.id AS billingAddressId,
                 c.id AS customerId,
                 cu.id AS id,
                 CASE WHEN ba.companyCustomer = true THEN \'\' ELSE cu.email END as email,
-                CASE WHEN ba.companyCustomer = true THEN \'\' ELSE cu.telephone END as telephone,
+                CASE WHEN ba.companyCustomer = true THEN \'\' ELSE ' . $phoneExpr . ' END as telephone,
                 ba.companyCustomer AS isCompanyCustomer,
                 cu.domainId as domainId,
                 CASE WHEN ba.companyCustomer = true THEN \'\' ELSE pg.name END as pricingGroup,
@@ -86,6 +89,8 @@ class CustomerUserListAdminRepository
                 $queryBuilder->setParameter('exactText', $quickSearchData->text);
             }
 
+            $phoneExpr = PhoneNumberSearchHelper::getDqlExpression('cu');
+
             $queryBuilder
                 ->andWhere('
                     (
@@ -96,7 +101,7 @@ class CustomerUserListAdminRepository
                         OR
                         NORMALIZED(ba.companyName) LIKE NORMALIZED(:text)
                         OR
-                        NORMALIZED(cu.telephone) LIKE :text
+                        NORMALIZED(' . $phoneExpr . ') LIKE NORMALIZED(:text)
                     )');
             $querySearchText = $this->databaseSearchingHelper->getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);

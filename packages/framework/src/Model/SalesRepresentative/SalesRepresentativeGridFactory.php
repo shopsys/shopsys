@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
 
 class SalesRepresentativeGridFactory implements GridFactoryInterface
 {
@@ -27,7 +28,7 @@ class SalesRepresentativeGridFactory implements GridFactoryInterface
     public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->salesRepresentativeFacade->getAllQueryBuilder();
-        $queryBuilder->addSelect('CONCAT(COALESCE(sr.telephonePrefix, \'\'), sr.telephoneNumber) as telephone');
+        $queryBuilder->addSelect(PhoneNumberSearchHelper::getDqlExpression('sr') . ' as telephone');
         $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'sr.id');
 
         $grid = $this->gridFactory->create('salesRepresentativesList', $dataSource, $roleConstant);
