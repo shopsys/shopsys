@@ -34,8 +34,8 @@ export type TypeAddNewCustomerUserDataInput = {
   newsletterSubscription: Scalars['Boolean']['input'];
   /** Customer user role group uuid. */
   roleGroupUuid: Scalars['Uuid']['input'];
-  /** The customer's telephone number */
-  telephone: Scalars['String']['input'];
+  /** The customer's telephone */
+  telephone: TypePhoneDataInput;
 };
 
 export type TypeAddOrderItemsToCartInput = {
@@ -297,6 +297,8 @@ export type TypeBaseCustomerUser = {
   street: Maybe<Scalars['String']['output']>;
   /** Phone number */
   telephone: Maybe<Scalars['String']['output']>;
+  /** Phone number data */
+  telephoneData: Maybe<TypePhoneData>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -762,8 +764,8 @@ export type TypeChangePersonalDataInput = {
   lastName: Scalars['String']['input'];
   /** Whether customer user should receive newsletters or not */
   newsletterSubscription: Scalars['Boolean']['input'];
-  /** The customer's telephone number */
-  telephone: Scalars['String']['input'];
+  /** The customer's telephone */
+  telephone: TypePhoneDataInput;
 };
 
 export type TypeChangeTransportInCartInput = {
@@ -817,6 +819,8 @@ export type TypeCompanyCustomerUser = TypeBaseCustomerUser & {
   street: Maybe<Scalars['String']['output']>;
   /** Phone number */
   telephone: Maybe<Scalars['String']['output']>;
+  /** Phone number data */
+  telephoneData: Maybe<TypePhoneData>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -843,6 +847,8 @@ export type TypeComplaint = {
   deliveryStreet: Scalars['String']['output'];
   /** Contact telephone number for delivery */
   deliveryTelephone: Scalars['String']['output'];
+  /** Structured delivery telephone data with prefix and number */
+  deliveryTelephoneData: TypePhoneData;
   /** The customer's email address */
   email: Scalars['String']['output'];
   /** All items in the complaint */
@@ -986,8 +992,8 @@ export type TypeCreateInquiryInput = {
   note: InputMaybe<Scalars['String']['input']>;
   /** Product UUID */
   productUuid: Scalars['Uuid']['input'];
-  /** The customer's telephone number */
-  telephone: Scalars['String']['input'];
+  /** The customer's telephone */
+  telephone: TypePhoneDataInput;
 };
 
 export type TypeCreateOrderResult = {
@@ -1048,6 +1054,8 @@ export type TypeCurrentCompanyCustomerUser = TypeBaseCustomerUser & TypeCurrentC
   street: Maybe<Scalars['String']['output']>;
   /** Phone number */
   telephone: Maybe<Scalars['String']['output']>;
+  /** Phone number data */
+  telephoneData: Maybe<TypePhoneData>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -1089,6 +1097,8 @@ export type TypeCurrentCustomerUser = {
   street: Maybe<Scalars['String']['output']>;
   /** Phone number */
   telephone: Maybe<Scalars['String']['output']>;
+  /** Phone number data */
+  telephoneData: Maybe<TypePhoneData>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -1131,6 +1141,8 @@ export type TypeCurrentRegularCustomerUser = TypeBaseCustomerUser & TypeCurrentC
   street: Maybe<Scalars['String']['output']>;
   /** Phone number */
   telephone: Maybe<Scalars['String']['output']>;
+  /** Phone number data */
+  telephoneData: Maybe<TypePhoneData>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -1174,6 +1186,8 @@ export type TypeDeliveryAddress = {
   street: Maybe<Scalars['String']['output']>;
   /** Delivery address telephone */
   telephone: Maybe<Scalars['String']['output']>;
+  /** Delivery address phone number data */
+  telephoneData: Maybe<TypePhoneData>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -1194,7 +1208,7 @@ export type TypeDeliveryAddressInput = {
   /** Delivery address street name */
   street: Scalars['String']['input'];
   /** Delivery address telephone */
-  telephone: InputMaybe<Scalars['String']['input']>;
+  telephone: InputMaybe<TypePhoneDataInput>;
   /** UUID */
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
@@ -1210,8 +1224,8 @@ export type TypeEditCustomerUserPersonalDataInput = {
   newsletterSubscription: Scalars['Boolean']['input'];
   /** Customer user role group uuid. */
   roleGroupUuid: Scalars['Uuid']['input'];
-  /** The customer's telephone number */
-  telephone: Scalars['String']['input'];
+  /** The customer's telephone */
+  telephone: TypePhoneDataInput;
 };
 
 /** Represents a downloadable file */
@@ -1932,6 +1946,8 @@ export type TypeOrder = {
   deliveryStreet: Maybe<Scalars['String']['output']>;
   /** Contact telephone number for delivery */
   deliveryTelephone: Maybe<Scalars['String']['output']>;
+  /** Contact phone number data for delivery */
+  deliveryTelephoneData: Maybe<TypePhoneData>;
   /** The customer's email address */
   email: Scalars['String']['output'];
   /** The customer's first name */
@@ -1970,8 +1986,10 @@ export type TypeOrder = {
   statusType: TypeOrderStatusEnum;
   /** Billing address street name  */
   street: Scalars['String']['output'];
-  /** The customer's telephone number */
+  /** The customer's formatted telephone number */
   telephone: Scalars['String']['output'];
+  /** The customer's telephone number split into country code, prefix, and number */
+  telephoneData: TypePhoneData;
   /** Total price of the order including transport and payment prices */
   totalPrice: TypePrice;
   /** The order tracking number */
@@ -2052,8 +2070,8 @@ export type TypeOrderInput = {
   deliveryPostcode: InputMaybe<Scalars['String']['input']>;
   /** Street name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
   deliveryStreet: InputMaybe<Scalars['String']['input']>;
-  /** Contact telephone number for delivery */
-  deliveryTelephone: InputMaybe<Scalars['String']['input']>;
+  /** Contact telephone for delivery */
+  deliveryTelephone: InputMaybe<TypePhoneDataInput>;
   /** The customer's email address */
   email: InputMaybe<Scalars['String']['input']>;
   /** The customer's first name */
@@ -2075,7 +2093,7 @@ export type TypeOrderInput = {
   /** Billing address street name (will be on the tax invoice) */
   street: Scalars['String']['input'];
   /** The customer's phone number */
-  telephone: Scalars['String']['input'];
+  telephone: TypePhoneDataInput;
 };
 
 /** Represent one item in the order */
@@ -2198,8 +2216,10 @@ export type TypeOrderWithdrawalRequest = {
   note: Maybe<Scalars['String']['output']>;
   /** Date and time when the withdrawal was requested by customer */
   requestedAt: Scalars['DateTime']['output'];
-  /** Telephone number for withdrawal request contact */
+  /** Formatted telephone number for withdrawal request contact */
   telephone: Maybe<Scalars['String']['output']>;
+  /** Telephone number data split into country code, prefix, and number */
+  telephoneData: Maybe<TypePhoneData>;
 };
 
 /** Input for requesting withdrawal from contract for an order */
@@ -2214,8 +2234,8 @@ export type TypeOrderWithdrawalRequestInput = {
   note: InputMaybe<Scalars['String']['input']>;
   /** Order URL hash to identify the order */
   orderUrlHash: Scalars['String']['input'];
-  /** Telephone number (optional) */
-  telephone: InputMaybe<Scalars['String']['input']>;
+  /** Telephone number data (optional) */
+  telephone: InputMaybe<TypePhoneDataInput>;
 };
 
 /** Information about pagination in a connection. */
@@ -2481,6 +2501,40 @@ export type TypePersonalDataPage = {
   exportSiteContent: Maybe<Scalars['String']['output']>;
   /** URL slug of export site */
   exportSiteSlug: Scalars['String']['output'];
+};
+
+/** Represents phone number data */
+export type TypePhoneData = {
+  __typename?: 'PhoneData';
+  /** Phone prefix country code in ISO 3166-1 alpha-2 */
+  countryCode: Maybe<Scalars['String']['output']>;
+  /** Phone number without prefix */
+  number: Scalars['String']['output'];
+  /** Phone prefix (eg. +420) */
+  prefix: Maybe<Scalars['String']['output']>;
+};
+
+/** Represents phone number input */
+export type TypePhoneDataInput = {
+  /** Phone prefix country code in ISO 3166-1 alpha-2 */
+  countryCode: Scalars['String']['input'];
+  /** Phone number without prefix */
+  number: Scalars['String']['input'];
+  /** Phone prefix (eg. +420) */
+  prefix: Scalars['String']['input'];
+};
+
+/** Represents phone prefix */
+export type TypePhonePrefix = {
+  __typename?: 'PhonePrefix';
+  /** ISO 3166-1 alpha-2 country code */
+  code: Scalars['String']['output'];
+  /** Country name */
+  countryName: Scalars['String']['output'];
+  /** International dial code (eg. +420) */
+  dialCode: Scalars['String']['output'];
+  /** Country flag */
+  flagEmoji: Scalars['String']['output'];
 };
 
 /** Represents the price */
@@ -3243,8 +3297,8 @@ export type TypeRegistrationDataInput = {
   productListsUuids: Array<Scalars['Uuid']['input']>;
   /** Billing address street name (will be on the tax invoice) */
   street: Scalars['String']['input'];
-  /** The customer's telephone number */
-  telephone: Scalars['String']['input'];
+  /** The customer's telephone */
+  telephone: TypePhoneDataInput;
 };
 
 /** Represents a regular customer user */
@@ -3283,6 +3337,8 @@ export type TypeRegularCustomerUser = TypeBaseCustomerUser & {
   street: Maybe<Scalars['String']['output']>;
   /** Phone number */
   telephone: Maybe<Scalars['String']['output']>;
+  /** Phone number data */
+  telephoneData: Maybe<TypePhoneData>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -3418,6 +3474,8 @@ export type TypeSalesRepresentative = {
   lastName: Maybe<Scalars['String']['output']>;
   /** Phone number */
   telephone: Maybe<Scalars['String']['output']>;
+  /** Phone number data */
+  telephoneData: Maybe<TypePhoneData>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -3491,6 +3549,8 @@ export type TypeSettings = {
   heurekaEnabled: Scalars['Boolean']['output'];
   /** Main blog category URL and background image */
   mainBlogCategoryData: TypeMainBlogCategoryData;
+  /** Returns available phone prefixes for current domain */
+  phonePrefixes: Array<TypePhonePrefix>;
   /** Settings related to pricing */
   pricing: TypePricingSetting;
   /** Returns privacy policy article's url */
