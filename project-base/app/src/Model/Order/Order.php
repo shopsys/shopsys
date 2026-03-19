@@ -13,8 +13,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 /**
  * @property \App\Model\Customer\User\CustomerUser|null $customerUser
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Order\Item\OrderItem> $items
- * @property \App\Model\Transport\Transport $transport
- * @property \App\Model\Payment\Payment $payment
  * @property \App\Model\Administrator\Administrator|null $createdAsAdministrator
  * @method \App\Model\Customer\User\CustomerUser|null getCustomerUser()
  * @method \App\Model\Order\Item\OrderItem[] getItems()

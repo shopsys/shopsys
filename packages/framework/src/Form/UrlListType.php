@@ -20,6 +20,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\GroupSequence;
 
 final class UrlListType extends AbstractType
@@ -40,6 +41,22 @@ final class UrlListType extends AbstractType
             throw new MissingRouteNameException();
         }
 
+        $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain(
+            $options['route_name'],
+            (int)$options['entity_id'],
+            $options['limit_domains_by_ids'],
+        );
+
+        $newUrlsConstraints = [
+            new UniqueSlugsOnDomains(
+                groups: [self::UNIQUE_SLUGS_VALIDATION_GROUP],
+            ),
+        ];
+
+        if ($options['required'] && count($friendlyUrlsByDomain) === 0 && $options['entity_id'] === null) {
+            $newUrlsConstraints[] = new Count(min: 1, minMessage: 'Please define at least one URL.');
+        }
+
         $builder->add('toDelete', FormType::class);
         $builder->add('mainFriendlyUrlsByDomainId', FormType::class);
         $builder->add('newUrls', CollectionType::class, [
@@ -50,18 +67,8 @@ final class UrlListType extends AbstractType
             'entry_options' => [
                 'limit_domains_by_ids' => $this->domain->getAdminEnabledDomainIds($options['limit_domains_by_ids']),
             ],
-            'constraints' => [
-                new UniqueSlugsOnDomains(
-                    groups: [self::UNIQUE_SLUGS_VALIDATION_GROUP],
-                ),
-            ],
+            'constraints' => $newUrlsConstraints,
         ]);
-
-        $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain(
-            $options['route_name'],
-            (int)$options['entity_id'],
-            $options['limit_domains_by_ids'],
-        );
 
         foreach ($friendlyUrlsByDomain as $domainId => $friendlyUrls) {
             $builder->get('toDelete')->add(
@@ -77,7 +84,7 @@ final class UrlListType extends AbstractType
 
             $builder->get('mainFriendlyUrlsByDomainId')->add(
                 $builder->create((string)$domainId, ChoiceType::class, [
-                    'required' => true,
+                    'required' => $options['required'],
                     'multiple' => false,
                     'expanded' => true,
                     'choices' => $friendlyUrls,

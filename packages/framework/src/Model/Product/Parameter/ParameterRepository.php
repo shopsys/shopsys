@@ -445,6 +445,25 @@ class ParameterRepository
      */
     public function getParameterValuesByParameter(Parameter $parameter): array
     {
+        return $this->getParameterValuesByParameterQueryBuilder($parameter)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getParameterValuesByParameterAndLocale(Parameter $parameter, string $locale): array
+    {
+        return $this->getParameterValuesByParameterQueryBuilder($parameter)
+            ->andWhere('pv.locale = :locale')
+            ->setParameter(':locale', $locale)
+            ->getQuery()
+            ->getResult();
+    }
+
+    protected function getParameterValuesByParameterQueryBuilder(Parameter $parameter): QueryBuilder
+    {
         return $this->getParameterValueRepository()->createQueryBuilder('pv')
             ->select('pv')
             ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value')
@@ -452,9 +471,7 @@ class ParameterRepository
             ->where('ppv.parameter = :parameter')
             ->setParameter(':parameter', $parameter)
             ->groupBy('pv')
-            ->orderBy('pv.id')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('pv.id');
     }
 
     public function updateParameterValueInProductsByConversion(

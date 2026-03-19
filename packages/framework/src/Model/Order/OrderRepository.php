@@ -275,7 +275,8 @@ class OrderRepository
     public function getAllWithoutTrackingNumberByTransportType(string $transportType): array
     {
         $queryBuilder = $this->createOrderQueryBuilder()
-            ->join('o.transport', 't')
+            ->join('o.items', 'oi', Join::WITH, 'oi.transport IS NOT NULL')
+            ->join('oi.transport', 't')
             ->andWhere('o.trackingNumber IS NULL')
             ->andWhere('t.type = :transportType')
             ->setParameter('transportType', $transportType);

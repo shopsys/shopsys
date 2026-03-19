@@ -56,14 +56,6 @@ mutation CreateOrder(
     ) {
         order {
             uuid
-            transport {
-                uuid
-                name
-            }
-            payment {
-                uuid
-                name
-            }
             status
             totalPrice {
                 priceWithVat

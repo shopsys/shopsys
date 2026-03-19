@@ -156,16 +156,12 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                                 promoCode={orderData.order.promoCode}
                                 totalPrice={orderData.order.totalPrice}
                                 payment={{
-                                    name: orderPayment?.name ?? orderData.order.payment.name,
-                                    price:
-                                        orderPayment?.totalPrice.priceWithVat ??
-                                        orderData.order.payment.price.priceWithVat,
+                                    name: orderPayment?.name,
+                                    price: orderPayment?.totalPrice.priceWithVat,
                                 }}
                                 transport={{
-                                    name: orderTransport?.name ?? orderData.order.transport.name,
-                                    price:
-                                        orderTransport?.totalPrice.priceWithVat ??
-                                        orderData.order.transport.price.priceWithVat,
+                                    name: orderTransport?.name,
+                                    price: orderTransport?.totalPrice.priceWithVat,
                                 }}
                             />
                         </div>

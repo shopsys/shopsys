@@ -1,16 +1,13 @@
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductListTypeEnum } from 'graphql/types';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useProductList } from 'utils/productLists/useProductList';
 import { useUpdateProductListUuid } from 'utils/productLists/useUpdateProductListUuid';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
-import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 export const useWishlist = () => {
     const { t } = useTranslation();
     const updateWishlistUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Wishlist);
-    const domainConfig = useDomainConfig();
 
     const { productListData, removeList, isProductInList, toggleProductInList, isProductListFetching } = useProductList(
         TypeProductListTypeEnum.Wishlist,
@@ -19,22 +16,18 @@ export const useWishlist = () => {
             addProductSuccess: (result) => {
                 showSuccessMessage(t('The item has been added to your wishlist.'));
                 updateWishlistUuid(result?.uuid ?? null);
-                dispatchBroadcastChannel('refetchWishedProducts', domainConfig.domainId);
             },
             removeError: () => showErrorMessage(t('Unable to clean wishlist.')),
             removeSuccess: () => {
                 showSuccessMessage(t('Wishlist was cleaned.'));
                 updateWishlistUuid(null);
-                dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
             },
             removeProductError: () => showErrorMessage(t('Unable to remove product from wishlist.')),
             removeProductSuccess: (result) => {
                 if (!result) {
                     updateWishlistUuid(null);
-                    dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
                 }
                 showSuccessMessage(t('The item has been removed from your wishlist.'));
-                dispatchBroadcastChannel('refetchWishedProducts', domainConfig.domainId);
             },
         },
     );

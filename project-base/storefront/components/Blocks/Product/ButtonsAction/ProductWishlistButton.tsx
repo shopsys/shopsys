@@ -1,5 +1,6 @@
 import { HeartFilledIcon } from 'components/Basic/Icon/HeartFilledIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
+import { TIDs } from 'cypress/tids';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -27,6 +28,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
 
     return (
         <button
+            data-tid={TIDs.product_wishlist_button}
             tabIndex={tabIndex}
             title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
             aria-label={

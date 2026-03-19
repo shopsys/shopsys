@@ -46,6 +46,20 @@ class OrderItemResolverMap extends ResolverMap
 
                     return null;
                 },
+                'transport' => function (OrderItem $orderItem) {
+                    if ($orderItem->isTypeTransport()) {
+                        return $orderItem->getTransport();
+                    }
+
+                    return null;
+                },
+                'payment' => function (OrderItem $orderItem) {
+                    if ($orderItem->isTypePayment()) {
+                        return $orderItem->getPayment();
+                    }
+
+                    return null;
+                },
             ],
         ];
     }

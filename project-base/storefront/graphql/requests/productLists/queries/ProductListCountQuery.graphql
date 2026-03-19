@@ -1,5 +1,6 @@
 query ProductListCountQuery($input: ProductListInput!) {
     productList(input: $input) {
+        uuid
         itemsCount
     }
 }

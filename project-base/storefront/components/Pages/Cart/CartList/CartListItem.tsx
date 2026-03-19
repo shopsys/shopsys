@@ -21,6 +21,7 @@ type CartListItemProps = {
     listIndex: number;
     onRemoveFromCart: () => void;
     onAddToCart: AddToCart;
+    isRemovingFromCart: boolean;
 };
 
 export const CartListItem: FC<CartListItemProps> = ({
@@ -28,6 +29,7 @@ export const CartListItem: FC<CartListItemProps> = ({
     listIndex,
     onRemoveFromCart,
     onAddToCart,
+    isRemovingFromCart,
 }) => {
     const spinboxRef = useRef<HTMLInputElement>(null);
     const lastSubmittedQuantityRef = useRef<number | null>(null);
@@ -40,6 +42,14 @@ export const CartListItem: FC<CartListItemProps> = ({
     const isProductGift = type === TypeCartItemTypeEnum.ProductGift;
 
     const onSubmitCartChange = useEffectEvent((productUuid: string, qty: number, idx: number) => {
+        if (qty === quantity) {
+            lastSubmittedQuantityRef.current = null;
+            return;
+        }
+        if (lastSubmittedQuantityRef.current === qty) {
+            return;
+        }
+        lastSubmittedQuantityRef.current = qty;
         onAddToCart(productUuid, qty, idx, true);
     });
 
@@ -48,19 +58,8 @@ export const CartListItem: FC<CartListItemProps> = ({
             return;
         }
 
-        if (debouncedSpinboxValue === quantity) {
-            lastSubmittedQuantityRef.current = null;
-
-            return;
-        }
-
-        if (lastSubmittedQuantityRef.current === debouncedSpinboxValue) {
-            return;
-        }
-
-        lastSubmittedQuantityRef.current = debouncedSpinboxValue;
         onSubmitCartChange(product.uuid, debouncedSpinboxValue, listIndex);
-    }, [debouncedSpinboxValue, listIndex, product.uuid, quantity]);
+    }, [debouncedSpinboxValue, listIndex, product.uuid]);
 
     useEffect(() => {
         if (quantity > 0 && spinboxRef.current) {
@@ -178,6 +177,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                 <IconButton
                     Icon={RemoveIcon}
                     className="vl:static absolute top-2.5 right-2.5 flex items-center"
+                    disabled={isRemovingFromCart}
                     tid={TIDs.pages_cart_removecartitembutton}
                     title={t('Remove product from cart')}
                     ariaLabel={t('Remove from cart product {{ productName }}', {

@@ -14,11 +14,13 @@ import { generateProductImageAlt } from 'utils/productAltText';
 type CartInHeaderListItemProps = {
     cartItem: TypeCartItemFragment;
     onRemoveFromCart: MouseEventHandler<HTMLButtonElement>;
+    isRemovingFromCart: boolean;
 };
 
 export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     cartItem: { product, uuid, quantity, type },
     onRemoveFromCart,
+    isRemovingFromCart,
 }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
@@ -87,6 +89,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
             <RemoveCartItemButton
                 ariaLabel={t('Remove from cart ' + product.fullName, { ns: 'accessibility' })}
                 className="text-icon-less hover:text-icon-default absolute top-2 right-0 cursor-pointer lg:relative lg:top-0 lg:right-0"
+                disabled={isRemovingFromCart}
                 title={t('Remove from cart')}
                 onRemoveFromCart={onRemoveFromCart}
             />

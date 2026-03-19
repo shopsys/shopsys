@@ -1,9 +1,10 @@
 import { useProductListCountQuery } from 'graphql/requests/productLists/queries/ProductListCountQuery.generated';
 import { TypeProductListTypeEnum } from 'graphql/types';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import { useRefetchOnTabFocus } from 'utils/useRefetchOnTabFocus';
 
 export const useProductListCount = (productListType: TypeProductListTypeEnum): number => {
     const isProductListHydrated = useSessionStore((s) => s.isProductListHydrated);
@@ -14,7 +15,7 @@ export const useProductListCount = (productListType: TypeProductListTypeEnum): n
 
     const isQueryPaused = !isProductListHydrated || (!productListUuid && !isUserLoggedIn) || authLoading !== null;
 
-    const [{ data }] = useProductListCountQuery({
+    const [{ data }, reexecuteQuery] = useProductListCountQuery({
         variables: {
             input: {
                 type: productListType,
@@ -23,6 +24,14 @@ export const useProductListCount = (productListType: TypeProductListTypeEnum): n
         },
         pause: isQueryPaused,
     });
+
+    const refetchOnFocus = useCallback(() => {
+        if (isQueryPaused) {
+            return;
+        }
+        reexecuteQuery({ requestPolicy: 'network-only' });
+    }, [reexecuteQuery, isQueryPaused]);
+    useRefetchOnTabFocus(refetchOnFocus);
 
     useEffect(() => {
         updatePageLoadingState({ isProductListHydrated: true });

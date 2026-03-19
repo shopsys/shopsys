@@ -229,6 +229,9 @@ msgstr ""
 msgid "Please choose unit"
 msgstr ""
 
+msgid "Please define at least one URL."
+msgstr ""
+
 msgid "Please enter BIC/SWIFT for domain %domainName%."
 msgstr ""
 

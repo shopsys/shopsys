@@ -1544,8 +1544,6 @@ type Order {
   note: String
   "Unique order number"
   number: String!
-  "Payment method applied to the order"
-  payment: Payment!
   "Selected pickup place identifier"
   pickupPlaceIdentifier: String
   "Billing address zip code"
@@ -1568,8 +1566,6 @@ type Order {
   trackingNumber: String
   "The order tracking link"
   trackingUrl: String
-  "Transport method applied to the order"
-  transport: Transport!
   "Unique url hash that can be used to "
   urlHash: String!
   "UUID"
@@ -1676,12 +1672,16 @@ type OrderItem {
   name: String!
   "Order to which the order item belongs"
   order: Order!
+  "Payment method applied to the order"
+  payment: Payment
   "Product of the order item"
   product: Product
   "Quantity of order items in the order"
   quantity: Int!
   "Total price for the quantity of order item"
   totalPrice: Price!
+  "Transport method applied to the order"
+  transport: Transport
   "Type of the order item"
   type: OrderItemTypeEnum!
   "Unit of measurement used for the order item"

@@ -8,6 +8,27 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\SelectedCategorySeoMixCo
 
 class SelectedCategorySeoMixCombinationFactory
 {
+    /**
+     * @param int[] $parameterValueIdsByParameterIds
+     */
+    public function create(
+        int $domainId,
+        int $categoryId,
+        ?int $flagId,
+        ?string $ordering,
+        array $parameterValueIdsByParameterIds,
+    ): SelectedCategorySeoMixCombination {
+        ksort($parameterValueIdsByParameterIds);
+
+        return new SelectedCategorySeoMixCombination(
+            $domainId,
+            $categoryId,
+            $ordering,
+            $flagId,
+            $parameterValueIdsByParameterIds,
+        );
+    }
+
     public function createFromJson(string $selectedCategorySeoMixCombinationJson): SelectedCategorySeoMixCombination
     {
         $selectedCategorySeoMixCombinationArray = json_decode($selectedCategorySeoMixCombinationJson, true, 512, JSON_THROW_ON_ERROR);

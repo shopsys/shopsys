@@ -21,14 +21,12 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Symfony\Component\Clock\DatePoint;
 
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
@@ -99,20 +97,6 @@ class Order
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order', cascade: ['persist'], orphanRemoval: true)]
     #[ORM\OrderBy(['id' => 'ASC'])]
     protected $items;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: Transport::class)]
-    protected $transport;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: Payment::class)]
-    protected $payment;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
@@ -384,9 +368,6 @@ class Order
     ) {
         $this->fillCommonFields($orderData);
 
-        $this->transport = $orderData->transport;
-        $this->payment = $orderData->payment;
-
         $this->items = new ArrayCollection();
 
         $this->number = $orderNumber;
@@ -567,14 +548,12 @@ class Order
     protected function editOrderTransport(OrderData $orderData): void
     {
         $orderTransportData = $orderData->orderTransport;
-        $this->transport = $orderTransportData->transport;
         $this->getTransportItem()->edit($orderTransportData);
     }
 
     protected function editOrderPayment(OrderData $orderData): void
     {
         $orderPaymentData = $orderData->orderPayment;
-        $this->payment = $orderPaymentData->payment;
         $this->getPaymentItem()->edit($orderPaymentData);
     }
 
@@ -612,15 +591,6 @@ class Order
 
     public function removeItem(OrderItem $item): void
     {
-        if ($item->isTypeTransport()) {
-            // @phpstan-ignore assign.propertyType
-            $this->transport = null;
-        }
-
-        if ($item->isTypePayment()) {
-            // @phpstan-ignore assign.propertyType
-            $this->payment = null;
-        }
         $this->items->removeElement($item);
     }
 
@@ -1202,7 +1172,7 @@ class Order
 
     public function getTrackingUrl(): ?string
     {
-        $trackingUrl = $this->transport->getTrackingUrl();
+        $trackingUrl = $this->getTransport()->getTrackingUrl();
         $trackingNumber = $this->getTrackingNumber();
 
         if ($trackingUrl === null || $trackingNumber === null) {

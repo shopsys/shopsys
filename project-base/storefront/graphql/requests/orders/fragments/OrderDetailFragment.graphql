@@ -6,29 +6,6 @@ fragment OrderDetailFragment on Order {
     items {
         ...OrderDetailItemFragment
     }
-    transport {
-        __typename
-        name
-        price {
-            ...PriceFragment
-        }
-        mainImage {
-            url
-        }
-        isPersonalPickup
-        transportTypeCode
-    }
-    payment {
-        __typename
-        name
-        type
-        price {
-            ...PriceFragment
-        }
-        mainImage {
-            url
-        }
-    }
     status
     statusType
     firstName

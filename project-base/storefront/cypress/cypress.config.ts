@@ -50,6 +50,19 @@ export default defineConfig({
         setupNodeEvents(on, config) {
             configureVisualRegression(on);
 
+            on('before:browser:launch', (browser, launchOptions) => {
+                if (browser.family === 'chromium' && browser.name !== 'electron') {
+                    launchOptions.args.push(
+                        '--font-render-hinting=none',
+                        '--disable-font-subpixel-positioning',
+                        '--disable-lcd-text',
+                        '--disable-skia-runtime-opts',
+                    );
+                }
+
+                return launchOptions;
+            });
+
             // Dynamically get available dataFixtures.locale.po file for translations
             on('task', {
                 getAvailablePoLocales() {

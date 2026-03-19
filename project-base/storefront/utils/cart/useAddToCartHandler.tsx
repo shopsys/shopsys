@@ -37,8 +37,8 @@ export const useAddToCartHandler = ({
         const addedQuantity = isWithSpinbox ? spinboxRef.current!.valueAsNumber : 1;
         const addToCartResult = await addToCart(productUuid, addedQuantity, listIndex);
 
-        if (isWithSpinbox) {
-            spinboxRef.current!.valueAsNumber = 1;
+        if (isWithSpinbox && spinboxRef.current !== null) {
+            spinboxRef.current.valueAsNumber = 1;
         }
 
         if (addToCartResult) {

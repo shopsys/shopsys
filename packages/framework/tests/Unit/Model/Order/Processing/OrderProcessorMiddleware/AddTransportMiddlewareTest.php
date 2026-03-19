@@ -39,7 +39,7 @@ class AddTransportMiddlewareTest extends MiddlewareTestCase
         $result = $addTransportMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
         $actualOrderData = $result->orderData;
 
-        $this->assertSame($actualOrderData->transport, $transport);
+        $this->assertSame($actualOrderData->orderTransport?->transport, $transport);
 
         $this->assertThat(
             $actualOrderData->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_TRANSPORT]),
@@ -69,7 +69,7 @@ class AddTransportMiddlewareTest extends MiddlewareTestCase
         $result = $addTransportMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
         $actualOrderData = $result->orderData;
 
-        $this->assertNull($actualOrderData->transport);
+        $this->assertNull($actualOrderData->orderTransport);
         $actualTransportItemsType = $actualOrderData->getItemsByType(OrderItemTypeEnum::TYPE_TRANSPORT);
 
         $this->assertCount(0, $actualTransportItemsType);

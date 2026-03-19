@@ -58,7 +58,17 @@ class PaymentMutationTest extends GraphQlTestCase
         $content = $this->getResponseDataForGraphQlType($response, 'UpdatePaymentStatus');
 
         $this->assertTrue($content['isPaid']);
-        $this->assertSame(PaymentTypeEnum::TYPE_GOPAY, $content['payment']['type']);
+        $paymentItem = null;
+
+        foreach ($content['items'] as $item) {
+            if ($item['type'] === 'payment') {
+                $paymentItem = $item;
+
+                break;
+            }
+        }
+        $this->assertNotNull($paymentItem, 'Payment item not found in order items');
+        $this->assertSame(PaymentTypeEnum::TYPE_GOPAY, $paymentItem['payment']['type']);
 
 
         $this->em->clear();

@@ -2,9 +2,12 @@ fragment UpdatePaymentStatusFragment on Order {
     __typename
     isPaid
     number
-    payment {
-        name
+    items {
         type
+        payment {
+            name
+            type
+        }
     }
     hasPaymentInProcess
     urlHash
