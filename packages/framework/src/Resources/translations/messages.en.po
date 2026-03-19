@@ -604,6 +604,9 @@ msgstr ""
 msgid "Company Tax number"
 msgstr ""
 
+msgid "Company customer"
+msgstr ""
+
 msgid "Company data"
 msgstr ""
 

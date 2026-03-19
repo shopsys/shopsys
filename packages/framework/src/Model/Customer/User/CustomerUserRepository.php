@@ -8,23 +8,14 @@ use DateTimeInterface;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
-use Doctrine\ORM\QueryBuilder;
-use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
-use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
-use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
-use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class CustomerUserRepository
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
@@ -77,81 +68,6 @@ class CustomerUserRepository
             'id' => $id,
             'loginToken' => $loginToken,
         ]);
-    }
-
-    public function getCustomerUserListQueryBuilderByQuickSearchData(
-        int $domainId,
-        QuickSearchFormData $quickSearchData,
-    ): QueryBuilder {
-        $ordersCountSubquery = $this->em->createQueryBuilder()
-            ->select('COUNT(o1.id)')
-            ->from(Order::class, 'o1')
-            ->where('o1.customer = c.id AND o1.deleted = false');
-
-        $ordersSumSubquery = $this->em->createQueryBuilder()
-            ->select('COALESCE(SUM(o2.totalPriceWithVat), 0)')
-            ->from(Order::class, 'o2')
-            ->where('o2.customer = c.id AND o2.deleted = false');
-
-        $lastOrderSubquery = $this->em->createQueryBuilder()
-            ->select('MAX(o3.createdAt)')
-            ->from(Order::class, 'o3')
-            ->where('o3.customer = c.id AND o3.deleted = false');
-
-        $queryBuilder = $this->em->createQueryBuilder()
-            ->select('
-                ba.id AS billingAddressId,
-                c.id AS customerId,
-                cu.id AS id,
-                CASE WHEN ba.companyCustomer = true THEN \'\' ELSE cu.email END as email,
-                CASE WHEN ba.companyCustomer = true THEN \'\' ELSE cu.telephone END as telephone,
-                ba.companyCustomer AS isCompanyCustomer,
-                cu.domainId as domainId,
-                CASE WHEN ba.companyCustomer = true THEN \'\' ELSE pg.name END as pricingGroup,
-                ba.city as city,
-                CASE WHEN ba.companyCustomer = true THEN ba.companyName ELSE CONCAT(cu.lastName, \' \', cu.firstName) END AS name,
-                ba.activated as isActivated,
-                (' . $ordersCountSubquery->getDQL() . ') as ordersCount,
-                (' . $ordersSumSubquery->getDQL() . ') as ordersSumPrice,
-                (' . $lastOrderSubquery->getDQL() . ') as lastOrderAt')
-            ->from(Customer::class, 'c')
-            ->join(CustomerUser::class, 'cu', Join::WITH, 'cu.customer = c.id AND cu.domainId = :selectedDomainId AND NOT EXISTS (
-                SELECT 1 FROM ' . CustomerUser::class . ' cu2 
-                WHERE cu2.customer = c.id AND cu2.domainId = :selectedDomainId AND cu2.id < cu.id
-            )')
-            ->leftJoin('cu.pricingGroup', 'pg')
-            ->leftJoin(BillingAddress::class, 'ba', Join::WITH, 'ba.customer = c.id AND NOT EXISTS (
-                SELECT 1 FROM ' . BillingAddress::class . ' ba2 
-                WHERE ba2.customer = c.id AND ba2.id < ba.id
-            )')
-            ->where('cu.id IS NOT NULL')
-            ->setParameter('selectedDomainId', $domainId);
-
-        if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
-            $uuidCondition = '';
-
-            if (Uuid::isValid($quickSearchData->text)) {
-                $uuidCondition = 'cu.uuid = :exactText OR ';
-                $queryBuilder->setParameter('exactText', $quickSearchData->text);
-            }
-
-            $queryBuilder
-                ->andWhere('
-                    (
-                        ' . $uuidCondition . '
-                        NORMALIZED(cu.lastName) LIKE NORMALIZED(:text)
-                        OR
-                        NORMALIZED(cu.email) LIKE NORMALIZED(:text)
-                        OR
-                        NORMALIZED(ba.companyName) LIKE NORMALIZED(:text)
-                        OR
-                        NORMALIZED(cu.telephone) LIKE :text
-                    )');
-            $querySearchText = $this->databaseSearchingHelper->getFullTextLikeSearchString($quickSearchData->text);
-            $queryBuilder->setParameter('text', $querySearchText);
-        }
-
-        return $queryBuilder;
     }
 
     public function replaceCustomerUsersPricingGroup(

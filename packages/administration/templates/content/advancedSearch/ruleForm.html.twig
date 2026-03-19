@@ -1,0 +1,38 @@
+{% block advanced_search_rules %}
+    {% for key, ruleForm in rulesForm %}
+        {% set isTemplate = key is same as('__template__') %}
+        {% block advanced_search_rule %}
+            <div class="js-advanced-search-rule{{ isTemplate ? ' d-none' : '' }}" {{- isTemplate ? ' id="js-advanced-search-rule-template"' : '' -}}>
+                <div class="row">
+                    {% block advanced_search_rule_subject %}
+                        <div class="col-md mb-2">
+                            {{ form_widget(ruleForm.subject, { attr: { class: 'js-advanced-search-rule-subject test-advanced-search-rule-subject' } }) }}
+                        </div>
+                    {% endblock %}
+
+                    {% block advanced_search_rule_operator %}
+                        <div class="col-md mb-2">
+                            {{ form_widget(ruleForm.operator, { attr: { class: 'js-advanced-search-rule-operator' } }) }}
+                        </div>
+                    {% endblock %}
+
+                    {% block advanced_search_rule_value %}
+                        <div class="col-md mb-2">
+                            <div class="js-advanced-search-rule-value test-advanced-search-rule-value">
+                                {{ form_widget(ruleForm.value) }}
+                            </div>
+                        </div>
+                    {% endblock %}
+
+                    {% block advanced_search_rule_remove %}
+                        <div class="col-auto mb-2">
+                            <span class="js-advanced-search-remove-rule-button btn btn-icon cursor-pointer" title="{{ 'Remove rule'|trans }}">
+                                {{ ux_icon('circle-cross') }}
+                            </span>
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endfor %}
+{% endblock %}

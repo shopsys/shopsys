@@ -604,6 +604,9 @@ msgstr "Firma (IČ)"
 msgid "Company Tax number"
 msgstr "DIČ firmy"
 
+msgid "Company customer"
+msgstr "Firemní zákazník"
+
 msgid "Company data"
 msgstr "Firemní údaje"
 

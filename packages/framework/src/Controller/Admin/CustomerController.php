@@ -27,11 +27,12 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
+use Shopsys\FrameworkBundle\Model\Customer\User\AdvancedSearch\CustomerUserAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\Listing\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,6 +58,7 @@ class CustomerController extends AdminBaseController
         protected readonly WatchdogFacade $watchdogFacade,
         protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
         protected readonly MoneyConvertingDataSourceDecoratorFactory $moneyConvertingDataSourceDecoratorFactory,
+        protected readonly CustomerUserAdvancedSearchFacade $customerUserAdvancedSearchFacade,
     ) {
     }
 
@@ -164,13 +166,27 @@ class CustomerController extends AdminBaseController
     #[CanView]
     public function listAction(Request $request): Response
     {
+        $advancedSearchForm = $this->customerUserAdvancedSearchFacade->createAdvancedSearchForm($request);
+        $advancedSearchData = $advancedSearchForm->getData();
+
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $queryBuilder = $this->customerUserListAdminFacade->getCustomerUserListQueryBuilderByQuickSearchData(
-            $this->adminDomainTabsFacade->getSelectedDomainId(),
-            $quickSearchForm->getData(),
+        $isAdvancedSearchFormSubmitted = $this->customerUserAdvancedSearchFacade->isAdvancedSearchFormSubmitted(
+            $request,
         );
+
+        if ($isAdvancedSearchFormSubmitted) {
+            $queryBuilder = $this->customerUserAdvancedSearchFacade->getQueryBuilderByAdvancedSearchData(
+                $advancedSearchData,
+                $this->adminDomainTabsFacade->getSelectedDomainId(),
+            );
+        } else {
+            $queryBuilder = $this->customerUserListAdminFacade->getCustomerUserListQueryBuilderByQuickSearchData(
+                $this->adminDomainTabsFacade->getSelectedDomainId(),
+                $quickSearchForm->getData(),
+            );
+        }
 
         $innerDataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
             $queryBuilder,
@@ -209,6 +225,10 @@ class CustomerController extends AdminBaseController
         return $this->render('@ShopsysAdministration/content/customer/list.html.twig', [
             'gridView' => $grid->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
+            'advancedSearchForm' => $advancedSearchForm->createView(),
+            'isAdvancedSearchFormSubmitted' => $this->customerUserAdvancedSearchFacade->isAdvancedSearchFormSubmitted(
+                $request,
+            ),
         ]);
     }
 

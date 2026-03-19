@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form;
 use Override;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductIdToProductTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -23,6 +24,10 @@ final class ProductType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $builder->addViewTransformer(new CallbackTransformer(
+            static fn ($value) => $value,
+            static fn ($value) => $value !== null && $value !== '' ? (int)$value : null,
+        ));
         $builder->addModelTransformer($this->productIdToProductTransformer);
     }
 

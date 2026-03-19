@@ -1,0 +1,137 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter;
+
+use Doctrine\ORM\QueryBuilder;
+use Override;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
+use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormTypeInterface;
+
+class ProductCategoryFilter extends AbstractAdvancedSearchFilter
+{
+    public const string NAME = 'productCategory';
+
+    protected ?Localization $localization = null;
+
+    public function __construct(
+        protected readonly CategoryFacade $categoryFacade,
+        Localization $localization,
+        DatabaseSearchingHelper $databaseSearchingHelper,
+    ) {
+        $this->localization = $localization;
+
+        parent::__construct($databaseSearchingHelper);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getName(): string
+    {
+        return self::NAME;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getLabel(): string
+    {
+        return t('Category');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getAllowedOperators(): array
+    {
+        return [
+            self::OPERATOR_IS,
+            self::OPERATOR_IS_NOT,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getValueFormType(): FormTypeInterface|string
+    {
+        return ChoiceType::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getValueFormOptions(): array
+    {
+        return [
+            'expanded' => false,
+            'multiple' => false,
+            'choices' => $this->categoryFacade->getAllTranslated($this->localization->getCurrentLocaleForTranslatableEntities()),
+            'choice_label' => function (Category $category) {
+                $padding = str_repeat("\u{00a0}", ($category->getLevel() - 1) * 2);
+
+                return $padding . $category->getName();
+            },
+            'choice_value' => 'id',
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
+    {
+        $isCategory = [];
+        $isNotCategory = [];
+
+        foreach ($rulesData as $ruleData) {
+            if ($ruleData->operator === self::OPERATOR_IS) {
+                $isCategory[] = $ruleData->value;
+            } elseif ($ruleData->operator === self::OPERATOR_IS_NOT) {
+                $isNotCategory[] = $ruleData->value;
+            }
+        }
+
+        if (count($isCategory) + count($isNotCategory) === 0) {
+            return;
+        }
+
+        $subQuery = 'SELECT IDENTITY(%s.product) FROM ' . ProductCategoryDomain::class . ' %1$s WHERE %1$s.category IN (:%s)';
+
+        if (count($isCategory) > 0) {
+            $queryBuilder->andWhere($queryBuilder->expr()->in('p.id', sprintf($subQuery, 'pcd_is', 'isCategory')));
+            $queryBuilder->setParameter('isCategory', $isCategory);
+        }
+
+        if (count($isNotCategory) === 0) {
+            return;
+        }
+
+        $queryBuilder->andWhere($queryBuilder->expr()->notIn('p.id', sprintf($subQuery, 'pcd_not', 'isNotCategory')));
+        $queryBuilder->setParameter('isNotCategory', $isNotCategory);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getEntityType(): string
+    {
+        return ProductAdvancedSearchFacade::getEntityType();
+    }
+}

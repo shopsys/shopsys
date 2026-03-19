@@ -25,7 +25,7 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantException;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
@@ -54,7 +54,7 @@ class ProductController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly ProductListAdminFacade $productListAdminFacade,
-        protected readonly AdvancedSearchProductFacade $advancedSearchProductFacade,
+        protected readonly ProductAdvancedSearchFacade $productAdvancedSearchFacade,
         protected readonly ProductVariantFacade $productVariantFacade,
         protected readonly ProductExtension $productExtension,
         protected readonly Domain $domain,
@@ -153,7 +153,7 @@ class ProductController extends AdminBaseController
     #[CanView(methods: [HttpMethod::GET])]
     public function listAction(Request $request): Response
     {
-        $advancedSearchForm = $this->advancedSearchProductFacade->createAdvancedSearchForm($request);
+        $advancedSearchForm = $this->productAdvancedSearchFacade->createAdvancedSearchForm($request);
         $advancedSearchData = $advancedSearchForm->getData();
         $quickSearchData = new QuickSearchFormData();
 
@@ -166,10 +166,10 @@ class ProductController extends AdminBaseController
         $massActionForm = $this->createForm(ProductMassActionFormType::class);
         $massActionForm->handleRequest($request);
 
-        $isAdvancedSearchFormSubmitted = $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted($request);
+        $isAdvancedSearchFormSubmitted = $this->productAdvancedSearchFacade->isAdvancedSearchFormSubmitted($request);
 
         if ($isAdvancedSearchFormSubmitted) {
-            $queryBuilder = $this->advancedSearchProductFacade->getQueryBuilderByAdvancedSearchData(
+            $queryBuilder = $this->productAdvancedSearchFacade->getQueryBuilderByAdvancedSearchData(
                 $advancedSearchData,
             );
         } else {
@@ -202,7 +202,7 @@ class ProductController extends AdminBaseController
             'quickSearchForm' => $quickSearchForm->createView(),
             'advancedSearchForm' => $advancedSearchForm->createView(),
             'massActionForm' => $massActionForm->createView(),
-            'isAdvancedSearchFormSubmitted' => $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted(
+            'isAdvancedSearchFormSubmitted' => $this->productAdvancedSearchFacade->isAdvancedSearchFormSubmitted(
                 $request,
             ),
             'productCanBeCreated' => $productCanBeCreated,
@@ -230,20 +230,6 @@ class ProductController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_product_list');
-    }
-
-    #[Route(path: '/product/get-advanced-search-rule-form/', methods: ['post'])]
-    #[CanView]
-    public function getRuleFormAction(Request $request): Response
-    {
-        $ruleForm = $this->advancedSearchProductFacade->createRuleForm(
-            $request->request->getString('filterName'),
-            $request->request->getString('newIndex'),
-        );
-
-        return $this->render('@ShopsysAdministration/content/product/advancedSearch/ruleForm.html.twig', [
-            'rulesForm' => $ruleForm->createView(),
-        ]);
     }
 
     #[Route(path: '/product/create-variant/')]

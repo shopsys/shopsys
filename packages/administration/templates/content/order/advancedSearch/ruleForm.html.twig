@@ -1,28 +1,13 @@
-{% for key, ruleForm in rulesForm %}
-    {% set isTemplate = key is same as('__template__') %}
+{% extends '@ShopsysAdministration/content/advancedSearch/ruleForm.html.twig' %}
 
-    <div class="js-advanced-search-rule{{ isTemplate ? ' d-none' : '' }}" {{- isTemplate ? ' id="js-advanced-search-rule-template"' : '' -}}>
-        <div class="row">
-            <div class="col-md mb-2">
-                {{ form_widget(ruleForm.subject, { attr: { class: 'js-advanced-search-rule-subject test-advanced-search-rule-subject' } }) }}
-            </div>
-            <div class="col-md mb-2">
-                {{ form_widget(ruleForm.operator, { attr: { class: 'js-advanced-search-rule-operator' } }) }}
-            </div>
-            <div class="col-md mb-2">
-                <div class="js-advanced-search-rule-value test-advanced-search-rule-value">
-                    {% if ruleForm.subject.vars.value == 'orderTotalPriceWithVat' %}
-                        {{ form_widget(ruleForm.value, { rawSymbolAfterInput: info_icon('Searching in all currencies'|trans) }) }}
-                    {% else %}
-                        {{ form_widget(ruleForm.value) }}
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-auto mb-2">
-                <span class="js-advanced-search-remove-rule-button btn btn-icon cursor-pointer" title="{{ 'Remove rule'|trans }}">
-                    {{ ux_icon('circle-cross') }}
-                </span>
-            </div>
+{% block advanced_search_rule_value %}
+    <div class="col-md mb-2">
+        <div class="js-advanced-search-rule-value test-advanced-search-rule-value">
+            {% if ruleForm.subject.vars.value == 'orderTotalPriceWithVat' %}
+                {{ form_widget(ruleForm.value, { rawSymbolAfterInput: info_icon('Searching in all currencies'|trans) }) }}
+            {% else %}
+                {{ form_widget(ruleForm.value) }}
+            {% endif %}
         </div>
     </div>
-{% endfor %}
+{% endblock %}

@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Complaint\ComplaintFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\AdvancedSearchComplaintFacade;
+use Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\ComplaintAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintGridFactory;
@@ -33,7 +33,7 @@ class ComplaintController extends AdminBaseController
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly ComplaintDataFactory $complaintDataFactory,
-        protected readonly AdvancedSearchComplaintFacade $advancedSearchComplaintFacade,
+        protected readonly ComplaintAdvancedSearchFacade $complaintAdvancedSearchFacade,
     ) {
     }
 
@@ -45,22 +45,22 @@ class ComplaintController extends AdminBaseController
 
         $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);
 
-        $advancedSearchForm = $this->advancedSearchComplaintFacade->createAdvancedSearchComplaintForm($request);
+        $advancedSearchForm = $this->complaintAdvancedSearchFacade->createAdvancedSearchForm($request);
         $advancedSearchData = $advancedSearchForm->getData();
 
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $isAdvancedSearchFormSubmitted = $this->advancedSearchComplaintFacade->isAdvancedSearchComplaintFormSubmitted(
+        $isAdvancedSearchFormSubmitted = $this->complaintAdvancedSearchFacade->isAdvancedSearchFormSubmitted(
             $request,
         );
 
         if ($isAdvancedSearchFormSubmitted) {
-            $queryBuilder = $this->advancedSearchComplaintFacade->getQueryBuilderByAdvancedSearchData(
+            $queryBuilder = $this->complaintAdvancedSearchFacade->getQueryBuilderByAdvancedSearchData(
                 $advancedSearchData,
             );
         } else {
-            $queryBuilder = $this->advancedSearchComplaintFacade->getComplaintListQueryBuilderByQuickSearchData($quickSearchForm->getData());
+            $queryBuilder = $this->complaintAdvancedSearchFacade->getComplaintListQueryBuilderByQuickSearchData($quickSearchForm->getData());
         }
 
         if ($selectedDomainId !== null) {
@@ -121,20 +121,6 @@ class ComplaintController extends AdminBaseController
             'form' => $form->createView(),
             'complaint' => $complaint,
             'domains' => $this->domain->getAll(),
-        ]);
-    }
-
-    #[Route(path: '/complaint/get-advanced-search-rule-form/', methods: ['post'])]
-    #[CanView]
-    public function getRuleFormAction(Request $request): Response
-    {
-        $ruleForm = $this->advancedSearchComplaintFacade->createRuleForm(
-            $request->request->getString('filterName'),
-            $request->request->getString('newIndex'),
-        );
-
-        return $this->render('@ShopsysAdministration/content/complaint/advancedSearch/ruleForm.html.twig', [
-            'rulesForm' => $ruleForm->createView(),
         ]);
     }
 }
