@@ -8,5 +8,10 @@ fragment SalesRepresentativeFragment on SalesRepresentative {
     }
     lastName
     telephone
+    telephoneData {
+        prefix
+        countryCode
+        number
+    }
     uuid
 }

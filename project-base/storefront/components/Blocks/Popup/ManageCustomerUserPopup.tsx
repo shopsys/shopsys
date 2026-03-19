@@ -2,6 +2,7 @@ import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
+import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
@@ -37,7 +38,6 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const { canManageCompanyData, currentCustomerUserUuid: uuid } = useAuthorization();
     const customerUserData = getCustomerUser(customerUser);
-
     const isRoleGroupDisabled = !canManageCompanyData || (mode === 'edit' && customerUser?.uuid === uuid);
     const { customerUserRoleGroupsOptions, isFetching: isRoleGroupsFetching } =
         useCustomerUserGroupsAsRadiobuttonOptions(isRoleGroupDisabled);
@@ -69,7 +69,11 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                     customerUserUuid: customerUser?.uuid ?? null,
                     firstName: customerUserManageProfileFormData.firstName,
                     lastName: customerUserManageProfileFormData.lastName,
-                    telephone: customerUserManageProfileFormData.telephone,
+                    telephone: {
+                        prefix: customerUserManageProfileFormData.telephonePrefix,
+                        countryCode: customerUserManageProfileFormData.telephonePrefixCountryCode || '',
+                        number: customerUserManageProfileFormData.telephone,
+                    },
                     roleGroupUuid: customerUserManageProfileFormData.roleGroup,
                     newsletterSubscription: false,
                 },
@@ -92,7 +96,11 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                 email: customerUserManageProfileFormData.email,
                 firstName: customerUserManageProfileFormData.firstName,
                 lastName: customerUserManageProfileFormData.lastName,
-                telephone: customerUserManageProfileFormData.telephone,
+                telephone: {
+                    prefix: customerUserManageProfileFormData.telephonePrefix,
+                    countryCode: customerUserManageProfileFormData.telephonePrefixCountryCode || '',
+                    number: customerUserManageProfileFormData.telephone,
+                },
                 roleGroupUuid: customerUserManageProfileFormData.roleGroup,
                 newsletterSubscription: false,
             },
@@ -145,8 +153,8 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-span-2"
                                     name={formMeta.fields.firstName.name}
+                                    width="half"
                                     textInputProps={{
                                         label: formMeta.fields.firstName.label,
                                         required: true,
@@ -158,8 +166,8 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-span-2"
                                     name={formMeta.fields.lastName.name}
+                                    width="half"
                                     textInputProps={{
                                         label: formMeta.fields.lastName.label,
                                         required: true,
@@ -169,20 +177,14 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                 />
                             </FormColumn>
 
-                            <FormColumn>
-                                <TextInputControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    gridClassName="col-span-2"
-                                    name={formMeta.fields.telephone.name}
-                                    textInputProps={{
-                                        label: formMeta.fields.telephone.label,
-                                        required: true,
-                                        type: 'tel',
-                                        autoComplete: 'tel',
-                                    }}
-                                />
-                            </FormColumn>
+                            <PhoneNumberInputControlled
+                                formName={formMeta.formName}
+                                formProviderMethods={formProviderMethods}
+                                prefixCountryCodeName={formMeta.fields.telephonePrefixCountryCode.name}
+                                prefixName={formMeta.fields.telephonePrefix.name}
+                                telephoneLabel={formMeta.fields.telephone.label}
+                                telephoneName={formMeta.fields.telephone.name}
+                            />
                         </FormBlockWrapper>
 
                         <FormBlockWrapper>

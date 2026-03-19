@@ -2,7 +2,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeSalesRepresentativeFragment = { __typename: 'SalesRepresentative', email: string | null, firstName: string | null, lastName: string | null, telephone: string | null, uuid: string, image: { __typename?: 'Image', url: string, name: string | null } | null };
+export type TypeSalesRepresentativeFragment = { __typename: 'SalesRepresentative', email: string | null, firstName: string | null, lastName: string | null, telephone: string | null, uuid: string, image: { __typename?: 'Image', url: string, name: string | null } | null, telephoneData: { __typename?: 'PhoneData', prefix: string | null, countryCode: string | null, number: string } | null };
 
 export const SalesRepresentativeFragment = gql`
     fragment SalesRepresentativeFragment on SalesRepresentative {
@@ -15,6 +15,11 @@ export const SalesRepresentativeFragment = gql`
   }
   lastName
   telephone
+  telephoneData {
+    prefix
+    countryCode
+    number
+  }
   uuid
 }
     `;

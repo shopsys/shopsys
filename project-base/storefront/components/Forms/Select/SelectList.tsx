@@ -16,6 +16,7 @@ const SelectListInfiniteScroll = dynamic(
 export type SelectListProps<T = string> = {
     itemBeforeText?: ReactNode;
     itemAfterText?: ReactNode;
+    listId?: string;
     options: SelectOptionType<T>[];
     onSelectOption: (data: SelectOptionType<T>, m?: React.MouseEvent, k?: React.KeyboardEvent) => void;
     activeOption?: SelectOptionType<T> | null;
@@ -30,6 +31,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     onSelectOption,
     itemAfterText,
     itemBeforeText,
+    listId,
     activeOption,
     infinityScrollConfig,
     listClassName,
@@ -151,7 +153,9 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                 listClassName,
             )}
         >
-            <ul ref={listRef}>{SelectListItems}</ul>
+            <ul id={listId} ref={listRef}>
+                {SelectListItems}
+            </ul>
         </AnimateCollapseDiv>
     );
 };

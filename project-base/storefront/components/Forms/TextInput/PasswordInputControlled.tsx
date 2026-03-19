@@ -1,6 +1,6 @@
 import { EyeCrossedIcon } from 'components/Basic/Icon/EyeCrossedIcon';
 import { EyeIcon } from 'components/Basic/Icon/EyeIcon';
-import { FormLine } from 'components/Forms/Lib/FormLine';
+import { FormLine, FormLineWidth } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { InputHTMLAttributes, ReactElement, ReactNode, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
@@ -20,7 +20,7 @@ type PasswordInputProps = NativeProps & {
 type PasswordInputControlledProps = {
     name: string;
     render?: (input: ReactElement) => ReactElement<any, any> | null;
-    gridClassName?: string;
+    width?: FormLineWidth;
     passwordInputProps: PasswordInputProps;
     control: Control<any>;
     formName: string;
@@ -29,7 +29,7 @@ type PasswordInputControlledProps = {
 export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
     name,
     render,
-    gridClassName,
+    width,
     control,
     passwordInputProps,
     formName,
@@ -88,5 +88,5 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
         return render(element);
     }
 
-    return <FormLine className={gridClassName}>{element}</FormLine>;
+    return <FormLine width={width}>{element}</FormLine>;
 };

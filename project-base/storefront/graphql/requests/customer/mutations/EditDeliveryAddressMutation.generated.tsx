@@ -10,7 +10,7 @@ export type TypeEditDeliveryAddressMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeEditDeliveryAddressMutation = { __typename?: 'Mutation', EditDeliveryAddress: Array<{ __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null }> };
+export type TypeEditDeliveryAddressMutation = { __typename?: 'Mutation', EditDeliveryAddress: Array<{ __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, telephoneData: { __typename?: 'PhoneData', prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null }> };
 
 
 export const EditDeliveryAddressMutationDocument = gql`

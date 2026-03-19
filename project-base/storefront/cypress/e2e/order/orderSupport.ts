@@ -161,7 +161,7 @@ export const registerAndCreateOrderForDeliveryAddressTests = (
         deliveryFirstName: staticData.deliveryAddress.firstName,
         deliveryLastName: staticData.deliveryAddress.lastName,
         deliveryCompanyName: staticData.deliveryAddress.company,
-        deliveryTelephone: staticData.deliveryAddress.phone,
+        deliveryTelephone: staticData.deliveryAddress.phoneData,
         deliveryStreet: staticData.deliveryAddress.street,
         deliveryCity: staticData.deliveryAddress.city,
         deliveryPostcode: staticData.deliveryAddress.postCode,

@@ -97,6 +97,11 @@ const getCreateOrderMutationVariables = (
 ) => {
     const country = formValues.country.value;
     let deliveryCountry = formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryCountry.value : null;
+    const telephone = {
+        prefix: formValues.telephonePrefix,
+        countryCode: formValues.telephonePrefixCountryCode || '',
+        number: formValues.telephone,
+    };
 
     const formValuesWithoutDeliveryInfo = getFormValuesWithoutDeliveryInfo(formValues);
     let deliveryInfo = getEmptyDeliveryInfo();
@@ -123,6 +128,7 @@ const getCreateOrderMutationVariables = (
 
     return {
         ...formValuesWithoutDeliveryInfo,
+        telephone,
         ...deliveryInfo,
         cartUuid,
         onCompanyBehalf: formValues.customer === 'companyCustomer',

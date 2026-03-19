@@ -4,6 +4,7 @@ import {
     validateFirstName,
     validateLastName,
     validateRoleGroup,
+    validateTelephonePrefix,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
 import { UseFormReturn } from 'react-hook-form';
@@ -22,6 +23,8 @@ export const useCustomerUserManageProfileForm = (
     const resolver = yupResolver(
         Yup.object().shape<Record<keyof CustomerUserManageProfileFormType, any>>({
             email: validateEmail(t),
+            telephonePrefix: validateTelephonePrefix(t),
+            telephonePrefixCountryCode: Yup.string(),
             telephone: validateTelephoneRequired(t),
             firstName: validateFirstName(t),
             lastName: validateLastName(t),
@@ -50,6 +53,8 @@ export const useCustomerUserManageProfileFormMeta = (
         },
         fields: createFields<CustomerUserManageProfileFormType>({
             email: t('User email'),
+            telephonePrefix: t('Phone prefix'),
+            telephonePrefixCountryCode: '',
             telephone: t('Phone'),
             firstName: t('First name'),
             lastName: t('Last name'),

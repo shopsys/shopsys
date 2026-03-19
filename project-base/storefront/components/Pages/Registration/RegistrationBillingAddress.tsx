@@ -1,16 +1,12 @@
 import { AnimateCollapseDivWithMargin } from 'components/Basic/Animations/AnimateCollapseDivWithMargin';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
-import { FormLine } from 'components/Forms/Lib/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { Select } from 'components/Forms/Select/Select';
+import { CountrySelectControlled } from 'components/Forms/Select/CountrySelectControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
 import { AnimatePresence } from 'framer-motion';
-import { useEffect } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
-import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { RegistrationCompany } from './RegistrationCompany';
 import { RegistrationCustomer } from './RegistrationCustomer';
@@ -18,20 +14,8 @@ import { RegistrationCustomer } from './RegistrationCustomer';
 export const RegistrationBillingAddress: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<RegistrationFormType>();
-    const { setValue } = formProviderMethods;
     const formMeta = useRegistrationFormMeta();
-    const countriesAsSelectOptions = useCountriesAsSelectOptions();
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
-
-    useEffect(() => {
-        if (countriesAsSelectOptions.length > 0) {
-            setValue(formMeta.fields.country.name, countriesAsSelectOptions[0], { shouldValidate: true });
-        }
-    }, [countriesAsSelectOptions, formMeta.fields.country.name, setValue]);
-
-    if (countriesAsSelectOptions.length === 0) {
-        return null;
-    }
 
     return (
         <div className="flex flex-col">
@@ -55,7 +39,6 @@ export const RegistrationBillingAddress: FC = () => {
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.street.name}
-                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.street.label,
                         required: true,
@@ -69,7 +52,7 @@ export const RegistrationBillingAddress: FC = () => {
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
                         name={formMeta.fields.city.name}
-                        render={(textInput) => <FormLine className="col-span-3">{textInput}</FormLine>}
+                        width="wide"
                         textInputProps={{
                             label: formMeta.fields.city.label,
                             required: true,
@@ -82,7 +65,7 @@ export const RegistrationBillingAddress: FC = () => {
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
                         name={formMeta.fields.postcode.name}
-                        render={(textInput) => <FormLine className="col-start-4">{textInput}</FormLine>}
+                        width="narrow"
                         textInputProps={{
                             label: formMeta.fields.postcode.label,
                             required: true,
@@ -93,29 +76,12 @@ export const RegistrationBillingAddress: FC = () => {
                     />
                 </FormColumn>
 
-                <FormColumn>
-                    <FormLine className="col-span-3">
-                        <Controller
-                            name={formMeta.fields.country.name}
-                            render={({ fieldState: { error }, field }) => (
-                                <>
-                                    <Select
-                                        isRequired
-                                        ariaLabel={t('Select country', { ns: 'accessibility' })}
-                                        label={formMeta.fields.country.label}
-                                        options={countriesAsSelectOptions}
-                                        tid={`${formMeta.formName}-${formMeta.fields.country.name}`}
-                                        activeOption={countriesAsSelectOptions.find(
-                                            (option) => option.value === field.value.value,
-                                        )}
-                                        onSelectOption={field.onChange}
-                                    />
-                                    <FormLineError error={error} inputType="select" />
-                                </>
-                            )}
-                        />
-                    </FormLine>
-                </FormColumn>
+                <CountrySelectControlled
+                    formName={formMeta.formName}
+                    formProviderMethods={formProviderMethods}
+                    label={formMeta.fields.country.label}
+                    name={formMeta.fields.country.name}
+                />
             </FormBlockWrapper>
         </div>
     );

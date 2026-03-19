@@ -29,8 +29,8 @@ export const CompanyCustomer: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.companyNumber.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.companyNumber.label,
                         required: true,
@@ -42,8 +42,8 @@ export const CompanyCustomer: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.companyTaxNumber.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.companyTaxNumber.label,
                         required: false,

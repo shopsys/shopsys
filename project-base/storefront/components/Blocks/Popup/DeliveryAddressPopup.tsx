@@ -1,9 +1,8 @@
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
-import { FormLine } from 'components/Forms/Lib/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { Select } from 'components/Forms/Select/Select';
+import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
+import { CountrySelectControlled } from 'components/Forms/Select/CountrySelectControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
 import {
@@ -14,12 +13,10 @@ import { TIDs } from 'cypress/tids';
 import { useCreateDeliveryAddressMutation } from 'graphql/requests/customer/mutations/CreateDeliveryAddressMutation.generated';
 import { useEditDeliveryAddressMutation } from 'graphql/requests/customer/mutations/EditDeliveryAddressMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { useEffect } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { DeliveryAddressType } from 'types/customer';
 import { DeliveryAddressFormType } from 'types/form';
-import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -40,7 +37,9 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
         street: deliveryAddress?.street ?? '',
         city: deliveryAddress?.city ?? '',
         postcode: deliveryAddress?.postcode ?? '',
-        telephone: deliveryAddress?.telephone ?? '',
+        telephonePrefix: deliveryAddress?.telephonePrefix ?? '',
+        telephonePrefixCountryCode: deliveryAddress?.telephonePrefixCountryCode ?? '',
+        telephone: deliveryAddress?.telephoneNumber ?? '',
         firstName: deliveryAddress?.firstName ?? '',
         lastName: deliveryAddress?.lastName ?? '',
         country: {
@@ -49,22 +48,6 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
         },
     });
     const formMeta = useDeliveryAddressFormMeta();
-    const countriesAsSelectOptions = useCountriesAsSelectOptions();
-    const { setValue } = formProviderMethods;
-
-    const countryFieldName = formMeta.fields.country.name;
-    const deliveryAddressCountryCode = deliveryAddress?.country.code;
-
-    useEffect(() => {
-        if (countriesAsSelectOptions.length > 0 && deliveryAddressCountryCode) {
-            const selectedCountry = countriesAsSelectOptions.find(
-                (country) => country.value === deliveryAddressCountryCode,
-            );
-            setValue(countryFieldName, selectedCountry ?? countriesAsSelectOptions[0], {
-                shouldValidate: true,
-            });
-        }
-    }, [countriesAsSelectOptions, deliveryAddressCountryCode, countryFieldName, setValue]);
 
     const handleEditError = useErrorHandler({
         form: formProviderMethods,
@@ -81,12 +64,26 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
     const deliveryAddressHandler: SubmitHandler<DeliveryAddressFormType> = async (deliveryAddressFormData) => {
         blurInput();
 
+        const mutationInput = {
+            firstName: deliveryAddressFormData.firstName,
+            lastName: deliveryAddressFormData.lastName,
+            companyName: deliveryAddressFormData.companyName,
+            telephone: {
+                prefix: deliveryAddressFormData.telephonePrefix,
+                countryCode: deliveryAddressFormData.telephonePrefixCountryCode || '',
+                number: deliveryAddressFormData.telephone,
+            },
+            street: deliveryAddressFormData.street,
+            city: deliveryAddressFormData.city,
+            postcode: deliveryAddressFormData.postcode,
+            country: deliveryAddressFormData.country.value,
+        };
+
         if (deliveryAddress?.uuid) {
             const editDeliveryAddressResult = await editDeliveryAddress({
                 input: {
                     uuid: deliveryAddress.uuid,
-                    ...deliveryAddressFormData,
-                    country: deliveryAddressFormData.country.value,
+                    ...mutationInput,
                 },
             });
 
@@ -105,8 +102,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
         const createDeliveryAddressResult = await createDeliveryAddress({
             input: {
                 uuid: null,
-                ...deliveryAddressFormData,
-                country: deliveryAddressFormData.country.value,
+                ...mutationInput,
             },
         });
 
@@ -130,8 +126,8 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-span-2"
                                     name={formMeta.fields.firstName.name}
+                                    width="half"
                                     textInputProps={{
                                         label: formMeta.fields.firstName.label,
                                         required: true,
@@ -143,8 +139,8 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-span-2"
                                     name={formMeta.fields.lastName.name}
+                                    width="half"
                                     textInputProps={{
                                         label: formMeta.fields.lastName.label,
                                         required: true,
@@ -154,20 +150,14 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 />
                             </FormColumn>
 
-                            <FormColumn>
-                                <TextInputControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    gridClassName="col-span-2"
-                                    name={formMeta.fields.telephone.name}
-                                    textInputProps={{
-                                        label: formMeta.fields.telephone.label,
-                                        required: true,
-                                        type: 'tel',
-                                        autoComplete: 'tel',
-                                    }}
-                                />
-                            </FormColumn>
+                            <PhoneNumberInputControlled
+                                formName={formMeta.formName}
+                                formProviderMethods={formProviderMethods}
+                                prefixCountryCodeName={formMeta.fields.telephonePrefixCountryCode.name}
+                                prefixName={formMeta.fields.telephonePrefix.name}
+                                telephoneLabel={formMeta.fields.telephone.label}
+                                telephoneName={formMeta.fields.telephone.name}
+                            />
 
                             <TextInputControlled
                                 control={formProviderMethods.control}
@@ -196,8 +186,8 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-span-3"
                                     name={formMeta.fields.city.name}
+                                    width="wide"
                                     textInputProps={{
                                         label: formMeta.fields.city.label,
                                         required: true,
@@ -209,8 +199,8 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-start-4"
                                     name={formMeta.fields.postcode.name}
+                                    width="narrow"
                                     textInputProps={{
                                         label: formMeta.fields.postcode.label,
                                         required: true,
@@ -221,29 +211,12 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 />
                             </FormColumn>
 
-                            <FormColumn>
-                                <FormLine className="col-span-3">
-                                    <Controller
-                                        name={formMeta.fields.country.name}
-                                        render={({ fieldState: { error }, field }) => (
-                                            <>
-                                                <Select
-                                                    isRequired
-                                                    ariaLabel={t('Select country', { ns: 'accessibility' })}
-                                                    label={formMeta.fields.country.label}
-                                                    options={countriesAsSelectOptions}
-                                                    tid={`${formMeta.formName}-${formMeta.fields.country.name}`}
-                                                    activeOption={countriesAsSelectOptions.find(
-                                                        (option) => option.value === field.value.value,
-                                                    )}
-                                                    onSelectOption={field.onChange}
-                                                />
-                                                <FormLineError error={error} inputType="select" />
-                                            </>
-                                        )}
-                                    />
-                                </FormLine>
-                            </FormColumn>
+                            <CountrySelectControlled
+                                formName={formMeta.formName}
+                                formProviderMethods={formProviderMethods}
+                                label={formMeta.fields.country.label}
+                                name={formMeta.fields.country.name}
+                            />
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>

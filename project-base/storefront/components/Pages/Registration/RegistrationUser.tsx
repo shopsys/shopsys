@@ -1,5 +1,6 @@
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
+import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
 import { useFormContext } from 'react-hook-form';
@@ -32,8 +33,8 @@ export const RegistrationUser: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.firstName.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.firstName.label,
                         required: true,
@@ -45,8 +46,8 @@ export const RegistrationUser: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.lastName.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.lastName.label,
                         required: true,
@@ -56,20 +57,14 @@ export const RegistrationUser: FC = () => {
                 />
             </FormColumn>
 
-            <FormColumn>
-                <TextInputControlled
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    gridClassName="col-span-2"
-                    name={formMeta.fields.telephone.name}
-                    textInputProps={{
-                        label: formMeta.fields.telephone.label,
-                        required: true,
-                        type: 'tel',
-                        autoComplete: 'tel',
-                    }}
-                />
-            </FormColumn>
+            <PhoneNumberInputControlled
+                formName={formMeta.formName}
+                formProviderMethods={formProviderMethods}
+                prefixCountryCodeName={formMeta.fields.telephonePrefixCountryCode.name}
+                prefixName={formMeta.fields.telephonePrefix.name}
+                telephoneLabel={formMeta.fields.telephone.label}
+                telephoneName={formMeta.fields.telephone.name}
+            />
         </FormBlockWrapper>
     );
 };

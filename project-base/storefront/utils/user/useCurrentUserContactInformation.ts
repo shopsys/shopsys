@@ -117,20 +117,22 @@ const mapCurrentCustomerContactInformationApiData = (
         postcode: apiCurrentCustomerUserData.postcode ?? '',
         companyName:
             apiCurrentCustomerUserData.__typename === 'CurrentCompanyCustomerUser' &&
-            apiCurrentCustomerUserData.companyName
+                apiCurrentCustomerUserData.companyName
                 ? apiCurrentCustomerUserData.companyName
                 : '',
         companyNumber:
             apiCurrentCustomerUserData.__typename === 'CurrentCompanyCustomerUser' &&
-            apiCurrentCustomerUserData.companyNumber
+                apiCurrentCustomerUserData.companyNumber
                 ? apiCurrentCustomerUserData.companyNumber
                 : '',
         companyTaxNumber:
             apiCurrentCustomerUserData.__typename === 'CurrentCompanyCustomerUser' &&
-            apiCurrentCustomerUserData.companyTaxNumber
+                apiCurrentCustomerUserData.companyTaxNumber
                 ? apiCurrentCustomerUserData.companyTaxNumber
                 : '',
-        telephone: apiCurrentCustomerUserData.telephone ?? '',
+        telephonePrefix: apiCurrentCustomerUserData.telephoneData?.prefix ?? '',
+        telephonePrefixCountryCode: apiCurrentCustomerUserData.telephoneData?.countryCode ?? '',
+        telephone: apiCurrentCustomerUserData.telephoneData?.number ?? '',
         country: {
             value: apiCurrentCustomerUserData.country?.code ?? '',
             label: apiCurrentCustomerUserData.country?.name ?? '',

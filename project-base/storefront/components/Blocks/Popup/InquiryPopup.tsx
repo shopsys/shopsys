@@ -2,6 +2,7 @@ import { useInquiryForm, useInquiryFormMeta } from 'components/Blocks/Product/In
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
+import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
@@ -30,7 +31,9 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
         email: user?.email ?? '',
         firstName: user?.firstName ?? '',
         lastName: user?.lastName ?? '',
-        telephone: user?.telephone ?? '',
+        telephonePrefix: user?.telephonePrefix ?? '',
+        telephonePrefixCountryCode: user?.telephonePrefixCountryCode ?? '',
+        telephone: user?.telephoneNumber ?? '',
         companyName: user?.companyName ?? '',
         companyNumber: user?.companyNumber ?? '',
         companyTaxNumber: user?.companyTaxNumber ?? '',
@@ -49,7 +52,19 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
 
         const createInquiryResult = await createInquiry({
             input: {
-                ...inquiryFormData,
+                email: inquiryFormData.email,
+                firstName: inquiryFormData.firstName,
+                lastName: inquiryFormData.lastName,
+                telephone: {
+                    prefix: inquiryFormData.telephonePrefix,
+                    countryCode: inquiryFormData.telephonePrefixCountryCode || '',
+                    number: inquiryFormData.telephone,
+                },
+                companyName: inquiryFormData.companyName,
+                companyNumber: inquiryFormData.companyNumber,
+                companyTaxNumber: inquiryFormData.companyTaxNumber,
+                note: inquiryFormData.note,
+                productUuid: inquiryFormData.productUuid,
             },
         });
 
@@ -92,8 +107,8 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-span-2"
                                     name={formMeta.fields.firstName.name}
+                                    width="half"
                                     textInputProps={{
                                         label: formMeta.fields.firstName.label,
                                         required: true,
@@ -105,8 +120,8 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-span-2"
                                     name={formMeta.fields.lastName.name}
+                                    width="half"
                                     textInputProps={{
                                         label: formMeta.fields.lastName.label,
                                         required: true,
@@ -116,20 +131,14 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                                 />
                             </FormColumn>
 
-                            <FormColumn>
-                                <TextInputControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    gridClassName="col-span-2"
-                                    name={formMeta.fields.telephone.name}
-                                    textInputProps={{
-                                        label: formMeta.fields.telephone.label,
-                                        required: true,
-                                        type: 'tel',
-                                        autoComplete: 'tel',
-                                    }}
-                                />
-                            </FormColumn>
+                            <PhoneNumberInputControlled
+                                formName={formMeta.formName}
+                                formProviderMethods={formProviderMethods}
+                                prefixCountryCodeName={formMeta.fields.telephonePrefixCountryCode.name}
+                                prefixName={formMeta.fields.telephonePrefix.name}
+                                telephoneLabel={formMeta.fields.telephone.label}
+                                telephoneName={formMeta.fields.telephone.name}
+                            />
 
                             <TextInputControlled
                                 control={formProviderMethods.control}
@@ -146,8 +155,8 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-span-2"
                                     name={formMeta.fields.companyNumber.name}
+                                    width="half"
                                     textInputProps={{
                                         label: formMeta.fields.companyNumber.label,
                                         type: 'text',
@@ -157,8 +166,8 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-span-2"
                                     name={formMeta.fields.companyTaxNumber.name}
+                                    width="half"
                                     textInputProps={{
                                         label: formMeta.fields.companyTaxNumber.label,
                                         type: 'text',

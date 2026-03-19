@@ -16,8 +16,8 @@ export const ContactInformationDeliveryPickUpForm = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.deliveryFirstName.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.deliveryFirstName.label,
                         required: true,
@@ -34,8 +34,8 @@ export const ContactInformationDeliveryPickUpForm = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.deliveryLastName.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.deliveryLastName.label,
                         required: true,
@@ -53,8 +53,8 @@ export const ContactInformationDeliveryPickUpForm = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.deliveryTelephone.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.deliveryTelephone.label,
                         required: false,

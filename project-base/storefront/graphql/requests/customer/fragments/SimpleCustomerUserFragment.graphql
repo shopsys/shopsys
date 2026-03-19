@@ -5,6 +5,11 @@ fragment SimpleCustomerUserFragment on BaseCustomerUser {
     lastName
     email
     telephone
+    telephoneData {
+        prefix
+        countryCode
+        number
+    }
     roles
     roleGroup {
         ...CustomerUserRoleGroupFragment

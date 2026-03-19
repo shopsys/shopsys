@@ -32,7 +32,11 @@ export const getDeliveryInfoFromFormValues = (formValues: ContactInformation): D
     deliveryFirstName: formValues.deliveryFirstName,
     deliveryLastName: formValues.deliveryLastName,
     deliveryCompanyName: formValues.deliveryCompanyName,
-    deliveryTelephone: formValues.deliveryTelephone,
+    deliveryTelephone: {
+        prefix: formValues.deliveryTelephonePrefix,
+        countryCode: formValues.deliveryTelephonePrefixCountryCode || '',
+        number: formValues.deliveryTelephone,
+    },
     deliveryStreet: formValues.deliveryStreet,
     deliveryCity: formValues.deliveryCity,
     deliveryPostcode: formValues.deliveryPostcode,
@@ -57,8 +61,16 @@ export const getDeliveryInfoFromSelectedPickupPlace = (
         ? formValues.deliveryLastName
         : formValues.lastName,
     deliveryTelephone: formValues.isDeliveryAddressDifferentFromBilling
-        ? formValues.deliveryTelephone
-        : formValues.telephone,
+        ? {
+              prefix: formValues.deliveryTelephonePrefix,
+              countryCode: formValues.deliveryTelephonePrefixCountryCode || '',
+              number: formValues.deliveryTelephone,
+          }
+        : {
+              prefix: formValues.telephonePrefix,
+              countryCode: formValues.telephonePrefixCountryCode || '',
+              number: formValues.telephone,
+          },
     deliveryStreet: selectedPickupPlace.street,
     deliveryCity: selectedPickupPlace.city,
     deliveryPostcode: selectedPickupPlace.postcode,
@@ -83,7 +95,10 @@ export const getDeliveryInfoFromSavedAndSelectedDeliveryAddress = (
 
 export const getFormValuesWithoutDeliveryInfo = (
     formValues: ContactInformation,
-): Omit<ContactInformation, keyof DeliveryInfo | 'deliveryCountry'> => ({
+): Omit<
+    ContactInformation,
+    keyof DeliveryInfo | 'deliveryCountry' | 'deliveryTelephonePrefix' | 'deliveryTelephonePrefixCountryCode'
+> => ({
     city: formValues.city,
     companyName: formValues.companyName,
     companyNumber: formValues.companyNumber,
@@ -98,5 +113,7 @@ export const getFormValuesWithoutDeliveryInfo = (
     note: formValues.note,
     postcode: formValues.postcode,
     street: formValues.street,
+    telephonePrefix: formValues.telephonePrefix,
+    telephonePrefixCountryCode: formValues.telephonePrefixCountryCode,
     telephone: formValues.telephone,
 });

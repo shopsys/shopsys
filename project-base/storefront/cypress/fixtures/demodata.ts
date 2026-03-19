@@ -23,6 +23,7 @@ export const staticData = {
         lastName: 'Zpodgrunia',
         company: 'Jankostaw',
         phone: '162736482',
+        phoneData: { countryCode: 'CZ', prefix: '+420', number: '162736482' },
         street: 'Jankowice 153a',
         city: 'Jankowice',
         postCode: '73961',

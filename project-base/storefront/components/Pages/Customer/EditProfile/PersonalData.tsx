@@ -1,6 +1,6 @@
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
-import { FormLine } from 'components/Forms/Lib/FormLine';
+import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useCustomerChangeProfileFormMeta } from 'components/Pages/Customer/EditProfile/customerChangeProfileFormMeta';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -31,20 +31,18 @@ export const PersonalData: FC = () => {
                 }}
             />
 
-            <FormLine>
-                <div>
-                    {t(
-                        'To prevent the possibility of account theft, it is necessary to deal with the change of e-mail individually. If your e-mail address has changed, please contact us.',
-                    )}
-                </div>
-            </FormLine>
+            <p className="text-sm">
+                {t(
+                    'To prevent the possibility of account theft, it is necessary to deal with the change of e-mail individually. If your e-mail address has changed, please contact us.',
+                )}
+            </p>
 
             <FormColumn>
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.firstName.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.firstName.label,
                         required: true,
@@ -56,8 +54,8 @@ export const PersonalData: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.lastName.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.lastName.label,
                         required: true,
@@ -68,21 +66,15 @@ export const PersonalData: FC = () => {
                 />
             </FormColumn>
 
-            <FormColumn>
-                <TextInputControlled
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    gridClassName="col-span-2"
-                    name={formMeta.fields.telephone.name}
-                    textInputProps={{
-                        label: formMeta.fields.telephone.label,
-                        required: true,
-                        disabled: !canManagePersonalData,
-                        type: 'tel',
-                        autoComplete: 'tel',
-                    }}
-                />
-            </FormColumn>
+            <PhoneNumberInputControlled
+                formName={formMeta.formName}
+                formProviderMethods={formProviderMethods}
+                isDisabled={!canManagePersonalData}
+                prefixCountryCodeName={formMeta.fields.telephonePrefixCountryCode.name}
+                prefixName={formMeta.fields.telephonePrefix.name}
+                telephoneLabel={formMeta.fields.telephone.label}
+                telephoneName={formMeta.fields.telephone.name}
+            />
         </FormBlockWrapper>
     );
 };

@@ -14,6 +14,7 @@ import {
     validatePostcode,
     validateResolution,
     validateStreet,
+    validateTelephonePrefix,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
 import { UseFormReturn } from 'react-hook-form';
@@ -59,6 +60,12 @@ export const useComplaintForm = (
                 otherwise: (schema) => schema,
             }),
             companyName: validateCompanyName(t).optional(),
+            telephonePrefix: Yup.string().when('deliveryAddressUuid', {
+                is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
+                then: () => validateTelephonePrefix(t),
+                otherwise: (schema) => schema,
+            }),
+            telephonePrefixCountryCode: Yup.string(),
             telephone: Yup.string().when('deliveryAddressUuid', {
                 is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
                 then: () => validateTelephoneRequired(t),
@@ -104,6 +111,8 @@ export const useComplaintForm = (
         firstName: '',
         lastName: '',
         companyName: '',
+        telephonePrefix: '',
+        telephonePrefixCountryCode: '',
         telephone: '',
         street: '',
         city: '',
@@ -142,6 +151,8 @@ export const useComplaintFormMeta = (): FormMeta<ComplaintFormType, { error: str
             firstName: t('First name'),
             lastName: t('Last name'),
             companyName: t('Company'),
+            telephonePrefix: t('Phone prefix'),
+            telephonePrefixCountryCode: '',
             telephone: t('Phone'),
             street: t('Street and house no.'),
             city: t('City'),

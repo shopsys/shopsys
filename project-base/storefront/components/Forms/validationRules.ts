@@ -24,23 +24,10 @@ export const validateCustomer = (): Schema => {
 
 export const validateTelephone = (t: Translate): Schema => {
     return Yup.string()
-        .matches(/^(\+[1-9]\d{0,3})?[0-9]+$/, {
+        .matches(/^[0-9]+$/, {
             excludeEmptyString: true,
-            message: t('Please enter a valid phone number. Examples: 123456789, +420123456789'),
+            message: t('Please enter only numbers'),
         })
-        .test(
-            'min-digits',
-            t('Telephone number must contain at least {{ telephoneMinLength }} digits', {
-                telephoneMinLength: VALIDATION_CONSTANTS.telephoneMinLength,
-            }),
-            (value) => {
-                if (!value) {
-                    return true;
-                }
-                const digits = value.replace(/\D/g, ''); // remove all non-digit characters
-                return digits.length >= VALIDATION_CONSTANTS.telephoneMinLength;
-            },
-        )
         .max(
             VALIDATION_CONSTANTS.telephoneMaxLength,
             t('Telephone must be at most {{ max }} characters', {
@@ -51,6 +38,12 @@ export const validateTelephone = (t: Translate): Schema => {
 
 export const validateTelephoneRequired = (t: Translate): Schema => {
     return validateTelephone(t).required(t('Please enter phone number'));
+};
+
+export const validateTelephonePrefix = (t: Translate): Schema => {
+    return Yup.string()
+        .required(t('Please select phone prefix'))
+        .matches(/^\+[1-9]\d{0,8}$/, t('Please enter a valid phone prefix'));
 };
 
 export const validateFirstName = (t: Translate): Schema => {

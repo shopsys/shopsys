@@ -28,7 +28,11 @@ type SelectProps<T = string> = {
     comboBoxConfig?: {
         searchValue: string;
         setSearchValue: (searchValue: string) => void;
+        inputAriaDescribedBy?: string;
+        inputAriaInvalid?: boolean;
+        inputAriaLabel?: string;
         searchInputClassName?: string;
+        filterOptions?: boolean;
     };
     onResetSelect?: () => void;
     externalSetIsSelectOpen?: (isOpen: boolean) => void;
@@ -60,6 +64,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
     const wrapperRef = useRef(null);
     const additionalItemRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
+    const listboxId = `${tid}-listbox`;
 
     const onSelectToggleOpenHandler = (isOpenFromArguments: boolean) => {
         externalSetIsSelectOpen?.(isOpenFromArguments);
@@ -81,7 +86,11 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
     };
 
     const filteredOptions = comboBoxConfig
-        ? options.filter((option) => option.label.toLowerCase().includes(comboBoxConfig.searchValue.toLowerCase()))
+        ? comboBoxConfig.filterOptions === false
+            ? options
+            : options.filter((option) =>
+                  (option.filterValue ?? option.label).toLowerCase().includes(comboBoxConfig.searchValue.toLowerCase()),
+              )
         : options;
 
     return (
@@ -99,18 +108,49 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     {comboBoxConfig ? (
                         <>
                             <input
+                                aria-autocomplete="list"
+                                aria-controls={listboxId}
+                                aria-describedby={comboBoxConfig.inputAriaDescribedBy}
+                                aria-expanded={isOpen}
+                                aria-haspopup="listbox"
+                                aria-invalid={comboBoxConfig.inputAriaInvalid}
+                                aria-label={comboBoxConfig.inputAriaLabel ?? ariaLabel}
+                                // Opt out of password-manager autofill — search/combobox inputs should
+                                // never receive it (vendor-specific data-* attributes for LP/1P/BW/Dashlane).
+                                autoComplete="off"
+                                data-1p-ignore="true"
+                                data-bwignore="true"
+                                data-form-type="other"
+                                data-lpignore="true"
                                 data-tid={tid}
                                 id={tid}
                                 placeholder={placeholder}
+                                role="combobox"
                                 value={comboBoxConfig.searchValue}
-                                className={twJoin(
-                                    'h-full w-full bg-transparent px-3 text-base! outline-hidden',
+                                className={twMergeCustom(
+                                    'h-full w-full bg-transparent px-3 font-secondary font-semibold text-base! outline-hidden',
+                                    label && 'pt-5',
                                     'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}
                                 onChange={(e) => handleSearchValueChange(e)}
                                 onClick={() => onSelectToggleOpenHandler(true)}
                             />
+
+                            {label && (
+                                <span
+                                    className={twJoin(
+                                        'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
+                                        isOpen || comboBoxConfig.searchValue || activeOption
+                                            ? 'top-[9px] left-3 text-sm'
+                                            : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-base',
+                                    )}
+                                >
+                                    {label}
+
+                                    {isRequired && <span className="ml-1 text-text-error">*</span>}
+                                </span>
+                            )}
 
                             {activeOption?.count !== undefined && (
                                 <span className="flex items-center whitespace-nowrap font-normal">
@@ -167,7 +207,10 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     )}
 
                     <button
-                        className="rounded-sm px-3"
+                        aria-expanded={isOpen}
+                        aria-haspopup="listbox"
+                        aria-label={ariaLabel}
+                        className="rounded-sm px-2.5"
                         disabled={isDisabled}
                         tabIndex={0}
                         title={ariaLabel}
@@ -186,6 +229,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             itemAfterText={itemAfterText}
                             itemBeforeText={itemBeforeText}
                             listClassName={listClassName}
+                            listId={listboxId}
                             options={filteredOptions}
                             setIsOpen={setIsOpen}
                             tid={tid}

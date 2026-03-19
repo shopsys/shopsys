@@ -17,6 +17,8 @@ type NativeProps = ExtractNativePropsFromDefault<
     | 'autoComplete'
     | 'onChange'
     | 'inputMode'
+    | 'aria-describedby'
+    | 'aria-invalid'
     | 'aria-label'
     | 'aria-labelledby'
     | 'aria-hidden'
@@ -50,6 +52,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             children,
             autoComplete,
             inputMode,
+            'aria-describedby': ariaDescribedby,
+            'aria-invalid': ariaInvalid,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
             'aria-hidden': ariaHidden,
@@ -58,7 +62,9 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     ) => (
         <LabelWrapper className={className} htmlFor={id} inputType="text-input" label={label} required={required}>
             <input
+                aria-describedby={ariaDescribedby}
                 aria-hidden={ariaHidden}
+                aria-invalid={ariaInvalid}
                 aria-label={ariaLabel}
                 aria-labelledby={ariaLabelledby}
                 autoComplete={autoComplete}
@@ -73,7 +79,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer w-full rounded-input border-2 px-3 pt-5 font-semibold transition [-moz-appearance:textfield] [-webkit-appearance:none] focus:outline-hidden disabled:pointer-events-none disabled:cursor-no-drop placeholder:[color:transparent]',
+                    'peer w-full rounded-input border-2 px-3 pt-5 font-semibold transition [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:text-transparent focus:outline-hidden disabled:pointer-events-none disabled:cursor-no-drop',
                     'border-input-border-default bg-input-bg-default text-input-text-default',
                     'disabled:border-input-border-disabled disabled:bg-input-bg-disabled disabled:text-input-text-disabled',
                     !hasError && 'hover:border-input-border-hovered hover:text-input-text-hovered',

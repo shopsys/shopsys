@@ -23,6 +23,7 @@ type PersistStoreProviderProps = {
 };
 
 const PERSIST_STORE_NAME = 'shopsys-platform-persist-store';
+const PERSIST_STORE_VERSION = 3;
 
 const createPersistStore = (domainId: number) => {
     const storeName = `${PERSIST_STORE_NAME}-${domainId}`;
@@ -49,7 +50,7 @@ const createPersistStore = (domainId: number) => {
                     storeName,
                     JSON.stringify({
                         state: initialState,
-                        version: 1,
+                        version: PERSIST_STORE_VERSION,
                     }),
                 );
             } catch (error) {
@@ -72,7 +73,7 @@ const createPersistStore = (domainId: number) => {
             ),
             {
                 name: storeName,
-                version: 1,
+                version: PERSIST_STORE_VERSION,
                 migrate: (persistedState, version) => {
                     let migratedPersistedState = { ...(persistedState as object) };
 
@@ -83,6 +84,18 @@ const createPersistStore = (domainId: number) => {
                             ...defaultUserState,
                             ...defaultContactInformationState,
                             ...defaultPacketeryState,
+                        };
+                    }
+
+                    // Migration from version 1/2 to version 3 - adds phone prefix fields
+                    if (version < 3) {
+                        const stored = migratedPersistedState as any;
+                        migratedPersistedState = {
+                            ...migratedPersistedState,
+                            contactInformation: {
+                                ...defaultContactInformationState.contactInformation,
+                                ...stored.contactInformation,
+                            },
                         };
                     }
 

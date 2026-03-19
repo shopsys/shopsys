@@ -37,6 +37,11 @@ export const RegistrationContent: FC = () => {
             password: registrationFormData.password,
             cartUuid,
             country: registrationFormData.country.value,
+            telephone: {
+                prefix: registrationFormData.telephonePrefix,
+                countryCode: registrationFormData.telephonePrefixCountryCode || '',
+                number: registrationFormData.telephone,
+            },
             companyCustomer: registrationFormData.customer === 'companyCustomer',
             billingAddressUuid: null,
         });

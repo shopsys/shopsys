@@ -1,5 +1,5 @@
 import { TypeCreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import { TypePromoCode, TypeRegistrationDataInput } from '../../graphql/types';
+import { TypePhoneDataInput, TypePromoCode, TypeRegistrationDataInput } from '../../graphql/types';
 import 'cypress-real-events';
 import { b2bDomain, PERSIST_STORE_NAME, staticData } from 'fixtures/demodata';
 
@@ -459,7 +459,7 @@ Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutati
                     $firstName: String!
                     $lastName: String!
                     $email: String!
-                    $telephone: String!
+                    $telephone: PhoneDataInput!
                     $onCompanyBehalf: Boolean!
                     $companyName: String
                     $companyNumber: String
@@ -472,7 +472,7 @@ Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutati
                     $deliveryFirstName: String
                     $deliveryLastName: String
                     $deliveryCompanyName: String
-                    $deliveryTelephone: String
+                    $deliveryTelephone: PhoneDataInput
                     $deliveryStreet: String
                     $deliveryCity: String
                     $deliveryPostcode: String
@@ -614,7 +614,7 @@ Cypress.Commands.add('createB2bOrderForTest', () => {
                                 $cartUuid: Uuid
                                 $firstName: String!
                                 $lastName: String!
-                                $telephone: String!
+                                $telephone: PhoneDataInput!
                                 $street: String!
                                 $city: String!
                                 $postcode: String!
@@ -641,7 +641,7 @@ Cypress.Commands.add('createB2bOrderForTest', () => {
                                 cartUuid,
                                 firstName: 'Test',
                                 lastName: 'B2B',
-                                telephone: '+420777000111',
+                                telephone: { countryCode: 'CZ', prefix: '+420', number: '777000111' },
                                 street: 'Testovací 1',
                                 city: 'Praha',
                                 postcode: '10000',
@@ -744,7 +744,7 @@ Cypress.Commands.add(
         email: string;
         firstName: string;
         lastName: string;
-        telephone: string;
+        telephone: TypePhoneDataInput;
         roleGroupUuid: string;
         newsletterSubscription?: boolean;
     }) => {

@@ -5,6 +5,7 @@ import {
     validateEmail,
     validateFirstName,
     validateLastName,
+    validateTelephonePrefix,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
 import { UseFormReturn } from 'react-hook-form';
@@ -25,6 +26,8 @@ export const useInquiryForm = (
             email: validateEmail(t),
             firstName: validateFirstName(t),
             lastName: validateLastName(t),
+            telephonePrefix: validateTelephonePrefix(t),
+            telephonePrefixCountryCode: Yup.string(),
             telephone: validateTelephoneRequired(t),
             companyName: Yup.string().nullable(),
             companyNumber: Yup.string().when('companyName', {
@@ -52,6 +55,8 @@ export const useInquiryFormMeta = (): FormMeta<InquiryFormType, { error: string 
             email: t('Your email'),
             firstName: t('First name'),
             lastName: t('Last name'),
+            telephonePrefix: t('Phone prefix'),
+            telephonePrefixCountryCode: '',
             telephone: t('Phone'),
             companyName: t('Company'),
             companyNumber: t('Company number'),

@@ -1,5 +1,6 @@
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
+import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { TIDs } from 'cypress/tids';
@@ -90,8 +91,8 @@ export const ContactInformationPersonalInformation: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.firstName.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.firstName.label,
                         required: true,
@@ -104,8 +105,8 @@ export const ContactInformationPersonalInformation: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.lastName.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.lastName.label,
                         required: true,
@@ -116,21 +117,21 @@ export const ContactInformationPersonalInformation: FC = () => {
                 />
             </FormColumn>
 
-            <FormColumn>
-                <TextInputControlled
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    gridClassName="col-span-2"
-                    name={formMeta.fields.telephone.name}
-                    textInputProps={{
-                        label: formMeta.fields.telephone.label,
-                        required: true,
-                        type: 'tel',
-                        autoComplete: 'tel',
-                        onChange: (event) => updateContactInformation({ telephone: event.currentTarget.value }),
-                    }}
-                />
-            </FormColumn>
+            <PhoneNumberInputControlled
+                formName={formMeta.formName}
+                formProviderMethods={formProviderMethods}
+                prefixCountryCodeName={formMeta.fields.telephonePrefixCountryCode.name}
+                prefixName={formMeta.fields.telephonePrefix.name}
+                telephoneLabel={formMeta.fields.telephone.label}
+                telephoneName={formMeta.fields.telephone.name}
+                telephoneOnChange={(event) => updateContactInformation({ telephone: event.currentTarget.value })}
+                onPrefixChange={(dialCode, countryCode) =>
+                    updateContactInformation({
+                        telephonePrefix: dialCode,
+                        telephonePrefixCountryCode: countryCode,
+                    })
+                }
+            />
         </FormBlockWrapper>
     );
 };

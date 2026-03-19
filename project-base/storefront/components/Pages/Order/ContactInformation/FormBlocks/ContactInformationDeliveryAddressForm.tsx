@@ -1,33 +1,48 @@
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
-import { FormLine } from 'components/Forms/Lib/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { Select } from 'components/Forms/Select/Select';
+import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
+import { CountrySelectControlled } from 'components/Forms/Select/CountrySelectControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
-import { SelectOptionType } from 'types/selectOptions';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ContactInformationDeliveryAddressForm = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
-    const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta();
-    const countriesAsSelectOptions = useCountriesAsSelectOptions();
     const { pickupPlace } = useCurrentCart();
 
     return (
         <div className="flex flex-col gap-5">
+            <PhoneNumberInputControlled
+                formName={formMeta.formName}
+                formProviderMethods={formProviderMethods}
+                isTelephoneRequired={false}
+                prefixCountryCodeName={formMeta.fields.deliveryTelephonePrefixCountryCode.name}
+                prefixName={formMeta.fields.deliveryTelephonePrefix.name}
+                telephoneLabel={formMeta.fields.deliveryTelephone.label}
+                telephoneName={formMeta.fields.deliveryTelephone.name}
+                telephoneOnChange={(event) =>
+                    updateContactInformation({
+                        deliveryTelephone: event.currentTarget.value,
+                    })
+                }
+                onPrefixChange={(dialCode, countryCode) =>
+                    updateContactInformation({
+                        deliveryTelephonePrefix: dialCode,
+                        deliveryTelephonePrefixCountryCode: countryCode,
+                    })
+                }
+            />
+
             <FormColumn>
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.deliveryFirstName.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.deliveryFirstName.label,
                         required: true,
@@ -44,8 +59,8 @@ export const ContactInformationDeliveryAddressForm = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.deliveryLastName.name}
+                    width="half"
                     textInputProps={{
                         label: formMeta.fields.deliveryLastName.label,
                         required: true,
@@ -54,25 +69,6 @@ export const ContactInformationDeliveryAddressForm = () => {
                         onChange: (event) =>
                             updateContactInformation({
                                 deliveryLastName: event.currentTarget.value,
-                            }),
-                    }}
-                />
-            </FormColumn>
-
-            <FormColumn>
-                <TextInputControlled
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    gridClassName="col-span-2"
-                    name={formMeta.fields.deliveryTelephone.name}
-                    textInputProps={{
-                        label: formMeta.fields.deliveryTelephone.label,
-                        required: false,
-                        type: 'tel',
-                        autoComplete: 'tel',
-                        onChange: (event) =>
-                            updateContactInformation({
-                                deliveryTelephone: event.currentTarget.value,
                             }),
                     }}
                 />
@@ -114,8 +110,8 @@ export const ContactInformationDeliveryAddressForm = () => {
                         <TextInputControlled
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
-                            gridClassName="col-span-3"
                             name={formMeta.fields.deliveryCity.name}
+                            width="wide"
                             textInputProps={{
                                 label: formMeta.fields.deliveryCity.label,
                                 required: true,
@@ -131,8 +127,8 @@ export const ContactInformationDeliveryAddressForm = () => {
                         <TextInputControlled
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
-                            gridClassName="col-start-4"
                             name={formMeta.fields.deliveryPostcode.name}
+                            width="narrow"
                             textInputProps={{
                                 label: formMeta.fields.deliveryPostcode.label,
                                 required: true,
@@ -147,37 +143,13 @@ export const ContactInformationDeliveryAddressForm = () => {
                         />
                     </FormColumn>
 
-                    <FormColumn>
-                        <FormLine className="col-span-3">
-                            <Controller
-                                name={formMeta.fields.deliveryCountry.name}
-                                render={({ fieldState: { error }, field }) => (
-                                    <>
-                                        <Select
-                                            isRequired
-                                            ariaLabel={t('Select country', { ns: 'accessibility' })}
-                                            label={formMeta.fields.deliveryCountry.label}
-                                            tid={`${formMeta.formName}-${formMeta.fields.deliveryCountry.name}`}
-                                            activeOption={countriesAsSelectOptions.find(
-                                                (option) => option.value === field.value.value,
-                                            )}
-                                            options={countriesAsSelectOptions.map((option) => ({
-                                                ...option,
-                                                id: `${option.value}-my-id`,
-                                            }))}
-                                            onSelectOption={(...selectOnChangeEventData) => {
-                                                field.onChange(...selectOnChangeEventData);
-                                                updateContactInformation({
-                                                    deliveryCountry: selectOnChangeEventData[0] as SelectOptionType,
-                                                });
-                                            }}
-                                        />
-                                        <FormLineError error={error} inputType="select" />
-                                    </>
-                                )}
-                            />
-                        </FormLine>
-                    </FormColumn>
+                    <CountrySelectControlled
+                        formName={formMeta.formName}
+                        formProviderMethods={formProviderMethods}
+                        label={formMeta.fields.deliveryCountry.label}
+                        name={formMeta.fields.deliveryCountry.name}
+                        onCountryChange={(country) => updateContactInformation({ deliveryCountry: country })}
+                    />
                 </>
             )}
         </div>

@@ -103,8 +103,8 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
                                 <PasswordInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-span-2"
                                     name={formMeta.fields.newPassword.name}
+                                    width="half"
                                     passwordInputProps={{
                                         label: formMeta.fields.newPassword.label,
                                         autoComplete: 'new-password',
@@ -114,8 +114,8 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
                                 <PasswordInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    gridClassName="col-span-2"
                                     name={formMeta.fields.newPasswordConfirm.name}
+                                    width="half"
                                     passwordInputProps={{
                                         label: formMeta.fields.newPasswordConfirm.label,
                                         autoComplete: 'new-password-confirm',

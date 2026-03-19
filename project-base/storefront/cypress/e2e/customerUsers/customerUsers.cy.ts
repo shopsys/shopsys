@@ -104,7 +104,7 @@ describe('Customer Users (B2B) Tests', () => {
                     email: testEmail,
                     firstName: 'CypressEdit',
                     lastName: 'TestUser',
-                    telephone: '777000111',
+                    telephone: { countryCode: 'CZ', prefix: '+420', number: '777000111' },
                     roleGroupUuid,
                 }).then((user) => {
                     userUuid = user.uuid;
@@ -147,7 +147,7 @@ describe('Customer Users (B2B) Tests', () => {
                     email: testEmail,
                     firstName: 'CypressDelete',
                     lastName: 'TestUser',
-                    telephone: '777000222',
+                    telephone: { countryCode: 'CZ', prefix: '+420', number: '777000222' },
                     roleGroupUuid,
                 });
             });

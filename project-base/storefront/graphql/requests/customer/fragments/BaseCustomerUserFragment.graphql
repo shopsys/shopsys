@@ -5,6 +5,11 @@ fragment BaseCustomerUserFragment on BaseCustomerUser {
     lastName
     email
     telephone
+    telephoneData {
+        prefix
+        countryCode
+        number
+    }
     billingAddressUuid
     street
     city
