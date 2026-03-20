@@ -55,3 +55,6 @@ msgstr ""
 msgid "Your watched product is back in stock!"
 msgstr ""
 
+msgid "pcs"
+msgstr ""
+

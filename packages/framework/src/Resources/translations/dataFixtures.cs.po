@@ -55,3 +55,6 @@ msgstr "Odstoupení od smlouvy - objednávka č. {number}"
 msgid "Your watched product is back in stock!"
 msgstr "Váš sledovaný produkt je znovu skladem!"
 
+msgid "pcs"
+msgstr "ks"
+

@@ -2104,9 +2104,6 @@ msgstr ""
 msgid "paper"
 msgstr ""
 
-msgid "pcs"
-msgstr ""
-
 msgid "plasma"
 msgstr ""
 

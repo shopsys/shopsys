@@ -2104,9 +2104,6 @@ msgstr "optický"
 msgid "paper"
 msgstr "papier"
 
-msgid "pcs"
-msgstr "ks"
-
 msgid "plasma"
 msgstr "plazma"
 
