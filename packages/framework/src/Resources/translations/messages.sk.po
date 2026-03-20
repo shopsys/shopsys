@@ -2080,14 +2080,14 @@ msgstr "Navigačná položka <strong><a href=\"{{ url }}\">{{ name }}</a></stron
 msgid "Navigation item <strong>{{ name }}</strong> has been removed"
 msgstr "Navigačná položka <strong>{{ name }}</strong> bola odstránená"
 
-msgid "New"
-msgstr "Nový"
-
 msgid "New SEO page"
 msgstr "Nová SEO stránka"
 
 msgid "New Withdrawal Request"
 msgstr "Nová žiadosť o odstúpenie od zmluvy"
+
+msgid "New [adjective]"
+msgstr "Nová"
 
 msgid "New administrator"
 msgstr "Nový administrátor"
