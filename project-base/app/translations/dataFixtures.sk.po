@@ -1160,7 +1160,7 @@ msgid "New Year's Day"
 msgstr "Nový rok"
 
 msgid "New [adjective]"
-msgstr "Nový [prídavné meno]"
+msgstr "Nová"
 
 msgid "New computers with USB"
 msgstr "Nové počítače s USB"
