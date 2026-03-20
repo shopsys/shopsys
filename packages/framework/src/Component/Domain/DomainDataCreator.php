@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatSetting;
 
 class DomainDataCreator
 {
@@ -31,6 +32,7 @@ class DomainDataCreator
         protected readonly PricingGroupFacade $pricingGroupFacade,
         protected readonly VatDataFactory $vatDataFactory,
         protected readonly VatFacade $vatFacade,
+        protected readonly VatSetting $vatSetting,
     ) {
     }
 
@@ -105,7 +107,7 @@ class DomainDataCreator
     protected function processDefaultVatForNewDomain(int $domainId): void
     {
         $vat = $this->createDefaultVatForNewDomain($domainId);
-        $this->setting->setForDomain(Vat::SETTING_DEFAULT_VAT, $vat->getId(), $domainId);
+        $this->vatSetting->setDefaultVatId($vat->getId(), $domainId);
     }
 
     protected function createDefaultVatForNewDomain(int $domainId): Vat

@@ -10,8 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 class Vat
 {
-    public const SETTING_DEFAULT_VAT = 'defaultVatId';
-
     /**
      * @var int
      */

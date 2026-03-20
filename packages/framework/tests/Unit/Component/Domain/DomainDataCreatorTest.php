@@ -18,8 +18,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatSetting;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 use Tests\FrameworkBundle\Unit\TestCase;
 
@@ -54,6 +57,7 @@ class DomainDataCreatorTest extends TestCase
         $pricingGroupFacadeStub = $this->createStub(PricingGroupFacade::class);
         $vatDataFactoryStub = $this->createStub(VatDataFactory::class);
         $vatFacadeStub = $this->createStub(VatFacade::class);
+        $vatSettingStub = $this->createStub(VatSetting::class);
 
         $domainDataCreator = new DomainDataCreator(
             $domain,
@@ -65,6 +69,7 @@ class DomainDataCreatorTest extends TestCase
             $pricingGroupFacadeStub,
             $vatDataFactoryStub,
             $vatFacadeStub,
+            $vatSettingStub,
         );
         $newDomainsDataCreated = $domainDataCreator->createNewDomainsData();
 
@@ -140,8 +145,24 @@ class DomainDataCreatorTest extends TestCase
             ->with($pricingGroupData, 2)
             ->willReturn($pricingGroup);
 
+        $vatData = new VatData();
+        $vatData->name = 'Default VAT group';
+        $vatData->percent = '0';
+
         $vatDataFactoryStub = $this->createStub(VatDataFactory::class);
+        $vatDataFactoryStub
+            ->method('create')
+            ->willReturn($vatData);
+
+        $vat = new Vat($vatData, 2);
+        $this->setValueOfProtectedProperty($vat, 'id', 1);
+
         $vatFacadeStub = $this->createStub(VatFacade::class);
+        $vatFacadeStub
+            ->method('create')
+            ->willReturn($vat);
+
+        $vatSettingStub = $this->createStub(VatSetting::class);
 
         $domainDataCreator = new DomainDataCreator(
             $domain,
@@ -153,6 +174,7 @@ class DomainDataCreatorTest extends TestCase
             $pricingGroupFacadeMock,
             $vatDataFactoryStub,
             $vatFacadeStub,
+            $vatSettingStub,
         );
 
         $tFunctionMock->enable();
@@ -212,6 +234,7 @@ class DomainDataCreatorTest extends TestCase
         $vatDataFactoryStub = $this->createStub(VatDataFactory::class);
         $vatFacadeStub = $this->createStub(VatFacade::class);
 
+        $vatSettingStub = $this->createStub(VatSetting::class);
         $domainDataCreator = new DomainDataCreator(
             $domainStub,
             $settingStub,
@@ -222,6 +245,7 @@ class DomainDataCreatorTest extends TestCase
             $pricingGroupFacadeStub,
             $vatDataFactoryStub,
             $vatFacadeStub,
+            $vatSettingStub,
         );
 
         $domainDataCreator->createNewDomainsData();
