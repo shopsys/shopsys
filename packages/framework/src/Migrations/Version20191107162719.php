@@ -95,7 +95,7 @@ class Version20191107162719 extends AbstractMigration implements DomainAwareInte
                 ->fetchOne();
 
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'defaultVatId\', :domainId, :vatId, \'string\');',
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'defaultVatId\', :domainId, :vatId, \'integer\');',
                 [
                     'domainId' => $domainId,
                     'vatId' => $newVatId,
