@@ -120,7 +120,7 @@ function getImageFromUrl(string $url): void
     if ($statusCode !== 200 || !$image) {
         renderError(
             'HTTP/1.1 404 Not Found',
-            sprintf('HTTP error thrown when trying to call "%s". Status code "%s" with message "%s"', $url, $statusCode, $image),
+            sprintf('HTTP error thrown when trying to call "%s". Status code "%s"', $url, $statusCode),
         );
     }
 
