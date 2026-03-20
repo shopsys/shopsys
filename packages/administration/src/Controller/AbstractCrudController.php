@@ -16,7 +16,6 @@ use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
-use Shopsys\AdministrationBundle\Component\Doctrine\Util\ObjectNameHelper;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
@@ -114,7 +113,6 @@ abstract class AbstractCrudController extends AdminBaseController
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\DeleteHandlerInterface $handler */
         $handler = $this->definition->getHandlerForAction(ActionType::DELETE);
         $entity = $handler->getById($id);
-        $objectName = ObjectNameHelper::getObjectName($entity);
 
         try {
             $this->executeExtensions(fn (CrudDeleteHookExtensionInterface $extension) => $extension->beforeDelete($entity), CrudDeleteHookExtensionInterface::class);
@@ -125,7 +123,7 @@ abstract class AbstractCrudController extends AdminBaseController
                 $this->addSuccessFlashTwig(
                     t('<strong>{{ objectName }}</strong> was deleted successfully.'),
                     [
-                        'objectName' => $objectName,
+                        'objectName' => $entity->toHumanReadable(),
                     ],
                 );
             }
@@ -137,7 +135,7 @@ abstract class AbstractCrudController extends AdminBaseController
                 $this->addErrorFlashTwig(
                     t('An error occurred while deleting <strong>{{ objectName }}</strong>.'),
                     [
-                        'objectName' => $objectName,
+                        'objectName' => $entity->toHumanReadable(),
                     ],
                 );
             }
@@ -151,7 +149,7 @@ abstract class AbstractCrudController extends AdminBaseController
                     'exception' => $exception,
                     'entityClass' => $this->definition->entityClass,
                     'entityId' => $id,
-                    'entityName' => $objectName,
+                    'entityName' => $entity->toHumanReadable(),
                 ],
             );
         }

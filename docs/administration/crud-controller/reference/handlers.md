@@ -139,16 +139,16 @@ When a CRUD action is executed, hooks follow this pattern:
 
 ## Entity Naming
 
-When working with CRUD handlers, it's important to ensure your entities have proper string representations. Entity names are displayed throughout the CRUD interface in:
+When working with CRUD handlers, it's important to ensure your entities have proper human-readable representations. Entity names are displayed throughout the CRUD interface in:
 
 - Flash messages (e.g., "Order #123 was deleted successfully")
 - Page titles and breadcrumbs
 - Error messages
 - Form labels
 
-### Implementing `__toString()` Method
+### Implementing the `Presentable` Interface
 
-To provide user-friendly entity names, implement the `__toString()` method in your entity class:
+To provide user-friendly entity names, implement the `Shopsys\FrameworkBundle\Component\Utils\Presentable` interface in your entity class:
 
 ```php
 <?php
@@ -157,40 +157,32 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-class Order
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+
+class Order implements Presentable
 {
     // ... other methods ...
-    
-    /**
-     * @return string
-     */
-    public function __toString(): string
+
+    public function toHumanReadable(): string
     {
         return t('Order with number %number%', ['%number%' => $this->getNumber()]);
     }
 }
 ```
 
-### How Entity Names Are Resolved
-
-The CRUD system uses `Shopsys\AdministrationBundle\Component\Doctrine\ObjectNameHelper::getObjectName()` to determine entity names:
-
-1. **If the entity implements `Stringable` interface** (which includes having a `__toString()` method), that string representation is used
-2. **Otherwise**, a technical fallback is generated: `ClassName@objectHash`
-
 ### Best Practices
 
-#### 1. Always Implement `__toString()`
+#### 1. Always Implement `Presentable` interface
 
 ```php
 // Good - provides meaningful information
-public function __toString(): string
+public function toHumanReadable(): string
 {
     return sprintf('Product "%s" (SKU: %s)', $this->getName(), $this->getSku());
 }
 
 // Bad - too generic
-public function __toString(): string
+public function toHumanReadable(): string
 {
     return 'Product';
 }
@@ -199,7 +191,7 @@ public function __toString(): string
 #### 2. Include Identifying Information
 
 ```php
-public function __toString(): string
+public function toHumanReadable(): string
 {
     // Include the most important identifier
     return t('Customer %name% (%email%)', [
@@ -212,7 +204,7 @@ public function __toString(): string
 #### 3. Use Translations
 
 ```php
-public function __toString(): string
+public function toHumanReadable(): string
 {
     // Use the t() function for translatable strings
     return t('Category "%name%"', [
@@ -224,7 +216,7 @@ public function __toString(): string
 #### 4. Handle Empty or Null Values
 
 ```php
-public function __toString(): string
+public function toHumanReadable(): string
 {
     $name = $this->getName() ?: t('Unnamed product');
     
@@ -241,9 +233,11 @@ declare(strict_types=1);
 
 namespace App\Model\Invoice;
 
-class Invoice
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+
+class Invoice implements Presentable
 {
-    public function __toString(): string
+    public function toHumanReadable(): string
     {
         if ($this->getInvoiceNumber()) {
             return t('Invoice %number% for %customer%', [
@@ -261,4 +255,4 @@ class Invoice
 
 !!! warning
 
-    The `__toString()` method should never throw exceptions. Always handle potential null values or missing data gracefully.
+    The `toHumanReadable()` method should never throw exceptions. Always handle potential null values or missing data gracefully.

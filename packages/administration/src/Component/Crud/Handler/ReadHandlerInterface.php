@@ -16,7 +16,7 @@ interface ReadHandlerInterface extends HandlerInterface
      *
      * @param int $id Entity identifier
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException When entity is not found
-     * @return object The entity object
+     * @return object&\Shopsys\FrameworkBundle\Component\Utils\Presentable The entity object
      */
     public function getById(int $id): object;
 }

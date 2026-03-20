@@ -67,7 +67,7 @@ This will enable Delete action in your CRUD controller. Similarly, you can creat
 
 ## 3. Implement Entity String Representation
 
-For user-friendly messages in the admin interface, implement the `__toString()` method in your entity class:
+For user-friendly messages in the admin interface, implement the `Shopsys\FrameworkBundle\Component\Utils\Presentable` interface in your entity class:
 
 ```php
 <?php
@@ -76,18 +76,17 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-class Order
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+
+class Order implements Presentable
 {
     // ... other properties and methods ...
-    
-    /**
-     * @return string
-     */
-    public function __toString(): string
+
+    public function toHumanReadable(): string
     {
         return t('Order #%number%', ['%number%' => $this->getNumber()]);
     }
 }
 ```
 
-Read more about implementing `__toString()` in the [Entity Naming](../reference/handlers.md#entity-naming) section.
+Read more about implementing `Presentable` interface in the [Entity Naming](../reference/handlers.md#entity-naming) section.

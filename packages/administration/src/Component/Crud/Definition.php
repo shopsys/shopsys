@@ -9,7 +9,9 @@ use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
 use Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface;
+use Shopsys\AdministrationBundle\Component\Crud\Handler\ReadHandlerInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 
 final readonly class Definition
 {
@@ -28,6 +30,18 @@ final readonly class Definition
         private array $extensions,
         private array $handlers,
     ) {
+        foreach ($handlers as $handler) {
+            if ($handler instanceof ReadHandlerInterface && is_subclass_of($this->entityClass, Presentable::class) === false) {
+                throw new RuntimeException(
+                    sprintf(
+                        'Entity "%s" must implement "%s" to be used with "%s".',
+                        $this->entityClass,
+                        Presentable::class,
+                        $handler::class,
+                    ),
+                );
+            }
+        }
     }
 
     /**
