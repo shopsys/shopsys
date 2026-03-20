@@ -64,9 +64,6 @@ msgstr "301 (Trvalé přesměrování)"
 msgid "302 (Temporary redirect)"
 msgstr "302 (Dočasné přesměrování)"
 
-msgid "<a href=\"%url%\">Default unit is not set.</a>"
-msgstr "<a href=\"%url%\">Není nastavena výchozí jednotka.</a>"
-
 msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
 msgstr "<a href=\"%url%\">Není nastaven článek zásady ochrany osobních údajů pro doménu %domainName%.</a>"
 
@@ -81,9 +78,6 @@ msgstr "<a href=\"%url%\">Není nastaven článek obchodní podmínky pro domén
 
 msgid "<a href=\"%url%\">There are no countries, you need to create some.</a>"
 msgstr "<a href=\"%url%\">Neexistují žádné státy, musíte nějaký vytvořit.</a>"
-
-msgid "<a href=\"%url%\">There are no units, you need to create some.</a>"
-msgstr "<a href=\"%url%\">Neexistují žádné jednotky, musíte nějakou vytvořit.</a>"
 
 msgid "<a href=\"%url%\">There are no warehouses, you need to create some.</a>"
 msgstr "<a href=\"%url%\">Neexistují žádné sklady, musíte nějaký vytvořit.</a>"

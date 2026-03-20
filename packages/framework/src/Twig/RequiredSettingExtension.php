@@ -13,8 +13,6 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
-use Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Symfony\Component\Routing\RouterInterface;
@@ -38,7 +36,6 @@ class RequiredSettingExtension extends AbstractExtension
         protected readonly Setting $setting,
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly ParameterFacade $parameterFacade,
-        protected readonly UnitFacade $unitFacade,
         protected readonly StockFacade $stockFacade,
         protected readonly CountryFacade $countryFacade,
         protected readonly ClosedDayFacade $closedDayFacade,
@@ -78,8 +75,6 @@ class RequiredSettingExtension extends AbstractExtension
         $this->requiredSettingsMessages = [];
 
         $this->checkEnabledMailTemplatesHaveTheirBodyAndSubjectFilled();
-        $this->checkAtLeastOneUnitExists();
-        $this->checkDefaultUnitIsSet();
         $this->checkAtLeastOneStockExists();
         $this->checkAtLeastOneCountryExists();
         $this->checkMandatoryArticlesExist();
@@ -94,32 +89,6 @@ class RequiredSettingExtension extends AbstractExtension
                 '<a href="%url%">Some required email templates are not fully set.</a>',
                 [
                     '%url%' => $this->router->generate('admin_mail_template'),
-                ],
-            );
-        }
-    }
-
-    protected function checkAtLeastOneUnitExists(): void
-    {
-        if ($this->unitFacade->getCount() === 0) {
-            $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">There are no units, you need to create some.</a>',
-                [
-                    '%url%' => $this->router->generate('admin_unit_list'),
-                ],
-            );
-        }
-    }
-
-    protected function checkDefaultUnitIsSet(): void
-    {
-        try {
-            $this->unitFacade->getDefaultUnit();
-        } catch (UnitNotFoundException) {
-            $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">Default unit is not set.</a>',
-                [
-                    '%url%' => $this->router->generate('admin_unit_list'),
                 ],
             );
         }

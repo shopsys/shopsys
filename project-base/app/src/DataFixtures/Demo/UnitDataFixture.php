@@ -8,9 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitData;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
@@ -38,13 +36,9 @@ class UnitDataFixture extends AbstractReferenceFixture
     public const string UNIT_KILOWATT_HOURS = 'unit_kilowatt_hours';
     public const string UNIT_YEARS = 'unit_years';
 
-    /**
-     * @param \App\Component\Setting\Setting $setting
-     */
     public function __construct(
         private readonly UnitFacade $unitFacade,
         private readonly UnitDataFactory $unitDataFactory,
-        private readonly Setting $setting,
         private readonly Domain $domain,
     ) {
     }
@@ -59,10 +53,8 @@ class UnitDataFixture extends AbstractReferenceFixture
         }
         $this->createUnit($unitData, self::UNIT_CUBIC_METERS);
 
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        }
-        $this->createUnit($unitData, self::UNIT_PIECES);
+        // default unit is created in migration Version20260320122217, so we only need to add reference to it
+        $this->addReference(self::UNIT_PIECES, $this->unitFacade->getDefaultUnit());
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -153,8 +145,6 @@ class UnitDataFixture extends AbstractReferenceFixture
             $unitData->name[$locale] = t('years', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_YEARS);
-
-        $this->setPiecesAsDefaultUnit();
     }
 
     private function createUnit(UnitData $unitData, ?string $referenceName = null): void
@@ -164,11 +154,5 @@ class UnitDataFixture extends AbstractReferenceFixture
         if ($referenceName !== null) {
             $this->addReference($referenceName, $unit);
         }
-    }
-
-    private function setPiecesAsDefaultUnit(): void
-    {
-        $defaultUnit = $this->getReference(self::UNIT_PIECES, Unit::class);
-        $this->setting->set(Setting::DEFAULT_UNIT, $defaultUnit->getId());
     }
 }
