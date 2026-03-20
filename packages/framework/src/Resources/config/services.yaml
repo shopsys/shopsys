@@ -741,6 +741,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
 
+    Shopsys\FrameworkBundle\Model\Pricing\Vat\VatSetting: ~
+
     Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter\:
         resource: '../../Model/Product/AdvancedSearch/Filter/*Filter.php'
 

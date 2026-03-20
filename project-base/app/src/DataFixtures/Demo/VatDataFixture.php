@@ -8,12 +8,12 @@ use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatSetting;
 
 class VatDataFixture extends AbstractReferenceFixture
 {
@@ -22,13 +22,10 @@ class VatDataFixture extends AbstractReferenceFixture
     public const string VAT_LOW = 'vat_low';
     public const string VAT_HIGH = 'vat_high';
 
-    /**
-     * @param \App\Component\Setting\Setting $setting
-     */
     public function __construct(
         private readonly VatFacade $vatFacade,
         private readonly VatDataFactory $vatDataFactory,
-        private readonly Setting $setting,
+        private readonly VatSetting $vatSetting,
     ) {
     }
 
@@ -78,6 +75,6 @@ class VatDataFixture extends AbstractReferenceFixture
     private function setHighVatAsDefault(int $domainId): void
     {
         $defaultVat = $this->getReferenceForDomain(self::VAT_HIGH, $domainId, Vat::class);
-        $this->setting->setForDomain(Vat::SETTING_DEFAULT_VAT, $defaultVat->getId(), $domainId);
+        $this->vatSetting->setDefaultVatId($defaultVat->getId(), $domainId);
     }
 }

@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatMarkedAsDeletedDeleteException;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatWithReplacedDeleteException;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
@@ -16,7 +15,7 @@ class VatFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly VatRepository $vatRepository,
-        protected readonly Setting $setting,
+        protected readonly VatSetting $vatSetting,
         protected readonly VatFactory $vatFactory,
         protected readonly Domain $domain,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
@@ -114,14 +113,14 @@ class VatFacade
 
     public function getDefaultVatForDomain(int $domainId): Vat
     {
-        $defaultVatId = $this->setting->getForDomain(Vat::SETTING_DEFAULT_VAT, $domainId);
+        $defaultVatId = $this->vatSetting->getDefaultVatId($domainId);
 
         return $this->vatRepository->getById($defaultVatId);
     }
 
     public function setDefaultVatForDomain(Vat $vat, int $domainId): void
     {
-        $this->setting->setForDomain(Vat::SETTING_DEFAULT_VAT, $vat->getId(), $domainId);
+        $this->vatSetting->setDefaultVatId($vat->getId(), $domainId);
     }
 
     public function isVatUsed(Vat $vat): bool
