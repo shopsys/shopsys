@@ -2071,14 +2071,14 @@ msgstr ""
 msgid "Navigation item <strong>{{ name }}</strong> has been removed"
 msgstr ""
 
-msgid "New"
-msgstr ""
-
 msgid "New SEO page"
 msgstr ""
 
 msgid "New Withdrawal Request"
 msgstr ""
+
+msgid "New [adjective]"
+msgstr "New"
 
 msgid "New administrator"
 msgstr ""

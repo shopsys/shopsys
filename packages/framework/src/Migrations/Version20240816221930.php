@@ -39,7 +39,7 @@ class Version20240816221930 extends AbstractMigration implements DomainAwareInte
         $this->createComplaintStatus(2, ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED);
 
         foreach ($this->getAllLocales() as $locale) {
-            $this->createComplaintStatusTranslations(1, t('New', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
+            $this->createComplaintStatusTranslations(1, t('New [adjective]', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
             $this->createComplaintStatusTranslations(2, t('Resolved', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
         }
 
