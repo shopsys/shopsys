@@ -80,12 +80,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     protected $position;
 
     /**
-     * @var bool
-     */
-    #[ORM\Column(type: 'boolean')]
-    protected $czkRounding;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Payment\PaymentDomain>
      */
     #[ORM\OneToMany(targetEntity: PaymentDomain::class, mappedBy: 'payment', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
@@ -125,7 +119,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     protected function setData(PaymentData $paymentData): void
     {
         $this->hidden = $paymentData->hidden;
-        $this->czkRounding = $paymentData->czkRounding;
         $this->type = $paymentData->type;
 
         if ($paymentData->type !== PaymentTypeEnum::TYPE_GOPAY) {
@@ -315,11 +308,19 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     }
 
     /**
+     * @return string
+     */
+    public function getOrderRoundingTypeForDomain(int $domainId)
+    {
+        return $this->getPaymentDomain($domainId)->getOrderRoundingType();
+    }
+
+    /**
      * @return bool
      */
-    public function isCzkRounding()
+    public function hasOrderRoundingForDomain(int $domainId)
     {
-        return $this->czkRounding;
+        return $this->getOrderRoundingTypeForDomain($domainId) !== OrderRoundingTypeEnum::NONE;
     }
 
     public function isGoPay(): bool
@@ -378,6 +379,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
             $paymentDomain->setAccountNumber($paymentData->accountNumberByDomainId[$domainId] ?? null);
             $paymentDomain->setIban($paymentData->ibanByDomainId[$domainId] ?? null);
             $paymentDomain->setBicSwift($paymentData->bicSwiftByDomainId[$domainId] ?? null);
+            $paymentDomain->setOrderRoundingType($paymentData->orderRoundingTypeByDomainId[$domainId] ?? OrderRoundingTypeEnum::NONE);
         }
     }
 
@@ -395,6 +397,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
                 $paymentData->accountNumberByDomainId[$domainId] ?? null,
                 $paymentData->ibanByDomainId[$domainId] ?? null,
                 $paymentData->bicSwiftByDomainId[$domainId] ?? null,
+                $paymentData->orderRoundingTypeByDomainId[$domainId] ?? OrderRoundingTypeEnum::NONE,
             );
             $this->domains->add($paymentDomain);
         }

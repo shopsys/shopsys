@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\PriceAndVatTableByDomainsType;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
+use Shopsys\FrameworkBundle\Model\Payment\OrderRoundingTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
@@ -47,6 +48,7 @@ final class PaymentFormType extends AbstractType
         private readonly Domain $domain,
         private readonly PaymentTypeProvider $paymentTypeProvider,
         private readonly PaymentInstructionFacade $paymentInstructionFacade,
+        private readonly OrderRoundingTypeEnum $orderRoundingTypeEnum,
     ) {
     }
 
@@ -163,9 +165,18 @@ final class PaymentFormType extends AbstractType
         ]);
 
         $builderPriceGroup
-            ->add('czkRounding', YesNoType::class, [
-                'label' => 'Order in CZK round to whole crowns',
-                'help' => t('Rounding item with 0 % VAT will be added to your order. It is used for payment in cash.'),
+            ->add('orderRoundingTypeByDomainId', MultidomainType::class, [
+                'entry_type' => ChoiceType::class,
+                'entry_options' => [
+                    'choices' => $this->orderRoundingTypeEnum->getAllIndexedByTranslations(),
+                ],
+                'display_mode' => 'columns',
+                'row_attr' => [
+                    'class' => 'mb-3',
+                ],
+                'label' => 'Order total rounding',
+                'required' => true,
+                'help' => t('Rounding item with 0 % VAT will be added to the order. It is used for payment in cash.'),
             ])
             ->add('pricesByDomains', PriceAndVatTableByDomainsType::class, [
                 'pricesIndexedByDomainId' => $this->paymentFacade->getPricesIndexedByDomainId($payment),

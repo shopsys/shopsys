@@ -2197,6 +2197,9 @@ msgstr ""
 msgid "Nominal"
 msgstr ""
 
+msgid "None"
+msgstr ""
+
 msgid "Not possible to assign product to itself"
 msgstr ""
 
@@ -2296,9 +2299,6 @@ msgstr ""
 msgid "Order has not been sent to GoPay"
 msgstr ""
 
-msgid "Order in CZK round to whole crowns"
-msgstr ""
-
 msgid "Order information"
 msgstr ""
 
@@ -2321,6 +2321,9 @@ msgid "Order sent page content"
 msgstr ""
 
 msgid "Order status"
+msgstr ""
+
+msgid "Order total rounding"
 msgstr ""
 
 msgid "Ordering"
@@ -2821,7 +2824,7 @@ msgstr ""
 msgid "Rounding"
 msgstr ""
 
-msgid "Rounding item with 0 % VAT will be added to your order. It is used for payment in cash."
+msgid "Rounding item with 0 % VAT will be added to the order. It is used for payment in cash."
 msgstr ""
 
 msgid "Rounding places of price without VAT and VAT amount"
@@ -3304,10 +3307,16 @@ msgstr ""
 msgid "To fifty hundredths (halfs)"
 msgstr ""
 
+msgid "To five cents (0.05)"
+msgstr ""
+
 msgid "To hundredths (cents)"
 msgstr ""
 
 msgid "To whole numbers"
+msgstr ""
+
+msgid "To whole numbers (1.00)"
 msgstr ""
 
 msgid "Too many login attempts. Please try again later."

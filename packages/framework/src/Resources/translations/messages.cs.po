@@ -2197,6 +2197,9 @@ msgstr "Žádný sklad není přiřazen"
 msgid "Nominal"
 msgstr "Nominální"
 
+msgid "None"
+msgstr "Žádné"
+
 msgid "Not possible to assign product to itself"
 msgstr "Nelze přiřadit produkt sám sobě"
 
@@ -2296,9 +2299,6 @@ msgstr "URL adresa detailu objednávky"
 msgid "Order has not been sent to GoPay"
 msgstr "Objednávka nebyla odeslána do GoPay"
 
-msgid "Order in CZK round to whole crowns"
-msgstr "Objednávku v CZK zaokrouhlit na celé koruny"
-
 msgid "Order information"
 msgstr "Informace o objednávce"
 
@@ -2322,6 +2322,9 @@ msgstr "Obsah stránky po odeslání objednávky"
 
 msgid "Order status"
 msgstr "Stav objednávky"
+
+msgid "Order total rounding"
+msgstr "Zaokrouhlení celkové ceny objednávky"
 
 msgid "Ordering"
 msgstr "Řazení"
@@ -2821,8 +2824,8 @@ msgstr "Role"
 msgid "Rounding"
 msgstr "Zaokrouhlení"
 
-msgid "Rounding item with 0 % VAT will be added to your order. It is used for payment in cash."
-msgstr "Do objednávky bude přidána zaokrouhlovací položka s 0% DPH. Používá se pro platbu v hotovosti."
+msgid "Rounding item with 0 % VAT will be added to the order. It is used for payment in cash."
+msgstr "K objednávce bude přidána položka zaokrouhlení s 0 % DPH. Používá se pro platbu v hotovosti."
 
 msgid "Rounding places of price without VAT and VAT amount"
 msgstr "Počet desetinných míst pro zaokrouhlování ceny bez DPH a částky DPH"
@@ -3304,11 +3307,17 @@ msgstr "TikTok URL"
 msgid "To fifty hundredths (halfs)"
 msgstr "Na padesátníky"
 
+msgid "To five cents (0.05)"
+msgstr "Na pětihaléře (0,05)"
+
 msgid "To hundredths (cents)"
 msgstr "Na setiny (haléře)"
 
 msgid "To whole numbers"
 msgstr "Na celá čísla (koruny)"
+
+msgid "To whole numbers (1.00)"
+msgstr "Na celá čísla (1,00)"
 
 msgid "Too many login attempts. Please try again later."
 msgstr "Příliš mnoho pokusů o přihlášení. Zkuste to prosím později."

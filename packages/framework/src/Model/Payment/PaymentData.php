@@ -37,9 +37,9 @@ class PaymentData
     public $transports;
 
     /**
-     * @var bool
+     * @var array<int, string>
      */
-    public $czkRounding;
+    public $orderRoundingTypeByDomainId;
 
     /**
      * @var bool[]
@@ -99,7 +99,7 @@ class PaymentData
         $this->hidden = false;
         $this->enabled = [];
         $this->transports = [];
-        $this->czkRounding = false;
+        $this->orderRoundingTypeByDomainId = [];
         $this->pricesIndexedByDomainId = [];
         $this->vatsIndexedByDomainId = [];
         $this->goPayPaymentMethodByDomainId = [];

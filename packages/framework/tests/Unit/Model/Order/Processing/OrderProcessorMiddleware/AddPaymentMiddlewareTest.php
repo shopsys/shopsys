@@ -39,7 +39,6 @@ class AddPaymentMiddlewareTest extends MiddlewareTestCase
         $actualOrderData = $result->orderData;
 
         $this->assertSame($actualOrderData->orderPayment?->payment, $payment);
-        $this->assertFalse($actualOrderData->paymentCzkRounding);
 
         $this->assertThat(
             $actualOrderData->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_PAYMENT]),

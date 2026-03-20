@@ -28,11 +28,13 @@ class PaymentFacade
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly PaymentFactory $paymentFactory,
         protected readonly PaymentPriceFactory $paymentPriceFactory,
+        protected readonly OrderRoundingTypeEnum $orderRoundingTypeEnum,
     ) {
     }
 
     public function create(PaymentData $paymentData): Payment
     {
+        $this->validateOrderRoundingTypes($paymentData);
         $payment = $this->paymentFactory->create($paymentData);
         $this->em->persist($payment);
         $this->em->flush();
@@ -48,6 +50,7 @@ class PaymentFacade
 
     public function edit(Payment $payment, PaymentData $paymentData): void
     {
+        $this->validateOrderRoundingTypes($paymentData);
         $payment->edit($paymentData);
         $this->updatePaymentPrices(
             $payment,
@@ -308,5 +311,12 @@ class PaymentFacade
             $transport,
             $domainId,
         );
+    }
+
+    protected function validateOrderRoundingTypes(PaymentData $paymentData): void
+    {
+        foreach ($paymentData->orderRoundingTypeByDomainId as $orderRoundingType) {
+            $this->orderRoundingTypeEnum->validateCase($orderRoundingType);
+        }
     }
 }

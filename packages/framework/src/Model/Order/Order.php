@@ -376,12 +376,6 @@ class Order
     #[ORM\Column(type: 'integer')]
     protected $currencyMinFractionDigits;
 
-    /**
-     * @var bool
-     */
-    #[ORM\Column(type: 'boolean')]
-    protected $paymentCzkRounding;
-
     public function __construct(
         OrderData $orderData,
         string $orderNumber,
@@ -414,7 +408,6 @@ class Order
         $this->currencyRoundingType = $orderData->currencyRoundingType;
         $this->currencyRoundingPlacesPriceWithoutVat = $orderData->currencyRoundingPlacesPriceWithoutVat;
         $this->currencyMinFractionDigits = $orderData->currencyMinFractionDigits;
-        $this->paymentCzkRounding = $orderData->paymentCzkRounding;
     }
 
     /**
@@ -581,7 +574,6 @@ class Order
     protected function editOrderPayment(OrderData $orderData): void
     {
         $orderPaymentData = $orderData->orderPayment;
-        $this->paymentCzkRounding = $orderPaymentData->payment->isCzkRounding();
         $this->getPaymentItem()->edit($orderPaymentData);
     }
 
@@ -745,14 +737,6 @@ class Order
     public function getCurrencyMinFractionDigits()
     {
         return $this->currencyMinFractionDigits;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPaymentCzkRounding()
-    {
-        return $this->paymentCzkRounding;
     }
 
     public function setTotalPrices(PriceInterface $orderTotalPrice, PriceInterface $productsTotalPrice): void

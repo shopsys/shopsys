@@ -359,7 +359,6 @@ class OrderFacade
 
         $orderData = $this->orderDataFactory->createFromOrder($order);
         $orderData->orderPayment = $orderPaymentData;
-        $orderData->paymentCzkRounding = $payment->isCzkRounding();
         $this->edit($order->getId(), $orderData);
     }
 

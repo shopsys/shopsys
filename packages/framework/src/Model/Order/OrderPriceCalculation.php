@@ -6,7 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Payment\OrderRoundingTypeEnum;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
@@ -16,6 +17,7 @@ class OrderPriceCalculation
     public function __construct(
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
         protected readonly Rounding $rounding,
+        protected readonly OrderRoundingTypeEnum $orderRoundingTypeEnum,
     ) {
     }
 
@@ -47,17 +49,19 @@ class OrderPriceCalculation
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     public function calculateOrderRoundingPrice(
-        bool $paymentCzkRounding,
-        string $currencyCode,
+        Payment $payment,
         string $currencyRoundingType,
         PriceInterface $orderTotalPrice,
+        int $domainId,
     ): ?PriceInterface {
-        if (!$paymentCzkRounding || $currencyCode !== Currency::CODE_CZK) {
+        if (!$payment->hasOrderRoundingForDomain($domainId)) {
             return null;
         }
 
+        $orderRoundingType = $payment->getOrderRoundingTypeForDomain($domainId);
+
         $priceWithVat = $orderTotalPrice->getPriceWithVat();
-        $roundedPriceWithVat = $priceWithVat->round(0);
+        $roundedPriceWithVat = $this->orderRoundingTypeEnum->roundPrice($orderRoundingType, $priceWithVat);
 
         $roundingPrice = $this->rounding->roundPriceWithVat(
             $roundedPriceWithVat->subtract($priceWithVat),

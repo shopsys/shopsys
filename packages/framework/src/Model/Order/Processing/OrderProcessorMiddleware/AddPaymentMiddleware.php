@@ -57,7 +57,6 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
         $orderData->addTotalPrice($paymentPrice, OrderItemTypeEnum::TYPE_PAYMENT);
 
         $orderData->orderPayment = $orderItemData;
-        $orderData->paymentCzkRounding = $payment->isCzkRounding();
         $orderData->goPayBankSwift = $orderProcessingData->orderInput->findAdditionalData(static::ADDITIONAL_DATA_GOPAY_BANK_SWIFT);
 
         $orderData->addItem($orderItemData);
