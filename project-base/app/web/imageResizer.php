@@ -80,9 +80,10 @@ if ($CDN_DOMAIN === '' || $CDN_API_KEY === '' || $CDN_API_SALT === '') {
 try {
     getImageFromUrl($imageUrl);
 } catch (Throwable $throwable) {
-    render404();
-
-    exit;
+    renderError(
+        'HTTP/1.0 502 Bad Gateway',
+        sprintf('error thrown when trying to call "%s" with message "%s"', $imageUrl, $throwable->getMessage()),
+    );
 }
 
 function getImageFromUrl(string $url): void
@@ -102,9 +103,25 @@ function getImageFromUrl(string $url): void
     $image = curl_exec($ch);
     $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
     $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $errorNumber = curl_errno($ch);
+    $errorMessage = curl_error($ch);
+
+    if ($errorNumber !== 0) {
+        renderError(
+            'HTTP/1.0 502 Bad Gateway',
+            sprintf('CURL error thrown when trying to call "%s" with message "%s" (%s)', $url, $errorMessage, $errorNumber),
+        );
+    }
+
+    if ($statusCode === 404) {
+        renderError('HTTP/1.1 404 Not Found');
+    }
+
     if ($statusCode !== 200 || !$image) {
-        render404();
-        exit;
+        renderError(
+            'HTTP/1.1 404 Not Found',
+            sprintf('HTTP error thrown when trying to call "%s". Status code "%s"', $url, $statusCode),
+        );
     }
 
     $etag = '"' . md5($image) . '"';
@@ -155,11 +172,15 @@ function findExactOrClosestLargerOrLargestImageSize(int $requestedImageSize, arr
     return array_last($allowedImageSizes);
 }
 
-function render404(): void
+function renderError(string $httpHeader, ?string $logMessage = null): void
 {
-    header('HTTP/1.1 404 Not Found');
+    if ($logMessage !== null) {
+        fwrite(fopen('/tmp/log-pipe', 'a'), 'imageResizer: ' . $logMessage . PHP_EOL);
+    }
 
+    header($httpHeader);
     echo 'File not found';
+    exit;
 }
 
 /**
