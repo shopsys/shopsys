@@ -1,0 +1,77 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %} - {{ 'MCP server'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'MCP server'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Current token'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            {% if administratorMcpToken is null %}
+                <p class="mb-4">{{ 'No active MCP token is configured for your administrator account.'|trans }}</p>
+                {{ form_start(generateForm, { attr: { class: 'd-inline-block mb-0' } }) }}
+                    {{ form_widget(generateForm.generate, { attr: { class: 'btn btn-primary' } }) }}
+                {{ form_end(generateForm) }}
+            {% else %}
+                <div class="table-responsive mb-4">
+                    <table class="table table-vcenter">
+                        <tbody>
+                            <tr>
+                                <th class="w-25">{{ 'Status'|trans }}</th>
+                                <td>{{ 'Active'|trans }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'Created at'|trans }}</th>
+                                <td>{{ administratorMcpToken.createdAt|formatDateTime }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'Last used at'|trans }}</th>
+                                <td>
+                                    {% if administratorMcpToken.lastUsedAt is null %}
+                                        {{ 'Never used'|trans }}
+                                    {% else %}
+                                        {{ administratorMcpToken.lastUsedAt|formatDateTime }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    {{ form_start(generateForm, { attr: { class: 'd-inline-block mb-0' } }) }}
+                        {{ form_widget(generateForm.generate, { attr: { class: 'btn btn-primary' } }) }}
+                    {{ form_end(generateForm) }}
+
+                    {{ form_start(revokeForm, { attr: { class: 'd-inline-block mb-0' } }) }}
+                        {{ form_widget(revokeForm.revoke, { attr: { class: 'btn btn-outline-danger' } }) }}
+                    {{ form_end(revokeForm) }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Usage guidance'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            <p>{{ 'Use the endpoint below from your MCP client with Bearer token authentication.'|trans }}</p>
+
+            <dl class="row mb-0">
+                <dt class="col-sm-3">{{ 'Endpoint URL'|trans }}</dt>
+                <dd class="col-sm-9"><code>{{ mcpEndpointUrl }}</code></dd>
+                <dt class="col-sm-3">{{ 'Authorization header'|trans }}</dt>
+                <dd class="col-sm-9"><code>Authorization: Bearer &lt;token&gt;</code></dd>
+            </dl>
+
+            <div class="alert alert-info mt-4 mb-0">
+                {{ 'Generated secrets are shown only once. Regenerating a token revokes the previous token immediately.'|trans }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

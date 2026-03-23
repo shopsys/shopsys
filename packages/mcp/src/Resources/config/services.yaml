@@ -5,4 +5,11 @@ services:
         public: false
 
     Shopsys\McpBundle\:
-        resource: '../../**/*{Authenticator,DataFactory,Facade,Factory,Generator,Hasher,Lookup,Repository}.php'
+        resource: '../../**/*{Authenticator,DataFactory,Facade,Factory,Generator,Hasher,Lookup,Repository,Subscriber}.php'
+
+    Shopsys\McpBundle\Controller\:
+        resource: '../../Controller/'
+        tags: ['controller.service_arguments']
+
+    Shopsys\McpBundle\Form\:
+        resource: '../../Form/'

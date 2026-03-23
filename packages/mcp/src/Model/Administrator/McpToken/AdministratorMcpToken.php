@@ -90,6 +90,14 @@ class AdministratorMcpToken
     }
 
     /**
+     * @return \DateTimeImmutable
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
      * @return string
      */
     public function getSecretHash()

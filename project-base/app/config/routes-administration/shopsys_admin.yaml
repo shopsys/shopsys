@@ -12,6 +12,11 @@ shopsys_frontend_api_admin:
     resource: "@ShopsysFrontendApiBundle/Controller/Admin"
     type: attribute
 
+shopsys_mcp:
+    prefix: /%admin_url%
+    resource: "@ShopsysMcpBundle/Controller/Admin"
+    type: attribute
+
 # has to be last to properly override routes from bundles above
 shopsys_project_base:
     prefix: /%admin_url%
