@@ -51,6 +51,11 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
                 'lastName' => 'lastName',
                 'email' => self::DEFAULT_USER_EMAIL,
                 'telephone' => '+53 123456789',
+                'telephoneData' => [
+                    'countryCode' => 'CU',
+                    'prefix' => '+53',
+                    'number' => '123456789',
+                ],
                 'companyName' => null,
                 'companyNumber' => null,
                 'companyTaxNumber' => null,
@@ -65,6 +70,11 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
                 'deliveryLastName' => 'lastName',
                 'deliveryCompanyName' => null,
                 'deliveryTelephone' => '+53 123456789',
+                'deliveryTelephoneData' => [
+                    'countryCode' => 'CU',
+                    'prefix' => '+53',
+                    'number' => '123456789',
+                ],
                 'deliveryStreet' => '123 Fake Street',
                 'deliveryCity' => 'Springfield',
                 'deliveryPostcode' => '12345',
@@ -114,6 +124,11 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
         $this->assertSame($expectedLastName, $responseData['deliveryLastName']);
         $this->assertSame($expectedCompanyName, $responseData['deliveryCompanyName']);
         $this->assertSame($expectedTelephone, $responseData['deliveryTelephone']);
+        $deliveryTelephoneData = $deliveryAddress->getTelephoneData();
+        $this->assertSame(
+            $deliveryTelephoneData !== null ? ['countryCode' => $deliveryTelephoneData->countryCode, 'prefix' => $deliveryTelephoneData->prefix, 'number' => $deliveryTelephoneData->number] : null,
+            $responseData['deliveryTelephoneData'],
+        );
         $this->assertSame($expectedStreet, $responseData['deliveryStreet']);
         $this->assertSame($expectedCity, $responseData['deliveryCity']);
         $this->assertSame($expectedPostcode, $responseData['deliveryPostcode']);

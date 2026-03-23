@@ -35,6 +35,11 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             'lastName' => 'Jágr',
             'email' => 'no-reply@shopsys.com',
             'telephone' => '+420 605 000 123',
+            'telephoneData' => [
+                'countryCode' => 'CZ',
+                'prefix' => '+420',
+                'number' => '605000123',
+            ],
             'newsletterSubscription' => true,
             'street' => 'Hlubinská 10',
             'city' => 'Ostrava',
@@ -50,6 +55,11 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 'city' => 'Ostrava',
                 'postcode' => '70030',
                 'telephone' => '+420 123456789',
+                'telephoneData' => [
+                    'countryCode' => 'CZ',
+                    'prefix' => '+420',
+                    'number' => '123456789',
+                ],
                 'country' => [
                     'code' => 'CZ',
                 ],
@@ -64,6 +74,11 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                     'city' => 'Ostrava',
                     'postcode' => '70030',
                     'telephone' => '+420 123456789',
+                    'telephoneData' => [
+                        'countryCode' => 'CZ',
+                        'prefix' => '+420',
+                        'number' => '123456789',
+                    ],
                     'country' => [
                         'code' => 'CZ',
                     ],
@@ -83,6 +98,11 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 'lastName' => 'Dvořák',
                 'email' => 'no-reply99@shopsys.com',
                 'telephone' => '+420 585 425 321',
+                'telephoneData' => [
+                    'countryCode' => 'CZ',
+                    'prefix' => '+420',
+                    'number' => '585425321',
+                ],
             ],
         ];
 
@@ -117,6 +137,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         $this->assertSame('John', $data['firstName']);
         $this->assertSame('Doe', $data['lastName']);
         $this->assertSame(new PhoneData('CZ', '+420', '123456321')->toPhoneNumber(), $data['telephone']);
+        $this->assertSame(['countryCode' => 'CZ', 'prefix' => '+420', 'number' => '123456321'], $data['telephoneData']);
         $this->assertSame('no-reply@shopsys.com', $data['email']);
         $this->assertSame('123 Fake street', $data['street']);
         $this->assertSame('Springfield', $data['city']);

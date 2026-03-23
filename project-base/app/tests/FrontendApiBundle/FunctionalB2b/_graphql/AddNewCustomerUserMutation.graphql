@@ -25,5 +25,10 @@ mutation AddNewCustomerUserMutation(
             uuid
         }
         telephone
+        telephoneData {
+            countryCode
+            prefix
+            number
+        }
     }
 }

@@ -29,5 +29,10 @@ mutation CreateDeliveryAddress(
         }
         companyName
         telephone
+        telephoneData {
+            countryCode
+            prefix
+            number
+        }
     }
 }

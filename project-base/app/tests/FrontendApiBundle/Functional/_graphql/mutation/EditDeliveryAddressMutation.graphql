@@ -32,5 +32,10 @@ mutation EditDeliveryAddress(
         }
         companyName
         telephone
+        telephoneData {
+            countryCode
+            prefix
+            number
+        }
     }
 }

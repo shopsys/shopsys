@@ -26,6 +26,11 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
             'deliveryLastName' => 'lastName',
             'deliveryCompanyName' => 'Shopsys',
             'deliveryTelephone' => '+53 123456789',
+            'deliveryTelephoneData' => [
+                'countryCode' => 'CU',
+                'prefix' => '+53',
+                'number' => '123456789',
+            ],
             'deliveryStreet' => $store->getStreet(),
             'deliveryCity' => $store->getCity(),
             'deliveryPostcode' => $store->getPostcode(),

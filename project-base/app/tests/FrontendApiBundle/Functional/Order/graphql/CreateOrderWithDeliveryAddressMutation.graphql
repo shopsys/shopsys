@@ -33,6 +33,11 @@ mutation CreateOrderWithDeliveryAddressMutation(
             deliveryLastName
             deliveryCompanyName
             deliveryTelephone
+            deliveryTelephoneData {
+                countryCode
+                prefix
+                number
+            }
             deliveryStreet
             deliveryCity
             deliveryPostcode

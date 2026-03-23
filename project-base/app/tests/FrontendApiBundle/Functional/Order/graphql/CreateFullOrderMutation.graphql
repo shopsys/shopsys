@@ -79,6 +79,11 @@ mutation CreateFullOrder(
             lastName
             email
             telephone
+            telephoneData {
+                countryCode
+                prefix
+                number
+            }
             companyName
             companyNumber
             companyTaxNumber
@@ -93,6 +98,11 @@ mutation CreateFullOrder(
             deliveryLastName
             deliveryCompanyName
             deliveryTelephone
+            deliveryTelephoneData {
+                countryCode
+                prefix
+                number
+            }
             deliveryStreet
             deliveryCity
             deliveryPostcode

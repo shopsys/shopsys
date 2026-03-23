@@ -5,6 +5,11 @@ query OrderWithdrawalDataQuery($urlHash: String!) {
             lastName
             email
             telephone
+            telephoneData {
+                countryCode
+                prefix
+                number
+            }
             requestedAt
             note
         }

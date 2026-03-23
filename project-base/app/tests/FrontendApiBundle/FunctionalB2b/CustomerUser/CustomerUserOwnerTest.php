@@ -67,6 +67,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
         ];
 
         $this->assertSame($personalData['telephone']->toPhoneNumber(), $responseData['telephone']);
+        $this->assertSame(['countryCode' => $personalData['telephone']->countryCode, 'prefix' => $personalData['telephone']->prefix, 'number' => $personalData['telephone']->number], $responseData['telephoneData']);
         $this->assertSame($personalData['firstName'], $responseData['firstName']);
         $this->assertSame($personalData['lastName'], $responseData['lastName']);
         $this->assertSame($personalData['newsletterSubscription'], $responseData['newsletterSubscription']);
@@ -160,6 +161,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
         $this->assertSame($editedFirstName, $responseData['firstName']);
         $this->assertSame($editedLastName, $responseData['lastName']);
         $this->assertSame($editedTelephone->toPhoneNumber(), $responseData['telephone']);
+        $this->assertSame(['countryCode' => $editedTelephone->countryCode, 'prefix' => $editedTelephone->prefix, 'number' => $editedTelephone->number], $responseData['telephoneData']);
         $this->assertSame($editedRoleGroupUuid, $responseData['roleGroup']['uuid']);
 
         $refreshedUserToEdit = $this->customerUserFacade->getCustomerUserById($userToEdit->getId());
@@ -205,6 +207,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
         $this->assertSame($lastName, $responseData['lastName']);
         $this->assertSame($email, $responseData['email']);
         $this->assertSame($telephone->toPhoneNumber(), $responseData['telephone']);
+        $this->assertSame(['countryCode' => $telephone->countryCode, 'prefix' => $telephone->prefix, 'number' => $telephone->number], $responseData['telephoneData']);
         $this->assertSame($roleGroupUuid, $responseData['roleGroup']['uuid']);
         $this->assertSame($currentCustomerUser->getCustomer()->getBillingAddress()->getUuid(), $responseData['billingAddressUuid']);
     }

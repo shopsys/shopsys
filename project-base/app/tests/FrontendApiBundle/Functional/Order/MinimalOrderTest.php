@@ -30,6 +30,11 @@ class MinimalOrderTest extends GraphQlTestCase
                 'lastName' => 'lastName',
                 'email' => 'user@example.com',
                 'telephone' => '+53 123456789',
+                'telephoneData' => [
+                    'countryCode' => 'CU',
+                    'prefix' => '+53',
+                    'number' => '123456789',
+                ],
                 'companyName' => null,
                 'companyNumber' => null,
                 'companyTaxNumber' => null,
@@ -44,6 +49,11 @@ class MinimalOrderTest extends GraphQlTestCase
                 'deliveryLastName' => 'lastName',
                 'deliveryCompanyName' => null,
                 'deliveryTelephone' => '+53 123456789',
+                'deliveryTelephoneData' => [
+                    'countryCode' => 'CU',
+                    'prefix' => '+53',
+                    'number' => '123456789',
+                ],
                 'deliveryStreet' => '123 Fake Street',
                 'deliveryCity' => 'Springfield',
                 'deliveryPostcode' => '12345',

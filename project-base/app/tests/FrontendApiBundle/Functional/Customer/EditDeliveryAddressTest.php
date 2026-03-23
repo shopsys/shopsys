@@ -50,6 +50,11 @@ class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
                 'name' => t('Czech republic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
             'telephone' => $editedValues['telephone']->toPhoneNumber(),
+            'telephoneData' => [
+                'countryCode' => $editedValues['telephone']->countryCode,
+                'prefix' => $editedValues['telephone']->prefix,
+                'number' => $editedValues['telephone']->number,
+            ],
         ]);
 
         $this->assertSame($expectedValues, $deliveryAddresses[$editedAddressKey]);

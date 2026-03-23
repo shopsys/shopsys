@@ -21,6 +21,11 @@ mutation ChangePersonalAndCompanyDataMutation(
         firstName
         lastName,
         telephone,
+        telephoneData {
+            countryCode
+            prefix
+            number
+        }
         email
         newsletterSubscription
     }

@@ -5,6 +5,11 @@ query CurrentCustomerUserQuery {
         lastName
         email
         telephone
+        telephoneData {
+            countryCode
+            prefix
+            number
+        }
         newsletterSubscription
         street
         city
@@ -20,6 +25,11 @@ query CurrentCustomerUserQuery {
             city
             postcode
             telephone
+            telephoneData {
+                countryCode
+                prefix
+                number
+            }
             country {
                 code
             }
@@ -33,6 +43,11 @@ query CurrentCustomerUserQuery {
             city
             postcode
             telephone
+            telephoneData {
+                countryCode
+                prefix
+                number
+            }
             country {
                 code
             }
@@ -53,6 +68,11 @@ query CurrentCustomerUserQuery {
             lastName
             email
             telephone
+            telephoneData {
+                countryCode
+                prefix
+                number
+            }
         }
     }
 }

@@ -24,5 +24,10 @@ mutation EditCustomerUserPersonalDataMutation(
             uuid
         }
         telephone
+        telephoneData {
+            countryCode
+            prefix
+            number
+        }
     }
 }

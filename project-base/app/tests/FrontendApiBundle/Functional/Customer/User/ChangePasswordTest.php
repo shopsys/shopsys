@@ -22,6 +22,11 @@ class ChangePasswordTest extends GraphQlWithLoginTestCase
         $this->assertSame('Jágr', $responseData['lastName']);
         $this->assertSame('no-reply@shopsys.com', $responseData['email']);
         $this->assertSame('+420 605 000 123', $responseData['telephone']);
+        $this->assertSame([
+            'countryCode' => 'CZ',
+            'prefix' => '+420',
+            'number' => '605000123',
+        ], $responseData['telephoneData']);
     }
 
     public function testChangePasswordWithWrongData(): void

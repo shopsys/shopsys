@@ -72,6 +72,11 @@ mutation CreateMinimalOrderMutation(
             lastName
             email
             telephone
+            telephoneData {
+                countryCode
+                prefix
+                number
+            }
             companyName
             companyNumber
             companyTaxNumber
@@ -86,6 +91,11 @@ mutation CreateMinimalOrderMutation(
             deliveryLastName
             deliveryCompanyName
             deliveryTelephone
+            deliveryTelephoneData {
+                countryCode
+                prefix
+                number
+            }
             deliveryStreet
             deliveryCity
             deliveryPostcode
