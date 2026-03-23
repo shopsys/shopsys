@@ -67,7 +67,7 @@ final class StaticRewritePathsWorker extends AbstractWorker
         $insertIndex = null;
 
         foreach ($lines as $index => $line) {
-            if (str_contains($line, 'process.env.DOMAIN_HOSTNAME_')) {
+            if (preg_match('/\[domains\[\d+\]\.url\]/', $line)) {
                 $insertIndex ??= $index;
                 unset($lines[$index]);
             }
@@ -80,7 +80,7 @@ final class StaticRewritePathsWorker extends AbstractWorker
         $newMappingLines = [];
 
         foreach ($config->domains as $index => $domain) {
-            $newMappingLines[] = $this->generateMappingLine($index, $domain->id);
+            $newMappingLines[] = $this->generateMappingLine($index);
         }
 
         $lines = array_values($lines);
@@ -89,12 +89,11 @@ final class StaticRewritePathsWorker extends AbstractWorker
         return $lines;
     }
 
-    private function generateMappingLine(int $index, int $domainId): string
+    private function generateMappingLine(int $index): string
     {
         return sprintf(
-            '    [(nextConfig?.publicRuntimeConfig?.domains?.[%d]?.url || process.env.DOMAIN_HOSTNAME_%d) as string]: routes[%d],',
+            '    [domains[%d].url]: routes[%d],',
             $index,
-            $domainId,
             $index,
         );
     }
