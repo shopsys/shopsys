@@ -62,7 +62,7 @@ final class ProductType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'placeholder' => 'Choose product',
+            'placeholder' => t('Choose product'),
             'enableRemove' => false,
             'required' => true,
             'allow_main_variants' => true,
