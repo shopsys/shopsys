@@ -37,7 +37,7 @@ abstract class AbstractAdvancedSearchFacade
 
     public function isAdvancedSearchFormSubmitted(Request $request): bool
     {
-        return $request->query->has(static::RULES_FORM_NAME);
+        return $request->query->has(static::RULES_FORM_NAME) || $request->query->has('advancedSearch');
     }
 
     public function createRuleForm(string $filterName, string $index): FormInterface

@@ -44,7 +44,7 @@
 
 {% block main_content %}
     {{ form_start(quickProductSearchForm) }}
-    <a class="btn btn-link" href="{{ url('admin_product_list', { as: true }) }}">
+    <a class="btn btn-link" href="{{ url('admin_product_list', { advancedSearch: true }) }}">
         {{ 'Go to product advanced search'|trans }}
     </a>
     {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
