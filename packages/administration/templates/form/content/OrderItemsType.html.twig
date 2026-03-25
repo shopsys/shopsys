@@ -32,14 +32,10 @@
                            data-prototype="{{ orderItemMacro.orderItem(form.itemsWithoutTransportAndPayment.vars.prototype, null, null, inputPriceType)|escape }}"
                            data-order-product-add-url="{{ url('admin_order_addproduct', { orderId: order.id }) }}"
                     >
-                        {% for productItem in order.productItems %}
-                            {{ orderItemMacro.orderItem(form.itemsWithoutTransportAndPayment[productItem.id], productItem.id, productItem, inputPriceType) }}
-                        {% endfor %}
-
                         {% for orderItemId, orderItemForm in form.itemsWithoutTransportAndPayment %}
-                            {% if not orderItemForm.rendered %}
-                                {{ orderItemMacro.orderItem(orderItemForm, orderItemId, null, inputPriceType) }}
-                            {% endif %}
+                            {% set itemData = orderItemForm.vars.data %}
+                            {% set productItemData = (itemData is not null and itemData.type in ['product', 'productGift']) ? itemData : null %}
+                            {{ orderItemMacro.orderItem(orderItemForm, orderItemId, productItemData, inputPriceType) }}
                         {% endfor %}
 
                         {{ orderItemMacro.orderTransport(form.orderTransport, transportPricesWithVatByTransportId, transportVatPercentsByTransportId, inputPriceType) }}
