@@ -9,4 +9,4 @@ services:
 
     Shopsys\CategoryFeed\LuigisBoxBundle\LuigisBoxCategoryFeed:
         tags:
-            - { name: shopsys.feed, hours: '*', minutes: '5' }
+            - { name: shopsys.feed, cron: '5 * * * *' }

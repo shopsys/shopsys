@@ -25,8 +25,7 @@ class RegisterProductFeedConfigsCompilerPass implements CompilerPassInterface
                     'registerFeed',
                     [
                         new Reference($serviceId),
-                        $tag['hours'],
-                        $tag['minutes'],
+                        $tag['cron'],
                         isset($tag['domain_ids']) ? $this->splitDomainIdsFromString($tag['domain_ids']) : [],
                     ],
                 );

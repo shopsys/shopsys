@@ -34,8 +34,7 @@ class CronModuleRunnerFacadeTest extends TestCase
         $this->cronConfig->registerCronModuleInstance(
             $cronModuleService,
             $this->serviceId,
-            '*',
-            '*',
+            '* * * * *',
             CronModuleConfig::DEFAULT_INSTANCE_NAME,
         );
     }

@@ -9,9 +9,8 @@ use Monolog\Logger;
 /**
  * IteratedCronModuleInterface is the interface that all long-running CRON modules must implement.
  *
- * In order for your CRON module to be run you must register it as a service tagged as "shopsys.cron".
- * Module is started every time the current system time matches the mask specified in tag attributes
- * named "hours" and "minutes" (e.g. hours: "*", minutes: "0,30" for running every half hour).
+ * In order for your CRON module to be run you must register it as a service tagged as "shopsys.cron"
+ * with a "cron" tag attribute containing a standard cron expression (e.g. cron: "0,30 * * * *" for running every half hour).
  * If the module takes too long to run it will be suspended by sleep() method and will be woken up
  * and re-run next time regardless of the current system time.
  * If you want to process a short task that does not take more than one minute use

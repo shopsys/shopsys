@@ -26,22 +26,19 @@ class CronConfig
     public function registerCronModuleInstance(
         SimpleCronModuleInterface|IteratedCronModuleInterface $service,
         string $serviceId,
-        string $timeHours,
-        string $timeMinutes,
+        string $cronExpression,
         string $instanceName,
         ?string $readableName = null,
         ?string $readableFrequency = null,
         int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
         int $timeoutIteratedCronSec = CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
     ): void {
-        $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);
-        $this->cronTimeResolver->validateTimeString($timeMinutes, 55, 1);
+        $this->cronTimeResolver->validateCronExpression($cronExpression);
 
         $cronModuleConfig = new CronModuleConfig(
             $service,
             $serviceId,
-            $timeHours,
-            $timeMinutes,
+            $cronExpression,
             $readableName,
             $readableFrequency,
             $runEveryMin,

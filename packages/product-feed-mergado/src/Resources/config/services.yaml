@@ -9,4 +9,4 @@ services:
 
     Shopsys\ProductFeed\MergadoBundle\MergadoFeed:
         tags:
-            - { name: shopsys.feed, hours: 5, minutes: 0 }
+            - { name: shopsys.feed, cron: '0 5 * * *' }

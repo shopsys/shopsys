@@ -4,91 +4,80 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Cron;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\InvalidTimeFormatException;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
 use Symfony\Component\Clock\DatePoint;
 
 class CronTimeResolverTest extends TestCase
 {
-    public static function validTimeStringProvider(): array
+    public static function validCronExpressionProvider(): array
     {
         return [
-            ['*', 1, 1],
-            ['*', 100, 10],
-            ['100', 100, 100],
-            ['100', 100, 10],
-            ['1', 100, 1],
-            ['*/10', 100, 10],
-            ['10,20,*,*/20', 100, 10],
+            ['* * * * *'],
+            ['0 3 * * *'],
+            ['*/15 * * * *'],
+            ['0 */2 * * *'],
+            ['0,30 * * * *'],
+            ['10 23 * * *'],
+            ['0 4 * * 1'],
         ];
     }
 
-    #[DataProvider('validTimeStringProvider')]
-    public function testValidateTimeString(mixed $timeString, mixed $maxValue, mixed $divisibleBy): void
+    #[DataProvider('validCronExpressionProvider')]
+    public function testValidateCronExpression(string $cronExpression): void
     {
         $cronTimeResolver = new CronTimeResolver();
-        $cronTimeResolver->validateTimeString($timeString, $maxValue, $divisibleBy);
+        $cronTimeResolver->validateCronExpression($cronExpression);
+
+        $this->expectNotToPerformAssertions();
     }
 
-    public static function invalidTimeStringProvider(): array
+    public static function invalidCronExpressionProvider(): array
     {
         return [
-            ['abcd', 1, 1],
-            ['101', 100, 10],
-            ['11', 100, 10],
-            ['*/11', 100, 10],
-            ['*/101', 100, 10],
-            ['*,*/101', 100, 10],
-            ['10,20,*/11', 100, 10],
+            ['not a cron'],
+            ['* * *'],
+            ['60 * * * *'],
+            ['* 25 * * *'],
         ];
     }
 
-    #[DataProvider('invalidTimeStringProvider')]
-    public function testValidateTimeStringInvalidTimeFormatException(
-        mixed $invalidTimeString,
-        mixed $maxValue,
-        mixed $divisibleBy,
-    ): void {
+    #[DataProvider('invalidCronExpressionProvider')]
+    public function testValidateCronExpressionThrowsOnInvalidExpression(string $cronExpression): void
+    {
         $cronTimeResolver = new CronTimeResolver();
-        $this->expectException(InvalidTimeFormatException::class);
-        $cronTimeResolver->validateTimeString($invalidTimeString, $maxValue, $divisibleBy);
+        $this->expectException(InvalidArgumentException::class);
+        $cronTimeResolver->validateCronExpression($cronExpression);
     }
 
     public static function isValidAtTimeProvider(): array
     {
         return [
-            ['0', '0', '2000-01-01 00:00:00', true],
-            ['00', '00', '2000-01-01 00:00:00', true],
-            ['1', '*', '2000-01-01 01:12:00', true],
-            ['*', '*', '2000-01-01 12:12:00', true],
-            ['2,3', '*', '2000-01-01 02:12:00', true],
-            ['*', '1,2', '2000-01-01 00:02:00', true],
-            ['*', '*/15', '2000-01-01 00:00:00', true],
-            ['*', '*/15', '2000-01-01 00:15:00', true],
-            ['*', '*/15', '2000-01-01 00:30:00', true],
-            ['*', '*/15,*/3', '2000-01-01 00:06:00', true],
-            ['*/4', '*/15', '2000-01-01 08:00:00', true],
-            ['1', '*', '2000-01-01 02:00:00', false],
-            ['*', '0', '2000-01-01 00:01:00', false],
-            ['*', '1,3', '2000-01-01 00:02:00', false],
-            ['*', '*/10', '2000-01-01 00:15:00', false],
-            ['*/4', '*', '2000-01-01 02:00:00', false],
+            ['0 0 * * *', '2000-01-01 00:00:00', true],
+            ['* * * * *', '2000-01-01 12:12:00', true],
+            ['* 1 * * *', '2000-01-01 01:12:00', true],
+            ['2,3 * * * *', '2000-01-01 02:02:00', true],
+            ['1,2 * * * *', '2000-01-01 00:02:00', true],
+            ['*/15 * * * *', '2000-01-01 00:00:00', true],
+            ['*/15 * * * *', '2000-01-01 00:15:00', true],
+            ['*/15 * * * *', '2000-01-01 00:30:00', true],
+            ['0 */4 * * *', '2000-01-01 08:00:00', true],
+            ['* 2 * * *', '2000-01-01 02:00:00', true],
+            ['0 * * * *', '2000-01-01 00:01:00', false],
+            ['1,3 * * * *', '2000-01-01 00:02:00', false],
+            ['*/10 * * * *', '2000-01-01 00:15:00', false],
+            ['* */4 * * *', '2000-01-01 02:00:00', false],
         ];
     }
 
     #[DataProvider('isValidAtTimeProvider')]
-    public function testIsValidAtTime(
-        mixed $timeHours,
-        mixed $timeMinutes,
-        mixed $dateTimeString,
-        mixed $isValid,
-    ): void {
+    public function testIsValidAtTime(string $cronExpression, string $dateTimeString, bool $isValid): void
+    {
         $cronTimeStub = $this->createStub(CronTimeInterface::class);
-        $cronTimeStub->method('getTimeHours')->willReturn($timeHours);
-        $cronTimeStub->method('getTimeMinutes')->willReturn($timeMinutes);
+        $cronTimeStub->method('getCronExpression')->willReturn($cronExpression);
 
         $cronTimeResolver = new CronTimeResolver();
 

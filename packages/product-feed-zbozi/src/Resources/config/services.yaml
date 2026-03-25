@@ -18,4 +18,4 @@ services:
 
     Shopsys\ProductFeed\ZboziBundle\ZboziFeed:
         tags:
-            - { name: shopsys.feed, hours: '3', minutes: '0' }
+            - { name: shopsys.feed, cron: '0 3 * * *' }

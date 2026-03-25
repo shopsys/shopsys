@@ -164,8 +164,7 @@ class CronFacadeTest extends TestCase
             $cronConfig->registerCronModuleInstance(
                 $service,
                 $serviceId,
-                '*',
-                '*',
+                '* * * * *',
                 CronModuleConfig::DEFAULT_INSTANCE_NAME,
                 'testing cron',
                 'every minute',

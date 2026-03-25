@@ -32,8 +32,7 @@ class RegisterCronModulesCompilerPass implements CompilerPassInterface
                     [
                         new Reference($serviceId),
                         $serviceId,
-                        $tag['hours'],
-                        $tag['minutes'],
+                        $tag['cron'],
                         $instanceName,
                         $tag['readableName'] ?? null,
                         $tag['readableFrequency'] ?? null,
@@ -60,7 +59,7 @@ class RegisterCronModulesCompilerPass implements CompilerPassInterface
             }
 
             if ($timeoutIteratedCronSec < 0 || $timeoutIteratedCronSec > $runEveryMin * 60) {
-                $timeoutIteratedCronSec = round($runEveryMin * 60 / 5);
+                $timeoutIteratedCronSec = (int)round($runEveryMin * 60 / 5);
             }
 
             return [

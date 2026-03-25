@@ -28,17 +28,19 @@ class FeedRegistry
     ) {
     }
 
-    public function registerFeed(FeedInterface $feed, string $timeHours, string $timeMinutes, array $domainIds): void
+    /**
+     * @param int[] $domainIds
+     */
+    public function registerFeed(FeedInterface $feed, string $cronExpression, array $domainIds): void
     {
-        $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);
-        $this->cronTimeResolver->validateTimeString($timeMinutes, 55, 1);
+        $this->cronTimeResolver->validateCronExpression($cronExpression);
 
         $name = $feed->getInfo()->getName();
         $this->assertNameIsUnique($name);
 
         $domainIds = $domainIds === [] ? $this->domain->getAllIds() : $domainIds;
 
-        $this->feedConfigsByName[$name] = new FeedConfig($feed, $timeHours, $timeMinutes, $domainIds);
+        $this->feedConfigsByName[$name] = new FeedConfig($feed, $cronExpression, $domainIds);
     }
 
     /**
