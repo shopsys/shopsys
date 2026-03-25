@@ -87,6 +87,7 @@ jobs:
                 with:
                     files: shopsys.phar
                     tag_name: ${{ steps.release_tag.outputs.tag }}
+                    target_commitish: ${{ github.sha }}
                     name: ${{ steps.release_tag.outputs.tag }}
                     prerelease: ${{ steps.release_tag.outputs.is_prerelease == 'true' }}
                     generate_release_notes: ${{ steps.release_tag.outputs.replace_existing != 'true' }}
