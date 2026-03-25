@@ -1450,15 +1450,6 @@ msgstr ""
 msgid "Error while importing CSV file."
 msgstr ""
 
-msgid "Every 5 minutes in %hour% hour"
-msgstr ""
-
-msgid "Every hour"
-msgstr ""
-
-msgid "Everyday at %hour%:%minutes%"
-msgstr ""
-
 msgid "Exchange"
 msgstr ""
 
@@ -2246,9 +2237,6 @@ msgid "Number of watchdogs"
 msgstr ""
 
 msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
-msgstr ""
-
-msgid "On each run (usually every 5 minutes)"
 msgstr ""
 
 msgid "One domain cannot be used in two groups"
@@ -3092,9 +3080,6 @@ msgid "Settings"
 msgstr ""
 
 msgid "Settings modified."
-msgstr ""
-
-msgid "Several times a day (%hours%h and %minutes%m)"
 msgstr ""
 
 msgid "Shipping <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"

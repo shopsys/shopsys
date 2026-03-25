@@ -1450,15 +1450,6 @@ msgstr "Nastala chyba, skúste to prosím znovu."
 msgid "Error while importing CSV file."
 msgstr "Chyba pri importe CSV súboru."
 
-msgid "Every 5 minutes in %hour% hour"
-msgstr "{0}Každých 5 minút v 0 hodín|{1}Každých 5 minút v 1 hodine|[2,4]Každých 5 minút v %hour% hodinách|[5,Inf]Každých 5 minút v %hour% hodinách"
-
-msgid "Every hour"
-msgstr "Každú hodinu"
-
-msgid "Everyday at %hour%:%minutes%"
-msgstr "Každý deň o %hour%:%minutes%"
-
 msgid "Exchange"
 msgstr "Výmena"
 
@@ -2247,9 +2238,6 @@ msgstr "Počet hliadacov (watchdogs)"
 
 msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
 msgstr "Práve ste sa pokúsili prihlásiť pomocou predvolených údajov. To nepovoľujeme v produkčnom prostredí. Ak ste náhodný hacker, prosím choďte niekam inam. Ak ste oprávnený používateľ, prosím použite iný účet alebo kontaktujte vývojárov a zmeňte heslo počas deploy."
-
-msgid "On each run (usually every 5 minutes)"
-msgstr "Pri každom spustení (obyčajne každých 5 minút)"
 
 msgid "One domain cannot be used in two groups"
 msgstr "Jedna doména nemôže byť použitá v dvoch skupinách"
@@ -3093,9 +3081,6 @@ msgstr "Nastavenia"
 
 msgid "Settings modified."
 msgstr "Nastavenia upravené."
-
-msgid "Several times a day (%hours%h and %minutes%m)"
-msgstr "Niekolˈkokrát denne (%hours%h a %minutes%m)"
 
 msgid "Shipping <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr "Doprava <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorená"
