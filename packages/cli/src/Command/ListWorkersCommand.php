@@ -30,6 +30,7 @@ final class ListWorkersCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        $io->title('This is the change');
         $io->title('Available Configuration Workers');
 
         try {
