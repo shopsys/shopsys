@@ -10,6 +10,7 @@
         },
         "files": [
             "src/Component/Filesystem/Flysystem/VolumeDriver.php",
+            "src/Component/Doctrine/doctrine_annotations_polyfill.php",
             "src/Component/Translation/functions.php",
             "src/Component/VarDumper/functions.php"
         ]

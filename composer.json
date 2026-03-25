@@ -35,6 +35,7 @@
             "project-base/app/app/Environment.php"
         ],
         "files": [
+            "packages/framework/src/Component/Doctrine/doctrine_annotations_polyfill.php",
             "packages/framework/src/Component/Filesystem/Flysystem/VolumeDriver.php",
             "packages/framework/src/Component/Translation/functions.php",
             "packages/framework/src/Component/VarDumper/functions.php"
