@@ -11,4 +11,5 @@ fragment UpdatePaymentStatusFragment on Order {
     }
     hasPaymentInProcess
     urlHash
+    paymentTransactionsCount
 }

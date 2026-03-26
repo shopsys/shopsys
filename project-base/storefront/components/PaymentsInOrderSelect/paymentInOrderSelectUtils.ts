@@ -1,26 +1,28 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useChangePaymentInOrderMutation } from 'graphql/requests/orders/mutations/ChangePaymentInOrderMutation.generated';
+import { TypePaymentTypeEnum } from 'graphql/types';
 import { onGtmPaymentTryEventHandler } from 'gtm/handlers/onGtmPaymentEventHandler';
-import {
-    getGtmPaymentEventFromLocalStorage,
-    removeGtmPaymentEventFromLocalStorage,
-} from 'gtm/utils/gtmPaymentEventLocalStorage';
-import { useRouter } from 'next/router';
+import { useSessionStore } from 'store/useSessionStore';
+import { SkeletonEnum } from 'types/skeletons';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import { getLocalePrefix } from 'utils/domain/domainUtils';
+import { removeGoPayPaymentSession } from 'utils/goPayPaymentSessionStorage';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 export const useChangePaymentInOrder = () => {
     const { t } = useTranslation();
-    const router = useRouter();
     const isUserLoggedIn = useIsUserLoggedIn();
-    const { url } = useDomainConfig();
+    const domainConfig = useDomainConfig();
+    const { url } = domainConfig;
     const [orderByHashUrl, customerOrderDetailUrl] = getInternationalizedStaticUrls(
         [{ url: '/order-detail/:urlHash', param: '' }, '/customer/order-detail'],
         url,
     );
+    const updatePageLoadingState = useSessionStore((store) => store.updatePageLoadingState);
 
     const [{ fetching: isChangingPaymentInOrder }, changePaymentInOrder] = useChangePaymentInOrderMutation();
 
@@ -28,6 +30,7 @@ export const useChangePaymentInOrder = () => {
         orderUuid: string,
         paymentUuid: string,
         paymentName: string,
+        paymentType: TypePaymentTypeEnum,
         paymentGoPayBankSwift?: string | null,
         withRedirectAfterChanging = true,
     ) => {
@@ -43,28 +46,30 @@ export const useChangePaymentInOrder = () => {
         }
 
         showSuccessMessage(t('Your payment has been successfully changed'));
+        removeGoPayPaymentSession();
 
         if (!withRedirectAfterChanging) {
             return changePaymentInOrderData;
         }
 
-        let redirectPromise: Promise<boolean>;
+        const isNonGatewayPayment = !getIsPaymentWithPaymentGate(paymentType);
+        const paymentRetryCount =
+            isNonGatewayPayment && editedOrder.paymentTransactionsCount > 0
+                ? editedOrder.paymentTransactionsCount
+                : Math.max(editedOrder.paymentTransactionsCount - 1, 0);
+        onGtmPaymentTryEventHandler(editedOrder.number, paymentName, true, undefined, paymentRetryCount);
 
-        if (isUserLoggedIn) {
-            redirectPromise = router.push({
-                pathname: customerOrderDetailUrl,
-                query: { orderNumber: editedOrder.number },
-            });
-        } else {
-            redirectPromise = router.push(orderByHashUrl + editedOrder.urlHash);
-        }
+        // Full page load to ensure fresh order data (router.push to the same URL is a no-op in Next.js)
+        const targetUrl = isUserLoggedIn
+            ? `${customerOrderDetailUrl}?orderNumber=${editedOrder.number}`
+            : orderByHashUrl + editedOrder.urlHash;
+        const localePrefix = getLocalePrefix(domainConfig);
 
-        redirectPromise.then(() => {
-            const { gtmPaymentEvent } = getGtmPaymentEventFromLocalStorage();
-            const retryCount = gtmPaymentEvent ? gtmPaymentEvent.ecommerce.paymentRetryCount + 1 : 0;
-            onGtmPaymentTryEventHandler(editedOrder.number, paymentName, true, undefined, retryCount);
-            removeGtmPaymentEventFromLocalStorage();
+        updatePageLoadingState({
+            isPageLoading: true,
+            redirectPageType: isUserLoggedIn ? SkeletonEnum.OrderDetail : SkeletonEnum.OrderDetailPublic,
         });
+        window.location.assign(`${localePrefix}${targetUrl}`);
 
         return changePaymentInOrderData;
     };

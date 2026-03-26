@@ -31,3 +31,6 @@
 /*.local.md
 mutagen.yml
 mutagen.yml.lock
+
+/.playwright
+/.playwright-cli

@@ -256,6 +256,18 @@ Login credentials for PostgreSQL are set in the `project-base/app/.env` file.
 - Framework packages should only be modified via the monorepo, not directly in `/packages/`
 - **Always use proper Docker commands**: `docker compose exec` for PHP/storefront commands, direct execution for git/make/system commands
 
+### Browser Automation Artifact Hygiene
+
+- When using `playwright-cli` with `--filename`, always save artifacts under `.playwright-cli/` (for example `.playwright-cli/manual/<name>.yml`).
+- Never save Playwright snapshots/logs/videos directly to repository root.
+- If a root artifact is created by mistake, move it to `.playwright-cli/` immediately.
+
+### GoPay Workflow Guardrail (Context-on-demand)
+
+- Only when changing Storefront GoPay flow / GoPay gateway payment behavior / GTM `ec.payment`, follow `docs/research/agent-ready-specification/gopay-gateway-and-ec-payment-flow.md`.
+- For iframe-touching GoPay changes: local verification is only pre-check (often redirect-mode); before sign-off, always run review-branch verification over HTTPS real iframe via `playwright-cli`.
+- For unrelated tasks, skip loading this spec to preserve context.
+
 ## Skills / Slash Commands
 
 When the user asks to generate upgrade notes, always use the `/generate-upgrade-notes` command instead of manually analyzing commits.

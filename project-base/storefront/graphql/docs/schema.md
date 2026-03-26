@@ -85,6 +85,7 @@
     * [ParameterValueColorFilterOption](#parametervaluecolorfilteroption)
     * [ParameterValueFilterOption](#parametervaluefilteroption)
     * [Payment](#payment)
+    * [PaymentInstructionSetupData](#paymentinstructionsetupdata)
     * [PaymentSetupCreationData](#paymentsetupcreationdata)
     * [PersonalData](#personaldata)
     * [PersonalDataPage](#personaldatapage)
@@ -1914,17 +1915,12 @@ Set default delivery address by Uuid
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="mutation.setorderpaymentstatuspagevalidityhashmutation">SetOrderPaymentStatusPageValidityHashMutation</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#paymentinstructionsetupdata">PaymentInstructionSetupData</a>!</td>
 <td>
 
-set order payment status page validity hash, so it's possible to safely return to the payment status page
+Resets order payment status page validity hash (server-generated) and returns GoPay embed JS URL
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderPaymentStatusPageValidityHash</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">orderUuid</td>
@@ -6847,6 +6843,24 @@ Unique order number
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.paymentpagecontent">paymentPageContent</strong></td>
+<td valign="top"><a href="#orderpaymentpagecontent">OrderPaymentPageContent</a></td>
+<td>
+
+Localized payment page content resolved for the order's current payment state.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.paymenttransactionscount">paymentTransactionsCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of payment transactions for this order
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.pickupplaceidentifier">pickupPlaceIdentifier</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -8102,6 +8116,39 @@ UUID
 </tbody>
 </table>
 
+### PaymentInstructionSetupData
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="paymentinstructionsetupdata.gopayembedjs">goPayEmbedJs</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+URL of GoPay embed JS script
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="paymentinstructionsetupdata.orderpaymentstatuspagevalidityhash">orderPaymentStatusPageValidityHash</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Server-generated validity hash for payment status page
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### PaymentSetupCreationData
 
 <table>
@@ -8120,6 +8167,15 @@ UUID
 <td>
 
 Identifiers of GoPay payment method
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="paymentsetupcreationdata.orderpaymentstatuspagevalidityhash">orderPaymentStatusPageValidityHash</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Hash for validating payment status page
 
 </td>
 </tr>

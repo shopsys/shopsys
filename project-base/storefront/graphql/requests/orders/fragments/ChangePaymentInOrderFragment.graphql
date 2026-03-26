@@ -2,4 +2,5 @@ fragment ChangePaymentInOrderFragment on Order {
     __typename
     urlHash
     number
+    paymentTransactionsCount
 }

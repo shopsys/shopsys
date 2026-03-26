@@ -1,42 +1,64 @@
-import { GtmPaymentEventType } from 'gtm/types/events';
 import { isClient } from 'utils/isClient';
-import { compressObjectToString, decompressStringToObject } from './objectCompression';
 
-const GTM_PAYMENT_OBJECT_LOCAL_STORAGE_KEY = 'gtmPaymentEvent' as const;
+const GTM_PENDING_PAYMENT_LOCAL_STORAGE_KEY = 'gtmPendingPayment' as const;
+const normalizeDomainUrl = (domainUrl?: string) => domainUrl?.replace(/\/+$/, '');
 
-export const saveGtmPaymentEventInLocalStorage = (gtmPaymentEventOrder: GtmPaymentEventType): void => {
+type GtmPendingPaymentType = {
+    orderUuid: string;
+    orderNumber: string;
+    paymentName: string;
+    paymentTransactionsCount?: number;
+    domainUrl: string;
+    timestamp: number;
+};
+
+export const saveGtmPendingPaymentInLocalStorage = (pendingPayment: Omit<GtmPendingPaymentType, 'timestamp'>): void => {
     if (!isClient) {
         return;
     }
-    const stringifiedGtmCreateOrderEvent = JSON.stringify(compressObjectToString(gtmPaymentEventOrder));
 
-    localStorage.setItem(GTM_PAYMENT_OBJECT_LOCAL_STORAGE_KEY, stringifiedGtmCreateOrderEvent);
-};
-
-export const getGtmPaymentEventFromLocalStorage = (): {
-    gtmPaymentEvent: GtmPaymentEventType | undefined;
-} => {
-    if (!isClient) {
-        return { gtmPaymentEvent: undefined };
-    }
-
-    const stringifiedGtmPaymentEvent = localStorage.getItem(GTM_PAYMENT_OBJECT_LOCAL_STORAGE_KEY);
-
-    if (stringifiedGtmPaymentEvent === null) {
-        return { gtmPaymentEvent: undefined };
-    }
-
-    const parsedGtmPaymentEvent = JSON.parse(stringifiedGtmPaymentEvent);
-
-    return {
-        gtmPaymentEvent: decompressStringToObject(parsedGtmPaymentEvent),
+    const data: GtmPendingPaymentType = {
+        ...pendingPayment,
+        domainUrl: normalizeDomainUrl(pendingPayment.domainUrl) ?? pendingPayment.domainUrl,
+        timestamp: Date.now(),
     };
+
+    try {
+        localStorage.setItem(GTM_PENDING_PAYMENT_LOCAL_STORAGE_KEY, JSON.stringify(data));
+    } catch {
+        // Ignore storage errors, pending payment recovery is best-effort only.
+    }
 };
 
-export const removeGtmPaymentEventFromLocalStorage = (): void => {
+export const getGtmPendingPaymentFromLocalStorage = (currentDomainUrl?: string): GtmPendingPaymentType | null => {
+    if (!isClient) {
+        return null;
+    }
+
+    const stringifiedData = localStorage.getItem(GTM_PENDING_PAYMENT_LOCAL_STORAGE_KEY);
+
+    if (stringifiedData === null) {
+        return null;
+    }
+
+    try {
+        const data = JSON.parse(stringifiedData) as GtmPendingPaymentType;
+
+        if (currentDomainUrl && normalizeDomainUrl(data.domainUrl) !== normalizeDomainUrl(currentDomainUrl)) {
+            return null;
+        }
+
+        return data;
+    } catch {
+        localStorage.removeItem(GTM_PENDING_PAYMENT_LOCAL_STORAGE_KEY);
+
+        return null;
+    }
+};
+
+export const removeGtmPendingPaymentFromLocalStorage = (): void => {
     if (!isClient) {
         return;
     }
-
-    localStorage.removeItem(GTM_PAYMENT_OBJECT_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(GTM_PENDING_PAYMENT_LOCAL_STORAGE_KEY);
 };

@@ -21,12 +21,14 @@ import {
 import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum, TypePaymentTypeEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
+import { useEmitPendingPaymentEvent } from 'gtm/hooks/useEmitPendingPaymentEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { useRouter } from 'next/router';
 import Trans from 'next-translate/Trans';
-import { useEffect, useEffectEvent, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
+import { buildPaymentConfirmationUrlFromSession } from 'utils/goPayPaymentSessionStorage';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
@@ -44,33 +46,80 @@ export type OrderConfirmationUrlQuery = Partial<{
 
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
-    const { query } = useRouter();
+    const router = useRouter();
+    const { query } = router;
     const { fetchCart } = useCurrentCart(false);
-    const { url } = useDomainConfig();
+    const domainConfig = useDomainConfig();
+    const { url } = domainConfig;
     const [isMaxTransactionCountReached, setIsMaxTransactionCountReached] = useState(false);
-    const { orderUuid, orderPaymentType, companyNumber, orderEmail, orderUrlHash, requiresAction } =
+    const hasRetriedMissingOrderInSafariRef = useRef(false);
+    const { orderUuid, companyNumber, orderEmail, orderPaymentType, orderUrlHash, requiresAction } =
         query as OrderConfirmationUrlQuery;
+    const isGoPayOrder = orderPaymentType === TypePaymentTypeEnum.GoPay;
+
+    // Synchronous GoPay session detection — before first render, no flash.
+    // First visit (fresh checkout): session doesn't exist yet → no redirect.
+    // Return visit (back from retry iframe): session exists → redirect to payment-confirmation.
+    const [goPayRedirectUrl] = useState<string | null>(() => {
+        if (typeof window === 'undefined') {
+            return null;
+        }
+
+        if (!orderUuid) {
+            return null;
+        }
+
+        const redirectUrl = buildPaymentConfirmationUrlFromSession(domainConfig, orderUuid);
+
+        if (!redirectUrl) {
+            return null;
+        }
+
+        return redirectUrl;
+    });
+
+    useEffect(() => {
+        if (goPayRedirectUrl) {
+            router.replace(goPayRedirectUrl);
+        }
+    }, [goPayRedirectUrl, router]);
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [
-        { data: orderSentPageContentData, fetching: isOrderSentPageContentFetching, error: orderSentPageContentError },
-    ] = useOrderSentPageContentQuery({
-        variables: { orderUuid: orderUuid! },
-    });
-
-    const [{ data: orderData }] = useOrderDetailByHashOrUuidQuery({
-        variables: {
-            urlHash: orderUrlHash,
-            uuid: orderUuid,
+    const [{ data: orderSentPageContentData, fetching: isOrderSentPageContentFetching }] = useOrderSentPageContentQuery(
+        {
+            variables: { orderUuid: orderUuid! },
         },
-    });
-
-    const [orderDetailUrl] = getInternationalizedStaticUrls(
-        [{ url: '/order-detail/:urlHash', param: orderData?.order?.urlHash }],
-        url,
     );
+
+    const orderDetailQueryVariables = {
+        urlHash: orderUrlHash || undefined,
+        uuid: orderUrlHash ? undefined : orderUuid,
+    };
+    const [{ data: orderData, fetching: isOrderFetching }, reexecuteOrderDetailQuery] = useOrderDetailByHashOrUuidQuery(
+        {
+            variables: orderDetailQueryVariables,
+            pause: !orderUrlHash && !orderUuid,
+        },
+    );
+
+    const order = orderData?.order;
+
+    const orderDetailUrlFromQuery = orderUrlHash
+        ? getInternationalizedStaticUrls([{ url: '/order-detail/:urlHash', param: orderUrlHash }], url)[0]
+        : undefined;
+
+    const orderDetailUrl = order?.urlHash
+        ? getInternationalizedStaticUrls([{ url: '/order-detail/:urlHash', param: order.urlHash }], url)[0]
+        : orderDetailUrlFromQuery;
+    const maxTransactionOrderDetailUrl = orderDetailUrl ?? orderDetailUrlFromQuery;
+
+    const isFetchingData = isOrderSentPageContentFetching || isOrderFetching;
+    const isOrderMissing = !order && !isFetchingData;
+
+    const pageTitle = t('Thank you for your order');
+    const pageHeading = isOrderMissing ? t('Order confirmation') : t('Your order was created');
 
     const onFetchCart = useEffectEvent(() => {
         fetchCart();
@@ -80,94 +129,181 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
         onFetchCart();
     }, []);
 
-    if (!orderData?.order) {
-        return null;
-    }
+    useEffect(() => {
+        if (
+            typeof window === 'undefined' ||
+            hasRetriedMissingOrderInSafariRef.current ||
+            isOrderFetching ||
+            order ||
+            !orderUuid ||
+            !isGoPayOrder
+        ) {
+            return;
+        }
+
+        const userAgent = window.navigator.userAgent;
+        const isSafariBrowser =
+            /Safari/i.test(userAgent) && !/Chrome|Chromium|CriOS|Android|FxiOS|Firefox|EdgiOS|Edg\//i.test(userAgent);
+
+        if (!isSafariBrowser) {
+            return;
+        }
+
+        // Safari occasionally lands on order confirmation before the anonymous order detail becomes readable.
+        // Keep this workaround isolated so we can remove it easily if it does not help.
+        hasRetriedMissingOrderInSafariRef.current = true;
+        reexecuteOrderDetailQuery({ requestPolicy: 'network-only' });
+    }, [isGoPayOrder, isOrderFetching, order, orderUuid, reexecuteOrderDetailQuery]);
+
+    const orderPayment = order?.items.find((item) => item.type === TypeOrderItemTypeEnum.Payment);
+    const orderTransport = order?.items.find((item) => item.type === TypeOrderItemTypeEnum.Transport);
+    const orderRounding = order?.items.find((item) => item.type === TypeOrderItemTypeEnum.Rounding);
+
+    // Guarded fallback: emit ec.payment only when GoPay redirect is NOT expected
+    const { tryEmitPaymentEvent } = useEmitPendingPaymentEvent();
+
+    useEffect(() => {
+        if (!order || !orderUuid) {
+            return;
+        }
+
+        // Stale browser-back landings from GoPay can return to the original
+        // order-confirmation history entry with requiresAction still present.
+        // In that case the payment attempt is still recoverable on
+        // /order-payment-confirmation and must not be closed as a final fail here.
+        if (isGoPayOrder && requiresAction) {
+            return;
+        }
+
+        tryEmitPaymentEvent({
+            orderUuid,
+            isPaid: order.isPaid,
+            hasPaymentInProcess: order.hasPaymentInProcess,
+            paymentTransactionsCount: order.paymentTransactionsCount,
+            paymentName: orderPayment?.name ?? '',
+            orderNumber: order.number,
+        });
+    }, [isGoPayOrder, order, orderUuid, orderPayment?.name, requiresAction]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const stepperFlow =
-        orderData.order.hasExternalPayment && orderData.order.isPaid
-            ? FlowTypesEnum.PaymentSuccess
-            : FlowTypesEnum.PaymentAwaiting;
+        order?.hasExternalPayment && order.isPaid ? FlowTypesEnum.PaymentSuccess : FlowTypesEnum.PaymentAwaiting;
 
-    const orderPayment = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Payment);
-    const orderTransport = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Transport);
-    const orderRounding = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Rounding);
+    const maxTransactionCountReachedContent = maxTransactionOrderDetailUrl ? (
+        <Trans
+            i18nKey="Max transaction count reached. Please go to the <link>order detail page</link> and pay with another method."
+            components={{
+                link: (
+                    <ExtendedNextLink
+                        aria-label={t('Go to order detail page', { ns: 'accessibility' })}
+                        href={maxTransactionOrderDetailUrl}
+                        type="orderDetail"
+                    />
+                ),
+            }}
+        />
+    ) : (
+        t('Max transaction count reached. Please go to the order detail page and pay with another method.')
+    );
+
+    if (goPayRedirectUrl) {
+        return <CommonLayout isFetchingData pageTypeOverride="order-confirmation" title={pageTitle} />;
+    }
 
     return (
         <>
             <MetaRobots content="noindex" />
 
-            <CommonLayout
-                isFetchingData={isOrderSentPageContentFetching}
-                pageTypeOverride="order-confirmation"
-                title={t('Thank you for your order')}
-            >
+            <CommonLayout isFetchingData={isFetchingData} pageTypeOverride="order-confirmation" title={pageTitle}>
                 <Webline tid={TIDs.pages_orderconfirmation}>
-                    <ConfirmationPageContent
-                        content={orderSentPageContentData?.orderSentPageContent}
-                        error={orderSentPageContentError}
-                        heading={t('Your order was created')}
-                        orderDetailUrl={orderDetailUrl}
-                    >
-                        {orderPaymentType === TypePaymentTypeEnum.GoPay && (
-                            <div className="mt-4">
-                                {isMaxTransactionCountReached ? (
-                                    <Trans
-                                        i18nKey="Max transaction count reached. Please go to the <link>order detail page</link> and pay with another method."
-                                        components={{
-                                            link: (
-                                                <ExtendedNextLink
-                                                    aria-label={t('Go to order detail page', { ns: 'accessibility' })}
-                                                    href={orderDetailUrl}
-                                                    type="orderDetail"
-                                                />
-                                            ),
+                    {isMaxTransactionCountReached ? (
+                        <ConfirmationPageContent
+                            heading={t('Payment could not be started')}
+                            headingClassName="text-text-error"
+                            orderDetailUrl={orderDetailUrl}
+                            warningMessage={maxTransactionCountReachedContent}
+                        />
+                    ) : (
+                        <ConfirmationPageContent
+                            content={orderSentPageContentData?.orderSentPageContent}
+                            heading={pageHeading}
+                            orderDetailUrl={orderDetailUrl}
+                            warningMessage={
+                                isOrderMissing ? (
+                                    orderDetailUrlFromQuery ? (
+                                        <Trans
+                                            i18nKey="We couldn't display the order confirmation details. <link>View order details</link>"
+                                            components={{
+                                                link: (
+                                                    <ExtendedNextLink
+                                                        href={orderDetailUrlFromQuery}
+                                                        type="orderDetail"
+                                                        aria-label={t('Go to order detail page', {
+                                                            ns: 'accessibility',
+                                                        })}
+                                                    />
+                                                ),
+                                            }}
+                                        />
+                                    ) : (
+                                        t(
+                                            "We couldn't display the order confirmation details. Check your email for order details.",
+                                        )
+                                    )
+                                ) : undefined
+                            }
+                        >
+                            {!!order && isGoPayOrder && (
+                                <GoPayGateway
+                                    className="mt-4"
+                                    initialButtonText={t('Repeat payment')}
+                                    orderNumber={order.number}
+                                    orderUrlHash={orderUrlHash || order.urlHash}
+                                    orderUuid={order.uuid}
+                                    paymentName={orderPayment?.name}
+                                    paymentTransactionsCount={order.paymentTransactionsCount}
+                                    requiresAction={requiresAction}
+                                    onMaxTransactionCountReached={() => setIsMaxTransactionCountReached(true)}
+                                />
+                            )}
+                        </ConfirmationPageContent>
+                    )}
+
+                    {!!order && (
+                        <>
+                            <OrderConfirmationStepper flow={stepperFlow} />
+
+                            <div className="grid vl:grid-cols-3 gap-4 vl:gap-10">
+                                <div className="vl:col-span-2 flex vl:flex-col flex-col-reverse gap-4">
+                                    <OrderCustomerInfo order={order} />
+
+                                    <RegistrationAfterOrder
+                                        companyNumber={companyNumber}
+                                        orderEmail={orderEmail || order.email}
+                                        orderUrlHash={orderUrlHash}
+                                        orderUuid={orderUuid}
+                                    />
+                                </div>
+
+                                <div className="vl:col-span-1 flex flex-1 flex-col gap-2.5">
+                                    <OrderConfirmationProducts items={order.items} />
+
+                                    <OrderConfirmationSummary
+                                        promoCode={order.promoCode}
+                                        roundingPrice={orderRounding?.totalPrice}
+                                        totalPrice={order.totalPrice}
+                                        payment={{
+                                            name: orderPayment?.name,
+                                            price: orderPayment?.totalPrice.priceWithVat,
+                                        }}
+                                        transport={{
+                                            name: orderTransport?.name,
+                                            price: orderTransport?.totalPrice.priceWithVat,
                                         }}
                                     />
-                                ) : (
-                                    <GoPayGateway
-                                        initialButtonText={t('Repeat payment')}
-                                        orderUuid={orderUuid!}
-                                        requiresAction={requiresAction}
-                                        onMaxTransactionCountReached={() => setIsMaxTransactionCountReached(true)}
-                                    />
-                                )}
+                                </div>
                             </div>
-                        )}
-                    </ConfirmationPageContent>
-
-                    <OrderConfirmationStepper flow={stepperFlow} />
-
-                    <div className="grid vl:grid-cols-3 gap-4 vl:gap-10">
-                        <div className="vl:col-span-2 flex vl:flex-col flex-col-reverse gap-4">
-                            <OrderCustomerInfo order={orderData.order} />
-
-                            <RegistrationAfterOrder
-                                companyNumber={companyNumber}
-                                orderEmail={orderEmail}
-                                orderUrlHash={orderUrlHash}
-                                orderUuid={orderUuid}
-                            />
-                        </div>
-
-                        <div className="vl:col-span-1 flex flex-1 flex-col gap-2.5">
-                            <OrderConfirmationProducts items={orderData.order.items} />
-
-                            <OrderConfirmationSummary
-                                promoCode={orderData.order.promoCode}
-                                roundingPrice={orderRounding?.totalPrice}
-                                totalPrice={orderData.order.totalPrice}
-                                payment={{
-                                    name: orderPayment?.name,
-                                    price: orderPayment?.totalPrice.priceWithVat,
-                                }}
-                                transport={{
-                                    name: orderTransport?.name,
-                                    price: orderTransport?.totalPrice.priceWithVat,
-                                }}
-                            />
-                        </div>
-                    </div>
+                        </>
+                    )}
                 </Webline>
             </CommonLayout>
         </>

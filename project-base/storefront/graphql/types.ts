@@ -1596,8 +1596,8 @@ export type TypeMutation = {
   RequestPersonalDataAccess: TypePersonalDataPage;
   /** Set default delivery address by Uuid */
   SetDefaultDeliveryAddress: TypeCurrentCustomerUser;
-  /** set order payment status page validity hash, so it's possible to safely return to the payment status page */
-  SetOrderPaymentStatusPageValidityHashMutation: Scalars['String']['output'];
+  /** Resets order payment status page validity hash (server-generated) and returns GoPay embed JS URL */
+  SetOrderPaymentStatusPageValidityHashMutation: TypePaymentInstructionSetupData;
   /** check payment status of order after callback from payment service */
   UpdatePaymentStatus: TypeOrder;
 };
@@ -1789,7 +1789,6 @@ export type TypeMutationSetDefaultDeliveryAddressArgs = {
 
 
 export type TypeMutationSetOrderPaymentStatusPageValidityHashMutationArgs = {
-  orderPaymentStatusPageValidityHash: Scalars['String']['input'];
   orderUuid: Scalars['Uuid']['input'];
 };
 
@@ -1972,6 +1971,10 @@ export type TypeOrder = {
   note: Maybe<Scalars['String']['output']>;
   /** Unique order number */
   number: Scalars['String']['output'];
+  /** Localized payment page content resolved for the order's current payment state. */
+  paymentPageContent: Maybe<TypeOrderPaymentPageContent>;
+  /** Number of payment transactions for this order */
+  paymentTransactionsCount: Scalars['Int']['output'];
   /** Selected pickup place identifier */
   pickupPlaceIdentifier: Maybe<Scalars['String']['output']>;
   /** Billing address zip code */
@@ -2449,10 +2452,20 @@ export enum TypePaymentContentPageStatusEnum {
   Successful = 'SUCCESSFUL'
 }
 
+export type TypePaymentInstructionSetupData = {
+  __typename?: 'PaymentInstructionSetupData';
+  /** URL of GoPay embed JS script */
+  goPayEmbedJs: Scalars['String']['output'];
+  /** Server-generated validity hash for payment status page */
+  orderPaymentStatusPageValidityHash: Scalars['String']['output'];
+};
+
 export type TypePaymentSetupCreationData = {
   __typename?: 'PaymentSetupCreationData';
   /** Identifiers of GoPay payment method */
   goPayCreatePaymentSetup: Maybe<TypeGoPayCreatePaymentSetup>;
+  /** Hash for validating payment status page */
+  orderPaymentStatusPageValidityHash: Maybe<Scalars['String']['output']>;
 };
 
 /** One of the possible methods of the payment type */

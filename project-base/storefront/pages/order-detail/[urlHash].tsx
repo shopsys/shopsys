@@ -1,13 +1,11 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
-import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { PageHero } from 'components/Layout/PageHero/PageHero';
-import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
-import { Webline } from 'components/Layout/Webline/Webline';
-import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
+import { OrderDetailByHashPageContent } from 'components/Pages/Customer/OrderDetail/OrderDetailByHashPageContent';
+import { OrderPaymentRecoveryContent } from 'components/Pages/Customer/OrderDetail/OrderPaymentRecoveryContent';
+import { useOrderDetailGoPayRecovery } from 'components/Pages/Customer/OrderDetail/useOrderDetailGoPayRecovery';
+import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
+import { useRefreshOrderPaymentStatus } from 'components/Pages/Order/PaymentConfirmation/useRefreshOrderPaymentStatus';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     OrderAvailablePaymentsQueryDocument,
@@ -19,9 +17,6 @@ import {
     TypeOrderDetailByHashQueryVariables,
     useOrderDetailByHashQuery,
 } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
-import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
@@ -34,44 +29,57 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 const OrderDetailByHashPage: FC = () => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const domainConfig = useDomainConfig();
+    const { url } = domainConfig;
     const router = useRouter();
-    const orderHash = getStringFromUrlQuery(router.query.urlHash);
-    const [{ data: orderData, fetching: isOrderFetching }] = useOrderDetailByHashQuery({
-        variables: { urlHash: orderHash },
-    });
-
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
     ];
+    const orderHash = getStringFromUrlQuery(router.query.urlHash);
+    const [{ data: orderData, fetching: isOrderFetching }, reexecuteOrderDetailQuery] = useOrderDetailByHashQuery({
+        variables: { urlHash: orderHash },
+    });
+    const order = orderData?.order ?? undefined;
+    const isOrderDataFetching = isOrderFetching && !order;
+    const isOrderMissing = !isOrderDataFetching && !order;
+    const isRecoveringGoPaySession = useOrderDetailGoPayRecovery(domainConfig, order?.uuid);
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    useRefreshOrderPaymentStatus(order, () => {
+        reexecuteOrderDetailQuery({ requestPolicy: 'network-only' });
+    });
+
+    if (isRecoveringGoPaySession) {
+        return (
+            <>
+                <MetaRobots content="noindex" />
+
+                <CommonLayout>
+                    <OrderPaymentRecoveryContent />
+                </CommonLayout>
+            </>
+        );
+    }
+
+    if (isOrderMissing) {
+        return (
+            <>
+                <MetaRobots content="noindex" />
+
+                <Error404Content />
+            </>
+        );
+    }
 
     return (
         <>
             <MetaRobots content="noindex" />
-            <PageGuard errorRedirectUrl="/" isWithAccess={!!orderData?.order || isOrderFetching}>
-                <CommonLayout
-                    breadcrumbs={breadcrumbs}
-                    title={`${t('Order number')} ${orderData?.order?.number ?? ''}`}
-                >
-                    {!!orderData?.order && (
-                        <Webline width="lg">
-                            <VerticalStack gap="sm">
-                                <PageHero
-                                    icon={DocumentIcon}
-                                    title={`${t('Your order')} ${orderData.order.number}`}
-                                    titleTid={TIDs.order_detail_number_heading}
-                                />
 
-                                <OrderDetailContent order={orderData.order} />
-                            </VerticalStack>
-                        </Webline>
-                    )}
-                </CommonLayout>
-            </PageGuard>
+            <OrderDetailByHashPageContent
+                breadcrumbs={breadcrumbs}
+                isOrderDataFetching={isOrderDataFetching}
+                order={order}
+            />
         </>
     );
 };

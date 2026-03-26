@@ -9,12 +9,10 @@ import {
 } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getGtmCreateOrderEventOrderPart, getGtmCreateOrderEventUserPart } from 'gtm/factories/getGtmCreateOrderEvent';
-import { getGtmPaymentEvent } from 'gtm/factories/getGtmPaymentEvent';
 import { onGtmCreateOrderEventHandler } from 'gtm/handlers/onGtmCreateOrderEventHandler';
 import { onGtmPaymentTryEventHandler } from 'gtm/handlers/onGtmPaymentEventHandler';
 import { getGtmReviewConsents } from 'gtm/utils/getGtmReviewConsents';
 import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/utils/gtmCreateOrderEventLocalStorage';
-import { saveGtmPaymentEventInLocalStorage } from 'gtm/utils/gtmPaymentEventLocalStorage';
 import { useRouter } from 'next/router';
 import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
 import { SubmitHandler, UseFormReturn } from 'react-hook-form';
@@ -180,13 +178,10 @@ const useHandleCreateOrderResult = (
             const [orderConfirmationUrl] = getInternationalizedStaticUrls(['/order-confirmation'], domainConfig.url);
 
             router
-                .replace(
-                    {
-                        pathname: orderConfirmationUrl,
-                        query: orderConfirmationUrlQuery,
-                    },
-                    orderConfirmationUrl,
-                )
+                .replace({
+                    pathname: orderConfirmationUrl,
+                    query: orderConfirmationUrlQuery,
+                })
                 .then(() => {
                     handleEventsAfterOrderCreation(createdOrder.number);
                 });
@@ -226,7 +221,6 @@ const useHandleEventsAfterOrderCreation = () => {
                 domainConfig,
             );
             const gtmCreateOrderEventUserPart = getGtmCreateOrderEventUserPart(user, userContactInformation);
-            const gtmPaymentEvent = getGtmPaymentEvent(orderNumber, payment.name, false, -1);
             const isPaymentWithPaymentGate = getIsPaymentWithPaymentGate(payment.type);
             const isPaymentSuccessful = isPaymentWithPaymentGate ? undefined : true;
 
@@ -239,7 +233,6 @@ const useHandleEventsAfterOrderCreation = () => {
 
             if (isPaymentWithPaymentGate) {
                 saveGtmCreateOrderEventInLocalStorage(gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart);
-                saveGtmPaymentEventInLocalStorage(gtmPaymentEvent);
             } else {
                 onGtmPaymentTryEventHandler(orderNumber, payment.name, true);
             }

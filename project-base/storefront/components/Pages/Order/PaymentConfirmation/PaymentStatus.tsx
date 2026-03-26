@@ -1,5 +1,5 @@
+import { TypeUpdatePaymentStatusMutation } from 'graphql/requests/orders/mutations/UpdatePaymentStatusMutation.generated';
 import { TypeOrderDetailByHashQuery } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
-import { TypeOrderPaymentPageContentQuery } from 'graphql/requests/orders/queries/OrderPaymentPageContentQuery.generated';
 import { TypePaymentContentPageStatusEnum } from 'graphql/types';
 import { PaymentFail } from './PaymentFail';
 import { PaymentInProcess } from './PaymentInProcess';
@@ -7,36 +7,24 @@ import { PaymentSuccess } from './PaymentSuccess';
 
 export const PaymentStatus: FC<{
     orderData: TypeOrderDetailByHashQuery | undefined;
-    orderPaymentPageContentData: TypeOrderPaymentPageContentQuery | undefined;
-}> = ({ orderData, orderPaymentPageContentData }) => {
+    paymentStatusData: TypeUpdatePaymentStatusMutation | undefined;
+    statusOverride?: TypePaymentContentPageStatusEnum;
+}> = ({ orderData, paymentStatusData, statusOverride }) => {
     const order = orderData?.order;
+    const paymentContent = paymentStatusData?.UpdatePaymentStatus.paymentPageContent;
+    const status = statusOverride ?? paymentContent?.status;
+    const paymentContentText = paymentContent?.content ?? '';
 
-    const isPaymentSuccessful =
-        orderPaymentPageContentData?.orderPaymentPageContent.status === TypePaymentContentPageStatusEnum.Successful;
-    const isPaymentInProcess =
-        orderPaymentPageContentData?.orderPaymentPageContent.status === TypePaymentContentPageStatusEnum.InProcess;
-    const isPaymentFailed =
-        orderPaymentPageContentData?.orderPaymentPageContent.status === TypePaymentContentPageStatusEnum.Failed;
-
-    if (order?.isPaid && isPaymentSuccessful) {
-        return (
-            <PaymentSuccess
-                orderPaymentSuccessfulContent={orderPaymentPageContentData.orderPaymentPageContent.content}
-            />
-        );
+    if (!order || !status) {
+        return null;
     }
 
-    if (order?.hasPaymentInProcess && isPaymentInProcess) {
-        return (
-            <PaymentInProcess
-                orderPaymentInProcessContent={orderPaymentPageContentData.orderPaymentPageContent.content}
-            />
-        );
+    switch (status) {
+        case TypePaymentContentPageStatusEnum.Successful:
+            return <PaymentSuccess orderPaymentSuccessfulContent={paymentContentText} />;
+        case TypePaymentContentPageStatusEnum.InProcess:
+            return <PaymentInProcess orderPaymentInProcessContent={paymentContentText} />;
+        default:
+            return <PaymentFail orderPaymentFailedContent={paymentContentText} />;
     }
-
-    if (order && isPaymentFailed) {
-        return <PaymentFail orderPaymentFailedContent={orderPaymentPageContentData.orderPaymentPageContent.content} />;
-    }
-
-    return null;
 };

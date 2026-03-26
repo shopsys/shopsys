@@ -45,6 +45,7 @@ fragment OrderDetailFragment on Order {
     isPaid
     hasExternalPayment
     hasPaymentInProcess
+    paymentTransactionsCount
     lastExternalPaymentUrl
     deliveredAt
     withdrawalRequest {

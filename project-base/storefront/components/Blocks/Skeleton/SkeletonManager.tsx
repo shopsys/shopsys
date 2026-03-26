@@ -23,6 +23,7 @@ import { SkeletonPageCustomerUsers } from './SkeletonPageCustomerUsers';
 import { SkeletonPageFlag } from './SkeletonPageFlag';
 import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageLogin } from './SkeletonPageLogin';
+import { SkeletonPageOrderDetailPublic } from './SkeletonPageOrderDetailPublic';
 import { SkeletonPageOrderWithdrawal } from './SkeletonPageOrderWithdrawal';
 import { SkeletonPageOrderWithdrawalSuccess } from './SkeletonPageOrderWithdrawalSuccess';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
@@ -59,6 +60,7 @@ const SKELETON_COMPONENT_MAP: Record<PageType, ComponentType> = {
     [SkeletonEnum.Login]: SkeletonPageLogin,
     [SkeletonEnum.OrderConfirmation]: SkeletonPageConfirmation,
     [SkeletonEnum.OrderDetail]: SkeletonPageCustomerOrderDetail,
+    [SkeletonEnum.OrderDetailPublic]: SkeletonPageOrderDetailPublic,
     [SkeletonEnum.OrderList]: SkeletonPageCustomerOrderList,
     [SkeletonEnum.OrderWithdrawal]: SkeletonPageOrderWithdrawal,
     [SkeletonEnum.OrderWithdrawalSuccess]: SkeletonPageOrderWithdrawalSuccess,
@@ -105,7 +107,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
     }, [isPageLoading]);
 
     if (!isPageLoading && !isFetchingData) {
-        return <div className={hadClientSideNavigation ? 'animate-in' : undefined}>{children}</div>;
+        return <div className={hadClientSideNavigation ? 'relative z-above animate-in' : undefined}>{children}</div>;
     }
 
     const SkeletonComponent = pageType ? SKELETON_COMPONENT_MAP[pageType] : null;

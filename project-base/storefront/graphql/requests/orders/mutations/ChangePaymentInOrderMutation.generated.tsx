@@ -10,7 +10,7 @@ export type TypeChangePaymentInOrderMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', ChangePaymentInOrder: { __typename: 'Order', urlHash: string, number: string } };
+export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', ChangePaymentInOrder: { __typename: 'Order', urlHash: string, number: string, paymentTransactionsCount: number } };
 
 
 export const ChangePaymentInOrderMutationDocument = gql`

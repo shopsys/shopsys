@@ -9,6 +9,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { OperationResult } from 'urql';
 import { setTokensToCookies } from 'utils/auth/setTokensToCookies';
+import { getLocalePrefix } from 'utils/domain/domainUtils';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 type LoginHandler = (
@@ -90,7 +91,8 @@ export const useLoginAfterPasswordRecovery = () => {
         updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
 
         dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
-        window.location.href = '/';
+        const localePrefix = getLocalePrefix(domainConfig);
+        window.location.href = localePrefix || '/';
     };
 
     return handleActionsAfterPasswordRecovery;

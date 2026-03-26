@@ -13,3 +13,11 @@ export const getOrderPaymentItem = <T extends { type: TypeOrderItemTypeEnum }>(i
 
 export const getOrderRoundingItem = <T extends { type: TypeOrderItemTypeEnum }>(items: T[] | null | undefined) =>
     getOrderItemByType(items, TypeOrderItemTypeEnum.Rounding);
+
+type OrderWithExternalPaymentContext = {
+    hasExternalPayment?: boolean | null;
+    lastExternalPaymentUrl?: string | null;
+};
+
+export const hasOrderExternalPaymentContext = (order: OrderWithExternalPaymentContext | null | undefined): boolean =>
+    !!order && (order.hasExternalPayment === true || !!order.lastExternalPaymentUrl);

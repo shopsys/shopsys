@@ -1,4 +1,4 @@
-import { FormHTMLAttributes, KeyboardEvent, SubmitEvent } from 'react';
+import { FormHTMLAttributes, KeyboardEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
@@ -26,8 +26,7 @@ export const Form: FC<FormProps> = ({
     onKeyDown,
 }) => {
     const formProviderMethods = useFormContext();
-
-    const controlledOnSubmitHandler = (event: SubmitEvent<HTMLFormElement>) => {
+    const controlledOnSubmitHandler = (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         // formProviderMethods may be null probably when it is not used in FormProvider context - see https://github.com/react-hook-form/react-hook-form/discussions/3894

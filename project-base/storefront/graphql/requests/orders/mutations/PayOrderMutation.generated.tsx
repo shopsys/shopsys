@@ -9,7 +9,7 @@ export type TypePayOrderMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypePayOrderMutation = { __typename?: 'Mutation', PayOrder: { __typename?: 'PaymentSetupCreationData', goPayCreatePaymentSetup: { __typename?: 'GoPayCreatePaymentSetup', gatewayUrl: string, goPayId: string, embedJs: string } | null } };
+export type TypePayOrderMutation = { __typename?: 'Mutation', PayOrder: { __typename?: 'PaymentSetupCreationData', orderPaymentStatusPageValidityHash: string | null, goPayCreatePaymentSetup: { __typename?: 'GoPayCreatePaymentSetup', gatewayUrl: string, goPayId: string, embedJs: string } | null } };
 
 
 export const PayOrderMutationDocument = gql`
@@ -20,6 +20,7 @@ export const PayOrderMutationDocument = gql`
       goPayId
       embedJs
     }
+    orderPaymentStatusPageValidityHash
   }
 }
     `;

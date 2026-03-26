@@ -4,13 +4,7 @@
         "**/*.generated.tsx": ["exports", "types"]
     },
     "project": ["**/*.{ts,tsx}"],
-    "ignore": [
-        "cypress/**",
-        "graphql/types.ts",
-        "gtm/factories/getGtmPaymentFailEvent.ts",
-        "gtm/handlers/onGtmPaymentFailEventHandler.ts",
-        "vitest/biome/fixtures/**"
-    ],
+    "ignore": ["cypress/**", "graphql/types.ts", "vitest/biome/fixtures/**"],
     "ignoreDependencies": ["license-checker", "tailwindcss"],
     "next": true,
     "vitest": {

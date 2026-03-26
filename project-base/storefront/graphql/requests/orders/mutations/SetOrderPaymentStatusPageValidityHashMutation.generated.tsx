@@ -6,19 +6,18 @@ import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeSetOrderPaymentStatusPageValidityHashMutationVariables = Types.Exact<{
   orderUuid: Types.Scalars['Uuid']['input'];
-  orderPaymentStatusPageValidityHash: Types.Scalars['String']['input'];
 }>;
 
 
-export type TypeSetOrderPaymentStatusPageValidityHashMutation = { __typename?: 'Mutation', SetOrderPaymentStatusPageValidityHashMutation: string };
+export type TypeSetOrderPaymentStatusPageValidityHashMutation = { __typename?: 'Mutation', SetOrderPaymentStatusPageValidityHashMutation: { __typename?: 'PaymentInstructionSetupData', goPayEmbedJs: string, orderPaymentStatusPageValidityHash: string } };
 
 
 export const SetOrderPaymentStatusPageValidityHashMutationDocument = gql`
-    mutation SetOrderPaymentStatusPageValidityHashMutation($orderUuid: Uuid!, $orderPaymentStatusPageValidityHash: String!) {
-  SetOrderPaymentStatusPageValidityHashMutation(
-    orderUuid: $orderUuid
-    orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash
-  )
+    mutation SetOrderPaymentStatusPageValidityHashMutation($orderUuid: Uuid!) {
+  SetOrderPaymentStatusPageValidityHashMutation(orderUuid: $orderUuid) {
+    goPayEmbedJs
+    orderPaymentStatusPageValidityHash
+  }
 }
     `;
 

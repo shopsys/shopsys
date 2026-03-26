@@ -2,6 +2,8 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CartContent } from 'components/Pages/Cart/CartContent';
 import { EmptyCart } from 'components/Pages/Cart/EmptyCart';
+import { useGoPayCheckoutRecovery } from 'components/Pages/Order/PaymentConfirmation/useGoPayCheckoutRecovery';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
@@ -14,7 +16,9 @@ import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initS
 
 const CartPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
+    const domainConfig = useDomainConfig();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
+    const isRecoveringGoPaySession = useGoPayCheckoutRecovery(domainConfig);
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.cart);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -25,7 +29,7 @@ const CartPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
 
             <CommonLayout
-                isFetchingData={isCartFetchingOrUnavailable}
+                isFetchingData={isCartFetchingOrUnavailable || isRecoveringGoPaySession}
                 pageTypeOverride="cart"
                 title={t('Shopping cart')}
             >

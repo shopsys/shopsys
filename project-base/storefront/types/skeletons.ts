@@ -21,6 +21,7 @@ export enum SkeletonEnum {
     Login = 'login',
     OrderConfirmation = 'order-confirmation',
     OrderDetail = 'orderDetail',
+    OrderDetailPublic = 'order-detail-public',
     OrderList = 'orderList',
     Product = 'product',
     ProductMainVariant = 'productMainVariant',

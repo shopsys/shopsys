@@ -1,9 +1,13 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
+import { OrderPaymentRecoveryContent } from 'components/Pages/Customer/OrderDetail/OrderPaymentRecoveryContent';
+import { useOrderDetailGoPayRecovery } from 'components/Pages/Customer/OrderDetail/useOrderDetailGoPayRecovery';
+import { useRefreshOrderPaymentStatus } from 'components/Pages/Order/PaymentConfirmation/useRefreshOrderPaymentStatus';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
@@ -34,19 +38,40 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 const OrderDetailPage: FC = () => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const domainConfig = useDomainConfig();
+    const { url } = domainConfig;
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
     const router = useRouter();
     const orderNumber = getStringFromUrlQuery(router.query.orderNumber);
-    const [{ data: orderData, fetching: isOrderDetailFetching, error: orderDetailError }] = useOrderDetailQuery({
-        variables: { orderNumber },
-    });
+    const [{ data: orderData, fetching: isOrderDetailFetching, error: orderDetailError }, reexecuteOrderDetailQuery] =
+        useOrderDetailQuery({
+            variables: { orderNumber },
+        });
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
         { __typename: 'Link', name: orderNumber, slug: '' },
     ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const isRecoveringGoPaySession = useOrderDetailGoPayRecovery(domainConfig, orderData?.order?.uuid);
+
+    useRefreshOrderPaymentStatus(orderData?.order ?? undefined, () => {
+        reexecuteOrderDetailQuery({ requestPolicy: 'network-only' });
+    });
+
+    if (isRecoveringGoPaySession) {
+        return (
+            <>
+                <MetaRobots content="noindex" />
+
+                <PageGuard errorRedirectUrl={customerOrdersUrl} isWithAccess={!orderDetailError}>
+                    <CommonLayout>
+                        <OrderPaymentRecoveryContent />
+                    </CommonLayout>
+                </PageGuard>
+            </>
+        );
+    }
 
     return (
         <>
@@ -56,7 +81,7 @@ const OrderDetailPage: FC = () => {
                 <CustomerLayout
                     breadcrumbs={breadcrumbs}
                     breadcrumbsType="orderList"
-                    isFetchingData={isOrderDetailFetching}
+                    isFetchingData={isOrderDetailFetching && !orderData?.order}
                 >
                     <PageHero
                         icon={DocumentIcon}

@@ -4,6 +4,7 @@ import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { ElementWithImage, OrderItemColumnInfo } from 'components/Pages/Customer/Orders/OrderItemElements';
 import { OrderPaymentStatusBar } from 'components/Pages/Customer/Orders/OrderPaymentStatusBar';
+import { ShowPaymentInstructionButton } from 'components/Pages/Order/PaymentConfirmation/ShowPaymentInstructionButton';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
@@ -15,7 +16,12 @@ import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { getOrderPaymentItem, getOrderRoundingItem, getOrderTransportItem } from 'utils/mappers/order';
+import {
+    getOrderPaymentItem,
+    getOrderRoundingItem,
+    getOrderTransportItem,
+    hasOrderExternalPaymentContext,
+} from 'utils/mappers/order';
 import { isPriceVisible } from 'utils/mappers/price';
 import { OrderDetailOrderItem } from './OrderDetailOrderItem';
 
@@ -32,6 +38,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
     const orderRounding = getOrderRoundingItem(order.items);
     const orderTransport = getOrderTransportItem(order.items);
     const orderPayment = getOrderPaymentItem(order.items);
+    const hasExternalPaymentContext = hasOrderExternalPaymentContext(order);
 
     const filteredOrderItems = order.items.filter(
         (orderItem) =>
@@ -50,7 +57,8 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 !item.product.isCurrentlyOutOfStock,
         );
 
-    const notPaid = order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;
+    const notPaid = hasExternalPaymentContext && !order.isPaid && !order.hasPaymentInProcess;
+    const hasPaymentInProcess = hasExternalPaymentContext && !order.isPaid && order.hasPaymentInProcess;
 
     return (
         <>
@@ -68,7 +76,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         {formatPrice(order.totalPrice.priceWithVat)}
 
                         <OrderPaymentStatusBar
-                            orderHasExternalPayment={order.hasExternalPayment}
+                            orderHasExternalPayment={hasExternalPaymentContext}
                             orderHasPaymentInProcess={order.hasPaymentInProcess}
                             orderIsPaid={order.isPaid}
                         />
@@ -78,8 +86,9 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 <OrderItemColumnInfo title={t('Status')}>{order.status}</OrderItemColumnInfo>
 
                 {showRepeatOrderButton && !notPaid && (
-                    <div className="flex shrink-0 gap-4">
+                    <div className="flex shrink-0 flex-col items-end gap-2">
                         <Button
+                            className="w-fit"
                             tid={TIDs.order_detail_repeat_order_button}
                             variant="secondary"
                             aria-label={t('Repeat order number {{ orderNumber }}', {
@@ -90,6 +99,14 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         >
                             {t('Repeat order')}
                         </Button>
+
+                        {hasPaymentInProcess && order.lastExternalPaymentUrl && (
+                            <ShowPaymentInstructionButton
+                                href={order.lastExternalPaymentUrl}
+                                orderUrlHash={order.urlHash}
+                                orderUuid={order.uuid}
+                            />
+                        )}
                     </div>
                 )}
 
@@ -111,7 +128,14 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 )}
             </div>
 
-            {canCreateOrder && notPaid && <PaymentsInOrderSelect orderUuid={order.uuid} />}
+            {canCreateOrder && notPaid && (
+                <PaymentsInOrderSelect
+                    orderNumber={order.number}
+                    orderUrlHash={order.urlHash}
+                    orderUuid={order.uuid}
+                    paymentTransactionsCount={order.paymentTransactionsCount}
+                />
+            )}
 
             {orderTransport && (
                 <OrderDetailRowInfo tid={TIDs.order_detail_transport} title={t('Transport')}>

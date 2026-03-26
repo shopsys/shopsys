@@ -5,6 +5,8 @@ import { AccessibilityNavigation } from 'components/Layout/Header/AccessibilityN
 import { Header } from 'components/Layout/Header/Header';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { useGoPayCheckoutRecovery } from 'components/Pages/Order/PaymentConfirmation/useGoPayCheckoutRecovery';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useSessionStore } from 'store/useSessionStore';
 import { useOrderPagesAccess } from 'utils/cart/useOrderPagesAccess';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -16,8 +18,10 @@ type OrderLayoutProps = {
 
 export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingData }) => {
     const { t } = useTranslation();
+    const domainConfig = useDomainConfig();
     const canContentBeDisplayed = useOrderPagesAccess(page);
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
+    const isRecoveringGoPaySession = useGoPayCheckoutRecovery(domainConfig);
 
     return (
         <>
@@ -38,7 +42,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                     id="main-content"
                 >
                     <SkeletonManager
-                        isFetchingData={!canContentBeDisplayed || isFetchingData}
+                        isFetchingData={!canContentBeDisplayed || isFetchingData || isRecoveringGoPaySession}
                         isPageLoading={isPageLoading}
                         pageTypeOverride={page}
                     >

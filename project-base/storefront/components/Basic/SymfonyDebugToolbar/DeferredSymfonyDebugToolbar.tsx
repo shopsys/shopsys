@@ -13,7 +13,7 @@ const SymfonyDebugToolbar =
                 (component) => component.SymfonyDebugToolbar,
             ),
         {
-            ssr: true,
+            ssr: false,
         },
     );
 

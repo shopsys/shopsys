@@ -15,7 +15,7 @@ import useWindowDimensions from 'utils/useWindowDimensions';
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 type PopupProps = {
-    title: string;
+    title?: string;
     ariaDescription?: string;
     hideCloseButton?: boolean;
     contentClassName?: string;
@@ -109,7 +109,7 @@ export const Popup: React.FC<PopupProps> = ({
                         tabIndex={-1}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'fixed z-aboveOverlay mx-5 flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl',
+                            'fixed z-aboveOverlay mx-5 flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl outline-hidden',
                             className,
                         )}
                         initial={{
@@ -127,22 +127,26 @@ export const Popup: React.FC<PopupProps> = ({
                             event.stopPropagation();
                         }}
                     >
-                        <div className="mb-3 flex justify-between">
-                            <span className="h3 outline-hidden" tabIndex={-1}>
-                                {title}
-                            </span>
+                        {(title || !hideCloseButton) && (
+                            <div className="mb-3 flex justify-between">
+                                {title && (
+                                    <span className="h3 outline-hidden" tabIndex={-1}>
+                                        {title}
+                                    </span>
+                                )}
 
-                            {!hideCloseButton && (
-                                <IconButton
-                                    Icon={RemoveIcon}
-                                    ariaLabel={t('Close popup', { ns: 'accessibility' })}
-                                    buttonRef={closeButtonRef}
-                                    className="ml-auto"
-                                    title={t('Close popup')}
-                                    onClick={() => updatePortalContent(null)}
-                                />
-                            )}
-                        </div>
+                                {!hideCloseButton && (
+                                    <IconButton
+                                        Icon={RemoveIcon}
+                                        ariaLabel={t('Close popup', { ns: 'accessibility' })}
+                                        buttonRef={closeButtonRef}
+                                        className="ml-auto"
+                                        title={t('Close popup')}
+                                        onClick={() => updatePortalContent(null)}
+                                    />
+                                )}
+                            </div>
+                        )}
 
                         <div className={twMergeCustom(contentClassName)}>{children}</div>
                     </m.div>

@@ -54,6 +54,38 @@ const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = [
     TIDs.header_cart,
 ];
 const SKIP_SNAPHOTS = Cypress.env('skipSnapshots');
+const ALLOWED_ERROR_DEBUGGING_LEVELS = ['no-debug', 'console'] as const;
+const ALLOW_VERBOSE_ERROR_DEBUGGING =
+    Cypress.env('allowVerboseErrorDebugging') === true || Cypress.env('allowVerboseErrorDebugging') === 'true';
+
+type EnvConfigWindow = Window & {
+    __ENV?: {
+        errorDebuggingLevel?: string;
+    };
+};
+
+const assertAllowedErrorDebuggingLevel = () => {
+    if (ALLOW_VERBOSE_ERROR_DEBUGGING) {
+        return;
+    }
+
+    cy.window().then((win) => {
+        const errorDebuggingLevel = (win as EnvConfigWindow).__ENV?.errorDebuggingLevel;
+
+        if (
+            !errorDebuggingLevel ||
+            !ALLOWED_ERROR_DEBUGGING_LEVELS.includes(
+                errorDebuggingLevel as (typeof ALLOWED_ERROR_DEBUGGING_LEVELS)[number],
+            )
+        ) {
+            throw new Error(
+                `Invalid ERROR_DEBUGGING_LEVEL='${errorDebuggingLevel ?? 'undefined'}'. ` +
+                    `For stable screenshots/e2e use one of: ${ALLOWED_ERROR_DEBUGGING_LEVELS.join(', ')}. ` +
+                    `If needed for local debugging only, run Cypress with --env allowVerboseErrorDebugging=true.`,
+            );
+        }
+    });
+};
 
 Cypress.Commands.add(
     'getByTID',
@@ -132,6 +164,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add('waitForHydration', () => {
     cy.get('body[data-hydrated="true"]', { timeout: 10000 }).should('exist');
+    assertAllowedErrorDebuggingLevel();
 });
 
 Cypress.on('uncaught:exception', (err) => {
@@ -269,6 +302,7 @@ export const takeSnapshotAndCompare = (
     }
 
     cy.document().its('fonts.status').should('equal', 'loaded');
+    assertAllowedErrorDebuggingLevel();
     scrollPageBeforeScreenshot(optionsWithDefaultValues);
     hideScrollbars();
     disableStickyPositioningBeforeScreenshot(optionsWithDefaultValues.capture, optionsWithDefaultValues.preserveFixed);

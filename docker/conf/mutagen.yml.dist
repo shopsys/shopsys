@@ -32,4 +32,8 @@ sync:
                 defaultOwner: "id:1000"
                 defaultGroup: "id:1000"
                 defaultDirectoryMode: 0777
+        ignore:
+            paths:
+                - ".next"
+                - ".turbo"
         mode: "two-way-resolved"
