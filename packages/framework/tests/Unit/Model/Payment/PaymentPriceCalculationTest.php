@@ -131,7 +131,7 @@ class PaymentPriceCalculationTest extends TestCase
             ),
         );
 
-        $price = $paymentPriceCalculation->calculateIndependentPrice($payment, $currency, Domain::FIRST_DOMAIN_ID);
+        $price = $paymentPriceCalculation->calculateIndependentPrice($payment, Domain::FIRST_DOMAIN_ID, $currency->getRoundingType(), $currency->getRoundingPlacesPriceWithoutVat());
 
         $this->assertThat($price->getPriceWithoutVat(), new IsMoneyEqual($priceWithoutVat));
         $this->assertThat($price->getPriceWithVat(), new IsMoneyEqual($priceWithVat));
@@ -197,10 +197,11 @@ class PaymentPriceCalculationTest extends TestCase
 
         $price = $paymentPriceCalculation->calculatePrice(
             $payment,
-            $currency,
             $productsPrice,
             Domain::FIRST_DOMAIN_ID,
             $forceFreePrice,
+            $currency->getRoundingType(),
+            $currency->getRoundingPlacesPriceWithoutVat(),
         );
 
         if ($priceShouldBeFree) {

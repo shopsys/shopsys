@@ -1,4 +1,4 @@
 {% trans_default_domain 'customerMessages' %}
 <p style="text-align: right; margin: 0;">
-    {{ orderRoundingItem.name }}: <strong>{{ orderRoundingTotalPrice.priceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}</strong>
+    {{ orderRoundingItem.name }}: <strong>{{ orderRoundingTotalPrice.priceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}</strong>
 </p>

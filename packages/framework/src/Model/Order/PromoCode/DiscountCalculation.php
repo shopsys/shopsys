@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
@@ -28,13 +27,14 @@ class DiscountCalculation
         PriceInterface $totalItemPrice,
         float $vatPercent,
         float $discountPercent,
-        Currency $currency,
+        string $roundingType,
+        int $roundingPlaces,
     ): ?PriceInterface {
         $multiplier = (string)($discountPercent / 100);
 
-        $priceWithVat = $this->rounding->roundPriceWithVatByCurrency(
+        $priceWithVat = $this->rounding->roundPriceWithVat(
             $totalItemPrice->getPriceWithVat()->multiply($multiplier),
-            $currency,
+            $roundingType,
         );
 
         if ($priceWithVat->isZero()) {
@@ -42,17 +42,17 @@ class DiscountCalculation
         }
 
         if ($this->pricingSetting->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
-            $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent, $currency);
+            $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent, $roundingPlaces);
             $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
         } else {
             $priceWithoutVat = $this->rounding->roundPriceWithoutVat(
                 $totalItemPrice->getPriceWithoutVat()->multiply($multiplier),
-                $currency,
+                $roundingPlaces,
             );
 
-            $priceWithVat = $this->rounding->roundPriceWithVatByCurrency(
+            $priceWithVat = $this->rounding->roundPriceWithVat(
                 $this->priceCalculation->applyVatByPercent($priceWithoutVat, $vatPercent),
-                $currency,
+                $roundingType,
             );
         }
 
@@ -63,14 +63,14 @@ class DiscountCalculation
         Money $discount,
         PriceInterface $totalPrice,
         float $vatPercent,
-        Currency $currency,
+        int $roundingPlaces,
     ): PriceInterface {
         if ($this->pricingSetting->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             if ($discount->isGreaterThan($totalPrice->getPriceWithVat())) {
                 return $totalPrice;
             }
 
-            $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($discount, $vatPercent, $currency);
+            $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($discount, $vatPercent, $roundingPlaces);
             $priceWithoutVat = $discount->subtract($priceVatAmount);
 
             return new Price($priceWithoutVat, $discount);

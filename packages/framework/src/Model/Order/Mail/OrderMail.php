@@ -164,9 +164,9 @@ class OrderMail implements MessageFactoryInterface
 
     protected function getFormattedPriceWithVat(Order $order): string
     {
-        $price = $this->priceExtension->priceTextWithCurrencyByCurrencyIdAndLocaleFilter(
+        $price = $this->priceExtension->priceTextWithCurrencyByOrderAndLocaleFilter(
             $order->getTotalPriceWithVat(),
-            $order->getCurrency()->getId(),
+            $order,
             $this->getDomainLocaleByOrder($order),
         );
 
@@ -175,9 +175,9 @@ class OrderMail implements MessageFactoryInterface
 
     protected function getFormattedPriceWithoutVat(Order $order): string
     {
-        $price = $this->priceExtension->priceTextWithCurrencyByCurrencyIdAndLocaleFilter(
+        $price = $this->priceExtension->priceTextWithCurrencyByOrderAndLocaleFilter(
             $order->getTotalPriceWithoutVat(),
-            $order->getCurrency()->getId(),
+            $order,
             $this->getDomainLocaleByOrder($order),
         );
 

@@ -42,7 +42,12 @@ class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
 
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($orderProcessingData->getDomainId());
 
-        $roundingPrice = $this->orderPriceCalculation->calculateOrderRoundingPrice($payment, $currency, $orderData->totalPrice);
+        $roundingPrice = $this->orderPriceCalculation->calculateOrderRoundingPrice(
+            $payment->isCzkRounding(),
+            $currency->getCode(),
+            $currency->getRoundingType(),
+            $orderData->totalPrice,
+        );
 
         if ($roundingPrice !== null && !$roundingPrice->isZero()) {
             $orderData->addItem($this->createRoundingItemData($roundingPrice, $orderProcessingData->getDomainConfig()));

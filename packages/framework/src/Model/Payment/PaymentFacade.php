@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -132,15 +131,16 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money[]
      */
-    public function getPaymentPricesWithVatByCurrencyAndDomainIdIndexedByPaymentId(
-        Currency $currency,
+    public function getPaymentPricesWithVatByDomainIdIndexedByPaymentId(
         int $domainId,
+        string $roundingType,
+        int $roundingPlaces,
     ): array {
         $paymentPricesWithVatByPaymentId = [];
         $payments = $this->getAllIncludingDeleted();
 
         foreach ($payments as $payment) {
-            $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice($payment, $currency, $domainId);
+            $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice($payment, $domainId, $roundingType, $roundingPlaces);
             $paymentPricesWithVatByPaymentId[$payment->getId()] = $paymentPrice->getPriceWithVat();
         }
 
@@ -184,8 +184,9 @@ class PaymentFacade
             $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
             $prices[$domainId] = $this->paymentPriceCalculation->calculateIndependentPrice(
                 $payment,
-                $currency,
                 $domainId,
+                $currency->getRoundingType(),
+                $currency->getRoundingPlacesPriceWithoutVat(),
             );
         }
 
@@ -210,8 +211,9 @@ class PaymentFacade
 
             $prices[$domainId] = $this->paymentPriceCalculation->calculateIndependentPrice(
                 $payment,
-                $currency,
                 $domainId,
+                $currency->getRoundingType(),
+                $currency->getRoundingPlacesPriceWithoutVat(),
             );
         }
 

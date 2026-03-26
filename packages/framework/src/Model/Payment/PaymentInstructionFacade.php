@@ -79,7 +79,7 @@ class PaymentInstructionFacade
                 $payment,
                 $order->getNumber(),
                 (float)$order->getTotalPrice()->getPriceWithVat()->getAmount(),
-                $order->getCurrency(),
+                $order->getCurrencyCode(),
                 $order->getDomainId(),
             );
 
@@ -135,14 +135,14 @@ class PaymentInstructionFacade
         Payment $payment,
         string $variableSymbol,
         float $amount,
-        Currency $currency,
+        string $currencyCode,
         int $domainId,
     ): string {
         return SpaydHelper::createSpayd(
             $payment->getIban($domainId),
             $amount,
-            $currency->getCode(),
-            $currency->getCode() === Currency::CODE_CZK ? null : $payment->getBicSwift($domainId),  // BIC required for non-CZK
+            $currencyCode,
+            $currencyCode === Currency::CODE_CZK ? null : $payment->getBicSwift($domainId),  // BIC required for non-CZK
             $variableSymbol,
         );
     }

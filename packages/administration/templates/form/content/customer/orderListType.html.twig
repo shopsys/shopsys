@@ -57,7 +57,7 @@
                                         {{ order.deliveryStreet }}<br />
                                         {{ order.deliveryCity }}, {{ order.deliveryPostcode }}
                                     </td>
-                                    <td>{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</td>
+                                    <td>{{ order.totalPriceWithVat|priceWithCurrencyByOrder(order) }}</td>
                                     <td>{{ order.status.name }}</td>
                                 </tr>
                             {% endfor %}

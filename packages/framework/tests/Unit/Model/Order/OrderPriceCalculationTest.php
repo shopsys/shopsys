@@ -10,10 +10,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
@@ -64,64 +61,37 @@ class OrderPriceCalculationTest extends TestCase
 
     public function testCalculateOrderRoundingPriceForOtherCurrency(): void
     {
-        $paymentData = new PaymentData();
-        $paymentData->czkRounding = true;
-        $payment = new Payment($paymentData);
-
-        $currencyData = new CurrencyData();
-        $currencyData->name = 'currencyName';
-        $currencyData->code = Currency::CODE_EUR;
-        $currencyData->exchangeRate = '1.0';
-        $currency = new Currency($currencyData);
         $orderTotalPrice = new Price(Money::create(100), Money::create(120));
 
         $roundingStub = $this->createStub(Rounding::class);
         $orderItemPriceCalculationStub = $this->createStub(OrderItemPriceCalculation::class);
 
         $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, $roundingStub);
-        $roundingPrice = $priceCalculation->calculateOrderRoundingPrice($payment, $currency, $orderTotalPrice);
+        $roundingPrice = $priceCalculation->calculateOrderRoundingPrice(true, Currency::CODE_EUR, Currency::DEFAULT_ROUNDING_TYPE, $orderTotalPrice);
 
         $this->assertNull($roundingPrice);
     }
 
     public function testCalculateOrderRoundingPriceForCzkWithoutRounding(): void
     {
-        $paymentData = new PaymentData();
-        $paymentData->czkRounding = false;
-        $payment = new Payment($paymentData);
-
-        $currencyData = new CurrencyData();
-        $currencyData->name = 'currencyName';
-        $currencyData->code = Currency::CODE_CZK;
-        $currencyData->exchangeRate = '1.0';
-        $currency = new Currency($currencyData);
         $orderTotalPrice = new Price(Money::create(100), Money::create(120));
 
         $roundingStub = $this->createStub(Rounding::class);
         $orderItemPriceCalculationStub = $this->createStub(OrderItemPriceCalculation::class);
 
         $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, $roundingStub);
-        $roundingPrice = $priceCalculation->calculateOrderRoundingPrice($payment, $currency, $orderTotalPrice);
+        $roundingPrice = $priceCalculation->calculateOrderRoundingPrice(false, Currency::CODE_CZK, Currency::DEFAULT_ROUNDING_TYPE, $orderTotalPrice);
 
         $this->assertNull($roundingPrice);
     }
 
     public function testCalculateOrderRoundingPriceDown(): void
     {
-        $paymentData = new PaymentData();
-        $paymentData->czkRounding = true;
-        $payment = new Payment($paymentData);
-
-        $currencyData = new CurrencyData();
-        $currencyData->name = 'currencyName';
-        $currencyData->code = Currency::CODE_CZK;
-        $currencyData->exchangeRate = '1.0';
-        $currency = new Currency($currencyData);
         $orderTotalPrice = new Price(Money::create(100), Money::create('120.3'));
 
         $roundingStub = $this->createStub(Rounding::class);
         $roundingStub->method(
-            'roundPriceWithVatByCurrency',
+            'roundPriceWithVat',
         )->willReturnCallback(
             function (Money $value) {
                 return $value->round(2);
@@ -132,8 +102,9 @@ class OrderPriceCalculationTest extends TestCase
 
         $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, $roundingStub);
         $roundingPrice = $priceCalculation->calculateOrderRoundingPrice(
-            $payment,
-            $currency,
+            true,
+            Currency::CODE_CZK,
+            Currency::DEFAULT_ROUNDING_TYPE,
             $orderTotalPrice,
         )->getPriceWithVat();
 
@@ -142,20 +113,11 @@ class OrderPriceCalculationTest extends TestCase
 
     public function testCalculateOrderRoundingPriceUp(): void
     {
-        $paymentData = new PaymentData();
-        $paymentData->czkRounding = true;
-        $payment = new Payment($paymentData);
-
-        $currencyData = new CurrencyData();
-        $currencyData->name = 'currencyName';
-        $currencyData->code = Currency::CODE_CZK;
-        $currencyData->exchangeRate = '1.0';
-        $currency = new Currency($currencyData);
         $orderTotalPrice = new Price(Money::create(100), Money::create('120.9'));
 
         $roundingStub = $this->createStub(Rounding::class);
         $roundingStub->method(
-            'roundPriceWithVatByCurrency',
+            'roundPriceWithVat',
         )->willReturnCallback(
             function (Money $value) {
                 return $value->round(2);
@@ -166,8 +128,9 @@ class OrderPriceCalculationTest extends TestCase
 
         $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, $roundingStub);
         $roundingPrice = $priceCalculation->calculateOrderRoundingPrice(
-            $payment,
-            $currency,
+            true,
+            Currency::CODE_CZK,
+            Currency::DEFAULT_ROUNDING_TYPE,
             $orderTotalPrice,
         )->getPriceWithVat();
 

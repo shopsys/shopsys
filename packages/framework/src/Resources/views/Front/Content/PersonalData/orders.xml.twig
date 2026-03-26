@@ -87,8 +87,8 @@
                         {% if not item.unitPriceWithVat.isZero %}
                             <item_unit_price_with_vat>{{ item.unitPriceWithVat|moneyFormat|hidePrice(customerUser) }}</item_unit_price_with_vat>
                         {% endif %}
-                        {% if order.currency.code %}
-                            <item_currency_code><![CDATA[{{ order.currency.code }}]]></item_currency_code>
+                        {% if order.currencyCode %}
+                            <item_currency_code><![CDATA[{{ order.currencyCode }}]]></item_currency_code>
                         {% endif %}
                     </item>
                 {% endfor %}

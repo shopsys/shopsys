@@ -74,12 +74,16 @@ class MiddlewareTestCase extends TestCase
     protected function createCurrencyFacade(
         string $currencyCode = Currency::CODE_EUR,
         string $roundingType = Currency::ROUNDING_TYPE_HUNDREDTHS,
+        int $roundingPlaces = Currency::DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT,
+        int $minFractionDigits = Currency::DEFAULT_MIN_FRACTION_DIGITS,
     ): CurrencyFacade {
         $currencyFacade = $this->createStub(CurrencyFacade::class);
 
         $currency = $this->createStub(Currency::class);
         $currency->method('getCode')->willReturn($currencyCode);
         $currency->method('getRoundingType')->willReturn($roundingType);
+        $currency->method('getRoundingPlacesPriceWithoutVat')->willReturn($roundingPlaces);
+        $currency->method('getMinFractionDigits')->willReturn($minFractionDigits);
 
         $currencyFacade->method('getDomainDefaultCurrencyByDomainId')
             ->willReturn($currency);

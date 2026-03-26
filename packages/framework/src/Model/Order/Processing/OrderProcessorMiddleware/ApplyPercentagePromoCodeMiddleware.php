@@ -88,11 +88,13 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         $locale = $domainConfig->getLocale();
         $domainId = $domainConfig->getId();
 
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $discountPrice = $this->discountCalculation->calculatePercentageDiscountRoundedByCurrency(
             $this->getItemTotalPriceWithAppliedPromotions($productItem),
             (float)$productItem->vatPercent,
             (float)$promoCodeLimit->getDiscount(),
-            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId),
+            $currency->getRoundingType(),
+            $currency->getRoundingPlacesPriceWithoutVat(),
         );
 
         if ($discountPrice === null) {

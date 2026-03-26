@@ -40,11 +40,11 @@
             {% endif %}
         </td>
         <td class="text-end">
-            {{ paymentTransaction.paidAmount|priceWithCurrency(order.currency) }}
+            {{ paymentTransaction.paidAmount|priceWithCurrencyByOrder(order) }}
         </td>
         <td class="text-end">
             <span class="js-refunded-amount">
-            {{ paymentTransaction.refundedAmount|priceWithCurrency(order.currency) }}
+            {{ paymentTransaction.refundedAmount|priceWithCurrencyByOrder(order) }}
                 {% if paymentTransaction.refundable %}
                     <span class="js-refunded-amount-edit cursor-pointer" title="edit">{{ ux_icon('pencil') }}</span>
                 {% endif %}
@@ -55,12 +55,12 @@
             </span>
         </td>
         <td class="text-end">
-            {{ paymentTransaction.refundableAmount|priceWithCurrency(order.currency) }}
+            {{ paymentTransaction.refundableAmount|priceWithCurrencyByOrder(order) }}
         </td>
         <td>
             {% if paymentTransaction.refundable %}
                 <div style="width: 150px">
-                    {{ form_widget(paymentTransactionForm.refundAmount, {symbolAfterInput: currencySymbolByCurrencyId(order.currency.id), attr: { class: 'text-end'}}) }}
+                    {{ form_widget(paymentTransactionForm.refundAmount, {symbolAfterInput: currencySymbolByCode(order.currencyCode), attr: { class: 'text-end'}}) }}
                     {{ form_errors(paymentTransactionForm.refundAmount, {errors_attr: { inline: true }}) }}
                 </div>
             {% else %}

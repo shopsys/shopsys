@@ -68,14 +68,14 @@ class RoundingTest extends TestCase
         $currency = $this->createCurrency(Currency::ROUNDING_TYPE_INTEGER);
 
         $this->assertThat(
-            $rounding->roundPriceWithVatByCurrency($unroundedPrice, $currency),
+            $rounding->roundPriceWithVat($unroundedPrice, $currency->getRoundingType()),
             new IsMoneyEqual($expectedAsPriceWithVat),
         );
         $this->assertThat(
-            $rounding->roundPriceWithoutVat($unroundedPrice, $currency),
+            $rounding->roundPriceWithoutVat($unroundedPrice, $currency->getRoundingPlacesPriceWithoutVat()),
             new IsMoneyEqual($expectedAsPriceWithoutVat),
         );
-        $this->assertThat($rounding->roundVatAmount($unroundedPrice, $currency), new IsMoneyEqual($expectedAsVatAmount));
+        $this->assertThat($rounding->roundVatAmount($unroundedPrice, $currency->getRoundingPlacesPriceWithoutVat()), new IsMoneyEqual($expectedAsVatAmount));
     }
 
     public static function roundingPriceWithVatProvider(): array
@@ -138,7 +138,7 @@ class RoundingTest extends TestCase
         $currency = $this->createCurrency($roundingType);
 
         $rounding = new Rounding();
-        $roundedPrice = $rounding->roundPriceWithVatByCurrency($inputPrice, $currency);
+        $roundedPrice = $rounding->roundPriceWithVat($inputPrice, $currency->getRoundingType());
 
         $this->assertThat($roundedPrice, new IsMoneyEqual($outputPrice));
     }

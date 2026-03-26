@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Component\CurrencyFormatter;
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
 use CommerceGuys\Intl\Formatter\CurrencyFormatter;
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class CurrencyFormatterFactory
 {
@@ -19,15 +18,17 @@ class CurrencyFormatterFactory
     ) {
     }
 
-    public function createByLocaleAndCurrency(string $locale, Currency $currency): CurrencyFormatter
-    {
+    public function createByLocaleAndMinFractionDigits(
+        string $locale,
+        int $minFractionDigits,
+    ): CurrencyFormatter {
         return new CurrencyFormatter(
             $this->numberFormatRepository,
             $this->intlCurrencyRepository,
             [
                 'locale' => $locale,
                 'style' => 'standard',
-                'minimum_fraction_digits' => $currency->getMinFractionDigits(),
+                'minimum_fraction_digits' => $minFractionDigits,
                 'maximum_fraction_digits' => static::MAXIMUM_FRACTION_DIGITS,
             ],
         );

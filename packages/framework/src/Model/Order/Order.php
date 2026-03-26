@@ -23,7 +23,6 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
@@ -278,13 +277,6 @@ class Order
     protected $urlHash;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
-    #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: Currency::class)]
-    protected $currency;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
      */
     #[ORM\JoinColumn(nullable: true, name: 'administrator_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
@@ -360,6 +352,36 @@ class Order
     #[ORM\Column(type: 'boolean')]
     protected $freeTransportAndPaymentApplied;
 
+    /**
+     * @var string
+     */
+    #[ORM\Column(type: 'string', length: 3)]
+    protected $currencyCode;
+
+    /**
+     * @var string
+     */
+    #[ORM\Column(type: 'string', length: 15)]
+    protected $currencyRoundingType;
+
+    /**
+     * @var int
+     */
+    #[ORM\Column(type: 'integer')]
+    protected $currencyRoundingPlacesPriceWithoutVat;
+
+    /**
+     * @var int
+     */
+    #[ORM\Column(type: 'integer')]
+    protected $currencyMinFractionDigits;
+
+    /**
+     * @var bool
+     */
+    #[ORM\Column(type: 'boolean')]
+    protected $paymentCzkRounding;
+
     public function __construct(
         OrderData $orderData,
         string $orderNumber,
@@ -378,7 +400,6 @@ class Order
         $this->createdAt = $orderData->createdAt;
         $this->domainId = $orderData->domainId;
         $this->urlHash = $urlHash;
-        $this->currency = $orderData->currency;
         $this->createdAsAdministrator = $orderData->createdAsAdministrator;
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
         $this->origin = $orderData->origin;
@@ -388,6 +409,12 @@ class Order
         $this->paymentTransactions = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;
         $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
+
+        $this->currencyCode = $orderData->currencyCode;
+        $this->currencyRoundingType = $orderData->currencyRoundingType;
+        $this->currencyRoundingPlacesPriceWithoutVat = $orderData->currencyRoundingPlacesPriceWithoutVat;
+        $this->currencyMinFractionDigits = $orderData->currencyMinFractionDigits;
+        $this->paymentCzkRounding = $orderData->paymentCzkRounding;
     }
 
     /**
@@ -554,6 +581,7 @@ class Order
     protected function editOrderPayment(OrderData $orderData): void
     {
         $orderPaymentData = $orderData->orderPayment;
+        $this->paymentCzkRounding = $orderPaymentData->payment->isCzkRounding();
         $this->getPaymentItem()->edit($orderPaymentData);
     }
 
@@ -688,11 +716,43 @@ class Order
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     * @return string
      */
-    public function getCurrency()
+    public function getCurrencyCode()
     {
-        return $this->currency;
+        return $this->currencyCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrencyRoundingType()
+    {
+        return $this->currencyRoundingType;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCurrencyRoundingPlacesPriceWithoutVat()
+    {
+        return $this->currencyRoundingPlacesPriceWithoutVat;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCurrencyMinFractionDigits()
+    {
+        return $this->currencyMinFractionDigits;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPaymentCzkRounding()
+    {
+        return $this->paymentCzkRounding;
     }
 
     public function setTotalPrices(PriceInterface $orderTotalPrice, PriceInterface $productsTotalPrice): void

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
@@ -155,9 +156,29 @@ class OrderData
     public $domainId;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|null
+     * @var string|null
      */
-    public $currency;
+    public $currencyCode;
+
+    /**
+     * @var string|null
+     */
+    public $currencyRoundingType;
+
+    /**
+     * @var int|null
+     */
+    public $currencyRoundingPlacesPriceWithoutVat;
+
+    /**
+     * @var int|null
+     */
+    public $currencyMinFractionDigits;
+
+    /**
+     * @var bool|null
+     */
+    public $paymentCzkRounding;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
@@ -391,5 +412,13 @@ class OrderData
     public function getPromoCodeDiscountPrice(): PriceInterface
     {
         return $this->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_DISCOUNT])->inverse();
+    }
+
+    public function fillCurrencyFieldsFromCurrency(Currency $currency): void
+    {
+        $this->currencyCode = $currency->getCode();
+        $this->currencyRoundingType = $currency->getRoundingType();
+        $this->currencyRoundingPlacesPriceWithoutVat = $currency->getRoundingPlacesPriceWithoutVat();
+        $this->currencyMinFractionDigits = $currency->getMinFractionDigits();
     }
 }

@@ -16,11 +16,11 @@
                             <th>{{ 'Catalog number'|trans }}</th>
                             <th class="text-end">{{ 'Amount'|trans }}</th>
                             <th class="text-end">{{ 'Unit'|trans }}</th>
-                            <th class="text-wrap text-end">{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+                            <th class="text-wrap text-end">{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
                             <th class="text-wrap text-end">{{ 'VAT rate (%)'|trans }}</th>
-                            <th class="text-wrap text-end">{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
-                            <th class="text-wrap text-end">{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
-                            <th class="text-wrap text-end">{{ 'Total including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+                            <th class="text-wrap text-end">{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
+                            <th class="text-wrap text-end">{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
+                            <th class="text-wrap text-end">{{ 'Total including VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
                             <th class="text-wrap text-center">
                                 {{ 'Set prices manually'|trans }}
                                 {{ info_icon('All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically.'|trans) }}
@@ -32,14 +32,10 @@
                            data-prototype="{{ orderItemMacro.orderItem(form.itemsWithoutTransportAndPayment.vars.prototype, null, null, inputPriceType)|escape }}"
                            data-order-product-add-url="{{ url('admin_order_addproduct', { orderId: order.id }) }}"
                     >
-                        {% for productItem in order.productItems %}
-                            {{ orderItemMacro.orderItem(form.itemsWithoutTransportAndPayment[productItem.id], productItem.id, productItem, inputPriceType) }}
-                        {% endfor %}
-
                         {% for orderItemId, orderItemForm in form.itemsWithoutTransportAndPayment %}
-                            {% if not orderItemForm.rendered %}
-                                {{ orderItemMacro.orderItem(orderItemForm, orderItemId, null, inputPriceType) }}
-                            {% endif %}
+                            {% set itemData = orderItemForm.vars.data %}
+                            {% set productItemData = (itemData is not null and itemData.type in ['product', 'productGift']) ? itemData : null %}
+                            {{ orderItemMacro.orderItem(orderItemForm, orderItemId, productItemData, inputPriceType) }}
                         {% endfor %}
 
                         {{ orderItemMacro.orderTransport(form.orderTransport, transportPricesWithVatByTransportId, transportVatPercentsByTransportId, inputPriceType) }}
@@ -51,10 +47,10 @@
                                 <strong>{{ 'Total'|trans }}</strong>
                             </td>
                             <td class="text-end">
-                                <strong>{{ order.totalPriceWithoutVat|priceWithCurrency(order.currency) }}</strong>
+                                <strong>{{ order.totalPriceWithoutVat|priceWithCurrencyByOrder(order) }}</strong>
                             </td>
                             <td class="text-end">
-                                <strong>{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</strong>
+                                <strong>{{ order.totalPriceWithVat|priceWithCurrencyByOrder(order) }}</strong>
                             </td>
                             <td></td>
                             <td></td>

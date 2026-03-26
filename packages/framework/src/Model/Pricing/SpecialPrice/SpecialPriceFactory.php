@@ -36,11 +36,13 @@ class SpecialPriceFactory
         string $priceListName,
         int $productId,
     ): SpecialPrice {
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $price = $this->basePriceCalculation->calculateRoundedBasePrice(
             $specialPriceAmount,
             $this->pricingSetting->getInputPriceType(),
             $vat,
-            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId),
+            $currency->getRoundingType(),
+            $currency->getRoundingPlacesPriceWithoutVat(),
         );
 
         return $this->create(

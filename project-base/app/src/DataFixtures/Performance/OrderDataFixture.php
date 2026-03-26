@@ -175,7 +175,8 @@ class OrderDataFixture
         $orderData->note = $this->faker->text(200);
         $orderData->createdAt = DatePoint::createFromMutable($this->faker->dateTimeBetween('-1 year', 'now'));
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
-        $orderData->currency = $this->persistentReferenceFacade->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
+        $currency = $this->persistentReferenceFacade->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
+        $orderData->fillCurrencyFieldsFromCurrency($currency);
 
         return $orderData;
     }

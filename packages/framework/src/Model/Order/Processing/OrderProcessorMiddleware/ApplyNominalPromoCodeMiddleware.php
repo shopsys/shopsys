@@ -93,11 +93,12 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
 
         $discountValue = Money::create($promoCodeLimit->getDiscount());
 
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $discountPrice = $this->discountCalculation->calculateNominalDiscount(
             $discountValue,
             $totalApplicableProductsPrice,
             (float)$defaultVat->getPercent(),
-            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId),
+            $currency->getRoundingPlacesPriceWithoutVat(),
         );
 
         $discountOrderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_DISCOUNT);

@@ -161,11 +161,10 @@ class OrderRepository
     public function getCustomerUserOrderList(CustomerUser $customerUser): array
     {
         return $this->createOrderQueryBuilder()
-            ->select('o, oi, os, ost, c')
+            ->select('o, oi, os, ost')
             ->join('o.items', 'oi')
             ->join('o.status', 'os')
             ->join('os.translations', 'ost')
-            ->join('o.currency', 'c')
             ->andWhere('o.customerUser = :customerUser')
             ->orderBy('o.createdAt', 'DESC')
             ->setParameter('customerUser', $customerUser)
@@ -178,10 +177,9 @@ class OrderRepository
     public function getLastCustomerOrdersByLimit(Customer $customer, int $limit, string $locale): array
     {
         return $this->createOrderQueryBuilder()
-            ->select('o, os, ost, c')
+            ->select('o, os, ost')
             ->join('o.status', 'os')
             ->join('os.translations', 'ost', Join::WITH, 'ost.locale = :locale')
-            ->join('o.currency', 'c')
             ->andWhere('o.customer = :customer')
             ->orderBy('o.createdAt', 'DESC')
             ->setParameter('customer', $customer)
@@ -252,20 +250,19 @@ class OrderRepository
         return $this->em->createQueryBuilder()
             ->select('c')
             ->from(Currency::class, 'c')
-            ->join(Order::class, 'o', Join::WITH, 'o.currency = c.id')
-            ->groupBy('c')
+            ->join(Order::class, 'o', Join::WITH, 'o.currencyCode = c.code')
+            ->groupBy('c.id')
             ->getQuery()->execute();
     }
 
     protected function getOrderListQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
-            ->select('o, oi, os, ost, c')
+            ->select('o, oi, os, ost')
             ->from(Order::class, 'o')
             ->join('o.items', 'oi')
             ->join('o.status', 'os')
             ->join('os.translations', 'ost')
-            ->join('o.currency', 'c')
             ->leftJoin('o.customerUser', 'cu');
     }
 

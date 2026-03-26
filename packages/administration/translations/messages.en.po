@@ -313,6 +313,9 @@ msgstr ""
 msgid "Closing modules"
 msgstr ""
 
+msgid "Code can't be modified because it is used for pairing with existing orders."
+msgstr ""
+
 msgid "Color parameter values"
 msgstr ""
 

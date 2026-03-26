@@ -51,7 +51,8 @@ class OrderDataFactory
     {
         $cloneOrderData = clone $orderData;
 
-        $cloneOrderData->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
+        $cloneOrderData->fillCurrencyFieldsFromCurrency($currency);
 
         $cloneOrderData->country = $this->countryFacade->findByCode($input['country']);
 

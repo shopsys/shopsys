@@ -49,10 +49,11 @@ class PriceQuery extends AbstractQuery
 
             return $this->paymentPriceCalculation->calculatePrice(
                 $payment,
-                $order->getCurrency(),
                 $order->getTotalProductsPrice(),
                 $order->getDomainId(),
                 $order->isFreeTransportAndPaymentApplied(),
+                $order->getCurrencyRoundingType(),
+                $order->getCurrencyRoundingPlacesPriceWithoutVat(),
             );
         }
 
@@ -73,10 +74,13 @@ class PriceQuery extends AbstractQuery
 
     protected function calculateIndependentPaymentPrice(Payment $payment): PriceInterface
     {
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
+
         return $this->paymentPriceCalculation->calculateIndependentPrice(
             $payment,
-            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
             $this->domain->getId(),
+            $currency->getRoundingType(),
+            $currency->getRoundingPlacesPriceWithoutVat(),
         );
     }
 

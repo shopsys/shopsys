@@ -54,7 +54,8 @@ class GiftPlanSettingFacade
             $inputPrice,
             $this->pricingSetting->getInputPriceType(),
             $vat,
-            $defaultCurrency,
+            $defaultCurrency->getRoundingType(),
+            $defaultCurrency->getRoundingPlacesPriceWithoutVat(),
         );
     }
 

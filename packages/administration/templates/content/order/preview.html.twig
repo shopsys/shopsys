@@ -23,14 +23,14 @@
                         {{ item.name }}
                     </td>
                     <td class="text-end">{{ item.quantity }} {{ item.unitName }}</td>
-                    <td class="text-end">{{ item.totalPriceWithVat|priceWithCurrency(order.currency) }}</td>
+                    <td class="text-end">{{ item.totalPriceWithVat|priceWithCurrencyByOrder(order) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="2" class="text-end"><strong>{{ 'Total including VAT'|trans }}</strong></td>
-                <td class="text-end"><strong>{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</strong></td>
+                <td class="text-end"><strong>{{ order.totalPriceWithVat|priceWithCurrencyByOrder(order) }}</strong></td>
             </tr>
         </tfoot>
     </table>
