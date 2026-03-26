@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Twig;
 use DateTimeImmutable;
 use Override;
 use Psr\Clock\ClockInterface;
+use Shopsys\AdministrationBundle\Component\Domain\AdminDomainQueryParameterSubscriber;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -157,7 +158,7 @@ class RequiredSettingExtension extends AbstractExtension
                 $this->requiredSettingsMessages[] = t(
                     '<a href="%url%">Term and conditions article for domain %domainName% is not set.</a>',
                     [
-                        '%url%' => $this->router->generate('admin_legalconditions_termsandconditions'),
+                        '%url%' => $this->generateUrlWithSelectedDomainTab('admin_legalconditions_termsandconditions', $domainId),
                         '%domainName%' => $domainConfig->getName(),
                     ],
                 );
@@ -167,7 +168,7 @@ class RequiredSettingExtension extends AbstractExtension
                 $this->requiredSettingsMessages[] = t(
                     '<a href="%url%">Privacy policy article for domain %domainName% is not set.</a>',
                     [
-                        '%url%' => $this->router->generate('admin_legalconditions_privacypolicy'),
+                        '%url%' => $this->generateUrlWithSelectedDomainTab('admin_legalconditions_privacypolicy', $domainId),
                         '%domainName%' => $domainConfig->getName(),
                     ],
                 );
@@ -177,12 +178,22 @@ class RequiredSettingExtension extends AbstractExtension
                 $this->requiredSettingsMessages[] = t(
                     '<a href="%url%">User consent policy article for domain %domainName% is not set.</a>',
                     [
-                        '%url%' => $this->router->generate('admin_userconsentpolicy_setting'),
+                        '%url%' => $this->generateUrlWithSelectedDomainTab('admin_userconsentpolicy_setting', $domainId),
                         '%domainName%' => $domainConfig->getName(),
                     ],
                 );
             }
         }
+    }
+
+    protected function generateUrlWithSelectedDomainTab(string $routeName, int $domainId): string
+    {
+        return $this->router->generate(
+            $routeName,
+            [
+                AdminDomainQueryParameterSubscriber::QUERY_PARAMETER_NAME => $domainId,
+            ],
+        );
     }
 
     protected function checkAllSliderNumericValuesAreSet(): void
