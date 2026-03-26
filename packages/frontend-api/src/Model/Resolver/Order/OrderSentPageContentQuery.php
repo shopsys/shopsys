@@ -7,7 +7,9 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 use DateTimeInterface;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
+use Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\OrderPaymentPageContentCache;
 use Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPage;
 use Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPageFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
@@ -19,6 +21,7 @@ class OrderSentPageContentQuery extends AbstractQuery
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly OrderContentPageFacade $orderContentPageFacade,
         protected readonly PaymentContentPageFactory $paymentContentPageFactory,
+        protected readonly OrderPaymentPageContentCache $orderPaymentPageContentCache,
         protected readonly ClockInterface $clock,
     ) {
     }
@@ -27,6 +30,31 @@ class OrderSentPageContentQuery extends AbstractQuery
     {
         $order = $this->orderApiFacade->getByUuid($orderUuid);
 
+        return $this->getOrderPaymentPageContentByOrder($order);
+    }
+
+    /**
+     * Cache-aware variant used by UpdatePaymentStatus to include payment page content
+     * in the same response without a redundant DB lookup.
+     * Returns null instead of throwing when the status page time window has expired.
+     */
+    public function orderPaymentPageContentByOrderUuidQuery(string $orderUuid): ?PaymentContentPage
+    {
+        if ($this->orderPaymentPageContentCache->hasForOrderUuid($orderUuid)) {
+            return $this->orderPaymentPageContentCache->getForOrderUuid($orderUuid);
+        }
+
+        try {
+            $order = $this->orderApiFacade->getByUuid($orderUuid);
+
+            return $this->getOrderPaymentPageContentByOrder($order);
+        } catch (OrderSentPageNotAvailableUserError) {
+            return null;
+        }
+    }
+
+    public function getOrderPaymentPageContentByOrder(Order $order): PaymentContentPage
+    {
         $this->assertDateTimeIsRecent($order->getOrderPaymentStatusPageValidFrom());
 
         if ($order->isPaid()) {
@@ -55,6 +83,10 @@ class OrderSentPageContentQuery extends AbstractQuery
         return $this->orderContentPageFacade->getOrderSentPageContent($order);
     }
 
+    /**
+     * Enforces a 5-minute window for accessing payment/order status page content.
+     * After expiry, the user must use the order detail page instead.
+     */
     public function assertDateTimeIsRecent(?DateTimeInterface $checkDateTime): void
     {
         $fiveMinutesAgo = $this->clock->now()->modify('-5 minutes');

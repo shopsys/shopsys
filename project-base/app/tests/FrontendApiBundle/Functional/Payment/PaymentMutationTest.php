@@ -10,6 +10,7 @@ use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
+use Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPageStatusEnum;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentMutationTest extends GraphQlTestCase
@@ -46,18 +47,23 @@ class PaymentMutationTest extends GraphQlTestCase
     {
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
 
-        $this->getResponseContentForGql(
+        $payOrderResponse = $this->getResponseContentForGql(
             __DIR__ . '/graphql/PayOrderMutation.graphql',
             ['orderUuid' => $order->getUuid()],
         );
+        $payOrderContent = $this->getResponseDataForGraphQlType($payOrderResponse, 'PayOrder');
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/UpdatePaymentStatusMutation.graphql',
-            ['orderUuid' => $order->getUuid()],
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderPaymentStatusPageValidityHash' => $payOrderContent['orderPaymentStatusPageValidityHash'],
+            ],
         );
         $content = $this->getResponseDataForGraphQlType($response, 'UpdatePaymentStatus');
 
         $this->assertTrue($content['isPaid']);
+        $this->assertSame(strtoupper(PaymentContentPageStatusEnum::STATUS_SUCCESSFUL), $content['paymentPageContent']['status']);
         $paymentItem = null;
 
         foreach ($content['items'] as $item) {

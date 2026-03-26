@@ -52,6 +52,8 @@ services:
         arguments:
             $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
 
+    Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\OrderPaymentPageContentCache: ~
+
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer: ~
 
     Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertResolverMap:

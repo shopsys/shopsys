@@ -79,6 +79,9 @@ class Order
     protected $createdAt;
 
     /**
+     * Timestamp when the payment status page became accessible for this order.
+     * Used to enforce a time-limited window (5 min) for viewing payment results.
+     *
      * @var \DateTimeImmutable|null
      */
     #[ExcludeLog]
@@ -321,6 +324,9 @@ class Order
     protected $origin;
 
     /**
+     * One-time token authorizing access to the payment status page.
+     * Reset before each PayOrder attempt to invalidate previous return URLs.
+     *
      * @var string|null
      */
     #[ExcludeLog]
@@ -523,9 +529,20 @@ class Order
         return $this->paymentTransactions->count();
     }
 
+    /**
+     * Returns the external payment URL only if the last transaction belongs to the current payment method.
+     * After a payment method change, the old transaction URL is no longer valid
+     * and null forces the frontend to create a new transaction via PayOrder mutation.
+     */
     public function getLastExternalPaymentUrl(): ?string
     {
-        return $this->getLastGoPayTransaction()?->getExternalPaymentUrl();
+        $lastGoPayTransaction = $this->getLastGoPayTransaction();
+
+        if ($lastGoPayTransaction === null || $lastGoPayTransaction->getPayment() !== $this->getPayment()) {
+            return null;
+        }
+
+        return $lastGoPayTransaction->getExternalPaymentUrl();
     }
 
     public function addPaymentTransaction(PaymentTransaction $paymentTransaction): void
@@ -588,6 +605,7 @@ class Order
 
         $this->promoCode = $orderData->promoCode;
         $this->freeTransportAndPaymentApplied = $orderData->freeTransportAndPaymentApplied;
+        $this->goPayBankSwift = $orderData->goPayBankSwift;
     }
 
     protected function editOrderTransport(OrderData $orderData): void
@@ -1335,6 +1353,10 @@ class Order
         return $this->customer;
     }
 
+    /**
+     * Generates a fresh validity hash, invalidating any previous payment status page links.
+     * Called before each PayOrder attempt so only the latest return URL grants access.
+     */
     public function resetOrderPaymentStatusPageValidityHash(): void
     {
         $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();

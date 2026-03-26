@@ -136,6 +136,13 @@ OrderDecorator:
             hasExternalPayment:
                 type: "Boolean!"
                 description: "Indicates whether the order has an external payment"
+            paymentTransactionsCount:
+                type: "Int!"
+                description: "Number of payment transactions for this order"
+            paymentPageContent:
+                type: "OrderPaymentPageContent"
+                description: "Localized payment page content resolved for the order's current payment state."
+                resolve: '@=query("orderPaymentPageContentByOrderUuidQuery", value.getUuid())'
             deliveredAt:
                 type: "DateTime"
                 description: "Date and time when the order was delivered to the customer"

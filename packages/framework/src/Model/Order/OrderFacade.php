@@ -333,8 +333,16 @@ class OrderFacade
         $this->em->flush();
     }
 
-    public function changeOrderPayment(Order $order, Payment $payment, bool $updatePaymentPrice = true): void
-    {
+    /**
+     * @param string|null $goPayBankSwift SWIFT code for GoPay bank transfer payments;
+     *                                    persisted only when the new payment is GoPay, cleared otherwise
+     */
+    public function changeOrderPayment(
+        Order $order,
+        Payment $payment,
+        bool $updatePaymentPrice = true,
+        ?string $goPayBankSwift = null,
+    ): void {
         $previousPaymentItems = $order->getItemsByType(OrderItemTypeEnum::TYPE_PAYMENT);
 
         if ($updatePaymentPrice || count($previousPaymentItems) === 0) {
@@ -360,6 +368,7 @@ class OrderFacade
 
         $orderData = $this->orderDataFactory->createFromOrder($order);
         $orderData->orderPayment = $orderPaymentData;
+        $orderData->goPayBankSwift = $payment->isGoPay() ? $goPayBankSwift : null;
 
         $this->recalculateRoundingForOrderData($orderData, $order, $payment, $paymentPrice);
 

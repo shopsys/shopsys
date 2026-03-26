@@ -1,0 +1,10 @@
+PaymentInstructionSetupData:
+    type: object
+    config:
+        fields:
+            goPayEmbedJs:
+                type: "String!"
+                description: "URL of GoPay embed JS script"
+            orderPaymentStatusPageValidityHash:
+                type: "String!"
+                description: "Server-generated validity hash for payment status page"

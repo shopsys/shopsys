@@ -176,20 +176,22 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
 
         $this->assertUserError($response, 'order-sent-page-not-available');
 
-        $validityHash = Uuid::uuid4();
+        $setOrderPaymentStatusPageValidityHashResponse = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/SetOrderPaymentStatusPageValidityHashMutation.graphql',
+            [
+                'orderUuid' => $orderUuid,
+            ],
+        );
+        $setOrderPaymentStatusPageValidityHashResponseData = $this->getResponseDataForGraphQlType(
+            $setOrderPaymentStatusPageValidityHashResponse,
+            'SetOrderPaymentStatusPageValidityHashMutation',
+        );
+        $validityHash = $setOrderPaymentStatusPageValidityHashResponseData['orderPaymentStatusPageValidityHash'];
 
-        $this->getResponseContentForGql(__DIR__ . '/graphql/SetOrderPaymentStatusPageValidityHashMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../Payment/graphql/UpdatePaymentStatusMutation.graphql', [
             'orderUuid' => $orderUuid,
             'orderPaymentStatusPageValidityHash' => $validityHash,
         ]);
-
-        $this->getResponseContentForGql(
-            __DIR__ . '/../Payment/graphql/UpdatePaymentStatusMutation.graphql',
-            [
-                'orderUuid' => $order->getUuid(),
-                'orderPaymentStatusPageValidityHash' => $validityHash,
-            ],
-        );
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentPageContentQuery.graphql', [
             'orderUuid' => $orderUuid,
@@ -198,6 +200,40 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
 
         $this->assertSame(strtoupper(PaymentContentPageStatusEnum::STATUS_SUCCESSFUL), $responseData['status']);
         $this->assertSame($this->orderContentPageFacade->getPaymentSuccessfulPageContent($order), $responseData['content']);
+    }
+
+    public function testOrderPaymentPageContentIsNotAccessibleByMismatchedHash(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $orderUuid = $order->getUuid();
+
+        $mismatchedHash = Uuid::uuid4()->toString();
+
+        $setOrderPaymentStatusPageValidityHashResponse = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/SetOrderPaymentStatusPageValidityHashMutation.graphql',
+            [
+                'orderUuid' => $orderUuid,
+            ],
+        );
+        $setOrderPaymentStatusPageValidityHashResponseData = $this->getResponseDataForGraphQlType(
+            $setOrderPaymentStatusPageValidityHashResponse,
+            'SetOrderPaymentStatusPageValidityHashMutation',
+        );
+        $this->assertNotEmpty($setOrderPaymentStatusPageValidityHashResponseData['orderPaymentStatusPageValidityHash']);
+
+        $this->getResponseContentForGql(
+            __DIR__ . '/../Payment/graphql/UpdatePaymentStatusMutation.graphql',
+            [
+                'orderUuid' => $orderUuid,
+                'orderPaymentStatusPageValidityHash' => $mismatchedHash,
+            ],
+        );
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentPageContentQuery.graphql', [
+            'orderUuid' => $orderUuid,
+        ]);
+
+        $this->assertUserError($response, 'order-sent-page-not-available');
     }
 
     private function createOrder(Product $product, Transport $transport, Payment $payment): Order

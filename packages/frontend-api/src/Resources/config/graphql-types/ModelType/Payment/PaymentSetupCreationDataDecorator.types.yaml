@@ -6,3 +6,6 @@ PaymentSetupCreationDataDecorator:
             goPayCreatePaymentSetup:
                 type: "GoPayCreatePaymentSetup"
                 description: "Identifiers of GoPay payment method"
+            orderPaymentStatusPageValidityHash:
+                type: "String"
+                description: "Hash for validating payment status page"

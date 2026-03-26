@@ -15,6 +15,10 @@ use Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception\MaxTransactionCou
 use Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception\OrderAlreadyPaidUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception\OrderWaitingForProcessPaymentUserError;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
+use Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\OrderPaymentPageContentCache;
+use Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPage;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderSentPageNotAvailableUserError;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderSentPageContentQuery;
 use Throwable;
 
 class PaymentMutation extends AbstractMutation
@@ -23,6 +27,8 @@ class PaymentMutation extends AbstractMutation
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly PaymentServiceFacade $paymentServiceFacade,
         protected readonly OrderFacade $orderFacade,
+        protected readonly OrderSentPageContentQuery $orderSentPageContentQuery,
+        protected readonly OrderPaymentPageContentCache $orderPaymentPageContentCache,
     ) {
     }
 
@@ -46,7 +52,12 @@ class PaymentMutation extends AbstractMutation
         try {
             $order->resetOrderPaymentStatusPageValidityHash();
 
-            return $this->paymentServiceFacade->payOrder($order);
+            $paymentSetupCreationData = $this->paymentServiceFacade->payOrder($order);
+            // Attach the freshly generated validity hash to the response so the frontend
+            // can redirect to the payment status page without an extra API call
+            $paymentSetupCreationData->setOrderPaymentStatusPageValidityHash($order->getOrderPaymentStatusPageValidityHash());
+
+            return $paymentSetupCreationData;
         } catch (Throwable $exception) {
             throw new Error($exception->getMessage(), null, null, [], null, $exception);
         }
@@ -63,13 +74,30 @@ class PaymentMutation extends AbstractMutation
                 $this->orderFacade->updatePaymentByLastPaymentTransaction($order);
             }
 
+            // Matching hash proves the request came from a legitimate PayOrder return URL.
+            // Opens the time-limited window for payment status page content.
             if ($orderPaymentStatusPageValidityHash !== null && $order->getOrderPaymentStatusPageValidityHash() === $orderPaymentStatusPageValidityHash) {
                 $this->orderFacade->setOrderPaymentStatusPageValidFromNow($order);
             }
 
+            $this->orderPaymentPageContentCache->setForOrderUuid(
+                $order->getUuid(),
+                $this->getPaymentPageContentOrNull($order),
+            );
+
             return $order;
         } catch (Throwable $exception) {
             throw new Error($exception->getMessage(), null, null, [], null, $exception);
+        }
+    }
+
+    protected function getPaymentPageContentOrNull(
+        Order $order,
+    ): ?PaymentContentPage {
+        try {
+            return $this->orderSentPageContentQuery->getOrderPaymentPageContentByOrder($order);
+        } catch (OrderSentPageNotAvailableUserError) {
+            return null;
         }
     }
 }

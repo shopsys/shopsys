@@ -99,6 +99,43 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $paymentItem = $this->findPaymentItem($responseData['items']);
         $this->assertSame($paymentGoPayBankAccount->getUuid(), $paymentItem['payment']['uuid']);
         $this->assertSame($paymentGoPayBankAccount->getName(), $paymentItem['payment']['name']);
+
+        $this->em->clear();
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $this->assertSame($swiftForFirstDomain, $order->getGoPayBankSwift());
+    }
+
+    public function testChangePaymentInOrderMutationClearsGoPaySwiftWhenChangingToNonGoPayPayment(): void
+    {
+        $swiftForFirstDomain = sprintf(GoPayDataFixture::AIRBANK_SWIFT_PATTERN, $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale());
+
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT, Payment::class);
+        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
+
+        $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
+            'input' => [
+                'orderUuid' => $order->getUuid(),
+                'paymentUuid' => $paymentGoPayBankAccount->getUuid(),
+                'paymentGoPayBankSwift' => $swiftForFirstDomain,
+            ],
+        ]);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
+            'input' => [
+                'orderUuid' => $order->getUuid(),
+                'paymentUuid' => $paymentCard->getUuid(),
+            ],
+        ]);
+
+        $responseData = $this->getResponseDataForGraphQlType($response, 'ChangePaymentInOrder');
+
+        $paymentItem = $this->findPaymentItem($responseData['items']);
+        $this->assertSame($paymentCard->getUuid(), $paymentItem['payment']['uuid']);
+
+        $this->em->clear();
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $this->assertNull($order->getGoPayBankSwift());
     }
 
     public function testChangePaymentInOrderMutationNonExistingOrder(): void

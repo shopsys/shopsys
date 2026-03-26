@@ -7,5 +7,9 @@ mutation UpdatePaymentStatus($orderUuid: Uuid!, $orderPaymentStatusPageValidityH
                 type
             }
         }
+        paymentPageContent {
+            status
+            content
+        }
     }
 }

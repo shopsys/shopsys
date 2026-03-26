@@ -1401,8 +1401,8 @@ type Mutation {
   RequestPersonalDataAccess(input: PersonalDataAccessRequestInput!): PersonalDataPage!
   "Set default delivery address by Uuid"
   SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CurrentCustomerUser!
-  "set order payment status page validity hash, so it's possible to safely return to the payment status page"
-  SetOrderPaymentStatusPageValidityHashMutation(orderPaymentStatusPageValidityHash: String!, orderUuid: Uuid!): String!
+  "Resets order payment status page validity hash (server-generated) and returns GoPay embed JS URL"
+  SetOrderPaymentStatusPageValidityHashMutation(orderUuid: Uuid!): PaymentInstructionSetupData!
   "check payment status of order after callback from payment service"
   UpdatePaymentStatus(orderPaymentStatusPageValidityHash: String, orderUuid: Uuid!): Order!
 }
@@ -1560,6 +1560,10 @@ type Order {
   note: String
   "Unique order number"
   number: String!
+  "Localized payment page content resolved for the order's current payment state."
+  paymentPageContent: OrderPaymentPageContent
+  "Number of payment transactions for this order"
+  paymentTransactionsCount: Int!
   "Selected pickup place identifier"
   pickupPlaceIdentifier: String
   "Billing address zip code"
@@ -2005,9 +2009,18 @@ enum PaymentContentPageStatusEnum {
   SUCCESSFUL
 }
 
+type PaymentInstructionSetupData {
+  "URL of GoPay embed JS script"
+  goPayEmbedJs: String!
+  "Server-generated validity hash for payment status page"
+  orderPaymentStatusPageValidityHash: String!
+}
+
 type PaymentSetupCreationData {
   "Identifiers of GoPay payment method"
   goPayCreatePaymentSetup: GoPayCreatePaymentSetup
+  "Hash for validating payment status page"
+  orderPaymentStatusPageValidityHash: String
 }
 
 "One of the possible methods of the payment type"

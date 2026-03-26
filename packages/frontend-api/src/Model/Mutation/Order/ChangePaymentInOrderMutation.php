@@ -27,12 +27,15 @@ class ChangePaymentInOrderMutation extends AbstractMutation
         $input = $argument['input'];
         $orderUuid = $input['orderUuid'];
         $paymentUuid = $input['paymentUuid'];
+        // Pass the SWIFT code so it is persisted when switching to a GoPay bank transfer;
+        // without this the SWIFT was silently dropped and the retry used a wrong bank
+        $paymentGoPayBankSwift = $input['paymentGoPayBankSwift'] ?? null;
 
         try {
             $order = $this->orderFacade->getByUuid($orderUuid);
             $payment = $this->paymentFacade->getByUuid($paymentUuid);
 
-            $this->orderFacade->changeOrderPayment($order, $payment);
+            $this->orderFacade->changeOrderPayment($order, $payment, true, $paymentGoPayBankSwift);
         } catch (OrderNotFoundException) {
             throw new OrderNotFoundUserError('Order with UUID \'' . $orderUuid . '\' not found.');
         } catch (PaymentNotFoundException) {
