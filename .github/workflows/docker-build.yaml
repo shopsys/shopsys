@@ -237,6 +237,12 @@ jobs:
         permissions:
             contents: read
             packages: write
+        env:
+            SENTRY_RELEASE: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
+            SENTRY_URL: ${{ vars.SENTRY_URL }}
+            SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+            SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
@@ -1214,6 +1220,9 @@ jobs:
             SEZNAM_CLIENTID: ${{ secrets.SEZNAM_CLIENTID }}
             SEZNAM_CLIENTSECRET: ${{ secrets.SEZNAM_CLIENTSECRET }}
             GOOGLE_MAP_API_KEY_VALUE: ${{ secrets.GOOGLE_MAP_API_KEY }}
+            SENTRY_DSN_VALUE: ${{ secrets.SENTRY_DSN }}
+            SENTRY_ENVIRONMENT_VALUE: ci-review
+            SENTRY_RELEASE_VALUE: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
         steps:
             -   name: Create branch directory
                 run: |
