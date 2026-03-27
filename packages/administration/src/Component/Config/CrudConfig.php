@@ -47,20 +47,13 @@ final class CrudConfig
         ActionType::DELETE->value => null,
     ];
 
-    public function __construct(string $entityName)
+    public function __construct(private readonly string $entityName)
     {
-        $this->customPageTitles = [
-            ActionType::CREATE->value => t('Creating new %entity_name%', ['%entity_name%' => $entityName]),
-            ActionType::EDIT->value => t('Editing %entity_name%', ['%entity_name%' => $entityName]),
-            ActionType::LIST->value => t('%entity_name% Overview', ['%entity_name%' => $entityName]),
-            ActionType::DETAIL->value => t('Viewing %entity_name%', ['%entity_name%' => $entityName]),
-        ];
+        $this->customPageTitles = [];
 
         $this->enabledActions = new ArrayCollection([
             ActionType::LIST,
         ]);
-
-        $this->menuTitle = t('%entity_name% Overview', ['%entity_name%' => $entityName]);
     }
 
     /**
@@ -301,6 +294,7 @@ final class CrudConfig
         return new CrudConfigData(
             $this->customPageTitles,
             $this->menuTitle,
+            $this->entityName,
             $this->fullDisabled,
             $this->enabledActions->toArray(),
             $this->menuSection,

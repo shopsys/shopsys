@@ -48,6 +48,11 @@ final class CrudTransformationHelper
         return 'admin_crud_' . self::transformToRouteName($controllerName) . '_' . $pageType->value;
     }
 
+    public static function generateRoleConstant(string $controllerName, ?string $customRoleConstant = null): string
+    {
+        return $customRoleConstant ?? 'ROLE_CRUD_' . strtoupper(self::transformToRouteName($controllerName));
+    }
+
     /**
      * Remove "CrudController" or "Controller" from controller name to be able to use it with routes
      */

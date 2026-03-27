@@ -21,9 +21,19 @@ final class CrudControllerRegistry
     public const string CRUD_CONTROLLERS_EXTENSIONS_PARAMETER = 'shopsys.admin.crud_controllers_extensions';
 
     /**
-     * @var \Shopsys\AdministrationBundle\Component\Crud\Definition[]|null
+     * @var array<class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, array{controllerName: string, entityClass: class-string, entityName: string}>|null
      */
-    private ?array $items = null;
+    private ?array $resolvedMetadata = null;
+
+    /**
+     * @var array<class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, \Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension[]>|null
+     */
+    private ?array $resolvedExtensions = null;
+
+    /**
+     * @var array<class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, \Shopsys\AdministrationBundle\Component\Crud\Definition>
+     */
+    private array $definitions = [];
 
     /**
      * @param array<int, array{class: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, entityClass: string}> $crudControllers
@@ -39,85 +49,71 @@ final class CrudControllerRegistry
     ) {
     }
 
-    private function buildDefinitions(): void
+    /**
+     * Returns all registered CRUD controllers with metadata and config (including disabled).
+     *
+     * @return \Shopsys\AdministrationBundle\Component\Crud\CrudRegistryItem[]
+     */
+    public function getAll(): array
     {
-        $this->items = [];
-        $extensionsByCrudController = $this->loadExtensions($this->crudControllerExtensions);
+        $items = [];
 
-        foreach ($this->crudControllers as $crudController) {
-            $controllerClass = $crudController['class'];
-
-            $this->addItem($controllerClass, $crudController['entityClass'], $extensionsByCrudController[$controllerClass] ?? []);
+        foreach ($this->getResolvedMetadata() as $controllerClass => $meta) {
+            $items[] = new CrudRegistryItem(
+                controllerClass: $controllerClass,
+                controllerName: $meta['controllerName'],
+                entityClass: $meta['entityClass'],
+                entityName: $meta['entityName'],
+                config: $this->buildConfig($controllerClass),
+            );
         }
+
+        return $items;
+    }
+
+    /**
+     * Returns full Definition for a specific controller (with handlers, extensions).
+     * Definitions are cached per controller for the lifetime of the request.
+     *
+     * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
+     */
+    public function getDefinition(string $controllerClass): Definition
+    {
+        if (!isset($this->definitions[$controllerClass])) {
+            $metadata = $this->getResolvedMetadata();
+
+            Assert::keyExists($metadata, $controllerClass, 'CRUD controller class is not registered.');
+
+            $meta = $metadata[$controllerClass];
+            $config = $this->buildConfig($controllerClass);
+            $extensions = $this->getResolvedExtensions()[$controllerClass] ?? [];
+
+            $this->definitions[$controllerClass] = new Definition(
+                $controllerClass,
+                $meta['controllerName'],
+                $meta['entityClass'],
+                $meta['entityName'],
+                $config,
+                $extensions,
+                $this->loadHandlers($config->getHandlerClasses()),
+            );
+        }
+
+        return $this->definitions[$controllerClass];
     }
 
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
-     * @param class-string $entityClass
-     * @param \Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension[] $extensions
      */
-    private function addItem(string $controllerClass, string $entityClass, array $extensions): void
+    private function buildConfig(string $controllerClass): CrudConfigData
     {
-        $entityClass = $this->entityNameResolver->resolve($entityClass);
-        $entityName = (new ReflectionClass($entityClass))->getShortName();
-        $controllerName = (new ReflectionClass($controllerClass))->getShortName();
+        $meta = $this->getResolvedMetadata()[$controllerClass];
+        $extensions = $this->getResolvedExtensions()[$controllerClass] ?? [];
 
         /** @var \Shopsys\AdministrationBundle\Controller\AbstractCrudController $crudController */
         $crudController = $this->container->get($controllerClass);
-        $config = $this->loadCrudConfiguration($controllerClass, $entityName, $extensions);
 
-        $item = new Definition(
-            $controllerClass,
-            $controllerName,
-            $entityClass,
-            $entityName,
-            $config,
-            $extensions,
-            $this->loadHandlers($config->getHandlerClasses()),
-        );
-
-        $crudController->setDefinition($item);
-
-        $this->items[$controllerClass] = $item;
-    }
-
-    /**
-     * @return \Shopsys\AdministrationBundle\Component\Crud\Definition[]
-     */
-    public function getItems(): array
-    {
-        if ($this->items === null) {
-            $this->buildDefinitions();
-        }
-
-        return $this->items;
-    }
-
-    /**
-     * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
-     */
-    public function getItem(string $controllerClass): Definition
-    {
-        $items = $this->getItems();
-
-        Assert::keyExists($items, $controllerClass, 'CRUD controller class is not registered.');
-
-        return $items[$controllerClass];
-    }
-
-    /**
-     * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
-     * @param \Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension[] $extensions
-     */
-    private function loadCrudConfiguration(
-        string $controllerClass,
-        string $entityName,
-        array $extensions,
-    ): CrudConfigData {
-        /** @var \Shopsys\AdministrationBundle\Controller\AbstractCrudController $crudController */
-        $crudController = $this->container->get($controllerClass);
-
-        $config = new CrudConfig($entityName);
+        $config = new CrudConfig($meta['entityName']);
         $crudController->configure($config);
 
         foreach ($extensions as $extension) {
@@ -128,33 +124,56 @@ final class CrudControllerRegistry
     }
 
     /**
-     * @param array<int, array{extensionClass: string, controllerClass: string, priority: int}> $extensions
+     * @return array<class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, array{controllerName: string, entityClass: class-string, entityName: string}>
+     */
+    private function getResolvedMetadata(): array
+    {
+        if ($this->resolvedMetadata === null) {
+            $this->resolvedMetadata = [];
+
+            foreach ($this->crudControllers as $crudController) {
+                $controllerClass = $crudController['class'];
+                $entityClass = $this->entityNameResolver->resolve($crudController['entityClass']);
+
+                $this->resolvedMetadata[$controllerClass] = [
+                    'controllerName' => (new ReflectionClass($controllerClass))->getShortName(),
+                    'entityClass' => $entityClass,
+                    'entityName' => (new ReflectionClass($entityClass))->getShortName(),
+                ];
+            }
+        }
+
+        return $this->resolvedMetadata;
+    }
+
+    /**
      * @return array<class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, \Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension[]>
      */
-    private function loadExtensions(array $extensions): array
+    private function getResolvedExtensions(): array
     {
-        $queueByController = [];
+        if ($this->resolvedExtensions === null) {
+            $this->resolvedExtensions = [];
+            $queueByController = [];
 
-        foreach ($extensions as $extension) {
-            if (isset($queueByController[$extension['controllerClass']]) === false) {
-                $queueByController[$extension['controllerClass']] = new SplPriorityQueue();
+            foreach ($this->crudControllerExtensions as $extension) {
+                if (isset($queueByController[$extension['controllerClass']]) === false) {
+                    $queueByController[$extension['controllerClass']] = new SplPriorityQueue();
+                }
+
+                $queueByController[$extension['controllerClass']]->insert(
+                    $this->container->get($extension['extensionClass']),
+                    $extension['priority'],
+                );
             }
 
-            $queueByController[$extension['controllerClass']]->insert(
-                $this->container->get($extension['extensionClass']),
-                $extension['priority'],
-            );
+            foreach ($queueByController as $controller => $queue) {
+                $queue->top();
+                $queue->setExtractFlags(SplPriorityQueue::EXTR_DATA);
+                $this->resolvedExtensions[$controller] = array_reverse(iterator_to_array($queue));
+            }
         }
 
-        $extensionsByCrudController = [];
-
-        foreach ($queueByController as $controller => $queue) {
-            $queue->top();
-            $queue->setExtractFlags(SplPriorityQueue::EXTR_DATA);
-            $extensionsByCrudController[$controller] = array_reverse(iterator_to_array($queue));
-        }
-
-        return $extensionsByCrudController;
+        return $this->resolvedExtensions;
     }
 
     /**

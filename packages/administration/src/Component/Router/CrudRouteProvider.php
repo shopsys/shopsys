@@ -4,13 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Router;
 
+use InvalidArgumentException;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
-use Shopsys\AdministrationBundle\Component\Crud\Definition;
+use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Symfony\Component\Routing\Route;
 
 final class CrudRouteProvider
 {
+    public const string IS_CRUD_CONTROLLER = '_crud_controller';
+    public const string CRUD_ACTION = '_crud_action';
+    public const string CRUD_ROLE_CONSTANT = '_crud_role_constant';
+
     /**
      * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, array{
      *     path: string,
@@ -46,21 +52,69 @@ final class CrudRouteProvider
         ],
     ];
 
-    public function generate(Definition $item, ActionType $pageType): CrudRouteItem
+    public function __construct(
+        private readonly CrudControllerRegistry $crudControllerRegistry,
+        private readonly InMemoryCache $inMemoryCache,
+    ) {
+    }
+
+    /**
+     * @return array<string, \Shopsys\AdministrationBundle\Component\Router\CrudRouteItem>
+     */
+    public function getAll(): array
     {
-        return new CrudRouteItem(
-            controller: CrudTransformationHelper::generateController($item->controllerClass, $pageType),
-            route: $this->generateRoute($item, $pageType, $item->getConfig()->getRoutePrefix()),
-            routeName: CrudTransformationHelper::generateRouteName($item->controllerName, $pageType),
-            pageType: $pageType,
+        return $this->inMemoryCache->getOrSaveValue(
+            self::class,
+            function () {
+                $routeItems = [];
+
+                foreach ($this->crudControllerRegistry->getAll() as $registryItem) {
+                    foreach ($registryItem->config->getActions() as $actionType) {
+                        $routeItem = $this->createRouteItem(
+                            $registryItem->controllerClass,
+                            $registryItem->controllerName,
+                            $registryItem->config->getRoutePrefix(),
+                            $registryItem->getRoleConstant(),
+                            $actionType,
+                        );
+
+                        $cacheKey = $registryItem->controllerClass . '::' . $actionType->value;
+                        $routeItems[$cacheKey] = $routeItem;
+                    }
+                }
+
+                return $routeItems;
+            },
+            'all',
         );
     }
 
-    private function generateRoute(
-        Definition $item,
-        ActionType $pageType,
+    /**
+     * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
+     */
+    public function getRouteItem(string $controllerClass, ActionType $pageType): CrudRouteItem
+    {
+        $cacheKey = $controllerClass . '::' . $pageType->value;
+        $allRouteItems = $this->getAll();
+
+        if (!isset($allRouteItems[$cacheKey])) {
+            throw new InvalidArgumentException(sprintf(
+                'Route item for controller "%s" and action "%s" not found.',
+                $controllerClass,
+                $pageType->value,
+            ));
+        }
+
+        return $allRouteItems[$cacheKey];
+    }
+
+    private function createRouteItem(
+        string $controllerClass,
+        string $controllerName,
         ?string $routePrefix,
-    ): Route {
+        string $roleConstant,
+        ActionType $pageType,
+    ): CrudRouteItem {
         $routeConfig = self::DEFAULT_ROUTES_CONFIG[$pageType->value];
         $routePath = '/';
 
@@ -68,13 +122,21 @@ final class CrudRouteProvider
             $routePath .= CrudTransformationHelper::transformToRouteUrl(trim($routePrefix, '/')) . '/';
         }
 
-        $routePath .= CrudTransformationHelper::transformToRouteUrl($item->controllerName) . $routeConfig['path'];
+        $routePath .= CrudTransformationHelper::transformToRouteUrl($controllerName) . $routeConfig['path'];
 
-        return new Route(
-            $routePath,
-            [
-                '_controller' => CrudTransformationHelper::generateController($item->controllerClass, $pageType),
-            ],
+        $route = new Route($routePath, [
+            '_controller' => CrudTransformationHelper::generateController($controllerClass, $pageType),
+        ]);
+
+        $route->setDefault(self::IS_CRUD_CONTROLLER, true);
+        $route->setDefault(self::CRUD_ACTION, $pageType->value);
+        $route->setDefault(self::CRUD_ROLE_CONSTANT, $roleConstant);
+
+        return new CrudRouteItem(
+            controller: CrudTransformationHelper::generateController($controllerClass, $pageType),
+            route: $route,
+            routeName: CrudTransformationHelper::generateRouteName($controllerName, $pageType),
+            pageType: $pageType,
         );
     }
 }
