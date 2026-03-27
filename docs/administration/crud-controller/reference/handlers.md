@@ -92,6 +92,8 @@ Implement hook interfaces in your CRUD controller extensions:
 | Interface | When to Use | Methods Provided |
 |-----------|-------------|------------------|
 | `CrudDeleteHookExtensionInterface` | Extend delete operations with custom logic | `beforeDelete()`, `afterDelete()`, `onDeleteError()` |
+| `CrudEditHookExtensionInterface` | Extend edit operations with custom logic | `beforeEdit()`, `afterEdit()`, `onEditError()` |
+| `CrudCreateHookExtensionInterface` | Extend create operations with custom logic | `beforeCreate()`, `afterCreate()`, `onCreateError()` |
 
 ### Hook Execution Flow
 
