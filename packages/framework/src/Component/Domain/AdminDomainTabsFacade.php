@@ -13,6 +13,8 @@ class AdminDomainTabsFacade
 {
     protected const string SESSION_SELECTED_DOMAIN = 'selected_domain_id';
 
+    public const string QUERY_PARAMETER_NAME = 'switchAdminDomainTo';
+
     public function __construct(
         protected readonly Domain $domain,
         protected readonly RequestStack $requestStack,

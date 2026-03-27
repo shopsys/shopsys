@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Twig;
 use DateTimeImmutable;
 use Override;
 use Psr\Clock\ClockInterface;
-use Shopsys\AdministrationBundle\Component\Domain\AdminDomainQueryParameterSubscriber;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -191,7 +191,7 @@ class RequiredSettingExtension extends AbstractExtension
         return $this->router->generate(
             $routeName,
             [
-                AdminDomainQueryParameterSubscriber::QUERY_PARAMETER_NAME => $domainId,
+                AdminDomainTabsFacade::QUERY_PARAMETER_NAME => $domainId,
             ],
         );
     }

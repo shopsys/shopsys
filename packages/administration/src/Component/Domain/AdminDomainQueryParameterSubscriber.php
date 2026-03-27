@@ -16,8 +16,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class AdminDomainQueryParameterSubscriber implements EventSubscriberInterface
 {
-    public const string QUERY_PARAMETER_NAME = 'switchAdminDomainTo';
-
     public function __construct(
         protected readonly ContextResolverInterface $contextResolver,
         protected readonly Domain $domain,
@@ -54,7 +52,7 @@ class AdminDomainQueryParameterSubscriber implements EventSubscriberInterface
     protected function getDomainIdFromRequest(Request $request): ?int
     {
         return $request->query->filter(
-            self::QUERY_PARAMETER_NAME,
+            AdminDomainTabsFacade::QUERY_PARAMETER_NAME,
             null,
             FILTER_VALIDATE_INT,
             ['flags' => FILTER_NULL_ON_FAILURE],
