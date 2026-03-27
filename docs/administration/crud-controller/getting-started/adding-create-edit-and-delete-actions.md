@@ -219,3 +219,34 @@ class Order implements Presentable
 ```
 
 Read more about implementing `Presentable` interface in the [Entity Naming](../reference/handlers.md#entity-naming) section.
+
+## 4. Configure Form
+
+To display forms on create and edit pages, override the `configureForm()` method in your CRUD controller. The method receives a Symfony `FormBuilderInterface` and the entity being edited (`null` for create).
+
+```php
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+protected function configureForm(FormBuilderInterface $builder, ?object $entity = null): void
+{
+    $builder
+        ->add('name', TextType::class, [
+            'label' => t('Name'),
+            'required' => true,
+        ]);
+}
+```
+
+You can also use an existing FormType class:
+
+```php
+protected function configureForm(FormBuilderInterface $builder, ?object $entity = null): void
+{
+    $builder->add('order', OrderFormType::class, [
+        'order' => $entity,
+    ]);
+}
+```
+
+See [configureForm reference](../reference/crud-controller.md#configureformformbuilderinterface-builder-object-entity--null-void) for more details.

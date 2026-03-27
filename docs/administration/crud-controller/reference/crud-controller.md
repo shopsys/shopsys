@@ -88,7 +88,7 @@ protected function configureDatagrid(Datagrid $datagrid): void
 }
 ```
 
-#### `configureQuery(QueryBuilder $queryBuilder): void`
+### `configureQuery(QueryBuilder $queryBuilder): void`
 
 Modify the query used to fetch entities for the list page.
 
@@ -98,6 +98,38 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
     $queryBuilder
         ->andWhere('o.deleted = :deleted')
         ->setParameter('deleted', false);
+}
+```
+
+### `configureForm(FormBuilderInterface $builder, ?object $entity = null): void`
+
+Configure the form for create and edit pages. The `$entity` parameter is `null` for create action and contains the entity being edited for edit action.
+
+You can define form fields inline:
+
+```php
+protected function configureForm(FormBuilderInterface $builder, ?object $entity = null): void
+{
+    $builder
+        ->add('name', TextType::class, [
+            'label' => t('Name'),
+            'required' => true,
+        ])
+        ->add('description', TextareaType::class, [
+            'label' => t('Description'),
+            'required' => false,
+        ]);
+}
+```
+
+Or use an existing FormType:
+
+```php
+protected function configureForm(FormBuilderInterface $builder, ?object $entity = null): void
+{
+    $builder->add('brand', BrandFormType::class, [
+        'brand' => $entity,
+    ]);
 }
 ```
 
