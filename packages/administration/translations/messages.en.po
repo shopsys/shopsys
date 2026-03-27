@@ -1150,9 +1150,6 @@ msgstr ""
 msgid "Navigation"
 msgstr ""
 
-msgid "New"
-msgstr ""
-
 msgid "New SEO page"
 msgstr ""
 

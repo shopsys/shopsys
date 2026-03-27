@@ -1150,9 +1150,6 @@ msgstr "Názov"
 msgid "Navigation"
 msgstr "Navigácia"
 
-msgid "New"
-msgstr "Nový"
-
 msgid "New SEO page"
 msgstr "Nová SEO stránka"
 
