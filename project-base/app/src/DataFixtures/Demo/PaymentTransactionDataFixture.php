@@ -25,11 +25,11 @@ class PaymentTransactionDataFixture extends AbstractReferenceFixture implements 
     public function load(ObjectManager $manager): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
-        $this->createPaymentTransaction($order, 'TR-123456', PaymentStatus::CREATED);
+        $this->createPaymentTransaction($order, 'TR-123456', PaymentStatus::CANCELED);
 
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_14, Order::class);
-        $this->createPaymentTransaction($order, '12454321', PaymentStatus::CREATED);
-        $this->createPaymentTransaction($order, '52467431', PaymentStatus::CREATED);
+        $this->createPaymentTransaction($order, '12454321', PaymentStatus::TIMEOUTED);
+        $this->createPaymentTransaction($order, '52467431', PaymentStatus::CANCELED);
     }
 
     /**
