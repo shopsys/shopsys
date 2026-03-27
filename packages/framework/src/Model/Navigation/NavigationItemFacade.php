@@ -42,7 +42,7 @@ class NavigationItemFacade
      */
     public function getOrderedNavigationItemDetails(DomainConfig $domainConfig): array
     {
-        $navigationItems = $this->getOrderedItemsByDomainQueryBuilder($domainConfig->getId())->getQuery()->execute();
+        $navigationItems = $this->getOrderedItemsByDomainQueryBuilder($domainConfig->getId())->getQuery()->getResult();
 
         return $this->navigationItemDetailFactory->createDetails($navigationItems, $domainConfig);
     }

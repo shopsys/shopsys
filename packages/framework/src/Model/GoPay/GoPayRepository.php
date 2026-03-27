@@ -44,6 +44,6 @@ class GoPayRepository
     {
         return $this->getQueryBuilderForAllUnpaidGoPayOrders($fromDate)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 }

@@ -13,7 +13,7 @@ class Version20180702111019 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $defaultAvailabilityInStockId = $this->sql(
+        $defaultAvailabilityInStockId = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultAvailabilityInStockId\' AND domain_id = 0;',
         )->fetchOne();
 

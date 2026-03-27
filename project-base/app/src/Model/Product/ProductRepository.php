@@ -50,7 +50,7 @@ class ProductRepository extends BaseProductRepository
             ->andWhere('p.sellingDenied = FALSE')
             ->setParameter('catnums', $productCatnums)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     /**

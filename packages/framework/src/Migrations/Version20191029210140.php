@@ -16,7 +16,7 @@ class Version20191029210140 extends AbstractMigration
         $this->sql('ALTER TABLE currencies ADD rounding_type VARCHAR(15) NOT NULL DEFAULT \'hundredths\'');
         $this->sql('ALTER TABLE currencies ALTER rounding_type DROP DEFAULT');
 
-        $roundingTypeSetting = $this->sql(
+        $roundingTypeSetting = $this->sqlQuery(
             'SELECT value FROM setting_values WHERE name = \'roundingType\' AND domain_id = 0;',
         )->fetchOne();
 

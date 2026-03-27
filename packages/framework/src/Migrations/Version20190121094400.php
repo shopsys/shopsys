@@ -53,7 +53,7 @@ class Version20190121094400 extends AbstractMigration implements DomainAwareInte
         $this->sql('ALTER TABLE countries ALTER COLUMN name DROP NOT NULL');
         $this->sql('ALTER TABLE countries ALTER COLUMN domain_id DROP NOT NULL');
 
-        $countries = $this->sql('SELECT * FROM countries')->fetchAllAssociative();
+        $countries = $this->sqlQuery('SELECT * FROM countries')->fetchAllAssociative();
 
         $transformer = new CountryDataModifierVersion20190121094400($countries);
 

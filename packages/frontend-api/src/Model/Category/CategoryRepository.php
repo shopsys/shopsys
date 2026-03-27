@@ -37,7 +37,7 @@ class CategoryRepository
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     protected function getVisibleCategoriesBySearchTextQueryBuilder(
@@ -83,7 +83,7 @@ class CategoryRepository
             ->indexBy('c', 'c.id')
             ->setParameter('categoryIds', array_merge(...$categoriesIds));
         $this->categoryRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
-        $result = $queryBuilder->getQuery()->execute();
+        $result = $queryBuilder->getQuery()->getResult();
 
         $allCategories = [];
 

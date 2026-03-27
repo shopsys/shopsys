@@ -13,7 +13,7 @@ class Version20240722150000 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $customerUsersData = $this->sql('SELECT id, last_login, created_at FROM customer_users')->fetchAllAssociative();
+        $customerUsersData = $this->sqlQuery('SELECT id, last_login, created_at FROM customer_users')->fetchAllAssociative();
 
         foreach ($customerUsersData as $customerUserData) {
             $lastLogin = $customerUserData['last_login'] ?? $customerUserData['created_at'];

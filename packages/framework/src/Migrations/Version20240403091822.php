@@ -331,7 +331,7 @@ class Version20240403091822 extends AbstractMigration implements DomainAwareInte
 
         if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20231004072533')) {
             $this->sql('INSERT INTO transport_types (code) VALUES (\'' . self::TRANSPORT_TYPE_PERSONAL_PICKUP . '\')');
-            $lastTransportTypeId = $this->connection->lastInsertId('transport_types_id_seq');
+            $lastTransportTypeId = $this->connection->lastInsertId();
 
             foreach ($this->getAllLocales() as $locale) {
                 $this->sql(
@@ -380,7 +380,7 @@ class Version20240403091822 extends AbstractMigration implements DomainAwareInte
 
         if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20210813063216')) {
             $this->sql('INSERT INTO transport_types (code) VALUES (\'' . self::TRANSPORT_TYPE_PACKETERY . '\')');
-            $lastTransportTypeId = $this->connection->lastInsertId('transport_types_id_seq');
+            $lastTransportTypeId = $this->connection->lastInsertId();
             $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (' . $lastTransportTypeId . ', \'Zásilkovna\', \'cs\')');
             $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (' . $lastTransportTypeId . ', \'Packetery\', \'en\')');
 

@@ -31,6 +31,6 @@ class LuigisBoxCategoryRepository
             $queryBuilder->andWhere('c.id > :lastCategoryId')->setParameter('lastCategoryId', $lastSeekId);
         }
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 }

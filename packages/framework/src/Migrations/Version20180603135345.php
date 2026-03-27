@@ -13,7 +13,7 @@ class Version20180603135345 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $categoriesCount = $this->sql('SELECT count(*) FROM categories')->fetchOne();
+        $categoriesCount = $this->sqlQuery('SELECT count(*) FROM categories')->fetchOne();
 
         if ($categoriesCount > 0) {
             return;

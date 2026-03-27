@@ -108,6 +108,6 @@ class CategoryRepository extends BaseCategoryRepository
             ->setParameter('category', $category);
         $this->addTranslation($queryBuilder, $domainConfig->getLocale());
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 }

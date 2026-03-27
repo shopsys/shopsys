@@ -15,8 +15,8 @@ doctrine:
                 class: \Shopsys\FrameworkBundle\Component\Doctrine\MoneyType
         user: "%env(DATABASE_USER)%"
     orm:
-        auto_generate_proxy_classes: false
         auto_mapping: false
+        class_metadata_factory_name: Shopsys\FrameworkBundle\Component\EntityExtension\ClassMetadataFactory
         controller_resolver:
             auto_mapping: false
         dql:

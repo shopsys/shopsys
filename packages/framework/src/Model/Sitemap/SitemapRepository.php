@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Sitemap;
 
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -104,7 +103,7 @@ class SitemapRepository
      */
     protected function getSitemapItemsFromQueryBuilderWithSlugField(QueryBuilder $queryBuilder): array
     {
-        $rows = $queryBuilder->getQuery()->execute(null, AbstractQuery::HYDRATE_SCALAR);
+        $rows = $queryBuilder->getQuery()->getScalarResult();
         $sitemapItems = [];
 
         foreach ($rows as $row) {

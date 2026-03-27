@@ -48,7 +48,7 @@ class ParameterFilterChoiceRepository
             ->resetDQLPart('orderBy')
             ->setParameter('locale', $locale);
 
-        $rows = $productsQueryBuilder->getQuery()->execute(null, GroupedScalarHydrator::HYDRATION_MODE);
+        $rows = $productsQueryBuilder->getQuery()->getResult(GroupedScalarHydrator::HYDRATION_MODE);
 
         $visibleParametersIndexedById = $this->getVisibleParametersIndexedByIdOrderedByName($rows, $locale);
         $parameterValuesIndexedByParameterId = $this->getParameterValuesIndexedByParameterIdOrderedByValueText(
@@ -89,7 +89,7 @@ class ParameterFilterChoiceRepository
             ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pt.name', $locale), 'asc');
         $parametersQueryBuilder->setParameter('parameterIds', $parameterIds);
         $parametersQueryBuilder->setParameter('locale', $locale);
-        $parameters = $parametersQueryBuilder->getQuery()->execute();
+        $parameters = $parametersQueryBuilder->getQuery()->getResult();
 
         $parametersIndexedById = [];
 
@@ -147,7 +147,7 @@ class ParameterFilterChoiceRepository
             ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pv.text', $locale), 'asc');
         $valuesQueryBuilder->setParameter('valueIds', $valueIds);
         $valuesQueryBuilder->setParameter('locale', $locale);
-        $values = $valuesQueryBuilder->getQuery()->execute();
+        $values = $valuesQueryBuilder->getQuery()->getResult();
 
         $valuesIndexedById = [];
 

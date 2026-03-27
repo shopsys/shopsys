@@ -161,7 +161,7 @@ class BlogArticleRepository
         $result = $this->getBlogArticlesByDomainIdQueryBuilder($domainId)
             ->select('ba.id')
             ->getQuery()
-            ->execute();
+            ->getResult();
 
         return array_column($result, 'id');
     }
@@ -180,7 +180,7 @@ class BlogArticleRepository
             ->setParameter('blogCategory', $blogCategory)
             ->setParameter('domainId', $domainId)
             ->getQuery()
-            ->execute();
+            ->getResult();
 
         return array_column($result, 'id');
     }

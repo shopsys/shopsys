@@ -17,7 +17,7 @@ class Version20240111072911 extends AbstractMigration implements DomainAwareInte
     #[Override]
     public function up(Schema $schema): void
     {
-        $blogArticles = $this->sql('SELECT id, publish_date FROM blog_articles')->fetchAllAssociative();
+        $blogArticles = $this->sqlQuery('SELECT id, publish_date FROM blog_articles')->fetchAllAssociative();
 
         foreach ($blogArticles as $blogArticle) {
             $dateTime = new DateTime(

@@ -90,7 +90,7 @@ class OrderRepository
             ->where('o.id IN (:ids)')
             ->setParameter('ids', $ids)
             ->getQuery()
-            ->execute()
+            ->getResult()
         ;
     }
 
@@ -168,7 +168,7 @@ class OrderRepository
             ->andWhere('o.customerUser = :customerUser')
             ->orderBy('o.createdAt', 'DESC')
             ->setParameter('customerUser', $customerUser)
-            ->getQuery()->execute();
+            ->getQuery()->getResult();
     }
 
     /**
@@ -185,7 +185,7 @@ class OrderRepository
             ->setParameter('customer', $customer)
             ->setParameter('locale', $locale)
             ->setMaxResults($limit)
-            ->getQuery()->execute();
+            ->getQuery()->getResult();
     }
 
     /**
@@ -199,7 +199,7 @@ class OrderRepository
             ->orderBy('o.createdAt', 'DESC')
             ->setParameter('email', $email)
             ->setParameter('domain', $domainId)
-            ->getQuery()->execute();
+            ->getQuery()->getResult();
     }
 
     public function getByUrlHashAndDomain(string $urlHash, int $domainId): Order
@@ -252,7 +252,7 @@ class OrderRepository
             ->from(Currency::class, 'c')
             ->join(Order::class, 'o', Join::WITH, 'o.currencyCode = c.code')
             ->groupBy('c.id')
-            ->getQuery()->execute();
+            ->getQuery()->getResult();
     }
 
     protected function getOrderListQueryBuilder(): QueryBuilder
@@ -278,6 +278,6 @@ class OrderRepository
             ->andWhere('t.type = :transportType')
             ->setParameter('transportType', $transportType);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 }

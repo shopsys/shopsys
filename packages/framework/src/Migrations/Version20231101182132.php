@@ -48,7 +48,7 @@ class Version20231101182132 extends AbstractMigration implements DomainAwareInte
 
     private function setPageContent(string $settingName, string $pageContent, int $domainId): void
     {
-        $paymentSuccessfulPageContent = $this->sql(
+        $paymentSuccessfulPageContent = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = :settingName AND domain_id = :domainId;',
             [
                 'settingName' => $settingName,

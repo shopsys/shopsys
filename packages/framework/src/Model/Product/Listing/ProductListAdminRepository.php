@@ -54,10 +54,8 @@ class ProductListAdminRepository
                 'pmip.product = p.id AND pmip.pricingGroup = :pricingGroupId',
             )
             ->leftJoin('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
-            ->setParameters([
-                'locale' => $this->localization->getCurrentLocaleForTranslatableEntities(),
-                'pricingGroupId' => $pricingGroupId,
-            ]);
+            ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities())
+            ->setParameter('pricingGroupId', $pricingGroupId);
 
         return $queryBuilder;
     }

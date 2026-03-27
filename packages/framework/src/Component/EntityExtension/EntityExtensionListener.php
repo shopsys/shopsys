@@ -9,6 +9,7 @@ use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\RuntimeReflectionService;
 use LogicException;
 use ReflectionClass;
 use Webmozart\Assert\Assert;
@@ -125,16 +126,20 @@ class EntityExtensionListener
             $parentMetadata = $this->getClassMetadataForEntity($parentClass);
 
             foreach ($parentMetadata->getAssociationMappings() as $associationName => $parentEntityAssociationMapping) {
-                if (isset($parentEntityAssociationMapping['sourceEntity']) && $parentEntityAssociationMapping['sourceEntity'] === $parentClass) {
-                    $parentEntityAssociationMapping['sourceEntity'] = $currentEntityClass;
+                $mappingArray = $parentEntityAssociationMapping->toArray();
+
+                if ($mappingArray['sourceEntity'] === $parentClass) {
+                    $mappingArray['sourceEntity'] = $currentEntityClass;
                 }
 
-                $parentEntityAssociationMapping['targetEntity'] = $this->ensureAbsoluteClassName(
-                    $parentEntityAssociationMapping['targetEntity'],
+                $mappingArray['targetEntity'] = $this->ensureAbsoluteClassName(
+                    $mappingArray['targetEntity'],
                     $parentClass,
                 );
 
-                $isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping = !isset($classMetadata->associationMappings[$associationName]) || $classMetadata->associationMappings[$associationName] !== $parentEntityAssociationMapping;
+                $reconstructedMapping = $parentEntityAssociationMapping::fromMappingArray($mappingArray);
+
+                $isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping = !$classMetadata->hasAssociation($associationName) || $classMetadata->getAssociationMapping($associationName)->toArray() !== $reconstructedMapping->toArray();
                 $isOverriddenPropertyInChildClass = true;
 
                 if ($isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping) {
@@ -144,7 +149,8 @@ class EntityExtensionListener
                 }
 
                 if (!$isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping || !$isOverriddenPropertyInChildClass) {
-                    $classMetadata->associationMappings[$associationName] = $parentEntityAssociationMapping;
+                    // @phpstan-ignore assign.propertyType (fromMappingArray() returns the correct subtype at runtime)
+                    $classMetadata->associationMappings[$associationName] = $reconstructedMapping;
                 }
             }
         }
@@ -174,7 +180,7 @@ class EntityExtensionListener
         foreach ($this->parentEntitiesByClass[$currentEntityClass] as $parentClass) {
             $parentMetadata = $this->getClassMetadataForEntity($parentClass);
 
-            foreach ($parentMetadata->reflFields as $name => $field) {
+            foreach ($parentMetadata->getReflectionProperties() as $name => $field) {
                 if (!isset($metadata->reflFields[$name])) {
                     $metadata->reflFields[$name] = $field;
                 }
@@ -225,6 +231,7 @@ class EntityExtensionListener
             $entityClass,
             $this->configuration->getNamingStrategy(),
         );
+        $classMetadata->initializeReflection(new RuntimeReflectionService());
 
         $metadataDriver = $this->configuration->getMetadataDriverImpl();
 
@@ -240,14 +247,16 @@ class EntityExtensionListener
     protected function updateAssociationMappingsToMappedSuperclasses(ClassMetadata $classMetadata): void
     {
         foreach ($classMetadata->getAssociationMappings() as $name => $mapping) {
-            if (!$this->isParentEntity($mapping['targetEntity'])) {
+            if (!$this->isParentEntity($mapping->targetEntity)) {
                 continue;
             }
 
-            $overridingClass = $this->getOverridingClass($mapping['targetEntity']);
+            $overridingClass = $this->getOverridingClass($mapping->targetEntity);
 
-            $mapping['targetEntity'] = $overridingClass;
-            $classMetadata->associationMappings[$name] = $mapping;
+            $mappingArray = $mapping->toArray();
+            $mappingArray['targetEntity'] = $overridingClass;
+            // @phpstan-ignore assign.propertyType (fromMappingArray() returns the correct subtype at runtime)
+            $classMetadata->associationMappings[$name] = $mapping::fromMappingArray($mappingArray);
         }
     }
 

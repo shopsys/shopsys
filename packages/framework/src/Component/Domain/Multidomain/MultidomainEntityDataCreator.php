@@ -49,9 +49,12 @@ class MultidomainEntityDataCreator
         $quotedColumnNamesSql = implode(', ', $quotedColumnNames);
         $quotedTableName = $this->sqlQuoter->quoteIdentifier($tableName);
 
+        $columnListSql = $quotedColumnNamesSql !== '' ? 'domain_id, ' . $quotedColumnNamesSql : 'domain_id';
+        $selectListSql = $quotedColumnNamesSql !== '' ? ':newDomainId, ' . $quotedColumnNamesSql : ':newDomainId';
+
         $this->em->getConnection()->executeStatement(
-            'INSERT INTO ' . $quotedTableName . ' (domain_id, ' . $quotedColumnNamesSql . ')
-            SELECT :newDomainId, ' . $quotedColumnNamesSql . '
+            'INSERT INTO ' . $quotedTableName . ' (' . $columnListSql . ')
+            SELECT ' . $selectListSql . '
             FROM ' . $quotedTableName . ' qt
             WHERE domain_id = :templateDomainId
             ON CONFLICT DO NOTHING',

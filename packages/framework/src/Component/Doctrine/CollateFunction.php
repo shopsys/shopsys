@@ -35,7 +35,7 @@ class CollateFunction extends FunctionNode
         return sprintf(
             '%s COLLATE %s',
             $this->inputStringExpression->dispatch($sqlWalker),
-            $sqlWalker->getConnection()->quoteIdentifier($this->collation),
+            $sqlWalker->getConnection()->quoteSingleIdentifier($this->collation),
         );
     }
 }

@@ -18,12 +18,12 @@ class Version20161207135225 extends AbstractMigration implements DomainAwareInte
         foreach ($this->getAllDomainIds() as $domainId) {
             $this->sql('DELETE FROM migrations WHERE version = \'201601207135225\';');
 
-            $phoneNumber = $this->sql(
+            $phoneNumber = $this->sqlQuery(
                 'SELECT COUNT(*) FROM setting_values WHERE name = \'shopInfoPhoneNumber\' AND domain_id = :domainId;
             ',
                 ['domainId' => $domainId],
             )->fetchOne();
-            $infoMail = $this->sql(
+            $infoMail = $this->sqlQuery(
                 'SELECT COUNT(*) FROM setting_values WHERE name = \'shopInfoEmail\' AND domain_id = :domainId;
             ',
                 ['domainId' => $domainId],

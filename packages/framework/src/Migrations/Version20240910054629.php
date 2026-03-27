@@ -65,7 +65,7 @@ class Version20240910054629 extends AbstractMigration implements DomainAwareInte
         bool $sendMail,
         int $complaintStatusId,
     ): void {
-        $mailTemplateCount = $this->sql('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName', [
+        $mailTemplateCount = $this->sqlQuery('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName', [
             'mailTemplateName' => $mailTemplateName,
         ])->fetchOne();
 

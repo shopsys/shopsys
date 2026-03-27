@@ -30,7 +30,7 @@ class HeurekaCategoryRepository
             ->setParameter('locale', $locale);
 
         return $queryBuilder->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     public function findByCategoryIdAndLocale(int $categoryId, string $locale): ?HeurekaCategory

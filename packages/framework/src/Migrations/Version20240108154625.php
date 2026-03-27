@@ -89,7 +89,7 @@ class Version20240108154625 extends AbstractMigration implements DomainAwareInte
             $this->sql('INSERT INTO seo_pages (page_name, default_page) VALUES (:pageName, true)', [
                 'pageName' => $pageName,
             ]);
-            $seoPageId = $this->connection->lastInsertId('seo_pages_id_seq');
+            $seoPageId = $this->connection->lastInsertId();
 
             $this->createSeoPageDomainsForSeoPage($seoPageId, $pageSlugsIndexedByLocale);
         }

@@ -13,7 +13,7 @@ class Version20180413102102 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $oldTableExists = $this->sql(
+        $oldTableExists = $this->sqlQuery(
             'SELECT COUNT(*) > 0 FROM information_schema.tables WHERE table_name=\'plugin_data_values\'',
         )->fetchOne();
 
@@ -24,7 +24,7 @@ class Version20180413102102 extends AbstractMigration
 
     private function migrateProducts(): void
     {
-        $rows = $this->sql(
+        $rows = $this->sqlQuery(
             'SELECT key, json_value
             FROM plugin_data_values
             WHERE plugin_name=:plugin_name AND context=:context',

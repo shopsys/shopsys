@@ -45,11 +45,9 @@ class NotificationBarRepository
             ->andWhere('nb.validityFrom IS NULL OR nb.validityFrom <= :now')
             ->andWhere('nb.validityTo IS NULL OR nb.validityTo >= :now')
             ->andWhere('nb.hidden = FALSE')
-            ->setParameters([
-                'domainId' => $domainId,
-                'now' => $this->clock->now(),
-            ])
-            ->getQuery()->execute();
+            ->setParameter('domainId', $domainId)
+            ->setParameter('now', $this->clock->now())
+            ->getQuery()->getResult();
     }
 
     public function getAllByDomainIdQueryBuilderForGrid(int $domainId): QueryBuilder

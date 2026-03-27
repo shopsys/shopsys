@@ -180,7 +180,7 @@ class CategoryRepository extends NestedTreeRepository
             ->setParameter('branchLft', $categoryBranch->getLft())
             ->setParameter('branchRgt', $categoryBranch->getRgt())
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     public function findById(int $categoryId): ?Category
@@ -233,7 +233,7 @@ class CategoryRepository extends NestedTreeRepository
             ->andWhere('c.level >= 1')
             ->orderBy('c.lft');
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -245,7 +245,7 @@ class CategoryRepository extends NestedTreeRepository
 
         $queryBuilder->andWhere('cd.visible = TRUE');
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function getPreOrderTreeTraversalForAllCategoriesByDomainQueryBuilder(
@@ -279,7 +279,7 @@ class CategoryRepository extends NestedTreeRepository
             ->andWhere('c.parent = :parentCategory')
             ->setParameter('parentCategory', $parentCategory);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function addTranslation(QueryBuilder $categoriesQueryBuilder, string $locale): void
@@ -311,7 +311,7 @@ class CategoryRepository extends NestedTreeRepository
             ->andWhere('c.parent = :category')
             ->setParameter('category', $category);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -382,10 +382,8 @@ class CategoryRepository extends NestedTreeRepository
             ->orderBy('c.level DESC, c.lft')
             ->setMaxResults(1);
 
-        $qb->setParameters([
-            'domainId' => $domainId,
-            'product' => $product,
-        ]);
+        $qb->setParameter('domainId', $domainId)
+            ->setParameter('product', $product);
 
         return $qb->getQuery()->getOneOrNullResult();
     }

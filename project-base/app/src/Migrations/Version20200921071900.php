@@ -14,7 +14,7 @@ class Version20200921071900 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql('INSERT INTO order_statuses (type) VALUES (5)');
-        $lastOrderStatusId = $this->connection->lastInsertId('order_statuses_id_seq');
+        $lastOrderStatusId = $this->connection->lastInsertId();
 
         $this->sql(sprintf('INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (%d, \'Nadlimitní\', \'cs\')', $lastOrderStatusId));
         $this->sql(sprintf('INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (%d, \'Over limit\', \'en\')', $lastOrderStatusId));
@@ -27,7 +27,7 @@ class Version20200921071900 extends AbstractMigration
 
     private function createMailTemplateIfNotExist(string $mailTemplateName, int $domainId, string $sendMail): void
     {
-        $mailTemplateCount = $this->sql('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName AND domain_id = :domainId', [
+        $mailTemplateCount = $this->sqlQuery('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName AND domain_id = :domainId', [
             'mailTemplateName' => $mailTemplateName,
             'domainId' => $domainId,
         ])->fetchOne();

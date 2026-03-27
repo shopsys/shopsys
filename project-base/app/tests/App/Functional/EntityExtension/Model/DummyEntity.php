@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 
-#[ORM\Entity]
+#[ORM\MappedSuperclass]
 class DummyEntity
 {
     #[ORM\Column(type: 'integer')]

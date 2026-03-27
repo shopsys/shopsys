@@ -78,7 +78,7 @@ class ProductStockRepository
             ->join('ps.stock', 's')
             ->orderBy('s.position', 'ASC')
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     public function isProductAvailableOnDomain(Product $product, int $domainId): bool
@@ -111,7 +111,7 @@ class ProductStockRepository
             ->join(StockDomain::class, 'sd', Join::WITH, 's.id = sd.stock AND sd.domainId = :domainId AND sd.isEnabled = TRUE')
             ->setParameter('domainId', $domainId)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     public function createProductStockRelationForStockId(int $stockId): void

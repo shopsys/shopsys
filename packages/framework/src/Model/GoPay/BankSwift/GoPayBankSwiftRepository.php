@@ -32,7 +32,7 @@ class GoPayBankSwiftRepository
             ->where('bs.goPayPaymentMethod = :paymentMethod')
             ->setParameter('paymentMethod', $paymentMethod)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     public function findBySwiftAndPaymentMethodAndCurrency(

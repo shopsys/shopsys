@@ -87,6 +87,16 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
 
         $deliveryAddress = $this->getReference(CustomerUserDataFixture::DELIVERY_ADDRESS_PERSISTENT_REFERENCE, DeliveryAddress::class);
 
+        // Pre-fetch values before GraphQL request to avoid ORM 3 EntityIdentityCollisionException
+        $expectedFirstName = $deliveryAddress->getFirstName();
+        $expectedLastName = $deliveryAddress->getLastName();
+        $expectedCompanyName = $deliveryAddress->getCompanyName();
+        $expectedTelephone = $deliveryAddress->getTelephone();
+        $expectedStreet = $deliveryAddress->getStreet();
+        $expectedCity = $deliveryAddress->getCity();
+        $expectedPostcode = $deliveryAddress->getPostcode();
+        $expectedCountryCode = $deliveryAddress->getCountry()->getCode();
+
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
             ...self::DEFAULT_INPUT_VALUES,
             'isDeliveryAddressDifferentFromBilling' => true,
@@ -96,13 +106,13 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
         $responseData = $this->getResponseDataForGraphQlType($response, 'CreateOrder')['order'];
 
         $this->assertTrue($responseData['isDeliveryAddressDifferentFromBilling']);
-        $this->assertSame($deliveryAddress->getFirstName(), $responseData['deliveryFirstName']);
-        $this->assertSame($deliveryAddress->getLastName(), $responseData['deliveryLastName']);
-        $this->assertSame($deliveryAddress->getCompanyName(), $responseData['deliveryCompanyName']);
-        $this->assertSame($deliveryAddress->getTelephone(), $responseData['deliveryTelephone']);
-        $this->assertSame($deliveryAddress->getStreet(), $responseData['deliveryStreet']);
-        $this->assertSame($deliveryAddress->getCity(), $responseData['deliveryCity']);
-        $this->assertSame($deliveryAddress->getPostcode(), $responseData['deliveryPostcode']);
-        $this->assertSame($deliveryAddress->getCountry()->getCode(), $responseData['deliveryCountry']['code']);
+        $this->assertSame($expectedFirstName, $responseData['deliveryFirstName']);
+        $this->assertSame($expectedLastName, $responseData['deliveryLastName']);
+        $this->assertSame($expectedCompanyName, $responseData['deliveryCompanyName']);
+        $this->assertSame($expectedTelephone, $responseData['deliveryTelephone']);
+        $this->assertSame($expectedStreet, $responseData['deliveryStreet']);
+        $this->assertSame($expectedCity, $responseData['deliveryCity']);
+        $this->assertSame($expectedPostcode, $responseData['deliveryPostcode']);
+        $this->assertSame($expectedCountryCode, $responseData['deliveryCountry']['code']);
     }
 }

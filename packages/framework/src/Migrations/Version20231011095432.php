@@ -15,7 +15,7 @@ class Version20231011095432 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $isMigrationInstalledFromGoogleBundle = $this->sql(
+        $isMigrationInstalledFromGoogleBundle = $this->sqlQuery(
             'SELECT COUNT(*) FROM migrations WHERE version = :version;',
             ['version' => self::WRONG_MIGRATION_VERSON],
         )->fetchOne();

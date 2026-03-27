@@ -40,7 +40,7 @@ class CustomerUploadedFileApiRepository
         }
 
         /** @var \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile */
-        foreach ($queryBuilder->getQuery()->execute() as $customerUploadedFile) {
+        foreach ($queryBuilder->getQuery()->getResult() as $customerUploadedFile) {
             $customerUploadedFilesByEntityId[$customerUploadedFile->getEntityId()][] = $customerUploadedFile;
         }
 

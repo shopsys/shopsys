@@ -34,7 +34,7 @@ class CategoryRepository extends BaseCategoryRepository
         $this->categoryRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
 
         /** @var \App\Model\Category\Category $childCategory */
-        foreach ($queryBuilder->getQuery()->execute() as $childCategory) {
+        foreach ($queryBuilder->getQuery()->getResult() as $childCategory) {
             $childrenByCategories[$childCategory->getParent()->getId()][] = $childCategory;
         }
 

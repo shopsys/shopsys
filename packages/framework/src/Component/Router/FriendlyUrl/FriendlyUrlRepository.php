@@ -163,7 +163,7 @@ class FriendlyUrlRepository
             ->andWhere('f.domainId = :domainId')->setParameter('domainId', $domainId)
             ->andWhere('f.main = TRUE');
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**

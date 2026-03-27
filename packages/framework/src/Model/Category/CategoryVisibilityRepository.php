@@ -58,7 +58,7 @@ class CategoryVisibilityRepository
 
     protected function getMaxLevelOnDomain(DomainConfig $domainConfig): int
     {
-        return $this->em->getConnection()->fetchOne(
+        return (int)$this->em->getConnection()->fetchOne(
             'SELECT MAX(c.level)
             FROM categories c
             JOIN category_domains cd ON cd.category_id = c.id AND cd.domain_id = :domainId

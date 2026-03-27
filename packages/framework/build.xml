@@ -336,6 +336,7 @@
             <env key="MESSENGER_TRANSPORT_DSN" value=""/>
             <arg value="${path.bin-console}"/>
             <arg value="doctrine:fixtures:load"/>
+            <arg value="--no-debug"/>
             <arg value="--append"/>
             <arg value="--no-interaction"/>
             <arg value="--verbose"/>
@@ -968,6 +969,7 @@
             <env key="MESSENGER_TRANSPORT_DSN" value=""/>
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:plugin-data-fixtures:load"/>
+            <arg value="--no-debug"/>
             <arg value="--verbose"/>
         </exec>
     </target>
@@ -1105,6 +1107,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="doctrine:fixtures:load"/>
+            <arg value="--no-debug"/>
             <arg value="--append"/>
             <arg value="--no-interaction"/>
             <arg value="--verbose"/>
@@ -1266,6 +1269,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:plugin-data-fixtures:load"/>
+            <arg value="--no-debug"/>
             <arg value="--verbose"/>
         </exec>
     </target>

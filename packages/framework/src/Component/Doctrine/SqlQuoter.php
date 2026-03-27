@@ -31,8 +31,8 @@ class SqlQuoter
         return $this->em->getConnection()->quoteIdentifier($identifier);
     }
 
-    public function quote(mixed $input, ?int $type = null): string
+    public function quote(string $input): string
     {
-        return $this->em->getConnection()->quote($input, $type);
+        return $this->em->getConnection()->quote($input);
     }
 }

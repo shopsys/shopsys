@@ -13,7 +13,7 @@ class Version20180702111018 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $orderNumberSequenceCount = $this->sql('SELECT count(*) FROM order_number_sequences')->fetchOne();
+        $orderNumberSequenceCount = $this->sqlQuery('SELECT count(*) FROM order_number_sequences')->fetchOne();
 
         if ($orderNumberSequenceCount > 0) {
             return;

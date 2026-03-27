@@ -82,7 +82,7 @@ class OrderRepository
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     public function getCustomerUserOrderCount(CustomerUser $customerUser, OrderFilter $filter): int
@@ -142,7 +142,7 @@ class OrderRepository
 
         $this->applyOrderFilterToQueryBuilder($orderFilter, $queryBuilder);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function getCustomerOrderCount(Customer $customer, OrderFilter $orderFilter): int

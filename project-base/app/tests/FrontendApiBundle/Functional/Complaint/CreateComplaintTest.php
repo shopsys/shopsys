@@ -48,6 +48,14 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         $complaintItemQuantity2 = 2;
         $complaintItemFilesCount2 = 1;
 
+        // Initialize product proxies before the GraphQL mutation to avoid
+        // EntityIdentityCollisionException in ORM 3 (the mutation loads the same
+        // entities into the identity map, causing collision on later proxy init)
+        $product1Name = $product1->getName();
+        $product1Catnum = $product1->getCatnum();
+        $product2Name = $product2->getName();
+        $product2Catnum = $product2->getCatnum();
+
         $response = $this->createComplaint(
             $order,
             $complaintItemQuantity1,
@@ -77,14 +85,16 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
             $responseData['items'][0],
             $complaintItemQuantity1,
             $complaintItemFilesCount1,
-            $product1,
+            $product1Name,
+            $product1Catnum,
         );
 
         $this->assertComplaintItem(
             $responseData['items'][1],
             $complaintItemQuantity2,
             $complaintItemFilesCount2,
-            $product2,
+            $product2Name,
+            $product2Catnum,
         );
     }
 
@@ -380,7 +390,8 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         array $expectedComplaintItem,
         int $quantity,
         int $filesCount,
-        ?Product $product = null,
+        ?string $productName = null,
+        ?string $productCatnum = null,
     ): void {
         $this->assertArrayHasKey('quantity', $expectedComplaintItem);
         $this->assertSame($quantity, $expectedComplaintItem['quantity']);
@@ -389,8 +400,8 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         $this->assertArrayHasKey('orderItem', $expectedComplaintItem);
         $this->assertArrayHasKey('name', $expectedComplaintItem['orderItem']);
         $this->assertArrayHasKey('productName', $expectedComplaintItem);
-        $this->assertSame($product?->getName(), $expectedComplaintItem['productName']);
+        $this->assertSame($productName, $expectedComplaintItem['productName']);
         $this->assertArrayHasKey('catnum', $expectedComplaintItem);
-        $this->assertSame($product->getCatnum(), $expectedComplaintItem['catnum']);
+        $this->assertSame($productCatnum, $expectedComplaintItem['catnum']);
     }
 }

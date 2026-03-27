@@ -83,7 +83,7 @@ class BlogCategoryRepository extends NestedTreeRepository
             ->setParameter('branchLft', $blogCategoryBranch->getLft())
             ->setParameter('branchRgt', $blogCategoryBranch->getRgt())
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     public function findById(int $blogCategoryId): ?BlogCategory
@@ -114,7 +114,7 @@ class BlogCategoryRepository extends NestedTreeRepository
     {
         $queryBuilder = $this->getPreOrderTreeTraversalForAllBlogCategoriesQueryBuilder($locale);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -124,7 +124,7 @@ class BlogCategoryRepository extends NestedTreeRepository
     {
         return $this->getPreOrderTreeTraversalForVisibleBlogCategoriesOnDomainQueryBuilder($domainId, $locale)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     protected function getPreOrderTreeTraversalForVisibleBlogCategoriesOnDomainQueryBuilder(
@@ -180,7 +180,7 @@ class BlogCategoryRepository extends NestedTreeRepository
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
         $this->addTranslation($queryBuilder, $locale);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -195,7 +195,7 @@ class BlogCategoryRepository extends NestedTreeRepository
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
         $this->addTranslation($queryBuilder, $locale);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function findBlogArticleMainBlogCategoryOnDomain(BlogArticle $blogArticle, int $domainId): ?BlogCategory
@@ -212,10 +212,8 @@ class BlogCategoryRepository extends NestedTreeRepository
             ->orderBy('bc.level DESC, bc.lft')
             ->setMaxResults(1);
 
-        $qb->setParameters([
-            'domainId' => $domainId,
-            'blogArticle' => $blogArticle,
-        ]);
+        $qb->setParameter('domainId', $domainId)
+            ->setParameter('blogArticle', $blogArticle);
 
         return $qb->getQuery()->getOneOrNullResult();
     }

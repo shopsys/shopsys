@@ -28,7 +28,7 @@ class Version20240131163656 extends AbstractMigration
             ADD
                 CONSTRAINT FK_D9B14247CE298D68 FOREIGN KEY (opening_hours_id) REFERENCES store_opening_hours (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
 
-        $openingHoursData = $this->sql('SELECT id, first_opening_time, first_closing_time, second_opening_time, second_closing_time FROM store_opening_hours')->fetchAllAssociative();
+        $openingHoursData = $this->sqlQuery('SELECT id, first_opening_time, first_closing_time, second_opening_time, second_closing_time FROM store_opening_hours')->fetchAllAssociative();
 
         foreach ($openingHoursData as $openingHoursRow) {
             $firstOpeningTime = $openingHoursRow['first_opening_time'];

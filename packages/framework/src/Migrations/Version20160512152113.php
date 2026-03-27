@@ -44,7 +44,7 @@ class Version20160512152113 extends AbstractMigration implements DomainAwareInte
         $this->sql('CREATE INDEX IDX_E52FFDEEF92F3E70 ON orders (country_id)');
 
         foreach ($this->getAllDomainIds() as $domainId) {
-            $countOfOrdersOnDomain = $this->sql(
+            $countOfOrdersOnDomain = $this->sqlQuery(
                 'SELECT COUNT(*) FROM orders WHERE domain_id = :domainId;',
                 ['domainId' => $domainId],
             )->fetchOne();

@@ -15,28 +15,26 @@ class SchemaDiffFilter
 
         foreach ($schemaDiff->getAlteredTables() as $tableDiff) {
             $filteredChangedTables[] = new TableDiff(
-                tableName: $tableDiff->getOldTable()?->getName() ?? '',
+                oldTable: $tableDiff->getOldTable(),
                 addedColumns: $tableDiff->getAddedColumns(),
-                modifiedColumns: $tableDiff->getModifiedColumns(),
+                changedColumns: $tableDiff->getChangedColumns(),
                 droppedColumns: [],
                 addedIndexes: $tableDiff->getAddedIndexes(),
-                changedIndexes: $tableDiff->getModifiedIndexes(),
-                removedIndexes: [],
-                fromTable: $tableDiff->getOldTable(),
-                addedForeignKeys: $tableDiff->getAddedForeignKeys(),
-                changedForeignKeys: $tableDiff->getModifiedForeignKeys(),
-                removedForeignKeys: [],
-                renamedColumns: $tableDiff->getRenamedColumns(),
+                modifiedIndexes: $tableDiff->getModifiedIndexes(),
+                droppedIndexes: [],
                 renamedIndexes: $tableDiff->getRenamedIndexes(),
+                addedForeignKeys: $tableDiff->getAddedForeignKeys(),
+                modifiedForeignKeys: $tableDiff->getModifiedForeignKeys(),
+                droppedForeignKeys: [],
             );
         }
 
         return new SchemaDiff(
-            newTables: $schemaDiff->getCreatedTables(),
-            changedTables: $filteredChangedTables,
-            removedTables: [],
             createdSchemas: $schemaDiff->getCreatedSchemas(),
             droppedSchemas: [],
+            createdTables: $schemaDiff->getCreatedTables(),
+            alteredTables: $filteredChangedTables,
+            droppedTables: [],
             createdSequences: $schemaDiff->getCreatedSequences(),
             alteredSequences: $schemaDiff->getAlteredSequences(),
             droppedSequences: [],

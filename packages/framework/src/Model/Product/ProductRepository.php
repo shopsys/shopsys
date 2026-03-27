@@ -275,7 +275,7 @@ class ProductRepository
             ->andWhere('p.mainVariant = :mainVariant')
             ->setParameter('mainVariant', $mainVariant);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -295,7 +295,7 @@ class ProductRepository
             ->addSelect('field(p.id, ' . implode(',', $sortedProductIds) . ') AS HIDDEN relevance')
             ->orderBy('relevance');
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -315,7 +315,7 @@ class ProductRepository
             ->addSelect('field(p.id, ' . implode(',', $sortedProductIds) . ') AS HIDDEN relevance')
             ->orderBy('relevance');
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function getOneByCatnumExcludeMainVariants(

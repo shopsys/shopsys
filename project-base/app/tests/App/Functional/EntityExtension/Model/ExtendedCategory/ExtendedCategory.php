@@ -26,7 +26,6 @@ class ExtendedCategory extends Category
     protected UnidirectionalEntity $oneToOneUnidirectionalEntity;
 
     #[ORM\OneToOne(targetEntity: CategoryOneToOneBidirectionalEntity::class, mappedBy: 'category')]
-    #[ORM\JoinColumn(nullable: true)]
     protected CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity;
 
     #[ORM\OneToOne(targetEntity: self::class)]

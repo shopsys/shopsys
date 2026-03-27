@@ -30,7 +30,7 @@ class FlagRepository
             ->indexBy('f', 'f.id')
             ->setParameter('flagsIds', array_merge(...$flagsIds))
             ->setParameter('locale', $domainConfig->getLocale());
-        $result = $queryBuilder->getQuery()->execute();
+        $result = $queryBuilder->getQuery()->getResult();
 
         $allFlags = [];
 

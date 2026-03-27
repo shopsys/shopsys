@@ -67,7 +67,7 @@ class ImageRepository
             $queryBuilder->andWhere('i.type = :type')->setParameter('type', $type);
         }
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -107,7 +107,7 @@ class ImageRepository
         $imagesByEntityId = [];
 
         /** @var \Shopsys\FrameworkBundle\Component\Image\Image $image */
-        foreach ($queryBuilder->getQuery()->execute() as $image) {
+        foreach ($queryBuilder->getQuery()->getResult() as $image) {
             $imagesByEntityId[$image->getEntityId()] = $image;
         }
 

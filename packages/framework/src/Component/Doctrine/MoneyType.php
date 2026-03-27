@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\ConversionException;
+use Doctrine\DBAL\Types\Exception\InvalidFormat;
+use Doctrine\DBAL\Types\Exception\InvalidType;
 use Doctrine\DBAL\Types\Type;
 use Exception;
 use Override;
@@ -17,18 +18,9 @@ class MoneyType extends Type
      * {@inheritdoc}
      */
     #[Override]
-    public function getName(): string
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return 'money';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
-    {
-        return $platform->getDecimalTypeDeclarationSQL($fieldDeclaration);
+        return $platform->getDecimalTypeDeclarationSQL($column);
     }
 
     /**
@@ -45,7 +37,7 @@ class MoneyType extends Type
             return $value->getAmount();
         }
 
-        throw ConversionException::conversionFailedInvalidType($value, 'money', ['null', Money::class]);
+        throw InvalidType::new($value, static::class, ['null', Money::class]);
     }
 
     /**
@@ -61,13 +53,7 @@ class MoneyType extends Type
         try {
             return Money::create($value);
         } catch (Exception $e) {
-            throw ConversionException::conversionFailedFormat($value, 'money', 'numeric', $e);
+            throw InvalidFormat::new($value, static::class, 'numeric', $e);
         }
-    }
-
-    #[Override]
-    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
-    {
-        return true;
     }
 }

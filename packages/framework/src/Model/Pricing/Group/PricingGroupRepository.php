@@ -63,7 +63,8 @@ class PricingGroupRepository
         $qb = $this->getPricingGroupRepository()->createQueryBuilder('pg')
             ->where('pg.domainId = :domainId')
             ->andWhere('pg.id != :id')
-            ->setParameters(['domainId' => $domainId, 'id' => $pricingGroupId]);
+            ->setParameter('domainId', $domainId)
+            ->setParameter('id', $pricingGroupId);
 
         return $qb->getQuery()->getResult();
     }

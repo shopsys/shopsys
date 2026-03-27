@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Doctrine;
 
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ManyToOneAssociationMapping;
+use Doctrine\ORM\Mapping\OneToManyAssociationMapping;
+use Doctrine\Persistence\Mapping\ClassMetadata as PersistenceClassMetadata;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
 use Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder;
+use stdClass;
 
 class NotNullableColumnsFinderTest extends TestCase
 {
     public function testGetAllNotNullableColumnNamesIndexedByTableName(): void
     {
-        $classMetadataInfoStub = $this->createStub(ClassMetadataInfo::class);
+        $classMetadataInfoStub = $this->createStub(ClassMetadata::class);
         $classMetadataInfoStub
             ->method('getTableName')
             ->willReturn('EntityName');
@@ -55,28 +58,37 @@ class NotNullableColumnsFinderTest extends TestCase
 
     private function getAssociationMappings(): array
     {
-        $associationMapping1['joinColumns'] = [
-            [
-                'nullable' => true,
-                'name' => 'nullable_association',
-            ],
-        ];
-        $associationMapping2['joinColumns'] = [
-            [
-                'nullable' => false,
-                'name' => 'not_nullable_association',
-            ],
-        ];
+        $associationMapping1 = ManyToOneAssociationMapping::fromMappingArray([
+            'fieldName' => 'nullableAssociation',
+            'sourceEntity' => stdClass::class,
+            'targetEntity' => stdClass::class,
+            'isOwningSide' => true,
+            'joinColumns' => [['name' => 'nullable_association', 'referencedColumnName' => 'id', 'nullable' => true]],
+        ]);
 
-        // this array can simulate bidirectional association
-        $associationMapping3 = [];
+        $associationMapping2 = ManyToOneAssociationMapping::fromMappingArray([
+            'fieldName' => 'notNullableAssociation',
+            'sourceEntity' => stdClass::class,
+            'targetEntity' => stdClass::class,
+            'isOwningSide' => true,
+            'joinColumns' => [['name' => 'not_nullable_association', 'referencedColumnName' => 'id', 'nullable' => false]],
+        ]);
+
+        // inverse side of bidirectional association (no joinColumns property)
+        $associationMapping3 = OneToManyAssociationMapping::fromMappingArray([
+            'fieldName' => 'inverseSide',
+            'sourceEntity' => stdClass::class,
+            'targetEntity' => stdClass::class,
+            'isOwningSide' => false,
+            'mappedBy' => 'owner',
+        ]);
 
         return [$associationMapping1, $associationMapping2, $associationMapping3];
     }
 
     public function testGetAllNotNullableColumnNamesIndexedByTableNameException(): void
     {
-        $classMetadataStub = $this->createStub(ClassMetadata::class);
+        $classMetadataStub = $this->createStub(PersistenceClassMetadata::class);
         $this->expectException(UnexpectedTypeException::class);
 
         $notNullableColumnsFinder = new NotNullableColumnsFinder();

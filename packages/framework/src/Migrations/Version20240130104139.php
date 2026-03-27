@@ -14,7 +14,7 @@ class Version20240130104139 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE stores ADD domain_id INT NOT NULL DEFAULT 1');
-        $storeDomainsData = $this->sql('SELECT store_id, domain_id FROM store_domains WHERE is_enabled = TRUE ORDER BY domain_id')->fetchAllAssociative();
+        $storeDomainsData = $this->sqlQuery('SELECT store_id, domain_id FROM store_domains WHERE is_enabled = TRUE ORDER BY domain_id')->fetchAllAssociative();
 
         foreach ($storeDomainsData as $storeDomainData) {
             $this->sql('UPDATE stores SET domain_id = :domainId WHERE id = :storeId', [

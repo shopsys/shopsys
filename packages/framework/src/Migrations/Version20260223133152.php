@@ -21,7 +21,7 @@ class Version20260223133152 extends AbstractMigration
         $this->sql('UPDATE heureka_category SET heureka_id = id');
 
         $this->sql('CREATE SEQUENCE heureka_category_id_seq');
-        $this->sql('SELECT setval(\'heureka_category_id_seq\', (SELECT MAX(id) FROM heureka_category))');
+        $this->sqlQuery('SELECT setval(\'heureka_category_id_seq\', (SELECT MAX(id) FROM heureka_category))');
         $this->sql('ALTER TABLE heureka_category ALTER id SET DEFAULT nextval(\'heureka_category_id_seq\')');
 
         $this->sql('DROP INDEX uniq_fe112a6912469de2;');

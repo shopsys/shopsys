@@ -25,7 +25,7 @@ class AdvertRepository
         array $positionNames,
         ?Category $category = null,
     ): array {
-        return $this->advertRepository->getVisibleAdvertByPositionsQueryBuilder($positionNames, $domainId, $category)->getQuery()->execute();
+        return $this->advertRepository->getVisibleAdvertByPositionsQueryBuilder($positionNames, $domainId, $category)->getQuery()->getResult();
     }
 
     /**
@@ -33,6 +33,6 @@ class AdvertRepository
      */
     public function getVisibleAdvertsByDomainId(int $domainId): array
     {
-        return $this->advertRepository->getVisibleAdvertsQueryBuilder($domainId)->getQuery()->execute();
+        return $this->advertRepository->getVisibleAdvertsQueryBuilder($domainId)->getQuery()->getResult();
     }
 }

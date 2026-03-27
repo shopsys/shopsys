@@ -55,10 +55,10 @@ class Version20191112122617 extends AbstractMigration implements DomainAwareInte
 
     private function migratePaymentsDomains(): void
     {
-        $payments = $this->sql('SELECT id, vat_id FROM payments')->fetchAllAssociative();
+        $payments = $this->sqlQuery('SELECT id, vat_id FROM payments')->fetchAllAssociative();
 
         foreach ($payments as $payment) {
-            $paymentDomains = $this->sql(
+            $paymentDomains = $this->sqlQuery(
                 'SELECT id, domain_id FROM payment_domains where payment_id = :paymentId',
                 ['paymentId' => $payment['id']],
             )->fetchAllAssociative();
@@ -68,7 +68,7 @@ class Version20191112122617 extends AbstractMigration implements DomainAwareInte
 
                 if ($paymentDomain['domain_id'] > 1) {
                     $vatId = $this
-                        ->sql(
+                        ->sqlQuery(
                             'SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId',
                             [
                                 'tmpOriginalId' => $payment['vat_id'],
@@ -91,7 +91,7 @@ class Version20191112122617 extends AbstractMigration implements DomainAwareInte
         foreach ($this->getAllDomainIds() as $domainId) {
             $priceCreated = [];
 
-            $defaultCurrencyForDomain = $this->sql(
+            $defaultCurrencyForDomain = $this->sqlQuery(
                 'SELECT value from setting_values where name = \'defaultDomainCurrencyId\' AND domain_id = :domainId',
                 ['domainId' => $domainId],
             )->fetchOne();
@@ -100,7 +100,7 @@ class Version20191112122617 extends AbstractMigration implements DomainAwareInte
                 continue;
             }
 
-            $paymentPricesByCurrency = $this->sql(
+            $paymentPricesByCurrency = $this->sqlQuery(
                 'SELECT payment_id, price, domain_id FROM payment_prices WHERE currency_id = :currencyId',
                 [
                     'currencyId' => $defaultCurrencyForDomain,
@@ -139,10 +139,10 @@ class Version20191112122617 extends AbstractMigration implements DomainAwareInte
 
     private function migrateTransportDomains(): void
     {
-        $transports = $this->sql('SELECT id, vat_id FROM transports')->fetchAllAssociative();
+        $transports = $this->sqlQuery('SELECT id, vat_id FROM transports')->fetchAllAssociative();
 
         foreach ($transports as $transport) {
-            $transportDomains = $this->sql(
+            $transportDomains = $this->sqlQuery(
                 'SELECT id, domain_id FROM transport_domains where transport_id = :transportId',
                 ['transportId' => $transport['id']],
             )->fetchAllAssociative();
@@ -152,7 +152,7 @@ class Version20191112122617 extends AbstractMigration implements DomainAwareInte
 
                 if ($transportDomain['domain_id'] > 1) {
                     $vatId = $this
-                        ->sql(
+                        ->sqlQuery(
                             'SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId',
                             [
                                 'tmpOriginalId' => $transport['vat_id'],
@@ -175,7 +175,7 @@ class Version20191112122617 extends AbstractMigration implements DomainAwareInte
         foreach ($this->getAllDomainIds() as $domainId) {
             $priceCreated = [];
 
-            $defaultCurrencyForDomain = $this->sql(
+            $defaultCurrencyForDomain = $this->sqlQuery(
                 'SELECT value from setting_values where name = \'defaultDomainCurrencyId\' AND domain_id = :domainId',
                 ['domainId' => $domainId],
             )->fetchOne();
@@ -184,7 +184,7 @@ class Version20191112122617 extends AbstractMigration implements DomainAwareInte
                 continue;
             }
 
-            $transportPricesByCurrency = $this->sql(
+            $transportPricesByCurrency = $this->sqlQuery(
                 'SELECT transport_id, price, domain_id FROM transport_prices WHERE currency_id = :currencyId',
                 [
                     'currencyId' => $defaultCurrencyForDomain,

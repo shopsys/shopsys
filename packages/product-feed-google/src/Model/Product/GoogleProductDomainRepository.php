@@ -24,7 +24,7 @@ class GoogleProductDomainRepository
             ->where('p.product = :productId')
             ->setParameter('productId', $productId);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function findByProductIdAndDomainId(

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\DependencyInjection\Compiler;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\RuntimeReflectionService;
 use Override;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -19,6 +20,7 @@ class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
 
         $entityExtensionMap = [];
         $allClasses = $attributeReader->getAllClassNames();
+        $reflectionService = new RuntimeReflectionService();
 
         foreach ($allClasses as $class) {
             if (strpos($class, 'App\\') === 0) {
@@ -29,7 +31,9 @@ class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
                     && strpos($parentClass, 'Shopsys\\') === 0
                     && !$attributeReader->isTransient($parentClass)
                 ) {
-                    $attributeReader->loadMetadataForClass($parentClass, new ClassMetadata($parentClass));
+                    $metadata = new ClassMetadata($parentClass);
+                    $metadata->initializeReflection($reflectionService);
+                    $attributeReader->loadMetadataForClass($parentClass, $metadata);
                     $entityExtensionMap[$parentClass] = $class;
                 }
             }

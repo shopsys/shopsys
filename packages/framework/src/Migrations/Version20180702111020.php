@@ -33,7 +33,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setInputPriceType(): void
     {
-        $inputPriceTypeSettingCount = $this->sql(
+        $inputPriceTypeSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'inputPriceType\' AND domain_id = 0;',
         )->fetchOne();
 
@@ -51,7 +51,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setRoundingType(): void
     {
-        $roundingTypeSettingCount = $this->sql(
+        $roundingTypeSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'roundingType\' AND domain_id = 0;',
         )->fetchOne();
 
@@ -70,7 +70,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
     private function setOrderSubmittedText(): void
     {
         foreach ($this->getAllDomainIds() as $domainId) {
-            $orderSubmittedTextSettingCount = $this->sql(
+            $orderSubmittedTextSettingCount = $this->sqlQuery(
                 'SELECT COUNT(*) FROM setting_values WHERE name = \'orderSubmittedText\' AND domain_id = :domainId;',
                 [
                     'domainId' => $domainId,
@@ -105,7 +105,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setMainAdminMail(): void
     {
-        $mailAdminMailSettingCount = $this->sql(
+        $mailAdminMailSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMail\' AND domain_id = 1;',
         )->fetchOne();
 
@@ -118,7 +118,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setMainAdminMailName(): void
     {
-        $mainAdminMailNameSettingCount = $this->sql(
+        $mainAdminMailNameSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMailName\' AND domain_id = 1;',
         )->fetchOne();
 
@@ -131,7 +131,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setFreeTransportAndPaymentPriceLimit(): void
     {
-        $freeTransportAndPaymentPriceLimitSettingCount = $this->sql(
+        $freeTransportAndPaymentPriceLimitSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'freeTransportAndPaymentPriceLimit\' AND domain_id = 1;',
         )->fetchOne();
 
@@ -144,7 +144,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setSeoMetaDescriptionMainPage(): void
     {
-        $seoMetaDescriptionMainPageSettingCount = $this->sql(
+        $seoMetaDescriptionMainPageSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'seoMetaDescriptionMainPage\' AND domain_id = 1;',
         )->fetchOne();
 
@@ -160,7 +160,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setSeoTitleMainPage(): void
     {
-        $seoTitleMainPageSettingCount = $this->sql(
+        $seoTitleMainPageSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleMainPage\' AND domain_id = 1;',
         )->fetchOne();
 
@@ -176,7 +176,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setSeoTitleAddOn(): void
     {
-        $seoTitleAddOnSettingCount = $this->sql(
+        $seoTitleAddOnSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleAddOn\' AND domain_id = 1;',
         )->fetchOne();
 
@@ -192,7 +192,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setTermsAndConditionsArticleId(): void
     {
-        $termsAndConditionsArticleIdSettingCount = $this->sql(
+        $termsAndConditionsArticleIdSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'termsAndConditionsArticleId\' AND domain_id = 1;',
         )->fetchOne();
 
@@ -205,7 +205,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setCookiesArticleId(): void
     {
-        $cookiesArticleIdSettingCount = $this->sql(
+        $cookiesArticleIdSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'cookiesArticleId\' AND domain_id = 1;',
         )->fetchOne();
 
@@ -218,7 +218,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setDomainDataCreated(): void
     {
-        $domainDataCreatedSettingCount = $this->sql(
+        $domainDataCreatedSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'domainDataCreated\' AND domain_id = 1;',
         )->fetchOne();
 
@@ -231,7 +231,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
     private function setFeedHash(): void
     {
-        $feedHashSettingCount = $this->sql(
+        $feedHashSettingCount = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'feedHash\' AND domain_id = 0;',
         )->fetchOne();
 

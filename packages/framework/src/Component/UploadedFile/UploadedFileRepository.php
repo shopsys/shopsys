@@ -183,7 +183,7 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
         }
 
         /** @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelation $fileRelation */
-        foreach ($queryBuilder->getQuery()->execute() as $fileRelation) {
+        foreach ($queryBuilder->getQuery()->getResult() as $fileRelation) {
             $filesByEntityId[$fileRelation->getEntityId()][] = $fileRelation->getUploadedFile();
         }
 

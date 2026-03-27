@@ -28,7 +28,7 @@ class Version20191107162719 extends AbstractMigration implements DomainAwareInte
 
     private function migrateCurrentVats(): void
     {
-        $currentVats = $this->sql(
+        $currentVats = $this->sqlQuery(
             'SELECT id, name, percent, replace_with_id FROM vats WHERE domain_id = 1',
         )->fetchAllAssociative();
 
@@ -61,13 +61,13 @@ class Version20191107162719 extends AbstractMigration implements DomainAwareInte
 
     private function migrateReplaceWithColumnData(): void
     {
-        $vatsForMigrateReplaceWithColumn = $this->sql(
+        $vatsForMigrateReplaceWithColumn = $this->sqlQuery(
             'SELECT id, replace_with_id, domain_id FROM vats WHERE replace_with_id is not null and domain_id > 1',
         )->fetchAllAssociative();
 
         foreach ($vatsForMigrateReplaceWithColumn as $vatForMigrateReplaceWithColumn) {
             $newVatId = $this
-                ->sql('SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId', [
+                ->sqlQuery('SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId', [
                     'tmpOriginalId' => $vatForMigrateReplaceWithColumn['replace_with_id'],
                     'domainId' => $vatForMigrateReplaceWithColumn['domain_id'],
                 ])
@@ -82,13 +82,13 @@ class Version20191107162719 extends AbstractMigration implements DomainAwareInte
 
     private function migrateCurrentVatSetting(): void
     {
-        $currentDefaultVat = $this->sql(
+        $currentDefaultVat = $this->sqlQuery(
             'SELECT value FROM setting_values WHERE name = \'defaultVatId\' AND domain_id = 0;',
         )->fetchOne();
 
         foreach ($this->getAllDomainIds() as $domainId) {
             $newVatId = $this
-                ->sql('SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId', [
+                ->sqlQuery('SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId', [
                     'tmpOriginalId' => $currentDefaultVat,
                     'domainId' => $domainId,
                 ])

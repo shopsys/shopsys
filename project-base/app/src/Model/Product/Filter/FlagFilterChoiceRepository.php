@@ -123,6 +123,6 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
             $flagsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
         }
 
-        return $flagsQueryBuilder->getQuery()->execute();
+        return $flagsQueryBuilder->getQuery()->getResult();
     }
 }

@@ -8,7 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Id\AssignedGenerator;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 #[AsDoctrineListener(event: Events::loadClassMetadata, priority: 10)]
 class EntityExtensionParentMetadataCleanerEventListener
@@ -28,13 +28,13 @@ class EntityExtensionParentMetadataCleanerEventListener
 
         $meta->isMappedSuperclass = true;
         $meta->identifier = [];
-        $meta->generatorType = ClassMetadataInfo::GENERATOR_TYPE_NONE;
+        $meta->generatorType = ClassMetadata::GENERATOR_TYPE_NONE;
         $meta->fieldMappings = [];
         $meta->fieldNames = [];
         $meta->associationMappings = [];
         $meta->idGenerator = new AssignedGenerator();
         $meta->embeddedClasses = [];
-        $meta->inheritanceType = ClassMetadataInfo::INHERITANCE_TYPE_NONE;
+        $meta->inheritanceType = ClassMetadata::INHERITANCE_TYPE_NONE;
         $meta->discriminatorColumn = null;
         $meta->discriminatorMap = [];
         $meta->discriminatorValue = null;

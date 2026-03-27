@@ -68,13 +68,11 @@ class SliderItemRepository
             ->orderBy('si.position')
             ->addOrderBy('si.id');
 
-        $queryBuilder->setParameters([
-            'domainId' => $domainId,
-            'hidden' => false,
-            'now' => $dateToday,
-        ]);
+        $queryBuilder->setParameter('domainId', $domainId)
+            ->setParameter('hidden', false)
+            ->setParameter('now', $dateToday);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     protected function getSliderItemQueryBuilder(): QueryBuilder

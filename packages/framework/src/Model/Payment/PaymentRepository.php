@@ -125,7 +125,7 @@ class PaymentRepository
             ->setParameter('domainId', $domainId)
             ->setParameter('goPayPaymentMethod', $goPayPaymentMethod)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     /**
@@ -140,7 +140,7 @@ class PaymentRepository
             ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
             ->setParameter('locale', $domainConfig->getLocale())
             ->setParameter('domainId', $domainConfig->getId())
-            ->getQuery()->execute();
+            ->getQuery()->getResult();
     }
 
     public function findPaymentByExternalMethodTransportAndDomainId(

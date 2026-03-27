@@ -97,7 +97,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
             $orderFromDb->getId(),
         );
 
-        $logs = $logsQueryBuilder->getQuery()->execute();
+        $logs = $logsQueryBuilder->getQuery()->getResult();
 
         $this->assertCount(4, $logs);
 

@@ -150,8 +150,9 @@ class CreateDatabaseCommand extends Command
 
         $params = $connection->getParams();
 
-        // remove "dbname" param so that doctrine does not try to connect to the database that does not exist yet
-        unset($params['dbname']);
+        // connect to the default "postgres" database instead of the application database
+        // that may not exist yet (DBAL 4 defaults to the username if dbname is not set)
+        $params['dbname'] = 'postgres';
 
         return DriverManager::getConnection($params);
     }

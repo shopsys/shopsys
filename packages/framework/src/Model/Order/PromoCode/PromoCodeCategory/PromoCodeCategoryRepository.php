@@ -32,7 +32,7 @@ class PromoCodeCategoryRepository
             ->where('pcc.promoCode = :promoCodeId')
             ->setParameter('promoCodeId', $promoCodeId)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     /**
@@ -47,7 +47,7 @@ class PromoCodeCategoryRepository
             ->where('pcc.promoCode = :promoCodeId')
             ->setParameter('promoCodeId', $promoCodeId)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     /**
@@ -68,7 +68,7 @@ class PromoCodeCategoryRepository
             ->setParameter('promoCodeId', $promoCodeId)
             ->setParameter('domainId', $domainId)
             ->getQuery()
-            ->execute();
+            ->getResult();
 
         return array_column($result, 'id');
     }

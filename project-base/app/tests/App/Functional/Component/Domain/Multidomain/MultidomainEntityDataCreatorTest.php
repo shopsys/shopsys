@@ -14,7 +14,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 {
     public function testCopyAllMultidomainDataForNewDomainCopiesTestRow(): void
     {
-        $this->em->getConnection()->executeQuery('
+        $this->em->getConnection()->executeStatement('
             CREATE TABLE _test_table (
                 domain_id int NOT NULL,
                 title text NOT NULL,
@@ -22,7 +22,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
             )
         ');
 
-        $this->em->getConnection()->executeQuery("
+        $this->em->getConnection()->executeStatement("
             INSERT INTO _test_table (domain_id, title, description)
                 VALUES (1, 'asdf', 'qwer')
         ");
@@ -69,14 +69,14 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 
     public function testCopyAllMultidomainDataForNewDomainWithDomainIdDoesNotThrowDriverException(): void
     {
-        $this->em->getConnection()->executeQuery('
+        $this->em->getConnection()->executeStatement('
             CREATE TABLE _test_table (
                 domain_id int NOT NULL,
                 title text NOT NULL
             )
         ');
 
-        $this->em->getConnection()->executeQuery("
+        $this->em->getConnection()->executeStatement("
             INSERT INTO _test_table (domain_id, title)
                 VALUES (1, 'asdf')
         ");

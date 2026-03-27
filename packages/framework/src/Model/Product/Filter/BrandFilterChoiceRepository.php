@@ -88,6 +88,6 @@ class BrandFilterChoiceRepository
             $brandsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
         }
 
-        return $brandsQueryBuilder->getQuery()->execute();
+        return $brandsQueryBuilder->getQuery()->getResult();
     }
 }

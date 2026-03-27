@@ -27,10 +27,8 @@ class ParameterValueRepository
             ->from(ParameterValue::class, 'pv')
             ->where('pv.text IN(:parameterValues)')
             ->andWhere('pv.locale = :locale')
-            ->setParameters([
-                'parameterValues' => $parameterValues,
-                'locale' => $locale,
-            ])
+            ->setParameter('parameterValues', $parameterValues)
+            ->setParameter('locale', $locale)
             ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pv.text', $locale))->getQuery()->getResult();
     }
 
@@ -47,10 +45,8 @@ class ParameterValueRepository
             ->from(ParameterValue::class, 'pv')
             ->where('pv.numericValue IN(:parameterValues)')
             ->andWhere('pv.locale = :locale')
-            ->setParameters([
-                'parameterValues' => $parameterValues,
-                'locale' => $locale,
-            ])
+            ->setParameter('parameterValues', $parameterValues)
+            ->setParameter('locale', $locale)
             ->getQuery()->getResult();
     }
 }

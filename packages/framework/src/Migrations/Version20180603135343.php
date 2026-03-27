@@ -13,7 +13,7 @@ class Version20180603135343 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $vatsCount = $this->sql('SELECT count(*) FROM vats')->fetchOne();
+        $vatsCount = $this->sqlQuery('SELECT count(*) FROM vats')->fetchOne();
 
         if ($vatsCount > 0) {
             return;
@@ -22,7 +22,7 @@ class Version20180603135343 extends AbstractMigration
         $this->sql('INSERT INTO vats (id, replace_with_id, name, percent) VALUES (1, null, \'Zero rate\', 0)');
         $this->sql('ALTER SEQUENCE vats_id_seq RESTART WITH 2');
 
-        $defaultVatId = $this->sql(
+        $defaultVatId = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultVatId\' AND domain_id = 0;',
         )->fetchOne();
 

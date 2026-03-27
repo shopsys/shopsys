@@ -13,7 +13,7 @@ class Version20240613235059 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $dropForeignKeysQueries = $this->sql(
+        $dropForeignKeysQueries = $this->sqlQuery(
             '
             SELECT string_agg(\'ALTER TABLE \' || quote_ident(c.relname) || \' DROP CONSTRAINT \' || quote_ident(con.conname), \'; \')
             FROM pg_constraint con

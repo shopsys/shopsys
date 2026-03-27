@@ -184,7 +184,7 @@ final class ProxyQuery
             throw new InvalidArgumentException('Association "' . $fieldName . '" not found in entity ' . $classMetadata->getName());
         }
 
-        if ($classMetadata->getAssociationMapping($fieldName)['type'] !== ClassMetadata::MANY_TO_ONE && $fieldName !== 'translations') {
+        if ($classMetadata->getAssociationMapping($fieldName)->type() !== ClassMetadata::MANY_TO_ONE && $fieldName !== 'translations') {
             throw new InvalidArgumentException('Association "' . $fieldName . '" is not MANY_TO_ONE in entity ' . $classMetadata->getName());
         }
 
@@ -198,7 +198,7 @@ final class ProxyQuery
         }
 
         $associationMapping = $classMetadata->getAssociationMapping($fieldName);
-        $this->queryBuilder->leftJoin($associationMapping['targetEntity'], $joinAlias, Join::WITH, "{$currentAlias}.{$fieldName} = {$joinAlias}.id");
+        $this->queryBuilder->leftJoin($associationMapping->targetEntity, $joinAlias, Join::WITH, "{$currentAlias}.{$fieldName} = {$joinAlias}.id");
     }
 
     public function getQueryBuilder(): QueryBuilder

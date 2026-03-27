@@ -40,7 +40,7 @@ class ZboziProductDomainRepository
             ->where('p.product = :productId')
             ->setParameter('productId', $productId);
 
-        return $queryBuilder->getQuery()->execute();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -58,7 +58,7 @@ class ZboziProductDomainRepository
             ->setParameter('productIds', $productsIds)
             ->setParameter('domainId', $domainId);
 
-        $result = $queryBuilder->getQuery()->execute();
+        $result = $queryBuilder->getQuery()->getResult();
 
         $indexedResult = [];
 

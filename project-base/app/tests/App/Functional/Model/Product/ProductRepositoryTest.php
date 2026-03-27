@@ -53,7 +53,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $queryBuilder = $this->productRepository->getAllListableQueryBuilder($this->domain->getId(), $pricingGroup);
         $queryBuilder->andWhere('p.id = :id')
             ->setParameter('id', $productId);
-        $result = $queryBuilder->getQuery()->execute();
+        $result = $queryBuilder->getQuery()->getResult();
 
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
@@ -92,7 +92,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $queryBuilder = $this->productRepository->getAllSellableQueryBuilder($this->domain->getId(), $pricingGroup);
         $queryBuilder->andWhere('p.id = :id')
             ->setParameter('id', $productId);
-        $result = $queryBuilder->getQuery()->execute();
+        $result = $queryBuilder->getQuery()->getResult();
 
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
@@ -131,7 +131,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($this->domain->getId(), $pricingGroup);
         $queryBuilder->andWhere('p.id = :id')
             ->setParameter('id', $productId);
-        $result = $queryBuilder->getQuery()->execute();
+        $result = $queryBuilder->getQuery()->getResult();
 
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }

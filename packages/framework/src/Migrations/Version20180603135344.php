@@ -13,7 +13,7 @@ class Version20180603135344 extends AbstractMigration
     #[Override]
     public function up(Schema $schema): void
     {
-        $defaultUnitId = $this->sql(
+        $defaultUnitId = $this->sqlQuery(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultUnitId\' AND domain_id = 0;',
         )->fetchOne();
 

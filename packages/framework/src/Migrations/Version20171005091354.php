@@ -23,7 +23,7 @@ class Version20171005091354 extends AbstractMigration
     private function transferDroppedHeurekaCategoryDataToPluginDataValues(): void
     {
         $heurekaCategoryDataValues = [];
-        $heurekaCategoryRows = $this->sql(
+        $heurekaCategoryRows = $this->sqlQuery(
             'SELECT ext_id, name, full_name FROM feed_categories',
         )->fetchAllAssociative();
 
@@ -41,7 +41,7 @@ class Version20171005091354 extends AbstractMigration
     private function transferDroppedCategoryDataToPluginDataValues(): void
     {
         $categoryDataValues = [];
-        $categoryRows = $this->sql(
+        $categoryRows = $this->sqlQuery(
             'SELECT categories.id, feed_categories.ext_id FROM categories
               JOIN feed_categories ON feed_categories.id = categories.heureka_cz_feed_category_id
               WHERE categories.heureka_cz_feed_category_id IS NOT NULL',

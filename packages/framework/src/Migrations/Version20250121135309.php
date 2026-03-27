@@ -41,7 +41,7 @@ class Version20250121135309 extends AbstractMigration implements DomainAwareInte
 
     private function convertAdvertDates(): void
     {
-        $adverts = $this->sql('SELECT id, datetime_visible_from, datetime_visible_to FROM adverts')->fetchAllAssociative();
+        $adverts = $this->sqlQuery('SELECT id, datetime_visible_from, datetime_visible_to FROM adverts')->fetchAllAssociative();
 
         foreach ($adverts as $advert) {
             $visibleFrom = $this->convertDateTime($advert['datetime_visible_from']);
@@ -65,7 +65,7 @@ class Version20250121135309 extends AbstractMigration implements DomainAwareInte
 
     private function convertNotificationBarDates(): void
     {
-        $notificationBars = $this->sql('SELECT id, validity_from, validity_to FROM notification_bars')
+        $notificationBars = $this->sqlQuery('SELECT id, validity_from, validity_to FROM notification_bars')
             ->fetchAllAssociative();
 
         foreach ($notificationBars as $notificationBar) {
@@ -90,7 +90,7 @@ class Version20250121135309 extends AbstractMigration implements DomainAwareInte
 
     private function convertSliderItemDates(): void
     {
-        $sliderItems = $this->sql('SELECT id, datetime_visible_from, datetime_visible_to FROM slider_items')
+        $sliderItems = $this->sqlQuery('SELECT id, datetime_visible_from, datetime_visible_to FROM slider_items')
             ->fetchAllAssociative();
 
         foreach ($sliderItems as $sliderItem) {

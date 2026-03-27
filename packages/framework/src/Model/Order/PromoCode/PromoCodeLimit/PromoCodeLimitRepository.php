@@ -26,7 +26,7 @@ class PromoCodeLimitRepository
             ->where('l.promoCode = :promoCodeId')
             ->setParameter('promoCodeId', $id)
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     public function deleteByPromoCodeId(int $id): void
