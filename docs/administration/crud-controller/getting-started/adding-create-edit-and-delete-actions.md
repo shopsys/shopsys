@@ -63,7 +63,136 @@ class OrderController extends AbstractCrudController
 }
 ```
 
-This will enable Delete action in your CRUD controller. Similarly, you can create and register handlers for Create, Edit, and Detail actions by implementing the respective interfaces.
+This will enable Delete action in your CRUD controller.
+
+### Edit Handler Example
+
+To enable edit functionality, implement `EditHandlerInterface`:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Model\Order;
+
+use Shopsys\AdministrationBundle\Component\Crud\Handler\EditHandlerInterface;
+
+class OrderEditHandler implements EditHandlerInterface
+{
+    public function __construct(
+        private readonly OrderFacade $orderFacade,
+        private readonly OrderDataFactory $orderDataFactory,
+    ) {
+    }
+
+    public function getById(int $id): object
+    {
+        return $this->orderFacade->getById($id);
+    }
+
+    public function createDataFromEntity(object $entity): object
+    {
+        return $this->orderDataFactory->createFromOrder($entity);
+    }
+
+    public function edit(object $entity, object $data): void
+    {
+        $this->orderFacade->edit($entity->getId(), $data);
+    }
+}
+```
+
+### Create Handler Example
+
+To enable create functionality, implement `CreateHandlerInterface`:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Model\Order;
+
+use Shopsys\AdministrationBundle\Component\Crud\Handler\CreateHandlerInterface;
+
+class OrderCreateHandler implements CreateHandlerInterface
+{
+    public function __construct(
+        private readonly OrderFacade $orderFacade,
+        private readonly OrderDataFactory $orderDataFactory,
+    ) {
+    }
+
+    public function getById(int $id): object
+    {
+        return $this->orderFacade->getById($id);
+    }
+
+    public function createData(): object
+    {
+        return $this->orderDataFactory->create();
+    }
+
+    public function create(object $data): object
+    {
+        return $this->orderFacade->create($data);
+    }
+}
+```
+
+### Full CRUD Handler
+
+To enable all operations at once, implement `CrudHandlerInterface` which combines Delete, Edit, and Create:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Model\Order;
+
+use Shopsys\AdministrationBundle\Component\Crud\Handler\CrudHandlerInterface;
+
+class OrderCrudHandler implements CrudHandlerInterface
+{
+    public function __construct(
+        private readonly OrderFacade $orderFacade,
+        private readonly OrderDataFactory $orderDataFactory,
+    ) {
+    }
+
+    public function getById(int $id): object
+    {
+        return $this->orderFacade->getById($id);
+    }
+
+    public function delete(object $entity): void
+    {
+        $this->orderFacade->deleteById($entity->getId());
+    }
+
+    public function createDataFromEntity(object $entity): object
+    {
+        return $this->orderDataFactory->createFromOrder($entity);
+    }
+
+    public function edit(object $entity, object $data): void
+    {
+        $this->orderFacade->edit($entity->getId(), $data);
+    }
+
+    public function createData(): object
+    {
+        return $this->orderDataFactory->create();
+    }
+
+    public function create(object $data): object
+    {
+        return $this->orderFacade->create($data);
+    }
+}
+```
 
 ## 3. Implement Entity String Representation
 

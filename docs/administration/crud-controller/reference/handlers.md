@@ -17,8 +17,10 @@ Handlers use a hierarchical interface structure where each interface extends the
 ```
 HandlerInterface (base)
     └── ReadHandlerInterface (adds getById)
-        └── DeleteHandlerInterface (adds delete)
-            └── CrudHandlerInterface (marker for full CRUD)
+        ├── DeleteHandlerInterface (adds delete)
+        ├── EditHandlerInterface (adds createDataFromEntity, edit)
+        ├── CreateHandlerInterface (adds createData, create)
+        └── CrudHandlerInterface extends Delete + Edit + Create (marker for full CRUD)
 ```
 
 ### Choosing the Right Interface
@@ -31,7 +33,9 @@ Implement only the interface that matches your needs:
 |-----------|-------------|
 | `ReadHandlerInterface` | Detail/view-only pages |
 | `DeleteHandlerInterface` | Delete functionality |
-| `CrudHandlerInterface` | Full CRUD operations |
+| `EditHandlerInterface` | Edit functionality (retrieve entity data, save changes) |
+| `CreateHandlerInterface` | Create functionality (create empty data, persist new entity) |
+| `CrudHandlerInterface` | Full CRUD operations (combines Delete + Edit + Create) |
 
 !!! note "About HandlerInterface"
 

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Config;
 
+use Shopsys\AdministrationBundle\Component\Crud\Handler\CreateHandlerInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Handler\CrudHandlerInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Handler\DeleteHandlerInterface;
+use Shopsys\AdministrationBundle\Component\Crud\Handler\EditHandlerInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -60,7 +62,9 @@ enum ActionType: string
 
         $actionsForHandlerInterface = [
             DeleteHandlerInterface::class => [self::DELETE],
-            CrudHandlerInterface::class => [self::DELETE],
+            EditHandlerInterface::class => [self::EDIT],
+            CreateHandlerInterface::class => [self::CREATE],
+            CrudHandlerInterface::class => [self::DELETE, self::EDIT, self::CREATE],
         ];
 
         $actions = [];

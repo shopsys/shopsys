@@ -45,6 +45,8 @@ final class CrudConfig
      */
     private array $handlerClasses = [
         ActionType::DELETE->value => null,
+        ActionType::EDIT->value => null,
+        ActionType::CREATE->value => null,
     ];
 
     public function __construct(private readonly string $entityName)
