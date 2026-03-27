@@ -1,16 +1,10 @@
 {% block grapes_js_widget %}
-    {% set domainByLocale = '' %}
-
-    {% if attr['data-locale'] is defined %}
-        {% set domainByLocale = getDomainUrlByLocale(attr['data-locale']) %}
-    {% endif %}
-
     <div class="d-none">{{ form_widget(form) }}</div>
     <button
             type="button"
             class="btn btn-info js-grapesjs-button"
             data-textarea-id="{{ form.vars.id }}"
-            data-template-url="{{ domainByLocale ~ constant('Shopsys\\FrameworkBundle\\Form\\GrapesJsType::GRAPESJS_TEMPLATE_PATH') }}"
+            data-template-url="{{ constant('Shopsys\\FrameworkBundle\\Form\\GrapesJsType::GRAPESJS_TEMPLATE_PATH') }}"
             data-elfinder-url="{{ url('elfinder', {instance: 'grapesJs'}) }}"
             data-allow-products="{{ form.vars.allow_products ? 'true':'false' }}"
     >
