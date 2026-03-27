@@ -1,6 +1,6 @@
-# Extending existing Crud Controller
+# Extending existing CRUD Controller
 
-This guide will show you how to extend an existing Crud Controller in your project.
+This guide will show you how to extend an existing CRUD Controller in your project.
 
 Prerequisite is an existing CrudController class defined for example in `Shopsys\FrameworkBundle\Controller\Admin\OrderCrudController`.
 
@@ -29,7 +29,7 @@ class OrderControllerExtension extends AbstractCrudControllerExtension
 
 Class will be automatically registered as a service and will be used as an extension for the `OrderCrudController`.
 
-## Override crud controller
+## Override CRUD controller
 
 That's it! Now you can override methods defined in `AbstractCrudControllerExtension` that copies the methods from the original Crud Controller.
 
@@ -54,9 +54,15 @@ public function configureDatagrid(Datagrid $datagrid): void
 }
 ```
 
-## Multiple extensions for one Crud Controller
+!!! tip "Using Hooks"
 
-You can also specify multiple extension classes for one Crud Controller. This is useful when building a complex system with multiple modules.
+    Extensions can implement hook interfaces to add custom logic before, after, or on error during CRUD operations.
+
+    See [Hooks System Reference](../reference/handlers.md#hooks-system) for complete documentation.
+
+## Multiple extensions for one CRUD Controller
+
+You can also specify multiple extension classes for one CRUD Controller. This is useful when building a complex system with multiple modules.
 
 ### Priority
 

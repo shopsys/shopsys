@@ -111,20 +111,27 @@ abstract class AbstractAction
     }
 
     /**
-     * Validate action configuration before rendering
+     * Prepare action configuration before rendering
      */
-    public function validate(mixed $data): bool
+    protected function prepareAction(mixed $data): bool
     {
         return $this->displayIf === null || call_user_func($this->displayIf, $data) !== false;
     }
 
-    final public function renderData(): array
+    final public function build(mixed $data): array|null
     {
+        // Clone action for build call to avoid state pollution between multiple renders
+        $action = clone $this;
+
+        if ($action->prepareAction($data) === false) {
+            return null;
+        }
+
         return [
-            'template' => $this->getTemplate(),
+            'template' => $action->getTemplate(),
             'parameters' => [
-                ...$this->getTemplateParameters(),
-                'attributes' => $this->parseAttributesToHTML(),
+                ...$action->getTemplateParameters(),
+                'attributes' => $action->parseAttributesToHTML(),
             ],
         ];
     }

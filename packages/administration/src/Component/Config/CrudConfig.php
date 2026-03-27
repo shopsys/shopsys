@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Config;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use InvalidArgumentException;
+use RuntimeException;
+use Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface;
 use Webmozart\Assert\Assert;
 
 final class CrudConfig
@@ -34,6 +37,13 @@ final class CrudConfig
     private ?string $customRoleConstant = null;
 
     private ?string $customRoleSection = null;
+
+    /**
+     * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>|null>
+     */
+    private array $handlerClasses = [
+        ActionType::DELETE->value => null,
+    ];
 
     public function __construct(string $entityName)
     {
@@ -200,6 +210,78 @@ final class CrudConfig
         return $this;
     }
 
+    /**
+     * @template T of \Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface
+     *
+     * Register handler class or classes for CRUD actions.
+     * @param array<class-string<T>>|class-string<T> $handler
+     * @return $this
+     */
+    public function registerHandler(array|string $handler): self
+    {
+        $handlers = is_array($handler) ? $handler : [$handler];
+
+        Assert::allClassExists($handlers);
+        Assert::allImplementsInterface($handlers, HandlerInterface::class);
+
+        foreach ($handlers as $handlerClass) {
+            $actionTypes = ActionType::getActionsForHandlerClass($handlerClass);
+
+            if (count($actionTypes) === 0) {
+                throw new InvalidArgumentException(sprintf(
+                    'Handler class "%s" does not correspond to any CRUD action.',
+                    $handlerClass,
+                ));
+            }
+
+            foreach ($actionTypes as $actionType) {
+                if ($this->handlerClasses[$actionType->value] !== null) {
+                    throw new RuntimeException(sprintf(
+                        'Cannot register "%s" handler class. Handler for "%s" action is already registered by "%s" class.',
+                        $handlerClass,
+                        $actionType->value,
+                        $this->handlerClasses[$actionType->value],
+                    ));
+                }
+
+                $this->handlerClasses[$actionType->value] = $handlerClass;
+                $this->enableAction($actionType);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface> $handler
+     * @return $this
+     */
+    public function unregisterHandler(string $handler): self
+    {
+        Assert::classExists($handler);
+        Assert::implementsInterface($handler, HandlerInterface::class);
+
+        $handlerExists = false;
+
+        foreach ($this->handlerClasses as $actionType => $handlerClass) {
+            if ($handlerClass === $handler) {
+                $this->handlerClasses[$actionType] = null;
+                $this->disableAction(ActionType::from($actionType));
+
+                $handlerExists = true;
+            }
+        }
+
+        if ($handlerExists === false) {
+            throw new InvalidArgumentException(sprintf(
+                'Handler class "%s" is not registered and cannot be unregistered.',
+                $handler,
+            ));
+        }
+
+        return $this;
+    }
+
     public function getConfig(): CrudConfigData
     {
         return new CrudConfigData(
@@ -213,6 +295,7 @@ final class CrudConfig
             $this->routePrefix,
             $this->customRoleConstant,
             $this->customRoleSection,
+            $this->handlerClasses,
         );
     }
 }

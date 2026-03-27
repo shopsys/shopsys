@@ -43,6 +43,11 @@ final class CrudTransformationHelper
             |> strtolower(...);
     }
 
+    public static function generateRouteName(string $controllerName, ActionType $pageType): string
+    {
+        return 'admin_crud_' . self::transformToRouteName($controllerName) . '_' . $pageType->value;
+    }
+
     /**
      * Remove "CrudController" or "Controller" from controller name to be able to use it with routes
      */

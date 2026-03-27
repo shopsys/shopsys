@@ -8,8 +8,9 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 
-abstract class AbstractCrudControllerExtension
+abstract class AbstractCrudControllerExtension extends AdminBaseController
 {
     public function configure(CrudConfig $config): void
     {

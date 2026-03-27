@@ -146,12 +146,13 @@ class GridView
             return;
         }
 
-        if ($actionColumn->validate($row) === false) {
+        $actionData = $actionColumn->build($row);
+
+        if ($actionData === null) {
             return;
         }
 
-        $renderData = $actionColumn->renderData();
-        echo $this->twig->render($renderData['template'], [...$renderData['parameters'], 'row' => $row]);
+        echo $this->twig->render($actionData['template'], [...$actionData['parameters'], 'row' => $row]);
     }
 
     public function renderTitleCell(Column $column): void

@@ -25,7 +25,7 @@ final class CrudRouteProvider
             'entityId' => false,
         ],
         ActionType::DETAIL->value => [
-            'path' => '/{id}/detail',
+            'path' => '/detail/{id}',
             'routeName' => 'detailAction',
             'entityId' => true,
         ],
@@ -35,12 +35,12 @@ final class CrudRouteProvider
             'entityId' => false,
         ],
         ActionType::EDIT->value => [
-            'path' => '/{id}/edit',
+            'path' => '/edit/{id}',
             'routeName' => 'editAction',
             'entityId' => true,
         ],
         ActionType::DELETE->value => [
-            'path' => '/{id}/delete',
+            'path' => '/delete/{id}',
             'routeName' => 'deleteAction',
             'entityId' => true,
         ],
@@ -51,14 +51,9 @@ final class CrudRouteProvider
         return new CrudRouteItem(
             controller: CrudTransformationHelper::generateController($item->controllerClass, $pageType),
             route: $this->generateRoute($item, $pageType, $item->getConfig()->getRoutePrefix()),
-            routeName: $this->generateRouteName($item->controllerName, $pageType),
+            routeName: CrudTransformationHelper::generateRouteName($item->controllerName, $pageType),
             pageType: $pageType,
         );
-    }
-
-    private function generateRouteName(string $controllerName, ActionType $pageType): string
-    {
-        return 'admin_crud_' . CrudTransformationHelper::transformToRouteName($controllerName) . '_' . $pageType->value;
     }
 
     private function generateRoute(

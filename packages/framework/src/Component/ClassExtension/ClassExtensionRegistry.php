@@ -71,9 +71,15 @@ class ClassExtensionRegistry
 
                 $projectClassFqcn = str_replace($package['namespace'], $package['app_namespace'], $packageClassFqcn);
 
-                if (class_exists($projectClassFqcn)) {
-                    $otherClassesMap[$packageClassFqcn] = $projectClassFqcn;
+                if (class_exists($projectClassFqcn) === false) {
+                    continue;
                 }
+
+                if (get_parent_class($projectClassFqcn) !== $packageClassFqcn) {
+                    continue;
+                }
+
+                $otherClassesMap[$packageClassFqcn] = $projectClassFqcn;
             }
         }
 

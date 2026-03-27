@@ -22,6 +22,9 @@ msgstr "Prehľad %entity_name%"
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr "<a href=\"%url%\">Späť</a> na prihlasovaciu stránku."
 
+msgid "<strong>{{ objectName }}</strong> was deleted successfully."
+msgstr "Položka \"<strong>{{ objectName }}</strong>\" bola úspešne vymazaná."
+
 msgid "Action"
 msgstr "Akcia"
 
@@ -147,6 +150,9 @@ msgstr "Suma"
 
 msgid "An authentication exception occurred."
 msgstr "Vyskytla sa výnimka overenia."
+
+msgid "An error occurred while deleting <strong>{{ objectName }}</strong>."
+msgstr "Pri odstraňovaní položky „<strong>{{ objectName }}</strong>\" došlo k chybe."
 
 msgid "Applicable variables"
 msgstr "Použiteľné premenné"

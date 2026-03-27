@@ -1,4 +1,5 @@
 arrange:
   - index.md
   - crud-controller.md
+  - handlers.md
   - actions.md

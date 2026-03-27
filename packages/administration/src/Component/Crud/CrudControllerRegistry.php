@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Crud;
 
 use ReflectionClass;
+use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use SplPriorityQueue;
+use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 use Webmozart\Assert\Assert;
 
 final class CrudControllerRegistry
@@ -29,8 +32,10 @@ final class CrudControllerRegistry
     public function __construct(
         private readonly EntityNameResolver $entityNameResolver,
         private readonly ContainerInterface $container,
-        private array $crudControllers = [],
-        private array $crudControllerExtensions = [],
+        #[TaggedLocator('shopsys.admin.crud_handler')]
+        private readonly ServiceLocator $handlers,
+        private readonly array $crudControllers = [],
+        private readonly array $crudControllerExtensions = [],
     ) {
     }
 
@@ -59,17 +64,19 @@ final class CrudControllerRegistry
 
         /** @var \Shopsys\AdministrationBundle\Controller\AbstractCrudController $crudController */
         $crudController = $this->container->get($controllerClass);
+        $config = $this->loadCrudConfiguration($controllerClass, $entityName, $extensions);
 
         $item = new Definition(
             $controllerClass,
             $controllerName,
             $entityClass,
             $entityName,
-            $this->loadCrudConfiguration($controllerClass, $entityName, $extensions),
+            $config,
             $extensions,
+            $this->loadHandlers($config->getHandlerClasses()),
         );
 
-        $crudController->definition = $item;
+        $crudController->setDefinition($item);
 
         $this->items[$controllerClass] = $item;
     }
@@ -148,5 +155,34 @@ final class CrudControllerRegistry
         }
 
         return $extensionsByCrudController;
+    }
+
+    /**
+     * @param array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>> $handlerClasses
+     * @return array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, \Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface|null>
+     */
+    private function loadHandlers(array $handlerClasses): array
+    {
+        $handlersByActionType = [];
+
+        foreach ($handlerClasses as $actionType => $handlerClass) {
+            if ($handlerClass === null) {
+                $handlersByActionType[$actionType] = null;
+
+                continue;
+            }
+
+            if (!$this->handlers->has($handlerClass)) {
+                throw new RuntimeException(sprintf(
+                    'Handler "%s" for action "%s" is not registered in the service container.',
+                    $handlerClass,
+                    $actionType,
+                ));
+            }
+
+            $handlersByActionType[$actionType] = $this->handlers->get($handlerClass);
+        }
+
+        return $handlersByActionType;
     }
 }

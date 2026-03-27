@@ -6,6 +6,8 @@ namespace Shopsys\AdministrationBundle\Component\Action\RouteData;
 
 use Closure;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
+use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
 
 class CrudActionRouteData implements ActionRouteInterface
 {
@@ -31,6 +33,13 @@ class CrudActionRouteData implements ActionRouteInterface
     public function getActionType(): ActionType
     {
         return $this->actionType;
+    }
+
+    public function getRouteName(): string
+    {
+        $controllerName = ReflectionHelper::getShortClassName($this->getCrudController());
+
+        return CrudTransformationHelper::generateRouteName($controllerName, $this->getActionType());
     }
 
     public function getId(mixed $data = null): ?int

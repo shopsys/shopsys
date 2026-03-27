@@ -22,6 +22,9 @@ msgstr ""
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr ""
 
+msgid "<strong>{{ objectName }}</strong> was deleted successfully."
+msgstr ""
+
 msgid "Action"
 msgstr ""
 
@@ -146,6 +149,9 @@ msgid "Amount"
 msgstr ""
 
 msgid "An authentication exception occurred."
+msgstr ""
+
+msgid "An error occurred while deleting <strong>{{ objectName }}</strong>."
 msgstr ""
 
 msgid "Applicable variables"

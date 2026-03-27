@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Action;
 
+use Closure;
 use InvalidArgumentException;
 use Override;
 use Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface;
@@ -20,6 +21,15 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
     private ?string $additionalClass = null;
 
     private ?string $confirmMessage = null;
+
+    /**
+     * @var array<\Closure(mixed, self): void>
+     */
+    private array $callbacks = [];
+
+    private bool $isDisabled = false;
+
+    private ?string $disabledMessage = null;
 
     /**
      * Sets additional classes for row action. Use this method to add custom classes. Default classes are required for proper functionality.
@@ -51,6 +61,38 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
         return $this;
     }
 
+    /**
+     * Adds a callback that will be executed during action build
+     *
+     * The callback receives row data and the action instance, allowing dynamic modification
+     * of the action based on the current row. Multiple callbacks can be added and will be
+     * executed in order.
+     *
+     * @param \Closure(mixed, self): void $callback Function receives row data and action instance
+     */
+    public function addCallback(Closure $callback): self
+    {
+        $this->callbacks[] = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Disables the action and shows a message as tooltip
+     *
+     * This method should be called from within an addCallback closure to conditionally
+     * disable the action based on row data.
+     *
+     * @param string $message Message to show as tooltip on the disabled action
+     */
+    public function disableWithMessage(string $message): self
+    {
+        $this->isDisabled = true;
+        $this->disabledMessage = $message;
+
+        return $this;
+    }
+
     #[Override]
     public static function create(string $name, string $label, ?string $icon = null): static
     {
@@ -62,16 +104,20 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
     }
 
     /**
-     * Validate action configuration before rendering
+     * Prepare action configuration before rendering
      */
     #[Override]
-    public function validate(mixed $data): bool
+    protected function prepareAction(mixed $data): bool
     {
         if ($this->actionRoute === null) {
             throw new InvalidArgumentException('Route must be set for row action. Use one of the "linkTo*" methods.');
         }
 
-        return parent::validate($data);
+        foreach ($this->callbacks as $callback) {
+            $callback($data, $this);
+        }
+
+        return parent::prepareAction($data);
     }
 
     #[Override]
@@ -87,18 +133,24 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
 
         $this->attributes['class'] = self::DEFAULT_CLASSES;
 
+        if ($this->isDisabled) {
+            $this->attributes['class'] .= ' link-disabled';
+            $this->confirmMessage = null;
+            $this->renderTooltip = true;
+        }
+
         if ($this->renderTooltip) {
             $this->attributes['data-bs-toggle'] = 'tooltip';
             $this->attributes['data-bs-placement'] = 'left';
         }
 
-        $this->attributes['title'] = $this->label;
+        $this->attributes['title'] = $this->disabledMessage ?? $this->label;
 
         if ($this->additionalClass !== null) {
             $this->attributes['class'] .= ' ' . $this->additionalClass;
         }
 
-        if ($this->confirmMessage) {
+        if ($this->confirmMessage !== null) {
             $this->attributes['data-confirm-message'] = $this->confirmMessage;
             $this->attributes['data-confirm-window'] = true;
         }
@@ -108,6 +160,7 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
             'label' => $this->label,
             'icon' => $this->icon,
             'actionRoute' => $this->actionRoute,
+            'disabled' => $this->isDisabled,
         ];
     }
 

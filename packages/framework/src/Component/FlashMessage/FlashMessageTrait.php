@@ -74,6 +74,11 @@ trait FlashMessageTrait
             && !$flashBag->has(FlashMessage::KEY_WARNING);
     }
 
+    public function hasErrorMessages(): bool
+    {
+        return $this->getSession()->getFlashBag()->has(FlashMessage::KEY_ERROR);
+    }
+
     /**
      * @return string[]
      */

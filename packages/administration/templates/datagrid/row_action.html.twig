@@ -1,9 +1,12 @@
 {% set url = action_url(actionRoute, row) %}
 
-{% if url is not null %}
-    <a href="{{ url }}"
-        {{ attributes|raw }}
+{% if action_has_access(actionRoute) %}
+    {% set tag = disabled ? 'span' : 'a' %}
+
+    <{{ tag }}
+    {{ attributes|raw }}
+    {% if not disabled %} href="{{ url }}"{% endif %}
     >
-        {{ ux_icon(icon) }}
-    </a>
+    {{ ux_icon(icon) }}
+    </{{ tag }}>
 {% endif %}
