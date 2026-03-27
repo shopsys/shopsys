@@ -246,6 +246,11 @@
         }
     },
     "config": {
+        "audit": {
+            "ignore": {
+                "CVE-2026-4587": "No fix yet, see https://github.com/advisories/GHSA-r3hf-q3mf-7h6w"
+            }
+        },
         "preferred-install": "dist",
         "component-dir": "project-base/app/web/components",
         "sort-packages": true,
