@@ -17,7 +17,7 @@ final class CrudConfig
      */
     private array $customPageTitles;
 
-    public ?string $menuTitle = null;
+    private ?string $menuTitle = null;
 
     private bool $fullDisabled = false;
 
