@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade as BaseAdmin
 /**
  * @method \App\Model\Administrator\Administrator create(\App\Model\Administrator\AdministratorData $administratorData)
  * @method \App\Model\Administrator\Administrator edit(int $administratorId, \App\Model\Administrator\AdministratorData $administratorData)
- * @method setPassword(\App\Model\Administrator\Administrator $administrator, string $password)
  * @method void checkForDelete(\App\Model\Administrator\Administrator $administrator)
  * @method \App\Model\Administrator\Administrator getById(int $administratorId)
  * @method void setRolesChangedNow(\App\Model\Administrator\Administrator $administrator)

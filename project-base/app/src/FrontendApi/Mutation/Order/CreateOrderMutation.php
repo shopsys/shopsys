@@ -8,7 +8,6 @@ use Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation as BaseCr
 
 /**
  * @property \App\FrontendApi\Model\Order\OrderDataFactory $orderDataFactory
- * @property \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  * @property \App\Model\Order\PlaceOrderFacade $placeOrderFacade
  * @method __construct(\App\FrontendApi\Model\Order\OrderDataFactory $orderDataFactory, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade, \Shopsys\FrontendApiBundle\Model\Order\CreateOrderResultFactory $createOrderResultFactory, \Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade $cartWatcherFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor, \App\Model\Order\PlaceOrderFacade $placeOrderFacade, \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory)
