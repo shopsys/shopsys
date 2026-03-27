@@ -38,6 +38,8 @@ final class CrudConfig
 
     private ?string $customRoleSection = null;
 
+    private ?string $menuIcon = null;
+
     /**
      * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>|null>
      */
@@ -211,6 +213,18 @@ final class CrudConfig
     }
 
     /**
+     * Set icon for root-level menu item. Only applicable when menu section is 'root' (1st level).
+     *
+     * @return $this
+     */
+    public function setMenuIcon(string $icon): self
+    {
+        $this->menuIcon = $icon;
+
+        return $this;
+    }
+
+    /**
      * @template T of \Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface
      *
      * Register handler class or classes for CRUD actions.
@@ -296,6 +310,7 @@ final class CrudConfig
             $this->customRoleConstant,
             $this->customRoleSection,
             $this->handlerClasses,
+            $this->menuIcon,
         );
     }
 }

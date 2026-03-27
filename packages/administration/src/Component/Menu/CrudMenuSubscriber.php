@@ -63,6 +63,10 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
                 'label' => $config->getMenuTitle(),
             ]);
 
+            if ($config->getMenuIcon() !== null && $menu === $rootMenu) {
+                $parent->setExtra('icon', $config->getMenuIcon());
+            }
+
             foreach ($config->getActions() as $action) {
                 if ($action === ActionType::DELETE) {
                     continue;
