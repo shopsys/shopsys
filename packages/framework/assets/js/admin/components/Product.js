@@ -14,7 +14,7 @@ export default class Product {
         const $productDetailNavigation = $container.find('.toc .nav');
         const sections = [];
 
-        $('#product_form h3').each(function () {
+        $('#product_form h3.card-title').each(function () {
             const $title = $(this);
 
             const $navigationItem = $(`<span class="nav-link cursor-pointer">${$title.text()}</span>`);
