@@ -16,9 +16,6 @@ msgstr "%defaultCurrency% za 1 %currentCurrency%"
 msgid "%defaultCurrency% per unit"
 msgstr "%defaultCurrency% za jednotku"
 
-msgid "%entity_name% Overview"
-msgstr "Prehľad %entity_name%"
-
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr "<a href=\"%url%\">Späť</a> na prihlasovaciu stránku."
 
@@ -2151,9 +2148,6 @@ msgstr "Veľmi slabé"
 
 msgid "View allowed recipients."
 msgstr "Zobraziť povolených príjemcov."
-
-msgid "Viewing %entity_name%"
-msgstr "Zobrazenie %entity_name%"
 
 msgid "Visibility and sellability for unlogged customers"
 msgstr "Viditeľnosť a predateľnosť pre neprihlásených zákazníkov"

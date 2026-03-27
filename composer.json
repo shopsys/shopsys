@@ -184,6 +184,7 @@
         "symfony/serializer": "^7.4",
         "symfony/service-contracts": "^3.5",
         "symfony/stopwatch": "^7.4",
+        "symfony/string": "^7.4",
         "symfony/translation": "^7.4",
         "symfony/twig-bundle": "^7.4",
         "symfony/ux-icons": "^2.22",

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Config;
 
 use RuntimeException;
+use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 final readonly class CrudConfigData
 {
@@ -44,11 +46,14 @@ final readonly class CrudConfigData
             return $this->customPageTitles[$pageType->value];
         }
 
+        $singularEntityName = Translator::staticTrans(CrudTransformationHelper::toSingularEntityName($this->entityName));
+        $pluralEntityName = Translator::staticTrans(CrudTransformationHelper::toPluralEntityName($this->entityName));
+
         return match ($pageType) {
-            ActionType::CREATE => t('Creating new %entity_name%', ['%entity_name%' => $this->entityName]),
-            ActionType::EDIT => t('Editing %entity_name%', ['%entity_name%' => $this->entityName]),
-            ActionType::LIST => t('%entity_name% Overview', ['%entity_name%' => $this->entityName]),
-            ActionType::DETAIL => t('Viewing %entity_name%', ['%entity_name%' => $this->entityName]),
+            ActionType::CREATE => t('Creating new %entity_name%', ['%entity_name%' => $singularEntityName]),
+            ActionType::EDIT => t('Editing %entity_name%', ['%entity_name%' => $singularEntityName]),
+            ActionType::LIST => $pluralEntityName,
+            ActionType::DETAIL => $singularEntityName,
             default => '',
         };
     }
@@ -59,7 +64,7 @@ final readonly class CrudConfigData
             return $this->menuTitle;
         }
 
-        return t('%entity_name% Overview', ['%entity_name%' => $this->entityName]);
+        return Translator::staticTrans(CrudTransformationHelper::toPluralEntityName($this->entityName));
     }
 
     /**

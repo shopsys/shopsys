@@ -30,7 +30,7 @@ That's it! Now you have a new Crud Controller that is automatically registered a
 
 ## 2. Configure Crud Controller (Optional)
 
-You can implement the `configure()` method to customize the general behavior of the controller:
+You can implement the `configure()` method to customize the controller behavior:
 
 ```php
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
@@ -39,11 +39,16 @@ use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 public function configure(CrudConfig $config): void
 {
     $config
-        ->setTitle(ActionType::LIST, t('Orders')) // Set the title of the list page
+        ->setTitle(ActionType::LIST, t('Orders management')) // Set the custom title of the list page
         ->setMenuSection('customers') // Set the menu section where the controller will be placed
     ;
 }
 ```
+
+!!! info
+
+    Default page titles and menu labels are generated automatically from the entity class name.
+
 
 More configuration options can be found in the [Crud Config](../reference/crud-controller.md#crud-config) reference.
 

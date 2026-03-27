@@ -39,6 +39,7 @@
         "symfony/http-foundation": "^7.4",
         "symfony/http-kernel": "^7.4",
         "symfony/routing": "^7.4",
+        "symfony/string": "^7.4",
         "symfony/translation": "^7.4",
         "symfony/ux-icons": "^2.22",
         "twig/twig": "^3.14.0"
