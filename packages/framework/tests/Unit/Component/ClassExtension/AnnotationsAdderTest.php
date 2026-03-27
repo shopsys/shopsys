@@ -125,15 +125,7 @@ class AnnotationsAdderTest extends TestCase
     public function testExtractPropertyOrMethodAnnotationName(string $expectedPropertyName, string $propertyLine): void
     {
         $fileContentsReplacerStub = $this->createStub(FileContentsReplacer::class);
-        $annotationsAdder = (new class($fileContentsReplacerStub) extends AnnotationsAdder {
-            /**
-             * Method overridden to make it public and thus testable
-             */
-            public function extractPropertyOrMethodAnnotationName(string $annotationLine): string
-            {
-                return parent::extractPropertyOrMethodAnnotationName($annotationLine);
-            }
-        });
+        $annotationsAdder = new AnnotationsAdder($fileContentsReplacerStub);
 
         $annotationName = $annotationsAdder->extractPropertyOrMethodAnnotationName($propertyLine);
 

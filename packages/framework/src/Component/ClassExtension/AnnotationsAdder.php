@@ -75,7 +75,7 @@ class AnnotationsAdder
      *
      * @see \Tests\FrameworkBundle\Unit\Component\ClassExtension\AnnotationsAdderTest::testExtractPropertyOrMethodAnnotationName()
      */
-    protected function extractPropertyOrMethodAnnotationName(string $annotationLine): string
+    public function extractPropertyOrMethodAnnotationName(string $annotationLine): string
     {
         if (preg_match('~@(property|method)\s+(?:\S+\s+)??(?:\$(\w+)|(\w+)\s*\()~', $annotationLine, $matches)) {
             return $matches[1] . '-' . $matches[2] . ($matches[3] ?? '');
