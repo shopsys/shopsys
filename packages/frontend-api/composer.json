@@ -56,6 +56,11 @@
         "shopsys/coding-standards": "19.0.x-dev"
     },
     "config": {
+        "audit": {
+            "ignore": {
+                "CVE-2026-4587": "No fix yet, see https://github.com/advisories/GHSA-r3hf-q3mf-7h6w"
+            }
+        },
         "allow-plugins": {
             "symfony/flex": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
