@@ -18,7 +18,7 @@ final class PrepareCurrencyWorker extends AbstractWorker
 {
     private const string MIGRATIONS_DIR = 'app/src/Migrations/';
 
-    private const string NEXT_CONFIG_FILE = 'storefront/next.config.js';
+    private const string NEXT_CONFIG_FILE = 'storefront/buildPublicEnvConfig.ts';
 
     /**
      * @var string[]
