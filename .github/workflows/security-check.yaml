@@ -13,7 +13,7 @@ jobs:
             fail-fast: false
         steps:
             -   name: GIT checkout branch - ${{ matrix.branches }}
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
                 with:
                     ref: 'refs/heads/${{ matrix.branches }}'
             -   name: Prepare variables

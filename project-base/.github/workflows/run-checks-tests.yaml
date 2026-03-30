@@ -12,7 +12,7 @@ jobs:
                 run: sleep 15s
                 shell: bash
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
                 with:
                     ref: ${{ github.ref }}
             -   name: Configure application
@@ -35,7 +35,7 @@ jobs:
                 run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v4
+                uses: actions/upload-artifact@v7
                 with:
                     name: acceptance-logs
                     path: ./app/var/log
@@ -59,19 +59,19 @@ jobs:
                 run: docker compose run -e TEST_LOCALE=en -e B2B_DOMAIN_ID=2 -e B2B_BASE_URL=http://127.0.0.2:8000 cypress
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v4
+                uses: actions/upload-artifact@v7
                 with:
                     name: cypress-videos
                     path: ./storefront/cypress/videos
             -   name: Upload Cypress screenshots to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v4
+                uses: actions/upload-artifact@v7
                 with:
                     name: cypress-screenshots
                     path: ./storefront/cypress/screenshots
             -   name: Upload Cypress snapshot diffs to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v4
+                uses: actions/upload-artifact@v7
                 with:
                     name: cypress-snapshot-diffs
                     path: ./storefront/cypress/snapshotDiffs
@@ -95,7 +95,7 @@ jobs:
                 run: sleep 15s
                 shell: bash
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
                 with:
                     ref: ${{ github.ref }}
             -   name: Remove all but first domain from next.config.js
@@ -132,7 +132,7 @@ jobs:
                 run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v4
+                uses: actions/upload-artifact@v7
                 with:
                     name: acceptance-logs
                     path: ./app/var/log
@@ -156,19 +156,19 @@ jobs:
                 run: docker compose run -e TEST_LOCALE=en cypress
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v4
+                uses: actions/upload-artifact@v7
                 with:
                     name: cypress-videos
                     path: ./storefront/cypress/videos
             -   name: Upload Cypress screenshots to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v4
+                uses: actions/upload-artifact@v7
                 with:
                     name: cypress-screenshots
                     path: ./storefront/cypress/screenshots
             -   name: Upload Cypress snapshot diffs to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v4
+                uses: actions/upload-artifact@v7
                 with:
                     name: cypress-snapshot-diffs
                     path: ./storefront/cypress/snapshotDiffs

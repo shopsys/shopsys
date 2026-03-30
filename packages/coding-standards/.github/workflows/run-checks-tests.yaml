@@ -17,7 +17,7 @@ jobs:
                 run: sleep 15s
                 shell: bash
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
                 with:
                     ref: ${{ github.ref }}
             -   name: Install PHP, extensions and tools

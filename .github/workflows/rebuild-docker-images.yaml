@@ -16,11 +16,11 @@ jobs:
             packages: write
         steps:
             -   name: GIT checkout branch - refs/heads/${{ matrix.branches }}
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
                 with:
                     ref: refs/heads/${{ matrix.branches }}
             -   name: Login to GitHub Container Registry
-                uses: docker/login-action@v3
+                uses: docker/login-action@v4
                 with:
                     registry: ghcr.io
                     username: ${{ github.actor }}
@@ -43,11 +43,11 @@ jobs:
             packages: write
         steps:
             -   name: GIT checkout branch - refs/heads/${{ matrix.branches }}
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
                 with:
                     ref: refs/heads/${{ matrix.branches }}
             -   name: Login to GitHub Container Registry
-                uses: docker/login-action@v3
+                uses: docker/login-action@v4
                 with:
                     registry: ghcr.io
                     username: ${{ github.actor }}
