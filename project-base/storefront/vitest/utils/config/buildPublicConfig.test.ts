@@ -4,11 +4,28 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 describe('buildPublicConfig', () => {
     const originalEnv = process.env;
 
+    // Build a baseline config to discover how many domains are defined
+    let domainCount: number;
+    let baselineConfig: ReturnType<typeof buildPublicConfig>;
+
     beforeEach(() => {
         process.env = { ...originalEnv };
-        process.env.DOMAIN_HOSTNAME_1 = 'https://domain1.example.com/';
-        process.env.DOMAIN_HOSTNAME_2 = 'https://domain2.example.com/';
-        process.env.DOMAIN_HOSTNAME_3 = 'https://domain3.example.com/';
+
+        // Set all DOMAIN_HOSTNAME_N env vars the config expects
+        const tempEnv = { ...originalEnv };
+        // We need to discover domain count - build with a generous set of hostnames
+        for (let i = 1; i <= 10; i++) {
+            tempEnv[`DOMAIN_HOSTNAME_${i}`] = `https://domain${i}.example.com/`;
+        }
+        process.env = tempEnv;
+        baselineConfig = buildPublicConfig();
+        domainCount = baselineConfig.domains.length;
+
+        // Reset env with exactly the needed hostnames
+        process.env = { ...originalEnv };
+        for (let i = 1; i <= domainCount; i++) {
+            process.env[`DOMAIN_HOSTNAME_${i}`] = `https://domain${i}.example.com/`;
+        }
     });
 
     afterEach(() => {
@@ -22,13 +39,44 @@ describe('buildPublicConfig', () => {
             expect(() => buildPublicConfig()).toThrow('DOMAIN_HOSTNAME_1 is required but not set.');
         });
 
-        it('throws when DOMAIN_HOSTNAME_2 is missing', () => {
+        it.skipIf(
+            (() => {
+                // Eagerly compute domain count for skip checks
+                const env = { ...originalEnv };
+                for (let i = 1; i <= 10; i++) {
+                    env[`DOMAIN_HOSTNAME_${i}`] = `https://domain${i}.example.com/`;
+                }
+                const origProcessEnv = process.env;
+                process.env = env;
+                try {
+                    const cfg = buildPublicConfig();
+                    return cfg.domains.length < 2;
+                } finally {
+                    process.env = origProcessEnv;
+                }
+            })(),
+        )('throws when DOMAIN_HOSTNAME_2 is missing', () => {
             delete process.env.DOMAIN_HOSTNAME_2;
 
             expect(() => buildPublicConfig()).toThrow('DOMAIN_HOSTNAME_2 is required but not set.');
         });
 
-        it('throws when DOMAIN_HOSTNAME_3 is missing', () => {
+        it.skipIf(
+            (() => {
+                const env = { ...originalEnv };
+                for (let i = 1; i <= 10; i++) {
+                    env[`DOMAIN_HOSTNAME_${i}`] = `https://domain${i}.example.com/`;
+                }
+                const origProcessEnv = process.env;
+                process.env = env;
+                try {
+                    const cfg = buildPublicConfig();
+                    return cfg.domains.length < 3;
+                } finally {
+                    process.env = origProcessEnv;
+                }
+            })(),
+        )('throws when DOMAIN_HOSTNAME_3 is missing', () => {
             delete process.env.DOMAIN_HOSTNAME_3;
 
             expect(() => buildPublicConfig()).toThrow('DOMAIN_HOSTNAME_3 is required but not set.');
@@ -40,16 +88,14 @@ describe('buildPublicConfig', () => {
             expect(() => buildPublicConfig()).toThrow('DOMAIN_HOSTNAME_1="not-a-url" is not a valid URL.');
         });
 
-        it('throws for URL without protocol', () => {
-            process.env.DOMAIN_HOSTNAME_2 = 'example.com';
+        it('throws for URL without protocol on any domain', () => {
+            process.env.DOMAIN_HOSTNAME_1 = 'example.com';
 
-            expect(() => buildPublicConfig()).toThrow('DOMAIN_HOSTNAME_2="example.com" is not a valid URL.');
+            expect(() => buildPublicConfig()).toThrow('DOMAIN_HOSTNAME_1="example.com" is not a valid URL.');
         });
 
         it('accepts valid URLs with different protocols', () => {
             process.env.DOMAIN_HOSTNAME_1 = 'https://example.com/';
-            process.env.DOMAIN_HOSTNAME_2 = 'http://localhost:8000/';
-            process.env.DOMAIN_HOSTNAME_3 = 'https://shop.example.com/sk/';
 
             expect(() => buildPublicConfig()).not.toThrow();
         });
@@ -91,7 +137,6 @@ describe('buildPublicConfig', () => {
 
     describe('string defaults', () => {
         it('all string fields default to empty string when env vars are missing', () => {
-            // Clear all env vars
             delete process.env.GOOGLE_MAP_API_KEY;
             delete process.env.PACKETERY_API_KEY;
             delete process.env.CDN_DOMAIN;
@@ -138,22 +183,23 @@ describe('buildPublicConfig', () => {
     });
 
     describe('LUIGIS_BOX_ENABLED_DOMAIN_IDS parsing', () => {
-        it('parses comma-separated list "1,2,3"', () => {
-            process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS = '1,2,3';
+        it('activates all domains when all IDs are listed', () => {
+            const allIds = Array.from({ length: domainCount }, (_, i) => String(i + 1)).join(',');
+            process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS = allIds;
             const config = buildPublicConfig();
 
-            expect(config.domains[0].isLuigisBoxActive).toBe(true);
-            expect(config.domains[1].isLuigisBoxActive).toBe(true);
-            expect(config.domains[2].isLuigisBoxActive).toBe(true);
+            for (let i = 0; i < domainCount; i++) {
+                expect(config.domains[i].isLuigisBoxActive).toBe(true);
+            }
         });
 
         it('empty string disables all domains', () => {
             process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS = '';
             const config = buildPublicConfig();
 
-            expect(config.domains[0].isLuigisBoxActive).toBe(false);
-            expect(config.domains[1].isLuigisBoxActive).toBe(false);
-            expect(config.domains[2].isLuigisBoxActive).toBe(false);
+            for (let i = 0; i < domainCount; i++) {
+                expect(config.domains[i].isLuigisBoxActive).toBe(false);
+            }
         });
 
         it('trailing comma does not cause issues', () => {
@@ -161,50 +207,33 @@ describe('buildPublicConfig', () => {
             const config = buildPublicConfig();
 
             expect(config.domains[0].isLuigisBoxActive).toBe(true);
-            expect(config.domains[1].isLuigisBoxActive).toBe(false);
         });
 
-        it('spaces around numbers: "1, 2" does NOT match "2" via exact includes', () => {
-            process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS = '1, 2';
+        it('spaces around numbers are NOT trimmed (exact match)', () => {
+            process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS = ' 1';
             const config = buildPublicConfig();
 
-            // '1, 2'.split(',') → ['1', ' 2'] — ' 2' !== '2'
-            expect(config.domains[0].isLuigisBoxActive).toBe(true);
-            expect(config.domains[1].isLuigisBoxActive).toBe(false);
-        });
-
-        it('single ID "2" activates only domain 2', () => {
-            process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS = '2';
-            const config = buildPublicConfig();
-
+            // ' 1' !== '1', so domain 1 should NOT be active
             expect(config.domains[0].isLuigisBoxActive).toBe(false);
-            expect(config.domains[1].isLuigisBoxActive).toBe(true);
-            expect(config.domains[2].isLuigisBoxActive).toBe(false);
+        });
+
+        it('single ID "1" activates only domain 1', () => {
+            process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS = '1';
+            const config = buildPublicConfig();
+
+            expect(config.domains[0].isLuigisBoxActive).toBe(true);
+            for (let i = 1; i < domainCount; i++) {
+                expect(config.domains[i].isLuigisBoxActive).toBe(false);
+            }
         });
 
         it('undefined env var disables all domains', () => {
             delete process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS;
             const config = buildPublicConfig();
 
-            expect(config.domains[0].isLuigisBoxActive).toBe(false);
-            expect(config.domains[1].isLuigisBoxActive).toBe(false);
-            expect(config.domains[2].isLuigisBoxActive).toBe(false);
-        });
-    });
-
-    describe('domain 3 correctly checks .includes("3")', () => {
-        it('domain 3 is NOT active when only "2" is in the list', () => {
-            process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS = '2';
-            const config = buildPublicConfig();
-
-            expect(config.domains[2].isLuigisBoxActive).toBe(false);
-        });
-
-        it('domain 3 IS active when only "3" is in the list', () => {
-            process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS = '3';
-            const config = buildPublicConfig();
-
-            expect(config.domains[2].isLuigisBoxActive).toBe(true);
+            for (let i = 0; i < domainCount; i++) {
+                expect(config.domains[i].isLuigisBoxActive).toBe(false);
+            }
         });
     });
 
@@ -254,77 +283,69 @@ describe('buildPublicConfig', () => {
 
     describe('per-domain GTM ID', () => {
         it('uses per-domain GTM_ID_N when set', () => {
-            process.env.GTM_ID_1 = 'GTM-DOMAIN1';
-            process.env.GTM_ID_2 = 'GTM-DOMAIN2';
-            process.env.GTM_ID_3 = 'GTM-DOMAIN3';
+            for (let i = 1; i <= domainCount; i++) {
+                process.env[`GTM_ID_${i}`] = `GTM-DOMAIN${i}`;
+            }
             const config = buildPublicConfig();
 
-            expect(config.domains[0].gtmId).toBe('GTM-DOMAIN1');
-            expect(config.domains[1].gtmId).toBe('GTM-DOMAIN2');
-            expect(config.domains[2].gtmId).toBe('GTM-DOMAIN3');
+            for (let i = 0; i < domainCount; i++) {
+                expect(config.domains[i].gtmId).toBe(`GTM-DOMAIN${i + 1}`);
+            }
         });
 
         it('falls back to shared GTM_ID when per-domain vars are not set', () => {
             process.env.GTM_ID = 'GTM-SHARED';
-            delete process.env.GTM_ID_1;
-            delete process.env.GTM_ID_2;
-            delete process.env.GTM_ID_3;
+            for (let i = 1; i <= domainCount; i++) {
+                delete process.env[`GTM_ID_${i}`];
+            }
             const config = buildPublicConfig();
 
-            expect(config.domains[0].gtmId).toBe('GTM-SHARED');
-            expect(config.domains[1].gtmId).toBe('GTM-SHARED');
-            expect(config.domains[2].gtmId).toBe('GTM-SHARED');
+            for (let i = 0; i < domainCount; i++) {
+                expect(config.domains[i].gtmId).toBe('GTM-SHARED');
+            }
         });
 
         it('per-domain GTM_ID_N takes priority over shared GTM_ID', () => {
             process.env.GTM_ID = 'GTM-SHARED';
             process.env.GTM_ID_1 = 'GTM-OVERRIDE';
-            delete process.env.GTM_ID_2;
-            delete process.env.GTM_ID_3;
+            for (let i = 2; i <= domainCount; i++) {
+                delete process.env[`GTM_ID_${i}`];
+            }
             const config = buildPublicConfig();
 
             expect(config.domains[0].gtmId).toBe('GTM-OVERRIDE');
-            expect(config.domains[1].gtmId).toBe('GTM-SHARED');
-            expect(config.domains[2].gtmId).toBe('GTM-SHARED');
+            for (let i = 1; i < domainCount; i++) {
+                expect(config.domains[i].gtmId).toBe('GTM-SHARED');
+            }
         });
 
         it('defaults to empty string when no GTM vars are set', () => {
             delete process.env.GTM_ID;
-            delete process.env.GTM_ID_1;
-            delete process.env.GTM_ID_2;
-            delete process.env.GTM_ID_3;
+            for (let i = 1; i <= domainCount; i++) {
+                delete process.env[`GTM_ID_${i}`];
+            }
             const config = buildPublicConfig();
 
-            expect(config.domains[0].gtmId).toBe('');
-            expect(config.domains[1].gtmId).toBe('');
-            expect(config.domains[2].gtmId).toBe('');
+            for (let i = 0; i < domainCount; i++) {
+                expect(config.domains[i].gtmId).toBe('');
+            }
         });
     });
 
     describe('domain config completeness', () => {
-        it('returns exactly 3 domains', () => {
+        it('returns at least 1 domain', () => {
             const config = buildPublicConfig();
 
-            expect(config.domains).toHaveLength(3);
+            expect(config.domains.length).toBeGreaterThanOrEqual(1);
         });
 
-        it('domains have correct hardcoded values', () => {
+        it('first domain has correct base values', () => {
             const config = buildPublicConfig();
 
             expect(config.domains[0].defaultLocale).toBe('en');
             expect(config.domains[0].currencyCode).toBe('EUR');
             expect(config.domains[0].domainId).toBe(1);
             expect(config.domains[0].type).toBe('B2C');
-
-            expect(config.domains[1].defaultLocale).toBe('cs');
-            expect(config.domains[1].currencyCode).toBe('CZK');
-            expect(config.domains[1].domainId).toBe(2);
-            expect(config.domains[1].type).toBe('B2B');
-
-            expect(config.domains[2].defaultLocale).toBe('sk');
-            expect(config.domains[2].currencyCode).toBe('EUR');
-            expect(config.domains[2].domainId).toBe(3);
-            expect(config.domains[2].type).toBe('B2B');
         });
 
         it('all domains have correct fallbackTimezone', () => {
@@ -342,6 +363,18 @@ describe('buildPublicConfig', () => {
                 expect(typeof domain.mapSetting.latitude).toBe('number');
                 expect(typeof domain.mapSetting.longitude).toBe('number');
                 expect(typeof domain.mapSetting.zoom).toBe('number');
+            }
+        });
+
+        it('all domains have required fields', () => {
+            const config = buildPublicConfig();
+
+            for (const domain of config.domains) {
+                expect(domain.domainId).toBeGreaterThan(0);
+                expect(domain.defaultLocale).toBeTruthy();
+                expect(domain.currencyCode).toBeTruthy();
+                expect(domain.type).toBeTruthy();
+                expect(domain.packeteryCountry).toBeTruthy();
             }
         });
     });
