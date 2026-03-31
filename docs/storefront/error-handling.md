@@ -287,20 +287,31 @@ Another way we can get to the `_error.tsx` page, is by returning a `notFound` po
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, ssrExchange, t }) =>
         async (context) => {
-            ...
-            if (isRedirectedFromSsr(context.req.headers)) {
-                ...
-                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    categoryDetailResponse.error?.graphQLErrors,
-                    categoryDetailResponse.data?.category,
-                    context.res,
-                );
+            const [categoryDetailResponse, layoutResult] = await Promise.all([
+                categoryDetailPromise,
+                prefetchLayoutQueries({ client, context, domainConfig }),
+            ]);
 
-                if (serverSideErrorResponse) {
-                    return serverSideErrorResponse;
-                }
+            const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                categoryDetailResponse.error,
+                categoryDetailResponse.data?.category,
+                context,
+                domainConfig.url,
+                urlSlug,
+            );
+
+            if (serverSideErrorResponse) {
+                return serverSideErrorResponse;
             }
-            ...
+
+            return buildServerSideProps({
+                layoutResult,
+                client,
+                ssrExchange,
+                context,
+                domainConfig,
+                pageQueryResults: [categoryDetailResponse],
+            });
         },
 );
 ```
@@ -347,6 +358,15 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ hasGetInitialPropsRun, err, statu
 ## Handling friendly URL page errors
 
 If a 'core' GraphQL request for a friendly URL page (e.g. product detail query for the product detail page) fails with a 500 code, an error is directly thrown on Storefront. Both on the client and on the server. On the server, this is handled using `handleServerSideErrorResponseForFriendlyUrls`, which can be used because we have a direct access to the failed query. On the client, this is done globally in the `errorExchange`. Here, each operation is checked for a special directive `@friendlyUrl`. If an operation with such directive fails with a 500 code on the client, an error is thrown. This means that for this mechanism to work, you have to add this directive to your queries, which are considered 'core' queries for your friendly URL pages.
+
+## Current customer SSR prefetch mode
+
+`initServerSideProps()` and `prefetchLayoutQueries()` support `currentCustomerUserPrefetchMode`:
+
+- `'auth'` (default) - prefetches lightweight `CurrentCustomerUserAuthQuery` for login and role checks during SSR.
+- `'full'` - prefetches `CurrentCustomerUserQuery` with full customer payload.
+
+Use `'full'` only on pages where user detail data is needed immediately after SSR (for example customer pages or form prefill pages). Keep `'auth'` everywhere else to minimize SSR payload and improve TTFB.
 
 ## Form Error Handling Guidelines
 
