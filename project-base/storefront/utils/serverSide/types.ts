@@ -24,6 +24,8 @@ export type LayoutQueryResult = {
     seoPageSlug: string | null;
 };
 
+export type CurrentCustomerUserPrefetchMode = 'auth' | 'full';
+
 export type InitServerSidePropsParameters<VariablesType> = {
     domainConfig: DomainConfigType;
     context: GetServerSidePropsContext;
@@ -33,6 +35,7 @@ export type InitServerSidePropsParameters<VariablesType> = {
         authorizedAreas?: CustomerUserAreaEnum[];
     };
     prefetchedQueries?: QueriesArray<VariablesType>;
+    currentCustomerUserPrefetchMode?: CurrentCustomerUserPrefetchMode;
     additionalProps?: Record<string, any>;
 } & (
     | {
@@ -54,6 +57,7 @@ export type PrefetchLayoutParams<VariablesType> = {
     context: GetServerSidePropsContext;
     domainConfig: DomainConfigType;
     prefetchedQueries?: QueriesArray<VariablesType>;
+    currentCustomerUserPrefetchMode?: CurrentCustomerUserPrefetchMode;
 };
 
 export type BuildServerSidePropsParams = {

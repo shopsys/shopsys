@@ -86,7 +86,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
             const orderResponse: OperationResult<TypeOrderWithdrawalDataQuery, TypeOrderWithdrawalDataQueryVariables> =
                 await client
-                    ?.query(OrderWithdrawalDataQueryDocument, {
+                    .query(OrderWithdrawalDataQueryDocument, {
                         urlHash: context.params.orderUrlHash,
                     })
                     .toPromise();
@@ -105,6 +105,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 client,
                 ssrExchange,
                 domainConfig,
+                currentCustomerUserPrefetchMode: 'full',
                 authenticationConfig: {
                     authenticationRequired: orderResponse.data.order.customerUser !== null,
                     authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],

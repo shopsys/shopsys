@@ -94,6 +94,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
         async (context) =>
             initServerSideProps({
                 context,
+                currentCustomerUserPrefetchMode: 'full',
                 authenticationConfig: {
                     authenticationRequired: true,
                     authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiAll],

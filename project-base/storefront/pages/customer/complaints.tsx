@@ -112,6 +112,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
             return initServerSideProps<TypeComplaintsQueryVariables>({
                 context,
+                currentCustomerUserPrefetchMode: 'full',
                 authenticationConfig: {
                     authenticationRequired: true,
                     authorizedRoles: [

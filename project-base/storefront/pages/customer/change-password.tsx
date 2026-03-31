@@ -55,6 +55,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             initServerSideProps({
                 context,
                 authenticationConfig: { authenticationRequired: true },
+                currentCustomerUserPrefetchMode: 'full',
                 redisClient,
                 domainConfig,
                 t,

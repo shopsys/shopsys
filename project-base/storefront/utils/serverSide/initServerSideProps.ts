@@ -1,10 +1,10 @@
-import { buildServerSideProps } from './buildServerSideProps';
-import { prefetchLayoutQueries } from './prefetchLayoutQueries';
-import { InitServerSidePropsParameters, ServerSidePropsType } from './types';
 import { Variables } from '@urql/exchange-graphcache';
 import { GetServerSidePropsResult } from 'next';
 import { ssrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
+import { buildServerSideProps } from './buildServerSideProps';
+import { prefetchLayoutQueries } from './prefetchLayoutQueries';
+import { InitServerSidePropsParameters, ServerSidePropsType } from './types';
 
 export { buildServerSideProps } from './buildServerSideProps';
 export { prefetchLayoutQueries } from './prefetchLayoutQueries';
@@ -22,6 +22,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     client,
     ssrExchange: ssrExchangeOverride,
     additionalProps = {},
+    currentCustomerUserPrefetchMode,
 }: InitServerSidePropsParameters<VariablesType>): Promise<
     GetServerSidePropsResult<Omit<ServerSidePropsType, 'cookiesStore'>>
 > => {
@@ -41,6 +42,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
         context,
         domainConfig,
         prefetchedQueries: additionalPrefetchQueries,
+        currentCustomerUserPrefetchMode,
     });
 
     return buildServerSideProps({

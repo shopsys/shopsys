@@ -2,14 +2,11 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { LoginContent } from 'components/Pages/Login/LoginContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import {
-    CurrentCustomerUserQueryDocument,
-    TypeCurrentCustomerUserQuery,
-} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { createClient } from 'urql/createClient';
+import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
@@ -48,13 +45,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 ssrExchange,
             });
 
-            const customerQueryResult = client.readQuery<TypeCurrentCustomerUserQuery>(
-                CurrentCustomerUserQueryDocument,
-                {},
-            );
-            const isLogged =
-                customerQueryResult?.data?.currentCustomerUser !== undefined &&
-                customerQueryResult?.data?.currentCustomerUser !== null;
+            const isLogged = isUserLoggedInSSR(client);
 
             if (isLogged) {
                 let redirectUrl = '/';

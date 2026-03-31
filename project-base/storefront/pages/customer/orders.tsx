@@ -71,6 +71,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
 
     return initServerSideProps<TypeOrdersQueryVariables>({
         context,
+        currentCustomerUserPrefetchMode: 'full',
         authenticationConfig: {
             authenticationRequired: true,
             authorizedRoles: [
