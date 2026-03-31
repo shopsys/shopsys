@@ -1,3 +1,4 @@
+import 'nprogress/nprogress.css';
 import { useAuthLoader } from 'utils/app/useAuthLoader';
 import { usePageLoader } from 'utils/app/usePageLoader';
 
