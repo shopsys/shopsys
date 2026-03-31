@@ -8,5 +8,10 @@ docker image build \
     --no-cache \
     --compress \
     --build-arg CYPRESS_KEEP_TID=1 \
+    --build-arg SENTRY_RELEASE="${SENTRY_RELEASE}" \
+    --build-arg SENTRY_URL="${SENTRY_URL}" \
+    --build-arg SENTRY_ORG="${SENTRY_ORG}" \
+    --build-arg SENTRY_AUTH_TOKEN="${SENTRY_AUTH_TOKEN}" \
+    --build-arg SENTRY_PROJECT="${SENTRY_PROJECT}" \
     -f project-base/storefront/docker/Dockerfile \
     ./project-base/storefront
