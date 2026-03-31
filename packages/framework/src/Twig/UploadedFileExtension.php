@@ -43,6 +43,8 @@ class UploadedFileExtension extends AbstractExtension
             new TwigFunction('uploadedFileUrl', $this->getUploadedFileUrl(...)),
             new TwigFunction('uploadedFilePreview', $this->getUploadedFilePreviewHtml(...), ['is_safe' => ['html']]),
             new TwigFunction('uploadedFilePreviewWithLink', $this->getUploadedFilePreviewWithLinkHtml(...), ['is_safe' => ['html']]),
+            new TwigFunction('uploadedFileViewUrl', $this->getUploadedFileViewUrl(...)),
+            new TwigFunction('isUploadedFileViewableInBrowser', $this->isUploadedFileViewableInBrowser(...)),
             new TwigFunction('uploadedFileExists', $this->uploadedFileExists(...)),
             new TwigFunction('customerUploadedFileUrl', $this->getCustomerUploadedFileUrl(...)),
             new TwigFunction('customerUploadedFileExists', $this->customerUploadedFileExists(...)),
@@ -52,6 +54,16 @@ class UploadedFileExtension extends AbstractExtension
     public function getUploadedFileUrl(UploadedFile $uploadedFile): string
     {
         return $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID), $uploadedFile);
+    }
+
+    public function getUploadedFileViewUrl(UploadedFile $uploadedFile): string
+    {
+        return $this->uploadedFileFacade->getUploadedFileViewUrl($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID), $uploadedFile);
+    }
+
+    public function isUploadedFileViewableInBrowser(UploadedFile $uploadedFile): bool
+    {
+        return $this->uploadedFileFacade->isUploadedFileViewableInBrowser($uploadedFile);
     }
 
     public function getCustomerUploadedFileUrl(CustomerUploadedFile $customerUploadedFile): string

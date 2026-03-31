@@ -42,6 +42,9 @@ query CategoryProductsFilterOptions($categoryUuid: Uuid!, $filter: ProductFilter
                             colorIcon {
                                 anchorText
                                 url
+                                viewUrl
+                                size
+                                extension
                             }
                         }
                     }

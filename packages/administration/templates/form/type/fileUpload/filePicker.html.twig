@@ -2,14 +2,26 @@
     {% set file = item %}
     <div class="card card-sm mb-3 js-file-upload-uploaded-file js-picker-item" data-id="{{ file ? file.id : '' }}" style="max-width: 17.5rem;">
         <div class="card-header d-flex justify-content-between align-items-center py-1">
-            <button class="js-picker-item-button-delete ms-auto btn btn-sm btn-ghost-danger" type="button" title="{{ 'Delete'|trans }}">
-                {{ ux_icon('delete', {class: 'icon mx-0'}) }}
-            </button>
+            <div class="d-flex align-items-center gap-1 ms-auto">
+                {% if file and uploadedFileExists(file) %}
+                    {% if isUploadedFileViewableInBrowser(file) %}
+                        <a href="{{ uploadedFileViewUrl(file) }}" target="_blank" class="btn btn-sm btn-ghost-secondary" title="{{ 'View'|trans }}">
+                            {{ ux_icon('forward-page', {class: 'icon mx-0'}) }}
+                        </a>
+                    {% endif %}
+                    <a href="{{ uploadedFileUrl(file) }}" download class="btn btn-sm btn-ghost-secondary" title="{{ 'Download'|trans }}">
+                        {{ ux_icon('download', {class: 'icon mx-0'}) }}
+                    </a>
+                {% endif %}
+                <button class="js-picker-item-button-delete btn btn-sm btn-ghost-danger" type="button" title="{{ 'Delete'|trans }}">
+                    {{ ux_icon('delete', {class: 'icon mx-0'}) }}
+                </button>
+            </div>
         </div>
 
         <div class="position-relative ratio ratio-16x9 overflow-hidden js-picker-item-thumbnail">
             {% if file %}
-                {{ uploadedFilePreviewWithLink(file) }}
+                {{ uploadedFilePreview(file) }}
             {% endif %}
         </div>
 

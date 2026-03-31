@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use League\Flysystem\FilesystemOperator;
+use League\Flysystem\UnableToRetrieveMetadata;
 use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileLocator;
@@ -242,11 +243,23 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
 
     public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
     {
-        if ($this->isUploadedFileViewableInBrowser($uploadedFile)) {
-            return $this->uploadedFileLocator->getUploadedFileViewUrl($domainConfig, $uploadedFile);
-        }
-
         return $this->uploadedFileLocator->getUploadedFileUrl($domainConfig, $uploadedFile);
+    }
+
+    public function getUploadedFileViewUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
+    {
+        return $this->uploadedFileLocator->getUploadedFileViewUrl($domainConfig, $uploadedFile);
+    }
+
+    public function getUploadedFileSize(UploadedFile $uploadedFile): ?int
+    {
+        try {
+            return $this->filesystem->fileSize(
+                $this->uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFile),
+            );
+        } catch (UnableToRetrieveMetadata) {
+            return null;
+        }
     }
 
     /**
@@ -547,7 +560,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         return $this->uploadedFileRepository->getAllFilesIndexedByEntityId($entityIds, $entityName, $requiredLocale, $type);
     }
 
-    protected function isUploadedFileViewableInBrowser(UploadedFile $uploadedFile): bool
+    public function isUploadedFileViewableInBrowser(UploadedFile $uploadedFile): bool
     {
         return in_array(strtolower($uploadedFile->getExtension()), static::VIEWABLE_EXTENSIONS, true);
     }
