@@ -10,3 +10,12 @@ FileDecorator:
             url:
                 type: "String!"
                 description: "Url to download the file"
+            viewUrl:
+                type: "String"
+                description: "Url to view the file in browser (available for images and PDF files)"
+            size:
+                type: "Int"
+                description: "File size in bytes"
+            extension:
+                type: "String"
+                description: "File extension"

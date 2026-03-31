@@ -6,10 +6,19 @@
 {% block h1 %}{{ entity.getNameWithExtension() }}{% endblock %}
 
 {% block btn %}
-    <a href="{{ uploadedFileUrl(entity) }}" class="btn btn-secondary">
-        {{ ux_icon('download') }}
-        {{ 'Download'|trans }}
-    </a>
+    {% if uploadedFileExists(entity) %}
+        {% if isUploadedFileViewableInBrowser(entity) %}
+            <a href="{{ uploadedFileViewUrl(entity) }}" target="_blank" class="btn btn-secondary">
+                {{ ux_icon('forward-page') }}
+                {{ 'View'|trans }}
+            </a>
+        {% endif %}
+
+        <a href="{{ uploadedFileUrl(entity) }}" class="btn btn-secondary" download>
+            {{ ux_icon('download') }}
+            {{ 'Download'|trans }}
+        </a>
+    {% endif %}
 
     <a href="{{ deleteUrl }}"
        class="btn btn-outline-danger"
@@ -33,7 +42,7 @@
 
                     <div class="card card-sm" style="max-width: 17.5rem;">
                         <div class="position-relative ratio ratio-16x9 overflow-hidden">
-                            {{ uploadedFilePreviewWithLink(entity) }}
+                            {{ uploadedFilePreview(entity) }}
                         </div>
 
                         <div class="card-footer">

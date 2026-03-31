@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\Exception\NotFoundRedirectT
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Symfony\Component\HttpFoundation\HeaderUtils;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class UploadedFileController
@@ -37,10 +38,15 @@ class UploadedFileController
         }
     }
 
-    public function viewAction(int $uploadedFileId, string $uploadedFilename): StreamedResponse
+    public function viewAction(int $uploadedFileId, string $uploadedFilename): Response
     {
         try {
             $uploadedFile = $this->getByIdSlugAndExtension($uploadedFileId, $uploadedFilename);
+
+            if (!$this->uploadedFileFacade->isUploadedFileViewableInBrowser($uploadedFile)) {
+                return $this->downloadAction($uploadedFileId, $uploadedFilename);
+            }
+
             $filePath = $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
 
             return new StreamedResponse(function () use ($filePath): void {

@@ -5258,11 +5258,38 @@ Clickable text for a hyperlink
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="file.extension">extension</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+File extension
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="file.size">size</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+File size in bytes
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="file.url">url</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Url to download the file
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="file.viewurl">viewUrl</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Url to view the file in browser (available for images and PDF files)
 
 </td>
 </tr>

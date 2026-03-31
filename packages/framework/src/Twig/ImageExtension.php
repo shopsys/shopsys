@@ -44,6 +44,7 @@ class ImageExtension extends AbstractExtension
     {
         return [
             new TwigFunction('image', $this->getImageHtml(...), ['is_safe' => ['html']]),
+            new TwigFunction('imageUrl', $this->getImageUrlForTemplate(...)),
         ];
     }
 
@@ -59,6 +60,23 @@ class ImageExtension extends AbstractExtension
         }
 
         return $this->imageLocator->imageExists($image);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
+     */
+    public function getImageUrlForTemplate(
+        object $imageOrEntity,
+        ?string $type = null,
+        int $domainId = Domain::FIRST_DOMAIN_ID,
+    ): ?string {
+        try {
+            $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+            return $this->imageFacade->getImageUrl($domainConfig, $imageOrEntity, $type);
+        } catch (ImageNotFoundException $e) {
+            return null;
+        }
     }
 
     /**

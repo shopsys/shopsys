@@ -57,6 +57,9 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
                 colorIcon {
                     anchorText
                     url
+                    viewUrl
+                    size
+                    extension
                 }
             }
         }
@@ -83,6 +86,9 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
         files {
             anchorText
             url
+            viewUrl
+            size
+            extension
         }
         isVisible
         isInquiryType
