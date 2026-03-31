@@ -14,7 +14,7 @@ export const PageHeadScripts: FC = () => {
     return (
         <Script
             id="usersnap-code"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
                 __html: `window.onUsersnapLoad=function(api){api.init();}
                         var script = document.createElement('script');script.defer = 1;script.src = 'https://widget.usersnap.com/global/load/${userSnapApiKey}?onload=onUsersnapLoad';document.getElementsByTagName('head')[0].appendChild(script);`,
