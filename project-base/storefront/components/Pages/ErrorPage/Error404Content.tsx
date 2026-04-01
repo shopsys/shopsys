@@ -1,5 +1,5 @@
 import { ErrorPage, ErrorPageTextHeading, ErrorPageTextMain, ErrorPageButtonLink } from './ErrorPageElements';
-import image404 from '/public/images/404_m.png';
+import image404 from '/public/images/404.png';
 import { Image } from 'components/Basic/Image/Image';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';

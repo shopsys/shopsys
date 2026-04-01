@@ -7,7 +7,7 @@ type ImageProps = {
 } & Omit<NextImageProps, 'src'> &
     React.RefAttributes<HTMLImageElement | null>;
 
-const fallbackImageSrc = '/images/optimized-noimage.webp';
+const fallbackImageSrc = '/images/noimage.webp';
 
 // Extract src from StaticImageData object if needed
 const getSrcFromImageUrl = (imageUrl: NextImageProps['src']): string => {
