@@ -16,7 +16,7 @@ class Version20260320122217 extends AbstractMigration implements DomainAwareInte
     #[Override]
     public function up(Schema $schema): void
     {
-        $unitCount = $this->sql('SELECT COUNT(*) FROM units')->fetchOne();
+        $unitCount = $this->sqlQuery('SELECT COUNT(*) FROM units')->fetchOne();
 
         if ($unitCount > 0) {
             return;
