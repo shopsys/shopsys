@@ -81,6 +81,8 @@ class StoreRepository
         $results = $queryBuilder->getQuery()->getResult();
 
         if ($storesFilterOptions->getCoordinates() === null) {
+            $this->eagerLoadOpeningHours($results);
+
             return $results;
         }
 
@@ -100,6 +102,30 @@ class StoreRepository
             $stores[$store->getId()] = $store;
         }
 
+        $this->eagerLoadOpeningHours(array_values($stores));
+
         return $stores;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store[] $stores
+     */
+    protected function eagerLoadOpeningHours(array $stores): void
+    {
+        if ($stores === []) {
+            return;
+        }
+
+        $storeIds = array_map(static fn (Store $store) => $store->getId(), $stores);
+
+        $this->entityManager->createQueryBuilder()
+            ->select('s, oh, ohr')
+            ->from(Store::class, 's')
+            ->leftJoin('s.openingHours', 'oh')
+            ->leftJoin('oh.openingHoursRanges', 'ohr')
+            ->where('s.id IN (:storeIds)')
+            ->setParameter('storeIds', $storeIds)
+            ->getQuery()
+            ->getResult();
     }
 }
