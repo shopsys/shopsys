@@ -20,7 +20,7 @@ jobs:
         if: github.event_name == 'pull_request'
         steps:
             -   name: Checkout repository
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
             -   name: Resolve author Slack mention
                 id: author-mention
                 uses: ./.github/actions/resolve-slack-mention
@@ -126,7 +126,7 @@ jobs:
             github.event.workflow_run.conclusion == 'cancelled')
         steps:
             -   name: Checkout repository
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
             -   name: Get PR with auto-merge enabled
                 id: get-pr
                 env:

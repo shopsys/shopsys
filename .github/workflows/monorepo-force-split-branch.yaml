@@ -15,7 +15,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ inputs.branch_name }}
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
                 with:
                     ref: refs/heads/${{ inputs.branch_name }}
                     fetch-depth: 0
