@@ -39,9 +39,9 @@ export const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams 
     const canonicalUrl = preferredCanonicalUrl || generateCanonicalUrl(router, url, canonicalQueryParams);
 
     return {
-        title: preferredTitle ?? defaultTitle ?? fallbackTitle,
+        title: preferredTitle ?? defaultTitle ?? fallbackTitle ?? '',
         titleSuffix: fallbackTitleSuffix ?? '',
-        description: preferredDescription ?? defaultDescription ?? fallbackDescription,
+        description: preferredDescription ?? defaultDescription ?? fallbackDescription ?? '',
         ogTitle: preferredOgTitle,
         ogDescription: preferredOgDescription,
         ogImageUrl: preferredOgImageUrl,
