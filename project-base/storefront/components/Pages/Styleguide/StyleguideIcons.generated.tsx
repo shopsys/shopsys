@@ -24,6 +24,8 @@ import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
+import { EyeCrossedIcon } from 'components/Basic/Icon/EyeCrossedIcon';
+import { EyeIcon } from 'components/Basic/Icon/EyeIcon';
 import { FacebookIcon } from 'components/Basic/Icon/FacebookIcon';
 import { FacebookSimpleIcon } from 'components/Basic/Icon/FacebookSimpleIcon';
 import { FillIcon } from 'components/Basic/Icon/FillIcon';
@@ -155,6 +157,14 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <ExitIcon className="size-10" />
                 <span className="text-center text-xs break-all">ExitIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <EyeCrossedIcon className="size-10" />
+                <span className="text-center text-xs break-all">EyeCrossedIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <EyeIcon className="size-10" />
+                <span className="text-center text-xs break-all">EyeIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <FacebookIcon className="size-10" />
