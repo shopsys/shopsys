@@ -65,7 +65,7 @@ class SeoPageRepository
 
     public function findByDomainIdAndPageSlug(int $domainId, string $pageSlug): ?SeoPage
     {
-        $seoPage = $this->getSeoPageRepository()
+        return $this->getSeoPageRepository()
             ->createQueryBuilder('sp')
             ->join('sp.domains', 'spd')
             ->where('spd.domainId = :domainId')
@@ -73,8 +73,6 @@ class SeoPageRepository
             ->setParameter('domainId', $domainId)
             ->setParameter('pageSlug', $pageSlug)
             ->getQuery()
-            ->getResult();
-
-        return array_first($seoPage);
+            ->getOneOrNullResult();
     }
 }
