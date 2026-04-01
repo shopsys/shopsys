@@ -3460,11 +3460,11 @@ export type TypeSeoPage = TypeHreflang & {
 export type TypeSeoSetting = {
   __typename?: 'SeoSetting';
   /** Description of the content of a web page */
-  metaDescription: Scalars['String']['output'];
+  metaDescription: Maybe<Scalars['String']['output']>;
   /** Robots.txt's file content */
   robotsTxtContent: Maybe<Scalars['String']['output']>;
   /** Document's title that is shown in a browser's title */
-  title: Scalars['String']['output'];
+  title: Maybe<Scalars['String']['output']>;
   /** Complement to title */
   titleAddOn: Maybe<Scalars['String']['output']>;
 };
