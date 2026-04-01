@@ -13,3 +13,4 @@ services:
         arguments:
             $indexDefinitionsDirectory: '%shopsys.elasticsearch.structure_dir%'
             $indexPrefix: 'test_%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
+            $environment: '%kernel.environment%'

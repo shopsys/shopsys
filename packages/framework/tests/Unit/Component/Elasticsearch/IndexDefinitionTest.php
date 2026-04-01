@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchCanno
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchInvalidJsonInDefinitionFileException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionModifier;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionYamlResolver;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 
 class IndexDefinitionTest extends TestCase
@@ -22,7 +23,7 @@ class IndexDefinitionTest extends TestCase
         int $domainId,
         string $expectedResult,
     ): void {
-        $indexDefinition = new IndexDefinition($indexName, $definitionsDirectory, $indexPrefix, $domainId, new IndexDefinitionModifier(EnvironmentType::TEST, false));
+        $indexDefinition = $this->createIndexDefinition($indexName, $definitionsDirectory, $indexPrefix, $domainId, EnvironmentType::TEST);
         $this->assertSame($expectedResult, $indexDefinition->getIndexAlias());
     }
 
@@ -40,14 +41,14 @@ class IndexDefinitionTest extends TestCase
     public function testGetDefinitionReturnsDefinition(): void
     {
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/valid/';
-        $indexDefinition = new IndexDefinition('product', $definitionDirectory, '', 1, new IndexDefinitionModifier(EnvironmentType::PRODUCTION, false));
+        $indexDefinition = $this->createIndexDefinition('product', $definitionDirectory, '', 1, EnvironmentType::PRODUCTION);
         $this->assertSame(['foo' => 'bar'], $indexDefinition->getDefinition());
     }
 
     public function testGetDefinitionOnInvalidJsonThrowsException(): void
     {
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/invalidJson/';
-        $indexDefinition = new IndexDefinition('product', $definitionDirectory, '', 1, new IndexDefinitionModifier(EnvironmentType::PRODUCTION, false));
+        $indexDefinition = $this->createIndexDefinition('product', $definitionDirectory, '', 1, EnvironmentType::PRODUCTION);
 
         $this->expectException(ElasticsearchInvalidJsonInDefinitionFileException::class);
         $indexDefinition->getDefinition();
@@ -56,7 +57,7 @@ class IndexDefinitionTest extends TestCase
     public function testGetDefinitionOnNonExistingDefinitionThrowsException(): void
     {
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/non-existing-folder-id-3e85ba/';
-        $indexDefinition = new IndexDefinition('product', $definitionDirectory, '', 1, new IndexDefinitionModifier(EnvironmentType::PRODUCTION, false));
+        $indexDefinition = $this->createIndexDefinition('product', $definitionDirectory, '', 1, EnvironmentType::PRODUCTION);
 
         $this->expectException(ElasticsearchCannotReadDefinitionFileException::class);
         $indexDefinition->getDefinition();
@@ -65,7 +66,7 @@ class IndexDefinitionTest extends TestCase
     public function testGetVersionedIndexName(): void
     {
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/valid/';
-        $indexDefinition = new IndexDefinition('product', $definitionDirectory, '', 1, new IndexDefinitionModifier(EnvironmentType::PRODUCTION, false));
+        $indexDefinition = $this->createIndexDefinition('product', $definitionDirectory, '', 1, EnvironmentType::PRODUCTION);
 
         $this->assertSame('product_1_49a3696adf0fbfacc12383a2d7400d51', $indexDefinition->getVersionedIndexName());
     }
@@ -73,7 +74,7 @@ class IndexDefinitionTest extends TestCase
     public function testDevEnvironmentIsLimited(): void
     {
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/valid/';
-        $indexDefinition = new IndexDefinition('product', $definitionDirectory, '', 1, new IndexDefinitionModifier(EnvironmentType::DEVELOPMENT, false));
+        $indexDefinition = $this->createIndexDefinition('product', $definitionDirectory, '', 1, EnvironmentType::DEVELOPMENT);
         $this->assertSame(
             [
                 'foo' => 'bar',
@@ -91,7 +92,14 @@ class IndexDefinitionTest extends TestCase
     public function testProdEnvironmentIsLimitedWhenForced(): void
     {
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/valid/';
-        $indexDefinition = new IndexDefinition('product', $definitionDirectory, '', 1, new IndexDefinitionModifier(EnvironmentType::PRODUCTION, true));
+        $indexDefinition = new IndexDefinition(
+            'product',
+            $definitionDirectory,
+            '',
+            1,
+            new IndexDefinitionModifier(EnvironmentType::PRODUCTION, true),
+            new IndexDefinitionYamlResolver(),
+        );
         $this->assertSame(
             [
                 'foo' => 'bar',
@@ -103,6 +111,24 @@ class IndexDefinitionTest extends TestCase
                 ],
             ],
             $indexDefinition->getDefinition(),
+        );
+    }
+
+    private function createIndexDefinition(
+        string $indexName,
+        string $definitionsDirectory,
+        string $indexPrefix,
+        int $domainId,
+        string $environment,
+        bool $forceElasticLimit = false,
+    ): IndexDefinition {
+        return new IndexDefinition(
+            $indexName,
+            $definitionsDirectory,
+            $indexPrefix,
+            $domainId,
+            new IndexDefinitionModifier($environment, $forceElasticLimit),
+            new IndexDefinitionYamlResolver(),
         );
     }
 }

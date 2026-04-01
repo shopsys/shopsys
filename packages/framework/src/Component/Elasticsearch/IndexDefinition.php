@@ -17,31 +17,80 @@ class IndexDefinition
         protected readonly string $indexPrefix,
         protected readonly int $domainId,
         protected readonly IndexDefinitionModifier $indexDefinitionModifier,
+        protected readonly IndexDefinitionYamlResolver $indexDefinitionYamlResolver,
+        protected readonly string $locale = '',
+        protected readonly string $environment = '',
     ) {
     }
 
     public function getDefinition(): array
     {
-        $decodedDefinition = json_decode($this->getDefinitionFileContent(), true);
+        $yamlFilepath = $this->getYamlDefinitionFilepath();
+
+        if (is_readable($yamlFilepath)) {
+            return $this->getYamlDefinition($yamlFilepath);
+        }
+
+        return $this->getJsonDefinition();
+    }
+
+    protected function getYamlDefinition(string $yamlFilepath): array
+    {
+        $yamlContent = file_get_contents($yamlFilepath);
+
+        $decodedDefinition = $this->indexDefinitionYamlResolver->resolveYamlToDefinition(
+            $yamlContent,
+            $this->domainId,
+            $this->locale,
+            $this->environment,
+        );
+
+        return $this->indexDefinitionModifier->modifyDefinition($decodedDefinition);
+    }
+
+    protected function getJsonDefinition(): array
+    {
+        $decodedDefinition = json_decode($this->getJsonDefinitionFileContent(), true);
 
         if ($decodedDefinition === null) {
             throw new ElasticsearchInvalidJsonInDefinitionFileException(
                 $this->getIndexName(),
-                $this->getDefinitionFilepath(),
+                $this->getJsonDefinitionFilepath(),
             );
         }
 
         return $this->indexDefinitionModifier->modifyDefinition($decodedDefinition);
     }
 
+    protected function getYamlDefinitionFilepath(): string
+    {
+        return $this->definitionsDirectory . $this->getIndexName() . '.yaml';
+    }
+
+    /**
+     * @deprecated Use YAML definition files instead. JSON definitions will be removed in a future version.
+     */
     protected function getDefinitionFilepath(): string
+    {
+        return $this->getJsonDefinitionFilepath();
+    }
+
+    protected function getJsonDefinitionFilepath(): string
     {
         return $this->definitionsDirectory . $this->getIndexName() . '/' . $this->getDomainId() . '.json';
     }
 
+    /**
+     * @deprecated Use YAML definition files instead. JSON definitions will be removed in a future version.
+     */
     protected function getDefinitionFileContent(): string
     {
-        $definitionFilepath = $this->getDefinitionFilepath();
+        return $this->getJsonDefinitionFileContent();
+    }
+
+    protected function getJsonDefinitionFileContent(): string
+    {
+        $definitionFilepath = $this->getJsonDefinitionFilepath();
 
         if (!is_readable($definitionFilepath)) {
             throw new ElasticsearchCannotReadDefinitionFileException($definitionFilepath);
