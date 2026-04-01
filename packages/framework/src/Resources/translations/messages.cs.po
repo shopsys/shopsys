@@ -3277,6 +3277,9 @@ msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
 msgid "Third column categories"
 msgstr "Kategorie třetího sloupce"
 
+msgid "This action is only available for parameter type slider."
+msgstr "Tato akce je dostupná pouze pro typ parametru slider."
+
 msgid "This currency can't be deleted, it is set as default or is saved with order."
 msgstr "Tuto měnu nelze smazat, je nastavena jako výchozí nebo je uložena u objednávky"
 

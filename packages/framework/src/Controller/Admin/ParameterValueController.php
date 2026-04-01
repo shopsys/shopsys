@@ -120,6 +120,13 @@ class ParameterValueController extends AdminBaseController
     public function parameterValuesEditAction(Request $request, int $id): Response
     {
         $parameter = $this->parameterFacade->getById($id);
+
+        if ($parameter->getParameterType() !== Parameter::PARAMETER_TYPE_SLIDER) {
+            $this->addErrorFlashTwig(t('This action is only available for parameter type slider.'));
+
+            return $this->redirectToRoute('admin_parameter_list');
+        }
+
         $parameterValues = $this->parameterFacade->getParameterValuesByParameter($parameter);
         $parameterValuesConversionDataIndexedByParameterValueId = $this->parameterValueConversionDataFactory->createForNumericConversion($parameterValues);
 
