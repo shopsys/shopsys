@@ -150,10 +150,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
         if ($seoMetaDescriptionMainPageSettingCount <= 0) {
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoMetaDescriptionMainPage\', 1, :text, \'string\')',
-                [
-                    'text' => 'Shopsys Platform - the best solution for your eshop.',
-                ],
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoMetaDescriptionMainPage\', 1, null, \'none\')',
             );
         }
     }
@@ -166,10 +163,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
         if ($seoTitleMainPageSettingCount <= 0) {
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoTitleMainPage\', 1, :text, \'string\')',
-                [
-                    'text' => 'Shopsys Platform - Title page',
-                ],
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoTitleMainPage\', 1, null, \'none\')',
             );
         }
     }
@@ -182,10 +176,7 @@ class Version20180702111020 extends AbstractMigration implements DomainAwareInte
 
         if ($seoTitleAddOnSettingCount <= 0) {
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoTitleAddOn\', 1, :text, \'string\')',
-                [
-                    'text' => '| Demo eshop',
-                ],
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoTitleAddOn\', 1, null, \'none\')',
             );
         }
     }
