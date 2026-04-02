@@ -70,6 +70,9 @@ msgstr "<a href=\"%url%\">Není nastaven článek zásady ochrany osobních úda
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr "<a href=\"%url%\">Státní svátky pro rok %year% nejsou nastaveny.</a>"
 
+msgid "<a href=\"%url%\">SEO information for main page for domain %domainName% is not fully set.</a>"
+msgstr "<a href=\"%url%\">SEO informace pro hlavní stránku domény %domainName% nejsou zcela nastaveny.</a>"
+
 msgid "<a href=\"%url%\">Some required email templates are not fully set.</a>"
 msgstr "<a href=\"%url%\">Některé povinné e-mailové šablony nejsou vyplněny.</a>"
 

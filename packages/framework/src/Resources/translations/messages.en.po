@@ -70,6 +70,9 @@ msgstr ""
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr ""
 
+msgid "<a href=\"%url%\">SEO information for main page for domain %domainName% is not fully set.</a>"
+msgstr ""
+
 msgid "<a href=\"%url%\">Some required email templates are not fully set.</a>"
 msgstr ""
 

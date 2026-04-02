@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Symfony\Component\Routing\RouterInterface;
@@ -40,6 +41,7 @@ class RequiredSettingExtension extends AbstractExtension
         protected readonly CountryFacade $countryFacade,
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly ClockInterface $clock,
+        protected readonly SeoSettingFacade $seoSettingFacade,
     ) {
     }
 
@@ -80,6 +82,7 @@ class RequiredSettingExtension extends AbstractExtension
         $this->checkMandatoryArticlesExist();
         $this->checkAllSliderNumericValuesAreSet();
         $this->checkPublicHolidaysAreSet();
+        $this->checkSeoInformationIsSet();
     }
 
     protected function checkEnabledMailTemplatesHaveTheirBodyAndSubjectFilled(): void
@@ -232,6 +235,31 @@ class RequiredSettingExtension extends AbstractExtension
 
                 return;
             }
+        }
+    }
+
+    protected function checkSeoInformationIsSet(): void
+    {
+        foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
+            $titleMainPage = $this->seoSettingFacade->getTitleMainPage($domainId);
+            $descriptionMainPage = $this->seoSettingFacade->getDescriptionMainPage($domainId);
+
+            $isTitleMissing = $titleMainPage === null || $titleMainPage === '';
+            $isDescriptionMissing = $descriptionMainPage === null || $descriptionMainPage === '';
+
+            if (!$isTitleMissing && !$isDescriptionMissing) {
+                continue;
+            }
+
+            $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+            $this->requiredSettingsMessages[] = t(
+                '<a href="%url%">SEO information for main page for domain %domainName% is not fully set.</a>',
+                [
+                    '%url%' => $this->generateUrlWithSelectedDomainTab('admin_seo_index', $domainId),
+                    '%domainName%' => $domainConfig->getName(),
+                ],
+            );
         }
     }
 }
