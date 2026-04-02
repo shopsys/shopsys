@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade as BasePlaceOrderFacade
 
 /**
  * @property \App\Model\Order\Item\OrderItemFactory $orderItemFactory
- * @property \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
  * @property \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
  * @method __construct(\Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository, \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository, \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository, \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory, \Doctrine\ORM\EntityManagerInterface $em, \App\Model\Order\Item\OrderItemFactory $orderItemFactory, \Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher $placedOrderMessageDispatcher, \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade, \App\Model\Customer\User\CustomerUserFacade $customerUserFacade, \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade)
  * @method \App\Model\Order\Order placeOrder(\App\Model\Order\OrderData $orderData, string|null $deliveryAddressUuid = null)

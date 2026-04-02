@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag as BaseFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
 
 /**
- * @property \App\Model\Product\Flag\FlagData $flagData
  * @method void setTranslations(\App\Model\Product\Flag\FlagData $flagData)
  * @method __construct(\App\Model\Product\Flag\FlagData $flagData)
  */

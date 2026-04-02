@@ -17,10 +17,8 @@ use Twig\TwigFunction;
  * @property \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @method string getProductDisplayName(\App\Model\Product\Product $product)
- * @method string getProductListDisplayName(\App\Model\Product\Product $product)
  * @method \App\Model\Category\Category getProductMainCategory(\App\Model\Product\Product $product, int $domainId)
  * @method \App\Model\Category\Category|null findProductMainCategory(\App\Model\Product\Product $product, int $domainId)
- * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface|null getProductSellingPrice(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValues(\App\Model\Product\Product $product)
  */
 class ProductExtension extends BaseProductExtension

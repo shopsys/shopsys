@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry;
 use Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory;
 use Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory;
+use Shopsys\FrameworkBundle\Component\ClassExtension\StaleAnnotationsRemover;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -45,7 +46,8 @@ class ExtendedClassesAnnotationsCommand extends Command
             ->setHelp('What does the command do exactly?
 - Replaces the shopsys with the project annotations in all project files when there exists a project extension of a given shopsys class.
 - Adds @property annotations to project classes when there exists a property in parent class that is extended in the project.
-- Adds @method annotations to project classes when there exists a method in parent class that accepts as a parameter or returns an instance of a class that is extended in the project.');
+- Adds @method annotations to project classes when there exists a method in parent class that accepts as a parameter or returns an instance of a class that is extended in the project.
+- Removes stale @property and @method annotations from project classes when the referenced method or property no longer exists in the parent class.');
     }
 
     public function __construct(
@@ -56,6 +58,7 @@ class ExtendedClassesAnnotationsCommand extends Command
         protected readonly AnnotationsReplacer $annotationsReplacer,
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
         protected readonly AnnotationsAdder $annotationsAdder,
+        protected readonly StaleAnnotationsRemover $staleAnnotationsRemover,
     ) {
         parent::__construct();
     }
@@ -99,7 +102,24 @@ class ExtendedClassesAnnotationsCommand extends Command
             }
         }
 
-        if (count($filesForReplacingAnnotations) === 0 && count($filesForAddingPropertyOrMethodAnnotations) === 0) {
+        $filesWithRemovedStaleAnnotations = $this->removeStalePropertyAndMethodAnnotationsFromProjectClasses($isDryRun);
+
+        if (count($filesWithRemovedStaleAnnotations) > 0) {
+            if ($isDryRun) {
+                $symfonyStyle->error('Stale @method or @property annotations need to be removed from the following files:');
+                $symfonyStyle->listing($filesWithRemovedStaleAnnotations);
+            } else {
+                $symfonyStyle->note(
+                    array_merge(['Stale @method or @property annotations were removed from the following files:'], $filesWithRemovedStaleAnnotations),
+                );
+            }
+        }
+
+        $hasChanges = count($filesForReplacingAnnotations) > 0
+            || count($filesForAddingPropertyOrMethodAnnotations) > 0
+            || count($filesWithRemovedStaleAnnotations) > 0;
+
+        if (!$hasChanges) {
             $symfonyStyle->success('All good!');
 
             return Command::SUCCESS;
@@ -203,5 +223,43 @@ class ExtendedClassesAnnotationsCommand extends Command
         }
 
         return $filesForAddingPropertyOrMethodAnnotations;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function removeStalePropertyAndMethodAnnotationsFromProjectClasses(bool $isDryRun): array
+    {
+        $classExtensionMap = $this->classExtensionRegistry->getClassExtensionMap();
+        $filesWithRemovedAnnotations = [];
+
+        foreach ($classExtensionMap as $shopsysClass => $projectClass) {
+            if (str_starts_with($projectClass, 'App') === false) {
+                continue;
+            }
+
+            $shopsysClassBetterReflection = ReflectionObject::createFromName($shopsysClass);
+            $projectClassBetterReflection = ReflectionObject::createFromName($projectClass);
+
+            $staleLines = $this->staleAnnotationsRemover->getStaleAnnotationLines(
+                $shopsysClassBetterReflection,
+                $projectClassBetterReflection,
+            );
+
+            if (count($staleLines) <= 0) {
+                continue;
+            }
+
+            $filesWithRemovedAnnotations[] = $projectClassBetterReflection->getFileName();
+
+            if (!$isDryRun) {
+                $this->staleAnnotationsRemover->removeStaleAnnotationsFromClass(
+                    $shopsysClassBetterReflection,
+                    $projectClassBetterReflection,
+                );
+            }
+        }
+
+        return $filesWithRemovedAnnotations;
     }
 }

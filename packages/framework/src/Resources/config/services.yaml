@@ -112,6 +112,8 @@ services:
 
     Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer: ~
 
+    Shopsys\FrameworkBundle\Component\ClassExtension\StaleAnnotationsRemover: ~
+
     Shopsys\FrameworkBundle\Component\Collector\ShopsysFrameworkDataCollector:
         tags:
             - { name: data_collector, id: shopsys_framework_core, template: '@ShopsysFramework/Components/Collector/shopsysFramework.html.twig', priority: -300 }

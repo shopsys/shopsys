@@ -10,8 +10,6 @@ use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation 
  * @property \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
  * @property \App\FrontendApi\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
  * @property \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
- * @method \App\Model\Customer\User\CustomerUser changePassword(\Overblog\GraphQLBundle\Definition\Argument $argument, \Overblog\GraphQLBundle\Validator\InputValidator $validator)
- * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
  * @property \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
  * @method \App\Model\Customer\User\CustomerUser changePasswordMutation(\Overblog\GraphQLBundle\Definition\Argument $argument, \Overblog\GraphQLBundle\Validator\InputValidator $validator)
  * @property \App\FrontendApi\Model\Order\OrderApiFacade $orderFacade
