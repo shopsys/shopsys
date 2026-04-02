@@ -8,6 +8,7 @@ use App\Model\Product\Search\ProductElasticsearchConverter;
 use Nette\Utils\Json;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Finder\Finder;
 
 class ProductElasticsearchConverterTest extends TestCase
 {
@@ -58,8 +59,14 @@ class ProductElasticsearchConverterTest extends TestCase
 
     public static function getProductMappingFiles(): iterable
     {
-        yield [realpath(__DIR__ . '/../../../../../../src/Resources/definition/product/1.json')];
+        $finder = Finder::create()
+            ->files()
+            ->in(__DIR__ . '/../../../../../../src/Resources/definition/product/')
+            ->name('*.json')
+            ->sortByName();
 
-        yield [realpath(__DIR__ . '/../../../../../../src/Resources/definition/product/2.json')];
+        foreach ($finder as $file) {
+            yield $file->getFilename() => [$file->getRealPath()];
+        }
     }
 }

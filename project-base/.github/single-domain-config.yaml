@@ -1,0 +1,19 @@
+domains:
+    -
+        id: 1
+        name: 'B2C - EN'
+        locale: en
+        timezone: Europe/Prague
+        type: b2c
+        currency_code: EUR
+        load_demo_data: true
+        map_settings:
+            latitude: 49.8175
+            longitude: 15.473
+            zoom: 7
+        social_login:
+            facebook: true
+            google: true
+            seznam: true
+metatag_site_name:
+    site_name: 'Shopsys Platform'

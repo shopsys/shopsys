@@ -304,9 +304,6 @@
             "ordering_priority": {
                 "type": "integer"
             },
-            "calculated_selling_denied": {
-                "type": "boolean"
-            },
             "selling_denied": {
                 "type": "boolean"
             },
@@ -342,6 +339,9 @@
             "stock_quantity": {
                 "type": "integer"
             },
+            "is_allowed_negative_stock": {
+                "type": "boolean"
+            },
             "variants": {
                 "type": "integer"
             },
@@ -365,9 +365,6 @@
             },
             "name_suffix": {
                 "type": "text"
-            },
-            "is_sale_exclusion": {
-                "type": "boolean"
             },
             "store_availabilities_information": {
                 "type": "nested",
@@ -572,6 +569,16 @@
             },
             "vat_percent": {
                 "type": "text"
+            },
+            "promotion": {
+                "properties": {
+                    "buy_quantity": {
+                        "type": "integer"
+                    },
+                    "free_quantity": {
+                        "type": "integer"
+                    }
+                }
             }
         }
     }
