@@ -87,7 +87,6 @@ Knip configuration is in `project-base/storefront/knip.json`. Key sections:
     "ignoreDependencies": ["..."],
     "next": true,
     "vitest": { ... },
-    "eslint": true,
     "postcss": true,
     "graphql-codegen": { ... }
 }
@@ -108,7 +107,6 @@ Knip uses plugins to understand framework-specific patterns:
 
 - **next** - Detects Next.js pages, middleware, instrumentation
 - **vitest** - Detects test files and setup
-- **eslint** - Detects ESLint config usage
 - **postcss** - Detects PostCSS config usage
 - **graphql-codegen** - Detects GraphQL codegen config
 

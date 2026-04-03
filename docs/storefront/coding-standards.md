@@ -1,14 +1,14 @@
 # Coding standards
 
-## Eslint
+## Biome
 
-It can show you errors on demand when writing your code - you have to install an editor plugin to use it. It can be used on the server-side in any test.
+It can show you errors on demand when writing your code. To use it in your editor, install a Biome-compatible plugin. It can also be run on the server side in any test or CI job.
 
-Rules are defined in files `.eslintignore` and `eslint.config.mjs`.
+Rules are defined in `biome.json`.
 
 ### HTML Validation Rules
 
-ESLint is configured with custom rules to catch HTML validation issues and ensure proper semantic markup. These rules help maintain accessibility and valid HTML structure.
+Biome is configured with a local plugin that catches HTML validation issues and ensures proper semantic markup. These rules help maintain accessibility and valid HTML structure.
 
 #### Commands
 
@@ -20,7 +20,7 @@ docker compose exec storefront pnpm lint
 docker compose exec storefront pnpm check--fix
 
 # Check specific file
-docker compose exec storefront npx eslint path/to/component.tsx
+docker compose exec storefront pnpm exec biome check path/to/component.tsx
 ```
 
 #### Button Content Validation
@@ -191,14 +191,18 @@ Interactive elements cannot be nested inside other interactive elements.
 
 #### Automatic Detection
 
-Your ESLint setup automatically catches:
+Your Biome setup automatically catches:
 
-✅ **`jsx-a11y/interactive-supports-focus`** - Elements with `role="button"` that need `tabIndex`  
-✅ **`jsx-a11y/click-events-have-key-events`** - Click handlers without keyboard support  
-✅ **`jsx-a11y/no-static-element-interactions`** - Non-interactive elements with event handlers
+✅ **`lint/a11y/noStaticElementInteractions`** - Static elements with pointer or keyboard handlers must expose an appropriate interactive role  
+✅ **`lint/a11y/noNoninteractiveElementInteractions`** - Non-interactive containers cannot silently become interactive without an explicit, documented reason  
+✅ **`lint/a11y/useValidAnchor`** - Raw `<a>` elements must have a valid navigational `href`  
+✅ **Local Grit plugin checks** - Invalid interactive nesting such as `<button><a /></button>`, `<a><button /></a>`, and placeholder `href` usage on `ExtendedNextLink`
+
+**Rule Level Note:**
+`lint/a11y/useSemanticElements` is enabled as a warning. It highlights places where a semantic element like `<button>`, `<section>`, or `<search>` would be preferable, without blocking the current storefront migration.
 
 **Special Case - Safari Anchors:**
-Anchors with `href` and `role="button"` are not flagged by ESLint (they're normally focusable), but Safari requires explicit `tabIndex={0}` for proper keyboard access.
+Anchors with `href` and `role="button"` are not flagged by the linter (they're normally focusable), but Safari requires explicit `tabIndex={0}` for proper keyboard access.
 
 #### Why These Rules Matter
 
@@ -208,11 +212,11 @@ Anchors with `href` and `role="button"` are not flagged by ESLint (they're norma
 4. **SEO:** Search engines rely on proper HTML semantics
 5. **Maintainability:** Consistent structure makes code easier to understand
 
-## Prettier
+## Formatting
 
-You can format your code on save or be fired by a key shortcut - you have to install an editor plugin to use it.
+Biome formats code as part of the same toolchain. You can format on save or trigger formatting from your editor or CLI.
 
-Rules are defined in files `.prettierignore` and `prettier.config.js`.
+Rules are defined in `biome.json`.
 
 ## Editorconfig
 

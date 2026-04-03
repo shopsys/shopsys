@@ -139,8 +139,8 @@ docker compose exec storefront pnpm run dev                   # Start dev server
 docker compose exec storefront pnpm run build                 # Production build
 
 # Code quality
-docker compose exec storefront pnpm run check--fix            # Fix TypeScript + ESLint + Prettier issues
-docker compose exec storefront pnpm run lint--fix             # Fix ESLint + format issues
+docker compose exec storefront pnpm run check--fix            # Fix TypeScript + Biome issues
+docker compose exec storefront pnpm run lint--fix             # Fix Biome issues and formatting
 docker compose exec storefront pnpm run typecheck            # Check TypeScript
 
 # GraphQL
@@ -243,7 +243,7 @@ Login credentials for PostgreSQL are set in the `project-base/app/.env` file.
 - **Docker**: `/docker-compose.yml`, `/docker/`
 - **Build**: `/project-base/app/build.xml` (Phing), `/project-base/app/webpack.config.js`
 - **Dependencies**: `/composer.json`, `/project-base/storefront/package.json`
-- **Code Quality**: `/ecs.php`, `/phpstan.neon`, `/project-base/storefront/eslint.config.mjs`
+- **Code Quality**: `/ecs.php`, `/phpstan.neon`, `/project-base/storefront/biome.json`
 - **Database**: Doctrine ORM with PostgreSQL, migrations in `/project-base/src/Migrations/`
 
 ## Important Development Notes
