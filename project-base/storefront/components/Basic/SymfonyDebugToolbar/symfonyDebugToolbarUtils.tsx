@@ -1,6 +1,6 @@
 import { BatchInterceptor } from '@mswjs/interceptors';
-import { XMLHttpRequestInterceptor } from '@mswjs/interceptors/XMLHttpRequest';
 import { FetchInterceptor } from '@mswjs/interceptors/fetch';
+import { XMLHttpRequestInterceptor } from '@mswjs/interceptors/XMLHttpRequest';
 import { useEffect, useState } from 'react';
 
 export type ResponseInfo = {
@@ -42,6 +42,10 @@ export const useRequests = (tokenHeader: string, tokenLinkHeader: string) => {
 
         interceptor.apply();
         interceptor.on('response', onResponse);
+
+        return () => {
+            interceptor.off('response', onResponse);
+        };
     }, [tokenHeader, tokenLinkHeader]);
 
     return {
